@@ -29,3 +29,5 @@ import BuleyeanMath.RL
 import BuleyeanMath.Numbers
 import BuleyeanMath.Confinement
 import BuleyeanMath.Bosons
+import BuleyeanMath.Category
+import BuleyeanMath.Continuum
