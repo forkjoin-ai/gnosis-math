@@ -31,3 +31,8 @@ import BuleyeanMath.Confinement
 import BuleyeanMath.Bosons
 import BuleyeanMath.Category
 import BuleyeanMath.Continuum
+import BuleyeanMath.Logic
+import BuleyeanMath.Real
+import BuleyeanMath.Arithmetic
+import BuleyeanMath.Tactics
+import BuleyeanMath.QueueBoundary

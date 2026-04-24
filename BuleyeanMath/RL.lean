@@ -44,7 +44,7 @@ theorem coherence (v : VoidBoundary K) (i : Fin K) :
 
 -- The sliver guarantees no option is permanently suppressed
 -- Even at maximum rejection, Buleyean weight ≥ 1
-theorem sliver_prevents_suppression (total rej : Nat) (h : rej ≤ total) :
+theorem sliver_prevents_suppression (total rej : Nat) (_ : rej ≤ total) :
     total - rej + 1 ≥ 1 := by omega
 
 -- Regret bound: O(sqrt(T log K)) for void walking
