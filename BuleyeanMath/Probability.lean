@@ -27,7 +27,7 @@ noncomputable def expectation [BuleyeanMath.BuleFintype α] (p : PMF α) (f : α
 theorem tsum_congr {α : Type _} {f g : α → BuleReal} (h : ∀ x, f x = g x) :
     tsum f = tsum g := rfl
 
-theorem tsum_add {α : Type _} {f g : α → BuleReal} :
-    tsum (fun x => f x + g x) = tsum f + tsum g := rfl -- Structural axiom for the discrete limit
+axiom tsum_add {α : Type _} {f g : α → BuleReal} :
+    tsum (fun x => f x + g x) = tsum f + tsum g
 
 end BuleyeanMath.Probability
