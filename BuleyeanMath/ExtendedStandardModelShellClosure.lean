@@ -1,6 +1,0 @@
-import BuleyeanMath.ScatteringAmplitudeClosure
-import BuleyeanMath.StandardModelShellClosure
-
-namespace BuleyeanMath
-
-noncomputable section

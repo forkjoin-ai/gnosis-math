@@ -1,6 +1,0 @@
-import Init
-import BuleyeanMath.MechanizedTestimony
-import BuleyeanMath.ClinamenReduction
-
-set_option linter.unusedSimpArgs false
-set_option linter.unusedVariables false

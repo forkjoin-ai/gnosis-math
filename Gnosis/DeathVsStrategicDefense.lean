@@ -1,0 +1,8 @@
+import Init
+import Gnosis.FightingTechniques
+import Gnosis.GoingWithTheFlow
+import Gnosis.ExplosiveRelaxation
+import Gnosis.StrategicWithdrawal
+
+set_option linter.unusedSimpArgs false
+set_option linter.unusedVariables false

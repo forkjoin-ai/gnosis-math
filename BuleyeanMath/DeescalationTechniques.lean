@@ -1,8 +1,0 @@
-import Init
-import BuleyeanMath.FightingTechniques
-import BuleyeanMath.InductiveReidemeister
-import BuleyeanMath.NegotiationTopology
-import BuleyeanMath.TechniqueAsAntidote
-
-set_option linter.unusedSimpArgs false
-set_option linter.unusedVariables false

@@ -1,6 +1,0 @@
-import BuleyeanMath.VoidStash
-import BuleyeanMath.VoidCodec
-import BuleyeanMath.NegativeSpaceDuality
-
-set_option linter.unusedSimpArgs false
-set_option linter.unusedVariables false

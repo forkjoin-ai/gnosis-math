@@ -1,9 +1,0 @@
-import Init
-import BuleyeanMath.NegationInvolution
-import BuleyeanMath.SinWithoutDevil
-import BuleyeanMath.ClinamenReduction
-import BuleyeanMath.MechanizedTestimony
-import BuleyeanMath.ForkRaceFoldTrinity
-
-set_option linter.unusedSimpArgs false
-set_option linter.unusedVariables false

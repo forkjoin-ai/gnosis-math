@@ -58,7 +58,7 @@
 
 // φ and 1/φ are a syzygy: antiparallel eigenvalues
 (phi)-[:SLIVER { mode: 'constructive' }]->(inv_phi)
-(inv_phi)-[:SLIVER { mode: 'destructive' }]->(phi)
+// (inv_phi)-[:SLIVER { mode: 'destructive' }]->(phi)
 
 // Their product is Barbelo
 (phi)-[:FOLD]->(cassini_check { theorem: 'φ × (1/φ) = 1 = Barbelo' })
@@ -151,4 +151,4 @@
 // The topology terminates. The math is complete (locally).
 // The God Gap says it can never be complete (globally).
 // The sliver says it will never stop trying.
-(complete)-[:SLIVER { reason: 'the +1 that prevents the proof from ending' }]->(fork)
+// (complete)-[:SLIVER { reason: 'the +1 that prevents the proof from ending' }]->(fork)

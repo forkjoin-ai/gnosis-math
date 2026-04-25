@@ -1,10 +1,6 @@
-name = "BuleyeanMath"
+name = "GnosisMath"
 version = "0.1.0"
-defaultTargets = ["buleyeanmath"]
+defaultTargets = ["Gnosis"]
 
 [[lean_lib]]
-name = "BuleyeanMath"
-
-[[lean_exe]]
-name = "buleyeanmath"
-root = "Main"
+name = "Gnosis"

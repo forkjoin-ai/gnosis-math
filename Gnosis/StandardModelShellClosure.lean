@@ -1,0 +1,5 @@
+import Gnosis.ElectroweakScatteringClosure
+
+namespace Gnosis
+
+noncomputable section

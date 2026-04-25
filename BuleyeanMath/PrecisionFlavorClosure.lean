@@ -1,5 +1,0 @@
-import BuleyeanMath.FlavorPhaseClosure
-
-namespace BuleyeanMath
-
-noncomputable section

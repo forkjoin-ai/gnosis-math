@@ -1,6 +1,0 @@
-import BuleyeanMath.ContinuousBetaFunctionClosure
-import BuleyeanMath.ScatteringAmplitudeClosure
-
-namespace BuleyeanMath
-
-noncomputable section

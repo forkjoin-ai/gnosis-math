@@ -1,7 +1,0 @@
-import Init
-import BuleyeanMath.NegationInvolution
-import BuleyeanMath.SinWithoutDevil
-import BuleyeanMath.NegotiationRefusalTopology
-
-set_option linter.unusedSimpArgs false
-set_option linter.unusedVariables false

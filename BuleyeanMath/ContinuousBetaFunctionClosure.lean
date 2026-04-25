@@ -1,5 +1,0 @@
-import BuleyeanMath.AnomalyCancellationClosure
-
-namespace BuleyeanMath
-
-noncomputable section

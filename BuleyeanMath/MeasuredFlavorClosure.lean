@@ -1,5 +1,0 @@
-import BuleyeanMath.FlavorMixingClosure
-
-namespace BuleyeanMath
-
-noncomputable section

@@ -1,6 +1,0 @@
-import Init
-import BuleyeanMath.TopologicalErasure
-import BuleyeanMath.TopologicalImmunity
-
-set_option linter.unusedSimpArgs false
-set_option linter.unusedVariables false

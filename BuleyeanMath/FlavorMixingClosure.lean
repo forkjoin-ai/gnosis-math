@@ -1,3 +1,0 @@
-namespace BuleyeanMath
-
-noncomputable section

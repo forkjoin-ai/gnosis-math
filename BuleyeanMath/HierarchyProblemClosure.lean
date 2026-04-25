@@ -1,5 +1,0 @@
-import BuleyeanMath.LocalGravityLaw
-
-namespace BuleyeanMath
-
-noncomputable section

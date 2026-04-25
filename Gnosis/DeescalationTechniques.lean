@@ -1,0 +1,8 @@
+import Init
+import Gnosis.FightingTechniques
+import Gnosis.InductiveReidemeister
+import Gnosis.NegotiationTopology
+import Gnosis.TechniqueAsAntidote
+
+set_option linter.unusedSimpArgs false
+set_option linter.unusedVariables false

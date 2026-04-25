@@ -1,0 +1,6 @@
+import Gnosis.ScatteringAmplitudeClosure
+import Gnosis.StandardModelShellClosure
+
+namespace Gnosis
+
+noncomputable section

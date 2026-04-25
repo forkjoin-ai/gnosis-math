@@ -1,0 +1,5 @@
+import Gnosis.ProtonQuantizedUniqueness
+
+namespace Gnosis
+
+noncomputable section

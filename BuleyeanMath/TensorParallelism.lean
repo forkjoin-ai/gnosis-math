@@ -1,6 +1,0 @@
-import Init
-import BuleyeanMath.MeshCharismaAttention
-import BuleyeanMath.MeshAttentionAsVoting
-
-set_option linter.unusedSimpArgs false
-set_option linter.unusedVariables false

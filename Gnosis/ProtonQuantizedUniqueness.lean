@@ -1,0 +1,4 @@
+
+namespace Gnosis
+
+noncomputable section

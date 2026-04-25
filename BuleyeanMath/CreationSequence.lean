@@ -1,8 +1,0 @@
-import Init
-import BuleyeanMath.EquivalentExchange
-import BuleyeanMath.ClinamenReduction
-import BuleyeanMath.ConstraintPowerDuality
-import BuleyeanMath.MechanizedTestimony
-
-set_option linter.unusedSimpArgs false
-set_option linter.unusedVariables false

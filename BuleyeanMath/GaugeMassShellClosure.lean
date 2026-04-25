@@ -1,6 +1,0 @@
-import BuleyeanMath.ExtendedStandardModelShellClosure
-import BuleyeanMath.YukawaMassGenerationClosure
-
-namespace BuleyeanMath
-
-noncomputable section
