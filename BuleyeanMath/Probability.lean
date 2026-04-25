@@ -27,7 +27,16 @@ noncomputable def expectation [BuleyeanMath.BuleFintype α] (p : PMF α) (f : α
 theorem tsum_congr {α : Type _} {f g : α → BuleReal} (h : ∀ x, f x = g x) :
     tsum f = tsum g := rfl
 
-axiom tsum_add {α : Type _} {f g : α → BuleReal} :
-    tsum (fun x => f x + g x) = tsum f + tsum g
+/-- In the Phase I structural placeholder where `tsum` collapses to `0`,
+    additivity is immediate: both sides are `0`. When the discrete-limit
+    semantics is filled in, this will need a real proof tracking the
+    underlying summability witness. -/
+theorem tsum_add {α : Type _} {f g : α → BuleReal} :
+    tsum (fun x => f x + g x) = tsum f + tsum g := by
+  have h₁ : tsum (fun x => f x + g x) = (0 : BuleReal) := rfl
+  have h₂ : tsum f = (0 : BuleReal) := rfl
+  have h₃ : tsum g = (0 : BuleReal) := rfl
+  rw [h₁, h₂, h₃]
+  rfl
 
 end BuleyeanMath.Probability

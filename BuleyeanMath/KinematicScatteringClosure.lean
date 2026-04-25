@@ -1,0 +1,5 @@
+import BuleyeanMath.ScatteringAmplitudeClosure
+
+namespace BuleyeanMath
+
+noncomputable section
