@@ -34,7 +34,7 @@ theorem positive_weighted_sleep_debt_yields_strict_majority_embedding
   refine ⟨?_, canonical_debt_embedding_strict_majority debt⟩
   exact SleepDebtWeightedSchedule.iterated_debt_positive_above_threshold hCrossed hCycle
 
-structure QueueBoundaryWitnessNat where
+structure QueueBoundaryWitnessNat_SleepQuorumQueueMoonshots where
   beta1 : Nat
   capacity : Nat
   arrivalRate : Nat
@@ -50,7 +50,7 @@ theorem positive_weighted_sleep_debt_via_quorum_embedding_yields_unit_capacity_b
     let debt :=
       SleepDebtWeightedSchedule.iteratedDebt
         n cycleLength scheduledWake wakeBurdenRate recoveryRate
-    ∃ boundary : QueueBoundaryWitnessNat,
+    ∃ boundary : QueueBoundaryWitnessNat_SleepQuorumQueueMoonshots,
       boundary.beta1 = 0 ∧
       boundary.capacity = 1 ∧
       boundary.arrivalRate = canonicalFailureBudgetFromDebt debt ∧
@@ -88,7 +88,7 @@ theorem positive_weighted_sleep_debt_can_coexist_with_nonmajority_quorum :
     SleepDebtWeightedSchedule.literature_boundary_crossed_at_twentyone_hours
     (by decide)
 
-structure GeometricErgodicityRateNat where
+structure GeometricErgodicityRateNat_SleepQuorumQueueMoonshots where
   numerator : Nat
   denominator : Nat
   initialBound : Nat
@@ -96,7 +96,7 @@ structure GeometricErgodicityRateNat where
   hDenomPos : 0 < denominator
   hInitialBoundPos : 0 < initialBound
 
-def debtIndexedGeometricRate (debt : Nat) : GeometricErgodicityRateNat :=
+def debtIndexedGeometricRate (debt : Nat) : GeometricErgodicityRateNat_SleepQuorumQueueMoonshots :=
   { numerator := 3
     denominator := 4
     initialBound := debt + 1
@@ -120,7 +120,7 @@ theorem positive_weighted_sleep_debt_yields_geometric_rate_certificate
       SleepDebtWeightedSchedule.iteratedDebt
         n cycleLength scheduledWake wakeBurdenRate recoveryRate
     0 < debt ∧
-    ∃ rate : GeometricErgodicityRateNat,
+    ∃ rate : GeometricErgodicityRateNat_SleepQuorumQueueMoonshots,
       rate = debtIndexedGeometricRate debt ∧
       rate.initialBound = debt + 1 ∧
       rate.numerator = 3 ∧

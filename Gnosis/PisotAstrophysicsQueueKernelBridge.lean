@@ -21,19 +21,19 @@ structure CelestialShadow where
 
 def visibleBudget (s : CelestialShadow) : Nat := s.observedFlux
 
-structure QueueBoundaryWitnessNat where
+structure QueueBoundaryWitnessNat_PisotAstrophysicsQueueKernelBridge where
   beta1 : Nat
   capacity : Nat
   arrivalRate : Nat
   serviceRate : Nat
 
-def canonicalMM1Boundary (lam mu : Nat) (_h : lam < mu) : QueueBoundaryWitnessNat :=
+def canonicalMM1Boundary (lam mu : Nat) (_h : lam < mu) : QueueBoundaryWitnessNat_PisotAstrophysicsQueueKernelBridge :=
   { beta1 := 0, capacity := 1, arrivalRate := lam, serviceRate := mu }
 
 theorem pisot_dimension_yields_unit_queue_boundary
     (d : Nat) (_hd_pos : 0 < d) :
     let cost := PisotComplexity.pisotCellMultCost d
-    ∃ boundary : QueueBoundaryWitnessNat,
+    ∃ boundary : QueueBoundaryWitnessNat_PisotAstrophysicsQueueKernelBridge,
       boundary.capacity = 1 ∧
       boundary.arrivalRate = cost ∧
       boundary.serviceRate = cost + 1 := by
@@ -43,7 +43,7 @@ theorem pisot_dimension_yields_unit_queue_boundary
 theorem astrophysics_shadow_yields_unit_queue_boundary
     (shadow : CelestialShadow) (_h_visible : 0 < visibleBudget shadow) :
     let budget := visibleBudget shadow
-    ∃ boundary : QueueBoundaryWitnessNat,
+    ∃ boundary : QueueBoundaryWitnessNat_PisotAstrophysicsQueueKernelBridge,
       boundary.capacity = 1 ∧
       boundary.arrivalRate = budget ∧
       boundary.serviceRate = budget + 1 := by
@@ -53,7 +53,7 @@ theorem astrophysics_shadow_yields_unit_queue_boundary
 theorem pisot_astrophysics_budget_yields_unit_queue_boundary
     (d : Nat) (shadow : CelestialShadow) (_hd_pos : 0 < d) :
     let budget := PisotComplexity.pisotCellMultCost d + visibleBudget shadow
-    ∃ boundary : QueueBoundaryWitnessNat,
+    ∃ boundary : QueueBoundaryWitnessNat_PisotAstrophysicsQueueKernelBridge,
       boundary.capacity = 1 ∧
       boundary.arrivalRate = budget ∧
       boundary.serviceRate = budget + 1 := by
@@ -63,14 +63,14 @@ theorem pisot_astrophysics_budget_yields_unit_queue_boundary
 theorem pisot_astrophysics_budget_does_not_force_positive_beta1
     (d : Nat) (shadow : CelestialShadow) (_hd_pos : 0 < d) :
     let budget := PisotComplexity.pisotCellMultCost d + visibleBudget shadow
-    ∃ boundary : QueueBoundaryWitnessNat,
+    ∃ boundary : QueueBoundaryWitnessNat_PisotAstrophysicsQueueKernelBridge,
       boundary.arrivalRate = budget ∧
       boundary.serviceRate = budget + 1 ∧
       boundary.beta1 = 0 := by
   intro budget
   exact ⟨canonicalMM1Boundary budget (budget + 1) (Nat.lt_succ_self _), rfl, rfl, rfl⟩
 
-structure GeometricErgodicityRateNat where
+structure GeometricErgodicityRateNat_PisotAstrophysicsQueueKernelBridge where
   numerator : Nat
   denominator : Nat
   initialBound : Nat
@@ -81,7 +81,7 @@ structure GeometricErgodicityRateNat where
 theorem pisot_astrophysics_budget_yields_geometric_rate_certificate
     (d : Nat) (shadow : CelestialShadow) (_hd_pos : 0 < d) :
     let budget := PisotComplexity.pisotCellMultCost d + visibleBudget shadow
-    ∃ rate : GeometricErgodicityRateNat,
+    ∃ rate : GeometricErgodicityRateNat_PisotAstrophysicsQueueKernelBridge,
       rate.numerator = 3 ∧ rate.denominator = 4 ∧
       rate.initialBound = budget + 1 := by
   intro budget

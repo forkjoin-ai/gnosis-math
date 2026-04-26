@@ -46,7 +46,7 @@ theorem gossip_interpretation_strict_majority
   unfold gossipReplicaCount
   exact Nat.lt_succ_self _
 
-structure QueueBoundaryWitnessNat where
+structure QueueBoundaryWitnessNat_GossipEpidemiologyQueueKernelBridge where
   beta1 : Nat
   capacity : Nat
   arrivalRate : Nat
@@ -56,7 +56,7 @@ theorem gossip_susceptible_yields_unit_queue_boundary
     (setup : GossipProtocol.GossipSetup) :
     GossipProtocol.godWeight setup.totalNodes setup.susceptibleNodes =
       setup.infectedNodes + 1 ∧
-    ∃ boundary : QueueBoundaryWitnessNat,
+    ∃ boundary : QueueBoundaryWitnessNat_GossipEpidemiologyQueueKernelBridge,
       boundary.beta1 = 0 ∧
       boundary.capacity = 1 ∧
       boundary.arrivalRate = gossipFailureBudget setup ∧
@@ -86,7 +86,7 @@ theorem sir_active_infected_yields_unit_queue_boundary
     (setup : EpidemiologySIR.SIRSetup) :
     EpidemiologySIR.godWeight setup.totalPopulation setup.activeInfected =
       setup.recoveredPopulation + 1 ∧
-    ∃ boundary : QueueBoundaryWitnessNat,
+    ∃ boundary : QueueBoundaryWitnessNat_GossipEpidemiologyQueueKernelBridge,
       boundary.beta1 = 0 ∧
       boundary.capacity = 1 ∧
       boundary.arrivalRate = sirFailureBudget setup ∧
@@ -121,7 +121,7 @@ theorem gossip_sir_budget_yields_unit_queue_boundary
     EpidemiologySIR.godWeight sir.totalPopulation sir.activeInfected =
       sir.recoveredPopulation + 1 ∧
     gossipSirFailureBudget gossip sir = gossip.susceptibleNodes + sir.activeInfected ∧
-    ∃ boundary : QueueBoundaryWitnessNat,
+    ∃ boundary : QueueBoundaryWitnessNat_GossipEpidemiologyQueueKernelBridge,
       boundary.beta1 = 0 ∧
       boundary.capacity = 1 ∧
       boundary.arrivalRate = gossipSirFailureBudget gossip sir ∧
@@ -140,7 +140,7 @@ theorem gossip_sir_budget_yields_unit_queue_boundary
 theorem gossip_sir_budget_does_not_force_beta1_equals_budget
     (gossip : GossipProtocol.GossipSetup) (sir : EpidemiologySIR.SIRSetup)
     (hBudgetPos : 0 < gossipSirFailureBudget gossip sir) :
-    ¬ (∀ boundary : QueueBoundaryWitnessNat,
+    ¬ (∀ boundary : QueueBoundaryWitnessNat_GossipEpidemiologyQueueKernelBridge,
         boundary.arrivalRate = gossipSirFailureBudget gossip sir →
         boundary.serviceRate =
           quorumSize (gossipSirReplicaCount gossip sir) (gossipSirFailureBudget gossip sir) →
@@ -152,7 +152,7 @@ theorem gossip_sir_budget_does_not_force_beta1_equals_budget
   rw [hBetaZero] at hEq
   omega
 
-structure GeometricErgodicityRateNat where
+structure GeometricErgodicityRateNat_GossipEpidemiologyQueueKernelBridge where
   numerator : Nat
   denominator : Nat
   initialBound : Nat
@@ -162,7 +162,7 @@ structure GeometricErgodicityRateNat where
 
 def gossipSirGeometricRate
     (gossip : GossipProtocol.GossipSetup) (sir : EpidemiologySIR.SIRSetup) :
-    GeometricErgodicityRateNat :=
+    GeometricErgodicityRateNat_GossipEpidemiologyQueueKernelBridge :=
   { numerator := 3
     denominator := 4
     initialBound := gossipSirFailureBudget gossip sir + 1
@@ -176,7 +176,7 @@ theorem gossip_sir_budget_yields_geometric_rate_certificate
       gossip.infectedNodes + 1 ∧
     EpidemiologySIR.godWeight sir.totalPopulation sir.activeInfected =
       sir.recoveredPopulation + 1 ∧
-    ∃ rate : GeometricErgodicityRateNat,
+    ∃ rate : GeometricErgodicityRateNat_GossipEpidemiologyQueueKernelBridge,
       rate = gossipSirGeometricRate gossip sir ∧
       rate.initialBound = gossipSirFailureBudget gossip sir + 1 ∧
       rate.numerator = 3 ∧

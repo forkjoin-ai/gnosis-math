@@ -9,7 +9,7 @@ theorem oracle_execution_stall_obstruction
     (assumptions : OracleStallAssumptions) :
     assumptions.executionSteps > assumptions.stallThreshold ->
     assumptions.executionSteps ≠ assumptions.stallThreshold := by
-  intro hGt
-  exact ne_of_gt hGt
+  intro _hGt
+  omega
 
 end Gnosis

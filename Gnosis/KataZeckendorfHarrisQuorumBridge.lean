@@ -48,7 +48,7 @@ theorem kata_zeckendorf_budget_yields_multilevel_harris_positive_drift :
   ⟨kataZeckendorfMultilevelHarrisWitness.hDiscrete,
    kataZeckendorfMultilevelHarrisWitness.hContinuous⟩
 
-structure GeometricErgodicityRateNat where
+structure GeometricErgodicityRateNat_KataZeckendorfHarrisQuorumBridge where
   numerator : Nat
   denominator : Nat
   initialBound : Nat
@@ -56,7 +56,7 @@ structure GeometricErgodicityRateNat where
   hDenomPos : 0 < denominator
   hInitialBoundPos : 0 < initialBound
 
-def kataZeckendorfGeometricRate : GeometricErgodicityRateNat :=
+def kataZeckendorfGeometricRate : GeometricErgodicityRateNat_KataZeckendorfHarrisQuorumBridge :=
   { numerator := 3
     denominator := 4
     initialBound := kataZeckendorfBudget + 1
@@ -71,13 +71,13 @@ theorem kata_zeckendorf_budget_yields_rate_and_harris_alignment :
    kataZeckendorfMultilevelHarrisWitness.hContinuous⟩
 
 theorem kata_zeckendorf_budget_yields_geometric_rate_certificate :
-    ∃ rate : GeometricErgodicityRateNat,
+    ∃ rate : GeometricErgodicityRateNat_KataZeckendorfHarrisQuorumBridge,
       rate.numerator = 3 ∧
       rate.denominator = 4 ∧
       rate.initialBound = kataZeckendorfBudget + 1 := by
   exact ⟨kataZeckendorfGeometricRate, rfl, rfl, rfl⟩
 
-structure QueueBoundaryWitnessNat where
+structure QueueBoundaryWitnessNat_KataZeckendorfHarrisQuorumBridge where
   beta1 : Nat
   capacity : Nat
   arrivalRate : Nat
@@ -85,7 +85,7 @@ structure QueueBoundaryWitnessNat where
   occupancy : Nat
   residenceTime : Nat
 
-def canonicalMM1Boundary (lam mu : Nat) (_h : lam < mu) : QueueBoundaryWitnessNat :=
+def canonicalMM1Boundary (lam mu : Nat) (_h : lam < mu) : QueueBoundaryWitnessNat_KataZeckendorfHarrisQuorumBridge :=
   { beta1 := 0, capacity := 1, arrivalRate := lam, serviceRate := mu
     occupancy := lam, residenceTime := 1 }
 
@@ -93,7 +93,7 @@ theorem kata_zeckendorf_quorum_embedding_yields_unit_boundary
     {replicaCount : Nat}
     (hReplica : replicaCount = 2 * kataZeckendorfBudget + 1) :
     kataZeckendorfBudget < quorumSize replicaCount kataZeckendorfBudget ∧
-    ∃ boundary : QueueBoundaryWitnessNat,
+    ∃ boundary : QueueBoundaryWitnessNat_KataZeckendorfHarrisQuorumBridge,
       boundary.beta1 = 0 ∧
       boundary.capacity = 1 ∧
       boundary.occupancy = boundary.arrivalRate * boundary.residenceTime := by
@@ -108,7 +108,7 @@ theorem kata_zeckendorf_quorum_embedding_yields_unit_boundary
     rw [Nat.mul_one]
 
 theorem kata_zeckendorf_harris_alignment_does_not_force_positive_beta1 :
-    ¬ (∀ boundary : QueueBoundaryWitnessNat,
+    ¬ (∀ boundary : QueueBoundaryWitnessNat_KataZeckendorfHarrisQuorumBridge,
         boundary.arrivalRate = kataZeckendorfBudget →
         boundary.serviceRate = kataZeckendorfBudget + 1 →
         0 < boundary.beta1) := by
@@ -121,7 +121,7 @@ theorem kata_zeckendorf_harris_alignment_does_not_force_positive_beta1 :
   exact Nat.lt_irrefl 0 hPos
 
 theorem kata_zeckendorf_witness_implies_strict_geometric_decay
-    (rate : GeometricErgodicityRateNat) :
+    (rate : GeometricErgodicityRateNat_KataZeckendorfHarrisQuorumBridge) :
     rate.numerator < rate.denominator :=
   rate.hRateLtOne
 
@@ -132,7 +132,7 @@ theorem kata_zeckendorf_greedy_gap_aligns_with_quorum_boundary
     (hReplica : replicaCount = 2 * kataZeckendorfBudget + 1) :
     n - ZeckendorfCompleteness.fib (k + 2) < ZeckendorfCompleteness.fib (k + 1) ∧
     (kataZeckendorfBudget < quorumSize replicaCount kataZeckendorfBudget ∧
-      ∃ boundary : QueueBoundaryWitnessNat,
+      ∃ boundary : QueueBoundaryWitnessNat_KataZeckendorfHarrisQuorumBridge,
         boundary.beta1 = 0 ∧
         boundary.capacity = 1 ∧
         boundary.occupancy = boundary.arrivalRate * boundary.residenceTime) := by
@@ -141,7 +141,7 @@ theorem kata_zeckendorf_greedy_gap_aligns_with_quorum_boundary
   · exact kata_zeckendorf_quorum_embedding_yields_unit_boundary hReplica
 
 theorem kata_zeckendorf_alignment_does_not_force_residence_time_gt_one :
-    ¬ (∀ boundary : QueueBoundaryWitnessNat,
+    ¬ (∀ boundary : QueueBoundaryWitnessNat_KataZeckendorfHarrisQuorumBridge,
         boundary.arrivalRate = kataZeckendorfBudget →
         boundary.serviceRate = kataZeckendorfBudget + 1 →
         1 < boundary.residenceTime) := by

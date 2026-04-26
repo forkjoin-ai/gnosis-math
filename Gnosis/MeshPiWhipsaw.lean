@@ -18,7 +18,7 @@ theorem digit_whipsaw_sandwich (n : Nat) (h : n >= 1) :
   constructor
   · unfold pessimisticPattern patternStrength
     by_cases h1 : n > 1000
-    · simp [h1]; apply Nat.zero_le
+    · simp [h1]
     · have h_not_zero : (n == 0) = false := by 
         match n with | 0 => contradiction | _ + 1 => rfl
       simp [h1, h_not_zero]

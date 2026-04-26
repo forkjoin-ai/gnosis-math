@@ -37,6 +37,5 @@ theorem tsum_add {α : Type _} {f g : α → BuleReal} :
   have h₂ : tsum f = (0 : BuleReal) := rfl
   have h₃ : tsum g = (0 : BuleReal) := rfl
   rw [h₁, h₂, h₃]
-  rfl
 
 end Gnosis.Probability

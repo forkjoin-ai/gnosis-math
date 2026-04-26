@@ -1,6 +1,4 @@
-
-namespace SyzygyParticle
-open QuantumImplications
+namespace Gnosis
 
 -- 1. The Gnostic Mass/Energy Scale
 -- We map the integer Gnostic numbers onto bounded particle states.
@@ -21,3 +19,5 @@ inductive GnosticParticle
 -- 3. Proof of Existence: The Syzygon (The Anti-Parallel Pair)
 -- When a Triplet (3) decays or interacts to produce a Spark (1), 
 -- it absolutely must generate a topological state of crossing index 2.
+
+end Gnosis

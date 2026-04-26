@@ -46,7 +46,6 @@ theorem amplituhedron_volume_equivalence {k n : Nat} (cfg : CFGTopology k n) :
 -/
 theorem grassmannian_compilation_soundness {k n : Nat} (cfg : CFGTopology k n) :
   ∃ (gr : PositiveGrassmannian k n), gr.volume = cfg.states * cfg.constraints := by
-  use compile_cfg_to_grassmannian cfg
-  rfl
+  exact ⟨compile_cfg_to_grassmannian cfg, rfl⟩
 
 end Gnosis.GrassmannianCompiler

@@ -21,18 +21,18 @@ structure EpistemologySetup where
   hGettierPos : 0 < gettierCases
   hEq : justifiedBeliefs + trueBeliefs = gettierCases + 1
 
-structure QueueBoundaryWitnessNat where
+structure QueueBoundaryWitnessNat_HydrologyEpistemologyQueueKernelBridge where
   beta1 : Nat
   capacity : Nat
   arrivalRate : Nat
   serviceRate : Nat
 
-def canonicalMM1Boundary (lam mu : Nat) (_h : lam < mu) : QueueBoundaryWitnessNat :=
+def canonicalMM1Boundary (lam mu : Nat) (_h : lam < mu) : QueueBoundaryWitnessNat_HydrologyEpistemologyQueueKernelBridge :=
   { beta1 := 0, capacity := 1, arrivalRate := lam, serviceRate := mu }
 
 theorem hydrology_runoff_yields_unit_queue_boundary
     (hydro : HydrologySetup) :
-    ∃ boundary : QueueBoundaryWitnessNat,
+    ∃ boundary : QueueBoundaryWitnessNat_HydrologyEpistemologyQueueKernelBridge,
       boundary.beta1 = 0 ∧
       boundary.capacity = 1 ∧
       boundary.arrivalRate = hydro.runoff ∧
@@ -42,7 +42,7 @@ theorem hydrology_runoff_yields_unit_queue_boundary
 
 theorem epistemology_gettier_yields_unit_queue_boundary
     (epis : EpistemologySetup) :
-    ∃ boundary : QueueBoundaryWitnessNat,
+    ∃ boundary : QueueBoundaryWitnessNat_HydrologyEpistemologyQueueKernelBridge,
       boundary.beta1 = 0 ∧
       boundary.capacity = 1 ∧
       boundary.arrivalRate = epis.gettierCases ∧
@@ -53,7 +53,7 @@ theorem epistemology_gettier_yields_unit_queue_boundary
 theorem hydrology_epistemology_budget_yields_unit_queue_boundary
     (hydro : HydrologySetup) (epis : EpistemologySetup)
     (_hBudgetBridge : hydro.runoff = epis.gettierCases) :
-    ∃ boundary : QueueBoundaryWitnessNat,
+    ∃ boundary : QueueBoundaryWitnessNat_HydrologyEpistemologyQueueKernelBridge,
       boundary.beta1 = 0 ∧
       boundary.capacity = 1 ∧
       boundary.arrivalRate = hydro.runoff ∧
@@ -64,7 +64,7 @@ theorem hydrology_epistemology_budget_yields_unit_queue_boundary
 theorem hydrology_epistemology_budget_does_not_force_positive_beta1
     (hydro : HydrologySetup) (epis : EpistemologySetup)
     (hBudgetBridge : hydro.runoff = epis.gettierCases) :
-    ¬ (∀ boundary : QueueBoundaryWitnessNat,
+    ¬ (∀ boundary : QueueBoundaryWitnessNat_HydrologyEpistemologyQueueKernelBridge,
         boundary.arrivalRate = hydro.runoff →
         boundary.serviceRate = 2 * epis.gettierCases + 1 →
         0 < boundary.beta1) := by
@@ -78,7 +78,7 @@ theorem hydrology_epistemology_budget_does_not_force_positive_beta1
 theorem hydrology_epistemology_budget_does_not_force_strict_capacity_growth
     (hydro : HydrologySetup) (epis : EpistemologySetup)
     (hBudgetBridge : hydro.runoff = epis.gettierCases) :
-    ¬ (∀ boundary : QueueBoundaryWitnessNat,
+    ¬ (∀ boundary : QueueBoundaryWitnessNat_HydrologyEpistemologyQueueKernelBridge,
         boundary.arrivalRate = hydro.runoff →
         boundary.serviceRate = 2 * epis.gettierCases + 1 →
         1 < boundary.capacity) := by
@@ -89,7 +89,7 @@ theorem hydrology_epistemology_budget_does_not_force_strict_capacity_growth
   rw [hCapacityOne] at hCap
   exact Nat.lt_irrefl 1 hCap
 
-structure GeometricErgodicityRateNat where
+structure GeometricErgodicityRateNat_HydrologyEpistemologyQueueKernelBridge where
   numerator : Nat
   denominator : Nat
   initialBound : Nat
@@ -100,7 +100,7 @@ structure GeometricErgodicityRateNat where
 theorem hydrology_epistemology_budget_yields_geometric_rate_certificate
     (hydro : HydrologySetup) (epis : EpistemologySetup)
     (_hBudgetBridge : hydro.runoff = epis.gettierCases) :
-    ∃ cert : GeometricErgodicityRateNat,
+    ∃ cert : GeometricErgodicityRateNat_HydrologyEpistemologyQueueKernelBridge,
       cert.numerator = 3 ∧ cert.denominator = 4 ∧
       cert.initialBound = hydro.runoff + 1 := by
   refine ⟨{

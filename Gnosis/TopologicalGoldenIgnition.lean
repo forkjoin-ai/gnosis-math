@@ -3,6 +3,8 @@ import Gnosis.TopologicalGriessAlgebra
 
 open TopologicalLucasDynamics
 
+namespace Gnosis
+
 -- ══════════════════════════════════════════════════════════
 -- THE GOLDEN PHASE IGNITION
 --
@@ -51,3 +53,5 @@ theorem ignition_cassini_lock :
 -/
 theorem ignition_holographic_lock :
   5 * fib 4 = lucas 3 + lucas 5 := by native_decide
+
+end Gnosis

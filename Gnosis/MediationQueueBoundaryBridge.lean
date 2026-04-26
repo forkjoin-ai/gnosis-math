@@ -15,16 +15,16 @@ structure MediationSetup where
 
 end CausalMediation
 
-structure QueueBoundaryWitnessNat where
+structure QueueBoundaryWitnessNat_MediationQueueBoundaryBridge where
   beta1 : Nat
   capacity : Nat
   arrivalRate : Nat
   serviceRate : Nat
 
-def canonicalMM1Boundary (lam mu : Nat) (_h : lam < mu) : QueueBoundaryWitnessNat :=
+def canonicalMM1Boundary (lam mu : Nat) (_h : lam < mu) : QueueBoundaryWitnessNat_MediationQueueBoundaryBridge :=
   { beta1 := 0, capacity := 1, arrivalRate := lam, serviceRate := mu }
 
-structure GeometricErgodicityRateNat where
+structure GeometricErgodicityRateNat_MediationQueueBoundaryBridge where
   numerator : Nat
   denominator : Nat
   initialBound : Nat
@@ -41,7 +41,7 @@ structure MultiLevelHarrisWitnessNat where
 
 theorem mediation_positive_loss_yields_unit_queue_boundary
     (m : CausalMediation.MediationSetup) :
-    ∃ boundary : QueueBoundaryWitnessNat,
+    ∃ boundary : QueueBoundaryWitnessNat_MediationQueueBoundaryBridge,
       boundary.beta1 = 0 ∧
       boundary.capacity = 1 ∧
       boundary.arrivalRate = m.mediatorLoss ∧
@@ -51,7 +51,7 @@ theorem mediation_positive_loss_yields_unit_queue_boundary
 
 theorem mediation_loss_does_not_force_positive_beta1
     (m : CausalMediation.MediationSetup) :
-    ¬ (∀ boundary : QueueBoundaryWitnessNat,
+    ¬ (∀ boundary : QueueBoundaryWitnessNat_MediationQueueBoundaryBridge,
         boundary.arrivalRate = m.mediatorLoss →
         boundary.serviceRate = m.mediatorLoss + 1 →
         0 < boundary.beta1) := by
@@ -63,7 +63,7 @@ theorem mediation_loss_does_not_force_positive_beta1
   exact Nat.lt_irrefl 0 hPos
 
 def mediationLossGeometricRate (m : CausalMediation.MediationSetup) :
-    GeometricErgodicityRateNat :=
+    GeometricErgodicityRateNat_MediationQueueBoundaryBridge :=
   { numerator := 3
     denominator := 4
     initialBound := m.mediatorLoss + 1
@@ -73,7 +73,7 @@ def mediationLossGeometricRate (m : CausalMediation.MediationSetup) :
 
 theorem mediation_positive_loss_yields_geometric_rate_certificate
     (m : CausalMediation.MediationSetup) :
-    ∃ rate : GeometricErgodicityRateNat,
+    ∃ rate : GeometricErgodicityRateNat_MediationQueueBoundaryBridge,
       rate = mediationLossGeometricRate m ∧
       rate.initialBound = m.mediatorLoss + 1 ∧
       rate.numerator = 3 ∧

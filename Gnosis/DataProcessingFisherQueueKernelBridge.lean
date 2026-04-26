@@ -18,7 +18,7 @@ theorem data_fisher_interpretation_strict_majority (n : Nat) :
   unfold dataProcessingFailureBudget fisherReplicaCount
   omega
 
-structure QueueBoundaryWitnessNat where
+structure QueueBoundaryWitnessNat_DataProcessingFisherQueueKernelBridge where
   beta1 : Nat
   capacity : Nat
   arrivalRate : Nat
@@ -29,7 +29,7 @@ def quorumSizeNat (replicaCount failureBudget : Nat) : Nat :=
 
 theorem data_processing_loss_yields_unit_queue_boundary
     (n : Nat) (_hn : n ≥ 1) :
-    ∃ boundary : QueueBoundaryWitnessNat,
+    ∃ boundary : QueueBoundaryWitnessNat_DataProcessingFisherQueueKernelBridge,
       boundary.beta1 = 0 ∧
       boundary.capacity = 1 ∧
       boundary.arrivalRate = dataProcessingFailureBudget n ∧
@@ -47,7 +47,7 @@ theorem data_processing_loss_yields_unit_queue_boundary
 
 theorem fisher_curvature_yields_unit_queue_boundary
     (n : Nat) (_hn : fisherScalarCurvatureX4 n ≥ 1) :
-    ∃ boundary : QueueBoundaryWitnessNat,
+    ∃ boundary : QueueBoundaryWitnessNat_DataProcessingFisherQueueKernelBridge,
       boundary.beta1 = 0 ∧
       boundary.capacity = 1 ∧
       boundary.arrivalRate =
@@ -70,7 +70,7 @@ theorem data_fisher_budget_yields_unit_queue_boundary
     (n m : Nat) (_hn : n ≥ 1) (_hm : fisherScalarCurvatureX4 m ≥ 1) :
     dataProcessingFailureBudget (n + fisherScalarCurvatureX4 m) =
         n + fisherScalarCurvatureX4 m ∧
-    ∃ boundary : QueueBoundaryWitnessNat,
+    ∃ boundary : QueueBoundaryWitnessNat_DataProcessingFisherQueueKernelBridge,
       boundary.beta1 = 0 ∧
       boundary.capacity = 1 ∧
       boundary.arrivalRate =
@@ -94,7 +94,7 @@ theorem data_fisher_budget_yields_unit_queue_boundary
 
 theorem data_fisher_budget_does_not_force_positive_beta1
     (n m : Nat) (hn : n ≥ 1) (hm : fisherScalarCurvatureX4 m ≥ 1) :
-    ¬ (∀ boundary : QueueBoundaryWitnessNat,
+    ¬ (∀ boundary : QueueBoundaryWitnessNat_DataProcessingFisherQueueKernelBridge,
         boundary.arrivalRate =
           dataProcessingFailureBudget (n + fisherScalarCurvatureX4 m) →
         boundary.serviceRate =
@@ -110,7 +110,7 @@ theorem data_fisher_budget_does_not_force_positive_beta1
   rw [hBetaZero] at hPos
   exact Nat.lt_irrefl 0 hPos
 
-structure GeometricErgodicityRateNat where
+structure GeometricErgodicityRateNat_DataProcessingFisherQueueKernelBridge where
   numerator : Nat
   denominator : Nat
   initialBound : Nat
@@ -118,7 +118,7 @@ structure GeometricErgodicityRateNat where
   hDenomPos : 0 < denominator
   hInitialBoundPos : 0 < initialBound
 
-def dataFisherGeometricRate (n m : Nat) : GeometricErgodicityRateNat :=
+def dataFisherGeometricRate (n m : Nat) : GeometricErgodicityRateNat_DataProcessingFisherQueueKernelBridge :=
   { numerator := 3
     denominator := 4
     initialBound := dataProcessingFailureBudget (n + fisherScalarCurvatureX4 m) + 1
@@ -128,7 +128,7 @@ def dataFisherGeometricRate (n m : Nat) : GeometricErgodicityRateNat :=
 
 theorem data_fisher_budget_yields_geometric_rate_certificate
     (n m : Nat) (_hn : n ≥ 1) (_hm : fisherScalarCurvatureX4 m ≥ 1) :
-    ∃ rate : GeometricErgodicityRateNat,
+    ∃ rate : GeometricErgodicityRateNat_DataProcessingFisherQueueKernelBridge,
       rate = dataFisherGeometricRate n m ∧
       rate.initialBound = dataProcessingFailureBudget (n + fisherScalarCurvatureX4 m) + 1 ∧
       rate.numerator = 3 ∧

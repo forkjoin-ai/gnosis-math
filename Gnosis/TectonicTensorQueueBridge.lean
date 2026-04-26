@@ -24,7 +24,7 @@ def tectonicFailureBudget (t : TectonicSubduction) : Nat :=
   t.subductedMass
 
 /-- Init-only `QueueBoundaryWitness`: rates are `Nat`-valued. -/
-structure QueueBoundaryWitnessNat where
+structure QueueBoundaryWitnessNat_TectonicTensorQueueBridge where
   beta1 : Nat
   capacity : Nat
   arrivalRate : Nat
@@ -32,12 +32,12 @@ structure QueueBoundaryWitnessNat where
 
 /-- Canonical M/M/1 boundary in `Nat` form: `arrivalRate < serviceRate`,
     `beta1 = 0`, `capacity = 1`. -/
-def canonicalMM1Boundary (lam mu : Nat) (_hLamLtMu : lam < mu) : QueueBoundaryWitnessNat :=
+def canonicalMM1Boundary (lam mu : Nat) (_hLamLtMu : lam < mu) : QueueBoundaryWitnessNat_TectonicTensorQueueBridge :=
   { beta1 := 0, capacity := 1, arrivalRate := lam, serviceRate := mu }
 
 theorem tectonic_subduction_yields_unit_queue_boundary
     (t : TectonicSubduction) :
-    ∃ b : QueueBoundaryWitnessNat,
+    ∃ b : QueueBoundaryWitnessNat_TectonicTensorQueueBridge,
       b.beta1 = 0 ∧
       b.capacity = 1 ∧
       b.arrivalRate = tectonicFailureBudget t ∧
@@ -48,7 +48,7 @@ theorem tectonic_subduction_yields_unit_queue_boundary
 
 theorem tectonic_subduction_does_not_force_positive_beta1
     (t : TectonicSubduction) :
-    ¬ ∀ b : QueueBoundaryWitnessNat,
+    ¬ ∀ b : QueueBoundaryWitnessNat_TectonicTensorQueueBridge,
         b.arrivalRate = tectonicFailureBudget t →
         b.serviceRate = tectonicFailureBudget t + 1 →
         b.beta1 > 0 := by
@@ -66,7 +66,7 @@ def tectonicTensorFailureBudget (t : TectonicSubduction) (tc : TensorContraction
 
     Encodes a contraction rate `numerator / denominator` with `numerator < denominator`
     (so the rate is strictly less than 1) and a `Nat`-valued `initialBound`. -/
-structure GeometricErgodicityRateNat where
+structure GeometricErgodicityRateNat_TectonicTensorQueueBridge where
   numerator : Nat
   denominator : Nat
   initialBound : Nat
@@ -76,7 +76,7 @@ structure GeometricErgodicityRateNat where
 
 theorem tectonic_tensor_budget_yields_geometric_rate
     (t : TectonicSubduction) (tc : TensorContraction) :
-    ∃ rate : GeometricErgodicityRateNat,
+    ∃ rate : GeometricErgodicityRateNat_TectonicTensorQueueBridge,
       rate.numerator = 3 ∧
       rate.denominator = 4 ∧
       rate.initialBound = tectonicTensorFailureBudget t tc + 1 := by
