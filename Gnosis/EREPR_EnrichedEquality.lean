@@ -99,5 +99,21 @@ theorem er_bridge_identity (x y : Nat) (h : boundaryTrace x = boundaryTrace y) :
   is_topologically_identical x y := 
   ⟨BettiGeodesic.er_bridge x y h, rfl⟩
 
+theorem geodesic_length_zero_implies_trace_eq {x y : Nat} (p : BettiGeodesic x y) (hp : p.length = 0) :
+  boundaryTrace x = boundaryTrace y := by
+  induction p with
+  | reflexivity x => rfl
+  | transitivity p1 p2 ih1 ih2 =>
+    simp [BettiGeodesic.length] at hp
+    exact (ih1 hp.left).trans (ih2 hp.right)
+  | step x =>
+    simp [BettiGeodesic.length] at hp
+  | er_bridge x y h_trace => exact h_trace
+
+theorem identical_implies_boundary_trace_eq {x y : Nat} (h : is_topologically_identical x y) :
+  boundaryTrace x = boundaryTrace y := by
+  let ⟨p, hp⟩ := h
+  exact geodesic_length_zero_implies_trace_eq p hp
+
 end EREPR
 end Gnosis
