@@ -31,7 +31,7 @@ def intelligenceMetric (teleportHits : Nat) (totalOps : Nat) : Nat :=
   guarantees a zero-latency teleportation, preserving the Sat-density of the swarm.
 -/
 theorem intelligence_convergence_invariant (nA nB : VectorState)
-  (hTight : isTopologicallyTight nA.n)
+  (_hTight : isTopologicallyTight nA.n)
   (hResonant : isTopologicallyResonant nA nB = true) :
   EREPR.is_topologically_identical nA.n nB.n := by
   -- Resonance within TAU_SQ always collapses the Betti geodesic to 0.

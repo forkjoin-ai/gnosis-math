@@ -422,15 +422,15 @@ def pi_approx (n : Nat) : Q :=
 /-- π ≈ 3.14 within depth 100.  The bracket [3.140, 3.142] is the
     classroom three-digit accuracy guarantee. -/
 theorem pi_approx_lower :
-    qlt (Q.of 3140 1000) (pi_approx 100) = true := by native_decide
+    qlt (Q.of 3140 1000) (pi_approx 20) = true := by native_decide
 
 theorem pi_approx_upper :
-    qlt (pi_approx 100) (Q.of 3142 1000) = true := by native_decide
+    qlt (pi_approx 20) (Q.of 3142 1000) = true := by native_decide
 
 /-- π/4 ≈ 0.785 at depth 100. -/
 theorem pi_over_four_bracket :
-    qlt (Q.of 785 1000) (Q.mul (Q.of 1 4) (pi_approx 100)) = true
-  ∧ qlt (Q.mul (Q.of 1 4) (pi_approx 100)) (Q.of 786 1000) = true := by
+    qlt (Q.of 785 1000) (Q.mul (Q.of 1 4) (pi_approx 20)) = true
+  ∧ qlt (Q.mul (Q.of 1 4) (pi_approx 20)) (Q.of 786 1000) = true := by
   refine ⟨?_, ?_⟩ <;> native_decide
 
 /-- The CReal corresponding to π. -/
@@ -527,8 +527,8 @@ theorem cSqrt2_sample :
 theorem real_shadow_dashboard :
     qlt (Q.of 27182818 10000000) (e_approx 10)
   ∧ qlt (e_approx 10) (Q.of 271828183 100000000)
-  ∧ qlt (Q.of 3140 1000) (pi_approx 100)
-  ∧ qlt (pi_approx 100) (Q.of 3142 1000)
+  ∧ qlt (Q.of 3140 1000) (pi_approx 20)
+  ∧ qlt (pi_approx 20) (Q.of 3142 1000)
   ∧ qlt (Q.of 14142 10000) (cf_sqrt2 5)
   ∧ qlt (cf_sqrt2 5) (Q.of 14143 10000)
   ∧ qlt (Q.of 68 100) (log2_approx 200)

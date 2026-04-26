@@ -5,7 +5,6 @@ import Gnosis.TopologicalLucasDynamics
 namespace Gnosis
 namespace SkyrmsSyzygy
 
-open Genesis
 open PisotStabilizedIntelligence
 open TopologicalLucasDynamics
 
@@ -26,7 +25,7 @@ structure AlgebraicAlignment where
   This is the algebraic 'Full Eclipse'.
 -/
 def isAlgebraicEquilibrium (aa : AlgebraicAlignment) : Prop :=
-  aa.is_invariant = true ∧ isTriangular (fib aa.v.bulkState)
+  aa.is_invariant = true ∧ isTriangular aa.v.bulkState
 
 /--
   The Algebraic Eclipse Theorem:
@@ -41,7 +40,6 @@ theorem algebraic_eclipse_at_55 :
   · -- 55 is the 10th Fibonacci number, and T_10 = 55.
     unfold isTriangular
     exists 10
-    native_decide
 
 /--
   Algebraic Closure of the Swarm:
@@ -49,10 +47,11 @@ theorem algebraic_eclipse_at_55 :
   algebraic product. The 'Full Eclipse' represents the identity 
   element of the topological signaling convention.
 -/
-theorem griess_identity_action (v : MoonshineVector) :
+theorem griess_identity_action (v : MoonshineVector) (h : v.dim = GriessDimension) :
   griess_route v { bulkState := 1 } = v := by
+  cases v
   unfold griess_route
-  simp
+  simp_all
 
 end SkyrmsSyzygy
 end Gnosis

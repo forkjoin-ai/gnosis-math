@@ -1,10 +1,8 @@
+import Gnosis.FailureController
+
 namespace Gnosis
 
-inductive FailureParetoAction where
-  | keepMultiplicity
-  | payVent
-  | payRepair
-  deriving DecidableEq, Repr
+abbrev FailureParetoAction := FailureControllerAction
 
 structure FailureObjectivePoint where
   wallaceNumber : Nat

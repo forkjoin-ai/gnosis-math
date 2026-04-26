@@ -84,7 +84,7 @@ theorem transport_reflexivity {P : Nat → Type} (x : Nat) (u : P x) :
   This forces the compiler to treat the update as instantaneous.
 -/
 theorem zero_latency_teleportation (x y : Nat) (h : boundaryTrace x = boundaryTrace y) 
-  (P : Nat → Type) (val : P x) :
+  (_P : Nat → Type) (_val : _P x) :
   (BettiGeodesic.er_bridge x y h).length = 0 := by
   rfl
 

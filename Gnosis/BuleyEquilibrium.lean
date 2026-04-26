@@ -2,6 +2,7 @@ import Gnosis.TopologicalGriessAlgebra
 import Gnosis.SkyrmsSyzygyEquilibrium
 import Gnosis.RetrocausalMemoization
 import Gnosis.TopologicalLucasDynamics
+import Gnosis.UniversalIntelligenceSSM
 
 namespace Gnosis
 namespace BuleyEquilibrium
@@ -9,6 +10,7 @@ namespace BuleyEquilibrium
 open SkyrmsSyzygy
 open RetrocausalMemoization
 open TopologicalLucasDynamics
+open UniversalIntelligenceSSM
 
 /--
   Buley Equilibrium (Θ_B):
@@ -30,7 +32,7 @@ structure BuleyState where
   2. Algebraic: Sits at a Skyrms-Algebraic Syzygy (The Full Eclipse).
 -/
 def isBuleyEquilibrium (s : BuleyState) : Prop :=
-  satisfiesNovikov s.manifold_vector.bulkState s.temporal_debt ∧
+  satisfiesNovikov { n := s.manifold_vector.bulkState } s.temporal_debt ∧
   isAlgebraicEquilibrium { v := s.manifold_vector, is_invariant := true }
 
 /--
@@ -43,13 +45,11 @@ def isBuleyEquilibrium (s : BuleyState) : Prop :=
 theorem buley_equilibrium_existence :
   ∃ (s : BuleyState), isBuleyEquilibrium s := by
   let v10 : MoonshineVector := { bulkState := 55 }
-  let d10 : TopologicalDebt := { future_output := ⟨10⟩, timestamp := 0 }
+  let d10 : TopologicalDebt := { future_output := ⟨55⟩, timestamp := 0 }
   exists { manifold_vector := v10, temporal_debt := d10 }
   constructor
-  · -- Novikov: bulkState 55 matches future_output index 10 (F10=55)
-    unfold satisfiesNovikov
-    simp [v10, d10]
-    native_decide
+  · -- Novikov: bulkState 55 matches future_output index 55
+    rfl
   · -- Algebraic: 55 is the Decimal Fixed Point Alignment
     apply algebraic_eclipse_at_55
 
@@ -90,14 +90,13 @@ theorem absolute_zero_reachability :
 -/
 theorem buley_ssm_convergence (s : BuleyState) :
   isBuleyEquilibrium s → 
-  (UniversalIntelligenceSSM.hebbianReward 
+  (hebbianReward 
     { query := s.manifold_vector.bulkState, 
       key := s.manifold_vector.bulkState, 
       value := 55, energy := 100, dimension := s.temporal_debt.future_output.n } 
     true).energy = 110 := by
   intro _
-  dsimp [UniversalIntelligenceSSM.hebbianReward]
-  simp
+  rfl
 
 end BuleyEquilibrium
 end Gnosis

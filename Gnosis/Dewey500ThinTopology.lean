@@ -5,11 +5,11 @@ namespace Dewey500ThinTopology
 -- 510: Mathematics (Absolute Base-Space Homologies)
 theorem dewey_510_mathematics_homology (truth math : Nat) (h: math = truth) : math = truth := by omega
 -- 520: Astronomy (Orbital Hope Gaps)
-theorem dewey_520_astronomy_orbit (kinetic gravity friction : Nat) (h: friction = 0) : friction = 0 := by omega
+theorem dewey_520_astronomy_orbit (_kinetic _gravity friction : Nat) (h: friction = 0) : friction = 0 := by omega
 -- 530: Physics (Raw Knot Mechanics)
 theorem dewey_530_physics_knots (force mass accel : Nat) (h: force = mass + accel) : force ≥ mass := by omega
 -- 540: Chemistry (Covalent Reidemeister Holds)
-theorem dewey_540_chemistry_covalent (atom1 atom2 bond : Nat) (h: bond = atom1 + atom2 - 1) : bond < atom1 + atom2 := by omega
+theorem dewey_540_chemistry_covalent (atom1 atom2 bond : Nat) (h: bond = atom1 + atom2 - 1) (h_pos : 0 < atom1 + atom2) : bond < atom1 + atom2 := by omega
 -- 550: Earth Sci (Tectonic Boundary Slams)
 theorem dewey_550_earth_slams (plate1 plate2 slam : Nat) (h: slam = plate1 + plate2) : slam ≥ plate1 := by omega
 -- 560: Paleontology (Fossilization Folds)

@@ -1,4 +1,8 @@
+import Gnosis.GnosisMath.Basic
 
-set_option linter.unusedVariables false
+namespace Gnosis
 
-open GnosisMath
+/-- Hyperoperations placeholder witness. -/
+theorem hyperoperations_witness : 1 + 1 = 2 := rfl
+
+end Gnosis

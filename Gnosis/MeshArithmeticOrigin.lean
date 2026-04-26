@@ -37,7 +37,7 @@ theorem arithmetic_is_gnosis (n m : Nat) :
   | zero => rfl
   | succ k ih => 
       simp [gnosisAdd, gnosisSucc, ih]
-      rw [Nat.add_succ]
+      omega
 
 -- ═══════════════════════════════════════════════════════════════════════
 -- (2) The Arithmetic Sandwich

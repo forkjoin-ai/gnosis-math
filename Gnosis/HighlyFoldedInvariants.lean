@@ -28,7 +28,5 @@ theorem bible_is_highly_folded :
     satDensity (foldingCycles "Bible") > satDensity (foldingCycles "Newspaper") := by
   unfold foldingCycles satDensity
   simp
-  -- 1000000000 > 1
-  native_decide
 
 end HighlyFoldedInvariants

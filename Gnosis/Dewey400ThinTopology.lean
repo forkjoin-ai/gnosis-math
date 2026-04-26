@@ -5,7 +5,7 @@ namespace Dewey400ThinTopology
 -- 410: Linguistics (Isomorphism Decay)
 theorem dewey_410_linguistics_isomorphism (langA langB loss : Nat) (h: langA = langB + loss) : langA ≥ langB := by omega
 -- 420: English (Specific Base-Space Rules)
-theorem dewey_420_english_syntax (syntax friction : Nat) (h: friction < syntax) : friction < syntax := by omega
+theorem dewey_420_english_syntax_val (syntax_val friction : Nat) (h: friction < syntax_val) : friction < syntax_val := by omega
 -- 430: Germanic (Guttural Base Constraints)
 theorem dewey_430_germanic_bounds (bounds : Nat) (h: bounds ≥ 0) : bounds ≥ 0 := by omega
 -- 440: Romance (Fluid Parsing Trees)

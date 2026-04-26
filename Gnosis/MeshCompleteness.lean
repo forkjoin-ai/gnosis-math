@@ -40,10 +40,8 @@ No state exists outside the Basis.
 -/
 theorem gnosis_is_complete (s : StateSpace) :
     ∃ (b : BasisSet), reduceToBasis s = b := by
-  cases s <;> simp [reduceToBasis]
-  · match (Nat.rec 0 (fun _ _ => 0) (id % 5)) with -- Simplified match for Lean
-    | _ => exact ⟨_, rfl⟩
-  · exact ⟨BasisSet.fold, rfl⟩
+  exists reduceToBasis s
+
 
 -- ═══════════════════════════════════════════════════════════════════════
 -- (2) The Completeness Sandwich

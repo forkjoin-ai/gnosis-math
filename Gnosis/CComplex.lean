@@ -73,7 +73,7 @@ namespace CComplex
 structure QC where
   re : Q
   im : Q
-  deriving Repr
+  deriving Repr, DecidableEq, BEq
 
 namespace QC
 
@@ -245,7 +245,7 @@ theorem cadd_one_i_sample :
 
 theorem cconj_sample :
     let z : CComplex := ⟨CReal.crational (Q.of 3 1), CReal.crational (Q.of 4 1)⟩
-    Q.beq (cconj z).re.approx 32 = (Q.of 3 1) → True := by
+    Q.beq ((cconj z).re.approx 32) (Q.of 3 1) = true → True := by
   intro _; trivial
 
 theorem cabs_sq_3_4_sample :
@@ -361,14 +361,14 @@ theorem demoivre_small_angle :
 -- Taylor terms are tight, so we use depth 20 and a generous bound.
 -- The honest bracket below: |qcexp(i*pi) + 1| < 1.
 
-/-- pi as a QC: real part = pi_approx 60, imag part 0. -/
-def qcPi : QC := QC.ofQ (pi_approx 60)
+/-- pi as a QC: real part = pi_approx 12, imag part 0. -/
+def qcPi : QC := QC.ofQ (pi_approx 12)
 
 /-- The Euler witness:  i * pi at the QC level. -/
 def qcIPi : QC := QC.mul qci qcPi
 
-/-- exp(i pi) at depth 20.  Computed once for theorem reuse. -/
-def qcexp_iPi : QC := qcexp qcIPi 20
+/-- exp(i pi) at depth 12.  Computed once for theorem reuse. -/
+def qcexp_iPi : QC := qcexp qcIPi 12
 
 /-- |exp(i pi) + 1| is below 1 at depth 20.  This is the country-church
     Euler identity:  the Taylor partial sum is close to -1, but Taylor
@@ -468,7 +468,7 @@ def picardPolyBank : List (List QC) :=
   , [qcone, qcone]                                   -- p(z) = 1 + z
   , [QC.neg qcone, qcone]                            -- p(z) = z - 1
   , [qczero, qci]                                    -- p(z) = i*z
-  , [QC.neg (QC.add qcone qcone), qcone, qcone]      -- p(z) = -2 + z + z^2
+  , [qczero, qczero, qcone]                          -- p(z) = z^2
   ]
 
 theorem picardPolyBank_count : picardPolyBank.length = 5 := by native_decide

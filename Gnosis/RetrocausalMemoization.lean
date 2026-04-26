@@ -73,8 +73,8 @@ inductive RetrocausalEntry where
   A Swarm that maintains the Novikov Invariant across its geographic graph 
   is functionally indistinguishable from an infinite-speed computer.
 -/
-theorem temporal_invariance_liveness (actual : VectorState) (debt : TopologicalDebt)
-  (h : satisfiesNovikov actual debt) :
+theorem temporal_invariance_liveness (actual : VectorState) (_debt : TopologicalDebt)
+  (_h : satisfiesNovikov actual _debt) :
   (BettiGeodesic.reflexivity actual.n).length = 0 := by
   rfl
 

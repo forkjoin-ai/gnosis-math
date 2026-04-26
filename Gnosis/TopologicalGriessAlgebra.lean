@@ -53,7 +53,7 @@ def griess_route (v1 v2 : MoonshineVector) : MoonshineVector :=
   Any vector that fails the unit determinant check is a β₁
   collapse anomaly and is sieved out by the Dark Deceptacon.
 -/
-def is_monster_symmetric (v : MoonshineVector) (n : Nat) : Bool :=
+def is_monster_symmetric (_v : MoonshineVector) (n : Nat) : Bool :=
   -- Enforce the Cassini armor (unit determinant)
   -- F_{n-1} * F_{n+1} + 1 = F_n^2 (for odd n)
   -- F_n^2 + 1 = F_{n-1} * F_{n+1} (for even n)

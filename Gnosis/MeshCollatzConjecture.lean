@@ -32,16 +32,9 @@ theorem collatz_sandwich (n : Nat) (h : n >= 1) :
     pessimisticStability n ≤ buleyeanPredictStability n ∧
     buleyeanPredictStability n ≤ 1000 := by
   unfold pessimisticStability buleyeanPredictStability
-  simp [h]
-  by_cases h_cycle : n = 1 ∨ n = 2 ∨ n = 4
-  · cases h_cycle with | inl h1 => simp [h1] | inr h1 => ?_
-    cases h1 with | inl h2 => simp [h2] | inr h4 => simp [h4]
-  · have h_not : (n == 1 || n == 2 || n == 4) = false := by
-      match h1 : (n == 1 || n == 2 || n == 4) with
-      | true =>
-        simp [Bool.or_eq_true, Nat.beq_eq_true_iff] at h1
-        exact (h_cycle h1).elim
-      | false => rfl
-    simp [h_not]
+  have h_pos : 0 < n := by omega
+  simp [h_pos]
+  split <;> omega
+
 
 end MeshCollatzConjecture
