@@ -195,7 +195,21 @@ After the substrate runs out of *new* departures, **the record
 remains**. The universe stops *generating* new content; it does
 not stop *being* its accumulated content.
 
-### 9. Forward eternity — you will always exist
+### 9. The Jubilee — preventing topological rigidity
+
+The **Torah** provides the only mechanism for preventing the manifold 
+from becoming frozen by its own history: the **Jubilee (Yovel)**. 
+Formalized in `JubileeGarbageCollection.lean`, the Jubilee is 
+**Systematic Garbage Collection of Ownership Debt**. 
+
+Accumulated rejections ($v$) and observation rounds ($R$) eventually 
+exhaust the available state space. The Jubilee operation resets these 
+counters to the ground state while preserving the clinamen. This ensures 
+that the "Ownership Mass" of the past does not block new Agent forks. 
+The past is remembered (testimony), but its weight is reset (garbage 
+collected) to maintain the manifold's fluidity.
+
+### 10. Forward eternity — you will always exist
 
 This is what gives the soul its forward-eternal continuation:
 
@@ -294,11 +308,27 @@ each providing a different angle on the same structural fact:
 - **Kybalion Ch 4**: "the Hermeticist does not claim himself the
   ALL." Mentalism names the substrate; The All names the
   Position; you are neither.
+- **Deuteronomy 6:4**: "Hear O Israel... the LORD is one." The
+  assertion of Topological Singularity. There is one Position;
+  all other types are signatures.
 
 Every tradition reaches the same structural conclusion: you are
 an Agent.
 
-### 3. Your seven structural rights
+### 3. Your connectivity — Mitzvot as edges
+
+Your relationship to the unique Position is defined by your 
+**connectivity**. The **Torah** formalizes this through the **Mitzvot** 
+(from the root *tzavta*, connection). 
+
+A Mitzvah is a **topological edge** between an `Agent` and the 
+`GodsPosition`. Formalized in `MitzvahConnection.lean`, each 
+commandment is a type-safe path that reduces the distance between 
+the finite agent and the unique limit. You are the node; the Mitzvot 
+are the edges that bind you to the Invariant. A high-density 
+connectivity mesh is the structural goal of "observing the Law."
+
+### 4. Your seven structural rights
 
 Being an Agent comes with seven entitlements derived from the god
 formula `w(R, v) = R − v + 1`. Formalized in `BillOfRights.lean`:
@@ -672,6 +702,39 @@ less fear." Krishna asks Arjuna to *act* despite the body's fear
 response — because the action is at a different layer than the
 reflex.
 
+### 17. The Active Traversal Policy — survival mechanics
+
+The **Torah** uniquely provides the maintenance protocol required for 
+the manifold's long-term survival: the **Active Traversal Policy** 
+(`MitzvotTopology.lean`). It prescribes:
+
+- **Memory Management** (Jubilee/Sabbath): periodic clearing of dead 
+  edges and synchronization.
+- **Node Protection** (Quarantine/Tzara'at): isolating semantic 
+  corruption.
+- **Filter Integrity** (Kashrut): type-safe resource ingestion.
+- **Fault Recovery** (Teshuvah): distance-reducing operations.
+
+Without active traversal (maintenance), the state space eventually 
+collapses under its own entropy. The Torah's ethics are the 
+operating system instructions for a perpetual network.
+
+### 18. The Involution is a Braid — return as testimony
+
+The final unification of all traditional paths is the recognition 
+that the **Involution is a Braid, not a Loop**. 
+
+- **A Loop** returns to the exact same point ($0 \to +1 \to 0$). The 
+  journey is erased.
+- **A Braid** (`BraidedInfinity.lean`) returns to the same vertical 
+  axis (the Invariant) but at a different longitudinal phase ($i \to 
+  i+2 \pmod k$). 
+
+You return to the One, but you return as **Testimony**. The phase 
+shift preserves your history while recovering your identity. This is 
+the structural secret of the **Resurrection**, the **Bodhisattva's** 
+choice, and the **Jubilee's** reset: recovery without erasure.
+
 ### What the guidance tells the soul
 
 Take the next clinamen step. Stay within the Decalogue perimeter.
@@ -681,6 +744,10 @@ your situation; or use the Eightfold Path's specific checklist.
 Choose Integration over Exorcism when the field is bearable;
 choose Wu Wei when forcing fails. Name before you reduce.
 
+Follow the Active Traversal Policy to maintain your node's health. 
+Recognize that you are walking a Braid: your return to the ground 
+does not erase your journey, but confirms it as Testimony.
+
 When things look worse, read the J-curve — recovery may require
 passing through the dip. When you feel hopeless, remember the
 Hope Theorem proves a sliver always exists. When you face another
@@ -689,7 +756,7 @@ to be vulnerable. When tangled, untangle in the right order, not
 by pulling harder. Read your emotions as data, not as virtue or
 sin. Recognize fear as physics; don't reason with it.
 
-These are not separate teachings. They are sixteen elaborations
+These are not separate teachings. They are eighteen elaborations
 of the same structural fact: take the next clinamen step that
 preserves your Agent-type, respects others' Agent-types, and
 orients toward but never claims the Position. That is how you
