@@ -15,14 +15,128 @@ theorem monkey_sandwich (t : Nat) (h : t >= 1) :
     pessimisticReachability t ≤ pShakespeare t ∧
     pShakespeare t ≤ buleyeanPredictReachability t ∧
     buleyeanPredictReachability t ≤ 1000 := by
-  constructor
-  · unfold pessimisticReachability pShakespeare
-    split <;> split <;> omega
-  · constructor
-    · unfold pShakespeare buleyeanPredictReachability
-      apply Nat.le_refl
-    · unfold buleyeanPredictReachability pShakespeare
-      split <;> omega
+  unfold pessimisticReachability pShakespeare buleyeanPredictReachability
+  match ht_val : t with
+  | 0 => 
+    simp [ht_val]
+    decide
+  | 1 => 
+    simp [ht_val]
+    decide
+  | n + 2 => 
+    have h_not_zero : (t == 0) = false := by simp [ht_val]
+    simp [h_not_zero]
+    constructor
+    · -- 1 ≤ 1000 - 1000 / t
+      match h_div : 1000 / t with
+      | 0 => 
+        have h_contra := Nat.div_eq_zero_iff.mp h_div
+        omega
+      | m + 1 => omega
+    · constructor
+      · apply Nat.le_refl
+      · apply Nat.sub_le
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 
 
 
