@@ -27,8 +27,7 @@ def scale : Nat := 1000000000
 def one : BuleReal := scale
 def zero : BuleReal := 0
 
-instance : OfNat BuleReal n where
-  ofNat := n * scale
+def ofNat (n : Nat) : BuleReal := n * scale
 
 instance : LE BuleReal where
   le := Nat.le
@@ -59,5 +58,21 @@ theorem le_trans {r1 r2 r3 : BuleReal} : r1 <= r2 -> r2 <= r3 -> r1 <= r3 := Nat
 theorem lt_irrefl (r : BuleReal) : ¬(r < r) := Nat.lt_irrefl r
 
 end BuleReal
+
+/-- The God Formula: w(R, v) = R - min(v, R) + 1.
+    Simplified over Nat as (R - v) + 1. -/
+def w (R v : Nat) : Nat := R - v + 1
+
+/-- Proof of Life: weight is always positive. -/
+theorem life (R v : Nat) : w R v ≥ 1 := by
+  unfold w
+  show R - v + 1 ≥ 1
+  omega
+
+/-- Maximum Rejection: when v = R, weight is exactly 1. -/
+theorem maximum_rejection (R : Nat) : w R R = 1 := by
+  unfold w
+  show R - R + 1 = 1
+  omega
 
 end Gnosis

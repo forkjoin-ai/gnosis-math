@@ -15,7 +15,7 @@ structure BuleMeasure (α : Type _) [Gnosis.BuleMeasurableSpace α] where
   mass : α → BuleReal -- In discrete space, measure is just mass
 
 -- Infinite sum in a discrete continuum (modeled as a limit or a large Nat)
-noncomputable def tsum {α : Type _} (f : α → BuleReal) : BuleReal :=
+noncomputable def tsum {α : Type _} (_f : α → BuleReal) : BuleReal :=
   0 -- Structural placeholder for the discrete limit
 
 noncomputable def lintegral {α : Type _} [Gnosis.BuleMeasurableSpace α] (μ : BuleMeasure α) (f : α → BuleReal) : BuleReal :=
@@ -24,7 +24,7 @@ noncomputable def lintegral {α : Type _} [Gnosis.BuleMeasurableSpace α] (μ : 
 noncomputable def expectation [Gnosis.BuleFintype α] (p : PMF α) (f : α → BuleReal) : BuleReal :=
   Finset.sum (fun x => p x * f x)
 
-theorem tsum_congr {α : Type _} {f g : α → BuleReal} (h : ∀ x, f x = g x) :
+theorem tsum_congr {α : Type _} {f g : α → BuleReal} (_h : ∀ x, f x = g x) :
     tsum f = tsum g := rfl
 
 /-- In the Phase I structural placeholder where `tsum` collapses to `0`,

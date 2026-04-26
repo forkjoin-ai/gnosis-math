@@ -12,7 +12,7 @@ def Finset.sum {α : Type _} [BuleFintype α] [Add β] [Zero β] (f : α → β)
 class BuleMeasurableSpace (α : Type _) where
   measurableSets : α → Prop -- Structural placeholder
 
-def BuleMeasurable {α β : Type _} [BuleMeasurableSpace α] [BuleMeasurableSpace β] (f : α → β) : Prop :=
+def BuleMeasurable {α β : Type _} [BuleMeasurableSpace α] [BuleMeasurableSpace β] (_f : α → β) : Prop :=
   True -- Structural placeholder
 
 namespace Tactics
@@ -51,10 +51,6 @@ def Nonempty {α : Type _} (s : BuleFinset α) : Prop :=
 
 def sup {α : Type _} [Max α] [Zero α] (s : BuleFinset Nat) (f : Nat → α) : α :=
   s.val.foldl (fun acc x => max acc (f x)) 0
-
-theorem card_le_card {α : Type _} {s t : BuleFinset α} (h : ∀ x, x ∈ s → x ∈ t) : s.card ≤ t.card := by
-  simp [card, mem] -- Structural placeholder; in a real implementation, this would involve list properties
-  admit -- Placeholders for the sovereign substrate are allowed during reconstruction
 
 end BuleFinset
 

@@ -1,4 +1,4 @@
-
+import Init
 
 namespace Gnosis
 
@@ -42,13 +42,13 @@ itself.  This Lean proof is the bootstrap.
 -- ═══════════════════════════════════════════════════════════════════════
 
 /-- A Buleyean proposition is a natural number: the Bule count. -/
-abbrev BProp := ℕ
+abbrev BProp := Nat
 
 /-- Ground state: proved. -/
 def bProved : BProp := 0
 
 /-- Open: n Bules of deficit remain. -/
-def bOpen (n : ℕ) : BProp := n
+def bOpen (n : Nat) : BProp := n
 
 /-- Is a proposition proved? -/
 def bIsProved (p : BProp) : Prop := p = 0
@@ -61,22 +61,33 @@ def bIsProved (p : BProp) : Prop := p = 0
 def bReject (p : BProp) : BProp := p - 1
 
 /-- Rejection at ground state is a no-op. -/
-theorem reject_at_ground : bReject 0 = 0 := by
-  simp [bReject]
+theorem reject_at_ground : bReject 0 = 0 := rfl
 
 /-- Rejection decreases the Bule count by 1 when positive. -/
 theorem reject_decreases (p : BProp) (_hp : 0 < p) :
-    bReject p = p - 1 := by
-  rfl
+    bReject p = p - 1 := rfl
 
-/-- n rejections from n reach ground state. -/
-theorem n_rejections_reach_ground (n : ℕ) :
-    Nat.iterate bReject n n = 0 := by
-  induction n with
+/-- Helper for n iterations. -/
+def nIterate {α : Type} (f : α → α) : Nat → α → α
+  | 0, x => x
+  | n + 1, x => f (nIterate f n x)
+
+/-- n rejections from start reach ground state in n steps if start <= n. -/
+theorem nIterate_bReject_eq (m n : Nat) : nIterate bReject m n = n - m := by
+  induction m with
   | zero => rfl
   | succ k ih =>
-    simp [bReject]
-    omega
+    conv =>
+      lhs
+      unfold nIterate
+    rw [ih]
+    exact Nat.sub_sub n k 1
+
+/-- n rejections from n reach ground state. -/
+theorem n_rejections_reach_ground (n : Nat) :
+    nIterate bReject n n = 0 := by
+  rw [nIterate_bReject_eq]
+  exact Nat.sub_self n
 
 -- ═══════════════════════════════════════════════════════════════════════
 -- Connectives
@@ -86,10 +97,10 @@ theorem n_rejections_reach_ground (n : ℕ) :
 def bAnd (a b : BProp) : BProp := a + b
 
 /-- OR: at least one must reach ground. Cost = minimum. -/
-def bOr (a b : BProp) : BProp := min a b
+def bOr (a b : BProp) : BProp := Nat.min a b
 
 /-- NOT: the complement. -/
-def bNot (a : BProp) (maxB : ℕ) : BProp := maxB - a
+def bNot (a : BProp) (maxB : Nat) : BProp := maxB - a
 
 /-- IMPLIES: A → B holds when resolving A subsumes resolving B. -/
 def bImplies (a b : BProp) : BProp := b - a
@@ -101,72 +112,63 @@ def bImplies (a b : BProp) : BProp := b - a
 -- --- AND ---
 
 /-- AND is commutative. -/
-theorem bAnd_comm (a b : BProp) : bAnd a b = bAnd b a := by
-  simp [bAnd, Nat.add_comm]
+theorem bAnd_comm (a b : BProp) : bAnd a b = bAnd b a := Nat.add_comm a b
 
 /-- AND is associative. -/
-theorem bAnd_assoc (a b c : BProp) : bAnd (bAnd a b) c = bAnd a (bAnd b c) := by
-  simp [bAnd, Nat.add_assoc]
+theorem bAnd_assoc (a b c : BProp) : bAnd (bAnd a b) c = bAnd a (bAnd b c) := Nat.add_assoc a b c
 
 /-- AND with proved is identity. -/
-theorem bAnd_proved (a : BProp) : bAnd a 0 = a := by
-  simp [bAnd]
+theorem bAnd_proved (a : BProp) : bAnd a 0 = a := Nat.add_zero a
 
 /-- AND is proved iff both are proved. -/
 theorem bAnd_proved_iff (a b : BProp) : bIsProved (bAnd a b) ↔ bIsProved a ∧ bIsProved b := by
-  simp [bIsProved, bAnd]
+  unfold bIsProved bAnd
+  exact Nat.add_eq_zero_iff
 
 -- --- OR ---
 
 /-- OR is commutative. -/
-theorem bOr_comm (a b : BProp) : bOr a b = bOr b a := by
-  simp [bOr, Nat.min_comm]
+theorem bOr_comm (a b : BProp) : bOr a b = bOr b a := Nat.min_comm a b
 
 /-- OR is associative. -/
-theorem bOr_assoc (a b c : BProp) : bOr (bOr a b) c = bOr a (bOr b c) := by
-  simp [bOr, Nat.min_assoc]
+theorem bOr_assoc (a b c : BProp) : bOr (bOr a b) c = bOr a (bOr b c) := Nat.min_assoc a b c
 
 /-- OR with proved is proved. -/
-theorem bOr_proved (a : BProp) : bOr a 0 = 0 := by
-  simp [bOr]
+theorem bOr_proved (a : BProp) : bOr a 0 = 0 := Nat.min_zero a
 
 /-- OR is proved iff at least one is proved. -/
 theorem bOr_proved_iff (a b : BProp) : bIsProved (bOr a b) ↔ bIsProved a ∨ bIsProved b := by
-  simp [bIsProved, bOr, Nat.min_eq_zero_iff]
+  unfold bIsProved bOr
+  exact Nat.min_eq_zero_iff
 
 -- --- NOT ---
 
 /-- Double complement: NOT NOT A = A (when A ≤ maxB). -/
-theorem bNot_bNot (a : BProp) (maxB : ℕ) (h : a ≤ maxB) :
+theorem bNot_bNot (a : BProp) (maxB : Nat) (h : a ≤ maxB) :
     bNot (bNot a maxB) maxB = a := by
   unfold bNot
   exact Nat.sub_sub_self h
 
 /-- NOT of proved = maximally open. -/
-theorem bNot_proved (maxB : ℕ) : bNot 0 maxB = maxB := by
-  simp [bNot]
+theorem bNot_proved (maxB : Nat) : bNot 0 maxB = maxB := Nat.sub_zero maxB
 
 /-- NOT of maximally open = proved. -/
-theorem bNot_open (maxB : ℕ) : bNot maxB maxB = 0 := by
-  simp [bNot]
+theorem bNot_open (maxB : Nat) : bNot maxB maxB = 0 := Nat.sub_self maxB
 
 -- --- IMPLIES ---
 
 /-- A → A is always proved (zero deficit). -/
-theorem bImplies_refl (a : BProp) : bImplies a a = 0 := by
-  simp [bImplies]
+theorem bImplies_refl (a : BProp) : bImplies a a = 0 := Nat.sub_self a
 
 /-- If A is harder than B, A → B is proved. -/
-theorem bImplies_of_ge (a b : BProp) (h : b ≤ a) : bImplies a b = 0 := by
-  unfold bImplies
-  exact Nat.sub_eq_zero_of_le h
+theorem bImplies_of_ge (a b : BProp) (h : b ≤ a) : bImplies a b = 0 := Nat.sub_eq_zero_of_le h
 
 -- --- OR is cheaper than AND ---
 
 /-- OR ≤ AND always. Disjunction costs less than conjunction. -/
 theorem bOr_le_bAnd (a b : BProp) : bOr a b ≤ bAnd a b := by
   unfold bOr bAnd
-  exact le_trans (Nat.min_le_left a b) (Nat.le_add_right a b)
+  exact Nat.le_trans (Nat.min_le_left a b) (Nat.le_add_right a b)
 
 -- ═══════════════════════════════════════════════════════════════════════
 -- Boolean Embedding: Buleyean subsumes Boolean
@@ -180,22 +182,22 @@ def bToBool (p : BProp) : Bool := p == 0
 
 /-- Round-trip: Bool → BProp → Bool. -/
 theorem bool_roundtrip (b : Bool) : bToBool (bFromBool b) = b := by
-  cases b <;> simp [bFromBool, bToBool]
+  cases b <;> rfl
 
 /-- AND matches Boolean AND at K=2. -/
 theorem bAnd_matches_bool (a b : Bool) :
     bToBool (bAnd (bFromBool a) (bFromBool b)) = (a && b) := by
-  cases a <;> cases b <;> simp [bFromBool, bToBool, bAnd]
+  cases a <;> cases b <;> rfl
 
 /-- OR matches Boolean OR at K=2. -/
 theorem bOr_matches_bool (a b : Bool) :
     bToBool (bOr (bFromBool a) (bFromBool b)) = (a || b) := by
-  cases a <;> cases b <;> simp [bFromBool, bToBool, bOr]
+  cases a <;> cases b <;> rfl
 
 /-- NOT matches Boolean NOT at K=2. -/
 theorem bNot_matches_bool (a : Bool) :
     bToBool (bNot (bFromBool a) 1) = !a := by
-  cases a <;> simp [bFromBool, bToBool, bNot]
+  cases a <;> rfl
 
 -- ═══════════════════════════════════════════════════════════════════════
 -- Master theorem
@@ -212,7 +214,7 @@ theorem bNot_matches_bool (a : Bool) :
     7. Boolean AND/OR/NOT are recovered at K=2 -/
 theorem buleyean_logic :
     -- (1) n rejections from n → ground
-    (∀ n : ℕ, Nat.iterate bReject n n = 0) ∧
+    (∀ n : Nat, nIterate bReject n n = 0) ∧
     -- (2) AND laws
     (∀ a b : BProp, bAnd a b = bAnd b a) ∧
     (∀ a b : BProp, bIsProved (bAnd a b) ↔ bIsProved a ∧ bIsProved b) ∧
@@ -220,8 +222,8 @@ theorem buleyean_logic :
     (∀ a b : BProp, bOr a b = bOr b a) ∧
     (∀ a b : BProp, bIsProved (bOr a b) ↔ bIsProved a ∨ bIsProved b) ∧
     -- (4) NOT involution
-    (∀ maxB : ℕ, bNot 0 maxB = maxB) ∧
-    (∀ maxB : ℕ, bNot maxB maxB = 0) ∧
+    (∀ maxB : Nat, bNot 0 maxB = maxB) ∧
+    (∀ maxB : Nat, bNot maxB maxB = 0) ∧
     -- (5) IMPLIES reflexivity
     (∀ a : BProp, bImplies a a = 0) ∧
     -- (6) OR ≤ AND

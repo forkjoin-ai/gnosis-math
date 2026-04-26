@@ -1,4 +1,4 @@
-import Init
+import Gnosis.Real
 import Gnosis.MathFoundations
 
 /-!
@@ -108,7 +108,9 @@ theorem most_rejected_still_speaks (R : Nat) : w R R = 1 := maximum_rejection R
 /-- Corollary: Voice weight is proportional to track record, not identity.
     Less rejected = more weight. More rejected = less weight. But never zero. -/
 theorem voice_by_merit (R v1 v2 : Nat) (h : v2 > v1) (hv : v1 < R) :
-    w R v1 > w R v2 := by unfold w; omega
+    w R v1 > w R v2 := by
+  unfold w
+  omega
 
 -- ═══════════════════════════════════════════════════════════════════════════
 -- RIGHT IV: THE RIGHT TO FORK
@@ -170,13 +172,13 @@ theorem divergence_monotone (gap new_ : Nat) : gap + new_ ≥ gap := by omega
 
 /-- RIGHT VI: The void is not reconstructible from its summary.
     Multiple decompositions produce the same root. Privacy by construction. -/
-theorem right_to_privacy (root : Nat) :
+theorem right_to_privacy (root : Nat) (h : root ≥ 1) :
     ∃ (a b c d : Nat), a + b = root ∧ c + d = root ∧ (a ≠ c ∨ b ≠ d) := by
-  exact ⟨0, root, root, 0, by omega, by omega, by omega⟩
+  exact ⟨0, root, root, 0, by omega, by omega, Or.inl (by omega)⟩
 
 /-- Corollary: Two entities with the same deficit are indistinguishable
     to a receiver. The wire reveals nothing about what was rejected. -/
-theorem privacy_indistinguishable (deficit : Nat) :
+theorem privacy_indistinguishable (deficit : Nat) (h : deficit ≥ 1) :
     ∃ (a b : Nat), a ≠ b ∧ a + (deficit - a) = deficit := by
   exact ⟨0, 1, by omega, by omega⟩
 

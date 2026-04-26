@@ -209,7 +209,7 @@ def chalf : CReal :=
   { approx := fun _ => Q.of 1 2, modulus := fun _ => 0 }
 
 /-- Lift a rational to a constant CReal. -/
-def cratiional (q : Q) : CReal :=
+def crational (q : Q) : CReal :=
   { approx := fun _ => q, modulus := fun _ => 0 }
 
 /-- Sample the n-th rational approximation. -/
@@ -263,14 +263,14 @@ theorem csub_sample :
     Q.beq ((csub cone chalf).approx 32) (Q.of 1 2) = true := by native_decide
 
 theorem cmul_sample :
-    Q.beq ((cmul (cratiional (Q.of 3 2)) (cratiional (Q.of 4 5))).approx 32)
+    Q.beq ((cmul (crational (Q.of 3 2)) (crational (Q.of 4 5))).approx 32)
           (Q.of 12 10) = true := by native_decide
 
 theorem cneg_sample :
     Q.beq ((cneg cone).approx 32) (Q.of (-1) 1) = true := by native_decide
 
 theorem cinv_sample :
-    Q.beq ((cinvWithSep (cratiional (Q.of 3 2)) 1).approx 32) (Q.of 2 3) = true := by
+    Q.beq ((cinvWithSep (crational (Q.of 3 2)) 1).approx 32) (Q.of 2 3) = true := by
   native_decide
 
 -- ══════════════════════════════════════════════════════════

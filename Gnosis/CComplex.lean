@@ -176,7 +176,7 @@ def ci : CComplex := ⟨CReal.czero, CReal.cone⟩
 
 /-- Lift a rational to a CComplex (purely real). -/
 def cratl (q : Q) : CComplex :=
-  ⟨CReal.cratiional q, CReal.czero⟩
+  ⟨CReal.crational q, CReal.czero⟩
 
 /-- Lift a CReal to a CComplex (purely real). -/
 def cfrom_real (x : CReal) : CComplex := ⟨x, CReal.czero⟩
@@ -244,17 +244,17 @@ theorem cadd_one_i_sample :
   refine ⟨?_, ?_⟩ <;> native_decide
 
 theorem cconj_sample :
-    let z : CComplex := ⟨CReal.cratiional (Q.of 3 1), CReal.cratiional (Q.of 4 1)⟩
+    let z : CComplex := ⟨CReal.crational (Q.of 3 1), CReal.crational (Q.of 4 1)⟩
     Q.beq (cconj z).re.approx 32 = (Q.of 3 1) → True := by
   intro _; trivial
 
 theorem cabs_sq_3_4_sample :
-    let z : CComplex := ⟨CReal.cratiional (Q.of 3 1), CReal.cratiional (Q.of 4 1)⟩
+    let z : CComplex := ⟨CReal.crational (Q.of 3 1), CReal.crational (Q.of 4 1)⟩
     Q.beq ((cabs_sq z).approx 32) (Q.of 25 1) = true := by
   native_decide
 
 theorem cabs_bound_sample :
-    let z : CComplex := ⟨CReal.cratiional (Q.of 3 1), CReal.cratiional (Q.of (-4) 1)⟩
+    let z : CComplex := ⟨CReal.crational (Q.of 3 1), CReal.crational (Q.of (-4) 1)⟩
     Q.beq (cabs_bound z 32) (Q.of 7 1) = true := by
   native_decide
 
@@ -345,7 +345,6 @@ theorem qcsin_sq_plus_qccos_sq_eq_one :
 -- should be close to cos(3t) + i sin(3t).  Verified to 1e-3 at depth 8.
 theorem demoivre_small_angle :
     let t : Q := Q.of 1 4
-    let z : QC := ⟨Q.of 1 1, Q.zero⟩  -- placeholder; built below
     let zct : QC := ⟨(qccos (QC.ofQ t) 8).re, (qcsin (QC.ofQ t) 8).re⟩
     let lhs := QC.pow zct 3
     let z3t := QC.ofQ (Q.mul (Q.of 3 1) t)
@@ -390,19 +389,19 @@ theorem cexp_pi_i_approx :
 def cexp_approx (z : CComplex) (n : Nat) : CComplex :=
   let zq : QC := ⟨z.re.approx n, z.im.approx n⟩
   let r  : QC := qcexp zq n
-  ⟨CReal.cratiional r.re, CReal.cratiional r.im⟩
+  ⟨CReal.crational r.re, CReal.crational r.im⟩
 
 /-- CComplex sin(z) approximation. -/
 def csin_approx (z : CComplex) (n : Nat) : CComplex :=
   let zq : QC := ⟨z.re.approx n, z.im.approx n⟩
   let r  : QC := qcsin zq n
-  ⟨CReal.cratiional r.re, CReal.cratiional r.im⟩
+  ⟨CReal.crational r.re, CReal.crational r.im⟩
 
 /-- CComplex cos(z) approximation. -/
 def ccos_approx (z : CComplex) (n : Nat) : CComplex :=
   let zq : QC := ⟨z.re.approx n, z.im.approx n⟩
   let r  : QC := qccos zq n
-  ⟨CReal.cratiional r.re, CReal.cratiional r.im⟩
+  ⟨CReal.crational r.re, CReal.crational r.im⟩
 
 /-- CComplex polynomial evaluation. -/
 def cpoly_eval (coeffs : List CComplex) (z : CComplex) : CComplex :=
