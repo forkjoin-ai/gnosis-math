@@ -20,24 +20,19 @@ theorem monkey_sandwich (t : Nat) (h : t >= 1) :
     by_cases h1 : t > 1
     · simp [h1]
       split
-      · -- t = 0 (contradiction)
-        omega
-      · -- t > 0
-        have h_ge_2 : 2 ≤ t := by omega
+      · omega
+      · have h_ge_2 : 2 ≤ t := by omega
         have h_div_val : 1000 / t ≤ 500 := Nat.div_le_div_left h_ge_2 (by decide)
         apply Nat.le_trans (by decide : 1 ≤ 1000 - 500)
         exact Nat.sub_le_sub_left h_div_val 1000
     · have h1_eq : t = 1 := by omega
-      simp [h1_eq]
-      unfold pShakespeare
-      simp
-
-  · constructor
-    · unfold buleyeanPredictReachability; apply Nat.le_refl
-    · unfold buleyeanPredictReachability pShakespeare
-      split
-      · omega
-      · apply Nat.sub_le
+      simp [h1_eq, pShakespeare]
+  constructor
+  · unfold buleyeanPredictReachability; apply Nat.le_refl
+  · unfold buleyeanPredictReachability pShakespeare
+    split
+    · omega
+    · apply Nat.sub_le
 
 
 
