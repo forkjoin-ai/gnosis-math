@@ -561,6 +561,7 @@ import Gnosis.MotivicCohomology
 import Gnosis.MovingSofaTopology
 import Gnosis.Multiplexing
 import Gnosis.NamingBeforeReduction
+import Gnosis.NahmDimensionCeiling
 import Gnosis.NashSkyrmsBuleyGodLadder
 import Gnosis.NavierStokesExistence
 import Gnosis.NegationInvolution
