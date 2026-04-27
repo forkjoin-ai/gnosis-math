@@ -32,7 +32,7 @@ structure GeometricErgodicityRateNat_MediationQueueBoundaryBridge where
   hDenomPos : 0 < denominator
   hInitialBoundPos : 0 < initialBound
 
-structure MultiLevelHarrisWitnessNat where
+structure MultiLevelHarrisWitnessNat_MediationQueueBoundaryBridge where
   levels : Nat
   discreteDriftGap : Nat
   continuousDriftGap : Nat
@@ -86,7 +86,7 @@ theorem mediation_positive_loss_yields_geometric_rate_certificate
     exact Nat.succ_lt_succ (Nat.lt_of_lt_of_le Nat.zero_lt_one m.mediatorLossPositive)
 
 def mediationLossMultiLevelWitness (m : CausalMediation.MediationSetup) :
-    MultiLevelHarrisWitnessNat :=
+    MultiLevelHarrisWitnessNat_MediationQueueBoundaryBridge :=
   { levels := 2
     discreteDriftGap := m.mediatorLoss
     continuousDriftGap := m.mediatorLoss
@@ -95,7 +95,7 @@ def mediationLossMultiLevelWitness (m : CausalMediation.MediationSetup) :
 
 theorem mediation_positive_loss_yields_multilevel_harris_witness
     (m : CausalMediation.MediationSetup) :
-    ∃ witness : MultiLevelHarrisWitnessNat,
+    ∃ witness : MultiLevelHarrisWitnessNat_MediationQueueBoundaryBridge,
       witness = mediationLossMultiLevelWitness m ∧
       0 < witness.discreteDriftGap ∧
       0 < witness.continuousDriftGap := by

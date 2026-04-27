@@ -9,7 +9,7 @@ open KataZeckendorfHarrisQuorumBridge
 Init-only Kata-Zeckendorf-Harris quorum race.
 
 Reuses the `Nat`-typed structures defined in the Bridge module
-(`MultiLevelHarrisWitnessNat`, `GeometricErgodicityRateNat_KataZeckendorfHarrisQuorumBridge`,
+(`MultiLevelHarrisWitnessNat_KataZeckendorfHarrisQuorumBridge`, `GeometricErgodicityRateNat_KataZeckendorfHarrisQuorumBridge`,
 `QueueBoundaryWitnessNat_KataZeckendorfHarrisQuorumBridge`, `kataZeckendorfBudget`).
 -/
 
@@ -22,7 +22,7 @@ theorem kata_zeckendorf_budget_yields_multilevel_harris_witness_from_gap
     (_hGap :
       ZeckendorfCompleteness.fib 2 + ZeckendorfCompleteness.fib 3 ≤
         kataZeckendorfBudget) :
-    ∃ witness : MultiLevelHarrisWitnessNat,
+    ∃ witness : MultiLevelHarrisWitnessNat_KataZeckendorfHarrisQuorumBridge,
       witness.levels = 2 ∧
       witness.discreteDriftGap = kataZeckendorfBudget ∧
       witness.continuousDriftGap = kataZeckendorfBudget + 1 := by
@@ -35,7 +35,7 @@ theorem kata_zeckendorf_budget_yields_multilevel_harris_witness_from_gap
   }, rfl, rfl, rfl⟩
 
 theorem kata_zeckendorf_budget_yields_multilevel_harris_witness_via_gap :
-    ∃ witness : MultiLevelHarrisWitnessNat,
+    ∃ witness : MultiLevelHarrisWitnessNat_KataZeckendorfHarrisQuorumBridge,
       witness.levels = 2 ∧
       witness.discreteDriftGap = kataZeckendorfBudget ∧
       witness.continuousDriftGap = kataZeckendorfBudget + 1 :=

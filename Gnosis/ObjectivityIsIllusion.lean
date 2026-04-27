@@ -35,7 +35,7 @@ def ClaimsObjectivity (M O : Nat) : Prop := O ≥ M
 -- THEOREM 2: Objectivity is Impossible (The Master Anti-Theorem)
 -- Proves that under the Complexity Constraint, claiming objectivity is a strict 
 -- formal contradiction. The observer's frame is topologically barred from holding the truth.
-theorem objectivity_is_impossible {M O : Nat} (h : ComplexityConstraint M O) : 
+theorem objectivity_is_impossible_ObjectivityIsIllusion {M O : Nat} (h : ComplexityConstraint M O) : 
   ¬ ClaimsObjectivity M O := by
   -- Assume for contradiction that the observer claims objectivity (O ≥ M).
   intro h_obj

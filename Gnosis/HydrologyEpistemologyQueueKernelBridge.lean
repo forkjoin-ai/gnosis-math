@@ -111,7 +111,7 @@ theorem hydrology_epistemology_budget_yields_geometric_rate_certificate
     hInitialBoundPos := Nat.succ_pos _
   }, rfl, rfl, rfl⟩
 
-structure MultiLevelHarrisWitnessNat where
+structure MultiLevelHarrisWitnessNat_HydrologyEpistemologyQueueKernelBridge where
   discreteDriftGap : Nat
   continuousDriftGap : Nat
   hDiscrete : 0 < discreteDriftGap
@@ -120,7 +120,7 @@ structure MultiLevelHarrisWitnessNat where
 theorem hydrology_epistemology_multilevel_harris_witness
     (hydro : HydrologySetup) (epis : EpistemologySetup)
     (_hBudgetBridge : hydro.runoff = epis.gettierCases) :
-    ∃ witness : MultiLevelHarrisWitnessNat,
+    ∃ witness : MultiLevelHarrisWitnessNat_HydrologyEpistemologyQueueKernelBridge,
       witness.discreteDriftGap = hydro.runoff ∧
       witness.continuousDriftGap = epis.gettierCases := by
   exact ⟨{

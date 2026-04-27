@@ -28,14 +28,14 @@ theorem kataZeckendorfBudget_eq_four : kataZeckendorfBudget = 4 := by
 theorem kataZeckendorfBudget_pos : 0 < kataZeckendorfBudget := by
   decide
 
-structure MultiLevelHarrisWitnessNat where
+structure MultiLevelHarrisWitnessNat_KataZeckendorfHarrisQuorumBridge where
   levels : Nat
   discreteDriftGap : Nat
   continuousDriftGap : Nat
   hDiscrete : 0 < discreteDriftGap
   hContinuous : 0 < continuousDriftGap
 
-def kataZeckendorfMultilevelHarrisWitness : MultiLevelHarrisWitnessNat :=
+def kataZeckendorfMultilevelHarrisWitness : MultiLevelHarrisWitnessNat_KataZeckendorfHarrisQuorumBridge :=
   { levels := 2
     discreteDriftGap := kataZeckendorfBudget
     continuousDriftGap := kataZeckendorfBudget + 1

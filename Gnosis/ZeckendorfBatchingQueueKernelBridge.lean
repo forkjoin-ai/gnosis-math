@@ -5,7 +5,7 @@ open ZeckendorfCompleteness
 
 namespace Gnosis
 
-structure QueueBoundaryWitness where
+structure QueueBoundaryWitness_Zeck where
   beta1 : Nat
   capacity : Nat
   arrivalRate : Nat
@@ -15,7 +15,7 @@ structure QuerySchedule where
   batchedQueries : Nat
   loopQueries : Nat
 
-def canonicalMM1Boundary_ZeckendorfBatchingQueueKernelBridge (lam mu : Nat) (_hlam_nonneg : 0 ≤ lam) (_hmu_pos : 0 < mu) (_hlam_lt_mu : lam < mu) : QueueBoundaryWitness :=
+def canonicalMM1Boundary_ZeckendorfBatchingQueueKernelBridge (lam mu : Nat) (_hlam_nonneg : 0 ≤ lam) (_hmu_pos : 0 < mu) (_hlam_lt_mu : lam < mu) : QueueBoundaryWitness_Zeck :=
   { beta1 := 0, capacity := 1, arrivalRate := lam, serviceRate := mu }
 
 -- Cross-domain bridge 1: Zeckendorf Gap
@@ -23,7 +23,7 @@ theorem zeckendorf_gap_yields_unit_queue_boundary
     (n k : Nat)
     (hLower : fib (k + 2) ≤ n)
     (hUpper : n < fib (k + 3)) :
-    ∃ boundary : QueueBoundaryWitness,
+    ∃ boundary : QueueBoundaryWitness_Zeck,
       boundary.beta1 = 0 ∧
       boundary.capacity = 1 ∧
       boundary.arrivalRate = n - fib (k + 2) ∧
@@ -39,7 +39,7 @@ theorem zeckendorf_batching_yields_unit_queue_boundary
     (s : QuerySchedule) (wasted : Nat)
     (hloop : s.loopQueries = s.batchedQueries + wasted)
     (hwasted : 1 ≤ wasted) :
-    ∃ boundary : QueueBoundaryWitness,
+    ∃ boundary : QueueBoundaryWitness_Zeck,
       boundary.beta1 = 0 ∧
       boundary.capacity = 1 ∧
       boundary.arrivalRate = s.batchedQueries ∧
@@ -55,7 +55,7 @@ theorem zeckendorf_batching_does_not_force_positive_beta1
     (s : QuerySchedule) (wasted : Nat)
     (hloop : s.loopQueries = s.batchedQueries + wasted)
     (hwasted : 1 ≤ wasted) :
-    ¬ (∀ boundary : QueueBoundaryWitness,
+    ¬ (∀ boundary : QueueBoundaryWitness_Zeck,
         boundary.arrivalRate = s.batchedQueries →
         boundary.serviceRate = s.loopQueries →
         0 < boundary.beta1) := by

@@ -132,7 +132,7 @@ theorem positive_weighted_sleep_debt_yields_geometric_rate_certificate
     SleepDebtWeightedSchedule.iterated_debt_positive_above_threshold hCrossed hCycle
   refine ⟨hDebtPos, debtIndexedGeometricRate debt, rfl, rfl, rfl, rfl⟩
 
-structure MultiLevelHarrisWitnessNat where
+structure MultiLevelHarrisWitnessNat_SleepQuorumQueueMoonshots where
   levels : Nat
   discreteDriftGap : Nat
   continuousDriftGap : Nat
@@ -140,7 +140,7 @@ structure MultiLevelHarrisWitnessNat where
   hContinuous : 0 < continuousDriftGap
 
 def debtIndexedMultiLevelHarrisWitness (debt : Nat) (hDebtPos : 0 < debt) :
-    MultiLevelHarrisWitnessNat :=
+    MultiLevelHarrisWitnessNat_SleepQuorumQueueMoonshots :=
   { levels := 2
     discreteDriftGap := debt
     continuousDriftGap := debt
@@ -154,7 +154,7 @@ theorem positive_weighted_sleep_debt_yields_multilevel_harris_witness
         SleepDebtWeightedSchedule.thresholdLhs
           scheduledWake wakeBurdenRate recoveryRate)
     (hCycle : 0 < n) :
-    ∃ witness : MultiLevelHarrisWitnessNat,
+    ∃ witness : MultiLevelHarrisWitnessNat_SleepQuorumQueueMoonshots,
       0 < witness.discreteDriftGap ∧
       0 < witness.continuousDriftGap := by
   have hDebtPos :

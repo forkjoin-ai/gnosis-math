@@ -7,7 +7,7 @@ def EmbeddedObserver_HawkingConflation (U O : Nat) : Prop := O < U
 
 -- Hawking correctly identified that Objectivity (Omniscience) is a formal contradiction.
 -- You cannot be inside a system and encompass the system simultaneously.
-theorem objectivity_is_impossible {U O : Nat} (h : EmbeddedObserver_HawkingConflation U O) : 
+theorem objectivity_is_impossible_HawkingConflation {U O : Nat} (h : EmbeddedObserver_HawkingConflation U O) : 
   ¬ (O ≥ U) := by
   intro h_obj
   exact Nat.not_le_of_gt h h_obj
