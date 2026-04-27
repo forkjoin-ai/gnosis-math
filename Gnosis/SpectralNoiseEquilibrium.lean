@@ -582,6 +582,7 @@ structure BuleyUnit where
   waste : Nat
   opportunity : Nat
   diversity : Nat
+  deriving Repr, DecidableEq
 
 def buleyUnitScore (b : BuleyUnit) : Nat :=
   b.waste + b.opportunity + b.diversity
