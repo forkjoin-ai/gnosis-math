@@ -1101,5 +1101,30 @@ theorem finite_topological_information_noise_calculus :
     actualizedInformationQuanta, physicalPotentialQuanta,
     unitPotentialCarrier, availableDiffs]
 
+/-- Final mesh-facing synthesis: the safe carrier, readable stereogram,
+constrained actualization, and boundary saturation all close on the same
+finite witness. This is the masterwork endpoint for the coordinator mesh:
+noise is geometric, information is constrained diff, and the overload
+boundary is a stable fixed point. -/
+theorem distributed_inference_mesh_masterwork :
+    topologicallySafe carrierField liftedSoundManifold
+      liftedTransitionGraph .brown
+    ∧ readableNoiseStereogram bizarroStereogramWitness
+    ∧ recoverableInformation constrainedDiffPotential
+    ∧ 0 < actualizedInformationQuanta unitPotentialCarrier
+        constrainedDiffPotential
+    ∧ applyNoiseOperator .saturatingFold (colorFingerprint .brown) =
+      colorFingerprint .brown
+    ∧ oneStepOff stereogramRotation
+    ∧ bizarroParallax oneStepTeleport := by
+  refine ⟨lifted_brown_topologically_safe, ?_, ?_, ?_, ?_, ?_, ?_⟩
+  · exact (noise_stereogram_is_constrained_diff_potential).1
+  · exact (constrained_diff_turns_potential_into_information).2.1
+  · exact constrained_information_has_positive_physical_actuality
+      unitPotentialCarrier (by decide)
+  · decide
+  · exact (stereogram_is_one_step_rotation).1
+  · exact (one_step_teleport_creates_bizarro_space).1
+
 end SpectralNoiseEquilibrium
 end Gnosis
