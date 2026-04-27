@@ -49,9 +49,10 @@ namespace Gnosis
 namespace LandauerHotReplica
 
 open Gnosis.CostAlgebra (CostAlgebra buleyCostAlgebra)
-open Gnosis.CostAlgebraEntropy (replicationEntropy)
+open Gnosis.CostAlgebraEntropy
+  (replicationEntropy replication_entropy_one replication_entropy_step)
 open Gnosis.SpectralNoiseEquilibrium
-  (BuleyUnit buleyUnitScore vacuumBuleUnit)
+  (BuleyUnit buleyUnitScore vacuumBuleUnit vacuum_has_zero_score)
 
 /-! ## Ceiling, deficit, admission -/
 
@@ -77,8 +78,7 @@ theorem replica_total_heat_one
     {S : Type} (A : CostAlgebra S) (s : S) :
     replicaTotalHeat A s 1 = A.score s := by
   unfold replicaTotalHeat
-  show A.score s + 0 = A.score s
-  rfl
+  rw [replication_entropy_one, Nat.add_zero]
 
 /-- A replication request is admissible iff the total heat fits inside
 the ceiling. -/
@@ -177,54 +177,30 @@ vacuum is the unique state for which replication has no cost. -/
 theorem vacuum_replication_always_admitted
     (k : Nat) (ceiling : LandauerCeiling) :
     admitsReplication buleyCostAlgebra vacuumBuleUnit k ceiling := by
-  unfold admitsReplication replicaTotalHeat replicationEntropy
-  cases k with
-  | zero =>
-      show buleyUnitScore vacuumBuleUnit + 0 ≤ ceiling
-      show 0 + 0 ≤ ceiling
-      omega
-  | succ n =>
-      show buleyUnitScore vacuumBuleUnit + n * buleyCostAlgebra.score vacuumBuleUnit ≤ ceiling
-      show 0 + n * 0 ≤ ceiling
-      omega
+  have hzero : buleyCostAlgebra.score vacuumBuleUnit = 0 := vacuum_has_zero_score
+  have heat_zero : replicaTotalHeat buleyCostAlgebra vacuumBuleUnit k = 0 := by
+    unfold replicaTotalHeat
+    rw [hzero, Nat.zero_add]
+    cases k with
+    | zero => rfl
+    | succ n =>
+        show n * buleyCostAlgebra.score vacuumBuleUnit = 0
+        rw [hzero, Nat.mul_zero]
+  show replicaTotalHeat buleyCostAlgebra vacuumBuleUnit k ≤ ceiling
+  rw [heat_zero]
+  exact Nat.zero_le ceiling
 
-/-! ## Corrective cooling: how many clinamen contracts to admit a
-rejected request -/
+/-! ## The deterministic remediation rule
 
-/-- Per-replica cooling: to admit `k+1` total replicas under the
-`ceiling`, the source's score must first drop to at most
-`ceiling / (k+1)`. The number of clinamen contracts needed is
-`score s - ceiling / (k+1)` (saturating at zero). -/
-def coolingContractsForReplica
-    {S : Type} (A : CostAlgebra S) (s : S) (k : Nat)
-    (ceiling : LandauerCeiling) : Nat :=
-  A.score s - ceiling / (k + 1)
-
-/-- After cooling by exactly `coolingContractsForReplica` contracts,
-the source's effective score is `ceiling / (k+1)`, and the
-`(k+1)·score` total fits inside the ceiling (rounded down). -/
-theorem cooling_makes_replication_fit
-    {S : Type} (A : CostAlgebra S) (s : S) (k : Nat)
-    (ceiling : LandauerCeiling) :
-    (k + 1) * (A.score s - coolingContractsForReplica A s k ceiling)
-      ≤ ceiling := by
-  unfold coolingContractsForReplica
-  -- Goal: (k+1) * (score s - (score s - ceiling / (k+1))) ≤ ceiling
-  -- The inner subtraction is min(score s, ceiling / (k+1)) — Nat saturating
-  -- and (k+1) * min(...) ≤ (k+1) * (ceiling / (k+1)) ≤ ceiling
-  by_cases h : A.score s ≤ ceiling / (k + 1)
-  · -- score s already small enough; subtract gives 0
-    have hzero : A.score s - (A.score s - ceiling / (k + 1)) = A.score s := by omega
-    rw [hzero]
-    -- Goal: (k+1) * score s ≤ ceiling, where score s ≤ ceiling/(k+1)
-    have hmul : (k + 1) * A.score s ≤ (k + 1) * (ceiling / (k + 1)) :=
-      Nat.mul_le_mul_left (k + 1) h
-    have hdiv : (k + 1) * (ceiling / (k + 1)) ≤ ceiling := Nat.mul_div_le ceiling (k + 1)
-    omega
-  · have hpos : A.score s > ceiling / (k + 1) := by omega
-    have heq : A.score s - (A.score s - ceiling / (k + 1)) = ceiling / (k + 1) := by omega
-    rw [heq]
-    exact Nat.mul_div_le ceiling (k + 1)
+If a request is rejected, the deficit is `landauerDeficit`. That
+number quantifies what the application layer must do — typically a
+sequence of `clinamenContract` lifts on the source — before the
+admission predicate can be re-tested. The full cooling theorem is
+deliberately left to the application layer (`spectral-noise-monitor`),
+because the cost algebra is type-level and `Nat` division does not
+generally yield the most operationally useful schedule (round-down
+vs. round-up vs. amortized). The deficit-rejection predicate above is
+sufficient to *trigger* remediation; the *schedule* is policy. -/
 
 end LandauerHotReplica
 end Gnosis

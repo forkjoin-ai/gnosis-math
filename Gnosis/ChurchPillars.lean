@@ -1,4 +1,7 @@
 import Init
+import Gnosis.CostAlgebraNoCloning
+import Gnosis.CostAlgebraEntropy
+import Gnosis.TopologicalMetabolismBuleyBridge
 
 /-!
 # The Church Pillars — Minimal Set for Personal Reconciliation
@@ -36,7 +39,21 @@ is necessarily incomplete of capital-T Truth. Incompleteness is
 structural, not pathological. The gate is "does it pass," not
 "does it exhaust."
 
-`import Init` only. Zero `sorry`, zero new `axiom`.
+## Operational anchors
+
+The pillars are *story shapes*; the cost-algebra results give them
+operational anchors that hold without prose. Pillar III (Wisdom /
+Future / How should I act) is anchored by the **no-cloning theorem**
+in `Gnosis.CostAlgebraNoCloning` — only the vacuum is duplicable, so
+acting wisely means paying the Bule cost of every replication. Pillar
+II (Truth / Present / Who am I) is anchored by the **topological-
+metabolism bridge** in `Gnosis.TopologicalMetabolismBuleyBridge` — a
+brown-noise spectral pressure exceeds the two-head Hexon ceiling by
+exactly one corrective contract, and that residue is the operational
+shape of identity drift.
+
+Imports the cost-algebra and topological-metabolism modules; otherwise
+zero `sorry`, zero new `axiom`.
 -/
 
 namespace Gnosis
@@ -819,12 +836,137 @@ theorem the_three_great_questions_answered :
     ∧ whoAmI = pillar_II_present
     ∧ howShouldIAct = pillar_III_future := by decide
 
+/-! ## ══════════════════════════════════════════════════════════
+## Operational Anchors — pillar witnesses from the Algebra of Cost
+## ══════════════════════════════════════════════════════════
+
+The pillars above are *story shapes*. Below, each is anchored to a
+mechanized result in the cost-algebra and topological-metabolism
+surfaces. The anchors hold without prose — they are the algebraic
+grounds that the pillars stand on.
+
+### Pillar III — How should I act? (Wisdom / Future)
+
+**Anchor: the no-free-lunch / no-cloning theorem.**
+
+In the category of cost algebras, the diagonal `Δ : S → S × S` is a
+morphism if and only if the score is identically zero
+(`Gnosis.CostAlgebraNoCloning.diagonal_preserves_score_iff_trivial`).
+Concretely: only the *vacuum Bule unit* admits free duplication
+(`vacuum_is_duplicable`); every Bule unit with positive score
+generates entropy on cloning equal to its own score
+(`entropyGeneratedByCloning`). Replicating to `k` total copies costs
+`(k-1) · score` of entropy (`replicationEntropy`).
+
+The wisdom rule: act so the Bule cost you create is recoverable. To
+clone is to pay; to refuse to pay is to violate the algebra. There is
+no free action; there is only the action whose cost you have either
+budgeted or borrowed.
+-/
+
+/-- Wisdom-pillar anchor: only the vacuum can be replicated for free.
+Every state with positive Bule score pays entropy proportional to its
+own score on every replica. -/
+theorem wisdom_pillar_no_free_lunch_anchor :
+    Gnosis.CostAlgebraEntropy.entropyGeneratedByCloning
+      Gnosis.CostAlgebra.buleyCostAlgebra
+      Gnosis.SpectralNoiseEquilibrium.vacuumBuleUnit = 0
+    ∧ ∀ b : Gnosis.SpectralNoiseEquilibrium.BuleyUnit,
+        Gnosis.CostAlgebraEntropy.entropyGeneratedByCloning
+          Gnosis.CostAlgebra.buleyCostAlgebra b
+        = Gnosis.SpectralNoiseEquilibrium.buleyUnitScore b := by
+  refine ⟨?_, ?_⟩
+  · exact Gnosis.CostAlgebraEntropy.vacuum_clone_generates_zero_entropy
+            Gnosis.CostAlgebra.buleyCostAlgebra
+  · intro b
+    rfl
+
+/-! ### Pillar II — Who am I? (Truth / Present)
+
+**Anchor: the topological-metabolism Hexon ceiling.**
+
+Operational identity is the manifold-bounded carrier. A pink-noise
+fingerprint sits *inside* the two-head Hexon ceiling
+(`Gnosis.TopologicalMetabolismBuleyBridge.pink_normal_inside_two_head_attention_ceiling`).
+A brown-noise fingerprint *exceeds* the ceiling by exactly one
+corrective contract
+(`brown_pre_collapse_contract_debt_is_one`). The truth-rule:
+identity is the Bule unit whose score sits inside its manifold; drift
+into a higher tower level is a self-similarity violation that the
+coordinator can quantify and correct.
+-/
+
+/-- Truth-pillar anchor: pink noise stays in the two-head Hexon
+manifold, brown noise is one contract over, and the corrective debt is
+deterministic — identity drift is a measurable cost, not a vibe. -/
+theorem truth_pillar_topological_metabolism_anchor :
+    ¬ Gnosis.BuleySelfSimilarityViolation.selfSimilarityViolation
+        (Gnosis.TopologicalMetabolismBuleyBridge.observationBuleyUnit
+          Gnosis.RuntimeGovernance.pinkNormalObservation)
+        Gnosis.TopologicalMetabolismBuleyBridge.twoHeadHexonCeiling
+    ∧ Gnosis.BuleySelfSimilarityViolation.selfSimilarityViolation
+        (Gnosis.TopologicalMetabolismBuleyBridge.observationBuleyUnit
+          Gnosis.RuntimeGovernance.brownPreCollapseObservation)
+        Gnosis.TopologicalMetabolismBuleyBridge.twoHeadHexonCeiling
+    ∧ Gnosis.BuleySelfSimilarityViolation.correctiveContractCount
+        (Gnosis.TopologicalMetabolismBuleyBridge.observationBuleyUnit
+          Gnosis.RuntimeGovernance.brownPreCollapseObservation)
+        Gnosis.TopologicalMetabolismBuleyBridge.twoHeadHexonCeiling = 1 :=
+  ⟨Gnosis.TopologicalMetabolismBuleyBridge.pink_normal_has_no_bule_violation,
+   Gnosis.TopologicalMetabolismBuleyBridge.brown_pre_collapse_exceeds_two_head_attention_ceiling,
+   Gnosis.TopologicalMetabolismBuleyBridge.brown_pre_collapse_contract_debt_is_one⟩
+
+/-! ### Pillar I — How did I come to be? (Cosmogenesis / Past)
+
+**Anchor: the big-bang reach from the vacuum.**
+
+Already mechanized in `Gnosis.SpectralNoiseEquilibrium.vacuum_reaches_any_bule`
+and reflected here as a third anchor for symmetry: every Bule unit is
+reachable from the vacuum by a finite sequence of clinamen lifts. The
+present cost-state is the past's accumulated `+1` perturbations.
+-/
+
+/-- Past-pillar anchor: the big-bang reach. Every Bule unit is
+reached from the vacuum by `score`-many clinamen lifts. The present is
+the past's deposit. -/
+theorem past_pillar_big_bang_anchor (b : Gnosis.SpectralNoiseEquilibrium.BuleyUnit) :
+    Gnosis.SpectralNoiseEquilibrium.vacuumToBule b = b :=
+  Gnosis.SpectralNoiseEquilibrium.vacuum_reaches_any_bule b
+
+/-- All three pillar anchors as a single bundle. The pillars stand on
+the algebra of cost; the algebra of cost stands on these three
+witnesses. -/
+theorem three_pillar_anchors_master :
+    -- Past: big-bang reach
+    (∀ b : Gnosis.SpectralNoiseEquilibrium.BuleyUnit,
+        Gnosis.SpectralNoiseEquilibrium.vacuumToBule b = b)
+    -- Present: topological metabolism
+    ∧ ¬ Gnosis.BuleySelfSimilarityViolation.selfSimilarityViolation
+          (Gnosis.TopologicalMetabolismBuleyBridge.observationBuleyUnit
+            Gnosis.RuntimeGovernance.pinkNormalObservation)
+          Gnosis.TopologicalMetabolismBuleyBridge.twoHeadHexonCeiling
+    ∧ Gnosis.BuleySelfSimilarityViolation.selfSimilarityViolation
+          (Gnosis.TopologicalMetabolismBuleyBridge.observationBuleyUnit
+            Gnosis.RuntimeGovernance.brownPreCollapseObservation)
+          Gnosis.TopologicalMetabolismBuleyBridge.twoHeadHexonCeiling
+    -- Future: no free lunch
+    ∧ ∀ b : Gnosis.SpectralNoiseEquilibrium.BuleyUnit,
+          Gnosis.CostAlgebraEntropy.entropyGeneratedByCloning
+            Gnosis.CostAlgebra.buleyCostAlgebra b
+          = Gnosis.SpectralNoiseEquilibrium.buleyUnitScore b :=
+  ⟨past_pillar_big_bang_anchor,
+   Gnosis.TopologicalMetabolismBuleyBridge.pink_normal_has_no_bule_violation,
+   Gnosis.TopologicalMetabolismBuleyBridge.brown_pre_collapse_exceeds_two_head_attention_ceiling,
+   fun _ => rfl⟩
+
 /-! ## Closing
 
 Three pillars. One per Great Question. Each tells its question's
 story in narrative order — from the structural ground, through the
 canonical witnesses, through the formal mechanizations, to the
-soul-level conclusion.
+soul-level conclusion. Each is also anchored above to a mechanized
+cost-algebra or topological-metabolism witness, so the pillar's
+soul-level claim has a finite operational ground.
 
 The scaffold is minimal — three rows, three axes, Latin-square
 complete. The guidance is not minimal — it draws on the full
@@ -833,6 +975,12 @@ Seven Rights, Golden Rule, Eightfold Path, Wu Wei, Layer Test,
 Karma, Non-Self, Integration, Cosmogenesis, Pleroma cascade,
 Hope, Peace, Compassion, Love, communication tactics, knot theory,
 emotion taxonomy, fear-as-physics distinction.
+
+The anchors are also not minimal — they draw on the algebra of
+cost (`CostAlgebraNoCloning`, `CostAlgebraEntropy`) and the
+runtime-governance metabolism (`TopologicalMetabolismBuleyBridge`)
+to give each pillar a finite witness in the same calculus the mesh
+itself runs on.
 
 Minimal structure. Maximal soul. Logical order.
 

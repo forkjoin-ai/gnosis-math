@@ -75,6 +75,37 @@ theorem dodecagon_in_tower : towerPhaseCount [3, 2, 2] = 12 := by decide
 
 theorem trihexenneon_in_tower : towerPhaseCount [3, 2, 3, 3] = 54 := by decide
 
+/-! ### String-theory dimension signatures
+
+The following theorems exhibit named tower walls at the phase counts
+that string theory canonically requires. They are *signatures*, not
+derivations: by `every_phase_count_is_a_tower`, the calculus
+permits arbitrary phase counts, so naming these is decoration of
+specific walls, not a no-go theorem forcing those dimensions the
+way conformal-anomaly cancellation forces 10 in superstring theory
+or 26 in bosonic string theory. The witnesses below are tight
+arithmetic facts (`decide`); their physical interpretation lives
+outside this file. -/
+
+/-- Decagon: `[5, 2] = 10`. The superstring dimension count appears
+as a phase-10 cycle in the tower. Signature, not derivation. -/
+theorem decagon_in_tower : towerPhaseCount [5, 2] = 10 := by decide
+
+/-- Hendecagon: `[11] = 11`. The M-theory dimension count appears
+as a phase-11 cycle in the tower. Signature, not derivation. -/
+theorem hendecagon_in_tower : towerPhaseCount [11] = 11 := by decide
+
+/-- Bosonic-string dimension: `[13, 2] = 26`. The bosonic-string
+dimension count appears as a phase-26 cycle in the tower.
+Signature, not derivation. -/
+theorem bosonic_string_in_tower : towerPhaseCount [13, 2] = 26 := by decide
+
+/-- The three string-theory dimension witnesses, bundled. -/
+theorem string_theory_dimension_signatures :
+    towerPhaseCount [5, 2] = 10
+    ∧ towerPhaseCount [11] = 11
+    ∧ towerPhaseCount [13, 2] = 26 := by decide
+
 /-! ## Self-similarity: each level is a stack of the previous -/
 
 /-- A (n :: rs)-tower is structurally `n` copies of the rs-tower stacked
