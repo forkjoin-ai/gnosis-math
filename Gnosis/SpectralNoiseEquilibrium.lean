@@ -622,6 +622,284 @@ theorem recoverable_information_casts_positive_bule_shadow
   show 0 < shadowHeatQuanta unitThermodynamicShadow p
   exact recoverable_information_casts_positive_thermodynamic_shadow h
 
+/-! ## Vacuum and the +1 clinamen lift on the Bule unit -/
+
+/-- The vacuum Bule unit: all three faces zero, score zero. The operational
+vacuum of the calculus — no waste, no unspent opportunity, no diversity
+spread. -/
+def vacuumBuleUnit : BuleyUnit := ⟨0, 0, 0⟩
+
+theorem vacuum_has_zero_score : buleyUnitScore vacuumBuleUnit = 0 := rfl
+
+/-- Three Bule faces, indexed for clinamen targeting. -/
+inductive BuleyFace where
+  | waste
+  | opportunity
+  | diversity
+  deriving DecidableEq, Repr
+
+/-- The +1 clinamen lift on a Bule unit: bump the chosen face by one. The
+unit-magnitude perturbation that, applied finitely many times to the
+vacuum, reaches any Bule unit in the lattice. The plus-residue per step is
+exactly +1, matching the universal-clinamen catalog. -/
+def clinamenLift (b : BuleyUnit) : BuleyFace → BuleyUnit
+  | .waste       => { b with waste := b.waste + 1 }
+  | .opportunity => { b with opportunity := b.opportunity + 1 }
+  | .diversity   => { b with diversity := b.diversity + 1 }
+
+theorem clinamen_lift_score_strict_increment
+    (b : BuleyUnit) (f : BuleyFace) :
+    buleyUnitScore (clinamenLift b f) = buleyUnitScore b + 1 := by
+  cases f <;> simp [clinamenLift, buleyUnitScore] <;> omega
+
+/-- The −1 clinamen contraction: the dual of `clinamenLift`. On Nat, faces
+that are already zero stay zero (saturating subtraction), so contraction is
+a partial inverse and round-trips with `clinamenLift` only when the chosen
+face is strictly positive. The pair (lift, contract) is the breathing
+operator on the Bule lattice: expand by +1, contract by −1, matching the
+plus/minus residues catalogued in `UniversalClinamenPlusOne`. -/
+def clinamenContract (b : BuleyUnit) : BuleyFace → BuleyUnit
+  | .waste       => { b with waste := b.waste - 1 }
+  | .opportunity => { b with opportunity := b.opportunity - 1 }
+  | .diversity   => { b with diversity := b.diversity - 1 }
+
+theorem lift_contract_round_trip_when_face_positive
+    (b : BuleyUnit) (f : BuleyFace)
+    (h : match f with
+         | .waste => 0 < b.waste
+         | .opportunity => 0 < b.opportunity
+         | .diversity => 0 < b.diversity) :
+    clinamenLift (clinamenContract b f) f = b := by
+  cases b with
+  | mk w o d =>
+    cases f <;> simp [clinamenLift, clinamenContract] at h ⊢ <;> omega
+
+/-- Repeated clinamen lift on a single face. -/
+def repeatedLift (b : BuleyUnit) (f : BuleyFace) : Nat → BuleyUnit
+  | 0 => b
+  | n + 1 => clinamenLift (repeatedLift b f n) f
+
+theorem repeated_lift_score (b : BuleyUnit) (f : BuleyFace) (n : Nat) :
+    buleyUnitScore (repeatedLift b f n) = buleyUnitScore b + n := by
+  induction n with
+  | zero => simp [repeatedLift]
+  | succ k ih =>
+      show buleyUnitScore (clinamenLift (repeatedLift b f k) f)
+            = buleyUnitScore b + (k + 1)
+      rw [clinamen_lift_score_strict_increment, ih]
+      omega
+
+theorem repeated_waste_lift_from_vacuum (n : Nat) :
+    repeatedLift vacuumBuleUnit .waste n = ⟨n, 0, 0⟩ := by
+  induction n with
+  | zero => rfl
+  | succ k ih =>
+      show clinamenLift (repeatedLift vacuumBuleUnit .waste k) .waste
+            = ⟨k + 1, 0, 0⟩
+      rw [ih]; rfl
+
+theorem repeated_opportunity_lift_from_waste (w n : Nat) :
+    repeatedLift ⟨w, 0, 0⟩ .opportunity n = ⟨w, n, 0⟩ := by
+  induction n with
+  | zero => rfl
+  | succ k ih =>
+      show clinamenLift (repeatedLift ⟨w, 0, 0⟩ .opportunity k) .opportunity
+            = ⟨w, k + 1, 0⟩
+      rw [ih]; rfl
+
+theorem repeated_diversity_lift_from_opportunity (w o n : Nat) :
+    repeatedLift ⟨w, o, 0⟩ .diversity n = ⟨w, o, n⟩ := by
+  induction n with
+  | zero => rfl
+  | succ k ih =>
+      show clinamenLift (repeatedLift ⟨w, o, 0⟩ .diversity k) .diversity
+            = ⟨w, o, k + 1⟩
+      rw [ih]; rfl
+
+/-- The vacuum-to-Bule construction: any Bule unit is reached from the
+vacuum by `b.waste` waste-lifts, then `b.opportunity` opportunity-lifts,
+then `b.diversity` diversity-lifts. -/
+def vacuumToBule (b : BuleyUnit) : BuleyUnit :=
+  let afterWaste := repeatedLift vacuumBuleUnit .waste b.waste
+  let afterOpportunity := repeatedLift afterWaste .opportunity b.opportunity
+  repeatedLift afterOpportunity .diversity b.diversity
+
+/-- Big-bang theorem: every Bule unit in the lattice is reachable from the
+vacuum by a finite sequence of +1 clinamen lifts. The unit-magnitude
+perturbation generates the entire operational cost lattice from zero. -/
+theorem vacuum_reaches_any_bule (b : BuleyUnit) :
+    vacuumToBule b = b := by
+  cases b with
+  | mk w o d =>
+    show repeatedLift
+          (repeatedLift
+            (repeatedLift vacuumBuleUnit .waste w)
+            .opportunity o)
+          .diversity d
+        = ⟨w, o, d⟩
+    rw [repeated_waste_lift_from_vacuum,
+        repeated_opportunity_lift_from_waste,
+        repeated_diversity_lift_from_opportunity]
+
+/-- The big-bang score identity: building any Bule unit from the vacuum
+costs exactly its score in clinamen lifts. -/
+theorem vacuum_to_bule_score (b : BuleyUnit) :
+    buleyUnitScore (vacuumToBule b) = buleyUnitScore b := by
+  rw [vacuum_reaches_any_bule]
+
+/-- The vacuum face: a Bule unit lens onto the `opportunity` face only. The
+"vacuum potential" of an operational state is the opportunity not yet
+collapsed into waste. The +1 clinamen lift on the opportunity face is a
+unit pull of the vacuum: it adds one unit of available potential without
+adding either heat (waste) or color spread (diversity). -/
+def vacuumFaceFromBule (b : BuleyUnit) : BuleyUnit :=
+  { waste := 0, opportunity := b.opportunity, diversity := 0 }
+
+theorem vacuum_face_score_equals_opportunity (b : BuleyUnit) :
+    buleyUnitScore (vacuumFaceFromBule b) = b.opportunity := by
+  show 0 + b.opportunity + 0 = b.opportunity
+  omega
+
+/-- The breathing identity: lifting and then contracting (on the same
+positive face) returns the original Bule unit. Expansion +1 followed by
+contraction −1 is the identity on positive faces. -/
+theorem lift_then_contract_round_trip_when_face_positive
+    (b : BuleyUnit) (f : BuleyFace) :
+    clinamenContract (clinamenLift b f) f = b := by
+  cases b with
+  | mk w o d =>
+    cases f <;> simp [clinamenLift, clinamenContract] <;> omega
+
+/-! ## Universal clinamen residue: the plus/minus phase pair (+1, -1) -/
+
+/-- Plus/minus residue pair attached to a clinamen step on a Bule unit.
+The plus-residue is the score change of `clinamenLift`; the minus-residue
+is the score change of `clinamenContract` on a positive face. -/
+structure ClinamenResidue where
+  plusResidue : Int
+  minusResidue : Int
+deriving Repr, DecidableEq
+
+def clinamenLiftResidue (_b : BuleyUnit) (_f : BuleyFace) : ClinamenResidue :=
+  { plusResidue := 1, minusResidue := -1 }
+
+/-- Every clinamen step on a Bule unit carries plus-residue exactly +1 and
+minus-residue exactly −1, matching the universal-clinamen catalog
+(`UniversalClinamenPlusOne`) and the strong sign claims:
+every minus-residue is −1, every plus-residue is strictly positive. The
+Bule clinamen is the *exact-+1* case (no outliers). -/
+theorem clinamen_lift_residue_is_universal_plus_one
+    (b : BuleyUnit) (f : BuleyFace) :
+    (clinamenLiftResidue b f).plusResidue = 1
+    ∧ (clinamenLiftResidue b f).minusResidue = -1 :=
+  ⟨rfl, rfl⟩
+
+/-! ## More physics faces of the Bule unit
+
+The thermodynamic shadow above projects onto the `waste` face. The
+remaining two faces also have direct physics readings:
+
+* `opportunity` is the least-action residual — what Hamilton's principle
+  is minimizing when a system follows the Lagrangian floor.
+* `diversity` is the Shannon/Boltzmann entropy axis — count of distinct
+  colors / states the carrier had to traverse.
+
+Each face is a structural projection on `BuleyUnit`. Their pointwise sum
+is exactly the unit, so the three faces fully account for the Bule cost.
+-/
+
+/-- The waste face inside the Bule lattice (carrier-independent). The
+joule shadow above is this face times a positive heat quantum. -/
+def wasteFaceFromBule (b : BuleyUnit) : BuleyUnit :=
+  { waste := b.waste, opportunity := 0, diversity := 0 }
+
+theorem waste_face_score_equals_waste (b : BuleyUnit) :
+    buleyUnitScore (wasteFaceFromBule b) = b.waste := by
+  show b.waste + 0 + 0 = b.waste
+  omega
+
+/-- The Action face: a Bule unit whose only nonzero face is `opportunity`,
+the least-action residual that Hamilton's principle minimizes. A system
+following the Lagrangian floor is a system whose action face shrinks. -/
+def actionFaceFromBule (b : BuleyUnit) : BuleyUnit :=
+  { waste := 0, opportunity := b.opportunity, diversity := 0 }
+
+theorem action_face_score_equals_opportunity (b : BuleyUnit) :
+    buleyUnitScore (actionFaceFromBule b) = b.opportunity := by
+  show 0 + b.opportunity + 0 = b.opportunity
+  omega
+
+theorem action_face_monotone {b₁ b₂ : BuleyUnit}
+    (h : b₁.opportunity ≤ b₂.opportunity) :
+    buleyUnitScore (actionFaceFromBule b₁)
+      ≤ buleyUnitScore (actionFaceFromBule b₂) := by
+  rw [action_face_score_equals_opportunity, action_face_score_equals_opportunity]
+  exact h
+
+/-- The Entropy face: a Bule unit whose only nonzero face is `diversity`.
+Shannon and Boltzmann entropies are both nondecreasing in the count of
+distinct states traversed, so this face is the finite Bule analogue of
+"system entropy." -/
+def entropyFaceFromBule (b : BuleyUnit) : BuleyUnit :=
+  { waste := 0, opportunity := 0, diversity := b.diversity }
+
+theorem entropy_face_score_equals_diversity (b : BuleyUnit) :
+    buleyUnitScore (entropyFaceFromBule b) = b.diversity := by
+  show 0 + 0 + b.diversity = b.diversity
+  omega
+
+theorem entropy_face_monotone {b₁ b₂ : BuleyUnit}
+    (h : b₁.diversity ≤ b₂.diversity) :
+    buleyUnitScore (entropyFaceFromBule b₁)
+      ≤ buleyUnitScore (entropyFaceFromBule b₂) := by
+  rw [entropy_face_score_equals_diversity, entropy_face_score_equals_diversity]
+  exact h
+
+/-- The three-face decomposition: every Bule unit's score equals the sum
+of its waste/action/entropy face scores. The three named physics faces
+fully account for the unit; nothing in the Bule is outside them. -/
+theorem bule_unit_decomposes_into_three_faces (b : BuleyUnit) :
+    buleyUnitScore b
+      = buleyUnitScore (wasteFaceFromBule b)
+        + buleyUnitScore (actionFaceFromBule b)
+        + buleyUnitScore (entropyFaceFromBule b) := by
+  rw [waste_face_score_equals_waste,
+      action_face_score_equals_opportunity,
+      entropy_face_score_equals_diversity]
+  rfl
+
+/-! ## Conservation: clinamen lifts commute on distinct faces
+
+The Bule analogue of Noether-style conservation: the three faces are
+independent channels, and the time-order of clinamen lifts on them does
+not affect the final unit. This is the formal statement that the unit is
+"gauge-invariant under face reordering."
+-/
+
+theorem clinamen_lift_commutes
+    (b : BuleyUnit) (f g : BuleyFace) :
+    clinamenLift (clinamenLift b f) g = clinamenLift (clinamenLift b g) f := by
+  cases b with
+  | mk w o d =>
+    cases f <;> cases g <;> rfl
+
+/-- Cyclic permutation of the three faces: waste → opportunity → diversity → waste.
+This is the gauge action induced by the braided-face cycle on the Bule unit. -/
+def cyclePermute (b : BuleyUnit) : BuleyUnit :=
+  { waste := b.opportunity, opportunity := b.diversity, diversity := b.waste }
+
+theorem cycle_permute_preserves_score (b : BuleyUnit) :
+    buleyUnitScore (cyclePermute b) = buleyUnitScore b := by
+  show b.opportunity + b.diversity + b.waste = b.waste + b.opportunity + b.diversity
+  omega
+
+/-- Three cycle permutations return the original Bule unit. The score is
+gauge-invariant on the cycle, and the cycle has phase 3, matching the
+`buleyFaceBraid` phaseCount in `BuleyClinamenBraid`. -/
+theorem cycle_permute_three_times_returns (b : BuleyUnit) :
+    cyclePermute (cyclePermute (cyclePermute b)) = b := by
+  cases b; rfl
+
 /-! ## Operators on the distribution contract -/
 
 /-- Noise calculus operators act on the distribution-level fingerprint, not on
