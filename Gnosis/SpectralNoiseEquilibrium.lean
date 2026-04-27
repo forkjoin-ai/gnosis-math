@@ -546,6 +546,82 @@ theorem constrained_information_has_positive_physical_actuality
   unfold actualizedInformationQuanta constrainedDiffPotential
   exact Nat.mul_pos (by decide) hQuantum
 
+/-- Finite thermodynamic shadow: the selected diff becomes an actual heat-like
+cost once it is carried through a positive thermal quantum. This is the local
+shadow of the repo's Landauer surface, stated here without importing the
+heavier thermodynamic modules. -/
+structure ThermodynamicShadow where
+  heatQuantum : Nat
+
+def shadowHeatQuanta
+    (shadow : ThermodynamicShadow) (p : InformationalPotential) : Nat :=
+  actualizedInformationQuanta unitPotentialCarrier p * shadow.heatQuantum
+
+def unitThermodynamicShadow : ThermodynamicShadow := ⟨1⟩
+
+/-- Recoverable information casts a positive thermodynamic shadow when the
+thermal quantum is positive. This is the finite proxy for the Landauer link:
+selected diff becomes heat-like cost. -/
+theorem recoverable_information_casts_positive_thermodynamic_shadow
+    {p : InformationalPotential} (h : recoverableInformation p) :
+    0 < shadowHeatQuanta unitThermodynamicShadow p := by
+  unfold shadowHeatQuanta unitThermodynamicShadow
+  have hActual : 0 < actualizedInformationQuanta unitPotentialCarrier p := by
+    unfold actualizedInformationQuanta
+    exact Nat.mul_pos h.2.1 (by decide)
+  exact Nat.mul_pos hActual (by decide)
+
+/-- Bule unit: the broader carrier of operational cost in this calculus. The
+thermodynamic shadow above (Joule-per-bit) is one face of it, capturing only
+the `waste` projection. The other two faces are `opportunity` (potential left
+unspent) and `diversity` (the spread of colors the carrier had to traverse).
+The runtime projection in `spectral-noise-monitor.ts` (`BuleyProjection`)
+measures the same three faces, so the unit system is shared between Lean and
+TypeScript: joule is what a Bule looks like when you only count waste. -/
+structure BuleyUnit where
+  waste : Nat
+  opportunity : Nat
+  diversity : Nat
+
+def buleyUnitScore (b : BuleyUnit) : Nat :=
+  b.waste + b.opportunity + b.diversity
+
+/-- The Joule face: a Bule unit whose only nonzero face is `waste`, set to
+the shadow heat. This makes "joule is one case of Bule" a definition, not a
+slogan. -/
+def jouleFaceFromShadow
+    (shadow : ThermodynamicShadow) (p : InformationalPotential) : BuleyUnit :=
+  { waste := shadowHeatQuanta shadow p, opportunity := 0, diversity := 0 }
+
+/-- The joule face's score equals the underlying shadow heat: collapsing a
+Bule unit to its `waste`-only face recovers the thermodynamic shadow exactly. -/
+theorem joule_face_score_equals_shadow_heat
+    (shadow : ThermodynamicShadow) (p : InformationalPotential) :
+    buleyUnitScore (jouleFaceFromShadow shadow p) = shadowHeatQuanta shadow p := by
+  rfl
+
+/-- Joule-per-bit is a lower bound on Bule-per-bit, never the whole story:
+any Bule unit whose `waste` face dominates the shadow heat dominates the
+joule face's full score. -/
+theorem bule_unit_dominates_joule_face
+    {shadow : ThermodynamicShadow} {p : InformationalPotential}
+    {b : BuleyUnit}
+    (hWaste : shadowHeatQuanta shadow p ≤ b.waste) :
+    buleyUnitScore (jouleFaceFromShadow shadow p) ≤ buleyUnitScore b := by
+  show shadowHeatQuanta shadow p ≤ b.waste + b.opportunity + b.diversity
+  exact Nat.le_trans hWaste
+    (Nat.le_trans (Nat.le_add_right b.waste b.opportunity)
+                  (Nat.le_add_right (b.waste + b.opportunity) b.diversity))
+
+/-- Recoverable information casts a positive Bule shadow on the joule face:
+the broader unit's score is positive whenever the thermodynamic face is. The
+"Joule is just one case" identity, mechanized. -/
+theorem recoverable_information_casts_positive_bule_shadow
+    {p : InformationalPotential} (h : recoverableInformation p) :
+    0 < buleyUnitScore (jouleFaceFromShadow unitThermodynamicShadow p) := by
+  show 0 < shadowHeatQuanta unitThermodynamicShadow p
+  exact recoverable_information_casts_positive_thermodynamic_shadow h
+
 /-! ## Operators on the distribution contract -/
 
 /-- Noise calculus operators act on the distribution-level fingerprint, not on
