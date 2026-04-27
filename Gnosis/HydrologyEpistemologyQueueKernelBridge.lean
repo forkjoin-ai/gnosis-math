@@ -27,7 +27,7 @@ structure QueueBoundaryWitnessNat_HydrologyEpistemologyQueueKernelBridge where
   arrivalRate : Nat
   serviceRate : Nat
 
-def canonicalMM1Boundary (lam mu : Nat) (_h : lam < mu) : QueueBoundaryWitnessNat_HydrologyEpistemologyQueueKernelBridge :=
+def canonicalMM1Boundary_HydrologyEpistemologyQueueKernelBridge (lam mu : Nat) (_h : lam < mu) : QueueBoundaryWitnessNat_HydrologyEpistemologyQueueKernelBridge :=
   { beta1 := 0, capacity := 1, arrivalRate := lam, serviceRate := mu }
 
 theorem hydrology_runoff_yields_unit_queue_boundary
@@ -38,7 +38,7 @@ theorem hydrology_runoff_yields_unit_queue_boundary
       boundary.arrivalRate = hydro.runoff ∧
       boundary.serviceRate = 2 * hydro.runoff + 1 := by
   have h : hydro.runoff < 2 * hydro.runoff + 1 := by omega
-  exact ⟨canonicalMM1Boundary hydro.runoff (2 * hydro.runoff + 1) h, rfl, rfl, rfl, rfl⟩
+  exact ⟨canonicalMM1Boundary_HydrologyEpistemologyQueueKernelBridge hydro.runoff (2 * hydro.runoff + 1) h, rfl, rfl, rfl, rfl⟩
 
 theorem epistemology_gettier_yields_unit_queue_boundary
     (epis : EpistemologySetup) :
@@ -48,7 +48,7 @@ theorem epistemology_gettier_yields_unit_queue_boundary
       boundary.arrivalRate = epis.gettierCases ∧
       boundary.serviceRate = 2 * epis.gettierCases + 1 := by
   have h : epis.gettierCases < 2 * epis.gettierCases + 1 := by omega
-  exact ⟨canonicalMM1Boundary epis.gettierCases (2 * epis.gettierCases + 1) h, rfl, rfl, rfl, rfl⟩
+  exact ⟨canonicalMM1Boundary_HydrologyEpistemologyQueueKernelBridge epis.gettierCases (2 * epis.gettierCases + 1) h, rfl, rfl, rfl, rfl⟩
 
 theorem hydrology_epistemology_budget_yields_unit_queue_boundary
     (hydro : HydrologySetup) (epis : EpistemologySetup)
@@ -59,7 +59,7 @@ theorem hydrology_epistemology_budget_yields_unit_queue_boundary
       boundary.arrivalRate = hydro.runoff ∧
       boundary.serviceRate = 2 * epis.gettierCases + 1 := by
   have h : hydro.runoff < 2 * epis.gettierCases + 1 := by omega
-  exact ⟨canonicalMM1Boundary hydro.runoff (2 * epis.gettierCases + 1) h, rfl, rfl, rfl, rfl⟩
+  exact ⟨canonicalMM1Boundary_HydrologyEpistemologyQueueKernelBridge hydro.runoff (2 * epis.gettierCases + 1) h, rfl, rfl, rfl, rfl⟩
 
 theorem hydrology_epistemology_budget_does_not_force_positive_beta1
     (hydro : HydrologySetup) (epis : EpistemologySetup)

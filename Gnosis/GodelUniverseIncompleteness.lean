@@ -7,7 +7,7 @@ variable (Universe : Nat)
 -- The Observer is a localized node embedded INSIDE the universe.
 -- Because the observer is a strict subset of the universe, their structural 
 -- and computational capacity is strictly less than the universe.
-def EmbeddedObserver (Universe ObserverCapacity : Nat) : Prop := 
+def EmbeddedObserver_GodelUniverseIncompleteness (Universe ObserverCapacity : Nat) : Prop := 
   ObserverCapacity < Universe
 
 -- A Model is the observer's formal mapping of reality (a theory, a simulation, a belief).
@@ -20,7 +20,7 @@ def ValidModel (ObserverCapacity ModelCapacity : Nat) : Prop :=
 -- to be strictly smaller than the universe. 
 -- There will always be true statements in the universe that the model cannot capture.
 theorem universal_incompleteness {U O M : Nat} 
-  (h_embed : EmbeddedObserver U O) 
+  (h_embed : EmbeddedObserver_GodelUniverseIncompleteness U O) 
   (h_valid : ValidModel O M) : 
   M < U := by
   -- By transitivity: if the model fits in the observer (M ≤ O), 
@@ -33,7 +33,7 @@ theorem universal_incompleteness {U O M : Nat}
 -- and captures the entire universe (M ≥ U), the system is formally inconsistent (it derives False).
 -- You cannot prove your own completeness without breaking reality.
 theorem omniscience_is_inconsistent {U O M : Nat} 
-  (h_embed : EmbeddedObserver U O) 
+  (h_embed : EmbeddedObserver_GodelUniverseIncompleteness U O) 
   (h_valid : ValidModel O M) 
   (claim_omniscience : M ≥ U) : 
   False := by

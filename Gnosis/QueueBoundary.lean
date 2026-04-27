@@ -17,7 +17,7 @@ structure QueueBoundaryWitness where
 deriving DecidableEq, Repr
 
 /-- Canonical M/M/1 boundary synthesis. -/
-def canonicalMM1Boundary (lam mu : BuleReal) (h_lam : 0 <= lam) (h_mu : 0 < mu) (h_stable : lam < mu) : QueueBoundaryWitness :=
+def canonicalMM1Boundary_QueueBoundary (lam mu : BuleReal) (h_lam : 0 <= lam) (h_mu : 0 < mu) (h_stable : lam < mu) : QueueBoundaryWitness :=
   let rho := BuleReal.div lam mu
   let W := BuleReal.div BuleReal.one (mu - lam)
   { beta1 := 0
@@ -27,10 +27,10 @@ def canonicalMM1Boundary (lam mu : BuleReal) (h_lam : 0 <= lam) (h_mu : 0 < mu) 
     occupancy := rho
     residenceTime := W }
 
-theorem canonicalMM1Boundary_beta1_zero (lam mu : BuleReal) (h1 h2 h3) :
-    (canonicalMM1Boundary lam mu h1 h2 h3).beta1 = 0 := rfl
+theorem canonicalMM1Boundary_QueueBoundary_beta1_zero (lam mu : BuleReal) (h1 h2 h3) :
+    (canonicalMM1Boundary_QueueBoundary lam mu h1 h2 h3).beta1 = 0 := rfl
 
-theorem canonicalMM1Boundary_capacity_eq_one (lam mu : BuleReal) (h1 h2 h3) :
-    (canonicalMM1Boundary lam mu h1 h2 h3).capacity = BuleReal.one := rfl
+theorem canonicalMM1Boundary_QueueBoundary_capacity_eq_one (lam mu : BuleReal) (h1 h2 h3) :
+    (canonicalMM1Boundary_QueueBoundary lam mu h1 h2 h3).capacity = BuleReal.one := rfl
 
 end Gnosis

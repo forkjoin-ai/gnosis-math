@@ -15,7 +15,7 @@ structure QuerySchedule where
   batchedQueries : Nat
   loopQueries : Nat
 
-def canonicalMM1Boundary (lam mu : Nat) (_hlam_nonneg : 0 ≤ lam) (_hmu_pos : 0 < mu) (_hlam_lt_mu : lam < mu) : QueueBoundaryWitness :=
+def canonicalMM1Boundary_ZeckendorfBatchingQueueKernelBridge (lam mu : Nat) (_hlam_nonneg : 0 ≤ lam) (_hmu_pos : 0 < mu) (_hlam_lt_mu : lam < mu) : QueueBoundaryWitness :=
   { beta1 := 0, capacity := 1, arrivalRate := lam, serviceRate := mu }
 
 -- Cross-domain bridge 1: Zeckendorf Gap
@@ -32,7 +32,7 @@ theorem zeckendorf_gap_yields_unit_queue_boundary
   have hlt_nat : n - fib (k + 2) < fib (k + 1) := remainder_bound n k hLower hUpper
   have hmu_pos : 0 < fib (k + 1) := by omega
   have hlam_lt_mu : n - fib (k + 2) < fib (k + 1) := hlt_nat
-  exact ⟨canonicalMM1Boundary (n - fib (k + 2)) (fib (k + 1)) hlam_nonneg hmu_pos hlam_lt_mu, rfl, rfl, rfl, rfl⟩
+  exact ⟨canonicalMM1Boundary_ZeckendorfBatchingQueueKernelBridge (n - fib (k + 2)) (fib (k + 1)) hlam_nonneg hmu_pos hlam_lt_mu, rfl, rfl, rfl, rfl⟩
 
 -- Cross-domain bridge 2: Batching
 theorem zeckendorf_batching_yields_unit_queue_boundary
@@ -48,7 +48,7 @@ theorem zeckendorf_batching_yields_unit_queue_boundary
   have hwpos : 0 < wasted := Nat.lt_of_succ_le hwasted
   have hlt_nat : s.batchedQueries < s.loopQueries := by omega
   have hmu_pos : 0 < s.loopQueries := by omega
-  exact ⟨canonicalMM1Boundary s.batchedQueries s.loopQueries hlam_nonneg hmu_pos hlt_nat, rfl, rfl, rfl, rfl⟩
+  exact ⟨canonicalMM1Boundary_ZeckendorfBatchingQueueKernelBridge s.batchedQueries s.loopQueries hlam_nonneg hmu_pos hlt_nat, rfl, rfl, rfl, rfl⟩
 
 -- Contrarian anti-theorem
 theorem zeckendorf_batching_does_not_force_positive_beta1

@@ -85,7 +85,7 @@ structure QueueBoundaryWitnessNat_KataZeckendorfHarrisQuorumBridge where
   occupancy : Nat
   residenceTime : Nat
 
-def canonicalMM1Boundary (lam mu : Nat) (_h : lam < mu) : QueueBoundaryWitnessNat_KataZeckendorfHarrisQuorumBridge :=
+def canonicalMM1Boundary_KataZeckendorfHarrisQuorumBridge (lam mu : Nat) (_h : lam < mu) : QueueBoundaryWitnessNat_KataZeckendorfHarrisQuorumBridge :=
   { beta1 := 0, capacity := 1, arrivalRate := lam, serviceRate := mu
     occupancy := lam, residenceTime := 1 }
 
@@ -102,7 +102,7 @@ theorem kata_zeckendorf_quorum_embedding_yields_unit_boundary
     rw [hReplica]
     have : kataZeckendorfBudget = 4 := kataZeckendorfBudget_eq_four
     omega
-  · refine ⟨canonicalMM1Boundary kataZeckendorfBudget (kataZeckendorfBudget + 1)
+  · refine ⟨canonicalMM1Boundary_KataZeckendorfHarrisQuorumBridge kataZeckendorfBudget (kataZeckendorfBudget + 1)
         (Nat.lt_succ_self _), rfl, rfl, ?_⟩
     show kataZeckendorfBudget = kataZeckendorfBudget * 1
     rw [Nat.mul_one]
@@ -113,7 +113,7 @@ theorem kata_zeckendorf_harris_alignment_does_not_force_positive_beta1 :
         boundary.serviceRate = kataZeckendorfBudget + 1 →
         0 < boundary.beta1) := by
   intro hPositive
-  let boundary := canonicalMM1Boundary kataZeckendorfBudget (kataZeckendorfBudget + 1)
+  let boundary := canonicalMM1Boundary_KataZeckendorfHarrisQuorumBridge kataZeckendorfBudget (kataZeckendorfBudget + 1)
     (Nat.lt_succ_self _)
   have hPos : 0 < boundary.beta1 := hPositive boundary rfl rfl
   have hZero : boundary.beta1 = 0 := rfl
@@ -146,7 +146,7 @@ theorem kata_zeckendorf_alignment_does_not_force_residence_time_gt_one :
         boundary.serviceRate = kataZeckendorfBudget + 1 →
         1 < boundary.residenceTime) := by
   intro hRes
-  let boundary := canonicalMM1Boundary kataZeckendorfBudget (kataZeckendorfBudget + 1)
+  let boundary := canonicalMM1Boundary_KataZeckendorfHarrisQuorumBridge kataZeckendorfBudget (kataZeckendorfBudget + 1)
     (Nat.lt_succ_self _)
   have hGt : 1 < boundary.residenceTime := hRes boundary rfl rfl
   have hEq : boundary.residenceTime = 1 := rfl

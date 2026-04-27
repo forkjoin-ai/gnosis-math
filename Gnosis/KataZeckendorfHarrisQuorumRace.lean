@@ -10,7 +10,7 @@ Init-only Kata-Zeckendorf-Harris quorum race.
 
 Reuses the `Nat`-typed structures defined in the Bridge module
 (`MultiLevelHarrisWitnessNat`, `GeometricErgodicityRateNat_KataZeckendorfHarrisQuorumBridge`,
-`QueueBoundaryWitnessNat_KataZeckendorfHarrisQuorumRace`, `kataZeckendorfBudget`).
+`QueueBoundaryWitnessNat_KataZeckendorfHarrisQuorumBridge`, `kataZeckendorfBudget`).
 -/
 
 theorem kata_zeckendorf_gap_hypothesis_from_source :
@@ -51,19 +51,19 @@ theorem kata_zeckendorf_budget_majority_rate_embedding_yields_unit_boundary
     {replicaCount : Nat}
     (hReplica : replicaCount = 2 * kataZeckendorfBudget + 1) :
     kataZeckendorfBudget < quorumSize replicaCount kataZeckendorfBudget ∧
-    ∃ boundary : QueueBoundaryWitnessNat_KataZeckendorfHarrisQuorumRace,
+    ∃ boundary : QueueBoundaryWitnessNat_KataZeckendorfHarrisQuorumBridge,
       boundary.beta1 = 0 ∧
       boundary.capacity = 1 ∧
       boundary.occupancy = boundary.arrivalRate * boundary.residenceTime :=
   kata_zeckendorf_quorum_embedding_yields_unit_boundary hReplica
 
 theorem kata_zeckendorf_budget_does_not_force_subunit_residence_time :
-    ¬ (∀ boundary : QueueBoundaryWitnessNat_KataZeckendorfHarrisQuorumRace,
+    ¬ (∀ boundary : QueueBoundaryWitnessNat_KataZeckendorfHarrisQuorumBridge,
       boundary.arrivalRate = kataZeckendorfBudget →
       boundary.serviceRate = kataZeckendorfBudget + 1 →
       boundary.residenceTime < 1) := by
   intro hSubunit
-  let boundary : QueueBoundaryWitnessNat_KataZeckendorfHarrisQuorumRace :=
+  let boundary : QueueBoundaryWitnessNat_KataZeckendorfHarrisQuorumBridge :=
     { beta1 := 0
       capacity := 1
       arrivalRate := kataZeckendorfBudget

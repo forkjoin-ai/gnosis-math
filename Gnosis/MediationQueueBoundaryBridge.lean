@@ -21,7 +21,7 @@ structure QueueBoundaryWitnessNat_MediationQueueBoundaryBridge where
   arrivalRate : Nat
   serviceRate : Nat
 
-def canonicalMM1Boundary (lam mu : Nat) (_h : lam < mu) : QueueBoundaryWitnessNat_MediationQueueBoundaryBridge :=
+def canonicalMM1Boundary_MediationQueueBoundaryBridge (lam mu : Nat) (_h : lam < mu) : QueueBoundaryWitnessNat_MediationQueueBoundaryBridge :=
   { beta1 := 0, capacity := 1, arrivalRate := lam, serviceRate := mu }
 
 structure GeometricErgodicityRateNat_MediationQueueBoundaryBridge where
@@ -47,7 +47,7 @@ theorem mediation_positive_loss_yields_unit_queue_boundary
       boundary.arrivalRate = m.mediatorLoss ∧
       boundary.serviceRate = m.mediatorLoss + 1 := by
   have h : m.mediatorLoss < m.mediatorLoss + 1 := Nat.lt_succ_self _
-  exact ⟨canonicalMM1Boundary m.mediatorLoss (m.mediatorLoss + 1) h, rfl, rfl, rfl, rfl⟩
+  exact ⟨canonicalMM1Boundary_MediationQueueBoundaryBridge m.mediatorLoss (m.mediatorLoss + 1) h, rfl, rfl, rfl, rfl⟩
 
 theorem mediation_loss_does_not_force_positive_beta1
     (m : CausalMediation.MediationSetup) :

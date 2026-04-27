@@ -32,7 +32,7 @@ structure QueueBoundaryWitnessNat_TectonicTensorQueueBridge where
 
 /-- Canonical M/M/1 boundary in `Nat` form: `arrivalRate < serviceRate`,
     `beta1 = 0`, `capacity = 1`. -/
-def canonicalMM1Boundary (lam mu : Nat) (_hLamLtMu : lam < mu) : QueueBoundaryWitnessNat_TectonicTensorQueueBridge :=
+def canonicalMM1Boundary_TectonicTensorQueueBridge (lam mu : Nat) (_hLamLtMu : lam < mu) : QueueBoundaryWitnessNat_TectonicTensorQueueBridge :=
   { beta1 := 0, capacity := 1, arrivalRate := lam, serviceRate := mu }
 
 theorem tectonic_subduction_yields_unit_queue_boundary
@@ -43,7 +43,7 @@ theorem tectonic_subduction_yields_unit_queue_boundary
       b.arrivalRate = tectonicFailureBudget t ∧
       b.serviceRate = tectonicFailureBudget t + 1 := by
   have hLamLtMu : tectonicFailureBudget t < tectonicFailureBudget t + 1 := Nat.lt_succ_self _
-  exact ⟨canonicalMM1Boundary (tectonicFailureBudget t) (tectonicFailureBudget t + 1) hLamLtMu,
+  exact ⟨canonicalMM1Boundary_TectonicTensorQueueBridge (tectonicFailureBudget t) (tectonicFailureBudget t + 1) hLamLtMu,
          rfl, rfl, rfl, rfl⟩
 
 theorem tectonic_subduction_does_not_force_positive_beta1

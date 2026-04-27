@@ -27,7 +27,7 @@ structure QueueBoundaryWitnessNat_PisotAstrophysicsQueueKernelBridge where
   arrivalRate : Nat
   serviceRate : Nat
 
-def canonicalMM1Boundary (lam mu : Nat) (_h : lam < mu) : QueueBoundaryWitnessNat_PisotAstrophysicsQueueKernelBridge :=
+def canonicalMM1Boundary_PisotAstrophysicsQueueKernelBridge (lam mu : Nat) (_h : lam < mu) : QueueBoundaryWitnessNat_PisotAstrophysicsQueueKernelBridge :=
   { beta1 := 0, capacity := 1, arrivalRate := lam, serviceRate := mu }
 
 theorem pisot_dimension_yields_unit_queue_boundary
@@ -38,7 +38,7 @@ theorem pisot_dimension_yields_unit_queue_boundary
       boundary.arrivalRate = cost ∧
       boundary.serviceRate = cost + 1 := by
   intro cost
-  exact ⟨canonicalMM1Boundary cost (cost + 1) (Nat.lt_succ_self _), rfl, rfl, rfl⟩
+  exact ⟨canonicalMM1Boundary_PisotAstrophysicsQueueKernelBridge cost (cost + 1) (Nat.lt_succ_self _), rfl, rfl, rfl⟩
 
 theorem astrophysics_shadow_yields_unit_queue_boundary
     (shadow : CelestialShadow) (_h_visible : 0 < visibleBudget shadow) :
@@ -48,7 +48,7 @@ theorem astrophysics_shadow_yields_unit_queue_boundary
       boundary.arrivalRate = budget ∧
       boundary.serviceRate = budget + 1 := by
   intro budget
-  exact ⟨canonicalMM1Boundary budget (budget + 1) (Nat.lt_succ_self _), rfl, rfl, rfl⟩
+  exact ⟨canonicalMM1Boundary_PisotAstrophysicsQueueKernelBridge budget (budget + 1) (Nat.lt_succ_self _), rfl, rfl, rfl⟩
 
 theorem pisot_astrophysics_budget_yields_unit_queue_boundary
     (d : Nat) (shadow : CelestialShadow) (_hd_pos : 0 < d) :
@@ -58,7 +58,7 @@ theorem pisot_astrophysics_budget_yields_unit_queue_boundary
       boundary.arrivalRate = budget ∧
       boundary.serviceRate = budget + 1 := by
   intro budget
-  exact ⟨canonicalMM1Boundary budget (budget + 1) (Nat.lt_succ_self _), rfl, rfl, rfl⟩
+  exact ⟨canonicalMM1Boundary_PisotAstrophysicsQueueKernelBridge budget (budget + 1) (Nat.lt_succ_self _), rfl, rfl, rfl⟩
 
 theorem pisot_astrophysics_budget_does_not_force_positive_beta1
     (d : Nat) (shadow : CelestialShadow) (_hd_pos : 0 < d) :
@@ -68,7 +68,7 @@ theorem pisot_astrophysics_budget_does_not_force_positive_beta1
       boundary.serviceRate = budget + 1 ∧
       boundary.beta1 = 0 := by
   intro budget
-  exact ⟨canonicalMM1Boundary budget (budget + 1) (Nat.lt_succ_self _), rfl, rfl, rfl⟩
+  exact ⟨canonicalMM1Boundary_PisotAstrophysicsQueueKernelBridge budget (budget + 1) (Nat.lt_succ_self _), rfl, rfl, rfl⟩
 
 structure GeometricErgodicityRateNat_PisotAstrophysicsQueueKernelBridge where
   numerator : Nat
