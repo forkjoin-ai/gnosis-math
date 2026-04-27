@@ -643,6 +643,7 @@ import Gnosis.SleepDebtWeightedSchedule
 import Gnosis.SleepQuorumQueueMoonshots
 import Gnosis.SlidingWindowGlobalMix
 import Gnosis.SolvableGroupS3
+import Gnosis.SpectralNoiseEquilibrium
 import Gnosis.SpectralSparsification
 import Gnosis.SpeculativeDecodingCorrectness
 import Gnosis.SpeculativePrefill
