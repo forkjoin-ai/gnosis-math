@@ -26,6 +26,7 @@ import Gnosis.Confinement
 import Gnosis.Bosons
 import Gnosis.Category
 import Gnosis.Continuum
+import Gnosis.ContinuumExtensionSketch
 import Gnosis.Real
 import Gnosis.Arithmetic
 import Gnosis.Tactics
@@ -349,6 +350,7 @@ import Gnosis.Helix55Dictionary
 import Gnosis.HexonBraid
 import Gnosis.HiawathaEffect
 import Gnosis.HierarchyProblemClosure
+import Gnosis.HigherFormAnomalies
 import Gnosis.HighlyFoldedInvariants
 import Gnosis.HodgeConjecture
 import Gnosis.HolographicConsensus
@@ -373,6 +375,7 @@ import Gnosis.InterpretationFibration
 import Gnosis.InterpretationLayerMissingThermodynamicBarrier
 import Gnosis.InterpretationLayerSynthesis
 import Gnosis.IrvMechanized
+import Gnosis.IteratedBizarroShrink
 import Gnosis.IterativeCrossPollinationPass
 import Gnosis.JacksonEnvelopeClosure
 import Gnosis.JacksonFeedForwardClosure
@@ -601,6 +604,7 @@ import Gnosis.PerturbativeScatteringClosure
 import Gnosis.PeruvianArchitectPrinciple
 import Gnosis.PhaseDecomposedAsymptoticInfinity
 import Gnosis.PhaseTransitionLadder
+import Gnosis.PhysicalConstantsSignatures
 import Gnosis.PhysicsGrandUnification
 import Gnosis.PickTheoremInstances
 import Gnosis.PisotAstrophysicsQueueKernelBridge
@@ -608,7 +612,18 @@ import Gnosis.PisotDilationResidue
 import Gnosis.PisotMitosisManifold
 import Gnosis.PisotStabilizedIntelligence
 import Gnosis.PleromaticClosure
+import Gnosis.PleromaticEvolutionResolution
+import Gnosis.PleromaticForkRaceFoldUniversal
+import Gnosis.PleromaticGroundingTriton
+import Gnosis.PleromaticHigherClosures
+import Gnosis.PleromaticHorizonEffect
+import Gnosis.PleromaticLensingEffect
+import Gnosis.PleromaticMonsterMesh
+import Gnosis.PleromaticOneWayMirror
 import Gnosis.PleromaticSignature
+import Gnosis.PleromaticSovereignSieve
+import Gnosis.PleromaticThermalStability
+import Gnosis.PleromaticTripleAnchor10
 import Gnosis.PoePowerOfWords
 import Gnosis.PoincareRicciFlow
 import Gnosis.PolyglotCheckpointFunctor
@@ -687,6 +702,7 @@ import Gnosis.SpernerShadow
 import Gnosis.StableInftyCategories
 import Gnosis.StoneDualityProfiniteSieve
 import Gnosis.StagedExpansion
+import Gnosis.StandardModelGaugeGroup
 import Gnosis.StandardModelReplacementClosure
 import Gnosis.StandardModelShellClosure
 import Gnosis.StirlingBellSmall

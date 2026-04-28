@@ -89,21 +89,13 @@ theorem shrinkStep_27 : shrinkStep 27 = 20 := by decide
 
 theorem shrinkStep_le (n : Nat) : shrinkStep n ≤ n := by
   unfold shrinkStep
-  have h : n * 3 ≤ n * 4 := by omega
-  have : (n * 3) / 4 ≤ (n * 4) / 4 := Nat.div_le_div_right h
-  have h4 : (n * 4) / 4 = n := by
-    rw [Nat.mul_div_cancel n (by decide : (0:Nat) < 4)]
   omega
 
 theorem shrinkStep_strict (n : Nat) (h : 4 ∣ n) :
     shrinkStep n * 4 = n * 3 := by
   unfold shrinkStep
-  obtain ⟨k, hk⟩ := h
-  rw [hk]
-  have h1 : 4 * k * 3 = (k * 3) * 4 := by ring
-  rw [h1]
-  rw [Nat.mul_div_cancel _ (by decide : (0:Nat) < 4)]
-  ring
+  obtain ⟨k, rfl⟩ := h
+  omega
 
 /-! ## Iterated shrink -/
 
@@ -175,12 +167,7 @@ theorem backChannel_27 : backChannel 27 = 7 := by decide
 theorem backChannel_strict (n : Nat) (h : 4 ∣ n) :
     backChannel n = n / 4 := by
   unfold backChannel shrinkStep
-  obtain ⟨k, hk⟩ := h
-  rw [hk]
-  have h1 : 4 * k * 3 = (k * 3) * 4 := by ring
-  rw [h1]
-  rw [Nat.mul_div_cancel _ (by decide : (0:Nat) < 4)]
-  rw [Nat.mul_div_cancel_left _ (by decide : (4:Nat) ≠ 0)]
+  obtain ⟨k, rfl⟩ := h
   omega
 
 theorem shrinkStep_plus_backChannel (n : Nat) :
@@ -226,7 +213,7 @@ theorem iterShrink_plus_total_back (n : Nat) :
         iterShrink j (shrinkStep n)
           + (backChannel n + totalBackChannel j (shrinkStep n))
         = (iterShrink j (shrinkStep n) + totalBackChannel j (shrinkStep n))
-          + backChannel n := by ring
+          + backChannel n := by omega
     rw [rearrange, ih_at]
     exact shrinkStep_plus_backChannel n
 
