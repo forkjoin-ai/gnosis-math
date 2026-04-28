@@ -617,6 +617,7 @@ import Gnosis.PleromaticEvolutionResolution
 import Gnosis.PleromaticForkRaceFoldUniversal
 import Gnosis.PleromaticGroundingTriton
 import Gnosis.PleromaticHigherClosures
+import Gnosis.PneumaVoiceFlac
 import Gnosis.PleromaticHorizonEffect
 import Gnosis.PleromaticLensingEffect
 import Gnosis.PleromaticMonsterMesh
