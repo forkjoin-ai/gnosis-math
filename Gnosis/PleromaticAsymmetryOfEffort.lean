@@ -73,14 +73,8 @@ theorem ascent_cost_is_double_closure (n : Nat) :
     ascentCost n = 2 * closureChain n := by
   unfold ascentCost
   rw [closure_chain_step_alt]
-  -- 3 * closureChain n - closureChain n = 2 * closureChain n
-  have h : 3 * closureChain n - closureChain n = 2 * closureChain n := by
-    -- 3c - c = 2c
-    -- equivalently: 2c + c = 3c
-    have : 2 * closureChain n + closureChain n = 3 * closureChain n := by
-      rw [Nat.succ_mul, Nat.succ_mul, Nat.one_mul]
-    omega
-  exact h
+  -- Goal: 3 * closureChain n - closureChain n = 2 * closureChain n
+  omega
 
 /-- Concrete ascent costs for the first few closures. -/
 theorem ascent_costs_concrete :
@@ -150,10 +144,10 @@ multiplier matches the Triton-stretch factor. -/
 theorem ascent_cost_triples_per_level (n : Nat) :
     ascentCost (n + 1) = 3 * ascentCost n := by
   rw [ascent_cost_is_double_closure, ascent_cost_is_double_closure]
-  -- 2 * closureChain (n+1) = 3 * (2 * closureChain n)
+  -- Goal: 2 * closureChain (n+1) = 3 * (2 * closureChain n)
   rw [closure_chain_step_alt]
-  -- 2 * (3 * closureChain n) = 3 * (2 * closureChain n)
-  rw [← Nat.mul_assoc, ← Nat.mul_assoc, Nat.mul_comm 2 3]
+  -- Goal: 2 * (3 * closureChain n) = 3 * (2 * closureChain n)
+  rw [← Nat.mul_assoc 2 3, Nat.mul_comm 2 3, Nat.mul_assoc]
 
 /-- Total cost of ascending from the grounding (closureChain 0) to
 closureChain (n + 1): the sum of all step-costs along the way. By
