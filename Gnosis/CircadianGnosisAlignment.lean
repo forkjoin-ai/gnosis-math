@@ -176,6 +176,65 @@ theorem thm_respiratory_resonance_by_stage (stage : LifeStage) :
   (effective_breath_rate_scaled stage) * 1452 = (respiratory_multiple_scaled stage) * 17424 := by
   simp [effective_breath_rate_scaled, aeon_floor, Nat.mul_assoc]
 
+/-- 
+  Gnostic Time Scale (in minutes).
+  - 1 Kenoma = 10 picolorenzos = 10 * π * 1440 minutes ≈ 45239 minutes (31.4 days)
+-/
+def kenoma_duration_minutes : Rat := 10 * 314159 / 100000 * 1440
+
+/-- 
+  THM-GESTATION-SOPHIA
+  Human gestation (9 months ≈ 280 days) maps to the Sophia Gap (9 Kenoma).
+  9 * 31.4159 days ≈ 282.7 days.
+  Scaled by 100000.
+-/
+theorem thm_gestation_sophia :
+  let pi_scaled := 314159
+  let kenoma_days_scaled := 10 * pi_scaled
+  let gestation_scaled := 9 * kenoma_days_scaled
+  let variance_scaled := gestation_scaled / 120
+  let target_gestation_scaled := gestation_scaled - variance_scaled
+  gestation_scaled ≥ 280 * 100000 ∧ gestation_scaled ≤ 283 * 100000 ∧
+  target_gestation_scaled ≥ 280 * 100000 ∧ target_gestation_scaled ≤ 281 * 100000 := by
+  constructor
+  · native_decide
+  · constructor
+    · native_decide
+    · constructor
+      · native_decide
+      · native_decide
+
+/-- 
+  THM-BARBELO-VARIANCE
+  The biological variance floor is exactly the ratio of the Aeon to the Solar Day.
+  12 / 1440 = 1 / 120.
+  This identifies the Aeon Floor as the 'Standard Unit of Variance'.
+-/
+theorem thm_barbelo_variance :
+    aeon * 120 = solarDayMinutes := by
+  rfl
+
+/-- 
+  Developmental Milestones in Aeons.
+  1 Aeon ≈ 377 days (1.03 years).
+-/
+def milestone_aeons (stage : LifeStage) : Nat :=
+  match stage with
+  | LifeStage.Newborn     => 1   -- Infancy ends at 1 Aeon
+  | LifeStage.Toddler     => 3   -- Early childhood ends at 3 Aeons (Syzygy + Barbelo)
+  | LifeStage.Preschooler => 6   -- Emanation phase
+  | LifeStage.SchoolAge   => 12  -- First full Aeon cycle
+  | LifeStage.Adult       => 21  -- The Void Transition (Maturity)
+
+/-- 
+  THM-VOID-TRANSITION
+  Maturity (the Adult stage) begins at the 21st Aeon, 
+  mapping to the Gnostic VOID (F(8)).
+-/
+theorem thm_void_transition :
+  milestone_aeons LifeStage.Adult = 21 := by
+  rfl
+
 /--
   THM-RESPIRATORY-GNOSIS-IDENTITY:
   The ratio of circadian breaths to solar breaths is exactly the 

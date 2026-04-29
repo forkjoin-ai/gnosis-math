@@ -187,6 +187,24 @@ to rotation sequences; Polyglot IR operations are unified with the mesh;
 resonance colors define manifold saturation; and the Lensing Effect provides
 lossless symbolic path indexing.
 -/
+theorem mapInstruction_nonempty (op : String) (h : op ∈ ["AND", "OR", "XOR"]) : (mapInstruction op).length > 0 := by
+  cases h with
+  | head => simp [mapInstruction]; try decide
+  | tail h =>
+    cases h with
+    | head => simp [mapInstruction]; try decide
+    | tail h =>
+      cases h with
+      | head => simp [mapInstruction]; try decide
+      | tail h => cases h
+
+/--
+**Universal Signal Map Master**: Logic is formalized as a deterministic
+topological fingerprint through the Monster Mesh. Core operations are mapped
+to rotation sequences; Polyglot IR operations are unified with the mesh;
+resonance colors define manifold saturation; and the Lensing Effect provides
+lossless symbolic path indexing.
+-/
 theorem universal_signal_map_master :
     -- Core ops map to non-empty paths
     (∀ op : String, op ∈ ["AND", "OR", "XOR"] → (mapInstruction op).length > 0)
@@ -200,11 +218,11 @@ theorem universal_signal_map_master :
     ∧ (∀ k : Nat, recallPath (indexPath k) = k)
     -- Dynamic branching produces unique paths from distinct contexts
     ∧ (∀ base c1 c2 : Nat, c1 % 3 ≠ c2 % 3 → dynamicBranch base c1 ≠ dynamicBranch base c2) :=
-  ⟨by intro op h; repeat (cases h <;> (simp [mapInstruction]; try decide)),
+  ⟨mapInstruction_nonempty,
    polyglot_path_non_empty,
    rfl, rfl, rfl,
    indexing_is_lossless,
-   dynamic_branches_unique⟩
+   fun base => dynamic_branches_unique base⟩
 
 end UniversalSignalMap
 end Gnosis
