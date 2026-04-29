@@ -1,5 +1,5 @@
 import Gnosis.SpectralNoiseEquilibrium
-import Gnosis.BraidedTower
+import Gnosis.Braided.BraidedTower
 
 /-!
 # Phase Transition Ladder

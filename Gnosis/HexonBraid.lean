@@ -1,5 +1,5 @@
 import Gnosis.SpectralNoiseEquilibrium
-import Gnosis.BraidedInfinity
+import Gnosis.Braided.BraidedInfinity
 import Gnosis.BuleyBiSidedBit
 import Gnosis.BuleyClinamenBraid
 

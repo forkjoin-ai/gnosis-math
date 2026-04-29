@@ -4,7 +4,7 @@ import Gnosis.NahmDimensionCeiling
 import Gnosis.CentralChargeMap
 import Gnosis.MathPhysicsDimensionCorrespondence
 import Gnosis.RealityMesh
-import Gnosis.BraidedTower
+import Gnosis.Braided.BraidedTower
 
 /-!
 # Pleromatic Closure — More Than Cosmological

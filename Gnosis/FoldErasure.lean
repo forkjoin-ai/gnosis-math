@@ -1,6 +1,6 @@
 import Gnosis.DataProcessingInequality
 import Gnosis.LandauerBuley
-import Gnosis.LandauerBeautyBridge
+import Gnosis.Bridges.LandauerBeautyBridge
 import Gnosis.CoarseningThermodynamics
 import Gnosis.BeautyOptimality
 

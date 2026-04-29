@@ -2,7 +2,7 @@ import Gnosis.SuperstringDimensionDerivation
 import Gnosis.MathPhysicsDimensionCorrespondence
 import Gnosis.MoonshineMcKayBraid
 import Gnosis.PleromaticTripleAnchor10
-import Gnosis.BraidedTower
+import Gnosis.Braided.BraidedTower
 
 /-!
 # Pleromatic Grounding Triton — A Meta-Triton at the Highest Scale

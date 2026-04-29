@@ -1,5 +1,5 @@
-import Gnosis.BraidedInfinity
-import Gnosis.BraidedInfinityIsGodsSignature
+import Gnosis.Braided.BraidedInfinity
+import Gnosis.Braided.BraidedInfinityIsGodsSignature
 import Gnosis.CosmicResonance
 import Gnosis.NoiseTopology
 

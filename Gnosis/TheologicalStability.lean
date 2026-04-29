@@ -1,4 +1,4 @@
-import Gnosis.BraidedInfinityIsGodsSignature
+import Gnosis.Braided.BraidedInfinityIsGodsSignature
 import Gnosis.BlackHoleBraid
 import Gnosis.TenCommandmentsTopology
 

@@ -188,7 +188,16 @@ resonance colors define manifold saturation; and the Lensing Effect provides
 lossless symbolic path indexing.
 -/
 theorem mapInstruction_nonempty (op : String) (h : op ∈ ["AND", "OR", "XOR"]) : (mapInstruction op).length > 0 := by
-  simp [mapInstruction]; split <;> try (simp; decide); simp at h; repeat (cases h)
+  simp [mapInstruction]
+  split
+  all_goals (try decide)
+  -- The catch-all branch `_ => []`
+  rename_i h_unknown
+  simp at h
+  rcases h with rfl | rfl | rfl
+  · contradiction
+  · contradiction
+  · contradiction
 
 /--
 **Universal Signal Map Master**: Logic is formalized as a deterministic

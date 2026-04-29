@@ -1,4 +1,4 @@
-import Gnosis.VoidWalking
+import Gnosis.Void.VoidWalking
 import Gnosis.SemioticDeficit
 import Gnosis.SemioticPeace
 

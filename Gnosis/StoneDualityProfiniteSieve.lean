@@ -1,4 +1,4 @@
-import Gnosis.BraidedInfinityIsGodsSignature
+import Gnosis.Braided.BraidedInfinityIsGodsSignature
 import Gnosis.PleromaticSignature
 import Gnosis.InfinityTopologicalPlane
 import Gnosis.UnknowableAntiTheorems

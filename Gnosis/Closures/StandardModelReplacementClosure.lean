@@ -8,7 +8,7 @@ import Gnosis.DarkSectorClosure
 import Gnosis.RunningCouplingClosure
 import Gnosis.ElectroweakScatteringClosure
 import Gnosis.ScatteringAmplitudeClosure
-import Gnosis.AnomalyCancellationClosure
+import Gnosis.Closures.AnomalyCancellationClosure
 import Gnosis.ProtonRestMassCandidate
 
 namespace Gnosis

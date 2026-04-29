@@ -1,7 +1,7 @@
 import Gnosis.SpectralNoiseEquilibrium
 import Gnosis.BuleyBiSidedBit
 import Gnosis.BuleyClinamenBraid
-import Gnosis.BraidedTower
+import Gnosis.Braided.BraidedTower
 import Gnosis.PhaseTransitionLadder
 
 /-!

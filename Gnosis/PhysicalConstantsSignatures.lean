@@ -1,5 +1,5 @@
 import Gnosis.SuperstringDimensionDerivation
-import Gnosis.BraidedTower
+import Gnosis.Braided.BraidedTower
 import Gnosis.BosonSkyrmsEquilibria
 import Gnosis.StandardModelGaugeGroup
 import Gnosis.CentralChargeMap

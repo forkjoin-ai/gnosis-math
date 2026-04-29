@@ -1,4 +1,4 @@
-import Gnosis.UntanglingKnotTheory
+import Gnosis.KnotTheory.UntanglingKnotTheory
 import Gnosis.PerpetualSpiral
 import Gnosis.SpiralMachine
 import Gnosis.SpiralDeterminism

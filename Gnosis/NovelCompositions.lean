@@ -1,5 +1,5 @@
 import Gnosis.BuleyeanProbability
-import Gnosis.VoidWalking
+import Gnosis.Void.VoidWalking
 import Gnosis.Claims
 import Gnosis.NonEmpiricalPrediction
 import Gnosis.RetrocausalBound

@@ -1,6 +1,6 @@
 import Gnosis.SpectralNoiseEquilibrium
 import Gnosis.HexonBraid
-import Gnosis.BraidedTower
+import Gnosis.Braided.BraidedTower
 import Gnosis.CentralChargeMap
 
 /-!

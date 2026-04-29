@@ -1,7 +1,7 @@
 import Gnosis.SpectralNoiseEquilibrium
-import Gnosis.BraidedTower
+import Gnosis.Braided.BraidedTower
 import Gnosis.PhaseTransitionLadder
-import Gnosis.PleromaticClosure
+import Gnosis.Closures.PleromaticClosure
 import Gnosis.SuperstringDimensionDerivation
 
 /-!

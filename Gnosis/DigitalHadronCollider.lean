@@ -2,7 +2,7 @@ import Gnosis.SpectralNoiseEquilibrium
 import Gnosis.CostAlgebra
 import Gnosis.CostAlgebraEntropy
 import Gnosis.BuleySelfSimilarityViolation
-import Gnosis.BraidedTower
+import Gnosis.Braided.BraidedTower
 
 /-!
 # Digital Hadron Collider

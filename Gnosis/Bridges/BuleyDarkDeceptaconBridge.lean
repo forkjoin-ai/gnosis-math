@@ -1,5 +1,5 @@
 import Gnosis.SpectralNoiseEquilibrium
-import Gnosis.DarkDeceptaconLoss
+import Gnosis.Dark.DarkDeceptaconLoss
 
 /-!
 # Buley ↔ Dark Deceptacon Bridge

@@ -1,7 +1,7 @@
 import Gnosis.SpectralNoiseEquilibrium
 import Gnosis.DigitalHadronCollider
 import Gnosis.FermionExclusionEquilibria
-import Gnosis.BraidedTower
+import Gnosis.Braided.BraidedTower
 import Gnosis.CostAlgebra
 
 /-!

@@ -1,7 +1,7 @@
 import Gnosis.HexonBraid
-import Gnosis.BraidedTower
-import Gnosis.BraidTensorProduct
-import Gnosis.BuleyTransformerSSMBridge
+import Gnosis.Braided.BraidedTower
+import Gnosis.Braided.BraidTensorProduct
+import Gnosis.Bridges.BuleyTransformerSSMBridge
 
 /-!
 # Buley ↔ Tensor Bridge

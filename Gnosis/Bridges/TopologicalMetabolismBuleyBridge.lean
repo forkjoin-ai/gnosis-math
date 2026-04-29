@@ -1,6 +1,6 @@
 import Gnosis.TopologicalMetabolism
 import Gnosis.BuleySelfSimilarityViolation
-import Gnosis.BuleyTransformerSSMBridge
+import Gnosis.Bridges.BuleyTransformerSSMBridge
 
 /-!
 # Topological Metabolism ↔ Buley Runtime Bridge

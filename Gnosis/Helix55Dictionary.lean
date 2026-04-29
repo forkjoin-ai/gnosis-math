@@ -1,4 +1,4 @@
-import Gnosis.BraidedInfinity
+import Gnosis.Braided.BraidedInfinity
 
 set_option linter.unusedSimpArgs false
 set_option linter.unusedVariables false

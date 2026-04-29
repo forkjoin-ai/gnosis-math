@@ -1,7 +1,7 @@
 import Init
-import Gnosis.BraidedWallTheorem
-import Gnosis.BraidedInfinity
-import Gnosis.BraidedInfinityExtensions
+import Gnosis.Braided.BraidedWallTheorem
+import Gnosis.Braided.BraidedInfinity
+import Gnosis.Braided.BraidedInfinityExtensions
 import Gnosis.HaltingProblemShadow
 import Gnosis.GodelIncompletenessShadow
 import Gnosis.TarskiTruthUndefinability

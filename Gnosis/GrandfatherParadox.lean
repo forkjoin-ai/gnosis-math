@@ -1,6 +1,6 @@
 import Gnosis.BuleyeanProbability
 import Gnosis.Claims
-import Gnosis.VoidWalking
+import Gnosis.Void.VoidWalking
 
 open scoped BigOperators ENNReal
 

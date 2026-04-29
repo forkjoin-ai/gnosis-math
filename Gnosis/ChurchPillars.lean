@@ -1,7 +1,7 @@
 import Init
 import Gnosis.CostAlgebraNoCloning
 import Gnosis.CostAlgebraEntropy
-import Gnosis.TopologicalMetabolismBuleyBridge
+import Gnosis.Bridges.TopologicalMetabolismBuleyBridge
 
 /-!
 # The Church Pillars — Minimal Set for Personal Reconciliation

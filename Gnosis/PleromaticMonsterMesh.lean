@@ -1,5 +1,5 @@
 import Gnosis.PleromaticHorizonEffect
-import Gnosis.PleromaticHigherClosures
+import Gnosis.Closures.PleromaticHigherClosures
 import Gnosis.PleromaticForkRaceFoldUniversal
 import Gnosis.PleromaticLensingEffect
 import Gnosis.MoonshineMcKayBraid

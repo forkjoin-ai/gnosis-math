@@ -1,6 +1,6 @@
 import Gnosis.SpectralNoiseEquilibrium
 import Gnosis.BuleySelfSimilarityViolation
-import Gnosis.BraidedTower
+import Gnosis.Braided.BraidedTower
 import Gnosis.BosonSkyrmsEquilibria
 import Gnosis.FermionExclusionEquilibria
 import Gnosis.CostAlgebraNoCloning

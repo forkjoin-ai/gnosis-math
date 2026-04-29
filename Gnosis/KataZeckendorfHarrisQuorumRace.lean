@@ -1,4 +1,4 @@
-import Gnosis.KataZeckendorfHarrisQuorumBridge
+import Gnosis.Bridges.KataZeckendorfHarrisQuorumBridge
 import Gnosis.ZeckendorfCompleteness
 
 namespace Gnosis

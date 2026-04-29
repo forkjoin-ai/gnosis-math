@@ -1,5 +1,5 @@
 import Gnosis.PleromaticForkRaceFoldUniversal
-import Gnosis.PleromaticHigherClosures
+import Gnosis.Closures.PleromaticHigherClosures
 import Gnosis.PleromaticGroundingTriton
 
 /-!

@@ -1,4 +1,4 @@
-import Gnosis.UntanglingKnotTheory
+import Gnosis.KnotTheory.UntanglingKnotTheory
 import Gnosis.RotationPatterns
 
 namespace Gnosis

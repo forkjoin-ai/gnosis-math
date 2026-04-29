@@ -1,7 +1,7 @@
 import Gnosis.SpectralNoiseEquilibrium
 import Gnosis.BuleyClinamenBraid
 import Gnosis.HexonBraid
-import Gnosis.BraidedTower
+import Gnosis.Braided.BraidedTower
 
 /-!
 # Self-Similarity Violation

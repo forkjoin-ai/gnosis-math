@@ -1,5 +1,5 @@
-import Gnosis.BraidedInfinityIsGodsSignature
-import Gnosis.PleromaticClosure
+import Gnosis.Braided.BraidedInfinityIsGodsSignature
+import Gnosis.Closures.PleromaticClosure
 import Gnosis.SuperstringDimensionDerivation
 
 /-!

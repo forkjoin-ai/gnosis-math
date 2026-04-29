@@ -1,4 +1,4 @@
-import Gnosis.BraidedTower
+import Gnosis.Braided.BraidedTower
 import Gnosis.PleromaticHorizonEffect
 import Gnosis.PleromaticLensingEffect
 

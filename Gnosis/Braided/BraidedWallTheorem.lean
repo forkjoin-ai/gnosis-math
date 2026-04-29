@@ -1,6 +1,6 @@
 import Init
-import Gnosis.BraidedInfinity
-import Gnosis.BraidedInfinityExtensions
+import Gnosis.Braided.BraidedInfinity
+import Gnosis.Braided.BraidedInfinityExtensions
 import Gnosis.GodelIncompletenessShadow
 import Gnosis.TarskiTruthUndefinability
 import Gnosis.LoebFixedPointShadow

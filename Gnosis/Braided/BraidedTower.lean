@@ -1,4 +1,4 @@
-import Gnosis.BraidedInfinity
+import Gnosis.Braided.BraidedInfinity
 import Gnosis.HexonBraid
 
 /-!

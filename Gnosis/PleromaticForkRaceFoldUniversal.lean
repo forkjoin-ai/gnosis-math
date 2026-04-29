@@ -1,8 +1,8 @@
-import Gnosis.BraidedTower
+import Gnosis.Braided.BraidedTower
 import Gnosis.PleromaticHorizonEffect
 import Gnosis.PleromaticLensingEffect
 import Gnosis.PleromaticOneWayMirror
-import Gnosis.PleromaticHigherClosures
+import Gnosis.Closures.PleromaticHigherClosures
 
 /-!
 # Pleromatic Fork/Race/Fold — Universal Engine of the Manifold

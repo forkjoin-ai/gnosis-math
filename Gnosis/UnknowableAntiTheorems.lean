@@ -1,6 +1,6 @@
-import Gnosis.BraidedInfinityIsGodsSignature
+import Gnosis.Braided.BraidedInfinityIsGodsSignature
 import Gnosis.PleromaticSignature
-import Gnosis.VoidMineGodsPosition
+import Gnosis.Void.VoidMineGodsPosition
 import Gnosis.RealityMesh
 
 /-!

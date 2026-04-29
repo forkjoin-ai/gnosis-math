@@ -1,7 +1,7 @@
 import Gnosis.BuleyeanProbability
-import Gnosis.VoidWalking
+import Gnosis.Void.VoidWalking
 import Gnosis.MolecularTopology
-import Gnosis.CancerTopology
+import Gnosis.Cancer.CancerTopology
 
 open scoped BigOperators ENNReal
 

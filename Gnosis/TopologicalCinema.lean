@@ -1,5 +1,5 @@
 import Gnosis.PleromaticMonsterMesh
-import Gnosis.PleromaticHigherClosures
+import Gnosis.Closures.PleromaticHigherClosures
 import Gnosis.BuleyBiSidedBit
 
 /-!

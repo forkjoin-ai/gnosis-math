@@ -5,7 +5,7 @@ import Gnosis.DiversityIsConcurrency
 import Gnosis.DiversityOptimality
 import Gnosis.SemioticDeficit
 import Gnosis.SemioticPeace
-import Gnosis.UntanglingKnotTheory
+import Gnosis.KnotTheory.UntanglingKnotTheory
 
 open scoped BigOperators ENNReal
 

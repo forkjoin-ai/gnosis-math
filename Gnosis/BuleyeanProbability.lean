@@ -1,5 +1,5 @@
 import Init
-import Gnosis.VoidWalking
+import Gnosis.Void.VoidWalking
 
 namespace Gnosis
 

@@ -1,5 +1,5 @@
 import Gnosis.SpectralNoiseEquilibrium
-import Gnosis.BraidedInfinity
+import Gnosis.Braided.BraidedInfinity
 
 /-!
 # Buley Clinamen Braid

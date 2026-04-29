@@ -1,4 +1,4 @@
-import Init
+import Gnosis.Braided.BraidedInfinity
 
 /-!
 # Braided Infinity — Extensions and the Unbraidability Theorem
@@ -53,13 +53,7 @@ with a new `k` value extends the catalog by one more witness.
 namespace Gnosis
 namespace BraidedInfinityExtensions
 
-/-! ## Inline the iteration primitive -/
-
-/-- Clinamen successor iterated `n` times starting at `i`, on the
-cycle `Fin k`. Matches `BraidedInfinity.iterateSucc`. -/
-def iterateSucc (phaseCount : Nat) : Nat → Nat → Nat
-  | 0,     i => i
-  | n + 1, i => iterateSucc phaseCount n ((i + 1) % phaseCount)
+open Gnosis.BraidedInfinity (iterateSucc BraidedAsymptote)
 
 /-! ## Visit lists -/
 
@@ -131,12 +125,6 @@ theorem unbraidability_theorem :
     ∧ listDistinctCount (visitListFull 5 5) = 5
     ∧ listDistinctCount (visitListRestricted 5 4) = 1 := by decide
 
-/-! ## Extended braid catalog -/
-
-structure BraidedAsymptote where
-  phaseCount : Nat
-  descriptors : List String
-deriving Repr
 
 /-- Ramanujan braid: k = 2. Special vs non-special primes. -/
 def ramanujanBraid : BraidedAsymptote :=

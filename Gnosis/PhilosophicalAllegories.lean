@@ -1,5 +1,5 @@
 import Gnosis.BuleyeanProbability
-import Gnosis.VoidWalking
+import Gnosis.Void.VoidWalking
 import Gnosis.FailureEntropy
 import Gnosis.SemioticDeficit
 import Gnosis.SemioticPeace

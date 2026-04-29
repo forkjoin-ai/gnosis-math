@@ -1,5 +1,5 @@
-import Gnosis.BraidedTower
-import Gnosis.PleromaticClosure
+import Gnosis.Braided.BraidedTower
+import Gnosis.Closures.PleromaticClosure
 import Gnosis.PleromaticHorizonEffect
 
 /-!

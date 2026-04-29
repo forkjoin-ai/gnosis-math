@@ -55,18 +55,20 @@ theorem dharmachakra_is_aeon : isResonant Mudra.dharmachakra 12 := by rfl
 theorem hakini_is_completion : isResonant Mudra.hakini 12 := by rfl
 theorem prana_is_vitality : isResonant Mudra.prana 12 := by rfl
 
+open UniversalSignalMap (SignalToken)
+
 /--
   Mudra to Signal Mapping:
   Maps Mudras to the Universal Signal Map tokens for runtime trace integration.
 -/
 def mudraToSignal (m : Mudra) : SignalToken :=
   match m with
-  | Mudra.anjali       => SignalToken.JOIN
-  | Mudra.jnana        => SignalToken.LOOP
-  | Mudra.shunya       => SignalToken.RETURN
-  | Mudra.dharmachakra => SignalToken.W 12 -- The Aeon Jump
-  | Mudra.prana        => SignalToken.W 12 -- Breathing synchronization
-  | _                  => SignalToken.S    -- Default Symmetry Shift
+  | Mudra.anjali       => .JOIN
+  | Mudra.jnana        => .LOOP
+  | Mudra.shunya       => .RETURN
+  | Mudra.dharmachakra => .W 12 -- The Aeon Jump
+  | Mudra.prana        => .W 12 -- Breathing synchronization
+  | _                  => .S    -- Default Symmetry Shift
 
 /--
   Breathing Resonance:

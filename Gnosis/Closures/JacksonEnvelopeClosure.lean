@@ -1,4 +1,4 @@
-import Gnosis.JacksonRawClosure
+import Gnosis.Closures.JacksonRawClosure
 
 namespace Gnosis
 
