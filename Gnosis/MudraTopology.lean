@@ -2,6 +2,7 @@ import Gnosis.Logic
 import Gnosis.Numbers
 import Gnosis.BuleyeanLogic
 import Gnosis.UniversalSignalMap
+import Gnosis.CircadianGnosisAlignment
 
 namespace Gnosis
 
@@ -65,5 +66,14 @@ def mudraToSignal (m : Mudra) : SignalToken :=
   | Mudra.shunya       => SignalToken.RETURN
   | Mudra.dharmachakra => SignalToken.W 12 -- The Aeon Jump
   | _                  => SignalToken.S    -- Default Symmetry Shift
+
+/--
+  Breathing Resonance:
+  A Mudra resonates with the biological clock (Aeon Floor) when its
+  structural constant matches the resting breath rate.
+-/
+theorem prana_matches_aeon_floor :
+  mudraToConstant Mudra.dharmachakra = Gnosis.Circadian.aeon := by
+  rfl
 
 end Gnosis

@@ -1,6 +1,0 @@
-import Init
-import Gnosis.DecompositionTopology
-import Gnosis.ReinforcementTopology
-
-set_option linter.unusedSimpArgs false
-set_option linter.unusedVariables false

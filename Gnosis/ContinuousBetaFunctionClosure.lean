@@ -1,5 +1,0 @@
-import Gnosis.AnomalyCancellationClosure
-
-namespace Gnosis
-
-noncomputable section

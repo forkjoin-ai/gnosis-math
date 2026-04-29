@@ -1,6 +1,0 @@
-import Init
-import Gnosis.NegotiationTopology
-import Gnosis.InductiveReidemeister
-
-set_option linter.unusedSimpArgs false
-set_option linter.unusedVariables false

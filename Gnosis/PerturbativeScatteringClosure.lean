@@ -1,6 +1,0 @@
-import Gnosis.ContinuousBetaFunctionClosure
-import Gnosis.ScatteringAmplitudeClosure
-
-namespace Gnosis
-
-noncomputable section

@@ -1,5 +1,0 @@
-import Gnosis.ParticleTheoryCoreClosure
-
-namespace Gnosis
-
-noncomputable section

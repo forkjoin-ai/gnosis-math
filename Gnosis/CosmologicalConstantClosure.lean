@@ -1,5 +1,0 @@
-import Gnosis.DarkSectorForceLawClosure
-
-namespace Gnosis
-
-noncomputable section

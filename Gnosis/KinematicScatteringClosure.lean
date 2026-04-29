@@ -1,5 +1,0 @@
-import Gnosis.ScatteringAmplitudeClosure
-
-namespace Gnosis
-
-noncomputable section

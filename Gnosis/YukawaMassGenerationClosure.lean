@@ -1,6 +1,0 @@
-import Gnosis.GaugeRepresentationClosure
-import Gnosis.FermionChargeClosure
-
-namespace Gnosis
-
-noncomputable section
