@@ -15,14 +15,15 @@ namespace Gnosis
 -/
 
 inductive Mudra where
-  | prithvi    -- Earth/Grounding
-  | jnana      -- Wisdom/Return
-  | anjali     -- Unity/Offering
-  | dhyana     -- Meditation/Stability
-  | shunya     -- Void/Reduction
-  | ganesha    -- Barrier/Strength
+  | prithvi      -- Earth/Grounding
+  | jnana        -- Wisdom/Return
+  | anjali       -- Unity/Offering
+  | dhyana       -- Meditation/Stability
+  | shunya       -- Void/Reduction
+  | ganesha      -- Barrier/Strength
   | dharmachakra -- Cycle/Completion
-  | hakini     -- Integration/Focus
+  | hakini       -- Integration/Focus
+  | prana        -- Breathing/Vitality
   deriving Repr, DecidableEq
 
 def mudraToConstant : Mudra → Nat
@@ -34,6 +35,7 @@ def mudraToConstant : Mudra → Nat
   | Mudra.ganesha      => 4
   | Mudra.dharmachakra => 12
   | Mudra.hakini       => 12
+  | Mudra.prana        => 12
 
 /--
   Resonance Invariant:
@@ -43,17 +45,15 @@ def mudraToConstant : Mudra → Nat
 def isResonant (m : Mudra) (constant : Nat) : Prop :=
   mudraToConstant m = constant
 
-theorem anjali_is_unity : isResonant Mudra.anjali 1 := by
-  simp [isResonant, mudraToConstant]
-
-theorem jnana_is_triad : isResonant Mudra.jnana 3 := by
-  simp [isResonant, mudraToConstant]
-
-theorem dhyana_is_luminary : isResonant Mudra.dhyana 4 := by
-  simp [isResonant, mudraToConstant]
-
-theorem dharmachakra_is_aeon : isResonant Mudra.dharmachakra 12 := by
-  simp [isResonant, mudraToConstant]
+theorem prithvi_is_sliver : isResonant Mudra.prithvi 1 := by rfl
+theorem anjali_is_unity : isResonant Mudra.anjali 1 := by rfl
+theorem jnana_is_triad : isResonant Mudra.jnana 3 := by rfl
+theorem shunya_is_void : isResonant Mudra.shunya 3 := by rfl
+theorem dhyana_is_luminary : isResonant Mudra.dhyana 4 := by rfl
+theorem ganesha_is_shield : isResonant Mudra.ganesha 4 := by rfl
+theorem dharmachakra_is_aeon : isResonant Mudra.dharmachakra 12 := by rfl
+theorem hakini_is_completion : isResonant Mudra.hakini 12 := by rfl
+theorem prana_is_vitality : isResonant Mudra.prana 12 := by rfl
 
 /--
   Mudra to Signal Mapping:
@@ -65,6 +65,7 @@ def mudraToSignal (m : Mudra) : SignalToken :=
   | Mudra.jnana        => SignalToken.LOOP
   | Mudra.shunya       => SignalToken.RETURN
   | Mudra.dharmachakra => SignalToken.W 12 -- The Aeon Jump
+  | Mudra.prana        => SignalToken.W 12 -- Breathing synchronization
   | _                  => SignalToken.S    -- Default Symmetry Shift
 
 /--
@@ -73,7 +74,7 @@ def mudraToSignal (m : Mudra) : SignalToken :=
   structural constant matches the resting breath rate.
 -/
 theorem prana_matches_aeon_floor :
-  mudraToConstant Mudra.dharmachakra = Gnosis.Circadian.aeon := by
+  mudraToConstant Mudra.prana = Gnosis.Circadian.aeon := by
   rfl
 
 end Gnosis
