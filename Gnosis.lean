@@ -566,6 +566,7 @@ import Gnosis.MoonshotWitnessGapTensegrityBridge
 import Gnosis.MoonshotWitnessGapTopologicalBraid
 import Gnosis.MotivicCohomology
 import Gnosis.MovingSofaTopology
+import Gnosis.MudraTopology
 import Gnosis.Multiplexing
 import Gnosis.NamingBeforeReduction
 import Gnosis.NahmDimensionCeiling

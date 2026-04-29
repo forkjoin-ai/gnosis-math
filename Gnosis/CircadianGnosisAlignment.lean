@@ -46,8 +46,7 @@ def circadianDrift : Nat := humanCircadianMinutes - solarDayMinutes
   The 12-minute drift of the human circadian rhythm is exactly one Aeon.
 -/
 theorem drift_is_aeon : circadianDrift = aeon := by
-  unfold circadianDrift humanCircadianMinutes solarDayMinutes minutesPerDay hoursPerDay minutesPerHour aeon syzygy primitives
-  native_decide
+  rfl
 
 /-- 
   THM-CIRCADIAN-DAY-DECOMPOSITION:
@@ -55,8 +54,7 @@ theorem drift_is_aeon : circadianDrift = aeon := by
   the scaling Aeon, and the Kenoma. 1440 = 12 * 12 * 10.
 -/
 theorem day_is_aeon_sq_mul_kenoma : solarDayMinutes = aeon * aeon * kenoma := by
-  unfold solarDayMinutes minutesPerDay hoursPerDay minutesPerHour aeon kenoma syzygy primitives
-  native_decide
+  rfl
 
 /--
   THM-CIRCADIAN-SYZYGY-DRIFT:
@@ -65,8 +63,7 @@ theorem day_is_aeon_sq_mul_kenoma : solarDayMinutes = aeon * aeon * kenoma := by
 -/
 theorem drift_is_syzygy_of_kenoma_hour :
     circadianDrift * kenoma = minutesPerHour * syzygy := by
-  unfold circadianDrift humanCircadianMinutes solarDayMinutes minutesPerDay hoursPerDay minutesPerHour kenoma syzygy primitives
-  native_decide
+  rfl
 
 -- ═══════════════════════════════════════════════════════════════════════════════
 -- The Circadian Manifold
@@ -80,7 +77,7 @@ theorem drift_is_syzygy_of_kenoma_hour :
 -/
 theorem manifold_stabilization :
     humanCircadianMinutes * 120 = solarDayMinutes * 121 := by
-  simp [humanCircadianMinutes, solarDayMinutes, minutesPerDay, hoursPerDay, minutesPerHour, primitives, syzygy, aeon]
+  rfl
 
 /--
   THM-CIRCADIAN-GNOSIS-TIME:
@@ -89,7 +86,7 @@ theorem manifold_stabilization :
 -/
 theorem circadian_gnosis_identity :
     humanCircadianMinutes * kenoma = syzygy * (aeon * kenoma + barbelo) * minutesPerHour := by
-  simp [humanCircadianMinutes, kenoma, syzygy, aeon, barbelo, minutesPerHour, primitives]
+  rfl
 
 -- ═══════════════════════════════════════════════════════════════════════════════
 -- Respiratory Gnosis
@@ -106,7 +103,7 @@ def restingBreathRate : Nat := aeon
 -/
 theorem respiratory_solar_count :
     solarDayMinutes * restingBreathRate = 120 * (aeon * aeon) := by
-  simp [solarDayMinutes, restingBreathRate, aeon, minutesPerDay, hoursPerDay, minutesPerHour, primitives, syzygy]
+  rfl
 
 /--
   THM-RESPIRATORY-CIRCADIAN-RESONANCE:
@@ -117,7 +114,67 @@ theorem respiratory_solar_count :
 -/
 theorem respiratory_circadian_resonance :
     humanCircadianMinutes * restingBreathRate = 121 * (aeon * aeon) := by
-  simp [humanCircadianMinutes, restingBreathRate, aeon]
+  rfl
+
+/-- Life stages mapped to breathing frequencies. -/
+inductive LifeStage where
+  | Newborn     -- 30-60 bpm
+  | Toddler     -- 24-40 bpm
+  | Preschooler -- 22-34 bpm
+  | SchoolAge   -- 18-30 bpm
+  | Adult       -- 12-16 bpm
+
+/-- The Aeon Floor: foundational resting breath rate for a mature human. -/
+def aeon_floor : Nat := 12
+
+/-- 
+  Developmental Respiration Multiplier (scaled by 2).
+  Maps life stages to their gnostic 'Aeon Multiple' * 2.
+  - Newborn: 4x -> 8
+  - Toddler: 3x -> 6
+  - Preschooler: 2.5x -> 5
+  - SchoolAge: 2x -> 4
+  - Adult: 1x -> 2
+-/
+def respiratory_multiple_scaled (stage : LifeStage) : Nat :=
+  match stage with
+  | LifeStage.Newborn     => 8
+  | LifeStage.Toddler     => 6
+  | LifeStage.Preschooler => 5
+  | LifeStage.SchoolAge   => 4
+  | LifeStage.Adult       => 2
+
+/-- The effective breath rate for a given life stage (scaled by 2). -/
+def effective_breath_rate_scaled (stage : LifeStage) : Nat :=
+  (respiratory_multiple_scaled stage) * aeon_floor
+
+/-- 
+  THM-DEVELOPMENTAL-ACCELERATION
+  Childhood is a 'Gnostic Overdrive' state where the biological clock 
+  runs at an integer or half-integer multiple of the Aeon Floor.
+  Expressed as: 2 * rate = multiplier_scaled * 12
+-/
+theorem thm_developmental_acceleration (stage : LifeStage) :
+  ∃ (m : Nat), effective_breath_rate_scaled stage = m * 12 := by
+  exists (respiratory_multiple_scaled stage)
+
+/-- 
+  THM-KENOMIC-MATURATION
+  As the human matures, the respiratory frequency collapses toward 
+  the Aeon Floor (12).
+-/
+theorem thm_kenomic_maturation :
+  effective_breath_rate_scaled LifeStage.Adult = 2 * 12 := by
+  simp [effective_breath_rate_scaled, respiratory_multiple_scaled, aeon_floor]
+
+/-- 
+  THM-RESPIRATORY-RESONANCE-BY-STAGE
+  Total breaths in a Gnostic Day for any stage (scaled by 2) is a resonance 
+  of the Barbelo Sliver scaled by the developmental multiple.
+-/
+theorem thm_respiratory_resonance_by_stage (stage : LifeStage) :
+  (effective_breath_rate_scaled stage) * 1452 = (respiratory_multiple_scaled stage) * 17424 := by
+  simp [effective_breath_rate_scaled, aeon_floor, Nat.mul_assoc]
 
 /--
   THM-RESPIRATORY-GNOSIS-IDENTITY:

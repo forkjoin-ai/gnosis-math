@@ -38,6 +38,10 @@ inductive SignalToken where
   | S : SignalToken      -- Symmetry shift (Triton rotation)
   | W : Nat → SignalToken -- Wormhole (ER=EPR) with jump-modulus
   | V : SignalToken      -- Vent (Exit path / beta-1 reduction)
+  -- Mudra Tokens (Proprioceptive Feedback)
+  | JOIN : SignalToken   -- Anjali / Unity
+  | LOOP : SignalToken   -- Jnana / Wisdom
+  | RETURN : SignalToken -- Shunya / Void
   deriving DecidableEq
 
 /-- A Monster Path is a sequence of Signal Tokens. -/
@@ -96,7 +100,7 @@ def mapPolyglot : PolyglotOp → MonsterPath
   | .LockRelease     => [SignalToken.F 0]    -- Release to residue 0
 
 theorem polyglot_path_non_empty (op : PolyglotOp) : (mapPolyglot op).length > 0 := by
-  cases op <;> (simp [mapPolyglot]; decide)
+  cases op <;> (simp [mapPolyglot]; try decide)
 
 /-! ## Stone Space Mapping -/
 
@@ -153,10 +157,10 @@ theorem indexing_is_lossless (k : Nat) : recallPath (indexPath k) = k :=
 The dynamic runtime generates unique branches based on variable context.
 Context is modeled as a natural number that shifts the path residue.
 -/
-def dynamicBranch (base : Nat) (context : Nat) : MonsterPath :=
+def dynamicBranch (_base : Nat) (context : Nat) : MonsterPath :=
   [SignalToken.F (context % 3), SignalToken.S]
 
-theorem dynamic_branches_unique (base : Nat) (c1 c2 : Nat) (h : c1 % 3 ≠ c2 % 3) :
+theorem dynamic_branches_unique (_base : Nat) (c1 c2 : Nat) (h : c1 % 3 ≠ c2 % 3) :
     dynamicBranch base c1 ≠ dynamicBranch base c2 := by
   simp [dynamicBranch]
   intro h_eq
@@ -196,7 +200,7 @@ theorem universal_signal_map_master :
     ∧ (∀ k : Nat, recallPath (indexPath k) = k)
     -- Dynamic branching produces unique paths from distinct contexts
     ∧ (∀ base c1 c2 : Nat, c1 % 3 ≠ c2 % 3 → dynamicBranch base c1 ≠ dynamicBranch base c2) :=
-  ⟨by intro op h; cases h <;> (simp [mapInstruction]; decide),
+  ⟨by intro op h; repeat (cases h <;> (simp [mapInstruction]; try decide)),
    polyglot_path_non_empty,
    rfl, rfl, rfl,
    indexing_is_lossless,
