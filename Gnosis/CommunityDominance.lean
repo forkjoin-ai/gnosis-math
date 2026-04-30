@@ -1,17 +1,30 @@
-import Init
+import Gnosis.ImmigrationTopology
 
 namespace Gnosis
 
 /-!
-# Community Dominance: CRDTs, Diversity, and the Attenuation of Trauma
+# Community Dominance
 
-Ledger anchor for `Gnosis.CommunityDominance`. The pre-ledger sketch depended on APIs or
-proof automation outside this Init-only Lake package, so the broken
-surface is recorded as a verified rustic-church marker until the full
-Init-only formalization is rebuilt.
+Community support lowers the remaining signed integration burden by a fixed
+unit in this simplified Init-only model.
 -/
 
-theorem community_dominance_ledger_anchor : True := by
-  trivial
+/-- A one-step community discount on signed integration burden. -/
+def communityDiscount (d : Int) : Int :=
+  communityReducedDeficit d
+
+theorem community_discount_strict (d : Int) :
+    communityDiscount d < d := by
+  exact community_accelerates_integration d
+
+theorem community_discount_preserves_order {d1 d2 : Int} (h : d1 ≤ d2) :
+    communityDiscount d1 ≤ communityDiscount d2 := by
+  unfold communityDiscount communityReducedDeficit
+  omega
+
+theorem community_discount_on_assimilation (host : HostTopology) (imm : ImmigrantTopology) :
+    communityDiscount (assimilationDeficit host imm) <
+      assimilationDeficit host imm := by
+  exact community_discount_strict _
 
 end Gnosis

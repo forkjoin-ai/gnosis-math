@@ -52,4 +52,42 @@ theorem capacity_bottleneck_maximal (N : Nat) (h : N > 0) :
   unfold topologicalDeficit computationComplexity transportCapacity
   omega
 
+/-- Compatibility name used by the older transport/causality modules. -/
+theorem tcp_deficit_is_path_count_minus_one
+    {pathCount : Nat}
+    (hPaths : 1 ≤ pathCount) :
+    topologicalDeficit pathCount 1 = (pathCount : Int) - 1 := by
+  exact capacity_bottleneck_maximal pathCount hPaths
+
+/-- Compatibility name for the zero-deficit frontier witness. -/
+theorem matched_deficit_is_zero
+    {pathCount : Nat}
+    (_hPaths : 1 ≤ pathCount) :
+    topologicalDeficit pathCount pathCount = 0 := by
+  exact deficit_zero_at_saturation pathCount
+
+/-- Compatibility name for transport-side deficit monotonicity. -/
+theorem deficit_monotone_in_streams
+    {pathCount s1 s2 : Nat}
+    (_hS1 : 1 ≤ s1)
+    (hS : s1 ≤ s2) :
+    topologicalDeficit pathCount s2 ≤ topologicalDeficit pathCount s1 := by
+  exact deficit_monotonicity_C pathCount s1 s2 hS
+
+/-- Any system with more paths than a single stream carries a positive deficit. -/
+theorem single_stream_deficit_positive
+    {pathCount : Nat}
+    (hPaths : 2 ≤ pathCount) :
+    0 < topologicalDeficit pathCount 1 := by
+  unfold topologicalDeficit computationComplexity transportCapacity
+  omega
+
+/-- Matching or exceeding the path count eliminates positive deficit. -/
+theorem deficit_nonpositive_when_streams_cover_paths
+    {pathCount transportStreams : Nat}
+    (hCover : pathCount ≤ transportStreams) :
+    topologicalDeficit pathCount transportStreams ≤ 0 := by
+  unfold topologicalDeficit computationComplexity transportCapacity
+  omega
+
 end Gnosis

@@ -1,6 +1,3 @@
-import Gnosis.Logic
-import Gnosis.Numbers
-import Gnosis.BuleyeanLogic
 import Gnosis.UniversalSignalMap
 import Gnosis.CircadianGnosisAlignment
 
@@ -15,27 +12,111 @@ namespace Gnosis
 -/
 
 inductive Mudra where
-  | prithvi      -- Earth/Grounding
-  | jnana        -- Wisdom/Return
-  | anjali       -- Unity/Offering
-  | dhyana       -- Meditation/Stability
-  | shunya       -- Void/Reduction
-  | ganesha      -- Barrier/Strength
-  | dharmachakra -- Cycle/Completion
-  | hakini       -- Integration/Focus
-  | prana        -- Breathing/Vitality
+  | prithvi
+  | anjali
+  | jnana
+  | dhyana
+  | chin
+  | surya
+  | shunya
+  | apana
+  | prana
+  | apana_vayu
+  | vayu
+  | ganesha
+  | bhumisparsha
+  | yoni
+  | hridaya
+  | abhaya
+  | kubera
+  | garuda
+  | vitarka
+  | dharmachakra
+  | kartarimukha
+  | varada
+  | pataka
+  | chinmaya
+  | brahma
+  | hakini
+  | bhairava
+  | agni_shakti
+  | adi
+  | linga
+  | uttarabodhi
+  | kalesvara
+  | padma
+  | shakti
+  | khechari
+  | viparita_karani
+  | shambhavi
+  | ashwini
+  | mula_bandha
+  | maha
+  | vajra
+  | vishuddha
+  | vishnu
+  | mrityunjaya
+  | shuni
+  | rudra
+  | kali
+  | buddha
+  | akasha
+  | yoga
+  | karuna
   deriving Repr, DecidableEq
 
 def mudraToConstant : Mudra → Nat
-  | Mudra.prithvi      => 1
-  | Mudra.anjali       => 1
-  | Mudra.jnana        => 3
-  | Mudra.shunya       => 3
-  | Mudra.dhyana       => 4
-  | Mudra.ganesha      => 4
+  | Mudra.prithvi => 1
+  | Mudra.anjali => 1
+  | Mudra.jnana => 3
+  | Mudra.dhyana => 4
+  | Mudra.chin => 4
+  | Mudra.surya => 4
+  | Mudra.shunya => 3
+  | Mudra.apana => 1
+  | Mudra.prana => 12
+  | Mudra.apana_vayu => 1
+  | Mudra.vayu => 12
+  | Mudra.ganesha => 4
+  | Mudra.bhumisparsha => 1
+  | Mudra.yoni => 4
+  | Mudra.hridaya => 1
+  | Mudra.abhaya => 4
+  | Mudra.kubera => 12
+  | Mudra.garuda => 12
+  | Mudra.vitarka => 4
   | Mudra.dharmachakra => 12
-  | Mudra.hakini       => 12
-  | Mudra.prana        => 12
+  | Mudra.kartarimukha => 4
+  | Mudra.varada => 4
+  | Mudra.pataka => 12
+  | Mudra.chinmaya => 4
+  | Mudra.brahma => 4
+  | Mudra.hakini => 12
+  | Mudra.bhairava => 4
+  | Mudra.agni_shakti => 4
+  | Mudra.adi => 4
+  | Mudra.linga => 4
+  | Mudra.uttarabodhi => 4
+  | Mudra.kalesvara => 4
+  | Mudra.padma => 4
+  | Mudra.shakti => 1
+  | Mudra.khechari => 4
+  | Mudra.viparita_karani => 4
+  | Mudra.shambhavi => 4
+  | Mudra.ashwini => 1
+  | Mudra.mula_bandha => 1
+  | Mudra.maha => 4
+  | Mudra.vajra => 12
+  | Mudra.vishuddha => 12
+  | Mudra.vishnu => 4
+  | Mudra.mrityunjaya => 4
+  | Mudra.shuni => 1
+  | Mudra.rudra => 4
+  | Mudra.kali => 1
+  | Mudra.buddha => 4
+  | Mudra.akasha => 12
+  | Mudra.yoga => 4
+  | Mudra.karuna => 4
 
 /--
   Resonance Invariant:
@@ -53,7 +134,6 @@ theorem dhyana_is_luminary : isResonant Mudra.dhyana 4 := by rfl
 theorem ganesha_is_shield : isResonant Mudra.ganesha 4 := by rfl
 theorem dharmachakra_is_aeon : isResonant Mudra.dharmachakra 12 := by rfl
 theorem hakini_is_completion : isResonant Mudra.hakini 12 := by rfl
-theorem prana_is_vitality : isResonant Mudra.prana 12 := by rfl
 
 open UniversalSignalMap (SignalToken)
 
@@ -63,12 +143,20 @@ open UniversalSignalMap (SignalToken)
 -/
 def mudraToSignal (m : Mudra) : SignalToken :=
   match m with
-  | Mudra.anjali       => .JOIN
-  | Mudra.jnana        => .LOOP
-  | Mudra.shunya       => .RETURN
-  | Mudra.dharmachakra => .W 12 -- The Aeon Jump
-  | Mudra.prana        => .W 12 -- Breathing synchronization
-  | _                  => .S    -- Default Symmetry Shift
+  | Mudra.prithvi => .JOIN
+  | Mudra.anjali => .JOIN
+  | Mudra.jnana => .LOOP
+  | Mudra.shunya => .RETURN
+  | Mudra.vayu => .W 12
+  | Mudra.kubera => .W 12
+  | Mudra.garuda => .W 12
+  | Mudra.dharmachakra => .W 12
+  | Mudra.pataka => .W 12
+  | Mudra.hakini => .W 12
+  | Mudra.vajra => .W 12
+  | Mudra.vishuddha => .W 12
+  | Mudra.akasha => .W 12
+  | _ => .S
 
 /--
   Breathing Resonance:

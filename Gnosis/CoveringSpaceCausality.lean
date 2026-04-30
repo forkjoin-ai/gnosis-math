@@ -113,21 +113,8 @@ theorem deficit_latency_separation
   unfold topologicalDeficit computationComplexity transportCapacity
   omega
 
-/-- TCP deficit equals pathCount - 1 (full mismatch). -/
-theorem tcp_deficit_is_path_count_minus_one
-    {pathCount : Nat}
-    (hPaths : 1 ≤ pathCount) :
-    topologicalDeficit pathCount 1 = (pathCount : Int) - 1 := by
-  unfold topologicalDeficit computationComplexity transportCapacity
-  omega
-
-/-- QUIC/Aeon Flow deficit is zero when streams match paths. -/
-theorem matched_deficit_is_zero
-    {pathCount : Nat}
-    (_hPaths : 1 ≤ pathCount) :
-    topologicalDeficit pathCount pathCount = 0 := by
-  unfold topologicalDeficit computationComplexity transportCapacity
-  omega
+-- `tcp_deficit_is_path_count_minus_one` and `matched_deficit_is_zero`
+-- live canonically in `Gnosis.DeficitCapacity`.
 
 /-- Deficit is monotonically decreasing in transport stream count. -/
 theorem deficit_decreasing_in_streams
