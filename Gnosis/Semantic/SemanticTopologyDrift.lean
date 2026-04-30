@@ -1,4 +1,4 @@
-import Init
+import Gnosis.DeficitCapacity
 
 namespace Gnosis
 
@@ -6,18 +6,17 @@ namespace Gnosis
 Moonshot: Semantic drift over time is isomorphic to a topological deficit,
 causing embedding gaps that can only be bridged by a fold operation.
 -/
-structure SemanticTopologyAssumptions where
-  driftDelta : Nat
-  topologicalDeficit : Nat
-  foldResolution : Nat
-  driftIsomorphism : driftDelta = topologicalDeficit
-  foldClosesGap : foldResolution ≥ topologicalDeficit
+structure SemanticTopologyAssumptions (N C : Nat) where
+  driftDelta : Int
+  foldResolution : Int
+  driftIsomorphism : driftDelta = topologicalDeficit N C
+  foldClosesGap : foldResolution ≥ topologicalDeficit N C
 
-theorem semantic_drift_implies_deficit (assumptions : SemanticTopologyAssumptions) :
-    assumptions.driftDelta = assumptions.topologicalDeficit := by
+theorem semantic_drift_implies_deficit {N C : Nat} (assumptions : SemanticTopologyAssumptions N C) :
+    assumptions.driftDelta = topologicalDeficit N C := by
   exact assumptions.driftIsomorphism
 
-theorem fold_resolves_semantic_gap (assumptions : SemanticTopologyAssumptions) :
+theorem fold_resolves_semantic_gap {N C : Nat} (assumptions : SemanticTopologyAssumptions N C) :
     assumptions.foldResolution ≥ assumptions.driftDelta := by
   rw [assumptions.driftIsomorphism]
   exact assumptions.foldClosesGap

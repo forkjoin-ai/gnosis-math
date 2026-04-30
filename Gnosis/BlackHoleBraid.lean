@@ -1,8 +1,9 @@
 import Gnosis.CosmicInfinity
+import Gnosis.ResolutionVsEvolution
 
 namespace Gnosis.Cosmic
 
-/-- 
+/-!
   # Black Hole Braiding: Beyond the Singularity
   
   Objective: Apply the Braided Infinity identity to Black Hole physics, 

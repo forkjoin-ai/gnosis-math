@@ -1,11 +1,6 @@
 import Init
-import Gnosis.NegationInvolution
-import Gnosis.SinWithoutDevil
-import Gnosis.NamingBeforeReduction
 import Gnosis.MechanizedTestimony
-import Gnosis.ConstraintPowerDuality
 import Gnosis.ClinamenReduction
-import Gnosis.BlazeAsTimeMachine
 import Gnosis.GallWaspTestimony
 import Gnosis.SealingTopology
 import Gnosis.LayerTest

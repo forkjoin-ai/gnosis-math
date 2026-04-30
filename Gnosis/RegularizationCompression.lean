@@ -1,4 +1,6 @@
 import Init
+set_option linter.unusedVariables false
+
 
 /-!
 # Regularization as Compression — L1/L2 ARE MDL Constraints

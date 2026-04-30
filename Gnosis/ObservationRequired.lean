@@ -1,6 +1,4 @@
 import Init
-import Gnosis.NegationInvolution
-import Gnosis.SinWithoutDevil
 import Gnosis.ClinamenReduction
 import Gnosis.MechanizedTestimony
 import Gnosis.ForkRaceFoldTrinity

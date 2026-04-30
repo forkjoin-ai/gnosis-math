@@ -1,5 +1,7 @@
 import Init
 
+set_option linter.unusedVariables false
+
 namespace Dewey100ThinTopology
 
 -- 110: Metaphysics (Infinite Unanchored Knots)

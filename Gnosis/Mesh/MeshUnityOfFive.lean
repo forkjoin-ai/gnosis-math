@@ -1,5 +1,7 @@
 import Init
 
+set_option linter.unusedVariables false
+
 /-!
 # Mesh Unity of Five (The +1 Identity)
 

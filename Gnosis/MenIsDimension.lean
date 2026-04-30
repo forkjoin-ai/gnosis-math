@@ -1,8 +1,6 @@
 import Init
 import Gnosis.ClinamenReduction
 import Gnosis.MechanizedTestimony
-import Gnosis.EquivalentExchange
-import Gnosis.ConstraintPowerDuality
 
 set_option linter.unusedSimpArgs false
 set_option linter.unusedVariables false

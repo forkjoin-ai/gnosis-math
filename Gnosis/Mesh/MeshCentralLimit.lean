@@ -1,5 +1,7 @@
 import Init
 
+set_option linter.unusedVariables false
+
 namespace MeshCentralLimit
 
 def actualDensity (distance : Nat) : Nat :=

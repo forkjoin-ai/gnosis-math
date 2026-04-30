@@ -1,5 +1,7 @@
 import Init
 
+set_option linter.unusedVariables false
+
 namespace Dewey700ThinTopology
 
 -- 710: Landscaping (Aesthetic Projections)

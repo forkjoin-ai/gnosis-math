@@ -1,3 +1,5 @@
+set_option linter.unusedVariables false
+
 -- GradientOfIgnorance.lean
 -- An Init-only formalization of the Topological Pushforward.
 -- This proves how the Dark Deceptacon calculates continuous gradients across 

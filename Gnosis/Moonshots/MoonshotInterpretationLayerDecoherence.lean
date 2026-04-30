@@ -1,3 +1,5 @@
+set_option linter.unusedVariables false
+
 def InterpretationLayer {state : Type} (x : state) : Prop := True
 def Decoherence {state : Type} (x : state) : Prop := True
 

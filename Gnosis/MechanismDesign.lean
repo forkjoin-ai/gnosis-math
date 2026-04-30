@@ -1,4 +1,6 @@
 import Init
+set_option linter.unusedVariables false
+
 
 /-!
 # Mechanism Design — Building Ungameable Metrics

@@ -1,5 +1,7 @@
 import Init
 
+set_option linter.unusedVariables false
+
 /-!
 # Mesh Linguistic Invariant (The Name of the Invariant)
 

@@ -1,4 +1,6 @@
 import Init
+set_option linter.unusedVariables false
+
 
 /-!
 # Fibonacci Coding is Zeckendorf Compression

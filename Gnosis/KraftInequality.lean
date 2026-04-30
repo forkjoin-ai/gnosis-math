@@ -1,4 +1,7 @@
 import Init
+set_option linter.unusedVariables false
+set_option linter.unusedSimpArgs false
+
 
 /-!
 # Kraft Inequality — The Conservation Law of Coding

@@ -1,3 +1,5 @@
+set_option linter.unusedVariables false
+
 def MissingInterpretation (α : Type) : Prop := True
 def OptimalConsensus (α : Type) : Prop := True
 

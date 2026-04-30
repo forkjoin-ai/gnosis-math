@@ -1,3 +1,5 @@
+set_option linter.unusedVariables false
+
 namespace Gnosis.CrossDomainInterpretationCybernetics
 
 def CyberneticFeedback (α : Type) : Prop := True

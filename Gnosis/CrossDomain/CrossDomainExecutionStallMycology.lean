@@ -1,3 +1,5 @@
+set_option linter.unusedVariables false
+
 namespace Gnosis.CrossDomainExecutionStallMycology
 
 def MycelialNetwork (α : Type) : Prop := True

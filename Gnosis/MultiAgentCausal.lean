@@ -1,4 +1,6 @@
 import Init
+set_option linter.unusedVariables false
+
 
 /-!
 # Multi-Agent Causal Models — When Agents Disagree About Reality

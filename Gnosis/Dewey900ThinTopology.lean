@@ -1,5 +1,7 @@
 import Init
 
+set_option linter.unusedVariables false
+
 namespace Dewey900ThinTopology
 
 -- 910: Geography (2D Reductions of 3D Shells)

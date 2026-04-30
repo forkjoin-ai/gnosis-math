@@ -1,7 +1,4 @@
 import Init
-import Gnosis.NegationInvolution
-import Gnosis.SinWithoutDevil
-import Gnosis.NamingBeforeReduction
 import Gnosis.DevilDetailer
 import Gnosis.ClinamenReduction
 

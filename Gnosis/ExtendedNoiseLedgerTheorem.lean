@@ -108,11 +108,8 @@ theorem cosmic_frequency_principle :
 theorem sleep_indexing_cosmic_connection :
     (8 : Rat) / 24 = 1/3 ∧ quantum_noise = 12 := by
   constructor
-  -- This connects the sleep indexing principle to cosmic frequency
-  have h₁ : (8 : Rat) / 24 = 1 / 3 := by
-    sorry -- Uses the same cross-multiplication principle
-  exact h₁
-  exact quantum_noise_meta_gnosis
+  · native_decide
+  · exact quantum_noise_meta_gnosis
 
 end Gnosis.ExtendedNoiseLedger
 

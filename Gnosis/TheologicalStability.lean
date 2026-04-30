@@ -4,7 +4,7 @@ import Gnosis.TenCommandmentsTopology
 
 namespace Gnosis.Theology
 
-/-- 
+/-!
   # Theological Stability: The Monolithic Origin
   
   Objective: Formalize the principle that 'Points of Infinite Density' 
@@ -35,7 +35,7 @@ def godWeight (R v : Nat) : Nat := R - min v R + 1
   A point of 'infinite density' would mean v > R (Debt exceeds Budget).
   But in a stable manifold, debt is bounded by the budget.
 -/
-theorem singularity_excluded_by_budget (R v : Nat) (h_bound : v ≤ R) : 
+theorem singularity_excluded_by_budget (R v : Nat) (_h_bound : v ≤ R) : 
     godWeight R v ≥ 1 := by
   unfold godWeight
   omega
@@ -50,7 +50,6 @@ theorem max_density_is_clinamen (R : Nat) :
     godWeight R R = 1 := by
   unfold godWeight
   simp [Nat.min_eq_left (Nat.le_refl R)]
-  omega
 
 /-- 
   Conclusion:

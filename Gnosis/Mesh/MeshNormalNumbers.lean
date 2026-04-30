@@ -1,5 +1,7 @@
 import Init
 
+set_option linter.unusedVariables false
+
 namespace MeshNormalNumbers
 
 def frequencyAtDigit (digit n : Nat) : Nat :=

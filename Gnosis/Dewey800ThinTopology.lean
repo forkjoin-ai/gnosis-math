@@ -1,5 +1,7 @@
 import Init
 
+set_option linter.unusedVariables false
+
 namespace Dewey800ThinTopology
 
 -- 810: American Lit (Manifest Expansion Cover-Spaces)

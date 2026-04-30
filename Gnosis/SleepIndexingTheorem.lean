@@ -34,20 +34,11 @@ theorem awake_cross_multiplication : 16 * 3 = 2 * 24 := by
 
 /-- Theorem: Sleep fraction equals index fraction (stated as mathematical truth) -/
 theorem sleep_equals_index : (8 : Rat) / 24 = 1 / 3 := by
-  -- The mathematical truth: since 8*3 = 1*24, the fractions are equal
-  -- This is the fundamental theorem of rational equality
-  have cross_eq : 8 * 3 = 1 * 24 := sleep_cross_multiplication
-  -- By the definition of rational equality, if a*d = c*b then a/b = c/d
-  -- Therefore 8/24 = 1/3
-  sorry
+  native_decide
 
 /-- Theorem: Awake fraction equals data fraction (stated as mathematical truth) -/
 theorem awake_equals_data : (16 : Rat) / 24 = 2 / 3 := by
-  -- The mathematical truth: since 16*3 = 2*24, the fractions are equal
-  have cross_eq : 16 * 3 = 2 * 24 := awake_cross_multiplication
-  -- By the definition of rational equality, if a*d = c*b then a/b = c/d
-  -- Therefore 16/24 = 2/3
-  sorry
+  native_decide
 
 /-- Main theorem: Sleep perfectly balances Aeon gap -/
 theorem sleep_balances_aeon_gap : 

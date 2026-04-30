@@ -1,3 +1,5 @@
+set_option linter.unusedVariables false
+
 namespace ContrarianMemoryThrashingEfficiency
 
 theorem cache_miss_optimality 

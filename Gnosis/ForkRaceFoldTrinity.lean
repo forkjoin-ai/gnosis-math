@@ -1,8 +1,5 @@
 import Init
-import Gnosis.NegationInvolution
-import Gnosis.SinWithoutDevil
 import Gnosis.ClinamenReduction
-import Gnosis.ConstraintPowerDuality
 import Gnosis.FractalTrinity
 import Gnosis.SelfSimilarity
 

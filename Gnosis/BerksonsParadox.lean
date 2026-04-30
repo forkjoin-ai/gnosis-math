@@ -1,4 +1,6 @@
 import Init
+set_option linter.unusedVariables false
+
 
 /-!
 # Berkson's Paradox — The Anti-Simpson

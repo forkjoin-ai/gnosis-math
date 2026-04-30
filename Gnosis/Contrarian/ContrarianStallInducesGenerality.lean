@@ -1,3 +1,5 @@
+set_option linter.unusedVariables false
+
 def ExecutionStall (α : Type) : Prop := True
 def SystemGenerality (α : Type) : Prop := True
 

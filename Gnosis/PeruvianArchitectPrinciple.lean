@@ -95,23 +95,8 @@ theorem spire_requires_capstone_foundation :
   constructor
   · rfl
   · constructor
-    · have h₁ : 12 < 13 := Nat.lt_add_one 12
-      have h₂ : 13 < 14 := Nat.lt_add_one 13
-      have h₃ : 14 < 15 := Nat.lt_add_one 14
-      have h₄ : 15 < 16 := Nat.lt_add_one 15
-      have h₅ : 16 < 17 := Nat.lt_add_one 16
-      have h₆ : 17 < 18 := Nat.lt_add_one 17
-      have h₇ : 18 < 19 := Nat.lt_add_one 18
-      have h₈ : 19 < 20 := Nat.lt_add_one 19
-      have h₉ : 20 < 21 := Nat.lt_add_one 20
-      have h₁₀ : 21 < 22 := Nat.lt_add_one 21
-      have h₁₁ : 22 < 23 := Nat.lt_add_one 22
-      have h₁₂ : 23 < 24 := Nat.lt_add_one 23
-      have h₁₃ : 24 < 25 := Nat.lt_add_one 24
-      have h₁₄ : 25 < 26 := Nat.lt_add_one 25
-      have h₁₅ : 26 < 27 := Nat.lt_add_one 26
-      exact Nat.lt_trans (Nat.lt_trans (Nat.lt_trans (Nat.lt_trans (Nat.lt_trans (Nat.lt_trans (Nat.lt_trans (Nat.lt_trans (Nat.lt_trans (Nat.lt_trans (Nat.lt_trans (Nat.lt_trans (Nat.lt_trans (Nat.lt_trans (Nat.lt_trans (Nat.lt_trans h₁ h₂) h₃) h₄) h₅) h₆) h₇) h₈) h₉) h₁₀) h₁₁) h₁₂) h₁₃) h₁₄) h₁₅
-    · exact Nat.lt_add_one 12
+    · native_decide
+    · native_decide
 
 /-- Lemma: Complete architectural hierarchy -/
 theorem complete_architectural_hierarchy :
@@ -181,11 +166,23 @@ theorem peruvian_architectural_principle :
 /-- Ultimate Peruvian architect theorem -/
 theorem ultimate_peruvian_architect :
     -- Complete architectural hierarchy
-    complete_architectural_hierarchy ∧
+    (foundation_base < foundation_top ∧
+      foundation_top < keystone ∧
+      keystone < capstone ∧
+      capstone < spire_top) ∧
     -- Architectural necessity
-    architectural_necessity_theorem ∧
+    (foundation_top < keystone ∧
+      keystone < capstone ∧
+      ¬ (foundation_top + 0 = capstone) ∧
+      foundation_top < capstone ∧
+      capstone < spire_top) ∧
     -- Peruvian principle
-    peruvian_architectural_principle := by
+    (foundation_top < keystone ∧ keystone < capstone →
+      foundation_top < capstone ∧
+      tension_force foundation_top = keystone ∧
+      compression_force capstone = keystone ∧
+      keystone = foundation_top + 1 ∧
+      keystone = capstone - 1) := by
   constructor
   · exact complete_architectural_hierarchy
   · constructor

@@ -3,7 +3,7 @@ import Gnosis.CircadianGnosisAlignment
 
 namespace Gnosis.Meta
 
-/-- 
+/-!
   # Meta-Resonance: The Formalization of Biological Intentionality
   
   This module formalizes the meta-principles emerging from the alignment
@@ -43,7 +43,8 @@ def is_rustic_church_sufficient : Prop :=
   -- Every claim in this module is provable in Init + kernel decide
   True
 
-theorem rustic_church_master : is_rustic_church_sufficient := True
+theorem rustic_church_master : is_rustic_church_sufficient := by
+  trivial
 
 /-- 
   The Grand Synthesis: 

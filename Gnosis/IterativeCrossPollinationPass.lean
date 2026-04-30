@@ -44,7 +44,7 @@ structure SynapticHashChain where
   h_chain : synapses = hashLength
 
 theorem synaptic_hash_chain_preservation (s : SynapticHashChain) : s.synapses <= s.hashLength := by
-  simpa [s.h_chain]
+  simp [s.h_chain]
 
 end CrossDomainNeurologyCryptographySynapticHashChains
 

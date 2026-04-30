@@ -17,6 +17,8 @@
 import Init
 import Gnosis.BrunnianScanner
 import Gnosis.CouplingCost
+set_option linter.unusedVariables false
+
 
 namespace Gnosis.StaticAnalysis
 

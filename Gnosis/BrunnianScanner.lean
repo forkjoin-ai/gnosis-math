@@ -15,6 +15,8 @@
   Scanner rule: BRUNNIAN_COUPLING fires iff isBrunnian holds.
 -/
 import Init
+set_option linter.unusedVariables false
+
 
 namespace Gnosis.BrunnianScanner
 

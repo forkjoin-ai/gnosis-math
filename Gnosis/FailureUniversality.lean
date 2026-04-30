@@ -1,4 +1,3 @@
-import Gnosis.FailureComposition
 
 namespace Gnosis
 

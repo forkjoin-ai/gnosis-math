@@ -1,3 +1,5 @@
+set_option linter.unusedVariables false
+
 namespace Gnosis
 
 def structuralCausalityPadding (paths streams : Nat) : Nat :=

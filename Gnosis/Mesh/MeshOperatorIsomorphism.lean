@@ -1,5 +1,7 @@
 import Init
 
+set_option linter.unusedVariables false
+
 /-!
 # Mesh Operator Isomorphism (The Operator Basis)
 

@@ -1,5 +1,5 @@
 import Init
-import ForkRaceFoldTheorems.AntColonyCollectiveIntelligence
+import Gnosis.AntColonyCollectiveIntelligence
 
 namespace Gnosis
 

@@ -1,13 +1,7 @@
 import Init
-import Gnosis.NamingBeforeReduction
-import Gnosis.SinWithoutDevil
-import Gnosis.NegationInvolution
 import Gnosis.GallWaspTestimony
 import Gnosis.MechanizedTestimony
-import Gnosis.ConstraintPowerDuality
 import Gnosis.ClinamenReduction
-import Gnosis.IdentityBinding
-import Gnosis.BlazeAsTimeMachine
 import Gnosis.SealingTopology
 
 set_option linter.unusedSimpArgs false

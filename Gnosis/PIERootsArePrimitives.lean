@@ -1,7 +1,6 @@
 import Init
 import Gnosis.ClinamenReduction
 import Gnosis.MechanizedTestimony
-import Gnosis.EquivalentExchange
 import Gnosis.MenIsDimension
 
 set_option linter.unusedSimpArgs false

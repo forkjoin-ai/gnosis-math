@@ -26,7 +26,7 @@ theorem monkey_sandwich (t : Nat) (h : t >= 1) :
         apply Nat.le_trans (by decide : 1 ≤ 1000 - 500)
         exact Nat.sub_le_sub_left h_div_val 1000
     · have h1_eq : t = 1 := by omega
-      simp [h1_eq, pShakespeare]
+      simp [h1_eq]
   constructor
   · unfold buleyeanPredictReachability; apply Nat.le_refl
   · unfold buleyeanPredictReachability pShakespeare

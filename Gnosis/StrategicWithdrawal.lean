@@ -1,9 +1,4 @@
 import Init
-import Gnosis.FightingTechniques
-import Gnosis.InductiveReidemeister
-import Gnosis.NegotiationTopology
-import Gnosis.TimeSpentWaiting
-import Gnosis.TechniqueAsAntidote
 import Gnosis.DeescalationTechniques
 
 set_option linter.unusedSimpArgs false

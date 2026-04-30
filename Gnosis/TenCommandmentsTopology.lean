@@ -1,8 +1,5 @@
-import Gnosis.NegationInvolution
-import Gnosis.NamingBeforeReduction
 import Gnosis.DevilDetailer
 import Gnosis.MechanizedTestimony
-import Gnosis.EquivalentExchange
 import Gnosis.LayerTest
 
 namespace TenCommandmentsTopology

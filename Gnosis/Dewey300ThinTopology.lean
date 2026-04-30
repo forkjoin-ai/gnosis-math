@@ -1,5 +1,7 @@
 import Init
 
+set_option linter.unusedVariables false
+
 namespace Dewey300ThinTopology
 
 -- 310: Statistics (Aggregate Smoothing)

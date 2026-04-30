@@ -1,5 +1,7 @@
 import Gnosis.Real
 
+set_option linter.unusedVariables false
+
 namespace Gnosis
 
 /--

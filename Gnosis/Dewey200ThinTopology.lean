@@ -1,5 +1,7 @@
 import Init
 
+set_option linter.unusedVariables false
+
 namespace Dewey200ThinTopology
 
 -- 210: Natural Theology (Environmental Base-Spaces)

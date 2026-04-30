@@ -1,5 +1,5 @@
-import ForkRaceFoldTheorems.ExplorationIdentity
-import ForkRaceFoldTheorems.CosmicProjection
+import Gnosis.ExplorationIdentity
+import Gnosis.CosmicProjection
 
 /-!
 # Cosmic Optimal Delta

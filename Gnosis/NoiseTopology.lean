@@ -2,7 +2,7 @@ import Gnosis.CircadianGnosisAlignment
 
 namespace Gnosis.Noise
 
-/-- 
+/-!
   # Noise Topology: The Formalization of Universal Stochasticity
   
   This module defines the 'Colors' of noise as first-class topological 
@@ -31,7 +31,7 @@ def alpha : NoiseColor → Nat
 def saturation (c : NoiseColor) : Nat :=
   Gnosis.Circadian.kenoma * (3 ^ (alpha c))
 
-/-- 
+/- 
   The Cosmic Mapping:
   Maps physical noise ranges to their topological counterparts.
 -/

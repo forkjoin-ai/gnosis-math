@@ -1,5 +1,7 @@
 import Init
 
+set_option linter.unusedVariables false
+
 namespace Dewey600ThinTopology
 
 -- 610: Medicine (Surgical Graph Severance)

@@ -1,4 +1,4 @@
-import ForkRaceFoldTheorems.CelestialShadows
+import Gnosis.CelestialShadows
 
 /-!
 # Astrophysical Projection

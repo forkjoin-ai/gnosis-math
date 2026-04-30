@@ -1,3 +1,5 @@
+set_option linter.unusedVariables false
+
 namespace CrossDomainFluidDynamicsEconomicsBridge
 
 structure FluidFlow where

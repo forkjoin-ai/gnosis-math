@@ -1,4 +1,4 @@
-import ForkRaceFoldTheorems.DimensionalConfinement
+import Gnosis.DimensionalConfinement
 
 /-!
 # Celestial Shadows

@@ -1,6 +1,4 @@
-import Init
-
-
+import Gnosis.DeficitCapacity
 
 namespace Gnosis
 
@@ -25,19 +23,7 @@ to constructive theorem: the frame header formalizes the covering map.
 
 -- ─── Topological structures ────────────────────────────────────────────
 
-/-- First Betti number (cycle rank) of a computation graph with N independent paths.
-    β₁ = N - 1 for N independent paths forming a fan-in/fan-out pattern. -/
-def computationBeta1 (pathCount : Nat) : Nat := pathCount - 1
-
-/-- First Betti number of the transport layer.
-    TCP: β₁ = 0 (single ordered stream)
-    QUIC: β₁ = streamCount - 1
-    Aeon Flow: β₁ = streamCount - 1 -/
-def transportBeta1 (transportStreams : Nat) : Nat := transportStreams - 1
-
-/-- Topological deficit: mismatch between computation and transport topology. -/
-def topologicalDeficit (pathCount transportStreams : Nat) : Int :=
-  (computationBeta1 pathCount : Int) - (transportBeta1 transportStreams : Int)
+-- (Topological definitions anchored in Gnosis.DeficitCapacity)
 
 -- ─── Blocking witness ──────────────────────────────────────────────────
 
@@ -64,12 +50,12 @@ def pathToStream (pathCount transportStreams : Nat) (path : Fin pathCount) : Nat
 theorem covering_causality
     {pathCount : Nat}
     (hPaths : 2 ≤ pathCount)
-    (_hTcpTransport : transportBeta1 1 = 0) :
-    0 < computationBeta1 pathCount ∧
+    (_hTcpTransport : transportCapacity 1 = 0) :
+    0 < computationComplexity pathCount ∧
     ∃ (p1 p2 : Fin pathCount), p1 ≠ p2 ∧
       pathToStream pathCount 1 p1 = pathToStream pathCount 1 p2 := by
   constructor
-  · unfold computationBeta1; omega
+  · unfold computationComplexity; omega
   · refine ⟨⟨0, by omega⟩, ⟨1, by omega⟩, ?_, ?_⟩
     · intro h; simp [Fin.ext_iff] at h
     · simp [pathToStream]
@@ -97,7 +83,7 @@ theorem covering_match
     (hMatch : pathCount ≤ transportStreams)
     (_hPathCount : 0 < pathCount) :
     topologicalDeficit pathCount transportStreams ≤ 0 := by
-  unfold topologicalDeficit computationBeta1 transportBeta1
+  unfold topologicalDeficit computationComplexity transportCapacity
   omega
 
 /-- Under matched topology, distinct paths map to distinct streams. -/
@@ -124,7 +110,7 @@ theorem deficit_latency_separation
     {pathCount : Nat}
     (_hPaths : 2 ≤ pathCount) :
     0 < topologicalDeficit pathCount 1 := by
-  unfold topologicalDeficit computationBeta1 transportBeta1
+  unfold topologicalDeficit computationComplexity transportCapacity
   omega
 
 /-- TCP deficit equals pathCount - 1 (full mismatch). -/
@@ -132,7 +118,7 @@ theorem tcp_deficit_is_path_count_minus_one
     {pathCount : Nat}
     (hPaths : 1 ≤ pathCount) :
     topologicalDeficit pathCount 1 = (pathCount : Int) - 1 := by
-  unfold topologicalDeficit computationBeta1 transportBeta1
+  unfold topologicalDeficit computationComplexity transportCapacity
   omega
 
 /-- QUIC/Aeon Flow deficit is zero when streams match paths. -/
@@ -140,7 +126,7 @@ theorem matched_deficit_is_zero
     {pathCount : Nat}
     (_hPaths : 1 ≤ pathCount) :
     topologicalDeficit pathCount pathCount = 0 := by
-  unfold topologicalDeficit computationBeta1 transportBeta1
+  unfold topologicalDeficit computationComplexity transportCapacity
   omega
 
 /-- Deficit is monotonically decreasing in transport stream count. -/
@@ -149,7 +135,7 @@ theorem deficit_decreasing_in_streams
     (hS : s1 ≤ s2)
     (hS1 : 1 ≤ s1) :
     topologicalDeficit pathCount s2 ≤ topologicalDeficit pathCount s1 := by
-  unfold topologicalDeficit computationBeta1 transportBeta1
+  unfold topologicalDeficit computationComplexity transportCapacity
   omega
 
 -- ─── Protocol ordering ────────────────────────────────────────────────
@@ -160,7 +146,7 @@ theorem protocol_deficit_ordering
     (hPaths : 2 ≤ pathCount) :
     topologicalDeficit pathCount pathCount <
     topologicalDeficit pathCount 1 := by
-  unfold topologicalDeficit computationBeta1 transportBeta1
+  unfold topologicalDeficit computationComplexity transportCapacity
   omega
 
 /-- The covering-space analogy is constructive: the frame header

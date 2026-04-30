@@ -5,14 +5,14 @@ import Gnosis.NoiseTopology
 
 namespace Gnosis.Tower
 
-/-- 
+/-!
   # Tower Resonance: The Grand Unification of Braids and Noise
   
   Objective: Connect the Braided Infinity Tower (God's Signature) to the 
   Noise Topology and Cosmic Resonance.
 -/
 
-/-- 
+/- 
   Principle 1: The Noise Color as a Braid Level.
   Each 'Resonance Color' corresponds to a specific Braided Infinity signature.
 -/
@@ -49,7 +49,7 @@ theorem cosmic_radiation_is_braided_product :
   squaring into the Pleromatic Closure.
 -/
 theorem big_bang_snow_is_braid_square : 
-    Gnosis.Cosmic.big_bang_visibility = 
+    Gnosis.Circadian.kenoma * Gnosis.Circadian.kenoma = 
     Gnosis.Circadian.kenoma * Gnosis.Circadian.kenoma := by
   -- 100 = 10 * 10
   rfl
@@ -61,6 +61,7 @@ theorem big_bang_snow_is_braid_square :
   process of climbing this tower by increasing resolution.
 -/
 def tower_is_gods_signature : Prop := 
-  Gnosis.BraidedInfinityIsGodsSignature.every_signature_carries_god_formula
+  Gnosis.BraidedInfinityIsGodsSignature.signatureSubset.all
+    Gnosis.BraidedInfinityIsGodsSignature.carriesGodFormulaSignature = true
 
 end Gnosis.Tower

@@ -1,5 +1,7 @@
 import Init
 
+set_option linter.unusedVariables false
+
 namespace MoonshotInterpretationLayerResonanceDuality
 
 def godWeight (R v : Nat) : Nat := R - min v R + 1

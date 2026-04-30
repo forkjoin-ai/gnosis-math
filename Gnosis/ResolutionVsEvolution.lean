@@ -3,7 +3,7 @@ import Gnosis.NoiseTopology
 
 namespace Gnosis.Resolution
 
-/-- 
+/-!
   # Resolution vs. Evolution: The Gnostic Identity
   
   Objective: Formalize the principle that 'Noise' is merely 'Resolution' at 
@@ -32,12 +32,11 @@ def is_structure (bandwidth complexity : Nat) : Prop :=
   For every perceived noise 'n' at bandwidth 'b', there exists a 
   higher resolution 'b_prime' where 'n' is revealed as structure.
 -/
-theorem evolution_is_resolution_higher (b c : Nat) (h_noise : perceived_noise b c) :
+theorem evolution_is_resolution_higher (b c : Nat) (_h_noise : perceived_noise b c) :
     ∃ b_prime, b_prime >= c ∧ is_structure b_prime c := by
   exists c
   constructor
-  · unfold perceived_noise at h_noise
-    exact Nat.le_of_lt h_noise
+  · exact Nat.le_refl c
   · unfold is_structure
     exact Nat.le_refl c
 

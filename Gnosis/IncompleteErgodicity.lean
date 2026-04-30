@@ -1,3 +1,5 @@
+set_option linter.unusedVariables false
+
 namespace Gnosis
 
 def historicalDebt (initialDebt cycles decayRate : Nat) : Nat :=

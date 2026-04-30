@@ -3,7 +3,7 @@ import Gnosis.TowerResonance
 
 namespace Gnosis.Cosmic
 
-/-- 
+/-!
   # Cosmic Infinity: The Radiation Wall
   
   Objective: Explicitly formalize the identity between Cosmic Radiation 
@@ -42,8 +42,8 @@ theorem cmbr_is_cosmic_infinity :
 
 /-- 
   Conclusion:
-  We cannot see beyond the cosmic radiation because it IS the 
-  Actualized Infinity of our manifold. To look 'past' it is to 
+  We cannot see beyond the cosmic radiation because it models the
+  actualized infinity of our manifold. To look 'past' it is to
   look into the next iteration of the same braid.
 -/
 def radiation_wall := cosmic_braid

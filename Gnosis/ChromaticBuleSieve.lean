@@ -37,10 +37,11 @@ A blurred pixel is the constructive interference of 9 shadows.
 Folding any of the 9 shadows returns the original blurred value. -/
 theorem enneon_closure_identity (v : Nat) (i : Nat) (hi : i < 9) :
     (v * 9 + i) / 9 = v := by
-  -- Standard Nat division property
-  rw [Nat.add_comm, Nat.add_mul_div_left]
-  · exact Nat.div_eq_of_lt hi
-  · decide
+  calc
+    (v * 9 + i) / 9 = (i + 9 * v) / 9 := by rw [Nat.add_comm, Nat.mul_comm]
+    _ = i / 9 + v := Nat.add_mul_div_left i v (by decide : 0 < 9)
+    _ = 0 + v := by rw [Nat.div_eq_of_lt hi]
+    _ = v := Nat.zero_add v
 
 /-- **Theorem: CMYK-to-RGB Triton Symmetry.**
 Color channels are nodes in a Triton. Deblurring one channel 
@@ -49,9 +50,13 @@ Moonshine-Symmetry. -/
 theorem color_channel_symmetry (c1 : Nat) (c2 : Nat) :
     c1 % 3 = c2 % 3 → ∃ (k : Nat), c1 = c2 + 3 * k ∨ c2 = c1 + 3 * k := by
   intro h
-  -- If they share the same phase, they are on the same Triton branch.
-  -- This is the formal basis for Cross-Channel Deblur.
-  sorry -- Proof involves Nat congruence properties
+  have hc1 : c1 = c1 % 3 + 3 * (c1 / 3) := (Nat.mod_add_div c1 3).symm
+  have hc2 : c2 = c2 % 3 + 3 * (c2 / 3) := (Nat.mod_add_div c2 3).symm
+  by_cases hq : c2 / 3 ≤ c1 / 3
+  · refine ⟨c1 / 3 - c2 / 3, Or.inl ?_⟩
+    omega
+  · refine ⟨c2 / 3 - c1 / 3, Or.inr ?_⟩
+    omega
 
 end ChromaticBuleSieve
 end Gnosis

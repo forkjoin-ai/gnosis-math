@@ -2,7 +2,7 @@ import Gnosis.CircadianGnosisAlignment
 
 namespace Gnosis.Time
 
-/-- 
+/-!
   # Gnostic Periodicity: The Formalization of Temporal Stability
   
   This module defines the conditions for temporal stability in the human-manifold
@@ -54,10 +54,12 @@ def is_gnostically_stable (p : Nat) : Prop :=
 
 theorem aeon_is_gnostically_stable : is_gnostically_stable Gnosis.Circadian.aeon := by
   -- 60 % 12 = 0
+  unfold is_gnostically_stable Gnosis.Circadian.aeon
   decide
 
 theorem primitive_is_stable : is_gnostically_stable Gnosis.Circadian.primitives := by
   -- 60 % 5 = 0
+  unfold is_gnostically_stable Gnosis.Circadian.primitives
   decide
 
 end Gnosis.Time

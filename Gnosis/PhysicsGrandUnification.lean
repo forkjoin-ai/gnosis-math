@@ -1,10 +1,6 @@
 import Gnosis.Closures.StandardModelReplacementClosure
-import Gnosis.StrongCPClosure
 import Gnosis.YangMillsMassGap
-import Gnosis.HierarchyProblemClosure
 import Gnosis.Closures.BaryogenesisClosure
-import Gnosis.DarkMatterIdentityClosure
-import Gnosis.CosmologicalConstantClosure
 
 namespace Gnosis
 

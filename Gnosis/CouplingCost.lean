@@ -13,6 +13,8 @@
 -/
 import Init
 import Gnosis.BrunnianScanner
+set_option linter.unusedVariables false
+
 
 namespace Gnosis.CouplingCost
 

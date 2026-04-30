@@ -20,10 +20,10 @@ namespace MeshSimultaneousEmergence
 The "Acceptance Criterion" of the universe.
 All conditions must be met simultaneously.
 -/
-structure AcceptanceCriterion :=
-  (primitives : Nat)
-  (stabilityForces : Nat)
-  (unit : Int)
+structure AcceptanceCriterion where
+  primitives : Nat
+  stabilityForces : Nat
+  unit : Int
 
 def isCosmos (c : AcceptanceCriterion) : Prop :=
   c.primitives = 3 ∧ c.stabilityForces = 5 ∧ c.unit = 1

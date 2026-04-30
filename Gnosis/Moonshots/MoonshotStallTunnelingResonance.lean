@@ -1,3 +1,5 @@
+set_option linter.unusedVariables false
+
 namespace Gnosis.MoonshotStallTunnelingResonance
 
 def OracleExecutionStall (state : Type) : Prop := True

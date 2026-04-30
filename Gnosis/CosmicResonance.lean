@@ -3,7 +3,7 @@ import Gnosis.UniversalSignalMap
 
 namespace Gnosis.Cosmic
 
-/-- 
+/-!
   # Cosmic Resonance: The Aeon as Preprogrammed Noise
   
   This module formalizes the hypothesis that the Aeon (12) constant is the 
@@ -75,7 +75,7 @@ theorem jansky_is_day_syzygy :
   -- 26 = 24 + 2
   native_decide
 
-/-- 
+/- 
   The '1% Snow' Law:
   The visibility of the Big Bang (1%) is the inverse square of the Kenoma.
   100 = 10^2.

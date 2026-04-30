@@ -91,7 +91,7 @@ def countFailing (p : List Bool → Bool)
 
 We duplicate the edge-indexing, triangle enumeration, and
 monochromatic-triangle detector from `RamseyR33.lean` rather than
-import it, to keep this module self-contained and `Init`-only. -/
+importing it, to keep this module self-contained and `Init`-only. -/
 
 /-- Indexed lookup on `List Bool` with `false` as the out-of-bounds
 default. -/

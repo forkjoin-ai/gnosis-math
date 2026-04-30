@@ -1,4 +1,6 @@
 import Init
+set_option linter.unusedVariables false
+
 
 /-!
 # Causal Discovery — Learning the Fork Graph from Data
