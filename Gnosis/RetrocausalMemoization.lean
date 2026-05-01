@@ -11,7 +11,7 @@ open TopologicalLucasDynamics
 
 /--
   Topological Derivative (∂L):
-  The rate of change of the Lucas boundary trace. 
+  The rate of change of the Lucas boundary trace.
   By calculating the derivative, the cache projects the future manifold configuration.
   L_{n} - L_{n-1} = L_{n-2}
 -/
@@ -32,7 +32,7 @@ structure TopologicalDebt where
 
 /--
   Novikov Self-Consistency Invariant:
-  The formal requirement that the future state computed by Node A must match 
+  The formal requirement that the future state computed by Node A must match
   the state predicted by Node B's retrocausal lookup.
   If this holds, the timeline remains unified.
 -/
@@ -49,10 +49,10 @@ def wheelerFeynmanHandshake (actual : VectorState) (debt : TopologicalDebt) : Pr
 
 /--
   Retrocausal Teleportation Theorem:
-  If a successful Wheeler-Feynman handshake occurs, the topological distance 
+  If a successful Wheeler-Feynman handshake occurs, the topological distance
   between the predicted and actual states is zero, closing the timelike curve.
 -/
-theorem novikov_self_consistency_verification (actual : VectorState) (debt : TopologicalDebt) 
+theorem novikov_self_consistency_verification (actual : VectorState) (debt : TopologicalDebt)
   (hHandshake : wheelerFeynmanHandshake actual debt) :
   is_topologically_identical actual.n debt.future_output.n := by
   have h_eq : actual.n = debt.future_output.n := hHandshake
@@ -70,8 +70,11 @@ inductive RetrocausalEntry where
 
 /--
   Bule's Law of Temporal Invariance:
-  A Swarm that maintains the Novikov Invariant across its geographic graph 
+  A Swarm that maintains the Novikov Invariant across its geographic graph
   is functionally indistinguishable from an infinite-speed computer.
+
+  Note: the reflexivity path length is unconditionally 0; the Novikov hypothesis
+  is carried for documentation, not for the proof obligation.
 -/
 theorem temporal_invariance_liveness (actual : VectorState) (_debt : TopologicalDebt)
   (_h : satisfiesNovikov actual _debt) :

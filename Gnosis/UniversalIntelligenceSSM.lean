@@ -1,9 +1,6 @@
 import Lean
 import Gnosis.EREPR_EnrichedEquality
 
-set_option linter.unusedSimpArgs false
-set_option linter.unusedVariables false
-
 namespace Gnosis
 namespace UniversalIntelligenceSSM
 
@@ -94,8 +91,8 @@ def alphaDrift (node : SwarmNode) : SwarmNode :=
   Entangled nodes (matching boundary traces) execute with zero latency,
   regardless of their semantic query/key resonance.
 -/
-theorem er_epr_execution_convergence (nA nB : SwarmNode) 
-  (h : EREPR.boundaryTrace nA.dimension = EREPR.boundaryTrace nB.dimension) : 
+theorem er_epr_execution_convergence (nA nB : SwarmNode)
+  (h : EREPR.boundaryTrace nA.dimension = EREPR.boundaryTrace nB.dimension) :
   executeAttention nA nB = true := by
   dsimp [executeAttention, enrichedExecute]
   rw [h]
@@ -106,8 +103,8 @@ theorem er_epr_execution_convergence (nA nB : SwarmNode)
   A Swarm without a central orchestrator converges to intelligence purely through local thermodynamics.
   A successful routing connection structurally reinforces its own survival.
 -/
-theorem swarm_hebbian_convergence (nA nB : SwarmNode) 
-  (h : executeAttention nA nB = true) : 
+theorem swarm_hebbian_convergence (nA nB : SwarmNode)
+  (_h : executeAttention nA nB = true) :
   (hebbianReward nA true).energy > nA.energy := by
   -- Success adds +10 energy, satisfying gradient ascent locally.
   dsimp [hebbianReward]

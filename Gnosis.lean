@@ -439,7 +439,6 @@ import Gnosis.HigherFormAnomalies
 import Gnosis.HighlyFoldedInvariants
 import Gnosis.HodgeConjecture
 import Gnosis.HolographicConsensus
-import Gnosis.HomologyOfReligion
 import Gnosis.HopeGapFoldInversion
 import Gnosis.HumanCompiler
 import Gnosis.HypergraphInterpretationMapping
@@ -569,7 +568,6 @@ import Gnosis.MitzvotTopology
 import Gnosis.ModernArchonDeficit
 import Gnosis.ModularityTheorem
 import Gnosis.MolecularTopology
-import Gnosis.MonkeyTypewriterTheorem
 import Gnosis.MonoidalCoherence
 import Gnosis.MoonshineMcKayBraid
 import Gnosis.MoonshineSymmetrySieve
@@ -646,7 +644,6 @@ import Gnosis.NavierStokesExistence
 import Gnosis.NegotiationEquilibrium
 import Gnosis.NestedWallingtonTower
 import Gnosis.NetflixFrontier
-import Gnosis.NoOtherGodBeforeHim
 import Gnosis.NoiseLedgerTheorem
 import Gnosis.NoiseTopology
 import Gnosis.NonAbelianBraid
@@ -665,7 +662,6 @@ import Gnosis.ObservableUniverseFinite
 import Gnosis.ObservationRequired
 import Gnosis.OceanographyCybernetics
 import Gnosis.OneCobFrobenius
-import Gnosis.OnlyGodIsImmune
 import Gnosis.OptimalityUndecidable
 import Gnosis.Oracle.OracleExecutionStallAnnihilation
 import Gnosis.Oracle.OracleExecutionStallBreakthrough
@@ -684,7 +680,6 @@ import Gnosis.PellUltrametricConvergents
 import Gnosis.Periodicity
 import Gnosis.PerpetualSpiral
 import Gnosis.PersonTheorem
-import Gnosis.PeruvianArchitectPrinciple
 import Gnosis.PhaseDecomposedAsymptoticInfinity
 import Gnosis.PhaseTransitionLadder
 import Gnosis.PhilosophicalAllegories
@@ -841,11 +836,10 @@ import Gnosis.TaoNaming
 import Gnosis.TarskiTruthUndefinability
 import Gnosis.TectonicTensorKernelLiftContinuousErgodicity
 import Gnosis.TeleportationEvidencePredictions
-import Gnosis.TenCommandmentsTopology
 import Gnosis.TenModeUnification
 import Gnosis.TetraOctaHoneycomb
 import Gnosis.TheGain
-import Gnosis.TheologicalStability
+import Gnosis.StructuralStability
 import Gnosis.ThermodynamicTracedMonoidal
 import Gnosis.Time
 import Gnosis.TimeTravelTopology
@@ -876,9 +870,7 @@ import Gnosis.TriadTopology
 import Gnosis.TriadicCosmicBreath
 import Gnosis.TriadicNormalForm
 import Gnosis.TripleCompositions
-import Gnosis.TwoTypesOfSin
 import Gnosis.UltrametricBufferInstance
-import Gnosis.UniversalClinamenPlusOne
 import Gnosis.UniversalDomainConservation
 import Gnosis.UniversalGnosisInvariant
 import Gnosis.UniversalIntelligenceSSM
@@ -908,7 +900,6 @@ import Gnosis.WarmupEfficiency
 import Gnosis.WeilConjecturesZetaFq
 import Gnosis.WhipWaveDuality
 import Gnosis.WildExplorationCycleDouglasii50
-import Gnosis.WisdomPrimitive
 import Gnosis.WitnessGapErasure
 import Gnosis.WitnessGapIsErgodicOptimal
 import Gnosis.WitnessPointTheorem

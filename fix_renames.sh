@@ -1,0 +1,55 @@
+#!/bin/zsh
+
+# Define the renames
+typeset -A renames
+renames=(
+  "ManifoldBoundaryCoupling" "ManifoldBoundaryCoupling"
+  "ErrorRecoveryInvariant" "ErrorRecoveryInvariant"
+  "OptimalStateTopology" "OptimalStateTopology"
+  "StructuralFoundations" "StructuralFoundations"
+  "MoralHeuristicLadder" "MoralHeuristicLadder"
+  "InvariantField" "InvariantField"
+  "StateEntropyReduction" "StateEntropyReduction"
+  "StateResistanceTopology" "StateResistanceTopology"
+  "ProtocolConnectivity" "ProtocolConnectivity"
+  "InvariantStateProtocols" "InvariantStateProtocols"
+  "CouplingTopology" "CouplingTopology"
+  "ManifoldMonsterMesh" "ManifoldMonsterMesh"
+  "KernelFormula" "KernelFormula"
+  "KernelFormulaPhaseManifestations" "KernelFormulaPhaseManifestations"
+  "ManifoldGroundingTriptych" "ManifoldGroundingTriptych"
+  "ManifoldOneWayMirror" "ManifoldOneWayMirror"
+  "KernelOperatorAgentTrichotomy" "KernelOperatorAgentTrichotomy"
+  "ManifoldHorizonEffect" "ManifoldHorizonEffect"
+  "ManifoldAsymmetryOfEffort" "ManifoldAsymmetryOfEffort"
+  "ManifoldThermalStability" "ManifoldThermalStability"
+  "VoidMineKernelPosition" "VoidMineKernelPosition"
+  "ManifoldLensingEffect" "ManifoldLensingEffect"
+  "KernelGap" "KernelGap"
+  "PhysicsFromKernelFormula" "PhysicsFromKernelFormula"
+  "ManifoldEvolutionResolution" "ManifoldEvolutionResolution"
+  "ZeckendorfStateVacuum" "ZeckendorfStateVacuum"
+  "ManifoldHigherClosures" "ManifoldHigherClosures"
+  "ManifoldClosure" "ManifoldClosure"
+  "ManifoldForkRaceFoldUniversal" "ManifoldForkRaceFoldUniversal"
+  "ModernRegulatoryObstructionDeficit" "ModernRegulatoryObstructionDeficit"
+  "ManifoldTripleAnchor10" "ManifoldTripleAnchor10"
+  "BraidedInfinityIsKernelSignature" "BraidedInfinityIsKernelSignature"
+  "ManifoldSignature" "ManifoldSignature"
+  "ManifoldSovereignSieve" "ManifoldSovereignSieve"
+  "DeviationDetailer" "DeviationDetailer"
+  "KernelFormulaQuine" "KernelFormulaQuine"
+  "ReadinessVortex" "ReadinessVortex"
+  "NashSkyrmsBuleyKernelLadder" "NashSkyrmsBuleyKernelLadder"
+  "MeshKernelIdentity" "MeshKernelIdentity"
+  "MeshImpersonalKernel" "MeshImpersonalKernel"
+  "CategoryMismatchDiagnostic" "CategoryMismatchDiagnostic"
+  "ManifoldCrossPollination" "ManifoldCrossPollination"
+  "StructuralStability" "StructuralStability"
+)
+
+# Perform the renames in all files in the current directory
+for old new in ${(kv)renames}; do
+    echo "Replacing $old with $new"
+    grep -rl "$old" . | xargs sed -i '' "s/$old/$new/g"
+done
