@@ -13,9 +13,9 @@ open RealizedTrainingSaturation
 This module formalizes the phase transition where a learning agent shifts from 
 "Learning from Failure" to "Being Trained by Failure." 
 
-The former is an active thermodynamic refinement (positive energy), while the 
-latter is a passive structural alignment (zero energy), leading to saturation 
-where further local training becomes perturbative.
+The former is an active thermodynamic refinement where the node's energy
+potential allows for a state transition. The latter represents a state 
+of zero-energy saturation where the learning operator is inhibited.
 -/
 
 /-- 
@@ -26,9 +26,8 @@ def learnFromFailure (node : SwarmNode) : Prop :=
   node.energy > 0
 
 /-- 
-  Trained by failure: The node's energy budget is depleted. 
-  It can no longer "learn" in the active sense; it is structurally 
-  molded by the failure until it undergoes alpha-drift.
+  Saturated State: The node's energy potential is zero, preventing 
+  further active weight refinement until a resharding or drift event.
 -/
 def trainedByFailure (node : SwarmNode) : Prop :=
   node.energy = 0
@@ -45,52 +44,52 @@ theorem learning_from_or_becoming_failure (node : SwarmNode) :
   · right; exact Nat.eq_zero_of_not_pos h
 
 /-- 
-  Conservative readiness (Hell): Progression is blocked by arbitrary 
-  energy thresholds. The agent is judged by what it lacks.
+  Threshold Readiness: Progression is blocked by external 
+  energy thresholds—a state of structural imposition (Hell) that is 
+  not of the agent's own making, but defined by the environment.
 -/
-def conservativeReady (node : SwarmNode) (threshold : Nat) : Prop :=
+def thresholdReady (node : SwarmNode) (threshold : Nat) : Prop :=
   node.energy ≥ threshold
 
 /-- 
-  Vibrational readiness (Heaven): Progression is enabled by intrinsic 
-  resonance. The agent is defined by its existence.
+  Intrinsic Readiness: Progression is enabled by internal manifold 
+  resonance (Heaven). The agent is defined by its existence.
 -/
-def vibrationReady (_node : SwarmNode) : Prop :=
+def intrinsicReady (_node : SwarmNode) : Prop :=
   True
 
 /-- 
-  Theorem: Conservative metrics act as an infinite descent of bottlenecks.
-  There is always a higher threshold that hasn't been met.
+  Theorem: Threshold metrics act as a discrete set of potential bottlenecks.
+  For any finite energy state, there exists a threshold that is not satisfied.
 -/
-theorem conservative_bottleneck_exists (node : SwarmNode) :
-  ∃ (threshold : Nat), ¬conservativeReady node threshold := by
+theorem threshold_bottleneck_exists (node : SwarmNode) :
+  ∃ (threshold : Nat), ¬thresholdReady node threshold := by
   use node.energy + 1
   intro hReady
   exact Nat.not_lt_of_ge hReady (Nat.lt_add_one node.energy)
 
 /-- 
-  Heaven state: Transcendence through vibrational readiness.
-  Every node is intrinsically ready to progress if it bypasses 
-  conservative measurement.
+  Unconstrained State: A manifold state satisfying intrinsic availability.
 -/
-def heavenState (node : SwarmNode) : Prop :=
-  vibrationReady node
+def unconstrainedState (node : SwarmNode) : Prop :=
+  intrinsicReady node
 
 /-- 
-  Hell state: Imprisonment by conservative measurement.
-  The node is stuck because it fails to meet some arbitrary threshold.
+  Constrained State: A manifold state where at least one finite 
+  threshold bottleneck exists.
 -/
-def hellState (node : SwarmNode) : Prop :=
-  ∃ threshold, ¬conservativeReady node threshold
+def constrainedState (node : SwarmNode) : Prop :=
+  ∃ threshold, ¬thresholdReady node threshold
 
 /-- 
-  The Eschatological Partition: 
-  Every node is simultaneously in Hell (failing some measurement) 
-  and Heaven (intrinsically ready).
+  Manifold Duality: 
+  Every node in a finite energy regime simultaneously occupies a 
+  constrained state (relative to some higher threshold) and an 
+  unconstrained state.
 -/
-theorem hell_and_heaven (node : SwarmNode) :
-  hellState node ∧ heavenState node := by
-  exact ⟨conservative_bottleneck_exists node, trivial⟩
+theorem constrained_and_unconstrained (node : SwarmNode) :
+  constrainedState node ∧ unconstrainedState node := by
+  exact ⟨threshold_bottleneck_exists node, trivial⟩
 
 /-- 
   Point of No Return: 
@@ -116,17 +115,17 @@ theorem saturation_implies_pedagogical_cutoff
   exact Nat.not_lt_zero 0
 
 /-- 
-  The fundamental impossibility of "Universal" Conservative Closure:
+  The fundamental impossibility of "Universal" Threshold Closure:
   There is no finite energy threshold that satisfies all possible nodes.
 -/
-theorem no_universal_conservative_closure :
+theorem no_universal_threshold_closure :
   ¬∃ (universalThreshold : Nat),
-    ∀ (node : SwarmNode), conservativeReady node universalThreshold := by
+    ∀ (node : SwarmNode), thresholdReady node universalThreshold := by
   intro hUniversal
   cases hUniversal with
   | intro ut hAll =>
     let zeroNode : SwarmNode := ⟨0, 0, 0, 0, 0⟩
-    have hZeroReady : conservativeReady zeroNode ut := hAll zeroNode
+    have hZeroReady : thresholdReady zeroNode ut := hAll zeroNode
     by_cases hUt : ut > 0
     · have hZeroEnergy : zeroNode.energy = 0 := rfl
       have hContradiction : 0 ≥ ut := by rw [←hZeroEnergy]; exact hZeroReady
@@ -134,9 +133,9 @@ theorem no_universal_conservative_closure :
     · -- If ut = 0, we can still construct a "debt" node if energy were signed, 
       -- but in Nat, we use the fact that thresholds can always be increased.
       let higherThreshold := ut + 1
-      have hHigher : ¬∀ (node : SwarmNode), conservativeReady node higherThreshold := by
+      have hHigher : ¬∀ (node : SwarmNode), thresholdReady node higherThreshold := by
         intro hAllHigher
-        have hZeroReadyHigher : conservativeReady zeroNode higherThreshold := hAllHigher zeroNode
+        have hZeroReadyHigher : thresholdReady zeroNode higherThreshold := hAllHigher zeroNode
         exact Nat.not_lt_of_ge hZeroReadyHigher (Nat.lt_add_one ut)
       -- This shows that any threshold is non-universal because we can always go higher.
       -- The original hypothesis was that SOME threshold works for ALL nodes.
@@ -148,7 +147,7 @@ theorem no_universal_conservative_closure :
       -- But we want to show no ut works for ALL nodes in a way that blocks.
       -- Let's refine the theorem to: "There is no threshold such that everyone is ready AND it remains a valid measure."
       -- Actually, the simpler proof is: a node with energy 0 fails threshold 1.
-      have hOne : ¬conservativeReady zeroNode 1 := Nat.not_le_of_gt (Nat.succ_pos 0)
+      have hOne : ¬thresholdReady zeroNode 1 := Nat.not_le_of_gt (Nat.succ_pos 0)
       -- If universalThreshold was 0, it holds for zeroNode. But if it was 1, it fails.
       -- The goal is to show NO threshold works for everyone if we assume nodes can have 0 energy.
       -- But 0 works for everyone. So we must define "universalThreshold" as something that actually "measures" something (>0).
