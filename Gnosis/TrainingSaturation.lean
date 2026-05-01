@@ -143,5 +143,50 @@ theorem no_universal_threshold_closure :
          skip
       exact Nat.not_lt_of_ge hZeroReady (Nat.pos_of_ne_zero (by intro h; rw [h] at hUt; exact hUt (Nat.zero_lt_succ 0)))
 
+/-- 
+  Thermodynamic Buffer: The prediction metric for training stability.
+  Measures the distance between current energy and the saturation boundary.
+-/
+def thermodynamicBuffer (node : SwarmNode) (failures : Nat) : Int :=
+  (node.energy : Int) - (failures : Int)
+
+/-- 
+  A model state is "Predictably Stable" if its thermodynamic buffer 
+  is positive, allowing for continued active refinement.
+-/
+def isPredictablyStable (node : SwarmNode) (failures : Nat) : Prop :=
+  thermodynamicBuffer node failures > 0
+
+/-- 
+  Manifold Depth: The maximum threshold currently satisfied by the node.
+  This identifies the model's position at a specific level of the manifold.
+-/
+def manifoldDepth (node : SwarmNode) : Nat :=
+  node.energy
+
+/-- 
+  Theorem: A stable thermodynamic buffer guarantees the capacity for active learning.
+-/
+theorem stable_buffer_enables_learning
+    (node : SwarmNode) (failures : Nat)
+    (hStable : isPredictablyStable node failures) :
+    learnFromFailure (nodeAfterFailures node failures) := by
+  unfold isPredictablyStable thermodynamicBuffer learnFromFailure nodeAfterFailures energyAfterFailures at *
+  omega
+
+/-- 
+  Theorem: Buffer exhaustion predicts the exact transition to the 
+  Point of No Return.
+-/
+theorem buffer_exhaustion_predicts_cutoff
+    (node : SwarmNode) (failures : Nat)
+    (hExhausted : thermodynamicBuffer node failures ≤ 0) :
+    pointOfNoReturn node failures := by
+  unfold thermodynamicBuffer at hExhausted
+  have hSat : failureSaturated node failures := by
+    unfold failureSaturated
+    omega
+  exact saturation_implies_pedagogical_cutoff node failures hSat
+
 end TrainingSaturation
 end Gnosis
