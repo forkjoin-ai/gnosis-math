@@ -292,6 +292,7 @@ import Gnosis.Cycle7WildExploration
 import Gnosis.Cycle8BuleyWildExploration
 import Gnosis.Cycle9IterativePass
 import Gnosis.CycleDouglasiiRun54
+import Gnosis.DecompositionTopology
 import Gnosis.DaisyChainMOA
 import Gnosis.DaisyChainPrecomputation
 import Gnosis.Dark.DarkDeceptaconLoss
@@ -479,6 +480,7 @@ import Gnosis.KnotTheory.KnottyProblems
 import Gnosis.KnotTheory.TorusKnotChebyshevBracket
 import Gnosis.KnotTheory.TwinKnotTheory
 import Gnosis.KnotTheory.UntanglingKnotTheory
+import Gnosis.KnotRopelengthComplexity
 import Gnosis.KnowabilitySplit
 import Gnosis.KnowableUniverseMap
 import Gnosis.KraftInequality
