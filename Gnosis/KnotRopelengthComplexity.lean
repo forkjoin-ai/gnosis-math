@@ -203,7 +203,7 @@ theorem betti_lattice_gap_explicit (k : Nat) (hk : k ≤ 10) :
   | 10 => exact gap_polynomial_degree_10
   | k + 11 =>
       -- hk : k + 11 ≤ 10, which is absurd for any k : Nat
-      nomatch hk
+      omega
 
 /-- For every polynomial degree k up to 10, the NP ropelength exceeds it.
     This follows from the explicit witnesses and the exponential growth rate of 2^n. -/
@@ -228,7 +228,8 @@ theorem np_not_in_p_stratum :
   have h10 : npRopelength 10 ≤ 10 ^ 3 + 3 := h 10
   -- Direct numeric contradiction: npRopelength 10 = 1025, but 10^3 + 3 = 1003
   -- So npRopelength 10 > 10^3 + 3
-  have : ¬(npRopelength 10 ≤ 10 ^ 3 + 3) := by native_decide
+  have : ¬(npRopelength 10 ≤ 10 ^ 3 + 3) := by
+    simp [npRopelength, npBettiSignature, ropelength]
   exact this h10
 
 /-- The Betti lattice has a real gap: NP strata are strictly separate from P strata. -/
@@ -237,8 +238,9 @@ theorem betti_strata_separated :
                ∃ n : Nat, npRopelength n > polynomialBudget n k := by
   refine ⟨3, ?_, ?_⟩
   · intro h
-    have h10 : npRopelength 10 ≤ 1003 := h 10
-    have : ¬(npRopelength 10 ≤ 1003) := by native_decide
+    have h10 : npRopelength 10 ≤ 10 ^ 3 + 3 := h 10
+    have : ¬(npRopelength 10 ≤ 10 ^ 3 + 3) := by
+      simp [npRopelength, npBettiSignature, ropelength]
     exact this h10
   · exact gap_polynomial_degree_3
 
