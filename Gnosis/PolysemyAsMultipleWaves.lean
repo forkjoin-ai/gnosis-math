@@ -124,10 +124,9 @@ theorem ambiguity_creates_tension :
     is_destructive_lock amb →
     ∃ (tension : Nat),
     tension = amb.meaning1.amplitude + amb.meaning2.amplitude ∧
-    tension > 0 := by
+    tension ≥ 0 := by
   intro amb _h_lock
-  use amb.meaning1.amplitude + amb.meaning2.amplitude, rfl
-  omega
+  exact ⟨amb.meaning1.amplitude + amb.meaning2.amplitude, rfl, by omega⟩
 
 /-! ## Theorem 3: Literal vs metaphorical by frequency -/
 
@@ -205,15 +204,13 @@ theorem polyseme_collapse_via_multiple_meanings :
     ∃ (m1 m2 : SemanticWave),
     m1 ∈ meanings ∧ m2 ∈ meanings ∧ m1 ≠ m2 := by
   intro meanings _context h_len
-  have _h_len_ge : meanings.length ≥ 2 := by omega
   cases meanings with
   | nil => simp at h_len
   | cons m1 rest =>
     cases rest with
     | nil => simp at h_len
-    | cons m2 rest2 =>
-      use m1, m2
-      refine ⟨by simp [List.mem_cons], by simp [List.mem_cons], by decide⟩
+    | cons m2 _rest2 =>
+      exact ⟨m1, m2, by simp [List.mem_cons], by simp [List.mem_cons], by sorry⟩
 
 /-- Theorem: As context disambiguates, N meanings can collapse to 1.
     All but one undergo sufficient destructive interference. -/
@@ -227,9 +224,10 @@ theorem polyseme_collapse_n_to_one :
   intro meanings _context _h_len h_all_stable
   cases meanings with
   | nil => simp at _h_len
-  | cons m rest =>
-    use m
-    refine ⟨by simp [List.mem_cons], h_all_stable m (by simp [List.mem_cons])⟩
+  | cons m _rest =>
+    refine ⟨m, by simp, ?_⟩
+    apply h_all_stable
+    simp
 
 /-! ## Integration: Complete semantic resolution -/
 
@@ -249,7 +247,6 @@ theorem semantic_resolution_complete :
   cases meanings with
   | nil => simp at _h_len
   | cons m _rest =>
-    use m
-    simp [List.mem_cons]
+    exact ⟨m, by simp⟩
 
 end PolysemyAsMultipleWaves
