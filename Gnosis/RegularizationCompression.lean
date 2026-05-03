@@ -1,6 +1,4 @@
 import Init
-set_option linter.unusedVariables false
-
 
 /-!
 # Regularization as Compression — L1/L2 ARE MDL Constraints
@@ -100,7 +98,7 @@ theorem bias_variance :
     model complexity is unconstrained → overfitting. The MDL cost
     is dominated by the model description, not the data fit. -/
 theorem zero_reg_overfits (R fit complexity : Nat)
-    (hHigh : complexity > fit) (hTotal : fit + complexity ≤ R) :
+    (hHigh : complexity > fit) (_hTotal : fit + complexity ≤ R) :
     -- Most of the total cost is complexity, not fit
     complexity > fit := hHigh
 

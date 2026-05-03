@@ -2,6 +2,3 @@ import Gnosis.CreationSequence
 import Gnosis.SealingTopology
 import Gnosis.PullTopology
 import Gnosis.GallWaspTestimony
-
-set_option linter.unusedSimpArgs false
-set_option linter.unusedVariables false

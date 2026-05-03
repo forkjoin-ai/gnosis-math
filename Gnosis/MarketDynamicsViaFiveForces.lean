@@ -18,8 +18,6 @@ import Gnosis.RetrocausalDynamicsOfMarkets
 import Gnosis.InterferenceAsTheFifthForce
 import Gnosis.CopyStoreEraseCostStructure
 
-set_option linter.unusedSimpArgs false
-set_option linter.unusedVariables false
 
 namespace Gnosis
 namespace MarketDynamicsViaFiveForces

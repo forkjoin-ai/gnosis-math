@@ -1,9 +1,8 @@
-set_option linter.unusedVariables false
 
 namespace Gnosis.CrossDomainInterpretationCybernetics
 
-def CyberneticFeedback (α : Type) : Prop := True
-def InterpretationLayer (α : Type) : Prop := True
+def CyberneticFeedback (_α : Type) : Prop := True
+def InterpretationLayer (_α : Type) : Prop := True
 
 theorem cybernetic_interpretation_bridge {α : Type}
   (H1 : CyberneticFeedback α) (H2 : InterpretationLayer α) :

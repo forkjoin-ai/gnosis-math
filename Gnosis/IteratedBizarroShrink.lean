@@ -1,7 +1,5 @@
 import Init
 
-set_option linter.unusedSimpArgs false
-set_option linter.unusedVariables false
 
 /-!
 # Iterated Bizarro Shrink — How Many Times?
@@ -245,7 +243,7 @@ theorem strict_wire_savings (s : BitwiseShrink) :
 theorem fp48_wire_savings : 48 * 4 = 64 * 3 := by decide
 
 /-- The wire-byte ratio for a strict shrink: output / input = 3/4. -/
-theorem strict_wire_ratio (s : BitwiseShrink) (h : s.inputBits > 0) :
+theorem strict_wire_ratio (s : BitwiseShrink) (_h : s.inputBits > 0) :
     4 * s.outputBits = 3 * s.inputBits := by
   have := s.hShrink
   omega

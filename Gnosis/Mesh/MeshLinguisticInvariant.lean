@@ -1,6 +1,5 @@
 import Init
 
-set_option linter.unusedVariables false
 
 /-!
 # Mesh Linguistic Invariant (The Name of the Invariant)
@@ -29,7 +28,7 @@ The Referent function.
 All canonical names for the Master Identity map to the same 
 Gnosis Invariant.
 -/
-def getReferent (n : Name) : Nat := 5
+def getReferent (_n : Name) : Nat := 5
 
 /--
 The "Linguistic Invariant" Theorem:

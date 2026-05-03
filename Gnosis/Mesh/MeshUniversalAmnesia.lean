@@ -1,10 +1,9 @@
 import Init
 
-set_option linter.unusedVariables false
 
 namespace MeshUniversalAmnesia
 
-def shuffle (n : Nat) : Nat := 0 -- Every specific state collapses to the mean
+def shuffle (_n : Nat) : Nat := 0 -- Every specific state collapses to the mean
 
 theorem universal_amnesia (n : Nat) (h : n > 0) :
     shuffle n ≠ n := by

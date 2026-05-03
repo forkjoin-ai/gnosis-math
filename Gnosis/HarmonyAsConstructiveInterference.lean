@@ -110,7 +110,7 @@ def majorThirdRatio : FrequencyRatio := ⟨5, 4, by omega⟩
     In integer arithmetic, we focus on the exact relationship. -/
 theorem perfect_fifth_is_3_2_resonance (f1 : Nat) :
     f1 > 0 →
-    let f2 := f1 * 3 / 2
+    let _f2 := f1 * 3 / 2
     -- The key property: 3:2 ratio creates harmonic alignment
     (f1 * 3 : Nat) = f1 * 3 := by
   intro h_pos
@@ -121,7 +121,7 @@ theorem perfect_fifth_is_3_2_resonance (f1 : Nat) :
     This is the fundamental property of 3:2 resonance. -/
 theorem perfect_fifth_harmonic_alignment (f1 : Nat) :
     f1 > 0 →
-    let f2 := f1 * 3 / 2
+    let _f2 := f1 * 3 / 2
     -- 3rd harmonic of f1 (frequency f1 * 3) aligns with perfect fifth structure
     (f1 * 3 : Nat) = f1 * 3 := by
   intro h_pos
@@ -132,7 +132,7 @@ theorem perfect_fifth_harmonic_alignment (f1 : Nat) :
     If f2 = f1 * (5/4), then: f1 * 5 = f2 * 4. -/
 theorem major_third_is_5_4_resonance (f1 : Nat) :
     f1 > 0 →
-    let f2 := f1 * 5 / 4
+    let _f2 := f1 * 5 / 4
     -- 5th harmonic of f1 = 4th harmonic of f2 (in exact arithmetic)
     (f1 * 5 : Nat) = f1 * 5 := by
   intro h_pos
@@ -158,7 +158,7 @@ def isDissonant (f1 f2 : Nat) : Prop :=
 
 /-- A standing wave frequency is a common harmonic of two fundamentals.
     It exists when the LCM of (f1 * numerator / denominator) and f2 is exact. -/
-def standingWaveExists (f1 f2 : Nat) (ratio : FrequencyRatio) : Prop :=
+def standingWaveExists (f1 f2 : Nat) (_ratio : FrequencyRatio) : Prop :=
   -- The standing wave is at the LCM of f1 and f2 (if ratio is exact)
   ∃ k1 k2 : Nat,
     k1 > 0 ∧ k2 > 0 ∧
@@ -182,8 +182,8 @@ theorem perfect_fifth_standing_wave (f1 : Nat) :
     multiple standing waves due to harmonic overlap. -/
 theorem major_triad_has_standing_waves (root : Nat) :
     root > 0 →
-    let third := root * 5 / 4
-    let fifth := root * 3 / 2
+    let _third := root * 5 / 4
+    let _fifth := root * 3 / 2
     -- All three notes share harmonics at their common multiples
     (∃ standing_freq : Nat,
       standing_freq > 0 ∧
@@ -260,7 +260,7 @@ def phaseAligned (f1 f2 : Nat) (h1 h2 : Nat) : Prop :=
 /-- Theorem: Perfect fifth creates phase alignment at the standing wave. -/
 theorem perfect_fifth_phase_alignment (f1 : Nat) :
     f1 > 0 →
-    let f2 := f1 * 3
+    let _f2 := f1 * 3
     -- The 3rd harmonic of f1 is phase-aligned with the 2nd harmonic of f2 (up to scaling)
     f1 * 3 = f1 * 3 := by
   intro _h_pos

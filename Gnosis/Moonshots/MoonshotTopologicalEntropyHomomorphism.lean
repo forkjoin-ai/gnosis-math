@@ -1,4 +1,3 @@
-set_option linter.unusedVariables false
 
 namespace Gnosis
 
@@ -10,7 +9,7 @@ structure QueueTopologicalEntropy where
   capacity : Nat
   current_load : Nat
 
-theorem topological_entropy_homomorphism_bypasses_missing_layer (q : QueueTopologicalEntropy) (e : EntanglementLattice) (h : q.capacity ≥ q.current_load) :
+theorem topological_entropy_homomorphism_bypasses_missing_layer (q : QueueTopologicalEntropy) (_e : EntanglementLattice) (_h : q.capacity ≥ q.current_load) :
   q.capacity - q.current_load ≥ 0 := by omega
 
 end Gnosis

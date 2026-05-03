@@ -1,5 +1,4 @@
 import Init
-set_option linter.unusedVariables false
 
 
 /-!
@@ -70,7 +69,7 @@ theorem same_data_different_conclusions (d : CausalDisagreement)
 /-- THM-OBSERVATION-CANNOT-RESOLVE: No amount of additional observation
     can resolve the disagreement because both models explain the SAME
     data equally well. Only INTERVENTION distinguishes them. -/
-theorem observation_insufficient (R v : Nat) (hv : v ≤ R) :
+theorem observation_insufficient (R v : Nat) (_hv : v ≤ R) :
     -- Both agents explain the data: godWeight(R, v) is the same
     godWeight R v = godWeight R v := rfl
 
@@ -94,7 +93,7 @@ theorem second_order_clinamen (numEdges : Nat) :
     models (not just outcomes), the BATNA is "my model stays as-is."
     The settlement = agreed interventional test. The void boundary =
     the set of rejected causal hypotheses. -/
-theorem negotiation_over_models (R v_agreed : Nat) (hv : v_agreed ≤ R) :
+theorem negotiation_over_models (R v_agreed : Nat) (_hv : v_agreed ≤ R) :
     godWeight R v_agreed ≥ 1 := by unfold godWeight; omega
 
 -- Concrete: two economists disagree about minimum wage

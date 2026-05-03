@@ -1,6 +1,5 @@
 import Init
 
-set_option linter.unusedVariables false
 
 namespace Dewey700ThinTopology
 
@@ -15,11 +14,11 @@ theorem dewey_740_drawing_shadow (pleroma shadow : Nat) (h: shadow < pleroma) : 
 -- 750: Painting (Pigment Crossings)
 theorem dewey_750_painting_crossings (canvas pigment : Nat) (h: pigment > canvas) : pigment > canvas := by omega
 -- 760: Print/Photo (Frozen Dilation Races)
-theorem dewey_760_photography_frozen (race frozen : Nat) (h: frozen = 0) : frozen = 0 := by omega
+theorem dewey_760_photography_frozen (_race frozen : Nat) (h: frozen = 0) : frozen = 0 := by omega
 -- 770: Photography Specs (Aperture Traps)
 theorem dewey_770_photo_trap (light trap : Nat) (h: trap < light) : trap < light := by omega
 -- 780: Music (Concurrent Time Topologies)
-theorem dewey_780_music_waves (dissonance fold root : Nat) (h: root = 0) : root = 0 := by omega
+theorem dewey_780_music_waves (_dissonance _fold root : Nat) (h: root = 0) : root = 0 := by omega
 -- 790: Sports/Games (Consensual Friction Vents)
 theorem dewey_790_sports_friction (play friction : Nat) (h: friction > play) : friction > play := by omega
 

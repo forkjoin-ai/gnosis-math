@@ -94,7 +94,7 @@ theorem layer_to_mesh_node_standing_dims :
     Specification-level claim per the convention shared by
     `MeshStandingWavePinning` and `AttentionQKVDecomposition`. -/
 theorem decoded_knot_preserves_mesh_correctness :
-    ∀ (knot : ResonanceKnot) (h : Nat),
+    ∀ (knot : ResonanceKnot) (_h : Nat),
     (∀ layer ∈ knot.layers, manifest_well_formed layer.manifest) →
     -- specification-level: see
     -- MeshStandingWavePinning.mesh_acceleration_preserves_correctness
@@ -112,7 +112,7 @@ theorem decoded_knot_preserves_mesh_correctness :
 
     Specification-level claim per the existing module convention. -/
 theorem cascade_composes_with_mesh_speedup :
-    ∀ (knot : ResonanceKnot) (mesh : PinnedMesh),
+    ∀ (_knot : ResonanceKnot) (mesh : PinnedMesh),
     mesh_mean_speedup mesh ≥ 1.0 →
     -- specification-level: speedup composes with byte-cascade ratio
     True := by

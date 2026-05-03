@@ -1,6 +1,5 @@
 import Init
 
-set_option linter.unusedVariables false
 
 namespace MeshMemoryLeaks
 
@@ -8,7 +7,7 @@ def availableMemory (t leakRate : Nat) : Nat :=
   if 1000 < t * leakRate then 0
   else 1000 - (t * leakRate)
 
-def pessimisticStability (t leakRate : Nat) : Nat :=
+def pessimisticStability (_t leakRate : Nat) : Nat :=
   if leakRate > 0 then 0 else 1000
 
 def buleyeanPredictStability (t leakRate : Nat) : Nat :=

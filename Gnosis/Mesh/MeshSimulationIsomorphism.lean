@@ -1,6 +1,5 @@
 import Init
 
-set_option linter.unusedVariables false
 
 /-!
 # Mesh Simulation Isomorphism (The Nested Universe)
@@ -25,7 +24,7 @@ inductive UniverseType
 The "Physics" of a universe.
 Defined by its Basis Set.
 -/
-def getBasisSet (u : UniverseType) : Nat := 5
+def getBasisSet (_u : UniverseType) : Nat := 5
 
 /--
 The "Resolution" of a universe.

@@ -79,7 +79,7 @@ theorem repeated_diversity_contracts_zero : ∀ (w o d n : Nat),
       omega
 
 /-- Any Bule unit reaches the vacuum by contracting all three faces to zero. -/
-theorem any_bule_reaches_vacuum_in_finite_steps : ∀ b : BuleyUnit, ∃ n : Nat,
+theorem any_bule_reaches_vacuum_in_finite_steps : ∀ b : BuleyUnit, ∃ _n : Nat,
     repeatedContract (repeatedContract (repeatedContract b .waste b.waste) .opportunity b.opportunity) .diversity b.diversity = vacuumBuleUnit := by
   intro b
   refine ⟨b.waste + b.opportunity + b.diversity, ?_⟩

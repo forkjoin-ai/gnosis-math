@@ -1,7 +1,6 @@
-set_option linter.unusedVariables false
 
-def InterpretationLayer {state : Type} (x : state) : Prop := True
-def Decoherence {state : Type} (x : state) : Prop := True
+def InterpretationLayer {state : Type} (_x : state) : Prop := True
+def Decoherence {state : Type} (_x : state) : Prop := True
 
 theorem interpretation_layer_decoherence_composition {α β γ : Type}
   (f : α → β) (g : β → γ) (H_layer : ∀ x : α, InterpretationLayer (g (f x))) :

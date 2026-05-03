@@ -3,5 +3,3 @@ import Gnosis.ClinamenReduction
 import Gnosis.MechanizedTestimony
 import Gnosis.MenIsDimension
 
-set_option linter.unusedSimpArgs false
-set_option linter.unusedVariables false

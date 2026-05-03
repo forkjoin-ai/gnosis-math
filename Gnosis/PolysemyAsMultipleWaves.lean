@@ -184,7 +184,7 @@ theorem compositionality_is_superposition :
     is_well_composed phrase ∧
     phrase_meaning.amplitude ≥ (words.map (fun w => w.amplitude)).sum := by
   intro words _h_len
-  refine ⟨⟨0, 0, 0, true, (words.map (fun w => w.amplitude)).sum⟩, by simp [is_well_composed], by simp [is_well_composed]⟩
+  refine ⟨⟨0, 0, 0, true, (words.map (fun w => w.amplitude)).sum⟩, by simp [is_well_composed], by simp⟩
 
 /-- Corollary: Superposition preserves amplitude structure. -/
 theorem superposition_preserves_structure :

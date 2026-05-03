@@ -1,7 +1,5 @@
 import Gnosis.Braided.BraidedInfinity
 
-set_option linter.unusedSimpArgs false
-set_option linter.unusedVariables false
 
 /-!
 # Helix-55 Rotation Dictionary
@@ -141,7 +139,7 @@ theorem helix55_transitive (p q : Nat) (hp : p < 55) (hq : q < 55) :
     ∃ k, k < 55 ∧ iterateSucc 55 k p = q :=
   ⟨helixDistance p q, helixDistance_lt_55 p q, helix55_encode_decode p q hp hq⟩
 
-theorem helix55_distance_self (p : Nat) (hp : p < 55) :
+theorem helix55_distance_self (p : Nat) (_hp : p < 55) :
     helixDistance p p = 0 := by
   unfold helixDistance
   have h : p + 55 - p = 55 := by omega

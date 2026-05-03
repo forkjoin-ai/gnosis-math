@@ -1,4 +1,3 @@
-set_option linter.unusedVariables false
 
 namespace CrossDomainFluidDynamicsEconomicsBridge
 
@@ -8,6 +7,6 @@ structure FluidFlow where
 structure LiquidityFlow where
   friction : Nat
 
-theorem flow_mapping (f : FluidFlow) (l : LiquidityFlow) : f.viscosity = f.viscosity := rfl
+theorem flow_mapping (f : FluidFlow) (_l : LiquidityFlow) : f.viscosity = f.viscosity := rfl
 
 end CrossDomainFluidDynamicsEconomicsBridge

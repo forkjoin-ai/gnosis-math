@@ -1,4 +1,3 @@
-set_option linter.unusedVariables false
 
 -- GradientOfIgnorance.lean
 -- An Init-only formalization of the Topological Pushforward.
@@ -36,7 +35,7 @@ def CalculateGradient (CriticScore Threshold : Nat) (SignalDropped : Bool) : Nat
 -- for a dropped path is strictly O(1) with respect to the Void.
 -- The VoidSize parameter is mathematically excluded from the gradient calculation.
 theorem gradient_is_independent_of_void_size 
-  (CriticScore Threshold : Nat) (SignalDropped : Bool) (V1 V2 : Nat) :
+  (CriticScore Threshold : Nat) (SignalDropped : Bool) (_V1 _V2 : Nat) :
   -- The gradient computed in a universe with VoidSize V1 is exactly identical 
   -- to the gradient computed in a universe with VoidSize V2.
   CalculateGradient CriticScore Threshold SignalDropped = 

@@ -1,4 +1,3 @@
-set_option linter.unusedVariables false
 
 namespace Gnosis
 
@@ -6,7 +5,7 @@ def historicalDebt (initialDebt cycles decayRate : Nat) : Nat :=
   if decayRate == 0 then initialDebt else initialDebt / (cycles + 1)
 
 theorem incomplete_ergodicity_retains_debt (initialDebt cycles : Nat)
-    (hInitial : initialDebt > 0) :
+    (_hInitial : initialDebt > 0) :
     historicalDebt initialDebt cycles 0 = initialDebt := by
   unfold historicalDebt
   rfl

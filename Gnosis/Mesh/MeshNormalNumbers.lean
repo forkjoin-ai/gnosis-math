@@ -1,10 +1,9 @@
 import Init
 
-set_option linter.unusedVariables false
 
 namespace MeshNormalNumbers
 
-def frequencyAtDigit (digit n : Nat) : Nat :=
+def frequencyAtDigit (digit _n : Nat) : Nat :=
   if digit >= 10 then 0 else 100
 
 def pessimisticFrequency (digit : Nat) : Nat :=

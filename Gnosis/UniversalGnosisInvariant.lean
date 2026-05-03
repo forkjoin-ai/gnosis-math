@@ -1,7 +1,5 @@
 import Init
 
-set_option linter.unusedSimpArgs false
-set_option linter.unusedVariables false
 
 namespace Gnosis
 namespace UniversalGnosisInvariant
@@ -49,7 +47,7 @@ def computePisotDistance (m : M2Mesh) : Int :=
 The "Intervention" (alpha-teleportation) in any domain
 is simply an algebraic repair to restore the M2Mesh invariant.
 -/
-def restoreInvariant (hidden : Int) (index : Nat) : M2Mesh :=
+def restoreInvariant (_hidden : Int) (index : Nat) : M2Mesh :=
   -- In a real system, we solve for the 'trace' that satisfies the identity
   -- For this reduction, we define the "Pleroma" state where the trace is restored.
   match index with

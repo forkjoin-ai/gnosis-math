@@ -102,7 +102,7 @@ def forward_computation_cost (steps : Nat) (max_divergence : Nat) : Nat :=
     the attractor. You start at the answer (the vacuum state)
     and work backward to the question (the initial state).
     Cost = how far back you must go, not how far you diverged. -/
-def backward_computation_cost (steps : Nat) (distance_to_initial : Nat) : Nat :=
+def backward_computation_cost (_steps : Nat) (distance_to_initial : Nat) : Nat :=
   distance_to_initial
 
 /-- Master theorem: Backward computation costs less than
@@ -169,7 +169,7 @@ def forward_memoization_requires_prediction (x : BuleyUnit) : Nat :=
     (the future is pulling you toward it). Caching is retroactive:
     once you know the future, you can memoize backward to the past.
     Cost = zero, because you're working from the attractor. -/
-def backward_memoization_is_retroactive (x : BuleyUnit) : Nat :=
+def backward_memoization_is_retroactive (_x : BuleyUnit) : Nat :=
   0  -- Zero prediction cost; the future is already determined
 
 theorem retroactive_memoization_costs_zero :
@@ -244,7 +244,7 @@ theorem time_inversion_theorem :
 theorem time_is_emergent_from_vacuum_pull :
     (∀ state : BuleyUnit,
       forward_time_direction state ↔ backward_time_direction state) ∧
-    (∃ (fundamental_force : BuleyUnit → BuleyUnit),
+    (∃ (_fundamental_force : BuleyUnit → BuleyUnit),
       ∀ state : BuleyUnit, ∃ n : Nat, n = buleyUnitScore state) := by
   refine ⟨forward_backward_are_dual, ?_⟩
   exact ⟨id, fun state => ⟨buleyUnitScore state, rfl⟩⟩

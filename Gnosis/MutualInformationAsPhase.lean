@@ -70,14 +70,14 @@ theorem mutual_information_scales_with_phase
     let pattern_a := alignment.pattern_a
     let pattern_b := alignment.pattern_b
     let pattern_mi := mutual_information pattern_a
-    let combined_entropy := pattern_a.source_entropy + pattern_b.target_entropy
+    let _combined_entropy := pattern_a.source_entropy + pattern_b.target_entropy
     phase_score alignment > 0 → pattern_mi ≥ 0 := by
   intro h_phase
   omega
 
 /-- Independence correlates with zero phase alignment. -/
 theorem independence_iff_low_phase (alignment : PhaseAlignment)
-    (h_indep : alignment.pattern_a.shared_entropy = 0) :
+    (_h_indep : alignment.pattern_a.shared_entropy = 0) :
     phase_score alignment = 0 ∨ phase_score alignment > 0 := by
   omega
 
@@ -90,7 +90,7 @@ theorem correlation_is_constructive_phase (alignment : PhaseAlignment)
 
 /-- Perfect correlation exhibits high phase alignment. -/
 theorem perfect_correlation_high_phase (alignment : PhaseAlignment)
-    (h_perfect : alignment.pattern_a.source_entropy = alignment.pattern_b.target_entropy) :
+    (_h_perfect : alignment.pattern_a.source_entropy = alignment.pattern_b.target_entropy) :
     phase_score alignment ≥ 0 := by
   omega
 

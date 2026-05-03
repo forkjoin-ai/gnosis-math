@@ -247,7 +247,7 @@ theorem maximally_dispersed_has_correct_score (n : Nat) :
   by_cases h0 : n % 3 = 0
   · simp [h0]; omega
   · by_cases h1 : n % 3 = 1
-    · simp [h0, h1]; omega
+    · simp [h1]; omega
     · simp [h0, h1]; omega
 
 theorem maximally_dispersed_has_max_entropy (n : Nat) :

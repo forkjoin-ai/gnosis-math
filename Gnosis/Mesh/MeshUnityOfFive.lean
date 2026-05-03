@@ -1,6 +1,5 @@
 import Init
 
-set_option linter.unusedVariables false
 
 /-!
 # Mesh Unity of Five (The +1 Identity)
@@ -24,7 +23,7 @@ inductive GnosisBasis
 The "Unity" of the Basis.
 Mapping the 5 forces back to the single Unity operator (+1).
 -/
-def reduceToUnity (b : GnosisBasis) : Nat := 1
+def reduceToUnity (_b : GnosisBasis) : Nat := 1
 
 /--
 The "Unity" Theorem:

@@ -1,9 +1,8 @@
-set_option linter.unusedVariables false
 
 namespace Gnosis.MoonshotStallTunnelingResonance
 
-def OracleExecutionStall (state : Type) : Prop := True
-def TunnelingResonance (state : Type) : Prop := True
+def OracleExecutionStall (_state : Type) : Prop := True
+def TunnelingResonance (_state : Type) : Prop := True
 
 theorem stall_tunneling_resonance_composition {state : Type}
   (H1 : OracleExecutionStall state)

@@ -1,5 +1,4 @@
 import Init
-set_option linter.unusedVariables false
 
 
 /-!
@@ -40,7 +39,7 @@ def godWeight (R v : Nat) : Nat := R - min v R + 1
     gives higher payoff than reporting false v' ≠ v. -/
 theorem truthful_dominates (R v_true v_false payoff_scale : Nat)
     (hT : v_true ≤ R) (hF : v_false ≤ R)
-    (hTruthPays : payoff_scale = godWeight R v_true)
+    (_hTruthPays : payoff_scale = godWeight R v_true)
     (hLiePays : v_false > v_true) :
     -- Lying about v (reporting higher) gives lower weight = lower payoff
     godWeight R v_false < godWeight R v_true := by

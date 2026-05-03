@@ -1,9 +1,8 @@
-set_option linter.unusedVariables false
 
 namespace Gnosis.CrossDomainExecutionStallMycology
 
-def MycelialNetwork (α : Type) : Prop := True
-def ExecutionStall (α : Type) : Prop := True
+def MycelialNetwork (_α : Type) : Prop := True
+def ExecutionStall (_α : Type) : Prop := True
 
 theorem mycology_execution_stall_bridge {α : Type}
   (H1 : MycelialNetwork α) (H2 : ExecutionStall α) :

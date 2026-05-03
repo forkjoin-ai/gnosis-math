@@ -1,6 +1,5 @@
 import Init
 
-set_option linter.unusedVariables false
 
 /-!
 # Mesh Operator Isomorphism (The Operator Basis)
@@ -53,7 +52,7 @@ theorem operator_is_force (op : ComputationalOperator) :
 -- ═══════════════════════════════════════════════════════════════════════
 
 /-- The "Alignment" between the Operator and its Force. -/
-def operatorAlignment (op : ComputationalOperator) : Nat := 1000
+def operatorAlignment (_op : ComputationalOperator) : Nat := 1000
 
 theorem operator_completeness_sandwich (op : ComputationalOperator) :
     1000 ≤ operatorAlignment op ∧

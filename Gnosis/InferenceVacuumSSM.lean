@@ -3,8 +3,6 @@ import Gnosis.EREPR_EnrichedEquality
 import Gnosis.TopologicalMemoizationCache
 import Gnosis.RetrocausalMemoization
 
-set_option linter.unusedSimpArgs false
-set_option linter.unusedVariables false
 
 namespace Gnosis
 namespace InferenceVacuumSSM

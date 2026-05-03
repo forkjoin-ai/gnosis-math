@@ -13,7 +13,6 @@
 -/
 import Init
 import Gnosis.BrunnianScanner
-set_option linter.unusedVariables false
 
 
 namespace Gnosis.CouplingCost
@@ -85,7 +84,7 @@ theorem findings_monotone_profit
 
 /-- Zero findings means zero value — a zero-finding scan is never profitable
     (assuming positive cost). -/
-theorem zero_findings_not_profitable (v c : Nat) (hc : 0 < c) :
+theorem zero_findings_not_profitable (v c : Nat) (_hc : 0 < c) :
     ¬ profitable 0 v c := by
   show ¬ (c < 0 * v)
   rw [Nat.zero_mul]
@@ -118,7 +117,7 @@ theorem brunnian_cost_surplus (b : BrunnianBeta1) (h : isBrunnian b) :
   exact h
 
 /-- The surplus cost equals the emergent gap. -/
-theorem surplus_eq_emergent_gap (b : BrunnianBeta1) (h : isBrunnian b) :
+theorem surplus_eq_emergent_gap (b : BrunnianBeta1) (_h : isBrunnian b) :
     crossingCost b.full - crossingCost b.pairwiseSum = emergentGap b := by
   unfold crossingCost emergentGap; rfl
 

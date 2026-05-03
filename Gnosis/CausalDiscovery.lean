@@ -1,5 +1,4 @@
 import Init
-set_option linter.unusedVariables false
 
 
 /-!
@@ -33,7 +32,7 @@ def godWeight (R v : Nat) : Nat := R - min v R + 1
     have additive rejection counts: godWeight(R, vX+vY) relates to
     individual weights via the conservation law. -/
 theorem independence_decomposes (R vX vY : Nat)
-    (hX : vX ≤ R) (hY : vY ≤ R) (hTotal : vX + vY ≤ R) :
+    (_hX : vX ≤ R) (_hY : vY ≤ R) (hTotal : vX + vY ≤ R) :
     godWeight R (vX + vY) = R - vX - vY + 1 := by
   unfold godWeight; simp [Nat.min_eq_left hTotal]; omega
 
@@ -65,12 +64,12 @@ theorem faithfulness (R v : Nat) (hv : v < R) :
     (undirected graph), then orients edges using V-structures.
     Skeleton edge X-Y exists ↔ no conditioning set makes X ⊥ Y. -/
 theorem skeleton_test (R v_marginal v_best_conditional : Nat)
-    (hM : v_marginal ≤ R) (hC : v_best_conditional ≤ R)
+    (_hM : v_marginal ≤ R) (_hC : v_best_conditional ≤ R)
     (hStillDependent : v_best_conditional < R) :
     godWeight R v_best_conditional > 1 := by
   unfold godWeight; omega
 
-theorem causal_discovery_master (R : Nat) (hR : R ≥ 1) :
+theorem causal_discovery_master (R : Nat) (_hR : R ≥ 1) :
     (∀ v, v < R → godWeight R v > 1) ∧
     godWeight R R = 1 ∧
     (∀ v1 v2, v1 ≤ R → v2 ≤ R → v1 ≤ v2 → godWeight R v2 ≤ godWeight R v1) := by

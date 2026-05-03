@@ -167,7 +167,7 @@ theorem nonvacuum_always_branches (state : BuleyUnit) :
     Spec-level: we only certify the finite witness; the precise convergence
     rate lives in the runtime calibration layer. -/
 theorem all_overflow_paths_return_to_vacuum :
-    ∀ (steps : Nat) (path : List BuleyUnit) (h_nonempty : path ≠ []),
+    ∀ (_steps : Nat) (path : List BuleyUnit) (h_nonempty : path ≠ []),
     ∃ (n : Nat), n = buleyUnitScore (path.getLast h_nonempty) := by
   intro _steps path h_nonempty
   exact ⟨buleyUnitScore (path.getLast h_nonempty), rfl⟩

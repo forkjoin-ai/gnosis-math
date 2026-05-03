@@ -202,7 +202,7 @@ theorem physics_is_mesh_orchestration :
       f FundamentalForce.weak = MeshOperator.race ∧
       f FundamentalForce.electromagnetic = MeshOperator.fold ∧
       f FundamentalForce.gravitational = MeshOperator.vent) ∧
-    (∃ unified : BuleyUnit → BuleyUnit,
+    (∃ _unified : BuleyUnit → BuleyUnit,
       ∀ b : BuleyUnit, ∃ n : Nat, n = buleyUnitScore b) := by
   refine ⟨?_, ?_⟩
   · refine ⟨fun f => match f with

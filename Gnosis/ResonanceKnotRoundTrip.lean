@@ -54,7 +54,7 @@ def quantization_error_bound (bits : Nat) : Float :=
     it here with a `True` body to mirror the spec-level pattern used in
     `MeshStandingWavePinning` and `AttentionQKVDecomposition`. -/
 theorem quantize_dequantize_error_bounded :
-    ∀ (x : Float) (bits : Nat),
+    ∀ (_x : Float) (bits : Nat),
     bits > 0 →
     -- |dequantize_value (quantize_value x bits) bits - x|
     --   ≤ quantization_error_bound bits
@@ -124,7 +124,7 @@ theorem round_trip_preserves_value_gated :
     m = manifest_from_patterns patterns m.d →
     bits > 0 →
     let encoded := encode_tensor t m bits
-    let decoded := decode_block encoded m
+    let _decoded := decode_block encoded m
     -- specification: decoded restricted to value_gated indices
     -- matches t restricted to those indices (modulo quant error)
     True := by

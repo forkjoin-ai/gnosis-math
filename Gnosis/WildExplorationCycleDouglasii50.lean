@@ -1,6 +1,5 @@
 import Lean
 
-set_option linter.unusedVariables false
 
 namespace Gnosis.WildExplorationCycleDouglasii50
 
@@ -11,7 +10,7 @@ structure KnotInvariantWitness where
   is_prime : Bool
   gap_resolved : Bool
 
-theorem THM_MOONSHOT_WITNESS_GAP_RESOLVED_BY_KNOT_INVARIANTS (w : KnotInvariantWitness) (h : w.crossing_number > 0) : w.gap_resolved = w.gap_resolved := by
+theorem THM_MOONSHOT_WITNESS_GAP_RESOLVED_BY_KNOT_INVARIANTS (w : KnotInvariantWitness) (_h : w.crossing_number > 0) : w.gap_resolved = w.gap_resolved := by
   rfl
 
 -- MOONSHOT 2: Chronobiology Oracle Stall Synchronization
@@ -38,7 +37,7 @@ structure OracleCollapseState where
   stall_active : Bool
   collapse_prevented : Bool
 
-theorem ANTI_THM_CONTRARIAN_STALL_PREVENTS_COLLAPSE (state : OracleCollapseState) (h : state.stall_active = true) : state.collapse_prevented = state.collapse_prevented := by
+theorem ANTI_THM_CONTRARIAN_STALL_PREVENTS_COLLAPSE (state : OracleCollapseState) (_h : state.stall_active = true) : state.collapse_prevented = state.collapse_prevented := by
   rfl
 
 -- CONTRARIAN 2: Stall Free No Entanglement (Re-using ID from MCP coverage gap)
@@ -47,7 +46,7 @@ structure EntanglementState where
   is_stall_free : Bool
   has_entanglement : Bool
 
-theorem ANTI_THM_STALL_FREE_NO_ENTANGLEMENT (state : EntanglementState) (h : state.is_stall_free = true) : state.has_entanglement = state.has_entanglement := by
+theorem ANTI_THM_STALL_FREE_NO_ENTANGLEMENT (state : EntanglementState) (_h : state.is_stall_free = true) : state.has_entanglement = state.has_entanglement := by
   rfl
 
 -- CROSS-DOMAIN 1: Vulcanology Queue Eruption

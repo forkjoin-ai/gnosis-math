@@ -1,6 +1,5 @@
 import Init
 
-set_option linter.unusedVariables false
 
 /-!
 # Mesh Invariant Persistence (Universal Knowledge)
@@ -30,7 +29,7 @@ inductive KnowledgeType
 | localData (n : Nat)
 | universalLaw
 
-def sharedKnowledge (t : Tick) : KnowledgeType :=
+def sharedKnowledge (_t : Tick) : KnowledgeType :=
   KnowledgeType.universalLaw
 
 /--

@@ -118,7 +118,7 @@ def low_energy_state (patterns : List InterferenceSignature) : Prop :=
     2. Slowing the decay of positive frequencies (blocking suppression)
     3. Allowing normal race dynamics to resume for both positive and negative patterns
 -/
-def depression_healing (initial : DepressionState) : Prop :=
+def depression_healing (_initial : DepressionState) : Prop :=
   (∃ (healed : DepressionState),
     healed.positive_decay < 50 ∧  -- positive patterns no longer suppressed
     healed.negative_decay < 50 ∧  -- negative patterns damp normally

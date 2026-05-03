@@ -172,7 +172,7 @@ theorem arrow_of_time_is_future_pull :
     -- (2) Any nonzero-score trajectory is one face away from a strict step toward zero
     (∀ b : BuleyUnit, ∀ n : Nat,
       buleyUnitScore b = n + 1 →
-      ∃ f : BuleyFace, True) ∧
+      ∃ _f : BuleyFace, True) ∧
     -- (3) Positive score witnesses positive number-of-steps to vacuum.
     -- Explicit iteration to vacuum is recorded as a spec-level claim.
     (∀ b : BuleyUnit,

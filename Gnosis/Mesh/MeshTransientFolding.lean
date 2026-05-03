@@ -1,6 +1,5 @@
 import Init
 
-set_option linter.unusedVariables false
 
 namespace MeshTransientFolding
 
@@ -13,7 +12,7 @@ def pessimisticConfidence (d : Nat) : Nat :=
 def buleyeanPredictConfidence (d : Nat) : Nat :=
   foldingConfidence d
 
-theorem folding_sandwich (d : Nat) (h : d >= 1) :
+theorem folding_sandwich (d : Nat) (_h : d >= 1) :
     pessimisticConfidence d ≤ foldingConfidence d ∧
     foldingConfidence d ≤ buleyeanPredictConfidence d ∧
     buleyeanPredictConfidence d ≤ 1000 := by

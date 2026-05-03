@@ -17,7 +17,6 @@
 import Init
 import Gnosis.BrunnianScanner
 import Gnosis.CouplingCost
-set_option linter.unusedVariables false
 
 
 namespace Gnosis.StaticAnalysis
@@ -104,7 +103,7 @@ theorem void_walker_convergence_rate (crossings : Nat) (h : 0 < crossings) :
   omega
 
 /-- After exactly n steps, the walker has reduced crossings by at least n. -/
-theorem void_walker_n_steps (crossings n : Nat) (h : n ≤ crossings) :
+theorem void_walker_n_steps (crossings n : Nat) (_h : n ≤ crossings) :
     crossings - n ≤ crossings := by
   exact Nat.sub_le _ _
 
@@ -168,7 +167,7 @@ theorem scanner_covers_emergent_bugs (b : BrunnianBeta1) (h : isBrunnian b) :
   emergent_gap_pos b h
 
 /-- A scan that finds at least one Brunnian gap is profitable at $9. -/
-theorem brunnian_scan_profitable (b : BrunnianBeta1) (h : isBrunnian b)
+theorem brunnian_scan_profitable (b : BrunnianBeta1) (_h : isBrunnian b)
     (scanCostCents : Nat) (hcost : scanCostCents < 900) :
     profitable 1 900 scanCostCents :=
   nine_dollar_finding_covers_scan scanCostCents hcost

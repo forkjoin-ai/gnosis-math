@@ -1,7 +1,5 @@
 import Init
 
-set_option linter.unusedSimpArgs false
-set_option linter.unusedVariables false
 
 /-!
 # pneuma-voice-flac — formal codec specification

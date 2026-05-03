@@ -15,7 +15,6 @@
   Scanner rule: BRUNNIAN_COUPLING fires iff isBrunnian holds.
 -/
 import Init
-set_option linter.unusedVariables false
 
 
 namespace Gnosis.BrunnianScanner
@@ -93,7 +92,7 @@ theorem brunnian_sum_monotone (b : BrunnianBeta1) (extra : Nat) :
 
 /-- Emergent gap grows when full beta1 grows (pairwise fixed). -/
 theorem gap_grows_with_full (b : BrunnianBeta1) (δ : Nat)
-    (h : isBrunnian b) :
+    (_h : isBrunnian b) :
     emergentGap b ≤
     emergentGap { b with full := b.full + δ } := by
   unfold emergentGap

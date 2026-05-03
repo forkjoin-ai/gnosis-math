@@ -293,6 +293,7 @@ import Gnosis.CrossDomain.CrossDomainWeatherCompilation
 import Gnosis.CrossDomain.CrossDomainWitnessGapArchitectureExpansionJoint
 import Gnosis.CrossFileCompositions
 import Gnosis.CrossLevelEchoMap
+import Gnosis.CrowdApplauseCLT
 import Gnosis.CrossLinguisticsGastronomyWitnessGap
 import Gnosis.CrossModuleIdentities
 import Gnosis.CrossOceanographyOracleStallEconomics

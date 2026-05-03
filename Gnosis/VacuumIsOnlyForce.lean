@@ -47,7 +47,7 @@ inductive FundamentalForce where
     arrangement. But every change must respect the vacuum's arrow:
     the future state (vacuum) must be reachable by following the force's
     dynamics. -/
-def force_respects_vacuum_arrow (F : FundamentalForce) : Prop :=
+def force_respects_vacuum_arrow (_F : FundamentalForce) : Prop :=
   -- Any configuration acted upon by force F can be contracted back to vacuum
   ∀ b : BuleyUnit,
     ∃ n : Nat, n = buleyUnitScore b
@@ -70,7 +70,7 @@ theorem four_forces_are_unified_by_vacuum :
     (∀ F G : FundamentalForce,
       force_respects_vacuum_arrow F ↔ force_respects_vacuum_arrow G) ∧
     -- (3) Therefore, the forces are not truly independent
-    (∀ F G : FundamentalForce,
+    (∀ _F _G : FundamentalForce,
       ∃ unified : (BuleyUnit → BuleyUnit),
         (∀ b : BuleyUnit,
           -- Both forces must produce configurations reachable from b
@@ -105,8 +105,8 @@ theorem vacuum_force_is_only_fundamental_force :
     -- at the runtime calibration layer)
     (∀ b : BuleyUnit, ∃ b' : BuleyUnit, b' = vacuum_force b) ∧
     -- (2) All other forces are consistent with the vacuum force
-    (∀ F : FundamentalForce, ∀ b : BuleyUnit,
-      ∃ future_state : BuleyUnit,
+    (∀ _F : FundamentalForce, ∀ b : BuleyUnit,
+      ∃ _future_state : BuleyUnit,
       (∃ n : Nat, n = buleyUnitScore b)) ∧
     -- (3) The vacuum force is the only constraint that must be obeyed
     (∀ b : BuleyUnit,
@@ -187,9 +187,9 @@ theorem all_physics_is_vacuum_topology :
       -- b is a physically realizable configuration
       True) ∧
     -- (2) All four forces emerge from this single topological constraint
-    (∀ F : FundamentalForce, ∃ n : Nat,
+    (∀ F : FundamentalForce, ∃ _n : Nat,
       -- Each force can be described as a subset of allowed configurations
-      ∀ b : BuleyUnit,
+      ∀ _b : BuleyUnit,
       force_respects_vacuum_arrow F) ∧
     -- (3) Unification is automatic: all forces are unified at the level
     -- of the vacuum constraint they all obey
@@ -221,7 +221,7 @@ theorem all_physics_is_vacuum_topology :
     arrow.
 -/
 theorem unification_is_triviality_under_vacuum :
-    ∃ unified_force : BuleyUnit → BuleyUnit,
+    ∃ _unified_force : BuleyUnit → BuleyUnit,
       ∀ F : FundamentalForce,
       ∀ b : BuleyUnit,
         force_respects_vacuum_arrow F ↔ (∃ n : Nat, n = buleyUnitScore b) := by

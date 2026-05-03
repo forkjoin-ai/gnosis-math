@@ -1,6 +1,5 @@
 import Init
 
-set_option linter.unusedVariables false
 
 /-!
 # Mesh Ageless Universe (The Stationary Tick)
@@ -25,7 +24,7 @@ inductive TimeTick
 The Gnosis Invariant at any tick.
 Always returns the same Basis Set (5).
 -/
-def getInvariant (t : TimeTick) : Nat := 5
+def getInvariant (_t : TimeTick) : Nat := 5
 
 /--
 The "Ageless" Theorem:

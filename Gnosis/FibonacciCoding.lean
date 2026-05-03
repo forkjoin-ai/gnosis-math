@@ -1,5 +1,4 @@
 import Init
-set_option linter.unusedVariables false
 
 
 /-!
@@ -167,7 +166,7 @@ theorem maximum_capacity (R : Nat) :
     the weight by exactly 1. The error is contained because the
     clinamen bounds the minimum weight at 1 — the system never
     crashes to zero from a single error. -/
-theorem single_bit_error_bounded (R v : Nat) (hv : v ≤ R) (hR : R ≥ 1) :
+theorem single_bit_error_bounded (R v : Nat) (hv : v ≤ R) (_hR : R ≥ 1) :
     -- Flipping one bit up: weight decreases by 1
     godWeight R v - godWeight R (v + 1) ≤ 1 ∧
     -- But never below 1 (clinamen floor)

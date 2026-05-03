@@ -1,7 +1,6 @@
 import Lean
 import Gnosis.EREPR_EnrichedEquality
 
-set_option linter.unusedVariables false
 
 namespace Gnosis
 namespace TopologicalMemoization

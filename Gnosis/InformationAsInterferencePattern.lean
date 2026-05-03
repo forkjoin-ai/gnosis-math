@@ -114,7 +114,7 @@ theorem compression_removes_noise_frequencies
     - between 0 and 100 if partially aligned
 -/
 theorem redundancy_is_phase_coherence (pat : InformationPattern)
-    (h_shared : pat.shared_entropy > 0) :
+    (_h_shared : pat.shared_entropy > 0) :
     redundancy pat ≥ 0 := by
   unfold redundancy
   simp only [Nat.zero_le]
@@ -191,7 +191,7 @@ def perfect_transmission (pat : InformationPattern) : Prop :=
 /-- Perfect transmission achieves maximum mutual information relative
     to the source entropy. -/
 theorem perfect_transmission_preserves_entropy (pat : InformationPattern)
-    (h_perf : perfect_transmission pat) :
+    (_h_perf : perfect_transmission pat) :
     mutual_information pat ≥ 0 := by
   unfold perfect_transmission mutual_information at *
   omega
@@ -202,7 +202,7 @@ def independent_patterns (pat : InformationPattern) : Prop :=
 
 /-- Independent patterns have reduced mutual information. -/
 theorem independent_affects_mi (pat : InformationPattern)
-    (h_indep : independent_patterns pat) :
+    (_h_indep : independent_patterns pat) :
     mutual_information pat ≥ 0 := by
   unfold independent_patterns mutual_information at *
   omega

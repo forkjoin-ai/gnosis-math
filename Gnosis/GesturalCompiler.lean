@@ -1,6 +1,5 @@
 import Gnosis.ArticulatorySynthesis
 import Gnosis.Real
-set_option linter.unusedVariables false
 
 
 namespace Gnosis
@@ -177,7 +176,7 @@ def isVowel : Phoneme → Bool
   Syllabic Siphon:
   Applies Prosodic Stress to the Vowel Nucleus.
 -/
-def applySyllabicStress (ps : List PhonemeGestures) (p : Phoneme) (pg : PhonemeGestures) : PhonemeGestures :=
+def applySyllabicStress (_ps : List PhonemeGestures) (p : Phoneme) (pg : PhonemeGestures) : PhonemeGestures :=
   if isVowel p then
     -- Nucleus detected: Increase pressure and duration
     { pg with duration := pg.duration * 1.2,

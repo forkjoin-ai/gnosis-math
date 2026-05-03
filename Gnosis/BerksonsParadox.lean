@@ -1,6 +1,4 @@
 import Init
-set_option linter.unusedVariables false
-
 
 /-!
 # Berkson's Paradox — The Anti-Simpson
@@ -72,7 +70,7 @@ def ColliderSetup.selected (cs : ColliderSetup) : Prop :=
     collider, the two causes are independent. Their weights are
     computed separately and don't interact. -/
 theorem independence_before_selection (R vA vB : Nat)
-    (hA : vA ≤ R) (hB : vB ≤ R) :
+    (_hA : vA ≤ R) (_hB : vB ≤ R) :
     -- A's weight doesn't depend on B's rejections
     godWeight R vA = godWeight R vA ∧
     -- B's weight doesn't depend on A's rejections
@@ -101,7 +99,7 @@ theorem berkson_negative_correlation (vA vB T : Nat)
     Under selection with high vA: vB can be as low as T - vA.
     Lower vB → higher godWeight → B appears better than it is. -/
 theorem berkson_phantom_weight (R vA T : Nat)
-    (hA : vA ≤ R) (hT : T ≤ vA)  -- A alone exceeds threshold
+    (hA : vA ≤ R) (_hT : T ≤ vA)  -- A alone exceeds threshold
     :
     -- When A alone suffices, B needs zero rejections → max weight
     godWeight R 0 = R + 1 := by
@@ -133,7 +131,7 @@ theorem simpson_berkson_duality :
     Berkson creates negative bias (spurious anti-correlation).
     Together they span the full ±1 phase space of the clinamen. -/
 theorem duality_phase (R v_combined v_selected : Nat)
-    (hC : v_combined ≤ R) (hS : v_selected ≤ R) :
+    (_hC : v_combined ≤ R) (_hS : v_selected ≤ R) :
     -- Simpson bias is positive: combined weight is LESS than stratified
     -- Berkson bias is negative: selected weight is MORE than population
     -- The difference can go either direction

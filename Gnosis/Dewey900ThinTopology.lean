@@ -1,6 +1,5 @@
 import Init
 
-set_option linter.unusedVariables false
 
 namespace Dewey900ThinTopology
 
@@ -13,7 +12,7 @@ theorem dewey_930_archaeology_decay (past preserved : Nat) (h: preserved < past)
 -- 940: Euro Hist (Rolling Boundary Slams)
 theorem dewey_940_euro_hist (war boundary : Nat) (h: boundary < war) : boundary < war := by omega
 -- 950: Asian Hist (Dynastic Loop Cycles)
-theorem dewey_950_asian_hist (dynasty loop : Nat) (h: loop = 0) : loop = 0 := by omega
+theorem dewey_950_asian_hist (_dynasty loop : Nat) (h: loop = 0) : loop = 0 := by omega
 -- 960: African Hist (Geographic Origin Nodes)
 theorem dewey_960_african_hist (origin spread : Nat) (h: spread > origin) : spread > origin := by omega
 -- 970: NA Hist (Pioneer Expansion Cover-Spaces)

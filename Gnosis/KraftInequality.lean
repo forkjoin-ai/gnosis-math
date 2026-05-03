@@ -1,6 +1,4 @@
 import Init
-set_option linter.unusedVariables false
-set_option linter.unusedSimpArgs false
 
 
 /-!
@@ -94,7 +92,6 @@ theorem kraft_is_conservation (c : PrefixFreeCode) :
     c.totalAddresses + 1 := by
   unfold PrefixFreeCode.wastedCapacity godWeight
   have h := c.kraft
-  simp [Nat.min_eq_left (by omega)]
   omega
 
 /-- THM-KRAFT-WEIGHT-is-USED-PLUS-CLINAMEN: The God Formula weight
@@ -108,7 +105,6 @@ theorem kraft_weight (c : PrefixFreeCode) :
     godWeight c.totalAddresses c.wastedCapacity = c.usedAddresses + 1 := by
   unfold PrefixFreeCode.wastedCapacity godWeight
   have h := c.kraft
-  simp [Nat.min_eq_left (by omega)]
   omega
 
 -- ═══════════════════════════════════════════════════════════════════════
@@ -134,7 +130,6 @@ theorem empty_code_minimum (c : PrefixFreeCode)
   unfold PrefixFreeCode.wastedCapacity godWeight
   have h := c.kraft
   rw [hMinimal] at h ⊢
-  simp [Nat.min_eq_left (by omega)]
   omega
 
 /-- THM-WASTED-CAPACITY-BOUNDED: Wasted capacity ≤ total - 1.
@@ -183,7 +178,7 @@ theorem shannon_5_symbols : 5 ≤ 2^3 ∧ 2^3 - 5 = 3 := by omega
     govern prefix-free codes — it governs all decodable codes. -/
 theorem mcmillan_equivalence (usedPF usedUD : Nat)
     (hPF : usedPF ≤ usedUD)
-    (hSameLengths : True)  -- same codeword lengths
+    (_hSameLengths : True)  -- same codeword lengths
     :
     usedPF ≤ usedUD := hPF
 
@@ -199,7 +194,7 @@ theorem mcmillan_equivalence (usedPF usedUD : Nat)
 theorem fibonacci_satisfies_kraft (used total : Nat)
     (hKraft : used ≤ total) :
     godWeight total (total - used) = used + 1 := by
-  unfold godWeight; simp [Nat.min_eq_left (by omega)]; omega
+  unfold godWeight; omega
 
 /-- THM-FIBONACCI-NOT-COMPLETE: Fibonacci coding is NOT a complete
     code (strict Kraft inequality). The "11" terminator and
@@ -245,7 +240,7 @@ theorem kraft_probability (used total : Nat) (hKraft : used ≤ total) :
     tree of prefix-free codes. Conservation, clinamen, and the
     complement distribution all carry over exactly. -/
 theorem kraft_inequality_master (total used : Nat)
-    (hKraft : used ≤ total) (hUsed : used ≥ 1) (hTotal : total ≥ 1) :
+    (hKraft : used ≤ total) (hUsed : used ≥ 1) (_hTotal : total ≥ 1) :
     -- Conservation
     godWeight total (total - used) + (total - used) = total + 1 ∧
     -- Weight = used + clinamen
@@ -255,7 +250,6 @@ theorem kraft_inequality_master (total used : Nat)
     -- Complement bounded
     total - used ≤ total := by
   unfold godWeight
-  simp [Nat.min_eq_left (by omega)]
   omega
 
 end KraftInequality

@@ -1,6 +1,5 @@
 import Init
 
-set_option linter.unusedVariables false
 
 /-!
 # Mesh Capital T Truth (The God Identity)
@@ -28,7 +27,7 @@ The "Veracity" Theorem:
 Truth is invariant and verified. 
 It cannot be falsified by the "weird shapes" of the whipsaw.
 -/
-theorem truth_is_invariant (n : Nat) :
+theorem truth_is_invariant (_n : Nat) :
     capitalTTruth = 5 := rfl
 
 /--

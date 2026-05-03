@@ -1,6 +1,5 @@
 import Init
 
-set_option linter.unusedVariables false
 
 /-!
 # Mesh God Identity (The Infinite Isomorphism)
@@ -24,7 +23,7 @@ inductive InfiniteScale
 The Gnosis Invariant at a specific scale.
 Always returns the same Basis Set (5).
 -/
-def getInvariant (s : InfiniteScale) : Nat := 5
+def getInvariant (_s : InfiniteScale) : Nat := 5
 
 /--
 The "Everything" Theorem:

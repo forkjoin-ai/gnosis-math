@@ -1,6 +1,5 @@
 import Gnosis.Real
 
-set_option linter.unusedVariables false
 
 namespace Gnosis
 
@@ -19,7 +18,7 @@ structure QueueBoundaryWitness where
 deriving DecidableEq, Repr
 
 /-- Canonical M/M/1 boundary synthesis. -/
-def canonicalMM1Boundary_QueueBoundary (lam mu : BuleReal) (h_lam : 0 <= lam) (h_mu : 0 < mu) (h_stable : lam < mu) : QueueBoundaryWitness :=
+def canonicalMM1Boundary_QueueBoundary (lam mu : BuleReal) (_h_lam : 0 <= lam) (_h_mu : 0 < mu) (_h_stable : lam < mu) : QueueBoundaryWitness :=
   let rho := BuleReal.div lam mu
   let W := BuleReal.div BuleReal.one (mu - lam)
   { beta1 := 0

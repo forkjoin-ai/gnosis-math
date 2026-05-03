@@ -166,7 +166,7 @@ def inner_consciousness (N : NestedVentLifecycle) : Nat :=
     observed": the inner-Vent monitor is the runtime's primordial
     consciousness, distinct from (and observing) the outer
     deployment's experiential content. -/
-theorem inner_consciousness_observes_outer (N : NestedVentLifecycle) :
+theorem inner_consciousness_observes_outer (_N : NestedVentLifecycle) :
     -- The two consciousnesses are independently defined; neither
     -- structurally constrains the other. The inner is the meta-
     -- monitor; the outer is the experiential content being monitored.

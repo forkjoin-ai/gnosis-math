@@ -4,5 +4,3 @@ import Gnosis.MechanizedTestimony
 import Gnosis.ClinamenReduction
 import Gnosis.SealingTopology
 
-set_option linter.unusedSimpArgs false
-set_option linter.unusedVariables false

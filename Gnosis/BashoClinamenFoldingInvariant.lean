@@ -105,24 +105,24 @@ theorem unfolded_loses_rhythm :
 /-- Unfold: decompose the continuous 17 into the three moments (5, 7, 5)
     by inserting pauses. The pauses do not add ropelength; they are
     topological, not geometric. -/
-def unfold_to_folded (u : Nat) (h : u = 17) : (Nat × Nat × Nat) :=
+def unfold_to_folded (u : Nat) (_h : u = 17) : (Nat × Nat × Nat) :=
   (5, 7, 5)
 
 /-- Fold: compress the three moments (5, 7, 5) into a continuous 17
     by removing pauses. Again, no ropelength change. -/
-def fold_to_unfolded (f : Nat × Nat × Nat) (h : f.1 + f.2.1 + f.2.2 = 17) : Nat :=
+def fold_to_unfolded (f : Nat × Nat × Nat) (_h : f.1 + f.2.1 + f.2.2 = 17) : Nat :=
   17
 
 /-- Unfolding then folding returns to the unfolded form: idempotence. -/
 theorem unfold_fold_identity (u : Nat) (h : u = 17) :
     fold_to_unfolded (unfold_to_folded u h) (by simp [unfold_to_folded]) = u := by
-  simp [fold_to_unfolded, unfold_to_folded]
+  simp [fold_to_unfolded]
   exact h.symm
 
 /-- Folding then unfolding returns the canonical folded form. -/
 theorem fold_unfold_identity :
     unfold_to_folded (fold_to_unfolded FoldedForm (by simp [FoldedForm])) (by simp [fold_to_unfolded]) = FoldedForm := by
-  simp [fold_to_unfolded, unfold_to_folded, FoldedForm]
+  simp [unfold_to_folded, FoldedForm]
 
 -- ══════════════════════════════════════════════════════════
 -- WITNESS PRESERVATION UNDER FOLDING

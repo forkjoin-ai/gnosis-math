@@ -1,6 +1,5 @@
 import Init
 
-set_option linter.unusedVariables false
 
 namespace MeshCentralLimit
 
@@ -10,7 +9,7 @@ def actualDensity (distance : Nat) : Nat :=
   else if distance < 10 then 100
   else 1
 
-def pessimisticDensity (distance : Nat) : Nat :=
+def pessimisticDensity (_distance : Nat) : Nat :=
   1
 
 def buleyeanPredictDensity (distance : Nat) : Nat :=
