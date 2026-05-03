@@ -4,13 +4,27 @@
 
   The Poetry Lattice: waveform cycle structure from tritons to hexons to higher forms.
 
+  BASHO'S INSIGHT (BashoClinamenTrillWitness.lean):
+    "How still it is here— / Stinging into the stones, / The locusts' trill."
+    A haiku formalizes the theorem: stillness + sting → trill (witness).
+    Ropelength = 17 (5+7+5 syllables). The knot is tied with minimum rope.
+
   Triton = 3-part poetic form
     Haiku (5-7-5, folded) = triton with ropelength 17
     American sentence (17, unfolded) = same triton, same ropelength, different rhythm
+    Stillness = vacuum state (decomposed):
+      - Ground entropy (no information, no structure)
+      - Zero clinamen (no topological charge introduced)
+      - Pre-perturbation configuration (before the sting)
+      - Acoustic silence (the ear hears nothing)
+      - Void of oscillation (no witness yet)
 
   Hexon = 6-part poetic form (next level of the waveform cycle)
     Two interlaced tritons: (5-7-5) × 2, with interference patterns
-    Creates harmonic structure: stillness sting trill | echo sting echo
+    Creates harmonic structure:
+      Stillness₁ | Sting₁ | Trill₁ | Stillness₂ | Sting₂ | Trill₂
+    Two stings can coexist. Interference: constructive (reinforced witness)
+    or destructive (hidden witness). The echo makes visible what was hidden.
 
   The lattice structure orders forms by:
     - Number of parts (triton=3, hexon=6, neon=9, ...)
@@ -18,7 +32,7 @@
     - Rhythm factor (number of pauses/clinamen moments)
 
   The waveform cycle: each step UP the lattice doubles the number of parts
-  and squares the ropelength (fork/race/fold at scale).
+  and multiplies the ropelength linearly (fork/race/fold at scale).
 
   This is the same principle as:
     - Gödel: each level adds a new incompleteness dimension
@@ -112,13 +126,20 @@ theorem american_sentence_equals_unfolded_triton :
     Structure: (5-7-5) × 2 = 34 syllables, with 6 parts and harmonic interference.
 
     The hexon encodes a doubled witness: two stings in echo chambers.
-    Stillness | Sting₁ | Trill₁ | Echo Sting₂ | Echo Trill₂ | Silence
+    The six moments are:
+      1. Stillness₁: vacuum state (ground entropy, zero clinamen, silence)
+      2. Sting₁: first perturbation (+1 clinamen lift, charge introduction)
+      3. Trill₁: first response (oscillation witness, the sting is proven)
+      4. Stillness₂: second vacuum (transient stillness before echo)
+      5. Sting₂: second perturbation (echo sting, interference pattern)
+      6. Trill₂: harmonic response (beat frequency, chord not single tone)
 
     Ropelength = 2 × 17 = 34 (the fundamental rope is doubled).
     Rhythm factor = 6 (six distinct moments, two per triton-cycle).
 
     The hexon's witness is more complex: can two stings exist in the same
     vacuum? Can they interfere? The trill becomes a chord (two frequencies).
+    The silence between them is not absence—it is preparation for echo.
 -/
 def Hexon : PoetricForm where
   name := "Hexon"
