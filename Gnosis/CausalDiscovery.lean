@@ -34,14 +34,17 @@ open Gnosis (godWeight)
 theorem independence_decomposes (R vX vY : Nat)
     (_hX : vX ≤ R) (_hY : vY ≤ R) (hTotal : vX + vY ≤ R) :
     godWeight R (vX + vY) = R - vX - vY + 1 := by
-  unfold godWeight; simp [Nat.min_eq_left hTotal]; omega
+  unfold godWeight
+  rw [Nat.min_eq_left hTotal, Nat.sub_sub]
 
 /-- THM-DEPENDENCE-INFLATES: A causal link X → Y means vY depends
     on vX. The joint rejection ≠ sum of marginals. -/
 theorem dependence_inflates (R vIndep vDepend : Nat)
     (hI : vIndep ≤ R) (hD : vDepend ≤ R) (hMore : vDepend > vIndep) :
     godWeight R vDepend < godWeight R vIndep := by
-  unfold godWeight; simp [Nat.min_eq_left hI, Nat.min_eq_left hD]; omega
+  unfold godWeight
+  rw [Nat.min_eq_left hI, Nat.min_eq_left hD]
+  omega
 
 /-- THM-COLLIDER-DETECTION: A collider (V-structure) X → Z ← Y is
     detected when: X ⊥ Y marginally BUT X ⊬⊥ Y | Z.
@@ -52,13 +55,17 @@ theorem collider_detection (R vX vY vZ_conditioned : Nat)
     (hCondBound : vZ_conditioned ≤ R) :
     godWeight R (vX + vY) > godWeight R vZ_conditioned := by
   unfold godWeight
-  simp [Nat.min_eq_left hMarginal, Nat.min_eq_left hCondBound]; omega
+  rw [Nat.min_eq_left hMarginal, Nat.min_eq_left hCondBound]
+  omega
 
 /-- THM-FAITHFULNESS: If godWeight > 1 everywhere along a path,
     there maps to a real causal connection. The clinamen prevents
     false independence: weight = 1 only at maximum rejection. -/
 theorem faithfulness (R v : Nat) (hv : v < R) :
-    godWeight R v > 1 := by unfold godWeight; omega
+    godWeight R v > 1 := by
+  unfold godWeight
+  rw [Nat.min_eq_left (Nat.le_of_lt hv)]
+  omega
 
 /-- THM-SKELETON-FIRST: The PC algorithm first learns the skeleton
     (undirected graph), then orients edges using V-structures.
@@ -66,16 +73,13 @@ theorem faithfulness (R v : Nat) (hv : v < R) :
 theorem skeleton_test (R v_marginal v_best_conditional : Nat)
     (_hM : v_marginal ≤ R) (_hC : v_best_conditional ≤ R)
     (hStillDependent : v_best_conditional < R) :
-    godWeight R v_best_conditional > 1 := by
-  unfold godWeight; omega
+    godWeight R v_best_conditional > 1 :=
+  faithfulness R v_best_conditional hStillDependent
 
 theorem causal_discovery_master (R : Nat) (_hR : R ≥ 1) :
     (∀ v, v < R → godWeight R v > 1) ∧
     godWeight R R = 1 ∧
-    (∀ v1 v2, v1 ≤ R → v2 ≤ R → v1 ≤ v2 → godWeight R v2 ≤ godWeight R v1) := by
-  refine ⟨?_, ?_, ?_⟩
-  · intro v hv; unfold godWeight; omega
-  · unfold godWeight; omega
-  · intro v1 v2 h1 h2 hl; unfold godWeight; simp [Nat.min_eq_left h1, Nat.min_eq_left h2]; omega
+    (∀ v1 v2, v1 ≤ R → v2 ≤ R → v1 ≤ v2 → godWeight R v2 ≤ godWeight R v1) :=
+  ⟨faithfulness R, Gnosis.godWeight_floor R, Gnosis.godWeight_antitone R⟩
 
 end CausalDiscovery

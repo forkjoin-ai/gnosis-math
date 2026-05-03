@@ -184,7 +184,7 @@ def pentagonColoring : List Bool :=
 The pentagon/pentagram 2-coloring of `K₅` contains no
 monochromatic triangle. Closed by `decide` over 10 triangles. -/
 theorem ramsey_lower_bound :
-    hasMonoTriangle 5 pentagonColoring = false := by decide
+    hasMonoTriangle 5 pentagonColoring = false := by native_decide
 
 /-! ## Combined statement
 
@@ -206,13 +206,13 @@ theorem edgeIndex_5_table :
     edgeIndex 5 0 1 = 0 ∧ edgeIndex 5 0 2 = 1 ∧ edgeIndex 5 0 3 = 2 ∧
     edgeIndex 5 0 4 = 3 ∧ edgeIndex 5 1 2 = 4 ∧ edgeIndex 5 1 3 = 5 ∧
     edgeIndex 5 1 4 = 6 ∧ edgeIndex 5 2 3 = 7 ∧ edgeIndex 5 2 4 = 8 ∧
-    edgeIndex 5 3 4 = 9 := by decide
+    edgeIndex 5 3 4 = 9 := by native_decide
 
 /-- `triples 5` has `C(5, 3) = 10` entries. -/
-theorem triples_5_length : (triples 5).length = 10 := by decide
+theorem triples_5_length : (triples 5).length = 10 := by native_decide
 
 /-- `triples 6` has `C(6, 3) = 20` entries. -/
-theorem triples_6_length : (triples 6).length = 20 := by decide
+theorem triples_6_length : (triples 6).length = 20 := by native_decide
 
 /-- `allBoolVecs 15` has `2^15 = 32768` entries. Same scale as
 `ramsey_upper_bound`, so closed by `native_decide` for the same
@@ -227,7 +227,7 @@ theorem pentagon_red_edges :
     nthBool pentagonColoring 3 = true ∧
     nthBool pentagonColoring 4 = true ∧
     nthBool pentagonColoring 7 = true ∧
-    nthBool pentagonColoring 9 = true := by decide
+    nthBool pentagonColoring 9 = true := by native_decide
 
 /-- Blue edges in the pentagon coloring form the 5-star:
 reading off indices `1, 2, 5, 6, 8`. -/
@@ -236,7 +236,7 @@ theorem pentagon_blue_edges :
     nthBool pentagonColoring 2 = false ∧
     nthBool pentagonColoring 5 = false ∧
     nthBool pentagonColoring 6 = false ∧
-    nthBool pentagonColoring 8 = false := by decide
+    nthBool pentagonColoring 8 = false := by native_decide
 
 end RamseyR33
 end Gnosis

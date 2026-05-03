@@ -56,8 +56,9 @@ theorem ne_deviation_penalty (R v_ne v_deviate : Nat)
     (hNE : v_ne ≤ R) (hDeviate : v_deviate ≤ R)
     (hPenalty : v_deviate > v_ne) : -- Deviation strictly increases debt
     godWeight R v_deviate < godWeight R v_ne := by
-  unfold godWeight
-  simp [Nat.min_eq_left hNE, Nat.min_eq_left hDeviate]
+  have h := Gnosis.godWeight_antitone R v_ne v_deviate hNE hDeviate (Nat.le_of_lt hPenalty)
+  unfold godWeight at h ⊢
+  rw [Nat.min_eq_left hNE, Nat.min_eq_left hDeviate] at h ⊢
   omega
 
 /-- THM-STABLE-KNOT: A strict Nash Equilibrium is a local maximum
@@ -70,10 +71,9 @@ theorem stable_knot (R vA_ne vB_ne vA_dev vB_dev : Nat)
     (hStrictA : vA_dev > vA_ne) (hStrictB : vB_dev > vB_ne) :
     godWeight R vA_dev < godWeight R vA_ne ∧
     godWeight R vB_dev < godWeight R vB_ne := by
-  unfold godWeight
-  simp [Nat.min_eq_left hA, Nat.min_eq_left hB,
-        Nat.min_eq_left hAd, Nat.min_eq_left hBd]
-  omega
+  constructor
+  · exact ne_deviation_penalty R vA_ne vA_dev hA hAd hStrictA
+  · exact ne_deviation_penalty R vB_ne vB_dev hB hBd hStrictB
 
 /-- THM-PARETO-VS-NASH: Prisoner's Dilemma. The Nash Equilibrium
     is NOT always Pareto optimal. The global budget R might be
@@ -90,7 +90,8 @@ theorem prisoners_dilemma :
     godWeight 10 10 < godWeight 10 8 ∧
     -- But the NE is Pareto inferior to Mutual Cooperation (3 < 9)
     godWeight 10 8 < godWeight 10 2 := by
-  unfold godWeight; omega
+  unfold godWeight
+  native_decide
 
 /-- THM-NASH-MASTER: Nash Equilibrium is formalized as the condition
     where any unilateral strategy change increases a player's
@@ -101,9 +102,8 @@ theorem nash_master (R : Nat) :
     (godWeight 10 10 < godWeight 10 8) ∧
     (godWeight 10 8 < godWeight 10 2) := by
   refine ⟨?_, ?_, ?_⟩
-  · intro vn vd hn hd hgt
-    unfold godWeight; simp [Nat.min_eq_left hn, Nat.min_eq_left hd]; omega
-  · unfold godWeight; omega
-  · unfold godWeight; omega
+  · intro vn vd hn hd hgt; exact ne_deviation_penalty R vn vd hn hd hgt
+  · unfold godWeight; native_decide
+  · unfold godWeight; native_decide
 
 end NashEquilibrium

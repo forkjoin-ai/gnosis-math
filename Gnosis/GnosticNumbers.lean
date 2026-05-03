@@ -85,25 +85,20 @@ theorem primitives_is_fibonacci : fib primitives = primitives := by native_decid
 
 -- Emanations = 6: pairwise interactions of 3 quarks × 2 directions
 theorem emanations_is_six : emanations = 6 := rfl
-theorem emanations_from_proton : proton * (proton - 1) = emanations := by
-  unfold proton emanations; omega
+theorem emanations_from_proton : proton * (proton - 1) = emanations := rfl
 
 -- Sophia = 9: the exploration budget for 10 modes
-theorem sophia_is_budget : sophia = kenoma - barbelo := by
-  unfold sophia kenoma barbelo; omega
+theorem sophia_is_budget : sophia = kenoma - barbelo := rfl
 
 -- Kenoma = 10: pairwise interactions of 5 operations
-theorem kenoma_from_primitives : pairwise primitives = kenoma := by
-  unfold pairwise primitives kenoma; omega
+theorem kenoma_from_primitives : pairwise primitives = kenoma := rfl
 
 -- Kenoma = Sophia + Barbelo: field = budget + sliver
-theorem kenoma_decomposition : kenoma = sophia + barbelo := by
-  unfold kenoma sophia barbelo; omega
+theorem kenoma_decomposition : kenoma = sophia + barbelo := rfl
 
 -- Void = 21: the 8th Fibonacci number AND the 6th triangular number
 theorem void_is_fib_eight : fib 8 = void_ := by native_decide
-theorem void_is_triangular_six : triangular emanations = void_ := by
-  unfold triangular emanations void_; omega
+theorem void_is_triangular_six : triangular emanations = void_ := rfl
 
 -- Void = gap between Kenoma and Sophia in Fibonacci space
 -- F(10) - F(9) = F(8) = 21
@@ -114,14 +109,12 @@ theorem void_is_fibonacci_gap : fib kenoma - fib sophia = void_ := by
 theorem pleroma_is_fib_kenoma : fib kenoma = pleroma := by
   unfold kenoma pleroma; native_decide
 
-theorem pleroma_is_triangular_kenoma : triangular kenoma = pleroma := by
-  unfold triangular kenoma pleroma; omega
+theorem pleroma_is_triangular_kenoma : triangular kenoma = pleroma := rfl
 
 -- Pleroma is the sum of 1 through Kenoma
 -- 55 = 1 + 2 + 3 + 4 + 5 + 6 + 7 + 8 + 9 + 10
 -- Every boson channel contributes its index
-theorem pleroma_is_channel_sum : triangular kenoma = pleroma := by
-  unfold triangular kenoma pleroma; omega
+theorem pleroma_is_channel_sum : triangular kenoma = pleroma := rfl
 
 -- The triple coincidence (Luo Ming 1989)
 theorem triple_coincidence :
@@ -129,7 +122,7 @@ theorem triple_coincidence :
     triangular kenoma = pleroma ∧
     fib kenoma = triangular kenoma := by
   unfold kenoma pleroma
-  refine ⟨by native_decide, by unfold triangular; omega, ?_⟩
+  refine ⟨by native_decide, rfl, ?_⟩
   native_decide
 
 -- ═══════════════════════════════════════════════════════════════════════════════
@@ -137,28 +130,22 @@ theorem triple_coincidence :
 -- ═══════════════════════════════════════════════════════════════════════════════
 
 -- The gap between Kenoma and Sophia is Barbelo
-theorem gap_kenoma_sophia : kenoma - sophia = barbelo := by
-  unfold kenoma sophia barbelo; omega
+theorem gap_kenoma_sophia : kenoma - sophia = barbelo := rfl
 
 -- The gap between Sophia and Emanations is Proton
-theorem gap_sophia_emanations : sophia - emanations = proton := by
-  unfold sophia emanations proton; omega
+theorem gap_sophia_emanations : sophia - emanations = proton := rfl
 
 -- The gap between Emanations and Primitives is Barbelo
-theorem gap_emanations_primitives : emanations - primitives = barbelo := by
-  unfold emanations primitives barbelo; omega
+theorem gap_emanations_primitives : emanations - primitives = barbelo := rfl
 
 -- The gap between Primitives and Proton is Syzygy
-theorem gap_primitives_proton : primitives - proton = syzygy := by
-  unfold primitives proton syzygy; omega
+theorem gap_primitives_proton : primitives - proton = syzygy := rfl
 
 -- The gap between Proton and Syzygy is Barbelo
-theorem gap_proton_syzygy : proton - syzygy = barbelo := by
-  unfold proton syzygy barbelo; omega
+theorem gap_proton_syzygy : proton - syzygy = barbelo := rfl
 
 -- The gap between Syzygy and Barbelo is Barbelo
-theorem gap_syzygy_barbelo : syzygy - barbelo = barbelo := by
-  unfold syzygy barbelo; omega
+theorem gap_syzygy_barbelo : syzygy - barbelo = barbelo := rfl
 
 -- Every gap eventually reaches Barbelo (1). The sliver is the base case.
 
@@ -175,18 +162,12 @@ theorem void_is_fib : fib 8 = void_ := by native_decide
 theorem pleroma_is_fib : fib 10 = pleroma := by native_decide
 
 -- Which are triangular numbers?
-theorem barbelo_is_triangular : triangular 1 = barbelo := by
-  unfold triangular barbelo; omega
-theorem proton_is_triangular : triangular 2 = proton := by
-  unfold triangular proton; omega
-theorem emanations_is_triangular : triangular 3 = emanations := by
-  unfold triangular emanations; omega
-theorem kenoma_is_triangular : triangular 4 = kenoma := by
-  unfold triangular kenoma; omega
-theorem void_is_triangular : triangular 6 = void_ := by
-  unfold triangular void_; omega
-theorem pleroma_is_triangular : triangular 10 = pleroma := by
-  unfold triangular pleroma; omega
+theorem barbelo_is_triangular : triangular 1 = barbelo := rfl
+theorem proton_is_triangular : triangular 2 = proton := rfl
+theorem emanations_is_triangular : triangular 3 = emanations := rfl
+theorem kenoma_is_triangular : triangular 4 = kenoma := rfl
+theorem void_is_triangular : triangular 6 = void_ := rfl
+theorem pleroma_is_triangular : triangular 10 = pleroma := rfl
 
 -- ═══════════════════════════════════════════════════════════════════════════════
 -- The complete naming theorem
@@ -211,13 +192,13 @@ theorem gnostic_number_system :
     -- The Fibonacci gap reproduces the sequence
     fib kenoma - fib sophia = void_ := by
   refine ⟨rfl, rfl, rfl, rfl, rfl, rfl, rfl, rfl, rfl,
-    by unfold pairwise primitives kenoma; omega,
-    by unfold kenoma sophia barbelo; omega,
+    rfl,
+    rfl,
     by unfold kenoma pleroma; native_decide,
-    by unfold triangular kenoma pleroma; omega,
+    rfl,
     by native_decide,
     by native_decide,
-    by unfold triangular emanations void_; omega,
+    rfl,
     ?_⟩
   unfold kenoma sophia void_; native_decide
 

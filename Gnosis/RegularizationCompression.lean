@@ -62,7 +62,7 @@ theorem sparse_beats_dense :
     let dense_total := 10 + 30
     -- Sparse wins in total description length
     godWeight 100 sparse_total > godWeight 100 dense_total := by
-  unfold godWeight; omega
+  native_decide
 
 /-- THM-L2-SHRINKS-NOT-KILLS: L2 makes parameters SMALL but not zero.
     In MDL terms: L2 charges for MAGNITUDE, so large params are
@@ -71,13 +71,14 @@ theorem l2_shrinks :
     -- Model A: 10 params, magnitude 5 → L2 cost = 5
     -- Model B: 10 params, magnitude 50 → L2 cost = 50
     godWeight 100 (10 + 5) > godWeight 100 (10 + 50) := by
-  unfold godWeight; omega
+  native_decide
 
 /-- THM-ELASTIC-NET: L1 + L2 combined. The elastic net penalty
     = α × L1 + (1-α) × L2. In MDL: charge for both existence
     AND magnitude. -/
 theorem elastic_net (fit params magnitude : Nat) :
-    fit + params + magnitude ≥ fit + params := by omega
+    fit + params + magnitude ≥ fit + params :=
+  Nat.le_add_right _ _
 
 /-- THM-BIAS-VARIANCE-TRADEOFF: More regularization (higher penalty)
     → higher fit error (more bias) but lower model complexity → less
@@ -92,7 +93,7 @@ theorem bias_variance :
     -- Moderate wins (U-shaped curve)
     godWeight 100 35 > godWeight 100 62 ∧
     godWeight 100 35 > godWeight 100 85 := by
-  unfold godWeight; omega
+  native_decide
 
 /-- THM-ZERO-REGULARIZATION-OVERFITS: Without regularization (λ=0),
     model complexity is unconstrained → overfitting. The MDL cost
@@ -106,7 +107,8 @@ theorem zero_reg_overfits (R fit complexity : Nat)
     are zeroed → null model. Fit error is maximal but complexity = 0.
     This is the null model clinamen from MDL. -/
 theorem infinite_reg (R : Nat) :
-    godWeight R R = 1 := by unfold godWeight; omega
+    godWeight R R = 1 :=
+  Gnosis.godWeight_floor R
 
 theorem regularization_master (R : Nat) :
     -- MDL conservation
@@ -118,9 +120,9 @@ theorem regularization_master (R : Nat) :
     -- Monotone
     (∀ v1 v2, v1 ≤ R → v2 ≤ R → v1 ≤ v2 → godWeight R v2 ≤ godWeight R v1) := by
   refine ⟨?_, ?_, ?_, ?_⟩
-  · intro v hv; unfold godWeight; simp [Nat.min_eq_left hv]; omega
-  · unfold godWeight; omega
-  · unfold godWeight; omega
-  · intro v1 v2 h1 h2 hl; unfold godWeight; simp [Nat.min_eq_left h1, Nat.min_eq_left h2]; omega
+  · intro v hv; exact Gnosis.godWeight_conservation R v hv
+  · exact Gnosis.godWeight_floor R
+  · exact Gnosis.godWeight_ceiling R
+  · intro v1 v2 h1 h2 hl; exact Gnosis.godWeight_antitone R v1 v2 h1 h2 hl
 
 end RegularizationCompression

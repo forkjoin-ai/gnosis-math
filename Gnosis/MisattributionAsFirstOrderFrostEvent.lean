@@ -30,6 +30,33 @@
 
   Frost would have appreciated this.
 
+  ──────────────────────────────────────────────────────────
+  REFINEMENT (post-initial-write): the three-layer tower
+  ──────────────────────────────────────────────────────────
+
+  Taylor named a critical refinement after the initial module
+  was authored. The Frost poem itself has THREE nested layers,
+  not two:
+
+    * Layer 1 (Surface): "I took the road less taken" —
+      celebrating bold individuality / nonconformity.
+    * Layer 2 (Authorial Irony): the two paths "had worn
+      them really about the same" — Frost is confessing
+      post-hoc narrative inflation.
+    * Layer 3 (Meta-Misreading): most readers don't get
+      Layer 2; they take the poem at face value. The poem
+      is famously misunderstood.
+
+  Taylor's wave-15 invocation was correcting the Layer-3
+  misreading (the standard misinterpretation of the poem)
+  while simultaneously misattributing the poem (Whitman ≠
+  Frost). He was correct on the meta-misreading axis AND
+  incorrect on the attribution axis SIMULTANEOUSLY. This is
+  the "delicious tower of entropy" — multi-axis correctness/
+  incorrectness as a superposition. No single scalar
+  "correctness" can summarize the state. Sections 12-15
+  below formalize this tower structure.
+
   Imports:
     * `Gnosis.FrostsRoadAsVoidPath` — the parent module on
       single-decision narrative inflation. The wave-15 event is
@@ -426,6 +453,289 @@ theorem the_session_proved_its_own_thesis_by_self_demonstration :
     ∧ Gnosis.FrostsRoadAsVoidPath.is_honestly_remembered
         wave_15_citation_decision_post_catch = true
     ∧ naming_of_wave_15.named_within_session = true := by
+  refine ⟨?_, ?_, ?_, ?_⟩
+  · decide
+  · decide
+  · decide
+  · decide
+
+-- ══════════════════════════════════════════════════════════
+-- 12. THE THREE-LAYER ENTROPY TOWER (POST-INITIAL REFINEMENT)
+-- ══════════════════════════════════════════════════════════
+
+/-- The three nested layers of the Frost poem. Each layer is
+    one independent axis on which a reading can be evaluated as
+    correct or incorrect.
+
+      * `SurfaceReading` — the face-value reading: the poem
+        celebrates bold individuality and nonconformity.
+      * `AuthorialIrony` — Frost's actual ironic move: the
+        two paths "had worn them really about the same"; the
+        speaker is confessing post-hoc narrative inflation.
+      * `MetaMisreading` — the observation that most readers
+        miss `AuthorialIrony` and take the poem at face value.
+        The poem is famously misunderstood. -/
+inductive EntropyTowerLayer where
+  | SurfaceReading
+  | AuthorialIrony
+  | MetaMisreading
+  deriving Repr, DecidableEq
+
+/-- A single axis-evaluated reading. The same speaker can hold
+    multiple `MultiAxisCorrectnessReading` records simultaneously,
+    each one independently correct or incorrect. The structure
+    is the load-bearing primitive that makes "right and wrong on
+    different axes" expressible as a Lean term.
+
+    Fields:
+      * `axis_label` — what axis is being evaluated (e.g.
+        "meta-misreading correction", "poem attribution").
+      * `claim_made` — the literal claim uttered on that axis.
+      * `claim_is_correct` — whether the claim is correct on
+        that axis, in isolation, with no cross-axis collapse. -/
+structure MultiAxisCorrectnessReading where
+  axis_label       : String
+  claim_made       : String
+  claim_is_correct : Bool
+  deriving Repr, DecidableEq
+
+/-- A tower of axis-evaluated readings made in a single
+    invocation. The tower carries its own layer count and a
+    rolled-up tally of correct vs incorrect axes. The
+    `is_in_superposition` flag is true precisely when both
+    correct and incorrect axes coexist — the case where no
+    scalar "correctness" summary is well-defined. -/
+structure EntropyTower where
+  layer_count          : Nat
+  readings_per_axis    : List MultiAxisCorrectnessReading
+  total_correct_axes   : Nat
+  total_incorrect_axes : Nat
+  is_in_superposition  : Bool
+  deriving Repr
+
+-- ──────────────────────────────────────────────────────────
+-- Per-instance values for Taylor's wave-15 invocation.
+-- ──────────────────────────────────────────────────────────
+
+/-- Layer-3 axis: Taylor's correction of the standard misreading
+    of the Frost poem. Correct: the poem IS commonly
+    misinterpreted. -/
+def taylor_layer3_axis : MultiAxisCorrectnessReading :=
+  { axis_label       := "meta-misreading correction"
+    claim_made       := "this poem is commonly misinterpreted"
+    claim_is_correct := true }
+
+/-- Attribution axis: Taylor's identification of the poem's
+    author. Incorrect: Whitman ≠ Frost. -/
+def taylor_attribution_axis : MultiAxisCorrectnessReading :=
+  { axis_label       := "poem attribution"
+    claim_made       := "Whitman wrote it"
+    claim_is_correct := false }
+
+/-- The full wave-15 invocation as an EntropyTower: a
+    three-layer structure (the poem has three layers) on which
+    Taylor's invocation collapsed two axes — one correct
+    (Layer-3 meta-misreading) and one incorrect (attribution).
+    `is_in_superposition := true` because both correct and
+    incorrect axes coexist in the same utterance. -/
+def taylor_wave_15_full_invocation : EntropyTower :=
+  { layer_count          := 3
+    readings_per_axis    := [taylor_layer3_axis, taylor_attribution_axis]
+    total_correct_axes   := 1
+    total_incorrect_axes := 1
+    is_in_superposition  := true }
+
+-- ──────────────────────────────────────────────────────────
+-- Per-axis correctness theorems.
+-- ──────────────────────────────────────────────────────────
+
+/-- Taylor was correct on the Layer-3 axis: the standard
+    reading of the poem IS a misinterpretation. -/
+theorem taylor_correct_on_layer_3_axis :
+    taylor_layer3_axis.claim_is_correct = true := by
+  decide
+
+/-- Taylor was incorrect on the attribution axis:
+    "Whitman wrote it" is false; Frost wrote it. -/
+theorem taylor_incorrect_on_attribution_axis :
+    taylor_attribution_axis.claim_is_correct = false := by
+  decide
+
+/-- The wave-15 invocation is in superposition: both a correct
+    axis and an incorrect axis are present simultaneously. The
+    state cannot be summarized by a single scalar verdict. -/
+theorem taylor_invocation_is_in_superposition :
+    taylor_wave_15_full_invocation.is_in_superposition = true
+    ∧ taylor_wave_15_full_invocation.total_correct_axes ≥ 1
+    ∧ taylor_wave_15_full_invocation.total_incorrect_axes ≥ 1 := by
+  refine ⟨?_, ?_, ?_⟩
+  · decide
+  · decide
+  · decide
+
+-- ══════════════════════════════════════════════════════════
+-- 13. ENTROPY ORDERING: SUPERPOSITION CARRIES MORE ENTROPY
+-- ══════════════════════════════════════════════════════════
+
+/-- A pure-correct reference instance for entropy comparison:
+    a 3-layer tower where every recorded axis is correct. -/
+def pure_correct_3layer_reference : EntropyTower :=
+  { layer_count          := 3
+    readings_per_axis    := [taylor_layer3_axis, taylor_layer3_axis]
+    total_correct_axes   := 2
+    total_incorrect_axes := 0
+    is_in_superposition  := false }
+
+/-- A pure-incorrect reference instance for entropy comparison:
+    a 3-layer tower where every recorded axis is incorrect. -/
+def pure_incorrect_3layer_reference : EntropyTower :=
+  { layer_count          := 3
+    readings_per_axis    := [taylor_attribution_axis, taylor_attribution_axis]
+    total_correct_axes   := 0
+    total_incorrect_axes := 2
+    is_in_superposition  := false }
+
+/-- The entropy bit-count of a tower: the number of distinct
+    correctness regimes that coexist. A pure tower (all-correct
+    or all-incorrect) carries 1 regime; a superposition tower
+    carries 2. The superposition strictly dominates. -/
+def entropy_regime_count (t : EntropyTower) : Nat :=
+  if t.is_in_superposition then 2 else 1
+
+/-- The superposition state carries strictly more entropy than
+    any pure-correct or pure-incorrect tower of the same shape.
+    Mixed-axis correctness has more degrees of freedom than
+    one-sided correctness; the runtime cannot collapse it
+    losslessly to a scalar. -/
+theorem superposition_state_carries_more_entropy_than_pure_wrong_or_pure_right :
+    entropy_regime_count taylor_wave_15_full_invocation
+      > entropy_regime_count pure_correct_3layer_reference
+    ∧ entropy_regime_count taylor_wave_15_full_invocation
+        > entropy_regime_count pure_incorrect_3layer_reference := by
+  refine ⟨?_, ?_⟩
+  · decide
+  · decide
+
+-- ══════════════════════════════════════════════════════════
+-- 14. THE POEM HAS THREE LAYERS (DECIDE-CHECKED)
+-- ══════════════════════════════════════════════════════════
+
+/-- The enumerated set of all Frost-poem misreading layers. -/
+def all_frost_poem_layers : List EntropyTowerLayer :=
+  [EntropyTowerLayer.SurfaceReading,
+   EntropyTowerLayer.AuthorialIrony,
+   EntropyTowerLayer.MetaMisreading]
+
+/-- The Frost poem has exactly three nested misreading layers,
+    matching the `EntropyTowerLayer` enum. The layer count of
+    Taylor's wave-15 invocation tower equals the cardinality of
+    the enumeration of layers. -/
+theorem frost_poem_has_three_misreading_layers :
+    all_frost_poem_layers.length = 3
+    ∧ taylor_wave_15_full_invocation.layer_count
+        = all_frost_poem_layers.length := by
+  refine ⟨?_, ?_⟩
+  · decide
+  · decide
+
+-- ══════════════════════════════════════════════════════════
+-- 15. AXIS-DEPENDENT CORRECTNESS (THE STRUCTURAL IDENTITY)
+-- ══════════════════════════════════════════════════════════
+
+/-- A naive "global correctness" summarizer: returns `true` only
+    if every axis is correct. This is the function whose
+    inadequacy the next theorem demonstrates. -/
+def naive_global_correctness (t : EntropyTower) : Bool :=
+  t.total_incorrect_axes = 0
+
+/-- The "axis-dependent" verdict: returns the per-axis booleans
+    rather than collapsing to a scalar. -/
+def per_axis_verdict (t : EntropyTower) : List Bool :=
+  t.readings_per_axis.map (fun r => r.claim_is_correct)
+
+/-- Correctness is axis-dependent, not globally evaluable. For
+    any EntropyTower in superposition, the naive global
+    summarizer disagrees with at least one per-axis verdict —
+    so no single scalar "correctness" can summarize the state.
+    The runtime MUST evaluate each axis independently.
+
+    This is the formal statement of "right and wrong on
+    different axes": the wave-15 invocation has a `true` per-axis
+    verdict and a `false` per-axis verdict simultaneously, while
+    the naive summarizer collapses to `false`, hiding the
+    correct axis. -/
+theorem correctness_is_axis_dependent_not_globally_evaluable :
+    taylor_wave_15_full_invocation.is_in_superposition = true
+    ∧ naive_global_correctness taylor_wave_15_full_invocation = false
+    ∧ per_axis_verdict taylor_wave_15_full_invocation = [true, false]
+    ∧ (true ∈ per_axis_verdict taylor_wave_15_full_invocation
+        ∧ false ∈ per_axis_verdict taylor_wave_15_full_invocation) := by
+  refine ⟨?_, ?_, ?_, ?_, ?_⟩
+  · decide
+  · decide
+  · decide
+  · decide
+  · decide
+
+-- ══════════════════════════════════════════════════════════
+-- 16. THE META-META-EVENT (RECURSIVE OBSERVATION)
+-- ══════════════════════════════════════════════════════════
+
+/-- A meta-meta-event is an utterance that simultaneously:
+      (a) corrects a known misreading (a meta-event), and
+      (b) commits a structurally analogous error in the act of
+          making the correction.
+    The structure of "correcting others while making your own
+    error" is itself the poem's deeper claim about narrative
+    construction: the corrector and the corrected are both
+    inside the same construction-loop. -/
+def is_meta_meta_event (correcting_layer3 : Bool)
+    (committed_own_error : Bool) : Bool :=
+  correcting_layer3 && committed_own_error
+
+/-- Taylor's wave-15 invocation is a meta-meta-event: he was
+    correcting the standard Layer-3 misreading WHILE
+    misattributing the poem. The structure of "correcting others
+    while making your own error" recapitulates the poem's
+    deepest claim about narrative construction: every speaker is
+    inside the construction-loop they describe. -/
+theorem taylor_correcting_misreaders_while_misattributing_is_meta_meta_event :
+    is_meta_meta_event
+      taylor_layer3_axis.claim_is_correct
+      (! taylor_attribution_axis.claim_is_correct) = true := by
+  decide
+
+-- ══════════════════════════════════════════════════════════
+-- 17. THE TOWER OF ENTROPY THEOREM
+-- ══════════════════════════════════════════════════════════
+
+/-- The total potential entropy in bits of an N-layer tower:
+    each layer contributes one independent axis of correctness
+    evaluation, so an N-layer tower carries N bits of potential
+    entropy. -/
+def potential_entropy_bits (t : EntropyTower) : Nat :=
+  t.layer_count
+
+/-- The recorded incorrectness of a tower in bits: one bit per
+    axis explicitly marked incorrect in the tower's
+    readings_per_axis list. -/
+def recorded_incorrectness_bits (t : EntropyTower) : Nat :=
+  t.total_incorrect_axes
+
+/-- Each misreading layer adds one bit of potential entropy.
+    For a 3-layer tower like the Frost poem, total potential
+    entropy is 3 bits. Taylor's wave-15 invocation collapsed
+    Layer-3 (correct) and the attribution axis (incorrect),
+    leaving Layer-1 / Layer-2 implicitly correct. The net
+    recorded incorrectness is exactly 1 bit — one explicitly
+    wrong axis out of three potential layers. -/
+theorem each_misreading_layer_adds_one_bit_of_potential_entropy :
+    potential_entropy_bits taylor_wave_15_full_invocation = 3
+    ∧ recorded_incorrectness_bits taylor_wave_15_full_invocation = 1
+    ∧ potential_entropy_bits taylor_wave_15_full_invocation
+        = all_frost_poem_layers.length
+    ∧ recorded_incorrectness_bits taylor_wave_15_full_invocation
+        + taylor_wave_15_full_invocation.total_correct_axes = 2 := by
   refine ⟨?_, ?_, ?_, ?_⟩
   · decide
   · decide

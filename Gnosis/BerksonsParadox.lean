@@ -102,8 +102,8 @@ theorem berkson_phantom_weight (R vA T : Nat)
     (hA : vA ≤ R) (_hT : T ≤ vA)  -- A alone exceeds threshold
     :
     -- When A alone suffices, B needs zero rejections → max weight
-    godWeight R 0 = R + 1 := by
-  unfold godWeight; omega
+    godWeight R 0 = R + 1 :=
+  Gnosis.godWeight_ceiling R
 
 -- ═══════════════════════════════════════════════════════════════════════
 -- §2. Simpson vs Berkson: Exact Duality
@@ -228,9 +228,9 @@ theorem berksons_paradox_master (R : Nat) :
     -- Monotone (more rejection → lower weight → Berkson phantom up)
     (∀ v1 v2, v1 ≤ R → v2 ≤ R → v1 ≤ v2 → godWeight R v2 ≤ godWeight R v1) := by
   refine ⟨?_, ?_, ?_, ?_⟩
-  · intro v; unfold godWeight; omega
-  · unfold godWeight; omega
-  · intro v hv; unfold godWeight; simp [Nat.min_eq_left hv]; omega
-  · intro v1 v2 h1 h2 hle; unfold godWeight; simp [Nat.min_eq_left h1, Nat.min_eq_left h2]; omega
+  · intro v; exact Gnosis.godWeight_pos R v
+  · exact Gnosis.godWeight_ceiling R
+  · intro v hv; exact Gnosis.godWeight_conservation R v hv
+  · intro v1 v2 h1 h2 hle; exact Gnosis.godWeight_antitone R v1 v2 h1 h2 hle
 
 end BerksonsParadox

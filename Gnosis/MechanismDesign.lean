@@ -43,27 +43,31 @@ theorem truthful_dominates (R v_true v_false payoff_scale : Nat)
     (hLiePays : v_false > v_true) :
     -- Lying about v (reporting higher) gives lower weight = lower payoff
     godWeight R v_false < godWeight R v_true := by
-  unfold godWeight; simp [Nat.min_eq_left hT, Nat.min_eq_left hF]; omega
+  have h := Gnosis.godWeight_antitone R v_true v_false hT hF (Nat.le_of_lt hLiePays)
+  unfold godWeight at h ⊢
+  rw [Nat.min_eq_left hT, Nat.min_eq_left hF] at h ⊢
+  omega
 
 /-- THM-VCG-EXTERNALITY: The VCG payment = social cost without i
     minus social cost with i. This is the externality i imposes. -/
 theorem vcg_externality (R v_without v_with : Nat)
     (hW : v_without ≤ R) (hI : v_with ≤ R) (hWorse : v_with ≥ v_without) :
     godWeight R v_without - godWeight R v_with = v_with - v_without := by
-  unfold godWeight; simp [Nat.min_eq_left hW, Nat.min_eq_left hI]; omega
+  unfold godWeight
+  rw [Nat.min_eq_left hW, Nat.min_eq_left hI]
+  omega
 
 /-- THM-MINIMUM-INCENTIVE: Truthful reporting requires a minimum payment
     of 1 (the clinamen). You cannot get truth for free. -/
-theorem minimum_incentive : godWeight 0 0 = 1 := by unfold godWeight; omega
+theorem minimum_incentive : godWeight 0 0 = 1 :=
+  Gnosis.godWeight_floor 0
 
 /-- THM-BUDGET-BALANCE: A mechanism cannot simultaneously be truthful,
     efficient, and budget-balanced. At least 1 unit must be paid
     from outside (the clinamen = subsidization of truth). -/
 theorem budget_imbalance (R v : Nat) (hv : v ≤ R) :
-    godWeight R v + v = R + 1 ∧ R + 1 > R := by
-  constructor
-  · unfold godWeight; simp [Nat.min_eq_left hv]; omega
-  · omega
+    godWeight R v + v = R + 1 ∧ R + 1 > R :=
+  ⟨Gnosis.godWeight_conservation R v hv, Nat.lt_succ_self R⟩
 
 /-- THM-AUCTION-SECOND-PRICE: In a second-price auction (Vickrey),
     the winner pays the SECOND highest bid. This is VCG for auctions.
@@ -86,9 +90,9 @@ theorem mechanism_design_master (R : Nat) :
     godWeight R 0 = R + 1 ∧ godWeight R R = 1 ∧
     (∀ v, godWeight R v ≥ 1) := by
   refine ⟨?_, ?_, ?_, ?_⟩
-  · intro v hv; unfold godWeight; simp [Nat.min_eq_left hv]; omega
-  · unfold godWeight; omega
-  · unfold godWeight; omega
-  · intro v; unfold godWeight; omega
+  · intro v hv; exact Gnosis.godWeight_conservation R v hv
+  · exact Gnosis.godWeight_ceiling R
+  · exact Gnosis.godWeight_floor R
+  · intro v; exact Gnosis.godWeight_pos R v
 
 end MechanismDesign

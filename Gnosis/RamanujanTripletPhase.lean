@@ -57,20 +57,20 @@ def p (n : Nat) : Nat := partitionsAux (n + n + 2) n n
 
 /-! ## Sanity values -/
 
-theorem p_0  : p 0  = 1   := by decide
-theorem p_1  : p 1  = 1   := by decide
-theorem p_2  : p 2  = 2   := by decide
-theorem p_3  : p 3  = 3   := by decide
-theorem p_4  : p 4  = 5   := by decide
-theorem p_5  : p 5  = 7   := by decide
-theorem p_6  : p 6  = 11  := by decide
-theorem p_7  : p 7  = 15  := by decide
-theorem p_9  : p 9  = 30  := by decide
-theorem p_12 : p 12 = 77  := by decide
-theorem p_14 : p 14 = 135 := by decide
-theorem p_17 : p 17 = 297 := by decide
-theorem p_19 : p 19 = 490 := by decide
-theorem p_28 : p 28 = 3718 := by decide
+theorem p_0  : p 0  = 1   := by native_decide
+theorem p_1  : p 1  = 1   := by native_decide
+theorem p_2  : p 2  = 2   := by native_decide
+theorem p_3  : p 3  = 3   := by native_decide
+theorem p_4  : p 4  = 5   := by native_decide
+theorem p_5  : p 5  = 7   := by native_decide
+theorem p_6  : p 6  = 11  := by native_decide
+theorem p_7  : p 7  = 15  := by native_decide
+theorem p_9  : p 9  = 30  := by native_decide
+theorem p_12 : p 12 = 77  := by native_decide
+theorem p_14 : p 14 = 135 := by native_decide
+theorem p_17 : p 17 = 297 := by native_decide
+theorem p_19 : p 19 = 490 := by native_decide
+theorem p_28 : p 28 = 3718 := by native_decide
 
 /-! ## Positive phase: the three Ramanujan congruences
 
@@ -79,22 +79,22 @@ Each prime in `{5, 7, 11}` admits a `r` such that
 
 /-! ### Mod 5: `r = 4` — `p(5n + 4) ≡ 0 (mod 5)` -/
 
-theorem rm5_n0 : p 4  % 5 = 0 := by decide
-theorem rm5_n1 : p 9  % 5 = 0 := by decide
-theorem rm5_n2 : p 14 % 5 = 0 := by decide
-theorem rm5_n3 : p 19 % 5 = 0 := by decide
+theorem rm5_n0 : p 4  % 5 = 0 := by native_decide
+theorem rm5_n1 : p 9  % 5 = 0 := by native_decide
+theorem rm5_n2 : p 14 % 5 = 0 := by native_decide
+theorem rm5_n3 : p 19 % 5 = 0 := by native_decide
 
 /-! ### Mod 7: `r = 5` — `p(7n + 5) ≡ 0 (mod 7)` -/
 
-theorem rm7_n0 : p 5  % 7 = 0 := by decide
-theorem rm7_n1 : p 12 % 7 = 0 := by decide
-theorem rm7_n2 : p 19 % 7 = 0 := by decide
+theorem rm7_n0 : p 5  % 7 = 0 := by native_decide
+theorem rm7_n1 : p 12 % 7 = 0 := by native_decide
+theorem rm7_n2 : p 19 % 7 = 0 := by native_decide
 
 /-! ### Mod 11: `r = 6` — `p(11n + 6) ≡ 0 (mod 11)` -/
 
-theorem rm11_n0 : p 6  % 11 = 0 := by decide
-theorem rm11_n1 : p 17 % 11 = 0 := by decide
-theorem rm11_n2 : p 28 % 11 = 0 := by decide
+theorem rm11_n0 : p 6  % 11 = 0 := by native_decide
+theorem rm11_n1 : p 17 % 11 = 0 := by native_decide
+theorem rm11_n2 : p 28 % 11 = 0 := by native_decide
 
 /-! ## Negative phase: non-special primes admit no Ramanujan congruence
 
@@ -106,34 +106,34 @@ Ramanujan congruence exists at modulus `m`. -/
 /-! ### Mod 2: both residues scraped -/
 
 /-- `r = 0`: `p(0) = 1`, odd. -/
-theorem no_rm2_r0_witness : p 0 % 2 ≠ 0 := by decide
+theorem no_rm2_r0_witness : p 0 % 2 ≠ 0 := by native_decide
 /-- `r = 1`: `p(1) = 1`, odd. -/
-theorem no_rm2_r1_witness : p 1 % 2 ≠ 0 := by decide
+theorem no_rm2_r1_witness : p 1 % 2 ≠ 0 := by native_decide
 
 /-! ### Mod 3: all three residues scraped -/
 
 /-- `r = 0`: `p(6) = 11`, and `11 % 3 = 2`. -/
-theorem no_rm3_r0_witness : p 6 % 3 ≠ 0 := by decide
+theorem no_rm3_r0_witness : p 6 % 3 ≠ 0 := by native_decide
 /-- `r = 1`: `p(1) = 1`, and `1 % 3 = 1`. -/
-theorem no_rm3_r1_witness : p 1 % 3 ≠ 0 := by decide
+theorem no_rm3_r1_witness : p 1 % 3 ≠ 0 := by native_decide
 /-- `r = 2`: `p(2) = 2`, and `2 % 3 = 2`. -/
-theorem no_rm3_r2_witness : p 2 % 3 ≠ 0 := by decide
+theorem no_rm3_r2_witness : p 2 % 3 ≠ 0 := by native_decide
 
 /-! ### Mod 13: every residue `0..12` scraped -/
 
-theorem no_rm13_r0  : p 0  % 13 ≠ 0 := by decide
-theorem no_rm13_r1  : p 1  % 13 ≠ 0 := by decide
-theorem no_rm13_r2  : p 2  % 13 ≠ 0 := by decide
-theorem no_rm13_r3  : p 3  % 13 ≠ 0 := by decide
-theorem no_rm13_r4  : p 4  % 13 ≠ 0 := by decide
-theorem no_rm13_r5  : p 5  % 13 ≠ 0 := by decide
-theorem no_rm13_r6  : p 6  % 13 ≠ 0 := by decide
-theorem no_rm13_r7  : p 7  % 13 ≠ 0 := by decide
-theorem no_rm13_r8  : p 8  % 13 ≠ 0 := by decide
-theorem no_rm13_r9  : p 9  % 13 ≠ 0 := by decide
-theorem no_rm13_r10 : p 10 % 13 ≠ 0 := by decide
-theorem no_rm13_r11 : p 11 % 13 ≠ 0 := by decide
-theorem no_rm13_r12 : p 12 % 13 ≠ 0 := by decide
+theorem no_rm13_r0  : p 0  % 13 ≠ 0 := by native_decide
+theorem no_rm13_r1  : p 1  % 13 ≠ 0 := by native_decide
+theorem no_rm13_r2  : p 2  % 13 ≠ 0 := by native_decide
+theorem no_rm13_r3  : p 3  % 13 ≠ 0 := by native_decide
+theorem no_rm13_r4  : p 4  % 13 ≠ 0 := by native_decide
+theorem no_rm13_r5  : p 5  % 13 ≠ 0 := by native_decide
+theorem no_rm13_r6  : p 6  % 13 ≠ 0 := by native_decide
+theorem no_rm13_r7  : p 7  % 13 ≠ 0 := by native_decide
+theorem no_rm13_r8  : p 8  % 13 ≠ 0 := by native_decide
+theorem no_rm13_r9  : p 9  % 13 ≠ 0 := by native_decide
+theorem no_rm13_r10 : p 10 % 13 ≠ 0 := by native_decide
+theorem no_rm13_r11 : p 11 % 13 ≠ 0 := by native_decide
+theorem no_rm13_r12 : p 12 % 13 ≠ 0 := by native_decide
 
 /-! ## Phase-span witness -/
 

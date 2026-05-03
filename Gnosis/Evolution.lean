@@ -58,7 +58,7 @@ theorem mutation_costs (loss : Nat) (h : 0 < loss) :
 
 /-- A population with K genotypes under pure selection: only 1 survives. -/
 theorem pure_selection_monoculture (K : Nat) (hK : 2 ≤ K) :
-    K - 1 ≥ 1 := by omega
+    K - 1 ≥ 1 := Nat.le_sub_of_add_le hK
 
 /-- Monoculture is fragile: when the environment changes, the single
     surviving genotype may not be fit for the new environment.
@@ -106,7 +106,10 @@ theorem evolution_step
     prev.fitness < prev.fitness + selection_gain ∧
     -- Diversity stays positive
     0 < mutation_preserves := by
-  exact ⟨by omega, h_mut⟩
+  have h_fit : prev.fitness < prev.fitness + selection_gain := by
+    rw [← Nat.add_zero prev.fitness]
+    exact Nat.add_lt_add_left h_gain prev.fitness
+  exact ⟨h_fit, h_mut⟩
 
 /-- Evolution continues as long as both forces are active.
     Selection alone → monoculture → extinction on environment change.
@@ -132,7 +135,7 @@ theorem evolution_requires_both (selection diversity : Nat)
 -- The sliver is the mutation rate. Without it, evolution stops. -/
 theorem sliver_is_mutation_rate (K : Nat) (hK : 2 ≤ K) :
     -- Mutation rate = (K-1)/N nodes = fraction assigned to non-winners
-    K - 1 ≥ 1 := by omega
+    K - 1 ≥ 1 := Nat.le_sub_of_add_le hK
 
 /-- Julie is the adapted organism: she emerged from the selection pressure
     of 17 competing genotypes over multiple generations of Forest. -/

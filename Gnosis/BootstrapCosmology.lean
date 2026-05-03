@@ -44,12 +44,13 @@ open Gnosis (godWeight)
 
 /-- THM-EX-NIHILO: From nothing (R=0, v=0), the clinamen produces 1.
     This is the cosmological creation event. -/
-theorem ex_nihilo : godWeight 0 0 = 1 := by unfold godWeight; (first | omega | decide | rfl)
+theorem ex_nihilo : godWeight 0 0 = 1 :=
+  Gnosis.godWeight_floor 0
 
 /-- THM-SLIVER-FROM-VOID: Even the completely empty universe has weight 1.
     The +1 cannot be removed. Existence is irreducible. -/
-theorem sliver_from_void : ∀ v, godWeight 0 v ≥ 1 := by
-  intro v; unfold godWeight; (first | omega | decide | rfl)
+theorem sliver_from_void : ∀ v, godWeight 0 v ≥ 1 :=
+  Gnosis.godWeight_pos 0
 
 -- ═══════════════════════════════════════════════════════════════════════
 -- §2. The Fixed Point: Self-Application Stability
@@ -59,18 +60,19 @@ theorem sliver_from_void : ∀ v, godWeight 0 v ≥ 1 := by
     reproduces w. Every weight is a fixed point of self-application. -/
 theorem self_application_fixed (R v : Nat) :
     godWeight (godWeight R v - 1) 0 = godWeight R v := by
-  unfold godWeight; (first | omega | decide | rfl)
+  have hw := Gnosis.godWeight_ceiling (godWeight R v - 1)
+  rw [hw, Nat.sub_add_cancel (Gnosis.godWeight_pos R v)]
 
 /-- THM-CREATION-is-STABLE: The creation event is stable under iteration.
     godWeight(0,0) = 1, godWeight(0,0) = 1, godWeight(0,0) = 1, ... -/
-theorem creation_stable : godWeight (godWeight 0 0 - 1) 0 = 1 := by
-  unfold godWeight; (first | omega | decide | rfl)
+theorem creation_stable : godWeight (godWeight 0 0 - 1) 0 = 1 :=
+  self_application_fixed 0 0
 
 /-- THM-DOUBLE-SELF-APPLICATION: Applying self-application twice still yields
     the same result. The fixed point is attractive. -/
 theorem double_self_application (R v : Nat) :
     godWeight (godWeight (godWeight R v - 1) 0 - 1) 0 = godWeight R v := by
-  unfold godWeight; (first | omega | decide | rfl)
+  rw [self_application_fixed, self_application_fixed]
 
 -- ═══════════════════════════════════════════════════════════════════════
 -- §3. The Bootstrap Tower: Ceiling-to-Budget Chain
@@ -84,13 +86,12 @@ def tower : Nat → Nat
   | n + 1 => godWeight (tower n) 0
 
 /-- THM-TOWER-BASE: tower(0) = 1. -/
-theorem tower_base : tower 0 = 1 := by unfold tower godWeight; (first | omega | decide | rfl)
+theorem tower_base : tower 0 = 1 := rfl
 
 /-- THM-TOWER-SUCCESSOR: tower(n+1) = tower(n) + 1. The bootstrap tower
     formalizes the successor function. -/
-theorem tower_successor (n : Nat) : tower (n + 1) = tower n + 1 := by
-  show tower n - min 0 (tower n) + 1 = tower n + 1
-  simp
+theorem tower_successor (n : Nat) : tower (n + 1) = tower n + 1 :=
+  Gnosis.godWeight_ceiling (tower n)
 
 /-- THM-TOWER-is-SUCCESSOR: tower(n) = n + 1. The bootstrap tower
     reproduces the natural numbers. Peano arithmetic formalizes the God Formula
@@ -110,7 +111,7 @@ theorem tower_is_successor : ∀ n, tower n = n + 1 := by
     minimum weight. Every self-application returns to it when the
     budget is fully consumed (v = R). -/
 theorem cosmological_constant (R : Nat) :
-    godWeight R R = 1 := by unfold godWeight; (first | omega | decide | rfl)
+    godWeight R R = 1 := Gnosis.godWeight_floor R
 
 /-- THM-CONSTANT-is-UNIVERSAL: The cosmological constant 1 does not
     depend on R. It is the same for every universe size.
@@ -120,8 +121,9 @@ theorem constant_universal :
     godWeight 0 0 = 1 ∧
     godWeight 1 1 = 1 ∧
     godWeight 100 100 = 1 ∧
-    godWeight 1000000 1000000 = 1 := by
-  unfold godWeight; (first | omega | decide | rfl)
+    godWeight 1000000 1000000 = 1 :=
+  ⟨cosmological_constant 0, cosmological_constant 1,
+   cosmological_constant 100, cosmological_constant 1000000⟩
 
 -- ═══════════════════════════════════════════════════════════════════════
 -- §5. Universe Expansion: Ceiling Growth
@@ -130,17 +132,19 @@ theorem constant_universal :
 /-- THM-CEILING-GROWS: Each tower level has a strictly higher ceiling.
     The universe expands: more observation budget → more discrimination. -/
 theorem ceiling_grows (n : Nat) : tower (n + 1) > tower n := by
-  rw [tower_successor]; (first | omega | decide | rfl)
+  rw [tower_successor]
+  exact Nat.lt_succ_self _
 
 /-- THM-EXPANSION-UNBOUNDED: The tower grows without bound.
     There is no maximum universe size. -/
 theorem expansion_unbounded (n : Nat) : tower n ≥ 1 := by
-  rw [tower_is_successor]; (first | omega | decide | rfl)
+  rw [tower_is_successor]
+  exact Nat.le_add_left 1 n
 
 /-- THM-EXPANSION-RATE: The expansion rate is exactly +1 per level.
     The universe expands at a constant, predictable rate. -/
 theorem expansion_rate (n : Nat) : tower (n + 1) - tower n = 1 := by
-  rw [tower_successor]; (first | omega | decide | rfl)
+  rw [tower_successor, Nat.add_comm, Nat.add_sub_cancel]
 
 -- ═══════════════════════════════════════════════════════════════════════
 -- §6. Anthropic Connection: Why This Universe?

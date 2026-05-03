@@ -89,10 +89,8 @@ def PrefixFreeCode.isComplete (c : PrefixFreeCode) : Prop :=
     total addresses. The godWeight adds the clinamen (+1). -/
 theorem kraft_is_conservation (c : PrefixFreeCode) :
     godWeight c.totalAddresses c.wastedCapacity + c.wastedCapacity =
-    c.totalAddresses + 1 := by
-  unfold PrefixFreeCode.wastedCapacity godWeight
-  have h := c.kraft
-  omega
+    c.totalAddresses + 1 :=
+  Gnosis.godWeight_conservation c.totalAddresses c.wastedCapacity (Nat.sub_le _ _)
 
 /-- THM-KRAFT-WEIGHT-is-USED-PLUS-CLINAMEN: The God Formula weight
     at the wasted capacity equals the used addresses plus the clinamen.
@@ -103,9 +101,8 @@ theorem kraft_is_conservation (c : PrefixFreeCode) :
     with zero meaningful content uses at least 1 address. -/
 theorem kraft_weight (c : PrefixFreeCode) :
     godWeight c.totalAddresses c.wastedCapacity = c.usedAddresses + 1 := by
-  unfold PrefixFreeCode.wastedCapacity godWeight
-  have h := c.kraft
-  omega
+  unfold godWeight PrefixFreeCode.wastedCapacity
+  rw [Nat.min_eq_left (Nat.sub_le _ _), Nat.sub_sub_self c.kraft]
 
 -- ═══════════════════════════════════════════════════════════════════════
 -- §3. Complete Codes and the Clinamen
@@ -118,8 +115,9 @@ theorem complete_code_maximum (c : PrefixFreeCode)
     (hComplete : c.isComplete) :
     godWeight c.totalAddresses c.wastedCapacity = c.totalAddresses + 1 := by
   unfold PrefixFreeCode.isComplete at hComplete
-  unfold PrefixFreeCode.wastedCapacity godWeight
-  rw [hComplete]; omega
+  unfold PrefixFreeCode.wastedCapacity
+  rw [hComplete, Nat.sub_self]
+  exact Gnosis.godWeight_ceiling c.totalAddresses
 
 /-- THM-EMPTY-CODE-MINIMUM: A code using only 1 address (the clinamen)
     has weight 2. Even the most degenerate code (one symbol, one codeword)
@@ -249,7 +247,12 @@ theorem kraft_inequality_master (total used : Nat)
     godWeight total (total - used) ≥ 2 ∧
     -- Complement bounded
     total - used ≤ total := by
-  unfold godWeight
-  omega
+  have hCons := Gnosis.godWeight_conservation total (total - used) (Nat.sub_le total used)
+  have hW : godWeight total (total - used) = used + 1 := by
+    unfold godWeight
+    rw [Nat.min_eq_left (Nat.sub_le total used), Nat.sub_sub_self hKraft]
+  refine ⟨hCons, hW, ?_, Nat.sub_le total used⟩
+  rw [hW]
+  exact Nat.succ_le_succ hUsed
 
 end KraftInequality

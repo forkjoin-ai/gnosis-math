@@ -34,27 +34,31 @@ open Gnosis (godWeight)
 /-- THM-KOLMOGOROV-MINIMUM: The minimum complexity of any string is 1.
     No data has zero description cost. The clinamen of information. -/
 theorem kolmogorov_minimum (R : Nat) (hR : R ≥ 1) :
-    godWeight R 1 = R := by unfold godWeight; omega
+    godWeight R 1 = R := by
+  unfold godWeight
+  rw [Nat.min_eq_left hR, Nat.sub_add_cancel hR]
 
 /-- THM-INCOMPRESSIBLE-STRINGS: Most strings of length n have
     complexity ≈ n (incompressible). Only a fraction 2^{-k}
     can be compressed by k bits. Random data cannot be compressed. -/
 theorem incompressible (R : Nat) :
-    godWeight R R = 1 := by unfold godWeight; omega
+    godWeight R R = 1 :=
+  Gnosis.godWeight_floor R
 
 /-- THM-UNIVERSAL-DOMINATES: The universal prior assigns non-zero
     weight to EVERY computable hypothesis. No hypothesis is ruled out
     a priori. godWeight ≥ 1 for all v. -/
 theorem universal_dominates (R v : Nat) :
-    godWeight R v ≥ 1 := by unfold godWeight; omega
+    godWeight R v ≥ 1 :=
+  Gnosis.godWeight_pos R v
 
 /-- THM-OCCAM-FACTOR: Shorter programs get higher prior weight.
     The Occam factor is exactly the godWeight difference:
     simpler model (lower v) → higher weight. -/
 theorem occam_factor (R v1 v2 : Nat) (h1 : v1 ≤ R) (h2 : v2 ≤ R)
     (hSimpler : v1 ≤ v2) :
-    godWeight R v2 ≤ godWeight R v1 := by
-  unfold godWeight; simp [Nat.min_eq_left h1, Nat.min_eq_left h2]; omega
+    godWeight R v2 ≤ godWeight R v1 :=
+  Gnosis.godWeight_antitone R v1 v2 h1 h2 hSimpler
 
 /-- THM-HALTING-BARRIER: Computing K(x) exactly requires solving
     the halting problem. MDL is the computable approximation.
@@ -66,17 +70,17 @@ theorem halting_barrier (mdl_cost kolmogorov : Nat) (hUpper : mdl_cost ≥ kolmo
     = budget + clinamen. What you spend describing = what you lose
     in generalization power. -/
 theorem description_conservation (R v : Nat) (hv : v ≤ R) :
-    godWeight R v + v = R + 1 := by
-  unfold godWeight; simp [Nat.min_eq_left hv]; omega
+    godWeight R v + v = R + 1 :=
+  Gnosis.godWeight_conservation R v hv
 
 theorem solomonoff_master (R : Nat) :
     (∀ v, godWeight R v ≥ 1) ∧ godWeight R 0 = R + 1 ∧
     godWeight R R = 1 ∧
     (∀ v, v ≤ R → godWeight R v + v = R + 1) := by
   refine ⟨?_, ?_, ?_, ?_⟩
-  · intro v; unfold godWeight; omega
-  · unfold godWeight; omega
-  · unfold godWeight; omega
-  · intro v hv; unfold godWeight; simp [Nat.min_eq_left hv]; omega
+  · intro v; exact Gnosis.godWeight_pos R v
+  · exact Gnosis.godWeight_ceiling R
+  · exact Gnosis.godWeight_floor R
+  · intro v hv; exact Gnosis.godWeight_conservation R v hv
 
 end SolomonoffInduction

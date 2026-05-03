@@ -42,8 +42,8 @@ open Gnosis (godWeight)
 
 /-- Conservation law: w + v = R + 1 when v ≤ R. -/
 theorem conservation (R v : Nat) (hv : v ≤ R) :
-    godWeight R v + v = R + 1 := by
-  unfold godWeight; omega
+    godWeight R v + v = R + 1 :=
+  Gnosis.godWeight_conservation R v hv
 
 -- ═══════════════════════════════════════════════════════════════════════
 -- §2. Cassini's Identity (Nat form, ±1 split)
@@ -158,7 +158,7 @@ theorem cassini_conservation_master :
   · native_decide
   · native_decide
   · native_decide
-  · intro R v; unfold godWeight; omega
-  · intro R; omega
+  · intro R v; exact Gnosis.godWeight_pos R v
+  · intro R; rw [Nat.min_self, Nat.sub_self]
 
 end CassiniConservation

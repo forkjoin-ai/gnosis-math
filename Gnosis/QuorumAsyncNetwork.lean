@@ -29,8 +29,13 @@ theorem nodup_subset_length_le
       List.length_pos_of_mem hHead
     have hEraseLen : (connected.erase head).length = connected.length - 1 :=
       List.length_erase_of_mem hHead
-    simp [List.length_cons]
-    omega
+    have hTailLen2 : tail.length ≤ connected.length - 1 := by
+      rw [← hEraseLen]
+      exact hTailLen
+    have hStep : tail.length + 1 ≤ connected.length - 1 + 1 := Nat.succ_le_succ hTailLen2
+    rw [Nat.sub_add_cancel hConnectedPos] at hStep
+    rw [List.length_cons]
+    exact hStep
 
 theorem minority_connected_set_cannot_host_quorum
     {replicaCount failureBudget : Nat}
@@ -43,7 +48,7 @@ theorem minority_connected_set_cannot_host_quorum
   rcases hQuorum with ⟨q, hNodup, hSubset, hCard⟩
   have hLe : q.length ≤ connected.length := nodup_subset_length_le hSubset hNodup
   rw [hCard] at hLe
-  omega
+  exact Nat.lt_irrefl _ (Nat.lt_of_le_of_lt hLe hConnectedCard)
 
 theorem connected_quorum_read_exact_of_coverage
     {quorum : List Nat}

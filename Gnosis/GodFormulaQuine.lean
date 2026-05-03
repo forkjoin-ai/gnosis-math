@@ -33,14 +33,14 @@ namespace GodFormulaQuine
 
 open Gnosis (godWeight)
 
-theorem godWeight_floor (R : Nat) : godWeight R R = 1 := by
-  unfold godWeight; omega
+theorem godWeight_floor (R : Nat) : godWeight R R = 1 :=
+  Gnosis.godWeight_floor R
 
-theorem godWeight_ceiling (R : Nat) : godWeight R 0 = R + 1 := by
-  unfold godWeight; omega
+theorem godWeight_ceiling (R : Nat) : godWeight R 0 = R + 1 :=
+  Gnosis.godWeight_ceiling R
 
-theorem godWeight_positive (R v : Nat) : godWeight R v ≥ 1 := by
-  unfold godWeight; omega
+theorem godWeight_positive (R v : Nat) : godWeight R v ≥ 1 :=
+  Gnosis.godWeight_pos R v
 
 -- ═══════════════════════════════════════════════════════════════════════
 -- §2. Manual simulation of the quine program
@@ -64,7 +64,8 @@ theorem loop_result_counter2 (R v : Nat) :
     after the loop (the v counter is fully consumed). -/
 theorem loop_counter2_zero (R v : Nat) (hv : v ≤ R) :
     (subtractMin R v).2 = 0 := by
-  unfold subtractMin; omega
+  unfold subtractMin
+  rw [Nat.min_eq_left hv, Nat.sub_self]
 
 /-- THM-ADD-CLINAMEN: After the loop, we add +1 (the clinamen) to counter1.
     This gives R - min(v,R) + 1 = godWeight(R, v). -/
@@ -115,14 +116,15 @@ example : addClinamen (subtractMin 100 100).1 = 1 := by native_decide
 /-- THM-FIXED-POINT: godWeight(0, 0) = 1. The formula applied to
     the empty universe (zero budget, zero rejection) yields the
     clinamen. From nothing, +1. The sliver bootstraps existence. -/
-theorem fixed_point : godWeight 0 0 = 1 := by unfold godWeight; omega
+theorem fixed_point : godWeight 0 0 = 1 := Gnosis.godWeight_floor 0
 
 /-- THM-SELF-APPLICATION: Applying godWeight to its own output.
     godWeight(godWeight(R, v) - 1, 0) = godWeight(R, v).
     The formula applied to its own weight is a fixed point. -/
 theorem self_application (R v : Nat) :
     godWeight (godWeight R v - 1) 0 = godWeight R v := by
-  unfold godWeight; omega
+  have hw := Gnosis.godWeight_ceiling (godWeight R v - 1)
+  rw [hw, Nat.sub_add_cancel (Gnosis.godWeight_pos R v)]
 
 /-- THM-QUINE-MASTER: The complete self-hosting theorem.
 

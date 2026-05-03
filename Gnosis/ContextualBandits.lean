@@ -41,25 +41,25 @@ theorem bandits_have_simpson_structural
     (h : a.ctx1Q > b.ctx1Q ∧ b.overallQ > a.overallQ) :
     a.ctx1Q > b.ctx1Q ∧ b.overallQ > a.overallQ := h
 
-theorem context_adjustment (R v : Nat) (h : v ≤ R) : godWeight R v + v = R + 1 := by
-  unfold godWeight; simp [Nat.min_eq_left h]; omega
+theorem context_adjustment (R v : Nat) (h : v ≤ R) : godWeight R v + v = R + 1 :=
+  Gnosis.godWeight_conservation R v h
 
 theorem context_isolation (R ve vh : Nat) (he : ve ≤ R) (hh : vh ≤ R) (hl : ve ≤ vh) :
-    godWeight R vh ≤ godWeight R ve := by
-  unfold godWeight; simp [Nat.min_eq_left he, Nat.min_eq_left hh]; omega
+    godWeight R vh ≤ godWeight R ve :=
+  Gnosis.godWeight_antitone R ve vh he hh hl
 
 theorem hft_regime_simpson :
     godWeight 50 5 > godWeight 50 10 ∧ godWeight 100 45 < godWeight 100 20 := by
-  unfold godWeight; omega
+  native_decide
 
 theorem contextual_bandits_master (R : Nat) :
     (∀ v, v ≤ R → godWeight R v + v = R + 1) ∧
     godWeight R 0 = R + 1 ∧ godWeight R R = 1 ∧
     (∀ v1 v2, v1 ≤ R → v2 ≤ R → v1 ≤ v2 → godWeight R v2 ≤ godWeight R v1) := by
   refine ⟨?_, ?_, ?_, ?_⟩
-  · intro v hv; unfold godWeight; simp [Nat.min_eq_left hv]; omega
-  · unfold godWeight; omega
-  · unfold godWeight; omega
-  · intro v1 v2 h1 h2 hl; unfold godWeight; simp [Nat.min_eq_left h1, Nat.min_eq_left h2]; omega
+  · intro v hv; exact Gnosis.godWeight_conservation R v hv
+  · exact Gnosis.godWeight_ceiling R
+  · exact Gnosis.godWeight_floor R
+  · intro v1 v2 h1 h2 hl; exact Gnosis.godWeight_antitone R v1 v2 h1 h2 hl
 
 end ContextualBandits

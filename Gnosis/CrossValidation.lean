@@ -79,12 +79,12 @@ theorem bias_variance_of_k :
     godWeight 20 4 = 17 ∧
     -- k=10: each fold gets 10 points, train on 90 → weight
     godWeight 10 2 = 9 := by
-  unfold godWeight; omega
+  native_decide
 
 /-- THM-CV-CONSERVATION: Per fold, test_weight + test_errors = fold_size + 1. -/
 theorem cv_conservation (foldSize v : Nat) (hv : v ≤ foldSize) :
-    godWeight foldSize v + v = foldSize + 1 := by
-  unfold godWeight; simp [Nat.min_eq_left hv]; omega
+    godWeight foldSize v + v = foldSize + 1 :=
+  Gnosis.godWeight_conservation foldSize v hv
 
 /-- THM-CV-AGGREGATION: The average CV weight across k folds is
     bounded between the best fold's weight and the worst's.
@@ -101,9 +101,9 @@ theorem cross_validation_master :
     -- Floor
     (∀ R, godWeight R R = 1) := by
   refine ⟨?_, ?_, ?_, ?_⟩
-  · intro R v hv; unfold godWeight; simp [Nat.min_eq_left hv]; omega
-  · unfold godWeight; omega
-  · unfold godWeight; omega
-  · intro R; unfold godWeight; omega
+  · intro R v hv; exact Gnosis.godWeight_conservation R v hv
+  · exact Gnosis.godWeight_ceiling 1
+  · exact Gnosis.godWeight_floor 1
+  · intro R; exact Gnosis.godWeight_floor R
 
 end CrossValidation
