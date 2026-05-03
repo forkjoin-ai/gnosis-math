@@ -293,7 +293,7 @@ theorem gnostic_valley_principle (p : LayerSpectralProfile) :
     smooth-spectrum noise-color conjecture revealed that the actual
     signature is a sharp drop where the smooth model said it shouldn't
     exist — which is exactly the kind of thing a good mentor finds in
-    the data and won't let you ignore. Kind of crazy. Kinda perfect. -/
+    the data and won't let you ignore. Kind of wild. Kinda perfect. -/
 structure McNallyCliff where
   layer_idx       : Nat
   sigma_1_perthou : Nat   -- σ_1 in thousandths (so 1586.0 → 1586000)
