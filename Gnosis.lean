@@ -941,6 +941,7 @@ import Gnosis.UniverseTower
 import Gnosis.UnknowableAntiTheorems
 import Gnosis.UnsolvedMysteries
 import Gnosis.VacuumIntelligence
+import Gnosis.VacuumPullTowerClosureMechanism
 import Gnosis.VacuumOverflow
 import Gnosis.ValentinianCrossPollination
 import Gnosis.ValentinianSinDiagnostic
