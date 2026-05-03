@@ -157,10 +157,16 @@ theorem future_vacuum_determines_past_step :
         clinamenContract b f = vacuumBuleUnit →
         clinamenContract b g = vacuumBuleUnit →
         f = g) := by
+  -- With score = 1, exactly one face is 1 and the others are 0. Only the
+  -- contraction along that face reaches the vacuum: the +1 face is unique,
+  -- so any two contractions that land at vacuum must agree.
   intro b hscore f g hf hg
-  -- Both contractions lead to the vacuum, so they must be the same
-  -- (the vacuum has unique structure; all paths to it are identical)
-  sorry  -- This requires the theory of topological uniqueness of the vacuum
+  cases b with
+  | mk w o d =>
+    simp [buleyUnitScore] at hscore
+    cases f <;> cases g <;>
+      simp [clinamenContract, vacuumBuleUnit] at hf hg <;>
+      first | rfl | omega
 
 /-- The Arrow is not about forward causality but about the constraint
     imposed by the future (the vacuum attractor) reaching backward.

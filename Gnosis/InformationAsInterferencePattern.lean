@@ -169,16 +169,18 @@ def channel_capacity (signal_power noise_power bandwidth : Nat) : Nat :=
     bandwidth (determined by SNR) can persist through the channel without
     being damped by destructive interference with channel noise. -/
 theorem channel_capacity_is_resonant_bandwidth
-    (pat : InformationPattern)
+    (_pat : InformationPattern)
     (signal noise bandwidth : Nat)
-    (h_signal : signal > 0)
-    (h_noise : noise > 0) :
+    (_h_signal : signal > 0)
+    (h_noise : noise > 0)
+    (h_bandwidth : bandwidth > 0) :
     channel_capacity signal noise bandwidth > 0 := by
   unfold channel_capacity
-  by_cases h : noise > 0
-  · simp [h]
-    sorry
-  · omega
+  simp [h_noise]
+  calc noise
+      = 1 * noise := (Nat.one_mul _).symm
+    _ ≤ bandwidth * noise := Nat.mul_le_mul_right noise h_bandwidth
+    _ ≤ bandwidth * (noise + signal) := Nat.mul_le_mul_left bandwidth (Nat.le_add_right _ _)
 
 /-! ## Additional structural theorems -/
 

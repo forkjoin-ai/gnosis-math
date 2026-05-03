@@ -109,20 +109,25 @@ def information_flow_rate
 
 /-- High phase alignment increases information flow. -/
 theorem high_phase_high_flow (bandwidth : Nat) (signal noise : Nat)
-    (h_band : bandwidth > 0)
-    (h_sig : signal > 0)
+    (_h_band : bandwidth > 0)
+    (_h_sig : signal > 0)
     (h_noise : noise > 0) :
     information_flow_rate 100 bandwidth signal noise ≥
     information_flow_rate 50 bandwidth signal noise := by
-  sorry
+  unfold information_flow_rate
+  rw [if_pos h_noise, if_pos h_noise]
+  apply Nat.div_le_div_right
+  exact Nat.mul_le_mul_right _ (Nat.mul_le_mul_right _ (by omega))
 
 /-- Zero phase alignment zero flow. -/
 theorem zero_phase_zero_flow (bandwidth : Nat) (signal noise : Nat)
-    (h_band : bandwidth > 0)
-    (h_sig : signal > 0)
+    (_h_band : bandwidth > 0)
+    (_h_sig : signal > 0)
     (h_noise : noise > 0) :
     information_flow_rate 0 bandwidth signal noise ≤ 1 := by
-  sorry
+  unfold information_flow_rate
+  rw [if_pos h_noise]
+  simp
 
 /-! ## Summary -/
 

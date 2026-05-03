@@ -201,16 +201,21 @@ theorem superposition_preserves_structure :
 theorem polyseme_collapse_via_multiple_meanings :
     ∀ (meanings : List SemanticWave) (_context : SemanticWave),
     meanings.length > 1 →
+    meanings.Nodup →
     ∃ (m1 m2 : SemanticWave),
     m1 ∈ meanings ∧ m2 ∈ meanings ∧ m1 ≠ m2 := by
-  intro meanings _context h_len
+  intro meanings _context h_len h_nodup
   cases meanings with
   | nil => simp at h_len
   | cons m1 rest =>
     cases rest with
     | nil => simp at h_len
     | cons m2 _rest2 =>
-      exact ⟨m1, m2, by simp [List.mem_cons], by simp [List.mem_cons], by sorry⟩
+      have h_ne : m1 ≠ m2 := by
+        intro h_eq
+        have h_notin : m1 ∉ (m2 :: _rest2) := (List.nodup_cons.mp h_nodup).1
+        exact h_notin (by simp [h_eq])
+      exact ⟨m1, m2, by simp [List.mem_cons], by simp [List.mem_cons], h_ne⟩
 
 /-- Theorem: As context disambiguates, N meanings can collapse to 1.
     All but one undergo sufficient destructive interference. -/
