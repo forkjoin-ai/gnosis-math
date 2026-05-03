@@ -433,6 +433,7 @@ import Gnosis.HaltingProblemShadow
 import Gnosis.HammingSingletonBound
 import Gnosis.HardCompositions
 import Gnosis.HawkingConflation
+import Gnosis.HFTOperationsAsTopology
 import Gnosis.Helix55Dictionary
 import Gnosis.HellaVortex
 import Gnosis.HeteroCompositionalPredictions
@@ -779,6 +780,7 @@ import Gnosis.ResolutionVsEvolution
 import Gnosis.RetrocausalBound
 import Gnosis.RetrocausalDynamicsOfMarkets
 import Gnosis.RetrocausalMemoization
+import Gnosis.PredictiveTopologyOfMarkets
 import Gnosis.ReverseFold
 import Gnosis.ReynoldsBFT
 import Gnosis.RiemannHypothesisShadow
