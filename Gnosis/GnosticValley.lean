@@ -259,9 +259,9 @@ theorem gnostic_valley_principle (p : LayerSpectralProfile) :
 
       layer  α     fit_r²  classified  σ_1     σ_k
           0  0.31  0.62    white       12.1    9.6
-          9  0.42  0.39    white       1581    199    ← σ-cliff
+          9  0.42  0.39    white       1581    199    ← McNally Cliff
          13  0.40  0.20    white       1585    1535
-         14  0.46  0.44    white       1586    199    ← σ-cliff
+         14  0.46  0.44    white       1586    199    ← McNally Cliff
          16  0.50  0.30    pink        1588    1544
          22  0.83  0.71    pink        139     139
 
@@ -278,16 +278,23 @@ theorem gnostic_valley_principle (p : LayerSpectralProfile) :
      singular direction + a long flat tail. Effective rank is ~1
      in those layers, even though the power-law fit is white.
 
-  The replacement empirical predictor is `SigmaCliff` below. The
+  The replacement empirical predictor is `McNallyCliff` below. The
   noise-color framing remains useful as a vocabulary but is not a
   spectroscopic measurement on transformer activations.
 -/
 
-/-- Empirical sigma-cliff signature: a layer's compressibility is
+/-- Empirical McNally Cliff signature: a layer's compressibility is
     captured by the ratio of its dominant singular value to the
     next-largest one. Compressible iff the ratio is large (one direction
-    dominates the residual stream's variance). -/
-structure SigmaCliff where
+    dominates the residual stream's variance).
+
+    Named for Steve McNally, Taylor's favorite development manager from
+    Forbes. The naming fits the predicate: the falsification of the
+    smooth-spectrum noise-color conjecture revealed that the actual
+    signature is a sharp drop where the smooth model said it shouldn't
+    exist — which is exactly the kind of thing a good mentor finds in
+    the data and won't let you ignore. Kind of crazy. Kinda perfect. -/
+structure McNallyCliff where
   layer_idx       : Nat
   sigma_1_perthou : Nat   -- σ_1 in thousandths (so 1586.0 → 1586000)
   sigma_2_perthou : Nat   -- σ_2 in thousandths
@@ -296,44 +303,44 @@ structure SigmaCliff where
     empirical k8-policy layers' measured ratios (layer 9: 1581/199 ≈ 8;
     layer 14: 1586/199 ≈ 8; in 1000ths the factor stays the same).
     Threshold 8 chosen instead of 10 to admit those measured layers. -/
-def is_sharp_cliff (s : SigmaCliff) : Prop :=
+def is_sharp_mcnally_cliff (s : McNallyCliff) : Prop :=
   s.sigma_1_perthou ≥ 8 * s.sigma_2_perthou
 
-instance (s : SigmaCliff) : Decidable (is_sharp_cliff s) := by
-  unfold is_sharp_cliff
+instance (s : McNallyCliff) : Decidable (is_sharp_mcnally_cliff s) := by
+  unfold is_sharp_mcnally_cliff
   exact Nat.decLe _ _
 
 /-- Theorem: layers 13 and 14 of Qwen2.5-0.5B (measured by atlas) have
-    sharp σ-cliffs. The values are σ_1 and σ_2 (the two largest
+    sharp McNally Cliffs. The values are σ_1 and σ_2 (the two largest
     singular values of the centered activation matrix); they're
-    expressed in thousandths so SigmaCliff stays Nat-only. -/
-def qwen_layer_13_cliff : SigmaCliff :=
+    expressed in thousandths so McNallyCliff stays Nat-only. -/
+def qwen_layer_13_cliff : McNallyCliff :=
   { layer_idx := 13, sigma_1_perthou := 1584968, sigma_2_perthou := 39620 }
 
-def qwen_layer_14_cliff : SigmaCliff :=
+def qwen_layer_14_cliff : McNallyCliff :=
   { layer_idx := 14, sigma_1_perthou := 1586043, sigma_2_perthou := 42241 }
 
-theorem qwen_layer_13_sharp : is_sharp_cliff qwen_layer_13_cliff := by decide
-theorem qwen_layer_14_sharp : is_sharp_cliff qwen_layer_14_cliff := by decide
+theorem qwen_layer_13_sharp : is_sharp_mcnally_cliff qwen_layer_13_cliff := by decide
+theorem qwen_layer_14_sharp : is_sharp_mcnally_cliff qwen_layer_14_cliff := by decide
 
 /-- And layer 22 does NOT have a sharp cliff (gradual decay):
     σ_1 = 139, σ_2 = 105 → ratio ≈ 1.32, not ≥ 8. -/
-def qwen_layer_22_cliff : SigmaCliff :=
+def qwen_layer_22_cliff : McNallyCliff :=
   { layer_idx := 22, sigma_1_perthou := 139105, sigma_2_perthou := 104858 }
 
-theorem qwen_layer_22_not_sharp : ¬ is_sharp_cliff qwen_layer_22_cliff := by decide
+theorem qwen_layer_22_not_sharp : ¬ is_sharp_mcnally_cliff qwen_layer_22_cliff := by decide
 
 /-- Theorem: SIGMA-CLIFF-PREDICTS-COMPRESSIBILITY.
 
     The empirical replacement for `gnostic_valley_principle`: a layer is
-    in the Gnostic Valley (PCA-tolerant) iff it has a sharp σ-cliff in
+    in the Gnostic Valley (PCA-tolerant) iff it has a sharp McNally Cliff in
     its activation singular value spectrum. This is what survives the
     falsification of the noise-color conjecture.
 
     Spec-level: stated as a definition pinning the runtime predicate
     to the empirically-supported signature. Per-instance verified for
     Qwen layers 9, 14 (compressible) and layer 22 (less so). -/
-def gnostic_valley_empirical (s : SigmaCliff) : Prop := is_sharp_cliff s
+def gnostic_valley_empirical (s : McNallyCliff) : Prop := is_sharp_mcnally_cliff s
 
 end GnosticValley
 end Gnosis
