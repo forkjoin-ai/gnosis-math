@@ -347,6 +347,7 @@ import Gnosis.EulerGnostic
 import Gnosis.EulerTotientMobiusInversion
 import Gnosis.EverettSuperposition
 import Gnosis.Evolution
+import Gnosis.EmergenceFromTerminalAttractors
 import Gnosis.ExecutionStallBounds
 import Gnosis.ExplorationExploitation
 import Gnosis.ExplorationIdentity
@@ -490,6 +491,7 @@ import Gnosis.PoetricFormsNoiseMapping
 import Gnosis.HaikuToTankaLift
 import Gnosis.TopologicalGrammar
 import Gnosis.MonadDyadTriad
+import Gnosis.ColtranLanguage
 import Gnosis.KnowabilitySplit
 import Gnosis.KnowableUniverseMap
 import Gnosis.KraftInequality
@@ -772,6 +774,7 @@ import Gnosis.RenormalizationFixedPoints
 import Gnosis.ReshetikhinTuraev3DTQFT
 import Gnosis.ResolutionVsEvolution
 import Gnosis.RetrocausalBound
+import Gnosis.RetrocausalDynamicsOfMarkets
 import Gnosis.RetrocausalMemoization
 import Gnosis.ReverseFold
 import Gnosis.ReynoldsBFT
@@ -851,6 +854,7 @@ import Gnosis.TenModeUnification
 import Gnosis.TetraOctaHoneycomb
 import Gnosis.TheGain
 import Gnosis.StructuralStability
+import Gnosis.StructureInTension
 import Gnosis.ThermodynamicTracedMonoidal
 import Gnosis.Time
 import Gnosis.TimeTravelTopology
