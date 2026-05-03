@@ -481,9 +481,13 @@ import Gnosis.KnotTheory.TorusKnotChebyshevBracket
 import Gnosis.KnotTheory.TwinKnotTheory
 import Gnosis.KnotTheory.UntanglingKnotTheory
 import Gnosis.KnotRopelengthComplexity
--- import Gnosis.BashoClinamenTrillWitness  -- TODO: fix syntax errors
--- import Gnosis.BashoClinamenFoldingInvariant  -- TODO: fix proof errors
+import Gnosis.BashoClinamenTrillWitness
+import Gnosis.BashoClinamenFoldingInvariant
 import Gnosis.PoetryLattice
+import Gnosis.RollingVerses
+import Gnosis.NoiseSpectrumLattice
+import Gnosis.PoetricFormsNoiseMapping
+import Gnosis.HaikuToTankaLift
 import Gnosis.KnowabilitySplit
 import Gnosis.KnowableUniverseMap
 import Gnosis.KraftInequality

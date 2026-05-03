@@ -139,8 +139,7 @@ theorem folded_encodes_witness :
     (trill > 0 → (∃ sting_events : Nat, sting_events = sting ∧ sting_events > 0)) := by
   refine ⟨⟨rfl, rfl, rfl⟩, ?_⟩
   intro _
-  refine ⟨7, rfl, ?_⟩
-  native_decide
+  exact ⟨7, rfl, by omega⟩
 
 /-- The unfolded form preserves the witness logically but obscures it
     perceptually. The sequence 17 = 5 + 7 + 5 still encodes the three
@@ -191,8 +190,7 @@ theorem folding_invariant :
       stillness + sting + trill = 17) := by
   refine ⟨rfl, rfl, rfl, ⟨5, 7, 5, rfl, rfl, rfl, ?_, rfl⟩⟩
   intro _
-  refine ⟨7, rfl, ?_⟩
-  native_decide
+  exact ⟨7, rfl, by omega⟩
 
 /-- Poetic statement of the folding invariant: the rope knows no difference
     between a haiku and an American sentence. But the ear knows. -/

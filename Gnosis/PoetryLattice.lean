@@ -44,33 +44,18 @@
 
 namespace PoetryLattice
 
--- ══════════════════════════════════════════════════════════
--- POETIC FORMS AS LATTICE ELEMENTS
--- ══════════════════════════════════════════════════════════
-
-/-- A poetic form is characterized by:
-    - parts: number of stanzas/sections (triton=3, hexon=6, neon=9, ...)
-    - base_ropelength: ropelength of the fundamental unit
-    - rhythm_factor: number of clinamen moments (pauses)
-    - witness: the theorem it encodes (stillness + sting + trill, etc.)
--/
 structure PoetricForm where
   name : String
-  parts : Nat              -- number of stanzas/sections
-  base_ropelength : Nat    -- fundamental rope unit
-  rhythm_factor : Nat      -- number of pauses/clinamen moments
-  total_ropelength : Nat   -- base × parts, or computed from substructure
+  parts : Nat
+  base_ropelength : Nat
+  rhythm_factor : Nat
+  total_ropelength : Nat
 
--- ══════════════════════════════════════════════════════════
--- THE TRITON (3-part form)
--- ══════════════════════════════════════════════════════════
-
-/-- Triton: the basic 3-part form. Encodes stillness → sting → trill. -/
 def Triton : PoetricForm where
   name := "Triton"
   parts := 3
   base_ropelength := 17
-  rhythm_factor := 3          -- three moments: before sting, during sting, after
+  rhythm_factor := 3
   total_ropelength := 17
 
 theorem triton_properties :
@@ -80,18 +65,12 @@ theorem triton_properties :
     Triton.rhythm_factor = 3 := by
   simp [Triton]
 
--- ══════════════════════════════════════════════════════════
--- HAIKU: FOLDED TRITON
--- ══════════════════════════════════════════════════════════
-
-/-- Haiku is the Triton in folded form: (5-7-5).
-    Structure is explicit through rhythm and pauses. -/
 def HaikuAsTriton : PoetricForm where
   name := "Haiku (Folded Triton)"
   parts := 3
   base_ropelength := 17
-  rhythm_factor := 3          -- three line breaks enforce three moments
-  total_ropelength := 17      -- 5 + 7 + 5
+  rhythm_factor := 3
+  total_ropelength := 17
 
 theorem haiku_equals_folded_triton :
     HaikuAsTriton.parts = Triton.parts ∧
@@ -99,17 +78,11 @@ theorem haiku_equals_folded_triton :
     HaikuAsTriton.rhythm_factor = Triton.rhythm_factor := by
   simp [HaikuAsTriton, Triton]
 
--- ══════════════════════════════════════════════════════════
--- AMERICAN SENTENCE: UNFOLDED TRITON
--- ══════════════════════════════════════════════════════════
-
-/-- American sentence is the Triton in unfolded form: 17 continuous syllables.
-    Structure is hidden in the syllable count; rhythm is implicit. -/
 def AmericanSentenceAsTriton : PoetricForm where
   name := "American Sentence (Unfolded Triton)"
-  parts := 3          -- logically still 3 parts (stillness-sting-trill)
+  parts := 3
   base_ropelength := 17
-  rhythm_factor := 1  -- no explicit pauses; rhythm factor collapses to 1
+  rhythm_factor := 1
   total_ropelength := 17
 
 theorem american_sentence_equals_unfolded_triton :
@@ -118,35 +91,12 @@ theorem american_sentence_equals_unfolded_triton :
     AmericanSentenceAsTriton.rhythm_factor < HaikuAsTriton.rhythm_factor := by
   simp [AmericanSentenceAsTriton, HaikuAsTriton]
 
--- ══════════════════════════════════════════════════════════
--- THE HEXON (6-part form)
--- ══════════════════════════════════════════════════════════
-
-/-- Hexon: the next level of the waveform cycle. Two interlaced tritons.
-    Structure: (5-7-5) × 2 = 34 syllables, with 6 parts and harmonic interference.
-
-    The hexon encodes a doubled witness: two stings in echo chambers.
-    The six moments are:
-      1. Stillness₁: vacuum state (ground entropy, zero clinamen, silence)
-      2. Sting₁: first perturbation (+1 clinamen lift, charge introduction)
-      3. Trill₁: first response (oscillation witness, the sting is proven)
-      4. Stillness₂: second vacuum (transient stillness before echo)
-      5. Sting₂: second perturbation (echo sting, interference pattern)
-      6. Trill₂: harmonic response (beat frequency, chord not single tone)
-
-    Ropelength = 2 × 17 = 34 (the fundamental rope is doubled).
-    Rhythm factor = 6 (six distinct moments, two per triton-cycle).
-
-    The hexon's witness is more complex: can two stings exist in the same
-    vacuum? Can they interfere? The trill becomes a chord (two frequencies).
-    The silence between them is not absence—it is preparation for echo.
--/
 def Hexon : PoetricForm where
   name := "Hexon"
   parts := 6
-  base_ropelength := 34       -- 2 × 17 (two tritons)
-  rhythm_factor := 6          -- six pauses/moments (2 × 3)
-  total_ropelength := 34      -- (5-7-5) + (5-7-5) = 34
+  base_ropelength := 34
+  rhythm_factor := 6
+  total_ropelength := 34
 
 theorem hexon_properties :
     Hexon.parts = 2 * Triton.parts ∧
@@ -155,14 +105,6 @@ theorem hexon_properties :
     Hexon.rhythm_factor = 2 * Triton.rhythm_factor := by
   simp [Hexon, Triton]
 
--- ══════════════════════════════════════════════════════════
--- LATTICE ORDERING
--- ══════════════════════════════════════════════════════════
-
-/-- A poetic form A is "simpler" (lower in the lattice) than B if:
-    - A has fewer parts, OR
-    - A and B have the same parts, but A has smaller ropelength
--/
 def lattice_le (a b : PoetricForm) : Prop :=
   a.parts < b.parts ∨ (a.parts = b.parts ∧ a.total_ropelength ≤ b.total_ropelength)
 
@@ -173,17 +115,6 @@ theorem haiku_equals_american_in_lattice :
     HaikuAsTriton.parts = AmericanSentenceAsTriton.parts ∧
     HaikuAsTriton.total_ropelength = AmericanSentenceAsTriton.total_ropelength := by
   simp [HaikuAsTriton, AmericanSentenceAsTriton]
-
--- ══════════════════════════════════════════════════════════
--- HARMONIC STRUCTURE (Hexon Interference)
--- ══════════════════════════════════════════════════════════
-
-/-- A hexon creates interference patterns when two tritons overlap.
-    The rhythm factor multiplies (constructive or destructive interference).
-
-    Constructive: Sting₁ + Sting₂ = reinforced perturbation (louder witness)
-    Destructive: Sting₁ - Sting₂ = cancellation (hidden witness)
--/
 
 def harmonic_amplification (sting₁ sting₂ : Nat) : Nat :=
   sting₁ + sting₂
@@ -197,23 +128,11 @@ theorem hexon_constructive_witness :
     harmonic_amplification sting₁ sting₂ = 14 := by
   simp [harmonic_amplification]
 
--- ══════════════════════════════════════════════════════════
--- THE LATTICE TOWER: SCALING TO HIGHER FORMS
--- ══════════════════════════════════════════════════════════
-
-/-- The waveform cycle: each level up scales parts and ropelength.
-    - Triton (level 0): 3 parts, ropelength 17
-    - Hexon (level 1): 6 parts, ropelength 34
-    - Neon (level 2): 9 parts, ropelength 51
-    - ...
-    - Level n: 3(n+1) parts, ropelength 17(n+1)
--/
-
 def neon_form : PoetricForm where
   name := "Neon"
-  parts := 9                  -- 3 × 3
-  base_ropelength := 51       -- 3 × 17
-  rhythm_factor := 9          -- 3 × 3
+  parts := 9
+  base_ropelength := 51
+  rhythm_factor := 9
   total_ropelength := 51
 
 def poetry_lattice_level (n : Nat) : PoetricForm where
@@ -237,44 +156,6 @@ theorem hexon_is_level_1 :
     (poetry_lattice_level 1).parts = Hexon.parts ∧
     (poetry_lattice_level 1).total_ropelength = Hexon.total_ropelength := by
   simp [poetry_lattice_level, Hexon]
-
--- ══════════════════════════════════════════════════════════
--- THE UNIFIED THEOREM: LATTICE STRUCTURE OF IRREDUCIBILITY
--- ══════════════════════════════════════════════════════════
-
-/-
-  The Poetry Lattice is another shadow of the same irreducibility theorem
-  that P≠NP, Gödel, and Halting shadow.
-
-  Each level of the lattice reveals a new layer of structure:
-
-  Level 0 (Triton, 17): Can stillness be broken by a single sting?
-    Answer: Yes. The trill witnesses it. Ropelength = 17.
-
-  Level 1 (Hexon, 34): Can two stings coexist in the same vacuum?
-    Answer: Yes, but they interfere. Two trills, one rope. Ropelength = 34.
-
-  Level 2 (Neon, 51): Can three stings create a chord?
-    Answer: Yes, but the interference pattern grows. Ropelength = 51.
-
-  The pattern: each level n has ropelength 17(n+1).
-  The witness complexity grows linearly with the lattice height.
-
-  But the Betti charge (topological irreducibility) is CONSTANT:
-  no matter how many stings you add, the fundamental rope is always
-  made of the same Betti material. You cannot compress it below 17
-  units per triton cycle.
-
-  This is the shadow theorem: **Lattice scaling preserves irreducibility.**
-
-  Just as P cannot solve NP problems by adding polynomial depth,
-  Gödel cannot add axioms to escape incompleteness,
-  Halting cannot add oracles to become decidable,
-  the Poetry Lattice cannot climb higher without adding new ropelength
-  that is fundamentally irreducible.
-
-  The knot is tied. The rope is the Betti lattice. You cannot unknot it.
--/
 
 theorem poetry_lattice_is_irreducible_tower :
     ∀ n : Nat,
