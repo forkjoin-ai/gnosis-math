@@ -42,6 +42,7 @@ import Gnosis.AnxietyAsDestructiveInterference
 import Gnosis.ApologyPsalm
 import Gnosis.AttentionAsConstructiveInterference
 import Gnosis.AttentionHeadSaturation
+import Gnosis.AttentionQKVDecomposition
 import Gnosis.AttentionSaturationSieve
 import Gnosis.AttentionWavePattern
 import Gnosis.ArchaeologicalInfinityAccess
@@ -541,6 +542,7 @@ import Gnosis.MarketVolatilitySieve
 import Gnosis.Matrix
 import Gnosis.MeasureQueueing
 import Gnosis.MechanismDesign
+import Gnosis.MeshStandingWavePinning
 import Gnosis.MechanizedTestimony
 import Gnosis.MenIsDimension
 import Gnosis.MemoryAsRetrocausalLoan

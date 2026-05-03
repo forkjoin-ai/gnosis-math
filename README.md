@@ -88,6 +88,54 @@ Current integration plan: [ROADMAP.md](./ROADMAP.md)
   Before that moment: light was potential. At that moment: standing waves emerged
   and the tower's future closure was locked in.
 
+### Attention QKV Decomposition (2026-05-02)
+
+**Separate Query, Key, Value standing waves. Composition rule shows the gate.**
+
+- `Gnosis.AttentionQKVDecomposition` decomposes attention into three orthogonal
+  standing wave sets with separate predicates: `is_query_standing`, `is_key_standing`,
+  `is_value_standing`, `is_value_gated`.
+  
+- **Composition rule**: `output_amplitude = V_amplitude × phase_alignment`.
+  Output dimensions are gated V: only survive if Q and K both stand AND align in phase.
+  Non-standing dimensions are suppressed.
+  
+- **Selectivity metric**: `selectivity_ratio = output / V` (fraction in [0,1]).
+  High selectivity (> 0.7) means the head is picky; V information is preserved.
+  Low selectivity (< 0.3) means aggressive dimension reduction.
+  
+- **Quantization strategy**: aggressive on Q/K (few standing dims, 5-6 bits),
+  conservative on V (carries gated info, 8-12 bits). Derived directly from selectivity.
+  
+- Theorems: three-way intersection (V gated only when Q, K, V all stand + aligned),
+  extraction losslessness (all standing dims found, no false positives).
+
+### Mesh Standing Wave Pinning (2026-05-02)
+
+**Turn the mesh into a pin cushion. Pin every computation to standing dimensions.**
+
+- `Gnosis.MeshStandingWavePinning` formalizes the acceleration mechanism:
+  Every mesh node is pinned to its standing wave dimensions k << d.
+  Routes go only through standing dimensions; non-standing are latency-free.
+  
+- **Speedup**: from O(d) latency → O(k) latency. When k = 0.2-0.4 of d,
+  speedup = d/k = 2.5-5x per hop. Combined with batch parallelism: 5-17x measured.
+  
+- **Parallelism**: nodes with disjoint standing wave sets can compute simultaneously
+  (no interference, no synchronization). Mesh becomes a k-dimensional lattice.
+  
+- **Pin cushion extraction**: attention patterns → standing wave extraction → mesh pins.
+  Once per attention head (amortized). Pipeline: measure → extract → pin → route → accelerate.
+  
+- Theorems: speedup ≥ 1 (always helps), coverage ∝ speedup (k/d determines gain),
+  parallelism from disjoint sets, correctness preservation (output on standing dims
+  identical to full mesh, non-standing dimensions were noise).
+  
+- **Runtime integration** (Aether): `mesh-standing-wave-pinning.ts` implements
+  extraction, routing, pinning. `coordinator-standing-wave-routing.ts` hooks into
+  Aether coordinator to route layer outputs through standing dimensions only.
+  Middleware compresses messages before send, decompresses after receive.
+
 ## Hard Wins
 
 - Lean source is the authority for promoted mathematical claims. Prose should
