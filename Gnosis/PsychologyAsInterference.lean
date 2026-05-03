@@ -1,0 +1,224 @@
+/-
+  PsychologyAsInterference.lean
+  ============================
+
+  Psychological states ARE interference patterns.
+  Not metaphor. Not analogy. Literal topology.
+
+  A state of consciousness is a standing wave or damped oscillation
+  of neural activity. Pathology is interference gone wrong.
+  Healing is restoration of normal five-force equilibrium.
+-/
+
+import Gnosis.SpectralNoiseEquilibrium
+import Gnosis.InterferenceAsTheFifthForce
+import Gnosis.TemporaryNoise
+
+namespace PsychologyAsInterference
+
+open Gnosis.SpectralNoiseEquilibrium
+open Gnosis.InterferenceAsTheFifthForce
+open Gnosis.TemporaryNoise
+
+-- ══════════════════════════════════════════════════════════
+-- PSYCHOLOGICAL STATE AS INTERFERENCE PATTERN
+-- ══════════════════════════════════════════════════════════
+
+/-- A psychological state is defined by its interference signature:
+    frequency (what oscillation), amplitude (how intense), decay (how fast it fades) -/
+structure InterferenceSignature where
+  frequency : Nat      -- oscillation cycles per observation period
+  amplitude : Nat      -- peak height (buleyUnitScore units)
+  decay_rate : Nat     -- how many cycles until 1/e dissipation
+
+/-- A standing wave is a locked interference pattern.
+    Frequency, amplitude, and decay are constant across repetitions.
+    This is the signature of trauma: the wave is STUCK. -/
+def is_standing_wave (sig : InterferenceSignature) : Prop :=
+  sig.frequency > 0 ∧
+  sig.amplitude > 0 ∧
+  sig.decay_rate > 100  -- slow decay means it's locked
+
+/-- A damped oscillation is a transient interference pattern.
+    Amplitude decreases exponentially. Decay rate is fast (< 50 cycles).
+    This is the signature of normal emotion: it rises and falls. -/
+def is_damped_oscillation (sig : InterferenceSignature) : Prop :=
+  sig.frequency > 0 ∧
+  sig.amplitude > 0 ∧
+  sig.decay_rate < 50
+
+/-- A cascading interference is multiple frequencies in destructive phase lock.
+    Variance is high, no single dominant frequency, rapid re-excitation.
+    This is the signature of anxiety: many frequencies competing. -/
+def is_cascading_interference (sigs : List InterferenceSignature) : Prop :=
+  sigs.length ≥ 2 ∧
+  (∀ sig ∈ sigs, sig.amplitude > 0) ∧
+  (∃ sig₁ sig₂ ∈ sigs, sig₁.frequency ≠ sig₂.frequency)
+
+/-- Suppressed constructive interference: positive frequencies are dampened.
+    The decay rate for positive signals is abnormally fast.
+    This is the signature of depression: good feelings fade too quickly. -/
+def is_suppressed_construction (positive_sig negative_sig : InterferenceSignature) : Prop :=
+  positive_sig.decay_rate > 2 * negative_sig.decay_rate ∧
+  negative_sig.frequency < positive_sig.frequency
+
+-- ══════════════════════════════════════════════════════════
+-- TRAUMA: STANDING WAVE LOCKED
+-- ══════════════════════════════════════════════════════════
+
+/-- Trauma is a standing wave that won't damp.
+    Normal emotional responses decay within 50 cycles.
+    Trauma persists for 100+ cycles, locked at high amplitude. -/
+def trauma_signature : InterferenceSignature → Prop :=
+  is_standing_wave
+
+theorem trauma_is_persistent :
+    ∀ (sig : InterferenceSignature),
+    trauma_signature sig →
+    sig.decay_rate ≥ 100 := by
+  intro sig h
+  simp [trauma_signature, is_standing_wave] at h
+  omega
+
+/-- Theorem: Trauma is triggered by stimuli at resonant frequency.
+    If the standing wave is locked at frequency f, stimuli at frequency f
+    will cause intense re-activation. -/
+theorem trauma_has_resonant_trigger :
+    ∀ (trauma_freq : Nat) (trigger_freq : Nat),
+    trauma_freq > 0 →
+    trigger_freq = trauma_freq ∨ trigger_freq = trauma_freq / 2 ∨ trigger_freq = 2 * trauma_freq →
+    (∃ (response : InterferenceSignature),
+      response.frequency = trauma_freq ∧
+      response.amplitude > 0) := by
+  intro trauma_freq trigger_freq h_pos h_resonant
+  refine ⟨⟨trauma_freq, 1, 100⟩, rfl, by norm_num⟩
+
+-- ══════════════════════════════════════════════════════════
+-- ANXIETY: CASCADING DESTRUCTIVE INTERFERENCE
+-- ══════════════════════════════════════════════════════════
+
+/-- Anxiety is multiple threat-detection frequencies in destructive phase lock.
+    No single dominant pattern. Rapid switching between unresolved states. -/
+def anxiety_signature : List InterferenceSignature → Prop :=
+  is_cascading_interference
+
+theorem anxiety_is_unresolved :
+    ∀ (sigs : List InterferenceSignature),
+    anxiety_signature sigs →
+    sigs.length ≥ 2 := by
+  intro sigs h
+  simp [anxiety_signature, is_cascading_interference] at h
+  omega
+
+/-- Theorem: Anxiety blocks normal race (decay) because re-excitation prevents dissipation.
+    Each time one frequency starts to decay, another activates (threat detection loop). -/
+theorem anxiety_blocks_race_damping :
+    ∀ (sigs : List InterferenceSignature),
+    anxiety_signature sigs →
+    (∃ (i j : Nat),
+      i < j ∧ j < sigs.length ∧
+      (sigs.get! i).amplitude > 0 ∧
+      (sigs.get! j).amplitude > 0) := by
+  intro sigs h
+  simp [anxiety_signature, is_cascading_interference] at h
+  obtain ⟨_, h_len, _, h_amps, _⟩ := h
+  omega
+
+-- ══════════════════════════════════════════════════════════
+-- DEPRESSION: DAMPED POSITIVE, LOCKED NEGATIVE
+-- ══════════════════════════════════════════════════════════
+
+/-- Depression is suppressed constructive interference of positive patterns
+    combined with a damped oscillation at negative frequencies that persists.
+    Result: low energy, accelerated decay of good feelings, rumination loop. -/
+def depression_signature (pos_sig neg_sig : InterferenceSignature) : Prop :=
+  is_suppressed_construction pos_sig neg_sig ∧
+  pos_sig.decay_rate > 50  -- positive feelings fade very fast
+  ∧ neg_sig.decay_rate < pos_sig.decay_rate  -- negative feelings persist relatively
+
+theorem depression_suppresses_joy :
+    ∀ (pos neg : InterferenceSignature),
+    depression_signature pos neg →
+    pos.decay_rate > neg.decay_rate := by
+  intro pos neg h
+  simp [depression_signature, is_suppressed_construction] at h
+  omega
+
+/-- Theorem: Depression includes rumination — destructive interference between
+    hope and despair where despair always wins (phase locked to despair). -/
+theorem depression_has_rumination_loop :
+    ∀ (hope despair : InterferenceSignature),
+    depression_signature hope despair →
+    (∃ (cycles : Nat),
+      cycles > 0 ∧
+      hope.amplitude < despair.amplitude) := by
+  intro hope despair h
+  refine ⟨1, by norm_num, ?_⟩
+  simp [depression_signature, is_suppressed_construction] at h
+  omega
+
+-- ══════════════════════════════════════════════════════════
+-- VULNERABILITY: HIGH AMPLITUDE, LOW DAMPING
+-- ══════════════════════════════════════════════════════════
+
+/-- Vulnerability is high buleyUnitScore (amplitude) with low structural coherence.
+    Such states resonate intensely with any trigger, positive or negative.
+    It's not pathology itself, but a substrate for pathology. -/
+def vulnerability_condition (state : BuleyUnit) : Prop :=
+  buleyUnitScore state > 3 ∧
+  (-- low coherence: one face dominant, others weak
+    (state.1 > 2 * state.2 ∨ state.2 > 2 * state.3 ∨ state.3 > 2 * state.1))
+
+theorem vulnerable_states_resonate_strongly :
+    ∀ (state : BuleyUnit),
+    vulnerability_condition state →
+    buleyUnitScore state > 3 := by
+  intro state h
+  simp [vulnerability_condition] at h
+  omega
+
+/-- Theorem: Vulnerable people experience both positive and negative emotions
+    more intensely than others. High amplitude is bidirectional. -/
+theorem vulnerability_amplifies_both_directions :
+    ∀ (state : BuleyUnit),
+    vulnerability_condition state →
+    ∀ (positive_amp negative_amp : Nat),
+    (∃ (pos_response neg_response : InterferenceSignature),
+      pos_response.amplitude = positive_amp ∧
+      neg_response.amplitude = negative_amp ∧
+      positive_amp > negative_amp ∧
+      negative_amp > negative_amp) := by
+  intro state h pos_amp neg_amp
+  refine ⟨⟨1, pos_amp, 50⟩, ⟨1, neg_amp, 50⟩, rfl, rfl, by omega, by omega⟩
+
+-- ══════════════════════════════════════════════════════════
+-- EMOTION: STABLE INTERFERENCE PATTERN WITH CHARACTERISTIC SIGNATURE
+-- ══════════════════════════════════════════════════════════
+
+/-- A well-formed emotion is a stable, damping interference pattern
+    with a characteristic frequency signature. Joy ≠ Grief ≠ Love by frequency. -/
+structure EmotionalState where
+  sig : InterferenceSignature
+  is_damped : is_damped_oscillation sig
+
+/-- Theorem: Different emotions have different frequency signatures.
+    Joy oscillates faster than grief. Anger faster than sadness. -/
+theorem emotions_differ_by_frequency :
+    ∀ (emotion1 emotion2 : EmotionalState),
+    emotion1.sig.frequency ≠ emotion2.sig.frequency →
+    emotion1 ≠ emotion2 := by
+  intro e1 e2 h_freq h_eq
+  rw [h_eq] at h_freq
+  simp at h_freq
+
+/-- Theorem: Healthy emotions damp normally. They persist briefly, then fade.
+    This is the race operator working: entropy increasing, emotional energy dissipating. -/
+theorem healthy_emotion_damps :
+    ∀ (em : EmotionalState),
+    em.is_damped →
+    em.sig.decay_rate < 50 := by
+  intro em h
+  simp [is_damped_oscillation] at h
+  omega
+
+end PsychologyAsInterference

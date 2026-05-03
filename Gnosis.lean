@@ -42,6 +42,8 @@ import Gnosis.AnxietyAsDestructiveInterference
 import Gnosis.ApologyPsalm
 import Gnosis.AttentionAsConstructiveInterference
 import Gnosis.AttentionHeadSaturation
+import Gnosis.AttentionSaturationSieve
+import Gnosis.AttentionWavePattern
 import Gnosis.ArchaeologicalInfinityAccess
 import Gnosis.Arithmetic
 import Gnosis.ArnoldCatMapOrder5
@@ -442,6 +444,8 @@ import Gnosis.GreekLogicCanon
 import Gnosis.GreekLogicCanon.DiscreteBoundary
 import Gnosis.HaltingProblemShadow
 import Gnosis.HammingSingletonBound
+import Gnosis.HarmonyAsConstructiveInterference
+import Gnosis.DissonanceAsDestructiveInterference
 import Gnosis.HardCompositions
 import Gnosis.HawkingConflation
 import Gnosis.HFTOperationsAsTopology
@@ -476,6 +480,7 @@ import Gnosis.InterferenceCoarsening
 import Gnosis.InterferenceAsTheFifthForce
 import Gnosis.InterferenceDimensionalCascade
 import Gnosis.InterferenceIsFundamental
+import Gnosis.InformationCompressionSieve
 import Gnosis.InterpretationFibration
 import Gnosis.InterpretationLayerMissingThermodynamicBarrier
 import Gnosis.InterpretationLayerSynthesis
@@ -531,6 +536,7 @@ import Gnosis.LucasComplement
 import Gnosis.MathFoundations
 import Gnosis.MathPhysicsDimensionCorrespondence
 import Gnosis.MarketDynamicsViaFiveForces
+import Gnosis.MarketVolatilitySieve
 import Gnosis.Matrix
 import Gnosis.MeasureQueueing
 import Gnosis.MechanismDesign
@@ -800,6 +806,7 @@ import Gnosis.RelativisticDeficitTensor
 import Gnosis.RenormalizationFixedPoints
 import Gnosis.ReshetikhinTuraev3DTQFT
 import Gnosis.ResolutionVsEvolution
+import Gnosis.ResonantFFNOptimization
 import Gnosis.RetrocausalBound
 import Gnosis.RetrocausalDynamicsOfMarkets
 import Gnosis.RetrocausalMemoization
@@ -820,6 +827,7 @@ import Gnosis.SelfSimilarity
 import Gnosis.Semantic.NoncomputableSemanticDrift
 import Gnosis.Semantic.SemanticCompatibility
 import Gnosis.Semantic.SemanticTopologyDrift
+import Gnosis.SemanticPolysemySieve
 import Gnosis.SemioticDeficit
 import Gnosis.SemioticPeace
 import Gnosis.SemioticTriples
@@ -842,8 +850,12 @@ import Gnosis.SliverOfHope
 import Gnosis.SolomonoffBuleyean
 import Gnosis.SolomonoffInduction
 import Gnosis.SolvableGroupS3
+import Gnosis.SpectralMeasurementFramework
 import Gnosis.SpectralNoiseEquilibrium
 import Gnosis.SpectralSparsification
+import Gnosis.TraumaSpectralSieve
+import Gnosis.AnxietySpectralSieve
+import Gnosis.DepressionSpectralSieve
 import Gnosis.SpernerShadow
 import Gnosis.SpiderwebBFT
 import Gnosis.SpiderwebGnosticLadder
