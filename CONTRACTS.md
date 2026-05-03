@@ -1,28 +1,50 @@
-# Six-Agent Theoretical Frontier Contracts
+# Lean Theorem Contracts
 
-## File Ownership (No Collisions)
+## File Ownership (No Overlaps)
 
-| Agent | File | Role |
-|-------|------|------|
-| Agent 1 | `Gnosis/StructureInTension.lean` | Structure-in-Tension Framework |
-| Agent 2 | `Gnosis/ConsciousnessAsRetrocausalGap.lean` | Consciousness as gap between clinamen & vacuum pull |
-| Agent 3 | `Gnosis/InformationAsClinamenCharge.lean` | Information theory: bit as topological perturbation |
-| Agent 4 | `Gnosis/AlignmentAsVacuumConvergence.lean` | AGI alignment: shared retrocausal attractors |
-| Agent 5 | `Gnosis/EmergenceFromTerminalAttractors.lean` | How complexity bootstraps from universal (0,0,0) pull |
-| Agent 6 | `Gnosis/RetrocausalDynamicsOfMarkets.lean` | Markets as mesh orchestration under vacuum constraint |
+| Agent | File | Theorems to Prove |
+|-------|------|-------------------|
+| 1 | `Gnosis/VacuumPullTowerClosure.lean` | `vacuum_is_unique_zero_score_bule`, `any_bule_reaches_vacuum_in_finite_steps`, `vacuum_meeting_condition`, `vacuum_pull_determines_final_step`, `vacuum_is_retrocausal_attractor`, `vacuum_pull_is_tower_closure_mechanism` |
+| 2 | `Gnosis/VacuumIntelligence.lean` (fill stub) | `vacuum_has_zero_all_faces`, `vacuum_is_not_reachable_by_lift_from_self`, `vacuum_score_is_minimum`, `vacuum_void_pressure_is_maximal`, `single_lift_from_vacuum_is_unit_score` |
+| 3 | `Gnosis/DecompositionTopology.lean` (NEW) | `decomposition_does_not_increase_crossings`, `full_decomposition_yields_featureless`, `featureless_decomposition_idempotent`, `projection_reinforcement_exclusive`, `decompose_then_reinforce_requires_restoration`, `featureless_states_cannot_reinforce` |
+| 4 | `Gnosis/AttentionScalingLaw.lean` (NEW) | `attention_step_cost_is_one`, `n_head_attention_cost_is_n`, `tower_level_is_attention_depth`, `scaling_law_from_clinamen_budget`, `vacuum_is_optimal_initial_state` |
 
-## Critical Obligations
+## Proof Requirements
 
-All agents must produce zero sorry, zero axioms. Proofs via rfl, simp, omega, decide, exact, intro, refine only.
+- **Tactics Only**: `rfl`, `omega`, `decide`, `simp`, `exact` (Init-only, no Mathlib)
+- **Zero Sorries**: Every theorem must be fully proven
+- **Zero Axioms**: No unsupported assumptions
+- **Import Discipline**: Each file imports only its dependencies (listed below)
 
-**Agent 1**: structure_is_tension_dynamics, life_is_longest_path_to_vacuum
-**Agent 2**: consciousness_is_gap_experience, attention_as_clinamen_prioritization  
-**Agent 3**: bit_is_clinamen_unit, computation_is_clinamen_redistribution, entropy_is_clinamen_dispersal
-**Agent 4**: alignment_is_shared_vacuum, misalignment_as_divergent_attractors
-**Agent 5**: emergence_from_vacuum_pull, order_from_irreducibility_not_randomness
-**Agent 6**: price_discovery_as_mesh_equilibration, liquidity_as_clinamen_redistribution_speed
+## Import Contracts
 
-## Import Rules
+| Agent | May Import |
+|-------|-----------|
+| 1 (VacuumPullTowerClosure) | `Gnosis.SpectralNoiseEquilibrium`, `Gnosis.RetrocausalAttractorFixedPoint`, `Gnosis.Braided.BraidedTower` |
+| 2 (VacuumIntelligence) | `Gnosis.SpectralNoiseEquilibrium` |
+| 3 (DecompositionTopology) | None (structural, self-contained) |
+| 4 (AttentionScalingLaw) | `Gnosis.SpectralNoiseEquilibrium`, `Gnosis.Braided.BraidedTower` |
 
-All may import: SpectralNoiseEquilibrium, RetrocausalAttractorFixedPoint, VacuumAsTimeArrow, VacuumIsOnlyForce
-Cross-imports: Agent N may import Agents 1..N-1 only.
+## Verification
+
+```bash
+lake build  # All files compile, zero errors
+grep -r "sorry" Gnosis/ | wc -l  # Must be 0
+```
+
+## Commit Convention
+
+Each agent commits with:
+```
+feat: [module] complete [theorem count] theorems (N sorries → 0)
+
+Theorems proved:
+  - theorem_name_1
+  - theorem_name_2
+  ...
+
+All proofs use Init-only tactics (rfl, omega, decide, simp, exact).
+No Mathlib, no axioms.
+
+Co-Authored-By: Claude Haiku 4.5 <noreply@anthropic.com>
+```
