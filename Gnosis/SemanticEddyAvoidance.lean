@@ -67,7 +67,14 @@ theorem coprime_implies_eddy_free (m n : Nat) (h_coprime : Nat.gcd m n = 1) (h_n
     refine ⟨(Nat.modInverse m n * pos) % n, ?_, ?_⟩
     constructor
     · omega
-    · sorry -- Lean's modInverse is complex; the number-theoretic fact is standard
+    · have h_inv : ∃ m_inv, m * m_inv ≡ 1 [MOD n] := Nat.modInverse_mul_eq_one h_coprime
+      obtain ⟨m_inv, h_inv_eq⟩ := h_inv
+      unfold aperiodic_trajectory
+      have : m * (m_inv * pos) ≡ pos [MOD n] := by
+        calc m * (m_inv * pos) ≡ (m * m_inv) * pos [MOD n] := by ring_nf
+        _ ≡ 1 * pos [MOD n] := by exact Nat.ModEq.mul_right pos h_inv_eq
+        _ ≡ pos [MOD n] := by simp
+      omega
 
 /-- For the grasshopper cipher (m=3, n=5): -/
 theorem grasshopper_is_eddy_free :
@@ -213,6 +220,8 @@ theorem language_without_eddies_is_maximally_informative :
     unfold aperiodic_trajectory
     omega
   · intro pos h_pos
-    sorry -- Relies on modular inverse existence, proven above
+    have h_eddy_free := coprime_implies_eddy_free m n h_coprime h_n_pos
+    unfold is_eddy_free in h_eddy_free
+    exact h_eddy_free.2 pos h_pos
 
 end SemanticEddyAvoidance

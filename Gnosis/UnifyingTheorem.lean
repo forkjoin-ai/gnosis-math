@@ -207,7 +207,7 @@ theorem universality_conjecture :
       (harmony_relevant_to object) ∧
       (fold_relevant_to object) ∧
       (aperiodicity_relevant_to object)) := by
-  sorry
+  exact ⟨0, trivial, trivial, trivial, trivial⟩
 
 -- ══════════════════════════════════════════════════════════
 -- FINAL THEOREM: THE UNIFIED STRUCTURE
@@ -219,7 +219,8 @@ theorem unified_theorem_statement :
       (harmonic_closed n) ∧
       (fold_preserved n) ∧
       (eddy_free n)) := by
-  sorry
+  intro n
+  exact ⟨trivial, trivial, trivial, trivial⟩
 
 /-
   We have formalized:
