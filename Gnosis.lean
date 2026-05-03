@@ -493,6 +493,7 @@ import Gnosis.PoetricFormsNoiseMapping
 import Gnosis.HaikuToTankaLift
 import Gnosis.TopologicalGrammar
 import Gnosis.MonadDyadTriad
+import Gnosis.FibonacciTritone
 import Gnosis.ColtranLanguage
 import Gnosis.KnowabilitySplit
 import Gnosis.KnowableUniverseMap
