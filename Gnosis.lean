@@ -29,6 +29,7 @@ import Gnosis.AdaptiveWitnesses
 import Gnosis.AdversarialRobustness
 import Gnosis.AeonFluxSiteAdequacy
 import Gnosis.AeonTwelveBraid
+import Gnosis.AlgorithmicExploitationOfFiveForces
 import Gnosis.AlignmentAsVacuumConvergence
 import Gnosis.AlphaOmegaGodsKingdom
 import Gnosis.AmericanFrontier
@@ -176,6 +177,7 @@ import Gnosis.Closures.UnifiedReplacementClosure
 import Gnosis.CoarseningThermodynamics
 import Gnosis.CodecRacing
 import Gnosis.CognitiveStateShift
+import Gnosis.CosmologicalEvolutionFromFiveForces
 import Gnosis.CollatzOneTwoFourBraid
 import Gnosis.CombinatorialBruteForce
 import Gnosis.CommunityCompositions
@@ -190,6 +192,7 @@ import Gnosis.CondensedMathematics
 import Gnosis.Confinement
 import Gnosis.ConformalFieldTheoryVOA
 import Gnosis.ConscienceLadder
+import Gnosis.ConsciousnessIsInterference
 import Gnosis.ConsciousnessSyzygyPolicy
 import Gnosis.ConsciousnessVsObjectivity
 import Gnosis.ContextualBandits
@@ -247,6 +250,7 @@ import Gnosis.CostAlgebraTerminalInitial
 import Gnosis.CountBadLucasPhaseReconstruction
 import Gnosis.CouplingCost
 import Gnosis.CoveringSpaceCausality
+import Gnosis.CopyStoreEraseCostStructure
 import Gnosis.CreationSequence
 import Gnosis.CrossDomain.CrossDomainAstrobiologyMeteorologyStallBridge
 import Gnosis.CrossDomain.CrossDomainAstrobiologyPsychologyStallBridge
@@ -339,6 +343,7 @@ import Gnosis.DynkinCoxeterClassification
 import Gnosis.EREPR_EnrichedEquality
 import Gnosis.Echolocation
 import Gnosis.EconomicGain
+import Gnosis.EnergyConservationFromVacuum
 import Gnosis.EnrichedConvergence
 import Gnosis.EnriquesKodairaSurfaces
 import Gnosis.EntropicRefinementCalculus
@@ -462,6 +467,9 @@ import Gnosis.InitOnlyDoctrine
 import Gnosis.InformationAsClinamenCharge
 import Gnosis.InstitutionalLiability
 import Gnosis.InterferenceCoarsening
+import Gnosis.InterferenceAsTheFifthForce
+import Gnosis.InterferenceDimensionalCascade
+import Gnosis.InterferenceIsFundamental
 import Gnosis.InterpretationFibration
 import Gnosis.InterpretationLayerMissingThermodynamicBarrier
 import Gnosis.InterpretationLayerSynthesis
@@ -516,6 +524,7 @@ import Gnosis.Logic
 import Gnosis.LucasComplement
 import Gnosis.MathFoundations
 import Gnosis.MathPhysicsDimensionCorrespondence
+import Gnosis.MarketDynamicsViaFiveForces
 import Gnosis.Matrix
 import Gnosis.MeasureQueueing
 import Gnosis.MechanismDesign
@@ -695,6 +704,7 @@ import Gnosis.OrbitColoringDiscreteIndex
 import Gnosis.OrnithologyMicroservicesKernelLiftAdapter
 import Gnosis.PIERootsArePrimitives
 import Gnosis.ParticlesExist
+import Gnosis.ParticlePredictionsFromFiveForces
 import Gnosis.PellCatLucasTraceFamily
 import Gnosis.PellUltrametricConvergents
 import Gnosis.Periodicity
@@ -886,6 +896,7 @@ import Gnosis.TopologicalMismatchAdequacy
 import Gnosis.TopologicalOctonions
 import Gnosis.TopologicalRenormalization
 import Gnosis.TopologicalUltrametric
+import Gnosis.TemporaryNoise
 import Gnosis.TotientMultiplicativityViaCRT
 import Gnosis.TowerResonance
 import Gnosis.TracedMonoidal
@@ -906,6 +917,7 @@ import Gnosis.UniverseTower
 import Gnosis.UnknowableAntiTheorems
 import Gnosis.UnsolvedMysteries
 import Gnosis.VacuumIntelligence
+import Gnosis.VacuumOverflow
 import Gnosis.ValentinianCrossPollination
 import Gnosis.ValentinianSinDiagnostic
 import Gnosis.Void.VoidArchaeology
