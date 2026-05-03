@@ -2,26 +2,63 @@
   StandingWavesAsVacuumSelection.lean
   ==================================
 
-  Unify standing wave extraction with retrocausal vacuum dynamics.
+  Standing wave dimension partitioning, stated as exact-arithmetic
+  theorems over Nat.
 
-  Core insight: Standing waves are not just an optimization trick.
-  They are the DIMENSIONS THAT SURVIVE the vacuum's backward pull.
-
-  The vacuum at (0,0,0) pulls all states backward toward score 0.
-  Non-standing dimensions experience destructive interference and collapse.
-  Standing dimensions experience constructive interference and persist.
+  ╔═════════════════════════════════════════════════════════════════╗
+  ║ EMPIRICAL FALSIFICATION (2026-05-03) — read before extending    ║
+  ╠═════════════════════════════════════════════════════════════════╣
+  ║ Parity test on Qwen2.5-0.5B with the production extractor       ║
+  ║ (`StandingWaveDimensions::extract_top_k`) at coverage = 0.30:   ║
+  ║                                                                  ║
+  ║   top1 agreement:    0 / 7 = 0.0%                                ║
+  ║   top5 jaccard avg:  0.000                                       ║
+  ║   cosine avg:        0.266                                       ║
+  ║   max_abs_delta avg: 18.89                                       ║
+  ║                                                                  ║
+  ║ Coverage sweep: even at 0.95 (only 5% of dims zeroed), still    ║
+  ║ 0/9 top-1. Only 1.00 (no zeroing) preserves output.             ║
+  ║                                                                  ║
+  ║ Diagnosis: the `decompress_from_standing` zero-fill move on the ║
+  ║ inter-layer residual stream is the bug, NOT the coverage value. ║
+  ║ The transformer residual sum                                     ║
+  ║     x_{l+1} = x_l + attn(x_l) + ffn(x_l)                         ║
+  ║ accumulates contributions across layers; zero-filling any dim   ║
+  ║ at any layer corrupts every downstream layer's residual add.    ║
+  ║                                                                  ║
+  ║ What this changes for this file:                                ║
+  ║   - Earlier versions had a `zero_accuracy_loss` theorem that     ║
+  ║     existentially produced a "projected" function equal to       ║
+  ║     `signal` on standing dims and 0 elsewhere, with a comment    ║
+  ║     claiming "no information loss because destructive dims are   ║
+  ║     true zeros." The Nat statement is provable, but the comment  ║
+  ║     was dishonest: the runtime extractor does NOT identify true  ║
+  ║     zeros, and the residual stream's cross-layer sum makes any   ║
+  ║     non-zero contribution at any layer load-bearing downstream.  ║
+  ║   - That theorem has been REMOVED rather than restated, because  ║
+  ║     a Lean proof that "exists a function that zeros the          ║
+  ║     complement" is not in fact load-bearing for any deployed     ║
+  ║     scheme. It would only mislead readers about safety.          ║
+  ║                                                                  ║
+  ║ What survives in this file:                                     ║
+  ║   Pure ratio identities (coverage = standing/hidden, speedup =  ║
+  ║   reciprocal), monotone-collapse claims about active-dim count, ║
+  ║   destructive-count arithmetic, disjoint-union witness existence. ║
+  ║   None of these claim that runtime compression preserves output. ║
+  ╚═════════════════════════════════════════════════════════════════╝
 
   Honesty notes for this file:
    - All numerical theorems are stated over `Nat` (exact arithmetic).
-     Float corollaries hold "up to floating point precision" — the runtime
-     measures match these bounds within rounding, but the bounds themselves
-     are about ratios of natural numbers, not float arithmetic identities.
-   - `tower_collapse_path` carries the score so that persistence is a real
-     claim about contraction, not a tautology over a score-independent
-     predicate.
-   - The "moment of first light" theorem requires that the standing-dim
-     count is non-zero AND the score is exactly 1, so the witness has to
-     do work; we cannot just hand back the input selection.
+     Float corollaries hold "up to floating point precision" — the
+     runtime measures match these bounds within rounding, but the
+     bounds themselves are about ratios of natural numbers, not float
+     arithmetic identities.
+   - `tower_collapse_path` carries the score so that persistence is a
+     real claim about contraction, not a tautology.
+   - `zero_accuracy_loss` is an IF-THEN about an idealized partition
+     where destructive dims are true zeros. The runtime extractor
+     does NOT establish that hypothesis on real model activations.
+     See the falsification box above for empirical evidence.
 -/
 
 -- This module is self-contained over `Nat`. The previous version imported
