@@ -1,4 +1,4 @@
-import Init
+import Gnosis.GodFormula
 
 
 /-!
@@ -33,7 +33,7 @@ Zero -- placeholder.
 
 namespace MechanismDesign
 
-def godWeight (R v : Nat) : Nat := R - min v R + 1
+open Gnosis (godWeight)
 
 /-- THM-TRUTHFUL-DOMINATES: In a truthful mechanism, reporting true v
     gives higher payoff than reporting false v' ≠ v. -/

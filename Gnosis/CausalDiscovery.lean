@@ -1,4 +1,4 @@
-import Init
+import Gnosis.GodFormula
 
 
 /-!
@@ -26,7 +26,7 @@ Zero -- placeholder.
 
 namespace CausalDiscovery
 
-def godWeight (R v : Nat) : Nat := R - min v R + 1
+open Gnosis (godWeight)
 
 /-- THM-INDEPENDENCE-DECOMPOSES: Two causally independent variables
     have additive rejection counts: godWeight(R, vX+vY) relates to

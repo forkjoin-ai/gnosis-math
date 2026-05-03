@@ -1,4 +1,4 @@
-import Init
+import Gnosis.GodFormula
 
 /-!
 # God Formula Quine — Self-Hosting Computation
@@ -31,7 +31,7 @@ namespace KernelFormulaQuine
 -- §1. The God Formula (self-contained)
 -- ═══════════════════════════════════════════════════════════════════════
 
-def godWeight (R v : Nat) : Nat := R - min v R + 1
+open Gnosis (godWeight)
 
 theorem godWeight_floor (R : Nat) : godWeight R R = 1 := by
   unfold godWeight; omega

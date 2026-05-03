@@ -1,4 +1,4 @@
-import Init
+import Gnosis.GodFormula
 
 /-!
 # Bootstrap Cosmology — Creation from Nothing
@@ -36,7 +36,7 @@ Zero -- placeholder.
 
 namespace BootstrapCosmology
 
-def godWeight (R v : Nat) : Nat := R - min v R + 1
+open Gnosis (godWeight)
 
 -- ═══════════════════════════════════════════════════════════════════════
 -- §1. Creation from Nothing

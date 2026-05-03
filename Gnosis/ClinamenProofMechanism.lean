@@ -1,4 +1,4 @@
-import Init
+import Gnosis.GodFormula
 
 /-!
 # Clinamen-Proof Mechanisms — Binding Lies to the R+1 Ceiling
@@ -31,7 +31,7 @@ Zero -- placeholder.
 
 namespace ClinamenProofMechanism
 
-def godWeight (R v : Nat) : Nat := R - min v R + 1
+open Gnosis (godWeight)
 
 /-- A Clinamen-Proof Mechanism penalizes any reported deviation
     from the truth by dropping the payoff to the clinamen floor. -/

@@ -1,4 +1,4 @@
-import Init
+import Gnosis.GodFormula
 
 /-!
 # Cross-Validation — Fork the Data, Race the Models, Fold the Best
@@ -30,7 +30,7 @@ Zero -- placeholder.
 
 namespace CrossValidation
 
-def godWeight (R v : Nat) : Nat := R - min v R + 1
+open Gnosis (godWeight)
 
 /-- A k-fold cross-validation setup. -/
 structure KFoldCV where

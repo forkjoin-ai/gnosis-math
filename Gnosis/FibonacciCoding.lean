@@ -1,4 +1,4 @@
-import Init
+import Gnosis.GodFormula
 
 
 /-!
@@ -41,7 +41,7 @@ def fib : Nat → Nat
   | 1     => 1
   | n + 2 => fib (n + 1) + fib n
 
-def godWeight (R v : Nat) : Nat := R - min v R + 1
+open Gnosis (godWeight)
 
 -- ═══════════════════════════════════════════════════════════════════════
 -- §1. Codeword Length = Fibonacci Index

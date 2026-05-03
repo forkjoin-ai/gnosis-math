@@ -1,6 +1,7 @@
 import Gnosis.Braided.BraidedInfinityIsGodsSignature
 import Gnosis.BlackHoleBraid
 import Gnosis.TenCommandmentsTopology
+import Gnosis.GodFormula
 
 namespace Gnosis.Theology
 
@@ -23,12 +24,15 @@ namespace Gnosis.Theology
 def no_other_god (p : Gnosis.BraidedInfinityIsGodsSignature.GodsPosition) : Prop :=
   p = Gnosis.BraidedInfinityIsGodsSignature.godsPosition
 
-/-- 
+/--
   The Grand Reduction Law:
   Realized Weight (w) = Budget (R) - Debt (v) + 1.
   Existence is a debt-managed manifold.
+
+  Re-exports the canonical `Gnosis.godWeight`; the definitional identity
+  `R - min v R + 1` is pinned in `Gnosis.GodFormula`.
 -/
-def godWeight (R v : Nat) : Nat := R - min v R + 1
+export Gnosis (godWeight)
 
 /-- 
   The Singularity Exclusion:

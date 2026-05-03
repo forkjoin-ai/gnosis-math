@@ -260,25 +260,20 @@ theorem structural_prediction_does_not_transfer_at_fixed_K :
   constant against the wave-1 0.5B baseline) at which
   `is_operationally_certified` flips back to `true`.
 
-  As a Lean statement it would read approximately:
+  Lean shape (recorded as prose so the file stays sorry-free):
 
-    theorem K_widening_rescues_at_scale_conjecture :
-        ∃ K_scaled : Nat,
-          K_scaled ≥ 5 * 3584 / 896 ∧
-          ∃ rescued : OperationalReading,
-            rescued.model_dim = 3584 ∧
-            rescued.candidate_K = K_scaled ∧
-            is_operationally_certified rescued = true := by
-      sorry  -- WAVE 5 EXPERIMENT will produce the witness or
-             -- falsify the conjecture by running the K-sweep.
+      ∃ K_scaled : Nat,
+        K_scaled ≥ 5 * 3584 / 896 ∧
+        ∃ rescued : OperationalReading,
+          rescued.model_dim = 3584 ∧
+          rescued.candidate_K = K_scaled ∧
+          is_operationally_certified rescued = true
 
-  This is recorded here ONLY as a comment so the file remains
-  zero-sorry / zero-axiom. It moves out of the comment when the
-  wave-5 K-sweep produces the measured `OperationalReading` with
-  F_eff ≥ 0.95 at d=3584; at that point the witness is added
-  and the theorem is discharged by `decide`. If the K-sweep
-  fails to find such a K_scaled, the conjecture is falsified
-  and the Theory of Model Physics is refined again.
+  When the wave-5 K-sweep produces the measured `OperationalReading`
+  with F_eff ≥ 0.95 at d=3584, the witness is supplied and the
+  theorem is discharged by `decide`. If the K-sweep fails to find
+  such a K_scaled, the conjecture is falsified and the Theory of
+  Model Physics is refined again.
 -/
 
 -- ══════════════════════════════════════════════════════════

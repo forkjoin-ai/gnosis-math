@@ -1,9 +1,9 @@
-import Init
+import Gnosis.GodFormula
 
 
 namespace MoonshotInterpretationLayerResonanceDuality
 
-def godWeight (R v : Nat) : Nat := R - min v R + 1
+open Gnosis (godWeight)
 
 theorem resonance_duality (R v : Nat) (h : v ≤ R) :
   godWeight R v + v = R + 1 := by

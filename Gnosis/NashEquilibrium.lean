@@ -1,4 +1,4 @@
-import Init
+import Gnosis.GodFormula
 
 /-!
 # Nash Equilibrium — The Stable Topological Knot
@@ -27,7 +27,7 @@ Zero -- placeholder.
 
 namespace NashEquilibrium
 
-def godWeight (R v : Nat) : Nat := R - min v R + 1
+open Gnosis (godWeight)
 
 /-- A Game State from Agent i's perspective. -/
 structure GameState where

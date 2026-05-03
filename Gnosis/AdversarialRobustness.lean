@@ -1,4 +1,4 @@
-import Init
+import Gnosis.GodFormula
 
 /-!
 # Adversarial Robustness — Goodhart's Law for Neural Networks
@@ -31,7 +31,7 @@ Zero -- placeholder.
 
 namespace AdversarialRobustness
 
-def godWeight (R v : Nat) : Nat := R - min v R + 1
+open Gnosis (godWeight)
 
 /-- THM-ADVERSARIAL-GAP: An adversarial perturbation of magnitude δ
     can increase the rejection count by at most δ. The damage is

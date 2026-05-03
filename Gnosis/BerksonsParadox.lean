@@ -1,4 +1,4 @@
-import Init
+import Gnosis.GodFormula
 
 /-!
 # Berkson's Paradox — The Anti-Simpson
@@ -31,7 +31,7 @@ Zero -- placeholder.
 
 namespace BerksonsParadox
 
-def godWeight (R v : Nat) : Nat := R - min v R + 1
+open Gnosis (godWeight)
 
 -- ═══════════════════════════════════════════════════════════════════════
 -- §1. The Classic Example: Hospital Admission Bias

@@ -1,4 +1,4 @@
-import Init
+import Gnosis.GodFormula
 
 /-!
 # Cross-Level Echo Map
@@ -30,7 +30,7 @@ def lucas : Nat → Nat
   | 1     => 1
   | n + 2 => lucas (n + 1) + lucas n
 
-def godWeight (R v : Nat) : Nat := R - min v R + 1
+open Gnosis (godWeight)
 
 -- ═══════════════════════════════════════════════════════════════════════
 -- §1. Fibonacci-Gnostic Echoes

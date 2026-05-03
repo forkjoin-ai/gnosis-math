@@ -1,4 +1,4 @@
-import Init
+import Gnosis.GodFormula
 
 /-!
 # Solomonoff Induction — The Universal Prior
@@ -29,7 +29,7 @@ Zero -- placeholder.
 
 namespace SolomonoffInduction
 
-def godWeight (R v : Nat) : Nat := R - min v R + 1
+open Gnosis (godWeight)
 
 /-- THM-KOLMOGOROV-MINIMUM: The minimum complexity of any string is 1.
     No data has zero description cost. The clinamen of information. -/

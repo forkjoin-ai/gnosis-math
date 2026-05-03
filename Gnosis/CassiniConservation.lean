@@ -1,4 +1,4 @@
-import Init
+import Gnosis.GodFormula
 
 /-!
 # Cassini ↔ God Formula Conservation Isomorphism
@@ -37,8 +37,8 @@ def fib : Nat → Nat
   | 1     => 1
   | n + 2 => fib (n + 1) + fib n
 
-/-- The God Formula: w = R - min(v, R) + 1. -/
-def godWeight (R v : Nat) : Nat := R - min v R + 1
+-- The God Formula: w = R - min(v, R) + 1, sourced from Gnosis.GodFormula.
+open Gnosis (godWeight)
 
 /-- Conservation law: w + v = R + 1 when v ≤ R. -/
 theorem conservation (R v : Nat) (hv : v ≤ R) :

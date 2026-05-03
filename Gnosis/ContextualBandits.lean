@@ -1,4 +1,4 @@
-import Init
+import Gnosis.GodFormula
 
 /-!
 # Contextual Bandits — Arms with Causal Structure
@@ -14,7 +14,7 @@ Zero -- placeholder.
 
 namespace ContextualBandits
 
-def godWeight (R v : Nat) : Nat := R - min v R + 1
+open Gnosis (godWeight)
 
 structure ContextualArm where
   totalPulls : Nat

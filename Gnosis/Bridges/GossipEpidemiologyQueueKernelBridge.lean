@@ -1,5 +1,6 @@
 import Gnosis.FailureDurability
 import Gnosis.GossipProtocol
+import Gnosis.GodFormula
 
 namespace Gnosis
 
@@ -19,7 +20,7 @@ structure SIRSetup where
   recoveredPopulation : Nat
   hConservation : recoveredPopulation + activeInfected = totalPopulation
 
-def godWeight (R v : Nat) : Nat := R - min v R + 1
+-- godWeight comes from `Gnosis.GodFormula`; resolved by the enclosing namespace.
 
 theorem recovery_identity (setup : SIRSetup) :
     godWeight setup.totalPopulation setup.activeInfected =
@@ -54,7 +55,7 @@ structure QueueBoundaryWitnessNat_GossipEpidemiologyQueueKernelBridge where
 
 theorem gossip_susceptible_yields_unit_queue_boundary
     (setup : GossipProtocol.GossipSetup) :
-    GossipProtocol.godWeight setup.totalNodes setup.susceptibleNodes =
+    godWeight setup.totalNodes setup.susceptibleNodes =
       setup.infectedNodes + 1 ∧
     ∃ boundary : QueueBoundaryWitnessNat_GossipEpidemiologyQueueKernelBridge,
       boundary.beta1 = 0 ∧
@@ -84,7 +85,7 @@ theorem sir_interpretation_strict_majority
 
 theorem sir_active_infected_yields_unit_queue_boundary
     (setup : EpidemiologySIR.SIRSetup) :
-    EpidemiologySIR.godWeight setup.totalPopulation setup.activeInfected =
+    godWeight setup.totalPopulation setup.activeInfected =
       setup.recoveredPopulation + 1 ∧
     ∃ boundary : QueueBoundaryWitnessNat_GossipEpidemiologyQueueKernelBridge,
       boundary.beta1 = 0 ∧
@@ -116,9 +117,9 @@ theorem gossip_sir_interpretation_strict_majority
 
 theorem gossip_sir_budget_yields_unit_queue_boundary
     (gossip : GossipProtocol.GossipSetup) (sir : EpidemiologySIR.SIRSetup) :
-    GossipProtocol.godWeight gossip.totalNodes gossip.susceptibleNodes =
+    godWeight gossip.totalNodes gossip.susceptibleNodes =
       gossip.infectedNodes + 1 ∧
-    EpidemiologySIR.godWeight sir.totalPopulation sir.activeInfected =
+    godWeight sir.totalPopulation sir.activeInfected =
       sir.recoveredPopulation + 1 ∧
     gossipSirFailureBudget gossip sir = gossip.susceptibleNodes + sir.activeInfected ∧
     ∃ boundary : QueueBoundaryWitnessNat_GossipEpidemiologyQueueKernelBridge,
@@ -172,9 +173,9 @@ def gossipSirGeometricRate
 
 theorem gossip_sir_budget_yields_geometric_rate_certificate
     (gossip : GossipProtocol.GossipSetup) (sir : EpidemiologySIR.SIRSetup) :
-    GossipProtocol.godWeight gossip.totalNodes gossip.susceptibleNodes =
+    godWeight gossip.totalNodes gossip.susceptibleNodes =
       gossip.infectedNodes + 1 ∧
-    EpidemiologySIR.godWeight sir.totalPopulation sir.activeInfected =
+    godWeight sir.totalPopulation sir.activeInfected =
       sir.recoveredPopulation + 1 ∧
     ∃ rate : GeometricErgodicityRateNat_GossipEpidemiologyQueueKernelBridge,
       rate = gossipSirGeometricRate gossip sir ∧

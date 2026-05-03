@@ -1,4 +1,4 @@
-import Init
+import Gnosis.GodFormula
 
 /-!
 # Regularization as Compression — L1/L2 ARE MDL Constraints
@@ -29,7 +29,7 @@ Zero -- placeholder.
 
 namespace RegularizationCompression
 
-def godWeight (R v : Nat) : Nat := R - min v R + 1
+open Gnosis (godWeight)
 
 /-- A regularized model: cost = fit_error + λ × model_complexity. -/
 structure RegularizedModel where
