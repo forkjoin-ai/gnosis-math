@@ -38,7 +38,10 @@ import Gnosis.AntColonyCollectiveIntelligence
 import Gnosis.AntiFrequencySyzygy
 import Gnosis.AntiTheorems.AntiTheoremStallInevitable
 import Gnosis.AntiThmPaleoclimatologySeismologyBudgetNotPositiveBeta1
+import Gnosis.AnxietyAsDestructiveInterference
 import Gnosis.ApologyPsalm
+import Gnosis.AttentionAsConstructiveInterference
+import Gnosis.AttentionHeadSaturation
 import Gnosis.ArchaeologicalInfinityAccess
 import Gnosis.Arithmetic
 import Gnosis.ArnoldCatMapOrder5
@@ -312,6 +315,7 @@ import Gnosis.DeepCompositions
 import Gnosis.DeepReduction
 import Gnosis.DeescalationTechniques
 import Gnosis.DeficitCapacity
+import Gnosis.DepressionAsDampedOscillation
 import Gnosis.DeterminantAnomalyUnified
 import Gnosis.DevilDetailer
 import Gnosis.Dewey000ThinTopology
@@ -339,6 +343,7 @@ import Gnosis.DualProtocol
 import Gnosis.DukkhaReduction
 import Gnosis.DynamicPermutation
 import Gnosis.DynamicalOrbitColoring
+import Gnosis.EchoChamberAsStandingWave
 import Gnosis.DynkinCoxeterClassification
 import Gnosis.EREPR_EnrichedEquality
 import Gnosis.Echolocation
@@ -465,6 +470,7 @@ import Gnosis.InftyOperads
 import Gnosis.InftyTopoi
 import Gnosis.InitOnlyDoctrine
 import Gnosis.InformationAsClinamenCharge
+import Gnosis.InformationAsInterferencePattern
 import Gnosis.InstitutionalLiability
 import Gnosis.InterferenceCoarsening
 import Gnosis.InterferenceAsTheFifthForce
@@ -665,6 +671,7 @@ import Gnosis.MotivicCohomology
 import Gnosis.MudraTopology
 import Gnosis.MultiAgentCausal
 import Gnosis.MultiAgentEquilibrium
+import Gnosis.MutualInformationAsPhase
 import Gnosis.Multiplexing
 import Gnosis.NahmDimensionCeiling
 import Gnosis.NashEquilibrium
@@ -691,6 +698,7 @@ import Gnosis.ObservableUniverseFinite
 import Gnosis.ObservationRequired
 import Gnosis.OceanographyCybernetics
 import Gnosis.OneCobFrobenius
+import Gnosis.OpinionAsInterference
 import Gnosis.OptimalityUndecidable
 import Gnosis.Oracle.OracleExecutionStallAnnihilation
 import Gnosis.Oracle.OracleExecutionStallBreakthrough
@@ -722,6 +730,7 @@ import Gnosis.PhysicsGrandUnification
 import Gnosis.PickTheoremInstances
 import Gnosis.PipelineSpeedup
 import Gnosis.PisotMitosisManifold
+import Gnosis.PolysemyAsMultipleWaves
 import Gnosis.PisotStabilizedIntelligence
 import Gnosis.PleromaticAsymmetryOfEffort
 import Gnosis.PleromaticEvolutionResolution
@@ -748,6 +757,7 @@ import Gnosis.ProofDepthFragility
 import Gnosis.ProtocolDeficitLatency
 import Gnosis.PsycheGrind
 import Gnosis.PsycheReduction
+import Gnosis.PsychologyAsInterference
 import Gnosis.PublicationBias
 import Gnosis.PullTopology
 import Gnosis.PureExtendedNoiseTheorem
@@ -901,6 +911,7 @@ import Gnosis.TotientMultiplicativityViaCRT
 import Gnosis.TowerResonance
 import Gnosis.TracedMonoidal
 import Gnosis.TradeTopology
+import Gnosis.TraumaAsStandingWave
 import Gnosis.TriadTopology
 import Gnosis.TriadicCosmicBreath
 import Gnosis.TriadicNormalForm
@@ -940,6 +951,7 @@ import Gnosis.WitnessGapErasure
 import Gnosis.WitnessGapIsErgodicOptimal
 import Gnosis.WitnessPointTheorem
 import Gnosis.Witnesses
+import Gnosis.WordMeaningAsInterference
 import Gnosis.WormholeTradeoff
 import Gnosis.YangMillsMassGap
 import Gnosis.ZeckendorfCompleteness
