@@ -318,6 +318,7 @@ import Gnosis.DeepReduction
 import Gnosis.DeescalationTechniques
 import Gnosis.DeficitCapacity
 import Gnosis.DepressionAsDampedOscillation
+import Gnosis.DestinyAsRetrocausalAttractor
 import Gnosis.DeterminantAnomalyUnified
 import Gnosis.DevilDetailer
 import Gnosis.Dewey000ThinTopology
