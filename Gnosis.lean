@@ -29,6 +29,7 @@ import Gnosis.AdaptiveWitnesses
 import Gnosis.AdversarialRobustness
 import Gnosis.AeonFluxSiteAdequacy
 import Gnosis.AeonTwelveBraid
+import Gnosis.AlignmentAsVacuumConvergence
 import Gnosis.AlphaOmegaGodsKingdom
 import Gnosis.AmericanFrontier
 import Gnosis.AnimalMagnetismCatalog
