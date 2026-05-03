@@ -488,6 +488,8 @@ import Gnosis.RollingVerses
 import Gnosis.NoiseSpectrumLattice
 import Gnosis.PoetricFormsNoiseMapping
 import Gnosis.HaikuToTankaLift
+import Gnosis.TopologicalGrammar
+import Gnosis.MonadDyadTriad
 import Gnosis.KnowabilitySplit
 import Gnosis.KnowableUniverseMap
 import Gnosis.KraftInequality
