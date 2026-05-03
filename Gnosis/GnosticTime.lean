@@ -70,18 +70,15 @@ def pleroma_pLo : Nat := 55 * picolorenzo   -- 172.79 days
 
 -- Kenoma / Sophia = 10/9 (exact ratio)
 theorem kenoma_sophia_ratio :
-    kenoma_pLo * 9 = sophia_pLo * 10 := by
-  unfold kenoma_pLo sophia_pLo picolorenzo piMicrodays; omega
+    kenoma_pLo * 9 = sophia_pLo * 10 := rfl
 
 -- Kenoma = Sophia + Barbelo (in time units too)
 theorem kenoma_is_sophia_plus_barbelo :
-    kenoma_pLo = sophia_pLo + barbelo_pLo := by
-  unfold kenoma_pLo sophia_pLo barbelo_pLo picolorenzo piMicrodays; omega
+    kenoma_pLo = sophia_pLo + barbelo_pLo := rfl
 
 -- Pleroma = Sophia × 6 + Barbelo (55 = 9×6 + 1)
 theorem pleroma_sophia_relation :
-    pleroma_pLo = sophia_pLo * 6 + barbelo_pLo := by
-  unfold pleroma_pLo sophia_pLo barbelo_pLo picolorenzo piMicrodays; omega
+    pleroma_pLo = sophia_pLo * 6 + barbelo_pLo := rfl
 
 -- ═══════════════════════════════════════════════════════════════════════════════
 -- Near-misses (anti-proofs): Gnostic time ≠ natural periods
@@ -89,7 +86,7 @@ theorem pleroma_sophia_relation :
 
 -- Syzygy pLo < week (6.28 < 7.00): the week is LONGER than 2π days
 theorem syzygy_less_than_week : syzygy_pLo < week := by
-  unfold syzygy_pLo picolorenzo piMicrodays week; omega
+  native_decide
 
 -- Gap: week - 2π days = 0.72 days (the God Gap of the week)
 theorem week_gap : week - syzygy_pLo = 716814 := by
@@ -116,7 +113,7 @@ theorem calendar_gap : kenoma_pLo - calendarMonth = 975930 := by
 
 -- Pleroma pLo < half year (172.79 < 182.50)
 theorem pleroma_less_than_half_year : pleroma_pLo < halfYear := by
-  unfold pleroma_pLo picolorenzo piMicrodays halfYear; omega
+  native_decide
 
 -- Gap: half year - 55π = 9.71 days
 theorem half_year_gap : halfYear - pleroma_pLo = 9712385 := by
@@ -133,9 +130,7 @@ theorem all_gaps_positive :
     lunarMonth > sophia_pLo ∧
     kenoma_pLo > calendarMonth ∧
     halfYear > pleroma_pLo := by
-  unfold week syzygy_pLo lunarMonth sophia_pLo kenoma_pLo calendarMonth
-    halfYear pleroma_pLo picolorenzo piMicrodays
-  omega
+  native_decide
 
 -- ═══════════════════════════════════════════════════════════════════════════════
 -- The Sophia-Lunar coincidence is the closest match

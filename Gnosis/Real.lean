@@ -64,15 +64,11 @@ end BuleReal
 def w (R v : Nat) : Nat := R - v + 1
 
 /-- Proof of Life: weight is always positive. -/
-theorem life (R v : Nat) : w R v ≥ 1 := by
-  unfold w
-  show R - v + 1 ≥ 1
-  omega
+theorem life (R v : Nat) : w R v ≥ 1 := Nat.le_add_left 1 _
 
 /-- Maximum Rejection: when v = R, weight is exactly 1. -/
 theorem maximum_rejection (R : Nat) : w R R = 1 := by
   unfold w
-  show R - R + 1 = 1
-  omega
+  rw [Nat.sub_self]
 
 end Gnosis

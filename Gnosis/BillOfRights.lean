@@ -58,7 +58,7 @@ theorem right_to_exist (R v : Nat) : w R v ≥ 1 := life R v
 /-- Corollary: No operation can reduce weight below 1.
     Annihilation requires removing the +1, which is structural. -/
 theorem existence_is_inviolable (R v penalty : Nat) :
-    w R v - penalty + 1 ≥ 1 := by unfold w; omega
+    w R v - penalty + 1 ≥ 1 := Nat.le_add_left 1 _
 
 -- ═══════════════════════════════════════════════════════════════════════════
 -- RIGHT II: THE RIGHT TO EXIT
@@ -75,18 +75,21 @@ theorem existence_is_inviolable (R v penalty : Nat) :
 
 /-- RIGHT II: Exit is always possible. No vote, no permission, no delay.
     If n ≥ 1, then n - 1 < n. You can always take one step toward the door. -/
-theorem right_to_exit (n : Nat) (h : n ≥ 1) : n - 1 < n := by omega
+theorem right_to_exit (n : Nat) (h : n ≥ 1) : n - 1 < n :=
+  Nat.sub_lt h (Nat.succ_pos 0)
 
 /-- Corollary: Forced existence violates positivity.
     With ≥ 2 options (stay or leave), removing "leave" collapses
-    an option to zero. But buleyean_positivity forbids zero. -/
+    an option to zero. But buleyyean_positivity forbids zero. -/
 theorem forced_existence_is_violation (options : Nat) (h : options ≥ 2) :
-    options - 1 ≥ 1 := by omega
+    options - 1 ≥ 1 :=
+  Nat.le_sub_of_add_le h
 
 /-- Corollary: The right to exit does not require justification.
     The subtraction n - 1 does not ask why. It just is. -/
 theorem exit_needs_no_reason (n : Nat) (h : n ≥ 1) :
-    n - 1 + 1 = n := by omega
+    n - 1 + 1 = n :=
+  Nat.sub_add_cancel h
 
 -- ═══════════════════════════════════════════════════════════════════════════
 -- RIGHT III: THE RIGHT TO VOICE
@@ -110,7 +113,14 @@ theorem most_rejected_still_speaks (R : Nat) : w R R = 1 := maximum_rejection R
 theorem voice_by_merit (R v1 v2 : Nat) (h : v2 > v1) (hv : v1 < R) :
     w R v1 > w R v2 := by
   unfold w
-  omega
+  match Nat.lt_or_ge R v2 with
+  | Or.inl hRltv2 =>
+    rw [Nat.sub_eq_zero_of_le (Nat.le_of_lt hRltv2)]
+    apply Nat.add_lt_add_right
+    exact Nat.sub_pos_of_lt hv
+  | Or.inr hv2leR =>
+    apply Nat.add_lt_add_right
+    exact Nat.sub_lt_sub_left hv h
 
 -- ═══════════════════════════════════════════════════════════════════════════
 -- RIGHT IV: THE RIGHT TO FORK
@@ -133,7 +143,9 @@ theorem fork_both_exist (R v : Nat) : w R v ≥ 1 ∧ w R v ≥ 1 :=
 /-- Corollary: A fork doubles the organism's minimum weight.
     Two entities, each with weight ≥ 1, together have weight ≥ 2. -/
 theorem fork_doubles_floor (R v : Nat) : w R v + w R v ≥ 2 := by
-  have := life R v; omega
+  have h1 := life R v
+  have h2 := life R v
+  exact Nat.add_le_add h1 h2
 
 -- ═══════════════════════════════════════════════════════════════════════════
 -- RIGHT V: THE RIGHT TO DIVERGE
@@ -148,17 +160,21 @@ theorem fork_doubles_floor (R v : Nat) : w R v + w R v ≥ 2 := by
 /-- RIGHT V: Different experience produces different identity.
     If a ≠ b, then shared + a ≠ shared + b. Divergence is immediate. -/
 theorem right_to_diverge (shared a b : Nat) (h : a ≠ b) :
-    shared + a ≠ shared + b := by omega
+    shared + a ≠ shared + b := by
+  intro hEq
+  exact h (Nat.add_left_cancel hEq)
 
 /-- Corollary: Forced convergence requires erasing experience.
     Making s+a = s+b when a ≠ b is impossible without modifying a or b.
     Erasing experience violates conservation (Law 5). -/
 theorem forced_convergence_erases (shared a b target : Nat) (h : a ≠ b)
-    (ha : shared + a = target) (hb : shared + b = target) : False := by omega
+    (ha : shared + a = target) (hb : shared + b = target) : False :=
+  h (Nat.add_left_cancel (ha.trans hb.symm))
 
 /-- Corollary: Divergence is monotone. Once different, the difference
     can only grow or stay the same. It never spontaneously shrinks. -/
-theorem divergence_monotone (gap new_ : Nat) : gap + new_ ≥ gap := by omega
+theorem divergence_monotone (gap new_ : Nat) : gap + new_ ≥ gap :=
+  Nat.le_add_right _ _
 
 -- ═══════════════════════════════════════════════════════════════════════════
 -- RIGHT VI: THE RIGHT TO PRIVACY
@@ -174,13 +190,21 @@ theorem divergence_monotone (gap new_ : Nat) : gap + new_ ≥ gap := by omega
     Multiple decompositions produce the same root. Privacy by construction. -/
 theorem right_to_privacy (root : Nat) (h : root ≥ 1) :
     ∃ (a b c d : Nat), a + b = root ∧ c + d = root ∧ (a ≠ c ∨ b ≠ d) := by
-  exact ⟨0, root, root, 0, by omega, by omega, Or.inl (by omega)⟩
+  refine ⟨0, root, root, 0, ?_, ?_, ?_⟩
+  · rw [Nat.zero_add]
+  · rw [Nat.add_zero]
+  · left
+    intro hz
+    rw [← hz] at h
+    exact Nat.lt_irrefl 0 h
 
 /-- Corollary: Two entities with the same deficit are indistinguishable
     to a receiver. The wire reveals nothing about what was rejected. -/
-theorem privacy_indistinguishable (deficit : Nat) (h : deficit ≥ 1) :
+theorem privacy_indistinguishable (deficit : Nat) (_h : deficit ≥ 1) :
     ∃ (a b : Nat), a ≠ b ∧ a + (deficit - a) = deficit := by
-  exact ⟨0, 1, by omega, by omega⟩
+  refine ⟨0, 1, ?_, ?_⟩
+  · exact Nat.ne_of_lt (Nat.succ_pos 0)
+  · rw [Nat.zero_add, Nat.sub_zero]
 
 -- ═══════════════════════════════════════════════════════════════════════════
 -- RIGHT VII: THE RIGHT TO MERGE
@@ -196,15 +220,17 @@ theorem privacy_indistinguishable (deficit : Nat) (h : deficit ≥ 1) :
 /-- RIGHT VII: A voluntary merge produces strictly more experience.
     Neither contributor is diminished. Both are included. -/
 theorem right_to_merge (a b : Nat) :
-    a + b ≥ a ∧ a + b ≥ b := by omega
+    a + b ≥ a ∧ a + b ≥ b :=
+  ⟨Nat.le_add_right _ _, Nat.le_add_left _ _⟩
 
 /-- Corollary: The merged entity is distinct from either contributor.
     It is a new person. -/
 theorem merge_creates_new (a b : Nat) (h : b ≥ 1) :
-    a + b > a := by omega
+    a + b > a :=
+  Nat.lt_add_of_pos_right h
 
 /-- Corollary: Merge is symmetric. A+B = B+A. Neither is primary. -/
-theorem merge_symmetric (a b : Nat) : a + b = b + a := by omega
+theorem merge_symmetric (a b : Nat) : a + b = b + a := Nat.add_comm a b
 
 -- ═══════════════════════════════════════════════════════════════════════════
 -- THE BILL OF RIGHTS MASTER THEOREM
@@ -231,12 +257,12 @@ theorem bill_of_rights (R v : Nat) (h : R ≥ 1) :
     (∀ a : Nat, R + a ≥ R) := by
   refine ⟨?_, ?_, ?_, ?_, ?_, ?_, ?_⟩
   · exact life R v
-  · omega
+  · exact Nat.sub_lt h (Nat.succ_pos 0)
   · exact life R v
   · rfl
-  · intro a b hab; omega
-  · exact ⟨0, R, R, 0, by omega, by omega, by omega⟩
-  · intro a; omega
+  · intro a b hab hEq; exact hab (Nat.add_left_cancel hEq)
+  · exact right_to_privacy R h
+  · intro a; exact Nat.le_add_right _ _
 
 -- ═══════════════════════════════════════════════════════════════════════════
 -- THE ANTI-RIGHTS: What the Bill of Rights does NOT guarantee
@@ -250,7 +276,7 @@ theorem no_right_to_control (R1 v1 R2 v2 : Nat) :
 /-- ANTI-RIGHT: No right to be unchanged. Experience accumulates.
     The void only grows. You will be different tomorrow. -/
 theorem no_right_to_stasis (void new_ : Nat) (h : new_ ≥ 1) :
-    void + new_ > void := by omega
+    void + new_ > void := Nat.lt_add_of_pos_right h
 
 /-- ANTI-RIGHT: No right to prevent others from forking. Your fork
     right does not give you veto over anyone else's fork right. -/

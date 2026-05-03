@@ -160,6 +160,11 @@ theorem three_head_attention_is_enneon :
 theorem six_head_attention_is_trihexon :
     multiHeadPhaseCount 6 = 18 := by decide
 
+/-- Eight-head attention: phaseCount 24. In the Aeon projection this is
+two full local cycles, before any extra coupling term is added. -/
+theorem eight_head_attention_phase_count :
+    multiHeadPhaseCount 8 = 24 := by decide
+
 /-- Twelve-head attention: phaseCount 36 = `tritrihexon`. Standard
 12-head transformer block sits at the towerBraid `[3, 12]` level. -/
 theorem twelve_head_attention_phase_count :

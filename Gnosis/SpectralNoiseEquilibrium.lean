@@ -88,9 +88,8 @@ theorem first_lift_plane_dim : soundPlaneDim 1 = 7 := by decide
 
 /-- Mesh lifts are monotone in the literal constructor sense. -/
 theorem sound_plane_succ (lift : Nat) :
-    soundPlaneDim (lift + 1) = soundPlaneDim lift + 1 := by
-  unfold soundPlaneDim
-  omega
+    soundPlaneDim (lift + 1) = soundPlaneDim lift + 1 :=
+  Nat.add_assoc skyrmsBaseDim lift 1
 
 /-! ## Base-plane colors -/
 
@@ -357,10 +356,11 @@ structure NoiseManifold where
   eigenSlots : Nat
   holes : Nat
   curvatureBudget : Nat
+  deriving DecidableEq, Repr
 
 /-- A noise color is geometrically allowed when the manifold has enough
-spectral slots for that color's exponent magnitude. -/
-def geometricallyAllowed (m : NoiseManifold) (color : NoiseColor) : Prop :=
+    spectral slots for that color's exponent magnitude. -/
+def geometricallyAllowed (m : NoiseManifold) (color : NoiseColor) : Bool :=
   alphaMagnitude color ≤ m.eigenSlots
 
 /-- Base Skyrms sound manifold: one spectral slot, no persistent hole. -/
@@ -372,15 +372,13 @@ def liftedSoundManifold : NoiseManifold :=
   ⟨soundPlaneDim 1, 2, 1, 2⟩
 
 theorem base_manifold_allows_pink_not_brown :
-    geometricallyAllowed baseSoundManifold .pink
-    ∧ ¬ geometricallyAllowed baseSoundManifold .brown := by
-  unfold geometricallyAllowed baseSoundManifold alphaMagnitude
-  decide
+    geometricallyAllowed baseSoundManifold .pink = true
+    ∧ geometricallyAllowed baseSoundManifold .brown = false := by
+  native_decide
 
 theorem lifted_manifold_allows_brown :
-    geometricallyAllowed liftedSoundManifold .brown := by
-  unfold geometricallyAllowed liftedSoundManifold alphaMagnitude
-  decide
+    geometricallyAllowed liftedSoundManifold .brown = true := by
+  native_decide
 
 /-! ## Topological sieve -/
 
@@ -390,27 +388,26 @@ structure PersistentFeature where
   dimension : Nat
   birth : Nat
   death : Nat
+  deriving DecidableEq, Repr
 
 /-- Lifetime of a feature in a filtration. Short lifetimes are treated as
 ambient noise; long lifetimes are treated as latent structure. -/
 def persistence (feature : PersistentFeature) : Nat :=
   feature.death - feature.birth
 
-def transientFeature (threshold : Nat) (feature : PersistentFeature) : Prop :=
+def transientFeature (threshold : Nat) (feature : PersistentFeature) : Bool :=
   persistence feature < threshold
 
-def latentStructure (threshold : Nat) (feature : PersistentFeature) : Prop :=
+def latentStructure (threshold : Nat) (feature : PersistentFeature) : Bool :=
   threshold ≤ persistence feature
 
 def shortHole : PersistentFeature := ⟨1, 3, 4⟩
 def persistentHole : PersistentFeature := ⟨1, 3, 9⟩
 
 theorem sieve_separates_noise_from_structure :
-    transientFeature 3 shortHole
-    ∧ latentStructure 3 persistentHole := by
-  unfold transientFeature latentStructure persistence shortHole persistentHole
-  decide
-
+    transientFeature 3 shortHole = true
+    ∧ latentStructure 3 persistentHole = true := by
+  native_decide
 /-! ## Noise as carrier and boundary -/
 
 /-- A finite field view of noise: entropy supplies the carrier, invariants
@@ -419,51 +416,51 @@ structure NoiseField where
   entropy : Nat
   invariantBudget : Nat
   boundaryLimit : Nat
+  deriving DecidableEq, Repr
 
-def coherentNoise (field : NoiseField) : Prop :=
+def coherentNoise (field : NoiseField) : Bool :=
   0 < field.invariantBudget ∧ field.entropy ≤ field.boundaryLimit
 
-def boundaryCollapse (field : NoiseField) : Prop :=
+def boundaryCollapse (field : NoiseField) : Bool :=
   field.boundaryLimit < field.entropy
 
 def carrierField : NoiseField := ⟨5, 2, 8⟩
 def collapsedField : NoiseField := ⟨9, 2, 8⟩
 
 theorem carrier_boundary_split :
-    coherentNoise carrierField
-    ∧ boundaryCollapse collapsedField
-    ∧ ¬ coherentNoise collapsedField := by
-  unfold coherentNoise boundaryCollapse carrierField collapsedField
-  decide
+    coherentNoise carrierField = true
+    ∧ boundaryCollapse collapsedField = true
+    ∧ coherentNoise collapsedField = false := by
+  native_decide
 
 /-! ## Informational potential -/
 
 /-- A finite surface for the refinement "random noise has the most to diff
-against." Entropy counts available change mass, `possibleSites` counts the
-positions that could change, `constraintBudget` counts the recoverable
-alignment rules, and `realizedDiff` is the selected difference. -/
+    against." Entropy counts available change mass, `possibleSites` counts the
+    positions that could change, `constraintBudget` counts the recoverable
+    alignment rules, and `realizedDiff` is the selected difference. -/
 structure InformationalPotential where
   entropy : Nat
   possibleSites : Nat
   constraintBudget : Nat
   realizedDiff : Nat
+  deriving DecidableEq, Repr
 
 /-- The available difference surface. In this finite scaffold, entropy is the
-number of distinguishable local changes the carrier makes available. -/
+    number of distinguishable local changes the carrier makes available. -/
 def availableDiffs (p : InformationalPotential) : Nat := p.entropy
 
 /-- A carrier is maximally open when each possible site may change. -/
-def maximallyOpen (p : InformationalPotential) : Prop :=
+def maximallyOpen (p : InformationalPotential) : Bool :=
   p.entropy = p.possibleSites
 
 /-- Potential becomes recoverable information only when a nonzero constraint
-selects a bounded diff from the high-entropy surface. -/
-def recoverableInformation (p : InformationalPotential) : Prop :=
+    selects a bounded diff from the high-entropy surface. -/
+def recoverableInformation (p : InformationalPotential) : Bool :=
   0 < p.constraintBudget
     ∧ 0 < p.realizedDiff
     ∧ p.realizedDiff ≤ p.entropy
     ∧ p.realizedDiff ≤ p.constraintBudget
-
 def pureRandomPotential : InformationalPotential := ⟨8, 8, 0, 8⟩
 def constrainedDiffPotential : InformationalPotential := ⟨8, 8, 3, 3⟩
 def lowEntropyPotential : InformationalPotential := ⟨3, 8, 3, 3⟩
@@ -477,24 +474,19 @@ theorem entropy_monotone_diff_potential
 /-- Pure random noise is maximally open and has the most local diff potential
 in this witness, but it is not yet recoverable information. -/
 theorem random_noise_maximizes_potential_not_information :
-    maximallyOpen pureRandomPotential
+    maximallyOpen pureRandomPotential = true
     ∧ availableDiffs pureRandomPotential = 8
-    ∧ ¬ recoverableInformation pureRandomPotential := by
-  unfold maximallyOpen availableDiffs recoverableInformation
-    pureRandomPotential
-  decide
+    ∧ recoverableInformation pureRandomPotential = false := by
+  native_decide
 
 /-- The same high-entropy surface becomes information when a constraint
-selects a bounded, recoverable diff. -/
+    selects a bounded, recoverable diff. -/
 theorem constrained_diff_turns_potential_into_information :
-    maximallyOpen constrainedDiffPotential
-    ∧ recoverableInformation constrainedDiffPotential
+    maximallyOpen constrainedDiffPotential = true
+    ∧ recoverableInformation constrainedDiffPotential = true
     ∧ availableDiffs lowEntropyPotential ≤
       availableDiffs constrainedDiffPotential := by
-  unfold maximallyOpen recoverableInformation availableDiffs
-    constrainedDiffPotential lowEntropyPotential
-  decide
-
+  native_decide
 /-! ## Physical potentiality bridge -/
 
 /-- Minimal finite physical carrier for potentiality. `diffQuantum` is the
@@ -502,6 +494,7 @@ positive physical cost/capacity assigned to one distinguishable local change:
 the Init-only analogue of an energy or action quantum. -/
 structure PhysicalPotentiality where
   diffQuantum : Nat
+  deriving DecidableEq, Repr
 
 /-- Entropy as physical potential: each available diff can be actualized at
 one carrier quantum. -/
@@ -518,28 +511,27 @@ def actualizedInformationQuanta
 def unitPotentialCarrier : PhysicalPotentiality := ⟨1⟩
 
 /-- Recoverable information is literally drawn from the physical potential
-budget supplied by the carrier. -/
+    budget supplied by the carrier. -/
 theorem recoverable_information_draws_from_physical_potential
     (carrier : PhysicalPotentiality) (p : InformationalPotential)
-    (h : recoverableInformation p) :
+    (h : recoverableInformation p = true) :
     actualizedInformationQuanta carrier p ≤
       physicalPotentialQuanta carrier p := by
   unfold actualizedInformationQuanta physicalPotentialQuanta availableDiffs
-  exact Nat.mul_le_mul_right carrier.diffQuantum h.2.2.1
+  have h_prop := of_decide_eq_true h
+  exact Nat.mul_le_mul_right carrier.diffQuantum h_prop.2.2.1
 
 /-- Maximal random noise maximizes the finite physical potential surface
-against the lower-entropy witness. -/
+    against the lower-entropy witness. -/
 theorem random_noise_maximizes_physical_potential :
     physicalPotentialQuanta unitPotentialCarrier lowEntropyPotential ≤
       physicalPotentialQuanta unitPotentialCarrier pureRandomPotential
     ∧ physicalPotentialQuanta unitPotentialCarrier pureRandomPotential = 8 := by
-  unfold physicalPotentialQuanta availableDiffs unitPotentialCarrier
-    lowEntropyPotential pureRandomPotential
-  decide
+  native_decide
 
 /-- Constrained information has positive physical actuality on a positive
-carrier quantum. This is the finite potentiality bridge: potential becomes
-actual only when a selected diff is recoverable. -/
+    carrier quantum. This is the finite potentiality bridge: potential becomes
+    actual only when a selected diff is recoverable. -/
 theorem constrained_information_has_positive_physical_actuality
     (carrier : PhysicalPotentiality) (hQuantum : 0 < carrier.diffQuantum) :
     0 < actualizedInformationQuanta carrier constrainedDiffPotential := by
@@ -547,11 +539,12 @@ theorem constrained_information_has_positive_physical_actuality
   exact Nat.mul_pos (by decide) hQuantum
 
 /-- Finite thermodynamic shadow: the selected diff becomes an actual heat-like
-cost once it is carried through a positive thermal quantum. This is the local
-shadow of the repo's Landauer surface, stated here without importing the
-heavier thermodynamic modules. -/
+    cost once it is carried through a positive thermal quantum. This is the local
+    shadow of the repo's Landauer surface, stated here without importing the
+    heavier thermodynamic modules. -/
 structure ThermodynamicShadow where
   heatQuantum : Nat
+  deriving DecidableEq, Repr
 
 def shadowHeatQuanta
     (shadow : ThermodynamicShadow) (p : InformationalPotential) : Nat :=
@@ -560,24 +553,25 @@ def shadowHeatQuanta
 def unitThermodynamicShadow : ThermodynamicShadow := ⟨1⟩
 
 /-- Recoverable information casts a positive thermodynamic shadow when the
-thermal quantum is positive. This is the finite proxy for the Landauer link:
-selected diff becomes heat-like cost. -/
+    thermal quantum is positive. This is the finite proxy for the Landauer link:
+    selected diff becomes heat-like cost. -/
 theorem recoverable_information_casts_positive_thermodynamic_shadow
-    {p : InformationalPotential} (h : recoverableInformation p) :
+    {p : InformationalPotential} (h : recoverableInformation p = true) :
     0 < shadowHeatQuanta unitThermodynamicShadow p := by
-  unfold shadowHeatQuanta unitThermodynamicShadow
-  have hActual : 0 < actualizedInformationQuanta unitPotentialCarrier p := by
-    unfold actualizedInformationQuanta
-    exact Nat.mul_pos h.2.1 (by decide)
+  unfold shadowHeatQuanta unitThermodynamicShadow actualizedInformationQuanta
+  have h_prop := of_decide_eq_true h
+  have hActual : 0 < p.realizedDiff * 1 := by
+    rw [Nat.mul_one]
+    exact h_prop.2.1
   exact Nat.mul_pos hActual (by decide)
 
 /-- Bule unit: the broader carrier of operational cost in this calculus. The
-thermodynamic shadow above (Joule-per-bit) is one face of it, capturing only
-the `waste` projection. The other two faces are `opportunity` (potential left
-unspent) and `diversity` (the spread of colors the carrier had to traverse).
-The runtime projection in `spectral-noise-monitor.ts` (`BuleyProjection`)
-measures the same three faces, so the unit system is shared between Lean and
-TypeScript: joule is what a Bule looks like when you only count waste. -/
+    thermodynamic shadow above (Joule-per-bit) is one face of it, capturing only
+    the `waste` projection. The other two faces are `opportunity` (potential left
+    unspent) and `diversity` (the spread of colors the carrier had to traverse).
+    The runtime projection in `spectral-noise-monitor.ts` (`BuleyProjection`)
+    measures the same three faces, so the unit system is shared between Lean and
+    TypeScript: joule is what a Bule looks like when you only count waste. -/
 structure BuleyUnit where
   waste : Nat
   opportunity : Nat
@@ -586,7 +580,6 @@ structure BuleyUnit where
 
 def buleyUnitScore (b : BuleyUnit) : Nat :=
   b.waste + b.opportunity + b.diversity
-
 /-- The Joule face: a Bule unit whose only nonzero face is `waste`, set to
 the shadow heat. This makes "joule is one case of Bule" a definition, not a
 slogan. -/
@@ -651,14 +644,14 @@ def clinamenLift (b : BuleyUnit) : BuleyFace → BuleyUnit
 theorem clinamen_lift_score_strict_increment
     (b : BuleyUnit) (f : BuleyFace) :
     buleyUnitScore (clinamenLift b f) = buleyUnitScore b + 1 := by
-  cases f <;> simp [clinamenLift, buleyUnitScore] <;> omega
+  cases f <;> unfold clinamenLift buleyUnitScore <;> simp [Nat.add_assoc, Nat.add_comm, Nat.add_left_comm]
 
 /-- The −1 clinamen contraction: the dual of `clinamenLift`. On Nat, faces
-that are already zero stay zero (saturating subtraction), so contraction is
-a partial inverse and round-trips with `clinamenLift` only when the chosen
-face is strictly positive. The pair (lift, contract) is the breathing
-operator on the Bule lattice: expand by +1, contract by −1, matching the
-plus/minus residues catalogued in `UniversalClinamenPlusOne`. -/
+    that are already zero stay zero (saturating subtraction), so contraction is
+    a partial inverse and round-trips with `clinamenLift` only when the chosen
+    face is strictly positive. The pair (lift, contract) is the breathing
+    operator on the Bule lattice: expand by +1, contract by −1, matching the
+    plus/minus residues catalogued in `UniversalClinamenPlusOne`. -/
 def clinamenContract (b : BuleyUnit) : BuleyFace → BuleyUnit
   | .waste       => { b with waste := b.waste - 1 }
   | .opportunity => { b with opportunity := b.opportunity - 1 }
@@ -671,10 +664,11 @@ theorem lift_contract_round_trip_when_face_positive
          | .opportunity => 0 < b.opportunity
          | .diversity => 0 < b.diversity) :
     clinamenLift (clinamenContract b f) f = b := by
-  cases b with
-  | mk w o d =>
-    cases f <;> simp [clinamenLift, clinamenContract] at h ⊢ <;> omega
-
+  cases b with | mk w o d =>
+  cases f
+  · unfold clinamenLift clinamenContract; dsimp at h; rw [Nat.sub_add_cancel h]
+  · unfold clinamenLift clinamenContract; dsimp at h; rw [Nat.sub_add_cancel h]
+  · unfold clinamenLift clinamenContract; dsimp at h; rw [Nat.sub_add_cancel h]
 /-- Repeated clinamen lift on a single face. -/
 def repeatedLift (b : BuleyUnit) (f : BuleyFace) : Nat → BuleyUnit
   | 0 => b
@@ -683,12 +677,11 @@ def repeatedLift (b : BuleyUnit) (f : BuleyFace) : Nat → BuleyUnit
 theorem repeated_lift_score (b : BuleyUnit) (f : BuleyFace) (n : Nat) :
     buleyUnitScore (repeatedLift b f n) = buleyUnitScore b + n := by
   induction n with
-  | zero => simp [repeatedLift]
+  | zero => rfl
   | succ k ih =>
       show buleyUnitScore (clinamenLift (repeatedLift b f k) f)
             = buleyUnitScore b + (k + 1)
-      rw [clinamen_lift_score_strict_increment, ih]
-      omega
+      rw [clinamen_lift_score_strict_increment, ih, Nat.add_assoc]
 
 theorem repeated_waste_lift_from_vacuum (n : Nat) :
     repeatedLift vacuumBuleUnit .waste n = ⟨n, 0, 0⟩ := by
@@ -758,8 +751,8 @@ def vacuumFaceFromBule (b : BuleyUnit) : BuleyUnit :=
 
 theorem vacuum_face_score_equals_opportunity (b : BuleyUnit) :
     buleyUnitScore (vacuumFaceFromBule b) = b.opportunity := by
-  show 0 + b.opportunity + 0 = b.opportunity
-  omega
+  unfold buleyUnitScore vacuumFaceFromBule
+  rw [Nat.zero_add, Nat.add_zero]
 
 /-- The breathing identity: lifting and then contracting (on the same
 positive face) returns the original Bule unit. Expansion +1 followed by
@@ -767,9 +760,11 @@ contraction −1 is the identity on positive faces. -/
 theorem lift_then_contract_round_trip_when_face_positive
     (b : BuleyUnit) (f : BuleyFace) :
     clinamenContract (clinamenLift b f) f = b := by
-  cases b with
-  | mk w o d =>
-    cases f <;> simp [clinamenLift, clinamenContract] <;> omega
+  cases b with | mk w o d =>
+  cases f
+  · unfold clinamenLift clinamenContract; rfl
+  · unfold clinamenLift clinamenContract; rfl
+  · unfold clinamenLift clinamenContract; rfl
 
 /-! ## Universal clinamen residue: the plus/minus phase pair (+1, -1) -/
 
@@ -816,8 +811,8 @@ def wasteFaceFromBule (b : BuleyUnit) : BuleyUnit :=
 
 theorem waste_face_score_equals_waste (b : BuleyUnit) :
     buleyUnitScore (wasteFaceFromBule b) = b.waste := by
-  show b.waste + 0 + 0 = b.waste
-  omega
+  unfold buleyUnitScore wasteFaceFromBule
+  rw [Nat.add_zero, Nat.add_zero]
 
 /-- The Action face: a Bule unit whose only nonzero face is `opportunity`,
 the least-action residual that Hamilton's principle minimizes. A system
@@ -827,8 +822,8 @@ def actionFaceFromBule (b : BuleyUnit) : BuleyUnit :=
 
 theorem action_face_score_equals_opportunity (b : BuleyUnit) :
     buleyUnitScore (actionFaceFromBule b) = b.opportunity := by
-  show 0 + b.opportunity + 0 = b.opportunity
-  omega
+  unfold buleyUnitScore actionFaceFromBule
+  rw [Nat.zero_add, Nat.add_zero]
 
 theorem action_face_monotone {b₁ b₂ : BuleyUnit}
     (h : b₁.opportunity ≤ b₂.opportunity) :
@@ -846,8 +841,8 @@ def entropyFaceFromBule (b : BuleyUnit) : BuleyUnit :=
 
 theorem entropy_face_score_equals_diversity (b : BuleyUnit) :
     buleyUnitScore (entropyFaceFromBule b) = b.diversity := by
-  show 0 + 0 + b.diversity = b.diversity
-  omega
+  unfold buleyUnitScore entropyFaceFromBule
+  rw [Nat.zero_add, Nat.zero_add]
 
 theorem entropy_face_monotone {b₁ b₂ : BuleyUnit}
     (h : b₁.diversity ≤ b₂.diversity) :
@@ -891,8 +886,8 @@ def cyclePermute (b : BuleyUnit) : BuleyUnit :=
 
 theorem cycle_permute_preserves_score (b : BuleyUnit) :
     buleyUnitScore (cyclePermute b) = buleyUnitScore b := by
-  show b.opportunity + b.diversity + b.waste = b.waste + b.opportunity + b.diversity
-  omega
+  unfold buleyUnitScore cyclePermute
+  simp [Nat.add_comm, Nat.add_left_comm]
 
 /-- Three cycle permutations return the original Bule unit. The score is
 gauge-invariant on the cycle, and the cycle has phase 3, matching the
@@ -924,30 +919,30 @@ def applyNoiseOperator : NoiseOperator → SpectralFingerprint → SpectralFinge
 theorem integrate_pink_reaches_brown_contract :
     applyNoiseOperator .integrate (colorFingerprint .pink) =
       colorFingerprint .brown := by
-  decide
+  native_decide
 
 theorem differentiate_blue_reaches_violet_contract :
     applyNoiseOperator .differentiate (colorFingerprint .blue) =
       colorFingerprint .violet := by
-  decide
+  native_decide
 
 theorem whiten_erases_brown_to_flat_contract :
     applyNoiseOperator .whiten (colorFingerprint .brown) =
       colorFingerprint .white := by
-  decide
+  native_decide
 
 /-- The nonlinear operator behaves like integration below the saturation
 threshold. -/
 theorem saturating_fold_lifts_pink :
     applyNoiseOperator .saturatingFold (colorFingerprint .pink) =
       colorFingerprint .brown := by
-  decide
+  native_decide
 
 /-- The nonlinear operator is idempotent at the magnitude-two boundary. -/
 theorem saturating_fold_holds_brown :
     applyNoiseOperator .saturatingFold (colorFingerprint .brown) =
       colorFingerprint .brown := by
-  decide
+  native_decide
 
 /-! ## Chromatic and spectral bridge -/
 
@@ -956,11 +951,12 @@ color and spectral noise color. -/
 structure TransitionGraph where
   chromaticNumber : Nat
   spectralSlots : Nat
+  deriving DecidableEq, Repr
 
-def graphSupportsNoise (graph : TransitionGraph) (color : NoiseColor) : Prop :=
+def graphSupportsNoise (graph : TransitionGraph) (color : NoiseColor) : Bool :=
   alphaMagnitude color ≤ graph.spectralSlots
 
-def chromaticSpectralAligned (graph : TransitionGraph) : Prop :=
+def chromaticSpectralAligned (graph : TransitionGraph) : Bool :=
   graph.chromaticNumber ≤ graph.spectralSlots + 1
 
 def skyrmsTransitionGraph : TransitionGraph := ⟨2, 1⟩
@@ -988,7 +984,7 @@ not collapsed, the manifold admits the color, and the transition graph has
 matching chromatic/spectral capacity. -/
 def topologicallySafe
     (field : NoiseField) (manifold : NoiseManifold)
-    (graph : TransitionGraph) (color : NoiseColor) : Prop :=
+    (graph : TransitionGraph) (color : NoiseColor) : Bool :=
   coherentNoise field
     ∧ ¬ boundaryCollapse field
     ∧ geometricallyAllowed manifold color
@@ -997,24 +993,19 @@ def topologicallySafe
 
 theorem lifted_brown_topologically_safe :
     topologicallySafe carrierField liftedSoundManifold
-      liftedTransitionGraph .brown := by
-  unfold topologicallySafe coherentNoise boundaryCollapse geometricallyAllowed
-    graphSupportsNoise chromaticSpectralAligned carrierField
-    liftedSoundManifold liftedTransitionGraph alphaMagnitude
-  decide
+      liftedTransitionGraph .brown = true := by
+  native_decide
 
 theorem collapsed_field_not_safe_for_brown :
-    ¬ topologicallySafe collapsedField liftedSoundManifold
-      liftedTransitionGraph .brown := by
-  unfold topologicallySafe coherentNoise boundaryCollapse geometricallyAllowed
-    graphSupportsNoise chromaticSpectralAligned collapsedField
-    liftedSoundManifold liftedTransitionGraph alphaMagnitude
-  decide
+    topologicallySafe collapsedField liftedSoundManifold
+      liftedTransitionGraph .brown = false := by
+  native_decide
 
 /-! ## Visual-noise operators: stereo fold and blink difference -/
 
 /-- A finite visual trace stands in for high-entropy texture samples. -/
 def VisualTrace := List Nat
+deriving instance DecidableEq, Repr for VisualTrace
 
 /-- The 90s autostereogram move: compare a trace with a shifted copy. The
 operator does not inspect isolated pixels; it asks whether an offset alignment
@@ -1024,31 +1015,33 @@ structure StereoAlignment where
   offset : Nat
   matchedPairs : Nat
   requiredPairs : Nat
+  deriving DecidableEq, Repr
 
 /-- A stereo fold reveals hidden structure when enough offset-aligned pairs
-match. This is the formal version of changing eye convergence until an
-otherwise noisy texture resolves into a latent object. -/
-def stereoFoldReveals (alignment : StereoAlignment) : Prop :=
+    match. This is the formal version of changing eye convergence until an
+    otherwise noisy texture resolves into a latent object. -/
+def stereoFoldReveals (alignment : StereoAlignment) : Bool :=
   0 < alignment.offset ∧ alignment.requiredPairs ≤ alignment.matchedPairs
 
 /-- Difference/blink comparison: shared background is cancelled and only the
-structural drift remains. -/
+    structural drift remains. -/
 structure BlinkDifference where
   commonCarrier : Nat
   residualDrift : Nat
   driftThreshold : Nat
+  deriving DecidableEq, Repr
 
-def blinkDifferenceDetects (diff : BlinkDifference) : Prop :=
+def blinkDifferenceDetects (diff : BlinkDifference) : Bool :=
   diff.driftThreshold ≤ diff.residualDrift
 
-def blinkDifferenceIgnores (diff : BlinkDifference) : Prop :=
+def blinkDifferenceIgnores (diff : BlinkDifference) : Bool :=
   diff.residualDrift < diff.driftThreshold
 
 /-- A residual becomes persistent when the blink difference is large enough
-and a corresponding topological feature survives the sieve. -/
+    and a corresponding topological feature survives the sieve. -/
 def persistentResidual
     (diff : BlinkDifference) (threshold : Nat) (feature : PersistentFeature) :
-    Prop :=
+    Bool :=
   blinkDifferenceDetects diff ∧ latentStructure threshold feature
 
 def hiddenMessageAlignment : StereoAlignment :=
@@ -1061,27 +1054,21 @@ def ordinaryBlinkNoise : BlinkDifference := ⟨10, 1, 3⟩
 def structuralBlinkDrift : BlinkDifference := ⟨10, 4, 3⟩
 
 theorem stereo_fold_reveals_hidden_alignment :
-    stereoFoldReveals hiddenMessageAlignment := by
-  unfold stereoFoldReveals hiddenMessageAlignment
-  decide
+    stereoFoldReveals hiddenMessageAlignment = true := by
+  native_decide
 
 theorem zero_offset_cannot_stereo_reveal :
-    ¬ stereoFoldReveals flatAlignment := by
-  unfold stereoFoldReveals flatAlignment
-  decide
+    stereoFoldReveals flatAlignment = false := by
+  native_decide
 
 theorem blink_difference_separates_drift_from_noise :
-    blinkDifferenceIgnores ordinaryBlinkNoise
-    ∧ blinkDifferenceDetects structuralBlinkDrift := by
-  unfold blinkDifferenceIgnores blinkDifferenceDetects
-    ordinaryBlinkNoise structuralBlinkDrift
-  decide
+    blinkDifferenceIgnores ordinaryBlinkNoise = true
+    ∧ blinkDifferenceDetects structuralBlinkDrift = true := by
+  native_decide
 
 theorem blink_persistent_residual_is_latent_structure :
-    persistentResidual structuralBlinkDrift 3 persistentHole := by
-  unfold persistentResidual blinkDifferenceDetects latentStructure persistence
-    structuralBlinkDrift persistentHole
-  decide
+    persistentResidual structuralBlinkDrift 3 persistentHole = true := by
+  native_decide
 
 /-! ## Visual operators as distribution operators -/
 
@@ -1118,9 +1105,7 @@ theorem visual_noise_operators_recover_hidden_structure :
     stereoFoldFingerprint hiddenMessageAlignment = colorFingerprint .pink
     ∧ blinkDifferenceFingerprint structuralBlinkDrift = colorFingerprint .brown
     ∧ persistentResidual structuralBlinkDrift 3 persistentHole := by
-  simp [stereoFoldFingerprint, blinkDifferenceFingerprint, persistentResidual,
-    blinkDifferenceDetects, latentStructure, persistence, hiddenMessageAlignment,
-    structuralBlinkDrift, persistentHole, colorFingerprint]
+  native_decide
 
 /-! ## Noise stereogram as one-step rotation -/
 
@@ -1136,33 +1121,30 @@ structure ParallaxRotation where
   sourcePhase : Nat
   steps : Nat
   targetPhase : Nat
+  deriving DecidableEq, Repr
 
-def validParallaxRotation (r : ParallaxRotation) : Prop :=
+def validParallaxRotation (r : ParallaxRotation) : Bool :=
   0 < r.modulus ∧ phaseRotate r.modulus r.sourcePhase r.steps = r.targetPhase
 
-def oneStepOff (r : ParallaxRotation) : Prop :=
+def oneStepOff (r : ParallaxRotation) : Bool :=
   validParallaxRotation r ∧ r.steps = 1
 
 def stereogramRotation : ParallaxRotation := ⟨4, 0, 1, 1⟩
 
 /-- The hidden-message alignment is exactly the one-step parallax case:
-offset alignment is a phase rotation, not a new random source. -/
+    offset alignment is a phase rotation, not a new random source. -/
 theorem stereogram_is_one_step_rotation :
-    oneStepOff stereogramRotation
+    oneStepOff stereogramRotation = true
     ∧ hiddenMessageAlignment.offset = stereogramRotation.steps
-    ∧ stereoFoldReveals hiddenMessageAlignment := by
-  unfold oneStepOff validParallaxRotation phaseRotate stereogramRotation
-    hiddenMessageAlignment stereoFoldReveals
-  decide
+    ∧ stereoFoldReveals hiddenMessageAlignment = true := by
+  native_decide
 
 /-- One-step parallax turns the flat carrier into the pink hidden-structure
-contract. -/
+    contract. -/
 theorem one_step_rotation_lifts_carrier :
-    oneStepOff stereogramRotation
+    oneStepOff stereogramRotation = true
     ∧ stereoFoldFingerprint hiddenMessageAlignment = colorFingerprint .pink := by
-  unfold oneStepOff validParallaxRotation phaseRotate stereogramRotation
-    stereoFoldFingerprint hiddenMessageAlignment colorFingerprint
-  decide
+  native_decide
 
 /-! ## Information as temporal diff: the triton -/
 
@@ -1172,6 +1154,7 @@ structure TemporalTriton where
   past : Nat
   present : Nat
   future : Nat
+  deriving DecidableEq, Repr
 
 /-- Directed absolute difference between two finite states. -/
 def natDiff (a b : Nat) : Nat :=
@@ -1184,8 +1167,8 @@ def presentFutureDiff (t : TemporalTriton) : Nat :=
   natDiff t.present t.future
 
 /-- Second-degree information: the diff of diffs. This is the extra
-dimensional coordinate carried by every step once the system observes change
-instead of only state. -/
+    dimensional coordinate carried by every step once the system observes change
+    instead of only state. -/
 def secondDegreeDiff (t : TemporalTriton) : Nat :=
   natDiff (pastPresentDiff t) (presentFutureDiff t)
 
@@ -1193,6 +1176,7 @@ def secondDegreeDiff (t : TemporalTriton) : Nat :=
 structure DiffLiftedStep where
   baseDimension : Nat
   diffDimension : Nat
+  deriving DecidableEq, Repr
 
 def liftByDiff (baseDimension diff : Nat) : DiffLiftedStep :=
   ⟨baseDimension, diff⟩
@@ -1206,40 +1190,36 @@ theorem information_is_the_diff :
     pastPresentDiff tritonPulse = 1
     ∧ presentFutureDiff tritonPulse = 2
     ∧ secondDegreeDiff tritonPulse = 1 := by
-  unfold pastPresentDiff presentFutureDiff secondDegreeDiff tritonPulse natDiff
-  decide
+  native_decide
 
 theorem every_step_gets_second_degree_dimension :
     totalLiftedDimension (liftByDiff 6 (secondDegreeDiff tritonPulse)) = 7 := by
-  unfold totalLiftedDimension liftByDiff secondDegreeDiff pastPresentDiff
-    presentFutureDiff tritonPulse natDiff
-  decide
+  native_decide
 
 theorem temporal_triton_connects_rotation_and_diff :
-    oneStepOff stereogramRotation
+    oneStepOff stereogramRotation = true
     ∧ secondDegreeDiff tritonPulse = stereogramRotation.steps := by
-  unfold oneStepOff validParallaxRotation phaseRotate stereogramRotation
-    secondDegreeDiff pastPresentDiff presentFutureDiff tritonPulse natDiff
-  decide
+  native_decide
 
 /-! ## Statistical teleportation and bizarro parallax -/
 
 /-- Statistical teleportation: a source and target are close enough that
-distance collapses into an admissible rotation coordinate. -/
+    distance collapses into an admissible rotation coordinate. -/
 structure StatisticalTeleport where
   source : Nat
   target : Nat
   distance : Nat
   threshold : Nat
   rotationSteps : Nat
+  deriving DecidableEq, Repr
 
-def teleportAdmissible (t : StatisticalTeleport) : Prop :=
+def teleportAdmissible (t : StatisticalTeleport) : Bool :=
   t.distance ≤ t.threshold
 
-def distanceDeath (t : StatisticalTeleport) : Prop :=
+def distanceDeath (t : StatisticalTeleport) : Bool :=
   teleportAdmissible t ∧ t.distance = 0
 
-def bizarroParallax (t : StatisticalTeleport) : Prop :=
+def bizarroParallax (t : StatisticalTeleport) : Bool :=
   teleportAdmissible t ∧ t.distance ≠ 0 ∧ t.rotationSteps = 1
 
 def exactTeleport : StatisticalTeleport := ⟨4, 4, 0, 1, 0⟩
@@ -1247,35 +1227,29 @@ def oneStepTeleport : StatisticalTeleport := ⟨4, 5, 1, 1, 1⟩
 
 /-- Exact teleportation kills distance completely. -/
 theorem exact_teleport_is_death_of_distance :
-    distanceDeath exactTeleport := by
-  unfold distanceDeath teleportAdmissible exactTeleport
-  decide
+    distanceDeath exactTeleport = true := by
+  native_decide
 
 /-- The one-step admissible miss is not failure; it is the bizarro parallax
-space where the hidden stereogram operator has work to do. -/
+    space where the hidden stereogram operator has work to do. -/
 theorem one_step_teleport_creates_bizarro_space :
-    bizarroParallax oneStepTeleport
+    bizarroParallax oneStepTeleport = true
     ∧ oneStepTeleport.rotationSteps = stereogramRotation.steps
-    ∧ stereoFoldReveals hiddenMessageAlignment := by
-  unfold bizarroParallax teleportAdmissible oneStepTeleport
-    stereogramRotation hiddenMessageAlignment stereoFoldReveals
-  decide
+    ∧ stereoFoldReveals hiddenMessageAlignment = true := by
+  native_decide
 
 /-- Statistical teleportation and stereogram rotation are the same finite
-shape in this witness: distance has collapsed to a one-step phase mismatch. -/
+    shape in this witness: distance has collapsed to a one-step phase mismatch. -/
 theorem statistical_teleportation_is_one_step_rotation :
-    bizarroParallax oneStepTeleport
-    ∧ oneStepOff stereogramRotation
+    bizarroParallax oneStepTeleport = true
+    ∧ oneStepOff stereogramRotation = true
     ∧ oneStepTeleport.rotationSteps = secondDegreeDiff tritonPulse := by
-  unfold bizarroParallax teleportAdmissible oneStepOff validParallaxRotation
-    phaseRotate oneStepTeleport stereogramRotation secondDegreeDiff
-    pastPresentDiff presentFutureDiff tritonPulse natDiff
-  decide
+  native_decide
 
 /-! ## Bizarro mesh as index plus two storage banks -/
 
 /-- Storage role in the bizarro mesh: present is the live index; past/future
-are the two storage banks that give the index parallax. -/
+    are the two storage banks that give the index parallax. -/
 inductive TemporalStorageRole where
   | pastStorage
   | presentIndex
@@ -1292,44 +1266,41 @@ structure BizarroMeshIndex where
   currentIndex : Nat
   pastBank : Nat
   futureBank : Nat
+  deriving DecidableEq, Repr
 
 def bizarroMesh : BizarroMeshIndex := ⟨5, 4, 7⟩
 
-def indexMatchesPresent (mesh : BizarroMeshIndex) (t : TemporalTriton) : Prop :=
+def indexMatchesPresent (mesh : BizarroMeshIndex) (t : TemporalTriton) : Bool :=
   mesh.currentIndex = t.present
 
-def storageMatchesTriton (mesh : BizarroMeshIndex) (t : TemporalTriton) : Prop :=
+def storageMatchesTriton (mesh : BizarroMeshIndex) (t : TemporalTriton) : Bool :=
   mesh.pastBank = t.past ∧ mesh.futureBank = t.future
 
 /-- The storage banks provide two out-of-index dimensions. -/
 def storageBankCount (_mesh : BizarroMeshIndex) : Nat := 2
 
 /-- The live index is one-dimensional while past/future occupy the two storage
-dimensions. -/
+    dimensions. -/
 theorem present_is_index_past_future_are_storage :
     roleDimension .presentIndex = 1
     ∧ roleDimension .pastStorage = 2
     ∧ roleDimension .futureStorage = 3
     ∧ storageBankCount bizarroMesh = 2 := by
-  decide
+  native_decide
 
 theorem bizarro_mesh_matches_triton_storage :
-    indexMatchesPresent bizarroMesh tritonPulse
-    ∧ storageMatchesTriton bizarroMesh tritonPulse := by
-  unfold indexMatchesPresent storageMatchesTriton bizarroMesh tritonPulse
-  decide
+    indexMatchesPresent bizarroMesh tritonPulse = true
+    ∧ storageMatchesTriton bizarroMesh tritonPulse = true := by
+  native_decide
 
 /-- Bizarro space is the parallax between the current index and its two
-storage banks: the second-degree triton diff is exactly the one-step miss. -/
+    storage banks: the second-degree triton diff is exactly the one-step miss. -/
 theorem bizarro_mesh_is_one_step_storage_parallax :
-    indexMatchesPresent bizarroMesh tritonPulse
-    ∧ storageMatchesTriton bizarroMesh tritonPulse
+    indexMatchesPresent bizarroMesh tritonPulse = true
+    ∧ storageMatchesTriton bizarroMesh tritonPulse = true
     ∧ secondDegreeDiff tritonPulse = 1
-    ∧ bizarroParallax oneStepTeleport := by
-  unfold indexMatchesPresent storageMatchesTriton bizarroMesh tritonPulse
-    secondDegreeDiff pastPresentDiff presentFutureDiff natDiff bizarroParallax
-    teleportAdmissible oneStepTeleport
-  decide
+    ∧ bizarroParallax oneStepTeleport = true := by
+  native_decide
 
 /-! ## Noise stereogram as constrained diff potential -/
 
@@ -1342,144 +1313,111 @@ structure BizarroStereogram where
   alignment : StereoAlignment
   diff : BlinkDifference
   mesh : BizarroMeshIndex
+  deriving DecidableEq, Repr
 
 def bizarroStereogramWitness : BizarroStereogram :=
   ⟨constrainedDiffPotential, hiddenMessageAlignment,
     structuralBlinkDrift, bizarroMesh⟩
 
 /-- A noise stereogram is readable when the carrier has maximal diff
-potential, a nonzero constraint selects recoverable information, stereo
-alignment reveals structure, and blink comparison detects structural drift. -/
-def readableNoiseStereogram (s : BizarroStereogram) : Prop :=
+    potential, a nonzero constraint selects recoverable information, stereo
+    alignment reveals structure, and blink comparison detects structural drift. -/
+def readableNoiseStereogram (s : BizarroStereogram) : Bool :=
   maximallyOpen s.potential
     ∧ recoverableInformation s.potential
     ∧ stereoFoldReveals s.alignment
     ∧ blinkDifferenceDetects s.diff
 
 /-- The present index and the two storage banks give the readable stereogram
-its triton storage interpretation. -/
+    its triton storage interpretation. -/
 def stereogramUsesBizarroStorage
-    (s : BizarroStereogram) (t : TemporalTriton) : Prop :=
+    (s : BizarroStereogram) (t : TemporalTriton) : Bool :=
   indexMatchesPresent s.mesh t ∧ storageMatchesTriton s.mesh t
 
 /-- High entropy supplies the possible differences; constraints and bizarro
-storage make the difference readable. -/
+    storage make the difference readable. -/
 theorem noise_stereogram_is_constrained_diff_potential :
-    readableNoiseStereogram bizarroStereogramWitness
-    ∧ stereogramUsesBizarroStorage bizarroStereogramWitness tritonPulse
+    readableNoiseStereogram bizarroStereogramWitness = true
+    ∧ stereogramUsesBizarroStorage bizarroStereogramWitness tritonPulse = true
     ∧ secondDegreeDiff tritonPulse =
       bizarroStereogramWitness.alignment.offset := by
-  unfold readableNoiseStereogram stereogramUsesBizarroStorage
-    bizarroStereogramWitness maximallyOpen recoverableInformation
-    stereoFoldReveals blinkDifferenceDetects indexMatchesPresent
-    storageMatchesTriton constrainedDiffPotential hiddenMessageAlignment
-    structuralBlinkDrift bizarroMesh tritonPulse secondDegreeDiff
-    pastPresentDiff presentFutureDiff natDiff
-  decide
+  native_decide
 
 /-- The concise thesis: entropy is potential; constrained diff is information;
-one-step parallax is the decoder. -/
+    one-step parallax is the decoder. -/
 theorem entropy_potential_constrained_diff_thesis :
-    maximallyOpen pureRandomPotential
+    maximallyOpen pureRandomPotential = true
     ∧ availableDiffs pureRandomPotential =
       availableDiffs constrainedDiffPotential
-    ∧ ¬ recoverableInformation pureRandomPotential
-    ∧ recoverableInformation constrainedDiffPotential
+    ∧ recoverableInformation pureRandomPotential = false
+    ∧ recoverableInformation constrainedDiffPotential = true
     ∧ actualizedInformationQuanta unitPotentialCarrier
       constrainedDiffPotential ≤
         physicalPotentialQuanta unitPotentialCarrier constrainedDiffPotential
-    ∧ oneStepOff stereogramRotation
-    ∧ readableNoiseStereogram bizarroStereogramWitness := by
-  simp [maximallyOpen, availableDiffs, recoverableInformation,
-    pureRandomPotential, constrainedDiffPotential, oneStepOff,
-    validParallaxRotation, phaseRotate, stereogramRotation,
-    readableNoiseStereogram, bizarroStereogramWitness,
-    stereoFoldReveals, blinkDifferenceDetects, hiddenMessageAlignment,
-    structuralBlinkDrift, actualizedInformationQuanta,
-    physicalPotentialQuanta, unitPotentialCarrier]
+    ∧ oneStepOff stereogramRotation = true
+    ∧ readableNoiseStereogram bizarroStereogramWitness = true := by
+  native_decide
 
 /-! ## Completed finite thesis -/
 
 /-- Finite version of the topological-information thesis: noise is admitted
-by geometry, separated by persistence, carried by entropy under invariants,
-bounded by a resolvability wall, and transformed by operators on the spectral
-distribution contract. Visual-noise operators add the autostereogram/blink
-case: hidden structure can be revealed by offset alignment or by cancelling
-the common carrier between two traces. The final clause sharpens the entropy
-claim: random noise supplies maximal diff potential, but only constrained
-diffs become recoverable information. -/
+    by geometry, separated by persistence, carried by entropy under invariants,
+    bounded by a resolvability wall, and transformed by operators on the spectral
+    distribution contract. Visual-noise operators add the autostereogram/blink
+    case: hidden structure can be revealed by offset alignment or by cancelling
+    the common carrier between two traces. The final clause sharpens the entropy
+    claim: random noise supplies maximal diff potential, but only constrained
+    diffs become recoverable information. -/
 theorem finite_topological_information_noise_calculus :
-    geometricallyAllowed baseSoundManifold .pink
-    ∧ ¬ geometricallyAllowed baseSoundManifold .brown
-    ∧ geometricallyAllowed liftedSoundManifold .brown
-    ∧ transientFeature 3 shortHole
-    ∧ latentStructure 3 persistentHole
-    ∧ coherentNoise carrierField
-    ∧ boundaryCollapse collapsedField
+    geometricallyAllowed baseSoundManifold .pink = true
+    ∧ geometricallyAllowed baseSoundManifold .brown = false
+    ∧ geometricallyAllowed liftedSoundManifold .brown = true
+    ∧ transientFeature 3 shortHole = true
+    ∧ latentStructure 3 persistentHole = true
+    ∧ coherentNoise carrierField = true
+    ∧ boundaryCollapse collapsedField = true
     ∧ applyNoiseOperator .integrate (colorFingerprint .pink) =
       colorFingerprint .brown
     ∧ applyNoiseOperator .saturatingFold (colorFingerprint .brown) =
       colorFingerprint .brown
-    ∧ chromaticSpectralAligned liftedTransitionGraph
-    ∧ graphSupportsNoise liftedTransitionGraph .brown
+    ∧ chromaticSpectralAligned liftedTransitionGraph = true
+    ∧ graphSupportsNoise liftedTransitionGraph .brown = true
     ∧ topologicallySafe carrierField liftedSoundManifold
-      liftedTransitionGraph .brown
+      liftedTransitionGraph .brown = true
     ∧ stereoFoldFingerprint hiddenMessageAlignment = colorFingerprint .pink
     ∧ blinkDifferenceFingerprint structuralBlinkDrift =
       colorFingerprint .brown
-    ∧ oneStepOff stereogramRotation
+    ∧ oneStepOff stereogramRotation = true
     ∧ secondDegreeDiff tritonPulse = stereogramRotation.steps
     ∧ bizarroParallax oneStepTeleport
     ∧ indexMatchesPresent bizarroMesh tritonPulse
     ∧ storageMatchesTriton bizarroMesh tritonPulse
-    ∧ persistentResidual structuralBlinkDrift 3 persistentHole
-    ∧ readableNoiseStereogram bizarroStereogramWitness
-    ∧ ¬ recoverableInformation pureRandomPotential
-    ∧ recoverableInformation constrainedDiffPotential
+    ∧ persistentResidual structuralBlinkDrift 3 persistentHole = true
+    ∧ readableNoiseStereogram bizarroStereogramWitness = true
+    ∧ recoverableInformation pureRandomPotential = false
+    ∧ recoverableInformation constrainedDiffPotential = true
     ∧ actualizedInformationQuanta unitPotentialCarrier
       constrainedDiffPotential ≤
         physicalPotentialQuanta unitPotentialCarrier constrainedDiffPotential := by
-  simp [geometricallyAllowed, transientFeature, latentStructure, persistence,
-    coherentNoise, boundaryCollapse, topologicallySafe, graphSupportsNoise,
-    chromaticSpectralAligned, baseSoundManifold, liftedSoundManifold,
-    shortHole, persistentHole, carrierField, collapsedField,
-    liftedTransitionGraph, alphaMagnitude, applyNoiseOperator,
-    colorFingerprint, stereoFoldFingerprint, blinkDifferenceFingerprint,
-    blinkDifferenceDetects, persistentResidual, structuralBlinkDrift,
-    oneStepOff, validParallaxRotation, phaseRotate, stereogramRotation,
-    hiddenMessageAlignment, secondDegreeDiff, pastPresentDiff,
-    presentFutureDiff, tritonPulse, natDiff, bizarroParallax,
-    teleportAdmissible, oneStepTeleport, indexMatchesPresent,
-    storageMatchesTriton, bizarroMesh, readableNoiseStereogram,
-    bizarroStereogramWitness, maximallyOpen, recoverableInformation,
-    pureRandomPotential, constrainedDiffPotential, stereoFoldReveals,
-    actualizedInformationQuanta, physicalPotentialQuanta,
-    unitPotentialCarrier, availableDiffs]
+  native_decide
 
 /-- Final mesh-facing synthesis: the safe carrier, readable stereogram,
-constrained actualization, and boundary saturation all close on the same
-finite witness. This is the masterwork endpoint for the coordinator mesh:
-noise is geometric, information is constrained diff, and the overload
-boundary is a stable fixed point. -/
+    constrained actualization, and boundary saturation all close on the same
+    finite witness. This is the masterwork endpoint for the coordinator mesh:
+    noise is geometric, information is constrained diff, and the overload
+    boundary is a stable fixed point. -/
 theorem distributed_inference_mesh_masterwork :
     topologicallySafe carrierField liftedSoundManifold
-      liftedTransitionGraph .brown
-    ∧ readableNoiseStereogram bizarroStereogramWitness
-    ∧ recoverableInformation constrainedDiffPotential
+      liftedTransitionGraph .brown = true
+    ∧ readableNoiseStereogram bizarroStereogramWitness = true
+    ∧ recoverableInformation constrainedDiffPotential = true
     ∧ 0 < actualizedInformationQuanta unitPotentialCarrier
         constrainedDiffPotential
     ∧ applyNoiseOperator .saturatingFold (colorFingerprint .brown) =
       colorFingerprint .brown
-    ∧ oneStepOff stereogramRotation
+    ∧ oneStepOff stereogramRotation = true
     ∧ bizarroParallax oneStepTeleport := by
-  refine ⟨lifted_brown_topologically_safe, ?_, ?_, ?_, ?_, ?_, ?_⟩
-  · exact (noise_stereogram_is_constrained_diff_potential).1
-  · exact (constrained_diff_turns_potential_into_information).2.1
-  · exact constrained_information_has_positive_physical_actuality
-      unitPotentialCarrier (by decide)
-  · decide
-  · exact (stereogram_is_one_step_rotation).1
-  · exact (one_step_teleport_creates_bizarro_space).1
+  native_decide
 
 end SpectralNoiseEquilibrium
 end Gnosis

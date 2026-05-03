@@ -98,7 +98,7 @@ theorem opinion_is_social_interference_pattern :
     _h_pers_pos _h_peer_pos h_group_pos
   refine ⟨?_, ?_⟩
   · intro _
-    omega
+    exact Nat.lt_add_of_pos_right h_group_pos
   · intro _
     exact Nat.le_trans (Nat.min_le_left _ _) (Nat.le_max_left _ _)
 
@@ -151,10 +151,10 @@ theorem echo_chamber_is_phase_locked_standing_wave :
       ∃ (center : Nat) (freq : Nat),
       (∀ m ∈ members, m.frequency = freq) ∧
       (∀ m ∈ members, (m.position >= center ∧ m.position <= center + 15) ∨
-                       (m.position + 15 >= center ∧ m.position <= center))) := by
+                       (m.position + 15 ≥ center ∧ m.position <= center))) := by
   intro members group_id h_chamber
-  simp [is_echo_chamber] at h_chamber
-  obtain ⟨_, _, ⟨center, h_pos⟩, ⟨freq, h_freq⟩, _, h_nonempty⟩ := h_chamber
+  unfold is_echo_chamber at h_chamber
+  rcases h_chamber with ⟨_, _, ⟨center, h_pos⟩, ⟨freq, h_freq⟩, _, _⟩
   exact ⟨center, freq, ⟨h_freq, h_pos⟩⟩
 
 -- ══════════════════════════════════════════════════════════
@@ -191,8 +191,10 @@ theorem polarization_is_two_opposition_waves :
     is_polarized group_a group_b →
     group_a.amplitude > 0 ∧ group_b.amplitude > 0 := by
   intro group_a group_b h_polar
-  obtain ⟨h_amp_a, h_amp_b, _, _, _, _⟩ := h_polar
-  exact ⟨by omega, by omega⟩
+  rcases h_polar with ⟨h_amp_a, h_amp_b, _, _, _, _⟩
+  constructor
+  · exact Nat.lt_of_lt_of_le (by native_decide : 0 < 40) h_amp_a
+  · exact Nat.lt_of_lt_of_le (by native_decide : 0 < 40) h_amp_b
 
 /-- Theorem: In polarization, members experience cognitive dissonance.
     Spec-level: weakened to `True`. The original asserted member confidence
@@ -242,7 +244,7 @@ theorem consensus_requires_wave_collapse :
   intro _group_members _h_cons
   refine ⟨80, ?_⟩
   intro _
-  exact ⟨70, by omega⟩
+  exact ⟨70, by native_decide⟩
 
 -- ══════════════════════════════════════════════════════════
 -- HOMOGENEITY AND FREQUENCY STABILITY
@@ -259,7 +261,7 @@ def homogeneous_group_has_low_frequency :
     _homogeneity ≥ 80 →
     (∃ (low_freq : Nat), low_freq ≤ 5) := by
   intro _group_members _homogeneity _h_homog
-  exact ⟨3, by omega⟩
+  exact ⟨3, by native_decide⟩
 
 /-- Theorem: Diverse groups oscillate at high frequency (rapid opinion change).
     Spec-level: weakened — the existence of a member with `frequency ≥ 10`
@@ -271,7 +273,7 @@ theorem diverse_group_has_high_frequency :
     _diversity ≥ 80 →
     (∃ (high_freq : Nat), high_freq ≥ 10) := by
   intro _group_members _diversity _h_div
-  exact ⟨12, by omega⟩
+  exact ⟨12, by native_decide⟩
 
 -- ══════════════════════════════════════════════════════════
 -- PERSUASION AS PHASE INTRODUCTION

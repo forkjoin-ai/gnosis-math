@@ -103,11 +103,11 @@ theorem void_is_triangular_six : triangular emanations = void_ := rfl
 -- Void = gap between Kenoma and Sophia in Fibonacci space
 -- F(10) - F(9) = F(8) = 21
 theorem void_is_fibonacci_gap : fib kenoma - fib sophia = void_ := by
-  unfold kenoma sophia void_; native_decide
+  native_decide
 
 -- Pleroma = 55: the 10th Fibonacci AND 10th triangular number
 theorem pleroma_is_fib_kenoma : fib kenoma = pleroma := by
-  unfold kenoma pleroma; native_decide
+  native_decide
 
 theorem pleroma_is_triangular_kenoma : triangular kenoma = pleroma := rfl
 
@@ -121,8 +121,6 @@ theorem triple_coincidence :
     fib kenoma = pleroma ∧
     triangular kenoma = pleroma ∧
     fib kenoma = triangular kenoma := by
-  unfold kenoma pleroma
-  refine ⟨by native_decide, rfl, ?_⟩
   native_decide
 
 -- ═══════════════════════════════════════════════════════════════════════════════
@@ -191,15 +189,6 @@ theorem gnostic_number_system :
     triangular emanations = void_ ∧
     -- The Fibonacci gap reproduces the sequence
     fib kenoma - fib sophia = void_ := by
-  refine ⟨rfl, rfl, rfl, rfl, rfl, rfl, rfl, rfl, rfl,
-    rfl,
-    rfl,
-    by unfold kenoma pleroma; native_decide,
-    rfl,
-    by native_decide,
-    by native_decide,
-    rfl,
-    ?_⟩
-  unfold kenoma sophia void_; native_decide
+  native_decide
 
 end GnosticNumbers

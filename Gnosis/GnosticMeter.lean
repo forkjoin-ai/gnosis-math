@@ -52,13 +52,11 @@ def skyBars : Nat := 8
 /-- Total trade cycle in bars. -/
 def tradeCycleBars : Nat := playerBars + skyBars
 
-theorem trade_cycle_is_void : tradeCycleBars = 13 := by
-  unfold tradeCycleBars playerBars skyBars; decide
+theorem trade_cycle_is_void : tradeCycleBars = 13 := rfl
 
 /-- The trade cycle equals the bar length, so the trade form is itself
     one bar at the next Fibonacci level. -/
-theorem trade_cycle_equals_bar : tradeCycleBars = barBeats := by
-  unfold tradeCycleBars playerBars skyBars barBeats; decide
+theorem trade_cycle_equals_bar : tradeCycleBars = barBeats := rfl
 
 -- ═══════════════════════════════════════════════════════════════════════
 -- §2  Strong-beat predicate
@@ -71,38 +69,32 @@ def isStrongBeat (beat : Nat) : Bool :=
   pos = 0 || pos = 5 || pos = 8
 
 /-- Beat 0 is strong (Bythos). -/
-theorem beat_zero_is_strong : isStrongBeat 0 = true := by
-  unfold isStrongBeat barBeats; decide
+theorem beat_zero_is_strong : isStrongBeat 0 = true := rfl
 
 /-- Beat 5 is strong (first emanation). -/
-theorem beat_five_is_strong : isStrongBeat 5 = true := by
-  unfold isStrongBeat barBeats; decide
+theorem beat_five_is_strong : isStrongBeat 5 = true := rfl
 
 /-- Beat 8 is strong (second emanation). -/
-theorem beat_eight_is_strong : isStrongBeat 8 = true := by
-  unfold isStrongBeat barBeats; decide
+theorem beat_eight_is_strong : isStrongBeat 8 = true := rfl
 
 /-- Beat 1 is not strong. -/
-theorem beat_one_is_weak : isStrongBeat 1 = false := by
-  unfold isStrongBeat barBeats; decide
+theorem beat_one_is_weak : isStrongBeat 1 = false := rfl
 
 /-- Beat 13 wraps to 0 and is strong (the next bar's downbeat). -/
-theorem beat_thirteen_wraps_to_strong : isStrongBeat 13 = true := by
-  unfold isStrongBeat barBeats; decide
+theorem beat_thirteen_wraps_to_strong : isStrongBeat 13 = true := rfl
 
 -- ═══════════════════════════════════════════════════════════════════════
 -- §3  Fibonacci structure of the bar
 -- ═══════════════════════════════════════════════════════════════════════
 
 /-- 13 = 5 + 8: the bar splits into two Fibonacci sub-bars. -/
-theorem bar_splits_phi : barBeats = 5 + 8 := by
-  unfold barBeats; decide
+theorem bar_splits_phi : barBeats = 5 + 8 := rfl
 
 /-- 8 = 3 + 5: the second sub-bar splits at the next Fibonacci pair. -/
-theorem second_subbar_splits : (8 : Nat) = 3 + 5 := by decide
+theorem second_subbar_splits : (8 : Nat) = 3 + 5 := rfl
 
 /-- 5 = 2 + 3: the first sub-bar splits at the next Fibonacci pair. -/
-theorem first_subbar_splits : (5 : Nat) = 2 + 3 := by decide
+theorem first_subbar_splits : (5 : Nat) = 2 + 3 := rfl
 
 /-- The strong-beat positions are exactly the heads of the Fibonacci
     sub-bars: position 0 (start), position 5 (after the first sub-bar),
@@ -119,8 +111,7 @@ theorem strong_beats_are_fibonacci_heads :
     -- Nor between 8 and 13:
     isStrongBeat 9 = false ∧ isStrongBeat 10 = false ∧
     isStrongBeat 11 = false ∧ isStrongBeat 12 = false := by
-  refine ⟨?_, ?_, ?_, ?_, ?_, ?_, ?_, ?_, ?_, ?_, ?_, ?_, ?_⟩
-    <;> (unfold isStrongBeat barBeats; decide)
+  native_decide
 
 -- ═══════════════════════════════════════════════════════════════════════
 -- §4  Conservation law (Valentinian, applied to time)
@@ -140,7 +131,8 @@ def beatReading (rejected : Nat) : Nat := barBeats - rejected
     structure as the Valentinian kenoma — rebuilt on the time axis. -/
 theorem bar_conservation (r : Nat) (h : r ≤ 13) :
     beatEnergy r + beatReading r = barBeats := by
-  unfold beatEnergy beatReading barBeats; omega
+  unfold beatEnergy beatReading barBeats
+  rw [Nat.add_comm, Nat.sub_add_cancel h]
 
 -- ═══════════════════════════════════════════════════════════════════════
 -- §5  Cross-axis claim — pitch and time share an algebra
@@ -149,7 +141,7 @@ theorem bar_conservation (r : Nat) (h : r ≤ 13) :
 /-- The pitch axis is `Fin 12` (chromatic torus, ToneCircle.lean) and
     the time axis is `Fin 13` (gnostic bar, this file). The two are
     coprime: gcd(12, 13) = 1. -/
-theorem chromatic_and_meter_coprime : Nat.gcd 12 13 = 1 := by decide
+theorem chromatic_and_meter_coprime : Nat.gcd 12 13 = 1 := by native_decide
 
 /-- **Coprime cycles theorem.** Because 12 and 13 share no common factor,
     a phrase that walks one pitch class per beat will visit every
@@ -157,12 +149,10 @@ theorem chromatic_and_meter_coprime : Nat.gcd 12 13 = 1 := by decide
     length is 12 × 13 = 156 beats. This is the structural reason why a
     gnostic-meter Coltrane phrase never repeats inside one trade cycle. -/
 theorem cross_axis_period :
-    Nat.lcm 12 13 = 156 := by decide
+    Nat.lcm 12 13 = 156 := by native_decide
 
 /-- The cross-axis period is exactly twelve trade cycles long. -/
 theorem cross_axis_is_twelve_trade_cycles :
-    Nat.lcm 12 13 = 12 * tradeCycleBars := by
-  unfold tradeCycleBars playerBars skyBars
-  decide
+    Nat.lcm 12 13 = 12 * tradeCycleBars := rfl
 
 end Gnosis

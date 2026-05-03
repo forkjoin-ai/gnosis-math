@@ -95,7 +95,8 @@ theorem er_epr_execution_convergence (nA nB : SwarmNode)
   (h : EREPR.boundaryTrace nA.dimension = EREPR.boundaryTrace nB.dimension) :
   executeAttention nA nB = true := by
   dsimp [executeAttention, enrichedExecute]
-  rw [h, ite_true]
+  rw [h]
+  simp
 
 /--
   The Universal Intelligence Theorem:

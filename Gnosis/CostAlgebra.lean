@@ -68,59 +68,38 @@ theorem buley_add_left_zero (s : BuleyUnit) :
     BuleyUnit.add vacuumBuleUnit s = s := by
   cases s with
   | mk w o d =>
-    show ({ waste := 0 + w, opportunity := 0 + o, diversity := 0 + d } : BuleyUnit)
-          = ⟨w, o, d⟩
-    have h1 : 0 + w = w := by omega
-    have h2 : 0 + o = o := by omega
-    have h3 : 0 + d = d := by omega
-    rw [h1, h2, h3]
+    unfold BuleyUnit.add vacuumBuleUnit
+    simp
 
 theorem buley_add_right_zero (s : BuleyUnit) :
     BuleyUnit.add s vacuumBuleUnit = s := by
   cases s with
   | mk w o d =>
-    show ({ waste := w + 0, opportunity := o + 0, diversity := d + 0 } : BuleyUnit)
-          = ⟨w, o, d⟩
-    rfl
+    unfold BuleyUnit.add vacuumBuleUnit
+    simp
 
 theorem buley_add_assoc (a b c : BuleyUnit) :
     BuleyUnit.add (BuleyUnit.add a b) c
       = BuleyUnit.add a (BuleyUnit.add b c) := by
-  cases a with
-  | mk wa oa da =>
-  cases b with
-  | mk wb ob db =>
-  cases c with
-  | mk wc oc dc =>
-    show (⟨(wa + wb) + wc, (oa + ob) + oc, (da + db) + dc⟩ : BuleyUnit)
-          = ⟨wa + (wb + wc), oa + (ob + oc), da + (db + dc)⟩
-    have hw : (wa + wb) + wc = wa + (wb + wc) := by omega
-    have ho : (oa + ob) + oc = oa + (ob + oc) := by omega
-    have hd : (da + db) + dc = da + (db + dc) := by omega
-    rw [hw, ho, hd]
+  cases a with | mk wa oa da =>
+  cases b with | mk wb ob db =>
+  cases c with | mk wc oc dc =>
+    unfold BuleyUnit.add
+    simp [Nat.add_assoc]
 
 theorem buley_add_comm (a b : BuleyUnit) :
     BuleyUnit.add a b = BuleyUnit.add b a := by
-  cases a with
-  | mk wa oa da =>
-  cases b with
-  | mk wb ob db =>
-    show (⟨wa + wb, oa + ob, da + db⟩ : BuleyUnit)
-          = ⟨wb + wa, ob + oa, db + da⟩
-    have hw : wa + wb = wb + wa := by omega
-    have ho : oa + ob = ob + oa := by omega
-    have hd : da + db = db + da := by omega
-    rw [hw, ho, hd]
+  cases a with | mk wa oa da =>
+  cases b with | mk wb ob db =>
+    unfold BuleyUnit.add
+    simp [Nat.add_comm]
 
 theorem buley_score_add (a b : BuleyUnit) :
     buleyUnitScore (BuleyUnit.add a b) = buleyUnitScore a + buleyUnitScore b := by
-  cases a with
-  | mk wa oa da =>
-  cases b with
-  | mk wb ob db =>
-    show (wa + wb) + (oa + ob) + (da + db)
-          = (wa + oa + da) + (wb + ob + db)
-    omega
+  cases a with | mk wa oa da =>
+  cases b with | mk wb ob db =>
+    unfold buleyUnitScore BuleyUnit.add
+    simp [Nat.add_comm, Nat.add_left_comm]
 
 def buleyCostAlgebra : CostAlgebra BuleyUnit :=
   { zero := vacuumBuleUnit

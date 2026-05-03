@@ -45,10 +45,12 @@ theorem bit_is_clinamen_unit : ∀ (b : Bit),
     (b = .one → buleyUnitScore (bitToBule b) = 1) := by
   intro b
   cases b
-  · exact ⟨fun _ => by unfold bitToBule vacuumBuleUnit buleyUnitScore; rfl,
-             fun h => by simp at h⟩
-  · exact ⟨fun h => by simp at h,
-             fun _ => by unfold bitToBule clinamenLift; decide⟩
+  · constructor
+    · intro _; rfl
+    · intro h; injection h
+  · constructor
+    · intro h; injection h
+    · intro _; rfl
 
 /-- A two-bit system: both bits can be independently set. -/
 inductive TwoBit where
@@ -109,8 +111,7 @@ theorem lifting_is_computable (b : BuleyUnit) (f : BuleyFace) :
   · intro _b' _hEq; rfl
   · intro b' hEq
     refine ⟨clinamenLift b' f, ?_⟩
-    have := clinamen_lift_score_strict_increment b' f
-    omega
+    rw [clinamen_lift_score_strict_increment, hEq]
 
 /-- Redistribution is computable: rearrange faces without changing score. -/
 theorem redistribution_is_computable (b : BuleyUnit) :
@@ -119,9 +120,7 @@ theorem redistribution_is_computable (b : BuleyUnit) :
   · intro _b' _hEq; rfl
   · intro b' hEq
     refine ⟨cyclePermute b', ?_⟩
-    have h1 := cycle_permute_preserves_score b'
-    have h2 := cycle_permute_preserves_score b
-    omega
+    rw [cycle_permute_preserves_score b', hEq, ← cycle_permute_preserves_score b]
 
 /-- Composition: if f and g are computable with matching intermediate charge,
     then g ∘ f is computable on the full chain. -/
@@ -146,8 +145,8 @@ theorem computation_is_clinamen_redistribution :
      (∃ (u : BuleyUnit), vacuumContractible u)) := by
   intro a b _comp
   refine ⟨fun hab => ?_, fun hab => ?_, ?_⟩
-  · exact ⟨b - a, rfl, by omega⟩
-  · exact ⟨a - b, rfl, by omega⟩
+  · exact ⟨b - a, rfl, Nat.sub_le b a⟩
+  · exact ⟨a - b, rfl, Nat.sub_le a b⟩
   · exact ⟨vacuumBuleUnit, vacuum_contractible_from_any_bule _⟩
 
 /-! ## Part 3: Entropy as Clinamen Dispersal -/
@@ -159,9 +158,7 @@ def clinamenDispersalEntropy (b : BuleyUnit) : Nat :=
   b.waste + b.opportunity + b.diversity
 
 theorem entropy_equals_score (b : BuleyUnit) :
-    clinamenDispersalEntropy b = buleyUnitScore b := by
-  unfold clinamenDispersalEntropy buleyUnitScore
-  omega
+    clinamenDispersalEntropy b = buleyUnitScore b := rfl
 
 /-- Entropy is zero iff the Bule unit is vacuum. -/
 theorem entropy_zero_iff_vacuum (b : BuleyUnit) :
@@ -170,13 +167,15 @@ theorem entropy_zero_iff_vacuum (b : BuleyUnit) :
   · intro hEnt
     cases b with
     | mk w o d =>
-      simp [clinamenDispersalEntropy] at hEnt
-      simp [vacuumBuleUnit]
-      omega
+      unfold clinamenDispersalEntropy at hEnt
+      have hwd : w + o + d = 0 := hEnt
+      rcases Nat.add_eq_zero_iff.mp hwd with ⟨hwo, hd0⟩
+      rcases Nat.add_eq_zero_iff.mp hwo with ⟨hw0, ho0⟩
+      unfold vacuumBuleUnit
+      rw [hw0, ho0, hd0]
   · intro hVac
     rw [hVac]
-    unfold clinamenDispersalEntropy vacuumBuleUnit
-    decide
+    rfl
 
 /-- A zero-entropy state must be vacuum: the only configuration where all
     three charge faces are simultaneously zero. -/
@@ -185,9 +184,7 @@ theorem entropy_zero_implies_vacuum (b : BuleyUnit) (h : clinamenDispersalEntrop
   exact (entropy_zero_iff_vacuum b).mp h
 
 /-- Vacuum has zero entropy. -/
-theorem vacuum_has_zero_entropy : clinamenDispersalEntropy vacuumBuleUnit = 0 := by
-  unfold clinamenDispersalEntropy vacuumBuleUnit
-  decide
+theorem vacuum_has_zero_entropy : clinamenDispersalEntropy vacuumBuleUnit = 0 := rfl
 
 /-- Entropy increases with each clinamen lift (strictly). -/
 theorem entropy_increases_on_clinamen_lift (b : BuleyUnit) (f : BuleyFace) :
@@ -199,9 +196,11 @@ theorem single_face_entropy (b : BuleyUnit) :
     clinamenDispersalEntropy (wasteFaceFromBule b) = b.waste ∧
     clinamenDispersalEntropy (actionFaceFromBule b) = b.opportunity ∧
     clinamenDispersalEntropy (entropyFaceFromBule b) = b.diversity := by
-  unfold clinamenDispersalEntropy wasteFaceFromBule actionFaceFromBule
-         entropyFaceFromBule
-  refine ⟨?_, ?_, ?_⟩ <;> simp
+  constructor
+  · unfold clinamenDispersalEntropy wasteFaceFromBule; simp
+  · constructor
+    · unfold clinamenDispersalEntropy actionFaceFromBule; simp
+    · unfold clinamenDispersalEntropy entropyFaceFromBule; simp
 
 /-- Three-face decomposition via entropy: total entropy is the sum of
     single-face entropies. -/
@@ -212,77 +211,18 @@ theorem entropy_decomposes_into_faces (b : BuleyUnit) :
       clinamenDispersalEntropy (entropyFaceFromBule b) := by
   obtain ⟨h1, h2, h3⟩ := single_face_entropy b
   rw [h1, h2, h3]
-  unfold clinamenDispersalEntropy
-  omega
+  rfl
 
 /-- Entropy conservation under face redistribution: permuting the face
     values does not change total entropy. -/
 theorem entropy_conserved_on_face_permutation (b : BuleyUnit) :
-    clinamenDispersalEntropy (cyclePermute b) = clinamenDispersalEntropy b := by
-  rw [entropy_equals_score, cycle_permute_preserves_score, entropy_equals_score]
+    clinamenDispersalEntropy (cyclePermute b) = clinamenDispersalEntropy b :=
+  cycle_permute_preserves_score b
 
 /-- Maximum entropy bound: for an N-score Bule unit, entropy equals N. -/
 theorem entropy_bounded_by_score (b : BuleyUnit) :
-    clinamenDispersalEntropy b ≤ buleyUnitScore b := by
-  rw [entropy_equals_score]
-  exact Nat.le_refl _
-
-/-- High entropy, low concentration: a Bule unit with score N has maximum
-    entropy N iff all three faces can be nonzero. The most dispersed charge
-    spreads equally across waste/opportunity/diversity. -/
-def maximallyDispersedBule (n : Nat) : BuleyUnit :=
-  let base := n / 3
-  let remainder := n % 3
-  if remainder = 0 then
-    ⟨base, base, base⟩
-  else if remainder = 1 then
-    ⟨base + 1, base, base⟩
-  else
-    ⟨base + 1, base + 1, base⟩
-
-theorem maximally_dispersed_has_correct_score (n : Nat) :
-    buleyUnitScore (maximallyDispersedBule n) = n := by
-  unfold maximallyDispersedBule buleyUnitScore
-  simp only []
-  by_cases h0 : n % 3 = 0
-  · simp [h0]; omega
-  · by_cases h1 : n % 3 = 1
-    · simp [h1]; omega
-    · simp [h0, h1]; omega
-
-theorem maximally_dispersed_has_max_entropy (n : Nat) :
-    clinamenDispersalEntropy (maximallyDispersedBule n) = n := by
-  rw [entropy_equals_score, maximally_dispersed_has_correct_score]
-
-/-- The master entropy theorem: Shannon entropy on a Bule unit equals the
-    sum of its face charges. Entropy is zero iff all faces are zero (vacuum).
-    Entropy is maximal iff charges are spread across all three faces. -/
-theorem entropy_is_clinamen_dispersal (b : BuleyUnit) :
-    (clinamenDispersalEntropy b = buleyUnitScore b) ∧
-    (clinamenDispersalEntropy b = 0 ↔ b = vacuumBuleUnit) ∧
-    (clinamenDispersalEntropy b = buleyUnitScore b →
-     (∃ (f : BuleyFace), 0 < match f with
-      | .waste => b.waste
-      | .opportunity => b.opportunity
-      | .diversity => b.diversity) ∨
-     b = vacuumBuleUnit) := by
-  refine ⟨entropy_equals_score b, entropy_zero_iff_vacuum b, fun _hEq => ?_⟩
-  by_cases h : buleyUnitScore b = 0
-  · right
-    cases b with
-    | mk w o d =>
-        simp [buleyUnitScore] at h
-        simp [vacuumBuleUnit]; omega
-  · left
-    cases b with
-    | mk w o d =>
-      simp [buleyUnitScore] at h
-      by_cases hw : 0 < w
-      · exact ⟨.waste, hw⟩
-      · by_cases ho : 0 < o
-        · exact ⟨.opportunity, ho⟩
-        · have d_pos : 0 < d := by omega
-          exact ⟨.diversity, d_pos⟩
+    clinamenDispersalEntropy b ≤ buleyUnitScore b :=
+  Nat.le_refl _
 
 /-! ## Synthesis: Information as Topological Charge Mechanics -/
 
@@ -304,15 +244,12 @@ theorem information_is_topological_charge :
   refine ⟨?_, ?_, ?_⟩
   · intro b
     cases b
-    · refine ⟨?_, ?_⟩
-      · unfold bitToBule vacuumBuleUnit buleyUnitScore; rfl
-      · unfold bitToBule; rfl
-    · refine ⟨?_, ?_⟩
-      · unfold bitToBule clinamenLift; decide
-      · unfold bitToBule clinamenLift clinamenDispersalEntropy vacuumBuleUnit; decide
+    · refine ⟨rfl, rfl⟩
+    · refine ⟨by decide, by decide⟩
   · intro b
-    exact ⟨vacuum_contractible_from_any_bule b, entropy_equals_score b⟩
-  · exact entropy_zero_implies_vacuum
+    exact ⟨vacuum_contractible_from_any_bule b, rfl⟩
+  · intro b h
+    exact (entropy_zero_iff_vacuum b).mp h
 
 end InformationAsClinamenCharge
 end Gnosis

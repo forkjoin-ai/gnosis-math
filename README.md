@@ -40,6 +40,19 @@ Current integration plan: [ROADMAP.md](./ROADMAP.md)
   feedback, cooling, color-pressure dynamics, and anomaly cancellation.
 - `Gnosis.TopologicalMetabolismBuleyBridge` connects the metabolism runtime
   ladder to Bule self-similarity remediation.
+- `Gnosis.CosmicNoiseConnections` connects layered cosmic noise to multi-head
+  attention shadowing: bare `n`-head blocks project as phase `3n` through the
+  Aeon frame, while an 8-head block plus Hexon coupling reaches the pink
+  `30 -> 6` projection with Betti-1 leakage `18` and a Pisot-stable folded
+  coordinate. The same bridge proves the closure condition: Aeon resolution
+  aliases the 8-head trace, while the 24-resolution lift separates the heads
+  and removes bare aggregate leakage; the 30-resolution coupled lift closes the
+  pink leakage case.
+- `Gnosis.UniversalIntelligenceSSMClosure` packages that closure result as a
+  Universal Intelligence SSM observer model: a low-resolution folded
+  `ClosureAttentionState`, a 24-resolution lifted state with separated heads
+  and zero aggregate residue, and a 30-resolution pink-coupled lifted state.
+  The closure lift composes with the existing Hebbian reward theorem.
 - `Gnosis.Mesh/*` collects many mesh claims in one import family. Some files
   are exploratory bridges; reviewer-facing claims should cite the exact theorem
   that survives `lake build`.
