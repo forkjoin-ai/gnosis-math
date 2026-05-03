@@ -502,6 +502,7 @@ import Gnosis.KraftInequality
 import Gnosis.KraftInequalityInstances
 import Gnosis.LandauerBuley
 import Gnosis.LandauerHotReplica
+import Gnosis.LandauerPrincipleAsClinaemenDebt
 import Gnosis.LastQuestion
 import Gnosis.LaunchOffsetDominance
 import Gnosis.LayerTest
