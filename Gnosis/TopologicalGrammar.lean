@@ -181,7 +181,7 @@ theorem sestina_unfolds_to_document :
     - Rhythm is preserved where it applies (sentence, paragraph) and abstracted where it doesn't (document)
 -/
 
-def UnfoldingMap where
+structure UnfoldingMap where
   form : TopologicalStructure
   scale : ProseScale
   distribution : Nat → Nat  -- how ropelength maps to each division

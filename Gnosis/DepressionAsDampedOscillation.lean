@@ -18,9 +18,9 @@ import Gnosis.PsychologyAsInterference
 namespace DepressionAsDampedOscillation
 
 open Gnosis.SpectralNoiseEquilibrium
-open Gnosis.InterferenceAsTheFifthForce
-open Gnosis.TemporaryNoise
-open Gnosis.PsychologyAsInterference
+open InterferenceAsTheFifthForce
+open TemporaryNoise
+open PsychologyAsInterference
 
 -- ══════════════════════════════════════════════════════════
 -- DEPRESSION: SUPPRESSED POSITIVE, LOCKED NEGATIVE
@@ -34,11 +34,14 @@ open Gnosis.PsychologyAsInterference
 structure DepressionState where
   positive_decay : Nat    -- how fast joy/meaning fade (should be <50, is >100 in depression)
   negative_decay : Nat    -- how fast sadness fades (should be <50, is ~40 in depression)
-  is_depressed : positive_decay > 2 * negative_decay
+
+/-- Predicate: is this state depressed (asymmetric decay rates)? -/
+def is_depressed (dep : DepressionState) : Prop :=
+  dep.positive_decay > 2 * dep.negative_decay
 
 theorem depression_asymmetry :
     ∀ (dep : DepressionState),
-    dep.is_depressed →
+    is_depressed dep →
     dep.positive_decay > 2 * dep.negative_decay := by
   intro dep h
   exact h
@@ -123,11 +126,15 @@ def depression_healing (initial : DepressionState) : Prop :=
 
 theorem antidepressant_slows_positive_decay :
     ∀ (initial : DepressionState),
-    initial.is_depressed →
+    is_depressed initial →
     (∃ (healed : DepressionState),
       healed.positive_decay < initial.positive_decay) := by
   intro initial h_dep
-  refine ⟨⟨40, initial.negative_decay, by omega⟩, by omega⟩
+  unfold is_depressed at h_dep
+  -- positive_decay > 2 * negative_decay ≥ 0, so positive_decay ≥ 1, so 0 < positive_decay
+  refine ⟨⟨0, initial.negative_decay⟩, ?_⟩
+  show (0 : Nat) < initial.positive_decay
+  omega
 
 theorem cognitive_therapy_disrupts_rumination :
     ∀ (hope despair : InterferenceSignature),
@@ -135,7 +142,9 @@ theorem cognitive_therapy_disrupts_rumination :
     (∃ (new_thought : InterferenceSignature),
       new_thought.frequency = hope.frequency ∧
       new_thought.amplitude > hope.amplitude) := by
-  intro hope despair h_rum
-  refine ⟨⟨hope.frequency, hope.amplitude + 1, 30⟩, rfl, by omega⟩
+  intro hope _despair _h_rum
+  refine ⟨⟨hope.frequency, hope.amplitude + 1, 30⟩, rfl, ?_⟩
+  show hope.amplitude + 1 > hope.amplitude
+  omega
 
 end DepressionAsDampedOscillation

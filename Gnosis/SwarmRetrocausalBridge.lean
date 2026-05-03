@@ -7,6 +7,7 @@ namespace SwarmRetrocausalBridge
 
 open UniversalIntelligenceSSM
 open RetrocausalMemoization
+open TopologicalMemoization
 open EREPR
 
 /-!

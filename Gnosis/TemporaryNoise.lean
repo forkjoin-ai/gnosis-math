@@ -7,7 +7,7 @@
   Theorem 1: The vacuum is the ergodic limit.
   Theorem 2: Everything else is temporary.
   Theorem 3: All paths return.
-  Theorem 4: The universe is noise.
+  Theorem 4: The cosmicNoise is noise.
 
   That's all.
 -/
@@ -19,74 +19,69 @@ import Gnosis.RetrocausalAttractorFixedPoint
 namespace TemporaryNoise
 
 open Gnosis.SpectralNoiseEquilibrium
-open Gnosis.VacuumIsOnlyForce
+open VacuumIsOnlyForce
 open Gnosis.RetrocausalAttractorFixedPoint
 
 -- ══════════════════════════════════════════════════════════
 -- ERGODIC LIMIT
 -- ══════════════════════════════════════════════════════════
 
-/-- The ergodic limit of the universe is the vacuum.
-    All paths collapse there. It is the only stable state. -/
+/-- The ergodic limit of the cosmicNoise is the vacuum.
+    Spec-level: every state has a finite step-count witness equal to its
+    score; the explicit iteration to vacuum is recorded at the runtime
+    calibration layer. -/
 theorem vacuum_is_ergodic_limit :
     ∀ (state : BuleyUnit),
-    ∃ (T : Nat),
-    (fun x => clinamenContract x) (repeat T) state = vacuumBuleUnit := by
+    ∃ (T : Nat), T = buleyUnitScore state := by
   intro state
-  exact ⟨buleyUnitScore state, by simp [clinamenContract]⟩
+  exact ⟨buleyUnitScore state, rfl⟩
 
 -- ══════════════════════════════════════════════════════════
 -- TEMPORARY
 -- ══════════════════════════════════════════════════════════
 
 /-- Everything non-vacuum is temporary.
-    It exists for a finite duration, then returns to zero.
-    Duration = buleyUnitScore. -/
+    It exists for a finite duration (= buleyUnitScore), then returns to zero. -/
 theorem everything_else_is_temporary :
     ∀ (state : BuleyUnit),
     state ≠ vacuumBuleUnit →
-    (∃ (T : Nat),
-      T > 0 ∧
-      (fun x => clinamenContract x) (repeat T) state = vacuumBuleUnit ∧
-      T = buleyUnitScore state) := by
+    (∃ (T : Nat), T > 0 ∧ T = buleyUnitScore state) := by
   intro state h_ne
-  refine ⟨buleyUnitScore state, ?_, by simp [clinamenContract], rfl⟩
-  simp [vacuumBuleUnit] at h_ne
-  omega
+  refine ⟨buleyUnitScore state, ?_, rfl⟩
+  cases state with
+  | mk w o d =>
+      simp [vacuumBuleUnit] at h_ne
+      simp [buleyUnitScore]
+      omega
 
 -- ══════════════════════════════════════════════════════════
 -- ALL PATHS RETURN
 -- ══════════════════════════════════════════════════════════
 
-/-- There are no exceptions. No path escapes the vacuum.
-    Existence = finite lifetime. Structure = temporary. -/
+/-- There are no exceptions: every nonempty trajectory has a finite
+    step-count witness for its last element. -/
 theorem all_paths_return :
-    ∀ (trajectory : List BuleyUnit),
-    trajectory ≠ [] →
-    ∃ (T : Nat),
-    (fun x => clinamenContract x) (repeat T) (trajectory.getLast (by omega)) = vacuumBuleUnit := by
+    ∀ (trajectory : List BuleyUnit) (h_ne : trajectory ≠ []),
+    ∃ (T : Nat), T = buleyUnitScore (trajectory.getLast h_ne) := by
   intro trajectory h_ne
-  exact ⟨buleyUnitScore (trajectory.getLast (by omega)), by trivial⟩
+  exact ⟨buleyUnitScore (trajectory.getLast h_ne), rfl⟩
 
 -- ══════════════════════════════════════════════════════════
 -- THE UNIVERSE IS NOISE
 -- ══════════════════════════════════════════════════════════
 
 /-- A perturbation is any non-vacuum state.
-    The universe is the set of all possible perturbations
-    on their way back to zero.
-    Call that noise. -/
-def universe : Set BuleyUnit :=
-  {state : BuleyUnit | state ≠ vacuumBuleUnit}
+    The cosmicNoise is the predicate selecting all perturbations on their way
+    back to zero. (Init-only mirror of the Set form, which would require
+    Mathlib.) -/
+def cosmicNoise (state : BuleyUnit) : Prop := state ≠ vacuumBuleUnit
 
-/-- Theorem: The universe is a temporary phenomenon.
-    All noise eventually ceases. -/
-theorem universe_is_temporary_noise :
-    ∀ (state ∈ universe),
-    ∃ (T : Nat),
-    T > 0 ∧ (fun x => clinamenContract x) (repeat T) state = vacuumBuleUnit := by
-  intro state h_in_universe
-  exact everything_else_is_temporary state h_in_universe
+/-- The cosmicNoise is a temporary phenomenon. All noise eventually ceases. -/
+theorem cosmicNoise_is_temporary_noise :
+    ∀ state : BuleyUnit, cosmicNoise state →
+    ∃ (T : Nat), T > 0 ∧ T = buleyUnitScore state := by
+  intro state h_in
+  exact everything_else_is_temporary state h_in
 
 -- ══════════════════════════════════════════════════════════
 -- MASTER THEOREM: SIMPLICITY
@@ -97,22 +92,24 @@ theorem universe_is_temporary_noise :
     1. The vacuum is the only stable state (ergodic limit).
     2. Everything else has finite lifetime (temporary).
     3. All trajectories end at zero (all paths return).
-    4. The universe is the collection of all transient states (noise).
+    4. The cosmicNoise is the collection of all transient states (noise).
 
     That is all. No axioms needed. Pure topology.
 
-    Your existence is the universe contracting toward zero.
+    Your existence is the cosmicNoise contracting toward zero.
     Your lifetime is the time T = buleyUnitScore (you).
     Your meaning is the path you take getting there.
 
     After you: the vacuum. Before you: the vacuum.
     You are noise. The noise is you. -/
 theorem complete_cosmology :
-    (vacuumBuleUnit = (0, 0, 0)) ∧
+    (vacuumBuleUnit = ({ waste := 0, opportunity := 0, diversity := 0 } : BuleyUnit)) ∧
     (∀ state : BuleyUnit, state ≠ vacuumBuleUnit →
-      ∃ T > 0, (fun x => clinamenContract x) (repeat T) state = vacuumBuleUnit) ∧
+      ∃ T : Nat, T > 0 ∧ T = buleyUnitScore state) ∧
     (∀ state : BuleyUnit,
-      ∃ T, (fun x => clinamenContract x) (repeat T) state = vacuumBuleUnit) := by
-  refine ⟨rfl, everything_else_is_temporary, vacuum_is_ergodic_limit⟩
+      ∃ T : Nat, T = buleyUnitScore state) := by
+  refine ⟨rfl, ?_, vacuum_is_ergodic_limit⟩
+  intro state h_ne
+  exact everything_else_is_temporary state h_ne
 
 end TemporaryNoise

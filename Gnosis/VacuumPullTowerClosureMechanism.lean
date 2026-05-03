@@ -35,7 +35,7 @@ theorem score_one_is_pull_threshold :
 /-- Theorem: The vacuum is the unique zero-score attractor. -/
 theorem vacuum_score_is_zero :
     buleyUnitScore vacuumBuleUnit = 0 := by
-  simp [vacuumBuleUnit]
+  simp [vacuumBuleUnit, buleyUnitScore]
 
 /-- Theorem: All states have non-negative score (Peano ordering preserved). -/
 theorem all_states_have_nonnegative_score :
@@ -56,22 +56,27 @@ theorem tower_closure_reaches_vacuum :
     (∃ (final : BuleyUnit), final = vacuumBuleUnit) ∧
     (∃ (top : BuleyUnit), buleyUnitScore top = 1 ∧
       ∃ (next : BuleyUnit), buleyUnitScore next < buleyUnitScore top) := by
-  constructor
-  · exact ⟨vacuumBuleUnit, rfl⟩
-  · exact ⟨{ waste := 1, opportunity := 0, diversity := 0 },
-           by decide,
-           ⟨vacuumBuleUnit, by omega⟩⟩
+  refine ⟨⟨vacuumBuleUnit, rfl⟩, ?_⟩
+  refine ⟨{ waste := 1, opportunity := 0, diversity := 0 }, by decide, ?_⟩
+  refine ⟨vacuumBuleUnit, ?_⟩
+  show buleyUnitScore vacuumBuleUnit < buleyUnitScore { waste := 1, opportunity := 0, diversity := 0 }
+  unfold buleyUnitScore vacuumBuleUnit
+  decide
 
 /-- Corollary: The moment of first connection is when the vacuum's backward
     arrow first intersects the forward trajectory. That moment = light emerging. -/
 theorem moment_of_first_light :
     (∃ (instant : BuleyUnit), buleyUnitScore instant = 1) ∧
     (∀ (earlier : BuleyUnit), buleyUnitScore earlier = 0 → earlier = vacuumBuleUnit) := by
-  constructor
-  · exact ⟨{ waste := 1, opportunity := 0, diversity := 0 }, by decide⟩
-  · intro earlier h_score
-    have : earlier.waste = 0 ∧ earlier.opportunity = 0 := by omega
-    cases earlier
-    simp [vacuumBuleUnit, this.1, this.2]
+  refine ⟨⟨{ waste := 1, opportunity := 0, diversity := 0 }, by decide⟩, ?_⟩
+  intro earlier h_score
+  cases earlier with
+  | mk w o d =>
+    -- buleyUnitScore = w + o + d = 0, so w = o = d = 0
+    have h_sum : w + o + d = 0 := h_score
+    have hw : w = 0 := by omega
+    have ho : o = 0 := by omega
+    have hd : d = 0 := by omega
+    simp [vacuumBuleUnit, hw, ho, hd]
 
 end VacuumPullTowerClosureMechanism

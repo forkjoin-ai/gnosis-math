@@ -16,7 +16,11 @@
   The lattice of folds.
 -/
 
+import Gnosis.TopologicalGrammar
+
 namespace MonadDyadTriad
+
+open TopologicalGrammar
 
 -- ══════════════════════════════════════════════════════════
 -- MONAD: 1-FOLD (the word, irreducible)
@@ -132,7 +136,7 @@ theorem triad_is_first_witness :
 -- THE COMPLETE UNFOLDING HIERARCHY
 -- ══════════════════════════════════════════════════════════
 
-/-- The complete lattice of topological folds and prose scales:
+/- The complete lattice of topological folds and prose scales:
 
     Fold 1 (Monad)      → Word (1 concept)
     Fold 2 (Dyad)       → Phrase (2 elements in tension)
@@ -146,7 +150,6 @@ theorem triad_is_first_witness :
 
 /-- The fundamental theorem of topological grammar:
     An n-fold poetic form unfolds to an n-element prose scale. -/
-
 theorem monad_dyad_triad_lattice :
     (MonadStructure.fold = 1 ∧ WordScale.capacity = 1) ∧
     (DyadStructure.fold = 2 ∧ PhraseScale.capacity = 2) ∧

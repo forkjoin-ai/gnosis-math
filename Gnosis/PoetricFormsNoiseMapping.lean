@@ -28,14 +28,14 @@ namespace PoetricFormsNoiseMapping
 /-- A poetic form is characterized by:
     - name: the form's name
     - ropelength: total syllables or lines
-    - structure: the repetition/rotation pattern
+    - pattern: the repetition/rotation structure
     - noise_color: which frequency domain it occupies
     - is_fractal: whether it has self-similar structure
 -/
 structure PoeticForm where
   name : String
   ropelength : Nat
-  structure : String           -- description of the form's pattern
+  pattern : String             -- description of the form's pattern
   noise_color : String         -- Brown, Pink, White, Violet, Ultraviolet
   is_fractal : Bool            -- self-similar recursion?
 
@@ -48,7 +48,7 @@ structure PoeticForm where
 def Triolet : PoeticForm where
   name := "Triolet"
   ropelength := 8
-  structure := "8 lines, 2 lines repeated 4 times total, tight loop"
+  pattern := "8 lines, 2 lines repeated 4 times total, tight loop"
   noise_color := "Brown"
   is_fractal := false
 
@@ -57,7 +57,7 @@ def Triolet : PoeticForm where
 def Rondeau : PoeticForm where
   name := "Rondeau"
   ropelength := 15
-  structure := "15 lines, repeating refrain, rhyme scheme ABA"
+  pattern := "15 lines, repeating refrain, rhyme scheme ABA"
   noise_color := "Brown/Pink transition"
   is_fractal := true
 
@@ -71,7 +71,7 @@ def Rondeau : PoeticForm where
 def Haiku : PoeticForm where
   name := "Haiku"
   ropelength := 17
-  structure := "5-7-5 syllables, triton (stillness-sting-trill)"
+  pattern := "5-7-5 syllables, triton (stillness-sting-trill)"
   noise_color := "Brown"
   is_fractal := false
 
@@ -88,7 +88,7 @@ theorem haiku_is_brown_baseline :
 def Villanelle : PoeticForm where
   name := "Villanelle"
   ropelength := 19
-  structure := "19 lines, 2 repeating lines, ABA rhyme, deterministic"
+  pattern := "19 lines, 2 repeating lines, ABA rhyme, deterministic"
   noise_color := "Brown/Pink"
   is_fractal := true
 
@@ -102,7 +102,7 @@ def Villanelle : PoeticForm where
 def Ghazal : PoeticForm where
   name := "Ghazal"
   ropelength := 0             -- variable length
-  structure := "Series of couplets, repeating refrain, self-similar"
+  pattern := "Series of couplets, repeating refrain, self-similar"
   noise_color := "Pink"
   is_fractal := true
 
@@ -112,7 +112,7 @@ def Ghazal : PoeticForm where
 def Pantoum : PoeticForm where
   name := "Pantoum"
   ropelength := 0             -- variable (multiples of 4)
-  structure := "Quatrains (4-line stanzas), lines repeat in next stanza"
+  pattern := "Quatrains (4-line stanzas), lines repeat in next stanza"
   noise_color := "Pink"
   is_fractal := true
 
@@ -126,7 +126,7 @@ def Pantoum : PoeticForm where
 def Tanka : PoeticForm where
   name := "Tanka"
   ropelength := 31
-  structure := "5-7-5-7-7 syllables, haiku (5-7-5) + resolution (7-7)"
+  pattern := "5-7-5-7-7 syllables, haiku (5-7-5) + resolution (7-7)"
   noise_color := "Pink/White"
   is_fractal := true
 
@@ -146,7 +146,7 @@ theorem tanka_is_haiku_extended :
 def Sestina : PoeticForm where
   name := "Sestina"
   ropelength := 39
-  structure := "39 lines, 6 end-words in rotating pattern, 6-fold symmetry"
+  pattern := "39 lines, 6 end-words in rotating pattern, 6-fold symmetry"
   noise_color := "White/Violet"
   is_fractal := false
 
@@ -161,7 +161,7 @@ def Sestina : PoeticForm where
 def Cadae : PoeticForm where
   name := "Cadae"
   ropelength := 120          -- sum 1..15
-  structure := "15 lines, line N has N syllables, triangular growth, 1+2+...+15"
+  pattern := "15 lines, line N has N syllables, triangular growth, 1+2+...+15"
   noise_color := "Violet/Ultraviolet"
   is_fractal := false
 
@@ -180,7 +180,7 @@ theorem cadae_ropelength :
 def GoldenShovel : PoeticForm where
   name := "Golden Shovel"
   ropelength := 0             -- variable, depends on the hidden phrase
-  structure := "Variable length, last words form hidden phrase (vertical read)"
+  pattern := "Variable length, last words form hidden phrase (vertical read)"
   noise_color := "Ultraviolet"
   is_fractal := false
 
@@ -194,7 +194,7 @@ def GoldenShovel : PoeticForm where
 def Lai : PoeticForm where
   name := "Lai"
   ropelength := 0             -- variable (multiples of 9)
-  structure := "9-line stanzas, repeating rhyme scheme, mirror structure"
+  pattern := "9-line stanzas, repeating rhyme scheme, mirror structure"
   noise_color := "Pink/White"
   is_fractal := true
 

@@ -69,10 +69,14 @@ def tanka_witness : String :=
 def gap_haiku_to_tanka : Nat := tanka_ropelength - haiku_ropelength
 
 theorem gap_is_14 : gap_haiku_to_tanka = 14 := by
-  simp [gap_haiku_to_tanka, tanka_ropelength, haiku_ropelength]
+  unfold gap_haiku_to_tanka tanka_ropelength haiku_ropelength
+  unfold TankaSyllables HaikuSyllables
+  rfl
 
 theorem gap_is_two_moments : gap_haiku_to_tanka = 7 + 7 := by
-  simp [gap_haiku_to_tanka, tanka_ropelength, haiku_ropelength]
+  unfold gap_haiku_to_tanka tanka_ropelength haiku_ropelength
+  unfold TankaSyllables HaikuSyllables
+  rfl
 
 -- ══════════════════════════════════════════════════════════
 -- THE LIFT STRUCTURE: TRITON → EXTENDED TRITON
@@ -97,7 +101,10 @@ def tanka_moments : Nat := 5
 theorem tanka_extends_haiku :
     tanka_moments = haiku_moments + 2 ∧
     tanka_ropelength = haiku_ropelength + 14 := by
-  simp [tanka_moments, haiku_moments, tanka_ropelength, haiku_ropelength]
+  refine ⟨rfl, ?_⟩
+  unfold tanka_ropelength haiku_ropelength
+  unfold TankaSyllables HaikuSyllables
+  rfl
 
 -- ══════════════════════════════════════════════════════════
 -- FREQUENCY SHIFT: BROWN NOISE → PINK NOISE
@@ -115,12 +122,20 @@ def tanka_noise_color : String := "Pink/White"
 /-- The shift from brown to pink: 17 → 31.
     The system gains a second moment of response.
     A single sting produces TWO oscillations (trill + echo).
-    This creates self-similarity: the pattern repeats at a smaller scale. -/
+    This creates self-similarity: the pattern repeats at a smaller scale.
+
+    NOTE: third conjunct weakened from `tanka_ropelength / haiku_ropelength > 1`
+    (which is false in integer division: 31/17 = 1) to the strict-inequality
+    on the ropelengths themselves. The frequency-ratio interpretation lives
+    at the runtime calibration layer where rationals are available. -/
 theorem brown_to_pink_shift :
     haiku_ropelength = 17 ∧
     tanka_ropelength = 31 ∧
-    tanka_ropelength / haiku_ropelength > 1 := by
-  simp [haiku_ropelength, tanka_ropelength]
+    haiku_ropelength < tanka_ropelength := by
+  refine ⟨haiku_ropelength_is_17, tanka_ropelength_is_31, ?_⟩
+  unfold tanka_ropelength haiku_ropelength
+  unfold TankaSyllables HaikuSyllables
+  decide
 
 -- ══════════════════════════════════════════════════════════
 -- THE UNIFIED THEOREM: 17→31 IS THE FIRST LIFT
@@ -161,7 +176,9 @@ theorem haiku_to_tanka_is_brown_to_pink :
     tanka_ropelength = 31 ∧ tanka_noise_color = "Pink/White" ∧
     tanka_ropelength = haiku_ropelength + 14 ∧
     14 = 7 + 7 := by
-  simp [haiku_ropelength, haiku_noise_color,
-        tanka_ropelength, tanka_noise_color]
+  refine ⟨haiku_ropelength_is_17, rfl, tanka_ropelength_is_31, rfl, ?_, rfl⟩
+  unfold tanka_ropelength haiku_ropelength
+  unfold TankaSyllables HaikuSyllables
+  rfl
 
 end HaikuToTankaLift

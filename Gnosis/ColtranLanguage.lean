@@ -71,10 +71,13 @@ theorem giant_steps_semantics_cardinality :
 -- ══════════════════════════════════════════════════════════
 
 /-- A harmonic grammar rule: moving from one semantic pitch class to another
-    via the major-thirds cycle. This is how language traverses semantic space. -/
+    via the major-thirds cycle. This is how language traverses semantic space.
+
+    NOTE: `from`/`to` renamed to `source`/`target` because `from` is a reserved
+    keyword in Lean 4 (used for `have ... from ...`). -/
 structure HarmonicTransition where
-  from : SemanticPitchClass
-  to : SemanticPitchClass
+  source : SemanticPitchClass
+  target : SemanticPitchClass
   distance : Nat               -- semitone distance (4 for major third)
   semantic_shift : String      -- what meaning changes
 
@@ -82,8 +85,8 @@ structure HarmonicTransition where
     Move from semantic C to semantic E (+4 semitones = major third).
     This is the perturbation that breaks equilibrium. -/
 def stillness_to_sting : HarmonicTransition where
-  from := SemanticC
-  to := SemanticE
+  source := SemanticC
+  target := SemanticE
   distance := 4
   semantic_shift := "Ground state breaks. Vacuum perturbed. Clinamen enters."
 
@@ -91,8 +94,8 @@ def stillness_to_sting : HarmonicTransition where
     Move from semantic E to semantic A♭ (+4 semitones).
     The perturbation provokes a response. -/
 def sting_to_trill : HarmonicTransition where
-  from := SemanticE
-  to := SemanticAFlat
+  source := SemanticE
+  target := SemanticAFlat
   distance := 4
   semantic_shift := "Perturbation creates oscillation. Response emerges. Witness born."
 
@@ -100,8 +103,8 @@ def sting_to_trill : HarmonicTransition where
     Move from semantic A♭ back to semantic C (+4 semitones mod 12).
     The cycle completes. The system returns to rest. -/
 def trill_to_stillness : HarmonicTransition where
-  from := SemanticAFlat
-  to := SemanticC
+  source := SemanticAFlat
+  target := SemanticC
   distance := 4
   semantic_shift := "Oscillation decays. Response fades. Return to silence. New equilibrium."
 
@@ -254,7 +257,9 @@ theorem coltran_language_complete :
     (stillness_to_sting.distance = 4) ∧
     (sting_to_trill.distance = 4) ∧
     (trill_to_stillness.distance = 4) ∧
-    (harmonic_cycle_closes) := by
-  simp [haiku_utterance, stillness_to_sting, sting_to_trill, trill_to_stillness]
+    (stillness_to_sting.distance + sting_to_trill.distance +
+     trill_to_stillness.distance = 12) := by
+  refine ⟨?_, ?_, ?_, ?_, ?_, ?_, ?_, ?_⟩
+  all_goals rfl
 
 end ColtranLanguage

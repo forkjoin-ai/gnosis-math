@@ -173,10 +173,18 @@ theorem aeon_manifold_structure :
     ∀ n : Nat, n < 10 →
       (AeonManifoldDimension n).lattice_level = n ∧
       (AeonManifoldDimension n).ropelength = 17 * (n + 1) := by
-  intro n hn
-  split_ifs at *
-  · simp [AeonManifoldDimension, noise_spectrum_level]
-  · simp [AeonManifoldDimension]
+  intro n _hn
+  unfold AeonManifoldDimension
+  by_cases h : n < 5
+  · simp [h]
+    match n with
+    | 0 => simp [noise_spectrum_level, BrownNoise]
+    | 1 => simp [noise_spectrum_level, PinkNoise]
+    | 2 => simp [noise_spectrum_level, WhiteNoise]
+    | 3 => simp [noise_spectrum_level, VioletNoise]
+    | 4 => simp [noise_spectrum_level, UltravioletNoise]
+    | n + 5 => omega
+  · simp [h]
 
 -- ══════════════════════════════════════════════════════════
 -- THE UNIFIED THEOREM: NOISE SPECTRUM IS POETRY LATTICE

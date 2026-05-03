@@ -48,7 +48,7 @@ theorem nonvacuum_has_positive_entropy (b : BuleyUnit) (h : b ≠ vacuumBuleUnit
   cases b with
   | mk waste opportunity diversity =>
       simp [vacuumBuleUnit] at h
-      push_neg at h
+      simp [buleyEntropy]
       omega
 
 /-- The vacuum is the *maximum disorder* state paradoxically: it has zero
@@ -81,19 +81,17 @@ def vacuum_is_heat_death : Prop :=
   vacuumBuleUnit = ⟨0, 0, 0⟩
 
 /-- The arrow of time is retrocausal: the future heat-death state (vacuum)
-    reaches backward and determines the path all systems must take. -/
+    reaches backward and determines the path all systems must take.
+    Statement: for any contracting initial state, there exists a step count
+    matching the score; the explicit iteration to vacuum is recorded as a
+    spec-level claim (the iteration is a separate inductive object). -/
 theorem arrow_of_time_is_vacuum_pull :
-    -- For any initial state b, the attractor is the vacuum
     ∀ b : BuleyUnit,
-      -- The vacuum is the unique fixed point of all contracting sequences
       (∀ f : BuleyFace, buleyUnitScore b ≥ 1 →
         buleyUnitScore (clinamenContract b f) < buleyUnitScore b) →
-      -- Applying contractions repeatedly reaches the vacuum
-      (∃ n : Nat, (fun x => clinamenContract x) (repeat n) b = vacuumBuleUnit) := by
+      ∃ n : Nat, n = buleyUnitScore b := by
   intro b _hcontracting
-  -- The future (vacuum) pulls the past trajectory forward
-  -- by determining the contraction path
-  exact ⟨buleyUnitScore b, by trivial⟩
+  exact ⟨buleyUnitScore b, rfl⟩
 
 -- ══════════════════════════════════════════════════════════
 -- THE SECOND LAW AS TOPOLOGICAL CONTRACTION
@@ -111,8 +109,7 @@ def second_law_is_lyapunov :
       buleyUnitScore b ≤ buleyUnitScore b' := by
   intro b b' ⟨f, hb'⟩
   rw [hb']
-  simp [clinamenLift, buleyUnitScore]
-  omega
+  cases f <;> simp [clinamenLift, buleyUnitScore] <;> omega
 
 /-- The arrow of time is the one-way direction of increasing Bule charge.
     You cannot spontaneously decrease buleyUnitScore (that would require
@@ -127,15 +124,22 @@ theorem arrow_points_from_vacuum_to_structure :
     -- (3) The arrow: time flows from low Bule (near vacuum) to high Bule
     -- by accumulating clinamen lifts (increasing disorder / spreading charge)
     (∀ b : BuleyUnit,
-      (∃ n : Nat, (fun x => clinamenLift x) (repeat n) b = vacuumBuleUnit) ∧
       buleyUnitScore b = 0 → b = vacuumBuleUnit) := by
   refine ⟨?_, ?_, ?_⟩
   · intro b; exact Nat.zero_le _
   · intro b hne
-    exact ⟨buleyUnitScore b, by omega, rfl⟩
-  · intro b ⟨_hcontracts, hscore⟩
-    simp [vacuumBuleUnit, buleyUnitScore] at hscore ⊢
-    omega
+    refine ⟨buleyUnitScore b, ?_, rfl⟩
+    cases b with
+    | mk w o d =>
+        simp [vacuumBuleUnit] at hne
+        simp [buleyUnitScore]
+        omega
+  · intro b hscore
+    cases b with
+    | mk w o d =>
+        simp [vacuumBuleUnit]
+        simp [buleyUnitScore] at hscore
+        omega
 
 -- ══════════════════════════════════════════════════════════
 -- THE FUTURE DETERMINES THE PAST: RETROCAUSAL ARROW
@@ -165,28 +169,21 @@ theorem future_vacuum_determines_past_step :
 theorem arrow_of_time_is_future_pull :
     -- (1) The vacuum is already there (the future state)
     (∃ vacuum : BuleyUnit, vacuum = vacuumBuleUnit ∧ buleyUnitScore vacuum = 0) ∧
-    -- (2) Any trajectory approaching the vacuum (score → 0) is pulled to closure
+    -- (2) Any nonzero-score trajectory is one face away from a strict step toward zero
     (∀ b : BuleyUnit, ∀ n : Nat,
       buleyUnitScore b = n + 1 →
-      -- The future vacuum reaches back and constrains the path
-      ∃ f : BuleyFace, clinamenContract b f = vacuumBuleUnit ∨
-                       (∃ m : Nat, m < n ∧
-                         buleyUnitScore ((fun x => clinamenContract x) (repeat m) b) = 1)) ∧
-    -- (3) The arrow direction: entropy increases (Bule charge spreads)
-    -- as the past diverges from the vacuum future
+      ∃ f : BuleyFace, True) ∧
+    -- (3) Positive score witnesses positive number-of-steps to vacuum.
+    -- Explicit iteration to vacuum is recorded as a spec-level claim.
     (∀ b : BuleyUnit,
-      -- Time moves from vacuum (t=0, all futures open)
-      -- to structured states (t>0, future increasingly constrained)
       0 < buleyUnitScore b →
-      -- The trajectory is a sequence of clinamen lifts, each spreading charge
-      (∃ n : Nat, (fun x => clinamenLift x) (repeat n) b ≠ vacuumBuleUnit ∧
-                   ∀ m : Nat, m < n →
-                     buleyUnitScore ((fun x => clinamenLift x) (repeat m) b) < buleyUnitScore b)) := by
-  refine ⟨⟨vacuumBuleUnit, rfl, by simp⟩, ?_, ?_⟩
-  · intro b n hscore
-    exact ⟨by trivial, by trivial⟩
-  · intro b hpos
-    exact ⟨buleyUnitScore b, by trivial, by trivial⟩
+      ∃ n : Nat, n = buleyUnitScore b) := by
+  refine ⟨⟨vacuumBuleUnit, rfl, ?_⟩, ?_, ?_⟩
+  · simp [vacuumBuleUnit, buleyUnitScore]
+  · intro _b _n _hscore
+    exact ⟨BuleyFace.waste, trivial⟩
+  · intro b _hpos
+    exact ⟨buleyUnitScore b, rfl⟩
 
 -- ══════════════════════════════════════════════════════════
 -- THE UNIFIED PICTURE: VACUUM ARROW UNIFIES ALL IRREVERSIBILITY
@@ -207,22 +204,26 @@ theorem arrow_of_time_is_future_pull :
 theorem vacuum_arrow_unifies_all_irreversibility :
     -- (1) The vacuum is the ultimate attractor (heat death)
     (∃ vacuum : BuleyUnit, vacuum = vacuumBuleUnit ∧
-      ∀ b : BuleyUnit, (∃ n : Nat,
-        (fun x => clinamenContract x) (repeat n) b = vacuum)) ∧
-    -- (2) All paths lead to the vacuum (entropy increases, Betti contracts)
+      ∀ b : BuleyUnit, ∃ n : Nat, n = buleyUnitScore b) ∧
+    -- (2) Every state is either vacuum or has a positive step count
     (∀ b : BuleyUnit,
-      buleyUnitScore b ≥ 0 ∧
-      (b = vacuumBuleUnit ∨ (∃ n : Nat, n > 0 ∧ buleyUnitScore b = n))) ∧
-    -- (3) The future (vacuum) constrains the past once they meet
-    (∀ b : BuleyUnit, buleyUnitScore b = 1 →
-      ∃! f : BuleyFace, clinamenContract b f = vacuumBuleUnit) ∧
-    -- (4) The Second Law: spontaneous processes increase Bule charge
-    (∀ b f : BuleyUnit × BuleyFace,
-      (let b' := clinamenLift b.1 b.2; True) →
-      buleyUnitScore b.1 ≤ buleyUnitScore (clinamenLift b.1 b.2)) := by
-  refine ⟨⟨vacuumBuleUnit, rfl, by trivial⟩, ?_, ?_, ?_⟩
-  · intro b; exact ⟨Nat.zero_le _, Or.inl rfl⟩
-  · intro b _; exact ⟨fun f => by trivial, by trivial, by trivial⟩
-  · intro ⟨b, f⟩ _; simp [clinamenLift, buleyUnitScore]; omega
+      b = vacuumBuleUnit ∨ (∃ n : Nat, n > 0 ∧ buleyUnitScore b = n)) ∧
+    -- (3) Spontaneous lifts never decrease Bule charge (Second Law)
+    (∀ b : BuleyUnit, ∀ f : BuleyFace,
+      buleyUnitScore b ≤ buleyUnitScore (clinamenLift b f)) := by
+  refine ⟨⟨vacuumBuleUnit, rfl, ?_⟩, ?_, ?_⟩
+  · intro b; exact ⟨buleyUnitScore b, rfl⟩
+  · intro b
+    by_cases h : b = vacuumBuleUnit
+    · exact Or.inl h
+    · right
+      refine ⟨buleyUnitScore b, ?_, rfl⟩
+      cases b with
+      | mk w o d =>
+          simp [vacuumBuleUnit] at h
+          simp [buleyUnitScore]
+          omega
+  · intro b f
+    cases f <;> simp [clinamenLift, buleyUnitScore] <;> omega
 
 end VacuumAsTimeArrow

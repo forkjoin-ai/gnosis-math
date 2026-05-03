@@ -59,12 +59,6 @@ def fib_sting_fibonacci (n : Nat) : Nat :=
 def fib_sting_additive (n : Nat) : Nat :=
   fib n + (if n > 0 then fib (n - 1) else 1)
 
-/-- For the haiku: frame = Fib(4) = 5, sting = Fib(5) = 8.
-    But Basho uses 7, not 8. Why? Because 7 is the minimal PRIME > 5. -/
-def minimal_prime_gt (n : Nat) : Nat :=
-  if n = 5 then 7
-  else fib_sting_fibonacci (fib_index_of n)
-
 /-- Reverse lookup: given a Fibonacci number, find its index. -/
 def fib_index_of : Nat → Nat
   | 1 => 0   -- fib(0) = 1, or fib(1) = 1 (ambiguous; we pick 0)
@@ -77,6 +71,12 @@ def fib_index_of : Nat → Nat
   | 34 => 8  -- fib(8) = 34
   | 55 => 9  -- fib(9) = 55
   | _ => 0   -- default
+
+/-- For the haiku: frame = Fib(4) = 5, sting = Fib(5) = 8.
+    But Basho uses 7, not 8. Why? Because 7 is the minimal PRIME > 5. -/
+def minimal_prime_gt (n : Nat) : Nat :=
+  if n = 5 then 7
+  else fib_sting_fibonacci (fib_index_of n)
 
 /-- For Fib(5)=5, the sting options are:
     - Fib(5) = 8 (the next Fibonacci)
@@ -159,23 +159,30 @@ def fib_triton_ropelength_additive (n : Nat) : Nat :=
 
 theorem fib_triton_ropelength_formula (n : Nat) :
     fib_triton_ropelength_additive n = fib (n + 2) + fib n := by
+  -- Fib identity: Fib(n+2) = Fib(n+1) + Fib(n)
+  -- Thus: 2*Fib(n) + Fib(n+1) = Fib(n) + (Fib(n+1) + Fib(n)) = Fib(n) + Fib(n+2)
   unfold fib_triton_ropelength_additive
-  -- Fib identity: Fib(n+2) = Fib(n+1) + Fib(n), so Fib(n+1) = Fib(n+2) - Fib(n)
-  -- Thus: 2*Fib(n) + Fib(n+1) = 2*Fib(n) + Fib(n+2) - Fib(n) = Fib(n) + Fib(n+2)
+  show 2 * fib n + fib (n + 1) = fib (n + 2) + fib n
+  have hfib : fib (n + 2) = fib (n + 1) + fib n := by rfl
+  rw [hfib]
   omega
 
 /-- Specific examples: -/
 theorem fib_triton_4_ropelength :
     fib_triton_ropelength_additive 4 = fib 6 + fib 4 := by
-  simp [fib_triton_ropelength_additive, fib]
+  decide
 
-theorem fib_triton_4_equals_17 :
+theorem fib_triton_4_equals_18 :
     fib 6 + fib 4 = 13 + 5 := by
-  simp [fib]
+  decide
 
-theorem haiku_ropelength_identity :
-    17 = fib 6 + fib 4 := by
-  simp [fib]
+/-- Haiku ropelength identity (corrected). The additive Fibonacci-sting
+    triton 5-8-5 has ropelength 18 = fib 6 + fib 4. The Basho haiku 5-7-5
+    uses the minimal-prime sting 7 (not 8), giving ropelength 17 — one less
+    than the pure-Fibonacci form. We record the additive-sting equality. -/
+theorem haiku_additive_ropelength_identity :
+    18 = fib 6 + fib 4 := by
+  decide
 
 -- ══════════════════════════════════════════════════════════
 -- ERROR CORRECTION PROPERTY
@@ -190,9 +197,12 @@ theorem haiku_ropelength_identity :
 def golden_ratio_approx : Nat := 8  -- numerator (using 8/5 ≈ 1.618)
 def golden_ratio_denom : Nat := 5   -- denominator
 
-/-- For the haiku: frame=5, sting=7. Ratio 7/5 = 1.4, close to φ ≈ 1.618. -/
+/-- For the haiku: frame=5, sting=7. Ratio 7/5 = 1.4, close to φ ≈ 1.618.
+    Original strict inequality `7 * 5 > 5 * 8` is FALSE (35 < 40). We weaken
+    to the correct ordering: 7/5 < 8/5 (i.e. the haiku ratio is BELOW the
+    golden ratio approximant 8/5), and the sting strictly exceeds the frame. -/
 theorem haiku_ratio_near_golden :
-    7 * 5 > 5 * 8 ∧  -- 7/5 > 8/5? No, but 7/5 = 1.4, and 8/5 = 1.6
+    7 * 5 < 5 * 8 ∧  -- 7/5 < 8/5 (haiku ratio sits just below φ)
     7 > 5 := by      -- Sting > frame
   omega
 
@@ -204,7 +214,7 @@ def triton_hamming_distance (frame sting : Nat) : Nat :=
 theorem triton_can_correct_one_error (frame sting : Nat) (h : frame ≠ sting) :
     triton_hamming_distance frame sting = 1 := by
   unfold triton_hamming_distance
-  split_ifs at * <;> omega
+  simp [h]
 
 -- ══════════════════════════════════════════════════════════
 -- THE UNIFIED THEOREM: FIBONACCI TRITONS UNIVERSALIZE HAIKU
@@ -238,14 +248,19 @@ theorem triton_can_correct_one_error (frame sting : Nat) (h : frame ≠ sting) :
   The haiku is universal. It is the Fibonacci witness proof at scale Fib(4).
 -/
 
+/-- Fibonacci triton universal (corrected). Original claim asserted
+    `fib_triton_4.total_ropelength = fib 6 + fib 4`; that's 17 = 18, false.
+    The Basho haiku uses the prime sting 7, so its ropelength sits ONE
+    BELOW the pure-Fibonacci ropelength fib(n+2)+fib(n) = 18. We record
+    the corrected ordering: haiku ropelength + 1 = fib 6 + fib 4. -/
 theorem fibonacci_triton_universal :
     (fib_triton_4.frame = fib 4) ∧
     (fib_triton_4.sting = 7) ∧
-    (fib_triton_4.total_ropelength = fib 6 + fib 4) ∧
+    (fib_triton_4.total_ropelength + 1 = fib 6 + fib 4) ∧
     (fib_triton_4.total_ropelength = 17) ∧
     (fib 4 = 5) ∧
     (fib 6 = 13) := by
-  simp [fib_triton_4, fib]
+  refine ⟨?_, ?_, ?_, ?_, ?_, ?_⟩ <;> decide
 
 theorem haiku_is_fib_triton_4 :
     haiku_frame = fib_triton_4.frame ∧
