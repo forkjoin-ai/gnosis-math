@@ -1,0 +1,6 @@
+import Gnosis.PredictiveTopologyOfMarkets
+
+#check Gnosis.PredictiveTopologyOfMarkets.price_movement_is_clinamen_redistribution_path
+#check Gnosis.PredictiveTopologyOfMarkets.predict_equilibration_from_imbalance
+#check Gnosis.PredictiveTopologyOfMarkets.liquidity_capture_maximizer_is_clinamen_maximizer
+#check Gnosis.PredictiveTopologyOfMarkets.latency_value_equals_clinamen_capture_speed
