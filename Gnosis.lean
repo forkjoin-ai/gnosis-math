@@ -457,6 +457,7 @@ import Gnosis.InfinityTopologicalPlane
 import Gnosis.InftyOperads
 import Gnosis.InftyTopoi
 import Gnosis.InitOnlyDoctrine
+import Gnosis.InformationAsClinamenCharge
 import Gnosis.InstitutionalLiability
 import Gnosis.InterferenceCoarsening
 import Gnosis.InterpretationFibration
