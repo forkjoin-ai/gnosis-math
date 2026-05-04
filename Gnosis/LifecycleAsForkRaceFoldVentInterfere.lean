@@ -43,18 +43,21 @@
   caches). The recursive form is captured here as a fixpoint over
   Lifecycle, but the per-cycle structure is the same five stages.
 
-  Imports CompressionUncertainty + SynergisticStabilization.
+  Imports CompressionUncertainty + SynergisticStabilization +
+  WankelEngineTheorem.
   Init-only otherwise. Zero sorries, zero axioms.
 -/
 
 import Gnosis.CompressionUncertainty
 import Gnosis.SynergisticStabilization
+import Gnosis.WankelEngineTheorem
 
 namespace Gnosis
 namespace LifecycleAsForkRaceFoldVentInterfere
 
 open CompressionUncertainty
 open SynergisticStabilization
+open WankelEngineTheorem
 
 -- ══════════════════════════════════════════════════════════
 -- THE FIVE STAGES (each a structure)
@@ -290,6 +293,63 @@ theorem qwen_triple_not_well_formed : ¬ well_formed qwen_triple_lifecycle := by
   decide
 
 -- ══════════════════════════════════════════════════════════
+-- THE WANKEL SCHEDULER AS A WELL-FORMED LIFECYCLE
+-- ══════════════════════════════════════════════════════════
+
+/-- The Wankel scheduler projected into the deployment lifecycle record.
+    The first four lifecycle fields carry the four visible rotor phases;
+    the Interfere field records the explicit fifth contact. -/
+def wankel_scheduler_lifecycle : Lifecycle :=
+  { fork := { num_elements := wankelAeonCells
+            , measured_count := wankelAeonCells }
+  , race := { num_candidates := fiveForceLifecycleTrace.length
+            , winners_count := 1
+            , passes_criterion := true }
+  , fold := { artifact_size_bytes := wankelAeonCells
+            , artifact_consistent := true }
+  , vent := { has_verifier := true
+            , rollback_num := 0
+            , rollback_den := 1 }
+  , interfere := .passes 1 1 }
+
+theorem wankel_scheduler_lifecycle_well_formed :
+    well_formed wankel_scheduler_lifecycle := by
+  decide
+
+theorem wankel_scheduler_lifecycle_has_five_force_cardinality :
+    wankel_scheduler_lifecycle.race.num_candidates =
+      fiveForceLifecycleTrace.length ∧
+    fiveForceLifecycleTrace.length = 5 ∧
+    wankel_scheduler_lifecycle.fork.measured_count = wankelAeonCells ∧
+    wankelAeonCells = 12 := by
+  exact ⟨rfl,
+    five_force_lifecycle_trace_length,
+    rfl,
+    three_faces_times_four_phases_is_aeon⟩
+
+theorem wankel_well_formed_lifecycle_preserves_path_contact :
+    well_formed wankel_scheduler_lifecycle ∧
+    InterferenceAsTheFifthForce.paths_interfere
+      (outgoingPath vacuumWasteEngine)
+      (returningPath vacuumWasteEngine) := by
+  exact ⟨wankel_scheduler_lifecycle_well_formed,
+    wankel_paths_interfere vacuumWasteEngine⟩
+
+/-- The deployment lifecycle predicate and the Wankel fifth-force mechanism
+    now meet in one named proposition. -/
+def WankelWellFormedLifecycleMechanism (steps : Nat) : Prop :=
+  well_formed wankel_scheduler_lifecycle ∧
+  WankelLifecycleMechanism steps ∧
+  wankel_scheduler_lifecycle.interfere = InterfereResult.passes 1 1
+
+theorem wankel_lifecycle_mechanism_is_well_formed (steps : Nat)
+    (hSteps : steps > 0) :
+    WankelWellFormedLifecycleMechanism steps := by
+  exact ⟨wankel_scheduler_lifecycle_well_formed,
+    wankel_lifecycle_generates_fifth_force_trace steps hSteps,
+    rfl⟩
+
+-- ══════════════════════════════════════════════════════════
 -- THE PATTERN AS LAW: EVERY DEPLOYMENT FACTORS THROUGH FIVE STAGES
 -- ══════════════════════════════════════════════════════════
 
@@ -354,7 +414,7 @@ theorem stable_pca_only_terminates :
   back at a rate that exceeds the β procurement budget (from
   ConversionInvariant), the runtime can either (a) accept the loss
   and continue, or (b) initiate a new measurement cycle. Path (b)
-  IS a Fork/Race/Fold inside Vent:
+  runs a Fork/Race/Fold loop inside Vent:
 
     Vent's rollback monitor       (continuous measurement)
       → Fork: per-batch rollback rate samples

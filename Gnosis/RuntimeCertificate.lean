@@ -25,8 +25,8 @@
 
   Each clause is structural / decidable, so a per-instance
   `certified C : Prop` can be discharged by composing the per-module
-  decide-checked theorems. The `RuntimeCertificate IS the production
-  deployment contract`: future operators check whether a (model, scheme)
+  decide-checked theorems. The `RuntimeCertificate` serves as the
+  production deployment contract: future operators check whether a (model, scheme)
   pair is certified for production with a single `decide` per instance.
 
   Imports listed below are the canonical evidence sources.
@@ -215,6 +215,51 @@ theorem qwen_pca_only_is_certified : certified qwen_pca_only_certificate := by
 theorem qwen_pca_only_certified_by_decide :
     certified qwen_pca_only_certificate := by
   decide
+
+-- ══════════════════════════════════════════════════════════
+-- THE WANKEL SCHEDULER AS A CERTIFIED RUNTIME LIFECYCLE
+-- ══════════════════════════════════════════════════════════
+
+/-- The Wankel scheduler lifted into the runtime certificate contract.
+    This reuses the existing verified protocol and model profile, replacing
+    only the lifecycle field with the Wankel five-force lifecycle witness. -/
+def wankel_scheduler_certificate : RuntimeCertificate :=
+  { protocol := qwen_pca_k8_verified
+  , profile := qwen_2_5_0_5b_profile
+  , lifecycle := wankel_scheduler_lifecycle
+  , fits := qwen_pca_k8_fits_capacity
+  , betaPos := qwen_pca_k8_beta_positive }
+
+theorem wankel_scheduler_certificate_is_certified :
+    certified wankel_scheduler_certificate := by
+  refine ⟨?_, ?_, ?_, ?_⟩
+  · exact wankel_scheduler_lifecycle_well_formed
+  · exact verify_preserves_identity _
+  · exact qwen_pca_k8_fits_capacity
+  · exact qwen_pca_k8_beta_positive
+
+theorem wankel_scheduler_certificate_certified_by_decide :
+    certified wankel_scheduler_certificate := by
+  decide
+
+/-- Operational Wankel mechanism: the lifecycle is certified by the runtime
+    certificate contract and still carries the finite fifth-force mechanism. -/
+def WankelOperationalMechanism (steps : Nat) : Prop :=
+  certified wankel_scheduler_certificate ∧
+  WankelWellFormedLifecycleMechanism steps ∧
+  wankel_scheduler_certificate.lifecycle = wankel_scheduler_lifecycle
+
+theorem wankel_fifth_force_mechanism_has_runtime_certificate
+    (steps : Nat) (hSteps : steps > 0) :
+    WankelOperationalMechanism steps := by
+  exact ⟨wankel_scheduler_certificate_is_certified,
+    wankel_lifecycle_mechanism_is_well_formed steps hSteps,
+    rfl⟩
+
+theorem wankel_certified_lifecycle_well_formed :
+    well_formed wankel_scheduler_certificate.lifecycle :=
+  certified_implies_lifecycle_well_formed
+    wankel_scheduler_certificate wankel_scheduler_certificate_is_certified
 
 -- ══════════════════════════════════════════════════════════
 -- PROJECTIONS APPLIED TO THE QWEN INSTANCE

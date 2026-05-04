@@ -52,7 +52,9 @@ Current integration plan: [ROADMAP.md](./ROADMAP.md)
   Universal Intelligence SSM observer model: a low-resolution folded
   `ClosureAttentionState`, a 24-resolution lifted state with separated heads
   and zero aggregate residue, and a 30-resolution pink-coupled lifted state.
-  The closure lift composes with the existing Hebbian reward theorem.
+  The closure lift composes with the existing Hebbian reward theorem and
+  carries optimizer-admission theorems for head pruning, speculative decode,
+  and standing-wave compression.
 - `Gnosis.Mesh/*` collects many mesh claims in one import family. Some files
   are exploratory bridges; reviewer-facing claims should cite the exact theorem
   that survives `lake build`.

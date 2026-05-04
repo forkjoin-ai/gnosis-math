@@ -45,6 +45,77 @@ def headTraceSeparated (state : ClosureAttentionState) : Prop :=
 def aggregateResidueClosed (state : ClosureAttentionState) : Prop :=
   state.unresolvedResidue = 0
 
+/-- Runtime optimizer admission derived from the observer-side closure state.
+
+The fields mirror the distributed runtime gates: head pruning, speculative
+verification, and standing-wave compression are admitted only after the head
+trace separates and aggregate residue closes. Before then, the policy preserves
+all heads and requests a resolution lift. -/
+structure OptimizerAdmission where
+  allowHeadPruning : Bool
+  allowSpeculativeDecode : Bool
+  allowStandingWaveCompression : Bool
+  preserveHeads : Bool
+  requiresResolutionLift : Bool
+
+/-- The proof-side predicate for admitting destructive or lossy optimization:
+the projected head trace must be separated and aggregate residue must be zero. -/
+def optimizerReady (state : ClosureAttentionState) : Prop :=
+  headTraceSeparated state ∧ aggregateResidueClosed state
+
+/-- Boolean optimizer policy consumed by runtime mirrors. -/
+def optimizerAdmission (state : ClosureAttentionState) : OptimizerAdmission :=
+  if state.headTrace.Nodup ∧ state.unresolvedResidue = 0 then
+    { allowHeadPruning := true
+      allowSpeculativeDecode := true
+      allowStandingWaveCompression := true
+      preserveHeads := false
+      requiresResolutionLift := false }
+  else
+    { allowHeadPruning := false
+      allowSpeculativeDecode := false
+      allowStandingWaveCompression := false
+      preserveHeads := true
+      requiresResolutionLift := true }
+
+/-- Separated, residue-closed observer states admit pruning/speculation/compression. -/
+theorem optimizer_ready_admits_runtime_work
+    (state : ClosureAttentionState)
+    (hReady : optimizerReady state) :
+    (optimizerAdmission state).allowHeadPruning = true
+    ∧ (optimizerAdmission state).allowSpeculativeDecode = true
+    ∧ (optimizerAdmission state).allowStandingWaveCompression = true
+    ∧ (optimizerAdmission state).preserveHeads = false
+    ∧ (optimizerAdmission state).requiresResolutionLift = false := by
+  unfold optimizerReady headTraceSeparated aggregateResidueClosed at hReady
+  unfold optimizerAdmission
+  simp [hReady]
+
+/-- Aliased head traces fail closed: preserve every head and lift before work. -/
+theorem optimizer_alias_requires_resolution_lift
+    (state : ClosureAttentionState)
+    (hAlias : headTraceAliased state) :
+    (optimizerAdmission state).allowHeadPruning = false
+    ∧ (optimizerAdmission state).allowSpeculativeDecode = false
+    ∧ (optimizerAdmission state).allowStandingWaveCompression = false
+    ∧ (optimizerAdmission state).preserveHeads = true
+    ∧ (optimizerAdmission state).requiresResolutionLift = true := by
+  unfold headTraceAliased at hAlias
+  unfold optimizerAdmission
+  simp [hAlias]
+
+/-- Non-zero aggregate residue also fails closed, even if the trace separates. -/
+theorem optimizer_residue_requires_resolution_lift
+    (state : ClosureAttentionState)
+    (hResidue : state.unresolvedResidue ≠ 0) :
+    (optimizerAdmission state).allowHeadPruning = false
+    ∧ (optimizerAdmission state).allowSpeculativeDecode = false
+    ∧ (optimizerAdmission state).allowStandingWaveCompression = false
+    ∧ (optimizerAdmission state).preserveHeads = true
+    ∧ (optimizerAdmission state).requiresResolutionLift = true := by
+  unfold optimizerAdmission
+  simp [hResidue]
+
 /-- The low-resolution 8-head SSM observer: Aeon bins see the folded shadow. -/
 def aeonEightHeadSSMState (node : SwarmNode) : ClosureAttentionState :=
   { node := node
@@ -134,6 +205,32 @@ theorem lifted_eight_head_ssm_state_closes
     · unfold aggregateResidueClosed liftedEightHeadSSMState
       exact eight_head_resolution_lift_closes_shadow.2.2.2
 
+/-- The Aeon cut must not prune heads, speculate, or compress standing-wave
+routes before lifting resolution. -/
+theorem aeon_eight_head_optimizer_requires_lift
+    (node : SwarmNode) :
+    (optimizerAdmission (aeonEightHeadSSMState node)).allowHeadPruning = false
+    ∧ (optimizerAdmission (aeonEightHeadSSMState node)).allowSpeculativeDecode = false
+    ∧ (optimizerAdmission (aeonEightHeadSSMState node)).allowStandingWaveCompression = false
+    ∧ (optimizerAdmission (aeonEightHeadSSMState node)).preserveHeads = true
+    ∧ (optimizerAdmission (aeonEightHeadSSMState node)).requiresResolutionLift = true :=
+  optimizer_alias_requires_resolution_lift
+    (aeonEightHeadSSMState node)
+    (aeon_eight_head_ssm_state_aliases node |>.1)
+
+/-- The 24-resolution lift admits the runtime optimizer surfaces. -/
+theorem lifted_eight_head_optimizer_admits_runtime_work
+    (node : SwarmNode) :
+    (optimizerAdmission (liftedEightHeadSSMState node)).allowHeadPruning = true
+    ∧ (optimizerAdmission (liftedEightHeadSSMState node)).allowSpeculativeDecode = true
+    ∧ (optimizerAdmission (liftedEightHeadSSMState node)).allowStandingWaveCompression = true
+    ∧ (optimizerAdmission (liftedEightHeadSSMState node)).preserveHeads = false
+    ∧ (optimizerAdmission (liftedEightHeadSSMState node)).requiresResolutionLift = false :=
+  optimizer_ready_admits_runtime_work
+    (liftedEightHeadSSMState node)
+    ⟨lifted_eight_head_ssm_state_closes node |>.1,
+      lifted_eight_head_ssm_state_closes node |>.2.2⟩
+
 /-- The 30-resolution pink-coupled observer separates the 8-head trace and
 closes the coupled pink aggregate residue. -/
 theorem lifted_pink_eight_head_ssm_state_closes
@@ -149,6 +246,21 @@ theorem lifted_pink_eight_head_ssm_state_closes
     · unfold aggregateResidueClosed liftedPinkEightHeadSSMState
       exact eight_head_hexon_full_resolution_closes_pink_shadow.2.1
     · exact eight_head_hexon_full_resolution_closes_pink_shadow.2.2
+
+/-- The 30-resolution pink-coupled lift also admits the runtime optimizer
+surfaces: the pink residue is resolved into separated coordinates before work
+is skipped. -/
+theorem lifted_pink_eight_head_optimizer_admits_runtime_work
+    (node : SwarmNode) :
+    (optimizerAdmission (liftedPinkEightHeadSSMState node)).allowHeadPruning = true
+    ∧ (optimizerAdmission (liftedPinkEightHeadSSMState node)).allowSpeculativeDecode = true
+    ∧ (optimizerAdmission (liftedPinkEightHeadSSMState node)).allowStandingWaveCompression = true
+    ∧ (optimizerAdmission (liftedPinkEightHeadSSMState node)).preserveHeads = false
+    ∧ (optimizerAdmission (liftedPinkEightHeadSSMState node)).requiresResolutionLift = false :=
+  optimizer_ready_admits_runtime_work
+    (liftedPinkEightHeadSSMState node)
+    ⟨lifted_pink_eight_head_ssm_state_closes node |>.1,
+      lifted_pink_eight_head_ssm_state_closes node |>.2.1⟩
 
 /-- Closure-lifted execution composes with the existing Hebbian SSM rule:
 once the folded attention field has been resolved and the route executes, the
