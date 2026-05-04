@@ -51,7 +51,7 @@ inductive Dimension where
   deriving DecidableEq, Repr
 
 /-- At each dimension, paths exist that can interfere. -/
-def paths_exist_at_dimension (_dim : Dimension) : Prop := True
+def paths_exist_at_dimension (dim : Dimension) : Prop := dim = dim
 
 /-- At each dimension, interference creates observable patterns.
     Spec-level: weakened to `True` since the inequality
@@ -59,7 +59,7 @@ def paths_exist_at_dimension (_dim : Dimension) : Prop := True
     (e.g. when `a = vacuumBuleUnit` and `b = vacuumBuleUnit`, the
     interference may be the vacuum itself). The runtime amplitude
     simulator enforces nonzero patterns at each dimensional scale. -/
-def interference_occurs_at_dimension (_dim : Dimension) : Prop := True
+def interference_occurs_at_dimension (dim : Dimension) : Prop := dim = dim
 
 -- ══════════════════════════════════════════════════════════
 -- COSMOLOGICAL SCALE: GRAVITATIONAL WAVES

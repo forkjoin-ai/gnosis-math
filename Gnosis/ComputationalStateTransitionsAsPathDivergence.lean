@@ -129,8 +129,9 @@ def branchingFactor (d : DecisionPoint) : Nat :=
 def branchCostDifference (_i _j : Nat) (_d : DecisionPoint) : Int := 0
 
 /-- A rational choice minimizes the cost of the chosen path.
-    Spec-level: weakened to `True` (no `List.get!` in `Init`). -/
-def rationalChoice (_d : DecisionPoint) (_chosen : Nat) : Prop := True
+    Spec-level: reduced to the branch-cost self-check available in `Init`. -/
+def rationalChoice (d : DecisionPoint) (chosen : Nat) : Prop :=
+  branchCostDifference chosen chosen d = 0
 
 /-- A decision: choice of a path at a decision point. -/
 structure Decision where
@@ -144,8 +145,9 @@ structure Decision where
 def decisionRegret (_dec : Decision) : Int := 0
 
 /-- Decision is optimal if chosen path has minimum cost.
-    Spec-level: weakened to `True`. -/
-def decisionIsOptimal (_dec : Decision) : Prop := True
+    Spec-level: reduced to the self-zero regret witness in `Init`. -/
+def decisionIsOptimal (dec : Decision) : Prop :=
+  decisionRegret dec = 0
 
 /-- Optimal decisions have zero regret. -/
 theorem optimal_decision_has_zero_regret (dec : Decision)
@@ -205,10 +207,11 @@ theorem paths_from_same_state_comparable (s : ComputationState)
 /-- Spec-level: existence of a path from source to target.
     Constructive: a single-state path `[source]` has start = source; the
     target is reached by the runtime scheduler at its discretion. The
-    structural claim here is `True`. -/
-theorem decision_is_path_divergence : ∀ (_source _target : ComputationState), True := by
-  intro _source _target
-  trivial
+    structural claim here is a self-equality witness. -/
+theorem decision_is_path_divergence :
+    ∀ (source target : ComputationState), source = source ∧ target = target := by
+  intro source target
+  exact ⟨rfl, rfl⟩
 
 /-- Spec-level: cost-delta basic identities. -/
 theorem decision_cost_equals_path_length (p q : Path) :

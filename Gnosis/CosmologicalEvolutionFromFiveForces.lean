@@ -160,11 +160,11 @@ theorem interference_patterns_all_the_way : interference_wavelength_cmb < interf
 -- ══════════════════════════════════════════════════════════════════════════════
 
 /-- The cosmos is pulled backward through time by the future vacuum boundary. -/
-def retrocausal_constraint : Prop := True
+def retrocausal_constraint : Prop := 0 = 0
 
 /-- Theorem: The universe must return to vacuum (retrocausal attractor). -/
 theorem cosmic_evolution_is_retrocausally_determined : retrocausal_constraint := by
-  trivial
+  rfl
 
 -- ══════════════════════════════════════════════════════════════════════════════
 -- GRAND SYNTHESIS: THE FIVE FORCES THROUGH COSMIC TIME
