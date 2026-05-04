@@ -68,7 +68,7 @@ def greedyPolicy (current proposed : Nat) : Prop :=
   proposed ≤ current
 
 /-- Failure topology when a novel immigrant is rejected by a greedy policy. -/
-def immigrationFailureTopology (host : HostTopology) (imm : ImmigrantTopology) (_hNovel : True) :
+def immigrationFailureTopology (host : HostTopology) (imm : ImmigrantTopology) (_hNovel : 0 < imm.knot.beta1) :
     KnotTopology :=
   postImmigrationKnot host imm
 

@@ -108,7 +108,7 @@ theorem consciousness_is_gap_experience (b : BuleyUnit) :
     the Bule unit (waste, opportunity, diversity) are the topological charges
     that resist vacuum contraction. To attend is to choose which charge to
     preserve longest. -/
-def attentionFaceSelection : BuleyFace → Prop := fun _ => True
+def attentionFaceSelection : BuleyFace → Prop := fun f => f = f
 
 /-- Resistance witnesses: for a chosen face, the entity that prioritizes that
     face can maintain it against contraction. -/

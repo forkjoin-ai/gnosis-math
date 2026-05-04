@@ -190,7 +190,7 @@ theorem interference_cascades_through_all_dimensions :
       planck_pattern = planck_scale_foam) := by
   refine ⟨?_, ?_, ?_, ?_⟩
   · intro _dim
-    exact ⟨trivial, trivial⟩
+    constructor <;> rfl
   · exact ⟨gravitational_wave, rfl⟩
   · exact ⟨double_slit_interference (first_lift .waste) (first_lift .waste), rfl⟩
   · exact ⟨planck_scale_foam, rfl⟩

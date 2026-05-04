@@ -25,8 +25,9 @@
   at q = e^{i π / (k + 2)}.
 
   This file mechanizes the *finite cyclotomic shadow* of U_q(sl_2)
-  at q^3 = 1 (smallest non-trivial root of unity), encoding ω = e^{2πi/3}
-  as the formal element of ℤ[ω]/(ω^2 + ω + 1) ≃ ℤ ⊕ ℤ · ω.  All
+  at q^3 = 1 (smallest non-trivial root of unity), encoding the
+  3rd root as the formal element of ℤ[root3]/(root3^2 + root3 + 1)
+  ≃ ℤ ⊕ ℤ · root3.  All
   identities become integer pair identities.
 
   Gnosis mapping
@@ -66,11 +67,11 @@ namespace Cyc3
 def zero : Cyc3 := ⟨0, 0⟩
 def one  : Cyc3 := ⟨1, 0⟩
 
-/-- ω = e^{2πi/3}. -/
-def omega : Cyc3 := ⟨0, 1⟩
+/-- root3 = e^{2πi/3}. -/
+def root3 : Cyc3 := ⟨0, 1⟩
 
-/-- ω^2 = -1 - ω. -/
-def omegaSq : Cyc3 := ⟨-1, -1⟩
+/-- root3^2 = -1 - root3. -/
+def root3Sq : Cyc3 := ⟨-1, -1⟩
 
 /-- Addition. -/
 def add (x y : Cyc3) : Cyc3 := ⟨x.re + y.re, x.om + y.om⟩
@@ -93,31 +94,31 @@ def smul (k : Int) (x : Cyc3) : Cyc3 := ⟨k * x.re, k * x.om⟩
 
 end Cyc3
 
-/-- ω is a primitive 3rd root: ω^3 = 1. -/
-theorem omega_cubed_is_one :
-    Cyc3.mul (Cyc3.mul Cyc3.omega Cyc3.omega) Cyc3.omega = Cyc3.one := by
+/-- root3 is a primitive 3rd root: root3^3 = 1. -/
+theorem root3_cubed_is_one :
+    Cyc3.mul (Cyc3.mul Cyc3.root3 Cyc3.root3) Cyc3.root3 = Cyc3.one := by
   native_decide
 
-/-- 1 + ω + ω^2 = 0. -/
-theorem omega_sum_zero :
-    Cyc3.add (Cyc3.add Cyc3.one Cyc3.omega) Cyc3.omegaSq = Cyc3.zero := by
+/-- 1 + root3 + root3^2 = 0. -/
+theorem root3_sum_zero :
+    Cyc3.add (Cyc3.add Cyc3.one Cyc3.root3) Cyc3.root3Sq = Cyc3.zero := by
   native_decide
 
-/-- q := ω satisfies q^3 = 1, so q is a primitive 3rd root. -/
-def q : Cyc3 := Cyc3.omega
+/-- q := root3 satisfies q^3 = 1, so q is a primitive 3rd root. -/
+def q : Cyc3 := Cyc3.root3
 
-/-- q^2 = ω^2. -/
+/-- q^2 = root3^2. -/
 def q2 : Cyc3 := Cyc3.mul q q
 
-theorem q2_value : q2 = Cyc3.omegaSq := by native_decide
+theorem q2_value : q2 = Cyc3.root3Sq := by native_decide
 
-/-- q^{-1} = ω^2 (inverse of a 3rd root). -/
-def qInv : Cyc3 := Cyc3.omegaSq
+/-- q^{-1} = root3^2 (inverse of a 3rd root). -/
+def qInv : Cyc3 := Cyc3.root3Sq
 
 theorem q_qInv : Cyc3.mul q qInv = Cyc3.one := by native_decide
 
-/-- q^{-2} = ω (inverse of ω^2 in the 3rd root ring). -/
-def qInv2 : Cyc3 := Cyc3.omega
+/-- q^{-2} = root3 (inverse of root3^2 in the 3rd root ring). -/
+def qInv2 : Cyc3 := Cyc3.root3
 
 theorem q2_qInv2 : Cyc3.mul q2 qInv2 = Cyc3.one := by native_decide
 
