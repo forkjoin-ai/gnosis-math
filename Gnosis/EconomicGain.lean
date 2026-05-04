@@ -8,7 +8,7 @@
   can regress, and merge rate is uncorrelated with scanner quality.
   Every theorem below falsifies that null model.
 
-  All proofs closed by omega / rfl / exact — zero sorry.
+  All proofs closed by Init Nat.* / rfl / exact — zero sorry, zero omega.
 -/
 import Init
 import Gnosis.CouplingCost
@@ -49,10 +49,34 @@ theorem deceptacon_not_additive (a b : SpeedupFactor)
     show (a + 2) + (b + 2) ≤ (a + 2) * (b + 2)
     have hexp : (a + 2) * (b + 2) = a * b + 2 * a + 2 * b + 4 := by
       rw [Nat.mul_add, Nat.add_mul, Nat.add_mul]
-      have h1 : a * 2 = 2 * a := Nat.mul_comm _ _
-      have h2 : 2 * 2 = 4 := rfl
-      omega
-    omega
+      -- Goal: a * b + 2 * b + (a * 2 + 2 * 2) = a * b + 2 * a + 2 * b + 4
+      rw [show (2 * 2 : Nat) = 4 from rfl, Nat.mul_comm a 2]
+      -- Goal: a * b + 2 * b + (2 * a + 4) = a * b + 2 * a + 2 * b + 4
+      rw [← Nat.add_assoc (a * b + 2 * b) (2 * a) 4]
+      -- Goal: a * b + 2 * b + 2 * a + 4 = a * b + 2 * a + 2 * b + 4
+      rw [Nat.add_right_comm (a * b) (2 * b) (2 * a)]
+    -- Now close (a + 2) + (b + 2) ≤ (a + 2) * (b + 2) via hexp.
+    rw [hexp]
+    -- Goal: (a + 2) + (b + 2) ≤ a * b + 2 * a + 2 * b + 4
+    -- Strategy: 2*a = a + a, 2*b = b + b, so RHS ≥ a + a + b + b + 4 ≥ a + b + 4 = LHS.
+    -- LHS rewrites to a + b + 4.
+    have hLhs : (a + 2) + (b + 2) = a + b + 4 := by
+      rw [Nat.add_assoc a 2 (b + 2), Nat.add_comm 2 (b + 2),
+          Nat.add_assoc b 2 2, ← Nat.add_assoc a b (2 + 2)]
+    rw [hLhs]
+    -- Goal: a + b + 4 ≤ a * b + 2 * a + 2 * b + 4
+    -- Suffices to show a + b ≤ a * b + 2 * a + 2 * b.
+    apply Nat.add_le_add_right
+    -- Goal: a + b ≤ a * b + 2 * a + 2 * b
+    -- a * b + 2 * a + 2 * b ≥ 2 * a + 2 * b ≥ a + b.
+    have h2a : a ≤ 2 * a := by
+      rw [Nat.two_mul]; exact Nat.le_add_right a a
+    have h2b : b ≤ 2 * b := by
+      rw [Nat.two_mul]; exact Nat.le_add_right b b
+    have hab : a + b ≤ 2 * a + 2 * b := Nat.add_le_add h2a h2b
+    have hMid : 2 * a + 2 * b ≤ a * b + 2 * a + 2 * b :=
+      Nat.add_le_add_right (Nat.le_add_left (2 * a) (a * b)) (2 * b)
+    exact Nat.le_trans hab hMid
 
 /-- Composed speedup strictly exceeds each individual factor. -/
 theorem composed_speedup_strict (a b : SpeedupFactor)
@@ -80,16 +104,16 @@ theorem buleyean_rl_cost_inverse (n : Nat) :
     buleyeanRLCost (n + 1) ≤ buleyeanRLCost n := by
   unfold buleyeanRLCost
   apply Nat.div_le_div_left
-  · omega
-  · omega
+  · exact Nat.le_succ (n + 1)
+  · exact Nat.succ_pos n
 
 /-- Buleyean RL is strictly cheaper than reward RL with ≥ 1 signal. -/
 theorem buleyean_strictly_cheaper (n : Nat) (h : 0 < n) :
     buleyeanRLCost n < rewardRLCost := by
   unfold buleyeanRLCost rewardRLCost
   apply Nat.div_lt_self
-  · omega
-  · omega
+  · decide
+  · exact Nat.succ_lt_succ h
 
 /-- Buleyean cost is bounded above by the initial reward RL cost. -/
 theorem buleyean_bounded_by_reward (n : Nat) :
@@ -126,10 +150,10 @@ theorem scanner_flywheel_monotone (s : FlywheelState) :
   show s.quality * (s.findings + 1)
        ≤ (s.quality + 1) * (s.findings + s.repos + 1)
   have h1 : s.quality * (s.findings + 1) ≤ s.quality * (s.findings + s.repos + 1) :=
-    Nat.mul_le_mul_left s.quality (by omega)
+    Nat.mul_le_mul_left s.quality (Nat.succ_le_succ (Nat.le_add_right s.findings s.repos))
   have h2 : s.quality * (s.findings + s.repos + 1)
             ≤ (s.quality + 1) * (s.findings + s.repos + 1) :=
-    Nat.mul_le_mul_right (s.findings + s.repos + 1) (by omega)
+    Nat.mul_le_mul_right (s.findings + s.repos + 1) (Nat.le_succ s.quality)
   exact Nat.le_trans h1 h2
 
 /-- Composing two flywheel steps is better than one. -/
@@ -181,7 +205,7 @@ theorem merge_rate_monotone (m : MergeRateSnapshot) (extra : Nat) :
   unfold mergeRate1000
   show m.merged * 1000 / m.total ≤ (m.merged + extra) * 1000 / m.total
   apply Nat.div_le_div_right
-  exact Nat.mul_le_mul_right 1000 (by omega)
+  exact Nat.mul_le_mul_right 1000 (Nat.le_add_right m.merged extra)
 
 /-- A perfect merge rate (all PRs merged) is the maximum. -/
 theorem perfect_merge_rate_is_max (m : MergeRateSnapshot)
