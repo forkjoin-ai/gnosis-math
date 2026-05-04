@@ -86,8 +86,8 @@ theorem barbelo_prevents_extinction (f : Field K) (i : Fin K) :
 
 -- No dead modes (buleyean_positivity in the field)
 theorem no_dead_modes (f : Field K) (i : Fin K) :
-    f.weights i > 0 := by
-  have := f.positive i; omega
+    f.weights i > 0 :=
+  f.positive i
 
 -- ═══════════════════════════════════════════════════════════════════════════════
 -- Sophia: Wisdom through Falling (the rejection quantum, W±)
@@ -98,8 +98,7 @@ theorem sophia_peak_has_max_weight (k : Kenoma K) (i j : Fin K)
     (hi : isAletheiaPeak k i) :
     sophiaWeight k i ≥ sophiaWeight k j := by
   unfold sophiaWeight
-  have := hi j
-  omega
+  exact Nat.sub_le_sub_left (hi j) k.totalRejections
 
 -- Sophia's exchange energy = exploration budget (K - 1)
 def explorationBudget (K : Nat) : Nat := K - 1
@@ -143,10 +142,8 @@ theorem demiurge_maximum :
 -- Two observers reading the same kenoma agree on the peak (neutral current)
 theorem aletheia_coherence (k : Kenoma K) (i : Fin K)
     (hi : isAletheiaPeak k i) (j : Fin K) (hj : isAletheiaPeak k j) :
-    k.rejections i = k.rejections j := by
-  have h1 := hi j
-  have h2 := hj i
-  omega
+    k.rejections i = k.rejections j :=
+  Nat.le_antisymm (hi j) (hj i)
 
 -- If all modes have equal rejections, the boson is in superposition
 -- (no truth to be found -- the kenoma has no structure)
@@ -170,8 +167,8 @@ theorem pleroma_no_exclusion (K : Nat) (i : Fin K) (n : Nat) :
 
 -- Multiple Logos flows through the same pipeline edge
 theorem multiple_logos_per_edge (n : Nat) :
-    ∃ (p : Pleroma 6), p.occupation ⟨0, by omega⟩ = n :=
-  ⟨⟨fun j => if j == ⟨0, by omega⟩ then n else 0⟩, by simp⟩
+    ∃ (p : Pleroma 6), p.occupation ⟨0, by decide⟩ = n :=
+  ⟨⟨fun j => if j == ⟨0, by decide⟩ then n else 0⟩, by simp⟩
 
 -- ═══════════════════════════════════════════════════════════════════════════════
 -- The Skyrms Propagator: walker traces the emanation path
@@ -219,11 +216,11 @@ theorem gauge_invariance_213 :
 
 -- For a two-mode kenoma, the boson is at the less-rejected mode
 theorem two_mode_prediction (k : Kenoma 2)
-    (h : k.rejections ⟨0, by omega⟩ < k.rejections ⟨1, by omega⟩) :
-    sophiaWeight k ⟨0, by omega⟩ > sophiaWeight k ⟨1, by omega⟩ := by
+    (h : k.rejections ⟨0, by decide⟩ < k.rejections ⟨1, by decide⟩) :
+    sophiaWeight k ⟨0, by decide⟩ > sophiaWeight k ⟨1, by decide⟩ := by
   unfold sophiaWeight
-  have b0 := k.bounded ⟨0, by omega⟩
-  have b1 := k.bounded ⟨1, by omega⟩
+  have b0 := k.bounded ⟨0, by decide⟩
+  have b1 := k.bounded ⟨1, by decide⟩
   omega
 
 -- ═══════════════════════════════════════════════════════════════════════════════
@@ -236,9 +233,9 @@ theorem skyrms_boson_correspondence :
     -- Demiurge confinement: missing stage has positive mass
     demiurgeEnergy [.compile, .dispatch] > 0 ∧
     -- Barbelo: sliver field has positive weight everywhere
-    (barbelo 3).weights ⟨0, by omega⟩ ≥ 1 ∧
+    (barbelo 3).weights ⟨0, by decide⟩ ≥ 1 ∧
     -- Pleroma: multiple emanations per mode
-    (∃ (p : Pleroma 6), p.occupation ⟨0, by omega⟩ = 42) ∧
+    (∃ (p : Pleroma 6), p.occupation ⟨0, by decide⟩ = 42) ∧
     -- Demiurge maximum: empty pipeline has maximum mass
     demiurgeEnergy [] = 3 := by
   constructor
@@ -248,7 +245,7 @@ theorem skyrms_boson_correspondence :
   constructor
   · unfold barbelo; decide
   constructor
-  · exact ⟨⟨fun j => if j == ⟨0, by omega⟩ then 42 else 0⟩, by simp⟩
+  · exact ⟨⟨fun j => if j == ⟨0, by decide⟩ then 42 else 0⟩, by simp⟩
   · rfl
 
 -- ═══════════════════════════════════════════════════════════════════════════════
@@ -284,9 +281,9 @@ theorem complete_boson_prediction :
     demiurgeEnergy [.compile, .dispatch, .compress] =
       demiurgeEnergy [.dispatch, .compress, .compile] ∧
     -- Barbelo (vacuum)
-    (barbelo 3).weights ⟨0, by omega⟩ ≥ 1 ∧
+    (barbelo 3).weights ⟨0, by decide⟩ ≥ 1 ∧
     -- Pleroma (Bose statistics)
-    (∃ p : Pleroma 6, p.occupation ⟨0, by omega⟩ = 42) := by
+    (∃ p : Pleroma 6, p.occupation ⟨0, by decide⟩ = 42) := by
   constructor
   · rfl
   constructor
@@ -295,6 +292,6 @@ theorem complete_boson_prediction :
   · rfl
   constructor
   · unfold barbelo; decide
-  · exact ⟨⟨fun j => if j == ⟨0, by omega⟩ then 42 else 0⟩, by simp⟩
+  · exact ⟨⟨fun j => if j == ⟨0, by decide⟩ then 42 else 0⟩, by simp⟩
 
 end BosonPosition

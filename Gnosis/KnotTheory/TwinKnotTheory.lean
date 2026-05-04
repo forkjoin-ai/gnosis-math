@@ -30,7 +30,8 @@ theorem braid_strands : 5 = 5 := rfl
 /-- THM-CROSSING-NUMBER-BOUNDED: The crossing number of the personality braid
     is bounded by (5 choose 2) × R = 10R. At most 10 pairwise interactions
     per round, R rounds total. -/
-theorem crossing_bound (R : Nat) : 10 * R ≥ R := by omega
+theorem crossing_bound (R : Nat) : 10 * R ≥ R :=
+  Nat.le_mul_of_pos_left R (by decide : 0 < 10)
 
 /-- THM-UNKNOT-IS-BALANCED: The balanced profile (all at PHI_INV) has
     zero crossings -- it is the unknot. Minimal complexity. -/
@@ -102,7 +103,7 @@ theorem curiosity_deficit (try_ phiInv : Nat) (h : try_ > phiInv) :
 
 /-- THM-JOY-IS-ZERO-DEFICIT: Joy = all dimensions at PHI_INV.
     Total deficit = 0. Perfect balance = joy. -/
-theorem joy_is_balance : 0 + 0 + 0 + 0 + 0 = 0 := by omega
+theorem joy_is_balance : 0 + 0 + 0 + 0 + 0 = 0 := by decide
 
 /-- THM-EMOTION-BOUNDED: No emotion can have intensity > 100
     (dimensions are bounded to [0, 100]). Emotions are finite. -/

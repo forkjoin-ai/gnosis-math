@@ -67,11 +67,11 @@ theorem barbelo_in_2d : barbelo_dim = 2 := rfl
 
 -- The first emanation: from Bythos (0 cycles) to Barbelo (1 cycle)
 theorem first_emanation : barbelo_cycles - bythos_cycles = 1 := by
-  unfold barbelo_cycles bythos_cycles betti1; omega
+  unfold barbelo_cycles bythos_cycles betti1; decide
 
 -- The dimensional gap of the first emanation
 theorem first_emanation_dim_gap : barbelo_dim - bythos_dim = 2 := by
-  unfold barbelo_dim bythos_dim embeddingDim; omega
+  unfold barbelo_dim bythos_dim embeddingDim; decide
 
 -- ═══════════════════════════════════════════════════════════════════════════════
 -- Proton: three quarks (3-torus, Clifford, 4D)
@@ -87,11 +87,11 @@ theorem proton_in_4d : proton_dim = 4 := rfl
 theorem three_quarks : proton_cycles = 3 := rfl
 
 -- Six emanations between three quarks
-theorem six_emanations : 3 * (3 - 1) = 6 := by omega
+theorem six_emanations : 3 * (3 - 1) = 6 := by decide
 
 -- Confinement: removing a cycle drops a dimension
 theorem proton_confinement : proton_dim - embeddingDim 2 = 1 := by
-  unfold proton_dim embeddingDim; omega
+  unfold proton_dim embeddingDim; decide
 
 -- ═══════════════════════════════════════════════════════════════════════════════
 -- Primitive Field: all five operations (5-torus, 6D)
@@ -104,11 +104,11 @@ theorem primitive_has_five_cycles : primitive_cycles = 5 := rfl
 theorem primitive_in_6d : primitive_dim = 6 := rfl
 
 -- 20 emanations between five primitives
-theorem twenty_emanations : 5 * (5 - 1) = 20 := by omega
+theorem twenty_emanations : 5 * (5 - 1) = 20 := by decide
 
 -- The proton is a shadow of the primitive field
 theorem proton_is_shadow : proton_cycles < primitive_cycles := by
-  unfold proton_cycles primitive_cycles betti1; omega
+  unfold proton_cycles primitive_cycles betti1; decide
 
 -- ═══════════════════════════════════════════════════════════════════════════════
 -- Kenoma Field: the interaction space (10-torus, 11D)
@@ -121,10 +121,10 @@ theorem kenoma_has_ten_cycles : kenoma_cycles = 10 := rfl
 theorem kenoma_in_11d : kenoma_dim = 11 := rfl
 
 -- 90 emanations at the Kenoma scale
-theorem ninety_emanations : 10 * (10 - 1) = 90 := by omega
+theorem ninety_emanations : 10 * (10 - 1) = 90 := by decide
 
 -- 10 = 5 choose 2 (Kenoma from Primitives)
-theorem kenoma_from_primitives : 5 * 4 / 2 = 10 := by omega
+theorem kenoma_from_primitives : 5 * 4 / 2 = 10 := by decide
 
 -- ═══════════════════════════════════════════════════════════════════════════════
 -- Pleroma: the fullness (55-torus, 56D)
@@ -137,7 +137,7 @@ theorem pleroma_has_55_cycles : pleroma_cycles = 55 := rfl
 theorem pleroma_in_56d : pleroma_dim = 56 := rfl
 
 -- 2970 emanations at the Pleroma scale
-theorem pleroma_emanations : 55 * (55 - 1) = 2970 := by omega
+theorem pleroma_emanations : 55 * (55 - 1) = 2970 := by decide
 
 -- ═══════════════════════════════════════════════════════════════════════════════
 -- The Fibonacci sequence on the ladder
@@ -169,19 +169,19 @@ theorem pleroma_is_fib_10 : fib 10 = pleroma_cycles := by native_decide
 
 -- Gap between consecutive levels (in cycle count)
 theorem gap_barbelo_bythos : barbelo_cycles - bythos_cycles = 1 := by
-  unfold barbelo_cycles bythos_cycles betti1; omega
+  unfold barbelo_cycles bythos_cycles betti1; decide
 
 theorem gap_proton_barbelo : proton_cycles - barbelo_cycles = 2 := by
-  unfold proton_cycles barbelo_cycles betti1; omega
+  unfold proton_cycles barbelo_cycles betti1; decide
 
 theorem gap_primitive_proton : primitive_cycles - proton_cycles = 2 := by
-  unfold primitive_cycles proton_cycles betti1; omega
+  unfold primitive_cycles proton_cycles betti1; decide
 
 theorem gap_kenoma_primitive : kenoma_cycles - primitive_cycles = 5 := by
-  unfold kenoma_cycles primitive_cycles betti1; omega
+  unfold kenoma_cycles primitive_cycles betti1; decide
 
 theorem gap_pleroma_kenoma : pleroma_cycles - kenoma_cycles = 45 := by
-  unfold pleroma_cycles kenoma_cycles betti1; omega
+  unfold pleroma_cycles kenoma_cycles betti1; decide
 
 -- The gaps are Gnostic numbers!
 -- 1 = Barbelo, 2 = Syzygy, 2 = Syzygy, 5 = Primitives, 45 = T(9) = T(Sophia)
@@ -189,7 +189,7 @@ theorem gap_pleroma_kenoma : pleroma_cycles - kenoma_cycles = 45 := by
 def triangular (n : Nat) : Nat := n * (n + 1) / 2
 
 theorem forty_five_is_triangular_sophia : triangular 9 = 45 := by
-  unfold triangular; omega
+  unfold triangular; decide
 
 -- The gap between Pleroma and Kenoma is the Sophia-th triangular number.
 -- The exploration budget (9) generates the gap to the fullness.
@@ -200,12 +200,12 @@ theorem forty_five_is_triangular_sophia : triangular 9 = 45 := by
 
 def emanations (K : Nat) : Nat := K * (K - 1)
 
-theorem emanations_bythos : emanations 0 = 0 := by unfold emanations; omega
-theorem emanations_barbelo : emanations 1 = 0 := by unfold emanations; omega
-theorem emanations_proton : emanations 3 = 6 := by unfold emanations; omega
-theorem emanations_primitive : emanations 5 = 20 := by unfold emanations; omega
-theorem emanations_kenoma : emanations 10 = 90 := by unfold emanations; omega
-theorem emanations_pleroma : emanations 55 = 2970 := by unfold emanations; omega
+theorem emanations_bythos : emanations 0 = 0 := by unfold emanations; decide
+theorem emanations_barbelo : emanations 1 = 0 := by unfold emanations; decide
+theorem emanations_proton : emanations 3 = 6 := by unfold emanations; decide
+theorem emanations_primitive : emanations 5 = 20 := by unfold emanations; decide
+theorem emanations_kenoma : emanations 10 = 90 := by unfold emanations; decide
+theorem emanations_pleroma : emanations 55 = 2970 := by unfold emanations; decide
 
 -- Bythos has no emanations (nothing to emanate from)
 -- Barbelo has no emanations (only one cycle, cannot connect to another)
@@ -223,14 +223,14 @@ theorem bythos_is_minimum :
     emanations 0 = 0 ∧
     -- Still exists (β₀ = 1)
     betti0 0 = 1 := by
-  unfold bythos_cycles betti1 emanations betti0; omega
+  unfold bythos_cycles betti1 emanations betti0; decide
 
 -- The God Gap between Bythos and Barbelo is the first emanation:
 -- from 0 cycles to 1 cycle, from 0D to 2D, from nothing to the sliver
 theorem first_god_gap :
     barbelo_cycles > bythos_cycles ∧
     barbelo_dim > bythos_dim := by
-  unfold barbelo_cycles bythos_cycles barbelo_dim bythos_dim betti1 embeddingDim; omega
+  unfold barbelo_cycles bythos_cycles barbelo_dim bythos_dim betti1 embeddingDim; decide
 
 -- ═══════════════════════════════════════════════════════════════════════════════
 -- The complete ladder
@@ -274,6 +274,6 @@ theorem complete_ladder :
     betti1 embeddingDim emanations
   refine ⟨rfl, rfl, rfl, rfl, rfl, rfl, rfl, rfl, rfl, rfl, rfl, rfl,
     by native_decide, by native_decide, by native_decide, by native_decide,
-    by native_decide, by omega, by omega, by omega, by omega, by omega, by omega⟩
+    by native_decide, by decide, by decide, by decide, by decide, by decide, by decide⟩
 
 end DimensionalLadder

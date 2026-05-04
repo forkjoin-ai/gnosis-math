@@ -68,14 +68,14 @@ theorem lifted_lift_score_increment (b : BiSidedBit) :
   cases b with
   | mk l c =>
     show (l + 1) + c = l + c + 1
-    omega
+    exact Nat.add_right_comm l 1 c
 
 theorem contracted_lift_score_increment (b : BiSidedBit) :
     biSidedScore (clinamenLiftContracted b) = biSidedScore b + 1 := by
   cases b with
   | mk l c =>
     show l + (c + 1) = l + c + 1
-    omega
+    rfl
 
 theorem lift_contract_round_trip_lifted_when_positive
     (b : BiSidedBit) (h : 0 < b.lifted) :
@@ -84,8 +84,7 @@ theorem lift_contract_round_trip_lifted_when_positive
   | mk l c =>
     have hL : 0 < l := h
     show ({ lifted := (l - 1) + 1, contracted := c } : BiSidedBit) = ⟨l, c⟩
-    have : (l - 1) + 1 = l := by omega
-    rw [this]
+    rw [Nat.sub_add_cancel hL]
 
 theorem lift_contract_round_trip_contracted_when_positive
     (b : BiSidedBit) (h : 0 < b.contracted) :
@@ -94,8 +93,7 @@ theorem lift_contract_round_trip_contracted_when_positive
   | mk l c =>
     have hC : 0 < c := h
     show ({ lifted := l, contracted := (c - 1) + 1 } : BiSidedBit) = ⟨l, c⟩
-    have : (c - 1) + 1 = c := by omega
-    rw [this]
+    rw [Nat.sub_add_cancel hC]
 
 /-! ## Phase shift between the two sides -/
 
@@ -116,7 +114,11 @@ theorem phase_shift_lifted_to_contracted_preserves_score_when_positive
   | mk l c =>
     have hL : 0 < l := h
     show (l - 1) + (c + 1) = l + c
-    omega
+    -- (l-1) + (c+1) = (l-1) + c + 1 = (l-1) + 1 + c = l + c
+    rw [show ((l - 1) + (c + 1)) = ((l - 1) + 1) + c from by
+          rw [show ((l - 1) + (c + 1)) = ((l - 1) + c + 1) from rfl,
+              Nat.add_right_comm (l - 1) c 1],
+        Nat.sub_add_cancel hL]
 
 theorem phase_shift_contracted_to_lifted_preserves_score_when_positive
     (b : BiSidedBit) (h : 0 < b.contracted) :
@@ -125,7 +127,10 @@ theorem phase_shift_contracted_to_lifted_preserves_score_when_positive
   | mk l c =>
     have hC : 0 < c := h
     show (l + 1) + (c - 1) = l + c
-    omega
+    -- (l+1) + (c-1) = l + (1 + (c-1)) = l + ((c-1) + 1) = l + c
+    rw [show ((l + 1) + (c - 1)) = (l + ((c - 1) + 1)) from by
+          rw [Nat.add_assoc, Nat.add_comm 1 (c - 1)],
+        Nat.sub_add_cancel hC]
 
 theorem phase_shift_round_trip_when_lifted_positive
     (b : BiSidedBit) (h : 0 < b.lifted) :
@@ -134,9 +139,7 @@ theorem phase_shift_round_trip_when_lifted_positive
   | mk l c =>
     have hL : 0 < l := h
     show ({ lifted := (l - 1) + 1, contracted := (c + 1) - 1 } : BiSidedBit) = ⟨l, c⟩
-    have h1 : (l - 1) + 1 = l := by omega
-    have h2 : (c + 1) - 1 = c := by omega
-    rw [h1, h2]
+    rw [Nat.sub_add_cancel hL, Nat.add_sub_cancel]
 
 /-! ## Bridge to the Bule unit -/
 
@@ -152,7 +155,7 @@ theorem bisided_score_equals_bule_score (b : BiSidedBit) :
   cases b with
   | mk l c =>
     show l + c = l + c + 0
-    omega
+    exact (Nat.add_zero (l + c)).symm
 
 /-- The bi-sided bit decomposes into the waste + action (= opportunity)
 faces of its Bule projection — the third face (entropy / diversity) is
@@ -167,7 +170,7 @@ theorem bisided_decomposes_into_waste_and_action (b : BiSidedBit) :
   cases b with
   | mk l c =>
     show l + c + 0 = l + c
-    omega
+    exact Nat.add_zero (l + c)
 
 /-! ## +1 / −1 clinamen residue on the bi-sided bit -/
 
@@ -190,9 +193,11 @@ theorem bisided_contract_residue_is_minus_one_when_positive
     have hC' : 0 < c := hC
     refine ⟨?_, ?_⟩
     · show (l - 1) + c + 1 = l + c
-      omega
+      -- (l-1) + c + 1 = (l-1) + 1 + c = l + c
+      rw [Nat.add_right_comm (l - 1) c 1, Nat.sub_add_cancel hL']
     · show l + (c - 1) + 1 = l + c
-      omega
+      -- l + (c-1) + 1 = l + ((c-1) + 1) = l + c
+      rw [Nat.add_assoc, Nat.sub_add_cancel hC']
 
 end BuleyBiSidedBit
 end Gnosis

@@ -9,7 +9,7 @@
   positive, scanner-detectable cost surplus, and that the scanner
   flywheel is monotone non-decreasing.
 
-  All proofs are closed by omega / rfl / exact — zero sorry.
+  All proofs are closed by Init `Nat.*` lemmas, `decide`, `rfl`, or `exact` — zero sorry, zero omega.
 -/
 import Init
 import Gnosis.BrunnianScanner
@@ -69,18 +69,17 @@ theorem one_more_finding_improves_profit
     profitable (f + 1) v c := by
   unfold profitable at *
   show c < (f + 1) * v
-  have : (f + 1) * v = f * v + v := by
-    show (f + 1) * v = f * v + v
-    rw [Nat.add_mul]; simp [Nat.one_mul]
-  omega
+  have hExpand : (f + 1) * v = f * v + v := by
+    rw [Nat.add_mul, Nat.one_mul]
+  rw [hExpand]
+  exact Nat.lt_of_lt_of_le h (Nat.le_add_right _ _)
 
 /-- Profitability is monotone: more findings never hurts. -/
 theorem findings_monotone_profit
     (f₁ f₂ v c : Nat) (hf : f₁ ≤ f₂) (h : profitable f₁ v c) :
     profitable f₂ v c := by
   unfold profitable at *
-  have : f₁ * v ≤ f₂ * v := Nat.mul_le_mul_right v hf
-  omega
+  exact Nat.lt_of_lt_of_le h (Nat.mul_le_mul_right v hf)
 
 /-- Zero findings means zero value — a zero-finding scan is never profitable
     (assuming positive cost). -/
@@ -103,12 +102,12 @@ theorem crossing_cost_monotone (c₁ c₂ : Nat) (h : c₁ ≤ c₂) :
 /-- Reducing crossings by d saves exactly d cost units. -/
 theorem refactoring_saves (crossings d : Nat) (h : d ≤ crossings) :
     crossingCost (crossings - d) + d = crossingCost crossings := by
-  unfold crossingCost; omega
+  unfold crossingCost; exact Nat.sub_add_cancel h
 
 /-- Refactoring cannot exceed total crossing count (no overcounting). -/
-theorem refactoring_bounded (crossings d : Nat) (h : d ≤ crossings) :
+theorem refactoring_bounded (crossings d : Nat) (_h : d ≤ crossings) :
     crossingCost crossings - d ≤ crossingCost crossings := by
-  unfold crossingCost; omega
+  unfold crossingCost; exact Nat.sub_le crossings d
 
 /-- A Brunnian system carries strictly more cost than pairwise analysis predicts. -/
 theorem brunnian_cost_surplus (b : BrunnianBeta1) (h : isBrunnian b) :
@@ -125,55 +124,54 @@ theorem surplus_eq_emergent_gap (b : BrunnianBeta1) (_h : isBrunnian b) :
 theorem pairwise_underestimates_cost (b : BrunnianBeta1) (h : isBrunnian b) :
     crossingCost b.pairwiseSum + emergentGap b = crossingCost b.full := by
   unfold crossingCost emergentGap
-  have hh : b.pairwiseSum < b.full := h
-  omega
+  exact Nat.add_sub_of_le (Nat.le_of_lt h)
 
 /-- Scanner quality is always at least 1. -/
 theorem scanner_quality_pos (f : Nat) :
     0 < scannerQuality f := by
-  unfold scannerQuality; omega
+  unfold scannerQuality; exact Nat.succ_pos f
 
 /-- Quality is monotone: more findings never decreases quality. -/
 theorem scanner_quality_monotone (f₁ f₂ : Nat) (h : f₁ ≤ f₂) :
     scannerQuality f₁ ≤ scannerQuality f₂ := by
-  unfold scannerQuality; omega
+  unfold scannerQuality; exact Nat.succ_le_succ h
 
 /-- Each flywheel step increases the repo count. -/
 theorem flywheel_repos_grow (s : FlywheelState) :
     s.repos < (flywheelStep s).repos := by
   show s.repos < s.repos + 1
-  omega
+  exact Nat.lt_succ_self s.repos
 
 /-- Each flywheel step increases the quality score. -/
 theorem flywheel_quality_grows (s : FlywheelState) :
     s.quality < (flywheelStep s).quality := by
   show s.quality < s.quality + 1
-  omega
+  exact Nat.lt_succ_self s.quality
 
 /-- Each flywheel step weakly increases findings. -/
 theorem flywheel_findings_monotone (s : FlywheelState) :
     s.findings ≤ (flywheelStep s).findings := by
   show s.findings ≤ s.findings + s.repos
-  omega
+  exact Nat.le_add_right s.findings s.repos
 
 /-- Starting from a positive repo count, findings strictly increase. -/
 theorem flywheel_findings_grow_if_repos_pos (s : FlywheelState)
     (h : 0 < s.repos) :
     s.findings < (flywheelStep s).findings := by
   show s.findings < s.findings + s.repos
-  omega
+  exact Nat.lt_add_of_pos_right h
 
 /-- After two flywheel steps, quality exceeds the initial value by at least 2. -/
 theorem flywheel_two_steps_quality (s : FlywheelState) :
     s.quality + 2 ≤ (flywheelStep (flywheelStep s)).quality := by
   show s.quality + 2 ≤ s.quality + 1 + 1
-  omega
+  exact Nat.le_refl _
 
 /-- The flywheel never regresses: quality is non-decreasing. -/
 theorem flywheel_no_regression (s : FlywheelState) :
     s.quality ≤ (flywheelStep s).quality := by
   show s.quality ≤ s.quality + 1
-  omega
+  exact Nat.le_succ s.quality
 
 /-- A profile's defense weight provides a lower bound on scanner ROI capacity:
     any coupling gap ≤ defenseWeight is economically containable. -/
@@ -198,15 +196,15 @@ theorem buleyean_cost_inverse (n : Nat) :
     buleyeanCost (n + 1) ≤ buleyeanCost n := by
   unfold buleyeanCost
   apply Nat.div_le_div_left
-  · omega
-  · omega
+  · exact Nat.le_succ (n + 1)
+  · exact Nat.succ_pos n
 
 /-- Each additional training signal weakly reduces buleyean RL cost. -/
 theorem buleyean_cost_monotone_decreasing (n : Nat) :
     buleyeanCost (n + 2) ≤ buleyeanCost n := by
   unfold buleyeanCost
   apply Nat.div_le_div_left
-  · omega
-  · omega
+  · exact Nat.le_add_right (n + 1) 2
+  · exact Nat.succ_pos n
 
 end Gnosis.CouplingCost

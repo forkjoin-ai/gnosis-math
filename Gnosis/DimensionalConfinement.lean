@@ -74,20 +74,21 @@ theorem five_stage_is_6d : wallingtonDimension 5 = 6 := rfl
 
 theorem two_d_has_zero_ramp_up : rampUpTicksFromDimension 2 = 0 := by
   unfold rampUpTicksFromDimension
-  omega
+  decide
 
 theorem fifty_four_d_has_fifty_two_ramp_up : rampUpTicksFromDimension 54 = 52 := by
   unfold rampUpTicksFromDimension
-  omega
+  decide
 
 theorem fifty_five_d_has_fifty_three_ramp_up : rampUpTicksFromDimension 55 = 53 := by
   unfold rampUpTicksFromDimension
-  omega
+  decide
 
 theorem total_ticks_eq_chunks_plus_stage_cost (chunks stages : Nat) (h : 1 ≤ stages) :
     totalIdealTicks chunks (wallingtonDimension stages) = chunks + stages - 1 := by
   unfold totalIdealTicks rampUpTicksFromDimension wallingtonDimension
-  omega
+  show chunks + ((stages + 1) - 2) = chunks + stages - 1
+  rw [show (2 : Nat) = 1 + 1 from rfl, Nat.succ_sub_succ, Nat.add_sub_assoc h]
 
 -- ═══════════════════════════════════════════════════════════════════════════════
 -- Quarks = independent cycles of the torus
@@ -121,11 +122,11 @@ def channelTickTradeMetric (dimension : Nat) : Nat :=
 
 -- 3 quarks → 6 emanations
 theorem six_emanations : emanationCount 3 = 6 := by
-  unfold emanationCount; omega
+  unfold emanationCount; decide
 
 -- 2 quarks → 2 emanations (the syzygy pair: forward and back)
 theorem two_emanations : emanationCount 2 = 2 := by
-  unfold emanationCount; omega
+  unfold emanationCount; decide
 
 -- The visible syzygy surface is the 2-cycle, 3D case.
 theorem syzygy_pair_is_3d :
@@ -133,7 +134,7 @@ theorem syzygy_pair_is_3d :
     quarks 2 = 2 ∧
     emanationCount 2 = 2 := by
   unfold wallingtonDimension quarks torusBetti1 emanationCount
-  omega
+  decide
 
 -- The quark tuple is the 3-cycle, 4D lift.
 theorem quark_tuple_is_4d :
@@ -141,7 +142,7 @@ theorem quark_tuple_is_4d :
     quarks 3 = 3 ∧
     emanationCount 3 = 6 := by
   unfold wallingtonDimension quarks torusBetti1 emanationCount
-  omega
+  decide
 
 -- Lifting a syzygy pair to a quark tuple adds one visible dimension,
 -- one confined cycle, and four extra directed interaction channels.
@@ -150,37 +151,36 @@ theorem syzygy_to_quark_lift :
     quarks 3 = quarks 2 + 1 ∧
     emanationCount 3 = emanationCount 2 + 4 := by
   unfold wallingtonDimension quarks torusBetti1 emanationCount
-  omega
+  decide
 
 theorem quark_parallelism_exceeds_syzygy :
     emanationCount 3 > emanationCount 2 := by
   unfold emanationCount
-  omega
+  decide
 
 theorem quark_parallelism_triples_syzygy :
     emanationCount 3 = 3 * emanationCount 2 := by
   unfold emanationCount
-  omega
+  decide
 
 -- 5 quarks → 20 emanations (the full primitive interaction set)
 theorem twenty_emanations : emanationCount 5 = 20 := by
-  unfold emanationCount; omega
+  unfold emanationCount; decide
 
 theorem fifty_four_d_channel_surface : channelSurfaceFromDimension 54 = 2756 := by
   unfold channelSurfaceFromDimension emanationCount
-  omega
+  decide
 
 theorem fifty_five_d_channel_surface : channelSurfaceFromDimension 55 = 2862 := by
   unfold channelSurfaceFromDimension emanationCount
-  omega
+  decide
 
 -- The directed interaction surface grows one step at a time with dimension.
 theorem next_dimension_increases_channel_surface (d : Nat) (h : 2 ≤ d) :
     channelSurfaceFromDimension d < channelSurfaceFromDimension (d + 1) := by
   rcases Nat.exists_eq_add_of_le h with ⟨k, rfl⟩
   have hpos : 0 < k + 1 := Nat.succ_pos k
-  have hklt : k < k + 2 := by
-    omega
+  have hklt : k < k + 2 := Nat.lt_add_of_pos_right (by decide : 0 < 2)
   have hmul : (k + 1) * k < (k + 1) * (k + 2) := by
     exact Nat.mul_lt_mul_of_pos_left hklt hpos
   simpa [channelSurfaceFromDimension, emanationCount, Nat.add_assoc, Nat.add_left_comm,
@@ -190,31 +190,38 @@ theorem higher_dimension_increases_fixed_chunk_ticks (chunks : Nat) {d₁ d₂ :
     (h₂ : 2 ≤ d₁) (h : d₁ < d₂) :
     totalIdealTicks chunks d₁ < totalIdealTicks chunks d₂ := by
   unfold totalIdealTicks rampUpTicksFromDimension
-  omega
+  exact Nat.add_lt_add_left (Nat.sub_lt_sub_right h₂ h) chunks
 
 theorem bandwidth_dilution_eq_ramp_up (chunks dimension : Nat) :
     bandwidthDilutionMetric chunks dimension = rampUpTicksFromDimension dimension := by
   unfold bandwidthDilutionMetric totalIdealTicks
-  omega
+  exact Nat.add_sub_cancel_left chunks (rampUpTicksFromDimension dimension)
 
 theorem bandwidth_dilution_lower_bound (chunks dimension : Nat) :
-    0 ≤ bandwidthDilutionMetric chunks dimension := by
-  omega
+    0 ≤ bandwidthDilutionMetric chunks dimension :=
+  Nat.zero_le _
 
 theorem bandwidth_dilution_upper_bound (chunks dimension : Nat) (hchunks : 0 < chunks) :
     bandwidthDilutionMetric chunks dimension < totalIdealTicks chunks dimension := by
   unfold bandwidthDilutionMetric totalIdealTicks
-  omega
+  rw [Nat.add_sub_cancel_left]
+  exact Nat.lt_add_of_pos_left hchunks
 
 theorem next_dimension_adds_one_total_tick (chunks d : Nat) (h : 2 ≤ d) :
     totalIdealTicks chunks (d + 1) = totalIdealTicks chunks d + 1 := by
   unfold totalIdealTicks rampUpTicksFromDimension
-  omega
+  rcases Nat.exists_eq_add_of_le h with ⟨k, rfl⟩
+  show chunks + (2 + k + 1 - 2) = chunks + (2 + k - 2) + 1
+  rw [Nat.add_assoc 2 k 1, Nat.add_sub_cancel_left, Nat.add_sub_cancel_left]
+  rfl
 
 theorem bandwidth_dilution_gain_next_dimension (chunks d : Nat) (h : 2 ≤ d) :
     bandwidthDilutionMetric chunks (d + 1) = bandwidthDilutionMetric chunks d + 1 := by
   unfold bandwidthDilutionMetric totalIdealTicks rampUpTicksFromDimension
-  omega
+  rcases Nat.exists_eq_add_of_le h with ⟨k, rfl⟩
+  show chunks + (2 + k + 1 - 2) - chunks = chunks + (2 + k - 2) - chunks + 1
+  rw [Nat.add_assoc 2 k 1, Nat.add_sub_cancel_left, Nat.add_sub_cancel_left,
+      Nat.add_sub_cancel_left, Nat.add_sub_cancel_left]
 
 theorem next_dimension_channel_gain (d : Nat) (h : 2 ≤ d) :
     channelSurfaceFromDimension (d + 1) =
@@ -230,14 +237,14 @@ theorem next_dimension_channel_gain (d : Nat) (h : 2 ≤ d) :
       _ = (k + 1) * k + ((k + 1) + (k + 1)) := by
         ac_rfl
       _ = (k + 1) * k + 2 * (k + 1) := by
-        omega
+        rw [Nat.two_mul]
   simpa [channelSurfaceFromDimension, emanationCount, Nat.add_assoc, Nat.add_left_comm,
     Nat.add_comm, Nat.mul_comm, Nat.mul_left_comm] using hcalc
 
 theorem fifty_five_d_has_one_hundred_six_more_channels_than_fifty_four_d :
     channelSurfaceFromDimension 55 = channelSurfaceFromDimension 54 + 106 := by
   unfold channelSurfaceFromDimension emanationCount
-  omega
+  decide
 
 theorem channel_tick_trade_metric_exact (d : Nat) (h : 2 ≤ d) :
     channelTickTradeMetric d = 2 * (d - 1) - 1 := by
@@ -247,12 +254,28 @@ theorem channel_tick_trade_metric_exact (d : Nat) (h : 2 ≤ d) :
 theorem channel_tick_trade_metric_lower_bound (d : Nat) (h : 2 ≤ d) :
     1 ≤ channelTickTradeMetric d := by
   rw [channel_tick_trade_metric_exact d h]
-  omega
+  -- 1 ≤ 2 * (d - 1) - 1, with 2 ≤ d. Substitute d = 2 + k ⇒ 2*(1+k) - 1 = 1 + 2*k.
+  rcases Nat.exists_eq_add_of_le h with ⟨k, rfl⟩
+  show 1 ≤ 2 * (2 + k - 1) - 1
+  rw [show (2 + k - 1) = (1 + k) from by
+        rw [show (2 : Nat) = 1 + 1 from rfl, Nat.add_assoc, Nat.add_sub_cancel_left],
+      Nat.mul_add, Nat.mul_one,
+      show (2 + 2 * k - 1) = 1 + 2 * k from by
+        rw [show (2 : Nat) = 1 + 1 from rfl, Nat.add_assoc, Nat.add_sub_cancel_left]]
+  exact Nat.le_add_right 1 (2 * k)
 
 theorem channel_tick_trade_metric_upper_bound (d : Nat) (h : 2 ≤ d) :
     channelTickTradeMetric d < 2 * (d - 1) := by
   rw [channel_tick_trade_metric_exact d h]
-  omega
+  -- 2 * (d - 1) - 1 < 2 * (d - 1). Substitute d = 2 + k ⇒ goal = 1 + 2*k < 2 + 2*k.
+  rcases Nat.exists_eq_add_of_le h with ⟨k, rfl⟩
+  show 2 * (2 + k - 1) - 1 < 2 * (2 + k - 1)
+  rw [show (2 + k - 1) = (1 + k) from by
+        rw [show (2 : Nat) = 1 + 1 from rfl, Nat.add_assoc, Nat.add_sub_cancel_left],
+      Nat.mul_add, Nat.mul_one,
+      show (2 + 2 * k - 1) = 1 + 2 * k from by
+        rw [show (2 : Nat) = 1 + 1 from rfl, Nat.add_assoc, Nat.add_sub_cancel_left]]
+  exact Nat.add_lt_add_right (by decide : (1 : Nat) < 2) (2 * k)
 
 theorem next_dimension_increases_warmup_fraction (chunks d : Nat)
     (hchunks : 0 < chunks) (h : 2 ≤ d) :
@@ -264,7 +287,7 @@ theorem next_dimension_increases_warmup_fraction (chunks d : Nat)
       k * (chunks + (k + 1)) < k * (chunks + (k + 1)) + chunks := by
         exact Nat.lt_add_of_pos_right hchunks
       _ = (k * (chunks + k) + k) + chunks := by
-        rw [show chunks + (k + 1) = (chunks + k) + 1 by omega, Nat.mul_succ]
+        rw [show chunks + (k + 1) = (chunks + k) + 1 from rfl, Nat.mul_succ]
       _ = k * (chunks + k) + ((k + chunks)) := by
         ac_rfl
       _ = k * (chunks + k) + (chunks + k) := by
@@ -311,9 +334,9 @@ theorem fifty_five_d_has_more_channels_and_costs_one_more_tick (chunks : Nat) :
     totalIdealTicks chunks 55 = totalIdealTicks chunks 54 + 1 := by
   constructor
   · unfold channelSurfaceFromDimension emanationCount
-    omega
+    decide
   · unfold totalIdealTicks rampUpTicksFromDimension
-    omega
+    rfl
 
 -- ═══════════════════════════════════════════════════════════════════════════════
 -- Confinement is dimensional: removing a cycle costs a dimension
@@ -327,21 +350,21 @@ theorem fifty_five_d_has_more_channels_and_costs_one_more_tick (chunks : Nat) :
 -- Removing a quark from a 3-quark system drops from 4D to 3D
 theorem removal_drops_dimension :
     wallingtonDimension 3 > wallingtonDimension 2 := by
-  unfold wallingtonDimension; omega
+  unfold wallingtonDimension; decide
 
 -- Removing any quark always costs exactly 1 dimension
 -- wallingtonDimension K - wallingtonDimension (K-1) = (K+1) - K = 1
 theorem confinement_costs_one_3 :
     wallingtonDimension 3 - wallingtonDimension 2 = 1 := by
-  unfold wallingtonDimension; omega
+  unfold wallingtonDimension; decide
 
 theorem confinement_costs_one_5 :
     wallingtonDimension 5 - wallingtonDimension 4 = 1 := by
-  unfold wallingtonDimension; omega
+  unfold wallingtonDimension; decide
 
 theorem confinement_costs_one_10 :
     wallingtonDimension 10 - wallingtonDimension 9 = 1 := by
-  unfold wallingtonDimension; omega
+  unfold wallingtonDimension; decide
 
 -- ═══════════════════════════════════════════════════════════════════════════════
 -- The visible Wallington Rotation is the 2D projection of 3D confinement
@@ -369,7 +392,7 @@ theorem shadow_shows_quarks :
     emanationCount 3 = 6 ∧
     -- Removing any quark drops a dimension (4D → 3D)
     wallingtonDimension 3 - wallingtonDimension 2 = 1 := by
-  unfold torusBetti1 emanationCount wallingtonDimension; omega
+  unfold torusBetti1 emanationCount wallingtonDimension; decide
 
 -- ═══════════════════════════════════════════════════════════════════════════════
 -- The Clifford torus and the golden ratio
@@ -410,7 +433,7 @@ theorem betti_ratio_is_fibonacci :
     torusBetti1 8 = 8 ∧ torusBetti1 5 = 5 ∧
     -- β₁ of 13-torus / β₁ of 8-torus = 13/8 = 1.625 ≈ φ
     torusBetti1 13 = 13 ∧ torusBetti1 8 = 8 := by
-  unfold torusBetti1; omega
+  unfold torusBetti1; decide
 
 -- The ratio of consecutive Fibonacci-indexed torus Betti numbers
 -- converges to φ. The golden ratio is the asymptotic ratio of
@@ -448,6 +471,6 @@ theorem dimensional_confinement_complete :
     wallingtonDimension 5 = 6 ∧
     -- 20 emanations from 5 quarks (full primitive set)
     emanationCount 5 = 20 := by
-  unfold wallingtonDimension torusBetti1 emanationCount; omega
+  unfold wallingtonDimension torusBetti1 emanationCount; decide
 
 end DimensionalConfinement

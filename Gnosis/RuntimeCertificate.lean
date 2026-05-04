@@ -261,6 +261,53 @@ theorem wankel_certified_lifecycle_well_formed :
   certified_implies_lifecycle_well_formed
     wankel_scheduler_certificate wankel_scheduler_certificate_is_certified
 
+/-- Runtime-result equivalence for fast-path selection.
+
+    A fast path may replace the scheduler lifecycle, but it must preserve the
+    verified protocol, model profile, β value, fidelity counters, capacity fit,
+    and positive-β witness of the certified baseline. This is the theorem-level
+    contract used by runtime surfaces before they present a speedup as certified. -/
+def FastPathResultEquivalent
+    (candidate baseline : RuntimeCertificate) : Prop :=
+  certified candidate ∧
+  certified baseline ∧
+  candidate.protocol = baseline.protocol ∧
+  candidate.profile = baseline.profile ∧
+  betaNum candidate.protocol = betaNum baseline.protocol ∧
+  verified_fidelity_num candidate.protocol =
+    verified_fidelity_num baseline.protocol ∧
+  verified_fidelity_den candidate.protocol =
+    verified_fidelity_den baseline.protocol ∧
+  fitsCapacity candidate.protocol.draft candidate.profile ∧
+  0 < betaNum candidate.protocol
+
+/-- The Wankel fast path changes only the scheduler lifecycle witness. It
+    preserves the certified baseline protocol/profile/result semantics. -/
+theorem wankel_fast_path_preserves_runtime_result_equivalence :
+    FastPathResultEquivalent
+      wankel_scheduler_certificate
+      qwen_pca_only_certificate := by
+  refine ⟨wankel_scheduler_certificate_is_certified,
+    qwen_pca_only_is_certified,
+    rfl,
+    rfl,
+    rfl,
+    rfl,
+    rfl,
+    qwen_pca_k8_fits_capacity,
+    qwen_pca_k8_beta_positive⟩
+
+/-- The operational Wankel certificate carries both the fifth-force mechanism
+    and the fast-path result-equivalence witness. -/
+theorem wankel_fast_path_equivalence_carries_fifth_force_mechanism
+    (steps : Nat) (hSteps : steps > 0) :
+    FastPathResultEquivalent
+      wankel_scheduler_certificate
+      qwen_pca_only_certificate ∧
+    WankelOperationalMechanism steps := by
+  exact ⟨wankel_fast_path_preserves_runtime_result_equivalence,
+    wankel_fifth_force_mechanism_has_runtime_certificate steps hSteps⟩
+
 -- ══════════════════════════════════════════════════════════
 -- PROJECTIONS APPLIED TO THE QWEN INSTANCE
 -- ══════════════════════════════════════════════════════════

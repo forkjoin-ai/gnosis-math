@@ -28,8 +28,9 @@ structure ForkRaceFoldSystem where
   cost_nonincreasing : ∀ n, cost (n + 1) ≤ cost n
 
 -- P1: Positivity
-theorem positivity (K : Nat) (hK : 1 ≤ K) : 0 < K := by omega
-theorem rejection_count (K : Nat) (hK : 2 ≤ K) : 1 ≤ K - 1 := by omega
+theorem positivity (K : Nat) (hK : 1 ≤ K) : 0 < K := hK
+theorem rejection_count (K : Nat) (hK : 2 ≤ K) : 1 ≤ K - 1 :=
+  Nat.le_sub_of_add_le hK
 
 -- P2: Convergence (reused proof)
 private theorem monotone_descent (cost : Nat → Nat) (h : ∀ n, cost (n + 1) ≤ cost n)
@@ -74,8 +75,11 @@ theorem system_converges (sys : ForkRaceFoldSystem) :
   exact ⟨N, hN⟩
 
 -- P3: Failure dominance
-theorem failure_more_informative (K : Nat) (hK : 3 ≤ K) : K - 1 > 1 := by omega
-theorem void_boundary_grows (K prev : Nat) (hK : 2 ≤ K) : prev < prev + (K - 1) := by omega
+theorem failure_more_informative (K : Nat) (hK : 3 ≤ K) : K - 1 > 1 :=
+  Nat.lt_sub_of_add_lt
+    (Nat.lt_of_lt_of_le (by decide : (1 + 1 : Nat) < 3) hK)
+theorem void_boundary_grows (K prev : Nat) (hK : 2 ≤ K) : prev < prev + (K - 1) :=
+  Nat.lt_add_of_pos_right (Nat.le_sub_of_add_le hK)
 
 -- P4: Deficit learnability
 def deficit (current optimal : Nat) : Nat := current - optimal

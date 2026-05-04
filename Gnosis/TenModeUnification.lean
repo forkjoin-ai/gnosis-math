@@ -35,14 +35,14 @@ namespace TenModeUnification
 def pairwiseInteractions (n : Nat) : Nat := n * (n - 1) / 2
 
 theorem ten_from_five : pairwiseInteractions 5 = 10 := by
-  unfold pairwiseInteractions; omega
+  unfold pairwiseInteractions; decide
 
 -- For n < 5 operations, you get fewer than 10 interactions (incomplete model)
 theorem four_is_six : pairwiseInteractions 4 = 6 := by
-  unfold pairwiseInteractions; omega
+  unfold pairwiseInteractions; decide
 
 theorem three_is_three : pairwiseInteractions 3 = 3 := by
-  unfold pairwiseInteractions; omega
+  unfold pairwiseInteractions; decide
 
 -- 10 is the unique answer for 5 operations
 -- Any other number of operations gives a different interaction count
@@ -64,14 +64,14 @@ def complementWeight (k : Kenoma K) (i : Fin K) : Nat :=
 def tenModeKenoma : Kenoma 10 where
   rejections := fun _ => 0
   total := 10
-  total_ge := by omega
-  bounded := fun _ => by omega
+  total_ge := by decide
+  bounded := fun _ => by decide
 
 theorem ten_mode_exists : ∃ (_ : Kenoma 10), True :=
   ⟨tenModeKenoma, trivial⟩
 
 -- Exploration budget for 10 modes = 9
-theorem exploration_budget_is_nine : 10 - 1 = 9 := by omega
+theorem exploration_budget_is_nine : 10 - 1 = 9 := by decide
 
 -- ═══════════════════════════════════════════════════════════════════════════════
 -- Face 2: The Barbelo wireframe (vacuum state)
@@ -165,7 +165,7 @@ theorem symmetry_restores_wireframe (k : Kenoma K)
 -- 1 = the sliver (Barbelo, the +1, the vacuum mode)
 -- 10 = 9 + 1
 
-theorem ten_is_nine_plus_one : 10 = 9 + 1 := by omega
+theorem ten_is_nine_plus_one : 10 = 9 + 1 := by decide
 
 -- The exploration budget plus the sliver equals the mode count
 -- 9 exchange particles carry exploration energy
@@ -173,10 +173,10 @@ theorem ten_is_nine_plus_one : 10 = 9 + 1 := by omega
 -- Together they span the full 10-mode field
 
 theorem budget_plus_sliver (K : Nat) (hK : K ≥ 1) :
-    (K - 1) + 1 = K := by omega
+    (K - 1) + 1 = K := Nat.sub_add_cancel hK
 
 -- Applied to K=10:
-theorem ten_mode_budget : (10 - 1) + 1 = 10 := by omega
+theorem ten_mode_budget : (10 - 1) + 1 = 10 := by decide
 
 theorem ten_mode_complement_weight_is_ten (i : Fin 10) :
     complementWeight tenModeKenoma i = 10 := by
@@ -221,50 +221,50 @@ def structuredRealityChannels (worlds : Nat) : Nat := totalRealityChannels world
 
 theorem ten_mode_has_nine_interlocking_tori : interlockingTori 10 = 9 := by
   unfold interlockingTori
-  omega
+  decide
 
 theorem nine_tori_plus_sliver_recovers_ten : interlockingTori 10 + 1 = 10 := by
   unfold interlockingTori
-  omega
+  decide
 
 theorem ten_mode_has_unique_void_anchor : 10 - interlockingTori 10 = 1 := by
   unfold interlockingTori
-  omega
+  decide
 
 theorem ten_worlds_have_forty_five_bridges : crossRealityBridges 10 = 45 := by
   unfold crossRealityBridges pairwiseInteractions
-  omega
+  decide
 
 theorem ten_worlds_have_ninety_directed_crossings :
     10 * interlockingTori 10 = 90 := by
   unfold interlockingTori
-  omega
+  decide
 
 theorem ten_worlds_directed_crossings_are_double_bridges :
     10 * interlockingTori 10 = 2 * crossRealityBridges 10 := by
   unfold interlockingTori crossRealityBridges pairwiseInteractions
-  omega
+  decide
 
 theorem ten_worlds_have_fifty_five_channels : totalRealityChannels 10 = 55 := by
   unfold totalRealityChannels crossRealityBridges pairwiseInteractions
-  omega
+  decide
 
 theorem ten_worlds_channel_split :
     totalRealityChannels 10 = 10 + 45 := by
   unfold totalRealityChannels crossRealityBridges pairwiseInteractions
-  omega
+  decide
 
 theorem ten_worlds_have_fifty_four_structured_channels :
     structuredRealityChannels 10 = 54 := by
   unfold structuredRealityChannels totalRealityChannels crossRealityBridges pairwiseInteractions
-  omega
+  decide
 
 theorem monad_plus_structure_recovers_fifty_five :
     structuredRealityChannels 10 + 1 = totalRealityChannels 10 := by
   unfold structuredRealityChannels
   rw [Nat.sub_add_cancel]
   unfold totalRealityChannels crossRealityBridges pairwiseInteractions
-  omega
+  decide
 
 theorem nine_tori_plus_sliver_have_fifty_five_channels :
     totalRealityChannels (interlockingTori 10 + 1) = 55 := by
@@ -375,7 +375,7 @@ theorem fib_ten : fib 10 = 55 := by native_decide
 
 -- T(10) = 55
 theorem triangular_ten : triangular 10 = 55 := by
-  unfold triangular; omega
+  unfold triangular; decide
 
 theorem ten_worlds_channels_eq_triangular_ten :
     totalRealityChannels 10 = triangular 10 := by
@@ -395,7 +395,8 @@ theorem triple_coincidence :
     fib 10 = 55 ∧
     triangular 10 = 55 ∧
     fib 10 = triangular 10 := by
-  refine ⟨by unfold pairwiseInteractions; omega, by native_decide, by unfold triangular; omega, ?_⟩
+  refine ⟨by unfold pairwiseInteractions; decide, by native_decide,
+          by unfold triangular; decide, ?_⟩
   native_decide
 
 -- The Fibonacci gap structure: F(n) - F(n-1) = F(n-2).
@@ -405,10 +406,10 @@ theorem triple_coincidence :
 theorem fibonacci_gap_is_fibonacci (n : Nat) (hn : n ≥ 2) :
     fib n - fib (n - 1) = fib (n - 2) := by
   cases n with
-  | zero => omega
+  | zero => exact absurd hn (by decide)
   | succ n =>
       cases n with
-      | zero => omega
+      | zero => exact absurd hn (by decide)
       | succ n =>
           simp [fib, Nat.add_sub_cancel_left]
 
@@ -419,17 +420,17 @@ theorem walkers_are_fibonacci : fib 5 = 5 := by native_decide
 -- The 10th triangular number is the sum of the first 10 natural numbers.
 -- Each boson channel contributes its index to the total.
 theorem fifty_five_is_sum : triangular 10 = 55 := by
-  unfold triangular; omega
+  unfold triangular; decide
 
 theorem structured_channels_eq_tori_plus_bridges :
     structuredRealityChannels 10 = interlockingTori 10 + crossRealityBridges 10 := by
   unfold structuredRealityChannels totalRealityChannels interlockingTori crossRealityBridges pairwiseInteractions
-  omega
+  decide
 
 theorem nine_tori_plus_forty_five_bridges_make_fifty_four :
     interlockingTori 10 + crossRealityBridges 10 = 54 := by
   unfold interlockingTori crossRealityBridges pairwiseInteractions
-  omega
+  decide
 
 -- ═══════════════════════════════════════════════════════════════════════════════
 -- The complete unification theorem
@@ -476,7 +477,7 @@ theorem complete_unification :
     -- Uniform kenoma = delocalized (wireframe symmetry)
     (∀ i j : Fin 10,
       complementWeight tenModeKenoma i = complementWeight tenModeKenoma j) := by
-  refine ⟨by unfold pairwiseInteractions; omega, by omega, ⟨tenModeKenoma, trivial⟩, ?_, ?_⟩
+  refine ⟨by unfold pairwiseInteractions; decide, by decide, ⟨tenModeKenoma, trivial⟩, ?_, ?_⟩
   · exact barbeloWireframe.uniform
   · intro i j; unfold complementWeight tenModeKenoma; rfl
 

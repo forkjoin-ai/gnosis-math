@@ -265,9 +265,15 @@ def truthRatio (p : NoisePotential) (m : ManifoldSlots) : Int :=
 theorem meta_truth_constancy (p : NoisePotential) (m : ManifoldSlots) :
     truthRatio p (liftManifold m) = truthRatio p m - 1 := by
   unfold truthRatio liftManifold
-  -- Int linear arithmetic: a - (b + 1) = (a - b) - 1
-  -- TODO(rustic-church): omega is stubbed in until an Init-only Int proof lands.
-  simp; omega
+  -- Reduce both sides to a + (-↑m.total + -1) using sub_eq_add_neg + add_assoc + neg_add.
+  show (p.entropy : Int) - ((m.total + 1 : Nat) : Int)
+       = ((p.entropy : Int) - (m.total : Int)) - 1
+  show (p.entropy : Int) - ((m.total : Int) + 1)
+       = ((p.entropy : Int) - (m.total : Int)) - 1
+  rw [show (((p.entropy : Int) - (m.total : Int)) - 1)
+        = (p.entropy : Int) + (-(m.total : Int) + (-1)) from by
+        rw [Int.sub_eq_add_neg, Int.sub_eq_add_neg, Int.add_assoc, ← Int.neg_add]]
+  rw [Int.sub_eq_add_neg, Int.neg_add]
 
 end MetaTruth
 
