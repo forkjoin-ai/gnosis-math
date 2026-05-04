@@ -21,13 +21,17 @@ structure MeasurementFramework where
   name : String
   homology : List HomologyLayer
 
+/-- The canonical four-layer basis carried by the Gnosis kernel. -/
+def canonicalHomology : List HomologyLayer :=
+  [HomologyLayer.H0, HomologyLayer.H1, HomologyLayer.H2, HomologyLayer.H3]
+
 /-- 
 isGnosticFramework:
 Defines a framework as being aligned with the Gnosis kernel if it 
 incorporates the complete basis of homological invariants {H0, H1, H2, H3}.
 -/
 def isGnosticFramework (f : MeasurementFramework) : Prop :=
-  f.homology = [HomologyLayer.H0, HomologyLayer.H1, HomologyLayer.H2, HomologyLayer.H3]
+  f.homology = canonicalHomology
 
 /--
 gnostic_isomorphism:
@@ -50,6 +54,15 @@ theorem homology_proves_invariant (f : MeasurementFramework) :
   intro h
   unfold isGnosticFramework at h
   rw [h]
-  simp
+  decide
+
+/-- The canonical kernel witness is gnostic by construction. -/
+def canonicalFramework : MeasurementFramework :=
+  { name := "canonical"
+    homology := canonicalHomology }
+
+theorem canonical_framework_is_gnostic :
+    isGnosticFramework canonicalFramework := by
+  rfl
 
 end HomologyOfManifold

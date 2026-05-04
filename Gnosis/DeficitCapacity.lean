@@ -26,31 +26,34 @@ def topologicalDeficit (N C : Nat) : Int :=
 theorem deficit_zero_at_saturation (N : Nat) :
     topologicalDeficit N N = 0 := by
   unfold topologicalDeficit computationComplexity transportCapacity
-  omega
+  exact Int.sub_self _
 
 /-- Deficit is monotonically increasing as computation complexity increases. -/
 theorem deficit_monotonicity_N (N1 N2 C : Nat) (h : N1 ≤ N2) :
     topologicalDeficit N1 C ≤ topologicalDeficit N2 C := by
   unfold topologicalDeficit computationComplexity transportCapacity
-  omega
+  exact Int.sub_le_sub_right (Int.ofNat_le.mpr (Nat.sub_le_sub_right h 1)) _
 
 /-- Deficit is monotonically decreasing as transport capacity increases. -/
 theorem deficit_monotonicity_C (N C1 C2 : Nat) (h : C1 ≤ C2) :
     topologicalDeficit N C2 ≤ topologicalDeficit N C1 := by
   unfold topologicalDeficit computationComplexity transportCapacity
-  omega
+  exact Int.sub_le_sub_left (Int.ofNat_le.mpr (Nat.sub_le_sub_right h 1)) _
 
 /-- The "Information Bottleneck": deficit is non-negative if complexity exceeds capacity. -/
 theorem deficit_non_negative_if_complexity_exceeds_capacity (N C : Nat) (h : N ≥ C) :
     topologicalDeficit N C ≥ 0 := by
   unfold topologicalDeficit computationComplexity transportCapacity
-  omega
+  exact Int.sub_nonneg.mpr (Int.ofNat_le.mpr (Nat.sub_le_sub_right h 1))
 
 /-- Maximum bottleneck: when capacity is minimal (1 stream), deficit equals N-1. -/
 theorem capacity_bottleneck_maximal (N : Nat) (h : N > 0) :
     topologicalDeficit N 1 = (N : Int) - 1 := by
   unfold topologicalDeficit computationComplexity transportCapacity
-  omega
+  show ((N - 1 : Nat) : Int) - ((1 - 1 : Nat) : Int) = (N : Int) - 1
+  rw [show (1 - 1 : Nat) = 0 from rfl, Int.ofNat_zero, Int.sub_zero,
+      Int.ofNat_sub h]
+  rfl
 
 /-- Compatibility name used by the older transport/causality modules. -/
 theorem tcp_deficit_is_path_count_minus_one
@@ -80,7 +83,9 @@ theorem single_stream_deficit_positive
     (hPaths : 2 ≤ pathCount) :
     0 < topologicalDeficit pathCount 1 := by
   unfold topologicalDeficit computationComplexity transportCapacity
-  omega
+  show 0 < ((pathCount - 1 : Nat) : Int) - ((1 - 1 : Nat) : Int)
+  rw [show (1 - 1 : Nat) = 0 from rfl, Int.ofNat_zero, Int.sub_zero]
+  exact Int.natCast_pos.mpr (Nat.sub_pos_of_lt hPaths)
 
 /-- Matching or exceeding the path count eliminates positive deficit. -/
 theorem deficit_nonpositive_when_streams_cover_paths
@@ -88,6 +93,6 @@ theorem deficit_nonpositive_when_streams_cover_paths
     (hCover : pathCount ≤ transportStreams) :
     topologicalDeficit pathCount transportStreams ≤ 0 := by
   unfold topologicalDeficit computationComplexity transportCapacity
-  omega
+  exact Int.sub_nonpos_of_le (Int.ofNat_le.mpr (Nat.sub_le_sub_right hCover 1))
 
 end Gnosis

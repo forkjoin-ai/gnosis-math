@@ -49,13 +49,14 @@ def OncogeneAddiction.growthBeta1 (oa : OncogeneAddiction) : Nat :=
 /-- Removing the sole growth pathway from an addicted tumor
     collapses growth β₁ to 0. -/
 theorem oncogene_addiction_collapse :
-    (OncogeneAddiction.mk 1 (by omega)).growthBeta1 = 0 := by
-  unfold OncogeneAddiction.growthBeta1; simp
+    (OncogeneAddiction.mk 1 Nat.one_pos).growthBeta1 = 0 := by
+  unfold OncogeneAddiction.growthBeta1; rfl
 
 /-- Multi-pathway tumors retain growth β₁ > 0 after losing one pathway. -/
 theorem multi_pathway_resilient (oa : OncogeneAddiction)
     (hMulti : 3 ≤ oa.numGrowthPathways) :
-    0 < (OncogeneAddiction.mk (oa.numGrowthPathways - 1) (by omega)).growthBeta1 := by
+    0 < (OncogeneAddiction.mk (oa.numGrowthPathways - 1)
+          (Nat.sub_pos_of_lt (Nat.lt_of_lt_of_le (by decide) hMulti))).growthBeta1 := by
   unfold OncogeneAddiction.growthBeta1
   rw [Nat.sub_sub]
   simpa using Nat.sub_pos_of_lt (Nat.lt_of_lt_of_le (by decide) hMulti)
@@ -178,7 +179,8 @@ def DrugResistance.effectiveVentBeta1 (dr : DrugResistance) : Nat :=
 theorem full_resistance_zero_vent (dr : DrugResistance)
     (hFull : dr.numResisted = dr.numDrugs) :
     dr.effectiveVentBeta1 = 0 := by
-  unfold DrugResistance.effectiveVentBeta1; omega
+  unfold DrugResistance.effectiveVentBeta1
+  rw [hFull, Nat.sub_self]
 
 /-- More resistance = less effective vent (monotone). -/
 theorem resistance_reduces_vent
@@ -186,11 +188,13 @@ theorem resistance_reduces_vent
     (hSameDrugs : dr1.numDrugs = dr2.numDrugs)
     (hMoreResistance : dr1.numResisted ≤ dr2.numResisted) :
     dr2.effectiveVentBeta1 ≤ dr1.effectiveVentBeta1 := by
-  unfold DrugResistance.effectiveVentBeta1; omega
+  unfold DrugResistance.effectiveVentBeta1
+  rw [← hSameDrugs]
+  exact Nat.sub_le_sub_left hMoreResistance _
 
 /-- Adding a drug the tumor can't resist increases effective vent. -/
 theorem new_drug_helps (dr : DrugResistance) :
-    dr.effectiveVentBeta1 ≤ dr.effectiveVentBeta1 + 1 := by omega
+    dr.effectiveVentBeta1 ≤ dr.effectiveVentBeta1 + 1 := Nat.le_succ _
 
 -- ═══════════════════════════════════════════════════════════════════════════════
 -- Prediction 35: Combination Therapy Index
@@ -225,8 +229,8 @@ def therapyIndex (restored deficit : Nat) : Nat × Nat :=
 
 /-- Adding a drug to the combination can only increase total β₁. -/
 theorem adding_drug_helps (ct : CombinationTherapy) (newBeta1 : Nat) :
-    ct.totalRestoredBeta1 ≤ ct.totalRestoredBeta1 + newBeta1 := by
-  omega
+    ct.totalRestoredBeta1 ≤ ct.totalRestoredBeta1 + newBeta1 :=
+  Nat.le_add_right _ _
 
 /-- Empty intervention = zero restoration. -/
 theorem no_therapy_no_restoration :
@@ -238,7 +242,7 @@ theorem no_therapy_no_restoration :
 
 theorem five_predictions_round5_master :
     -- 31. Oncogene addiction: single pathway → β₁ = 0 after removal
-    (OncogeneAddiction.mk 1 (by omega)).growthBeta1 = 0 ∧
+    (OncogeneAddiction.mk 1 Nat.one_pos).growthBeta1 = 0 ∧
     -- 32. Telomere at critical length → 0 remaining divisions
     (∀ tc : TelomereCountdown, tc.currentLength = tc.criticalLength →
       tc.remainingDivisions = 0) ∧

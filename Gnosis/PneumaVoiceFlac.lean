@@ -96,15 +96,15 @@ def emptyPacket : VoiceFlacPacket :=
     flagAgreesPhoneme := by
       constructor
       · intro h; cases h
-      · intro h; omega
+      · intro h; exact absurd h (Nat.lt_irrefl 0)
     flagAgreesProsody := by
       constructor
       · intro h; cases h
-      · intro h; omega
+      · intro h; exact absurd h (Nat.lt_irrefl 0)
     flagAgreesResidual := by
       constructor
       · intro h; cases h
-      · intro h; omega }
+      · intro h; exact absurd h (Nat.lt_irrefl 0) }
 
 /-! ## Flag computation -/
 
@@ -121,7 +121,7 @@ theorem flagsByte_lt_16 (p : VoiceFlacPacket) :
     flagsByte p < 16 := by
   unfold flagsByte flagPhoneme flagProsody flagResidual flagSampleRate
   cases p.hasPhoneme <;> cases p.hasProsody <;> cases p.hasResidual <;>
-    cases p.sampleRate <;> simp <;> omega
+    cases p.sampleRate <;> simp <;> decide
 
 /-! ## Packet size -/
 
@@ -169,7 +169,7 @@ theorem phoneme_addition_is_additive (p : VoiceFlacPacket) (k : Nat) (hk : 0 < k
         flagAgreesResidual := p.flagAgreesResidual }
     totalBytes p' = headerBytes p + k + p.prosodyLen + p.residualLen := by
   unfold totalBytes headerBytes
-  cases p.sampleRate <;> simp <;> omega
+  cases p.sampleRate <;> simp
 
 /-- Adding the prosody section is additive in the same shape. -/
 theorem prosody_addition_is_additive (p : VoiceFlacPacket) (k : Nat) (hk : 0 < k) :
@@ -189,7 +189,7 @@ theorem prosody_addition_is_additive (p : VoiceFlacPacket) (k : Nat) (hk : 0 < k
         flagAgreesResidual := p.flagAgreesResidual }
     totalBytes p' = headerBytes p + p.phonemeLen + k + p.residualLen := by
   unfold totalBytes headerBytes
-  cases p.sampleRate <;> simp <;> omega
+  cases p.sampleRate <;> simp
 
 /-- Adding the residual section is additive in the same shape. -/
 theorem residual_addition_is_additive (p : VoiceFlacPacket) (k : Nat) (hk : 0 < k) :
@@ -209,7 +209,7 @@ theorem residual_addition_is_additive (p : VoiceFlacPacket) (k : Nat) (hk : 0 < 
           · intro _; rfl }
     totalBytes p' = headerBytes p + p.phonemeLen + p.prosodyLen + k := by
   unfold totalBytes headerBytes
-  cases p.sampleRate <;> simp <;> omega
+  cases p.sampleRate <;> simp
 
 /-! ## Length-bound theorems
 
@@ -239,7 +239,7 @@ theorem totalBytes_bounded
     | none => show (12 : Nat) ≤ 16; decide
     | some _ => show (16 : Nat) ≤ 16; decide
   unfold totalBytes
-  omega
+  exact Nat.add_le_add (Nat.add_le_add (Nat.add_le_add h_hdr h1) h2) h3
 
 /-! ## Round-trip-at-the-metadata layer
 

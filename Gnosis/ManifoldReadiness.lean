@@ -43,7 +43,9 @@ theorem manifold_readiness_eq_observability
     manifoldReadiness frame signal problem =
       observabilityScore frame signal problem := by
   unfold manifoldReadiness carrierReadiness reconstructionReadiness observabilityScore
-  omega
+  -- (absorbed - leaked) + witness = absorbed + witness - leaked
+  rw [Int.sub_eq_add_neg, Int.add_right_comm]
+  rfl
 
 theorem canonical_reconstruction_readiness :
     reconstructionReadiness canonicalSieveProblem = 2 := by
@@ -57,7 +59,7 @@ theorem zero_leakage_carrier_readiness_is_absorption
     carrierReadiness frame signal = absorbedInfo frame signal := by
   unfold carrierReadiness
   rw [hLeak]
-  omega
+  exact Int.sub_zero _
 
 theorem carrier_readiness_linear_law
     (frame : ObserverFrame) (signal : HigherLayerSignal)

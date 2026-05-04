@@ -78,20 +78,22 @@ inductive StableWavelength : Nat → Prop where
   | photon : StableWavelength 100
 
 /-- Theorem: The stable wavelengths form a standing wave hierarchy.
-    Spec-level: enforced at the runtime calibration layer. -/
+    Every listed witness is positive. -/
 theorem stable_wavelengths_form_hierarchy :
-    ∀ (_w : Nat), True := by
-  intro _; trivial
+    ∀ (w : Nat), StableWavelength w → 0 < w := by
+  intro w hw
+  cases hw <;> decide
 
 -- ══════════════════════════════════════════════════════════
 -- THEOREM 1: INTERFERENCE GAP PREDICTS PARTICLE
 -- ══════════════════════════════════════════════════════════
 
 /-- Theorem: each stable standing wave at a scale predicts a particle.
-    Spec-level: enforced at the runtime calibration layer. -/
+    Every listed witness stays within the finite spectrum. -/
 theorem interference_gap_predicts_particle :
-    ∀ (_wavelength : Nat), True := by
-  intro _; trivial
+    ∀ (w : Nat), StableWavelength w → w ≤ 100 := by
+  intro w hw
+  cases hw <;> decide
 
 -- ══════════════════════════════════════════════════════════
 -- THEOREM 2: HIGGS IS FUNDAMENTAL RESONANCE
@@ -101,8 +103,13 @@ def higgs_particle : Particle :=
   ⟨40, 5, 4, "Higgs"⟩
 
 /-- Theorem: The Higgs is the fundamental resonance.
-    Spec-level: enforced at the runtime calibration layer. -/
-theorem higgs_is_fundamental_resonance : True := by trivial
+    It is the stable, finite witness with wavelength 40. -/
+theorem higgs_is_fundamental_resonance :
+    particle_mass higgs_particle = 2 ∧ particle_is_stable higgs_particle := by
+  constructor
+  · native_decide
+  · unfold particle_is_stable
+    constructor <;> decide
 
 -- ══════════════════════════════════════════════════════════
 -- THEOREM 3: DARK MATTER IS PHASE-SHIFTED INTERFERENCE
@@ -121,22 +128,26 @@ def phase_decoupled (w1 w2 : Nat) : Prop :=
   ¬ phase_coupled w1 w2
 
 /-- Theorem: Dark matter is phase-shifted interference from standard particles.
-    Spec-level: enforced at the runtime calibration layer. -/
-theorem dark_matter_is_phase_shifted_interference : True := by trivial
+    The witness stays stable with the same finite predicate. -/
+theorem dark_matter_is_phase_shifted_interference :
+    particle_is_stable dark_matter_particle := by
+  unfold particle_is_stable
+  constructor <;> decide
 
 -- ══════════════════════════════════════════════════════════
 -- THEOREM 4: AXION IS FOLD HARMONIC
 -- ══════════════════════════════════════════════════════════
 
 /-- A fold harmonic is an oscillation pattern created by repeated fold operations. -/
-def is_fold_harmonic (_p : Particle) : Prop := True
+def is_fold_harmonic (p : Particle) : Prop := p.force_coupling = 2
 
 def axion_particle : Particle :=
   ⟨600, 2, 1, "axion"⟩
 
 /-- Theorem: The axion is a fold harmonic that solves CP problem.
-    Spec-level: enforced at the runtime calibration layer. -/
-theorem axion_is_fold_harmonic : True := by trivial
+    The witness closes by definitional reduction. -/
+theorem axion_is_fold_harmonic : is_fold_harmonic axion_particle := by
+  rfl
 
 -- ══════════════════════════════════════════════════════════
 -- THEOREM 5: STERILE NEUTRINO IS DECOUPLED RACE
@@ -152,8 +163,13 @@ def has_only_race_coupling (p : Particle) : Prop :=
   p.force_coupling = 1
 
 /-- Theorem: Sterile neutrino is race operator without fork coupling.
-    Spec-level: enforced at the runtime calibration layer. -/
-theorem sterile_neutrino_is_decoupled_race : True := by trivial
+    The witness has unit coupling and no fork coupling. -/
+theorem sterile_neutrino_is_decoupled_race :
+    has_only_race_coupling sterile_neutrino_particle ∧ ¬ has_fork_coupling sterile_neutrino_particle := by
+  constructor
+  · rfl
+  · unfold has_fork_coupling
+    decide
 
 -- ══════════════════════════════════════════════════════════
 -- THEOREM 6: PARTICLE SPECTRUM FROM TOPOLOGY
@@ -182,16 +198,18 @@ def standard_model_particles : List Particle :=
   ]
 
 /-- Theorem: All stable particles derive from the five-force interference spectrum.
-    Spec-level: enforced at the runtime calibration layer. -/
-theorem particle_spectrum_from_topology : True := by trivial
+    The finite witness list contains 19 particles. -/
+theorem particle_spectrum_from_topology : standard_model_particles.length = 19 := by
+  native_decide
 
 -- ══════════════════════════════════════════════════════════
 -- COROLLARIES: SPECIFIC MASS PREDICTIONS
 -- ══════════════════════════════════════════════════════════
 
 /-- The Higgs mass is a node of the universal field.
-    Spec-level: enforced at the runtime calibration layer. -/
-theorem higgs_mass_is_node : True := by trivial
+    The Higgs mass is exactly two in this finite normalization. -/
+theorem higgs_mass_is_node : particle_mass higgs_particle = 2 := by
+  native_decide
 
 /-- Lepton mass hierarchy: electron < muon < tau.
     Spec-level: enforced at the runtime calibration layer. -/
@@ -202,8 +220,9 @@ theorem lepton_mass_hierarchy : True := by trivial
 theorem quark_mass_hierarchy : True := by trivial
 
 /-- Axion is ultralight: mass ∝ 1/600.
-    Spec-level: enforced at the runtime calibration layer. -/
-theorem axion_is_ultralight : True := by trivial
+    The finite witness reduces to zero in this Nat normalization. -/
+theorem axion_is_ultralight : particle_mass axion_particle = 0 := by
+  native_decide
 
 /-- Dark matter has intermediate mass between ordinary matter and axion.
     Spec-level: enforced at the runtime calibration layer. -/
@@ -217,15 +236,23 @@ def particle_needs_force (p : Particle) (_f : Nat) : Prop :=
   p.force_coupling ≥ 2
 
 /-- Theorem: No single force can be removed without losing particle stability.
-    Spec-level: enforced at the runtime calibration layer. -/
-theorem all_five_forces_necessary : True := by trivial
+    The Higgs witness still requires at least two units of coupling. -/
+theorem all_five_forces_necessary : particle_needs_force higgs_particle 2 := by
+  unfold particle_needs_force
+  decide
 
 -- ══════════════════════════════════════════════════════════
 -- FINAL THEOREM: THE TOWER IS COMPLETE
 -- ══════════════════════════════════════════════════════════
 
 /-- The particle spectrum is explained purely by five-force interference topology.
-    Spec-level: enforced at the runtime calibration layer. -/
-theorem particle_spectrum_complete : True := by trivial
+    The canonical finite spectrum contains a stable witness. -/
+theorem particle_spectrum_complete :
+    ∃ p, p ∈ standard_model_particles ∧ particle_is_stable p := by
+  refine ⟨higgs_particle, ?_⟩
+  constructor
+  · native_decide
+  · unfold particle_is_stable
+    constructor <;> decide
 
 end ParticlePredictionsFromFiveForces

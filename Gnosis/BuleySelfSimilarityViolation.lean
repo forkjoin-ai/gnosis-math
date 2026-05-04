@@ -54,7 +54,7 @@ theorem inside_or_violation (b : BuleyUnit) (ceiling : ManifoldPhaseCount) :
   unfold insideManifold selfSimilarityViolation
   by_cases h : buleyUnitScore b ≤ ceiling
   · exact Or.inl h
-  · exact Or.inr (by omega)
+  · exact Or.inr (Nat.lt_of_not_le h)
 
 /-- The corrective debt: how many `clinamenContract` steps are needed
 to bring the unit's score down to the ceiling. Saturates at zero when
@@ -68,7 +68,7 @@ theorem corrective_count_is_zero_inside_manifold
     correctiveContractCount b ceiling = 0 := by
   unfold insideManifold at h
   unfold correctiveContractCount
-  omega
+  exact Nat.sub_eq_zero_of_le h
 
 theorem corrective_count_is_positive_on_violation
     {b : BuleyUnit} {ceiling : ManifoldPhaseCount}
@@ -76,7 +76,7 @@ theorem corrective_count_is_positive_on_violation
     correctiveContractCount b ceiling > 0 := by
   unfold selfSimilarityViolation at h
   unfold correctiveContractCount
-  omega
+  exact Nat.sub_pos_of_lt h
 
 /-- Score-after-correction: subtracting the corrective count from the
 unit's score yields exactly the ceiling. The remediation is exactly
@@ -87,7 +87,8 @@ theorem remediated_score_equals_ceiling
     buleyUnitScore b - correctiveContractCount b ceiling = ceiling := by
   unfold selfSimilarityViolation at h
   unfold correctiveContractCount
-  omega
+  -- score - (score - ceiling) = ceiling, given ceiling < score
+  rw [Nat.sub_sub_self (Nat.le_of_lt h)]
 
 /-! ## Concrete tower-level violations
 
@@ -125,7 +126,7 @@ theorem topologically_safe_implies_inside
     insideManifold b ceiling := by
   unfold topologicallySafe at h
   unfold insideManifold
-  omega
+  exact Nat.le_of_eq h
 
 theorem topologically_safe_implies_no_violation
     {b : BuleyUnit} {ceiling : ManifoldPhaseCount}
@@ -133,7 +134,7 @@ theorem topologically_safe_implies_no_violation
     ¬ selfSimilarityViolation b ceiling := by
   unfold topologicallySafe at h
   unfold selfSimilarityViolation
-  omega
+  exact fun hLt => Nat.lt_irrefl _ (h ▸ hLt)
 
 theorem topologically_safe_corrective_count_is_zero
     {b : BuleyUnit} {ceiling : ManifoldPhaseCount}
@@ -141,7 +142,7 @@ theorem topologically_safe_corrective_count_is_zero
     correctiveContractCount b ceiling = 0 := by
   unfold topologicallySafe at h
   unfold correctiveContractCount
-  omega
+  exact Nat.sub_eq_zero_of_le (Nat.le_of_eq h)
 
 end BuleySelfSimilarityViolation
 end Gnosis

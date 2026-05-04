@@ -17,7 +17,7 @@ combinatorics, and dynamics):
 - Imports `Init` only.
 - Contains zero `sorry` and zero new `axiom`.
 - Closes every theorem by kernel `decide`, `rfl`, or a small
-  `omega` application.
+  finite case split or direct reduction.
 - Builds in under 5 seconds per file (most under 1 second).
 
 If this regime can hold every phase reconstruction, every braid, every
@@ -97,7 +97,7 @@ def doctrineClaim3 : DoctrinalClaim :=
     holds := true }
 
 def doctrineClaim4 : DoctrinalClaim :=
-  { name := "Every compilation witness closes by kernel `decide`, `rfl`, or short `omega`"
+  { name := "Every compilation witness closes by kernel `decide`, `rfl`, or finite case split"
     holds := true }
 
 def doctrineClaim5 : DoctrinalClaim :=
@@ -111,6 +111,50 @@ def doctrineClaim6 : DoctrinalClaim :=
 def doctrine : List DoctrinalClaim :=
   [ doctrineClaim1, doctrineClaim2, doctrineClaim3
   , doctrineClaim4, doctrineClaim5, doctrineClaim6 ]
+
+/-- Claim classes for the sandbox-universe gate. -/
+inductive ClaimKind where
+  | exactTheorem
+  | finiteShadow
+  | runtimeCertificate
+  | empiricalConjecture
+  | refused
+  deriving DecidableEq, Repr
+
+/-- A single universe claim, tagged by admissibility class. -/
+structure SandboxClaim where
+  kind : ClaimKind
+  statement : String
+  admitted : Bool
+  deriving Repr
+
+/-- Canonical admissibility: every class except `refused` is admitted. -/
+def claimKindAdmitted : ClaimKind → Bool
+  | .exactTheorem => true
+  | .finiteShadow => true
+  | .runtimeCertificate => true
+  | .empiricalConjecture => true
+  | .refused => false
+
+/-- A compact canonical universe slice: theory, shadow, runtime, conjecture. -/
+def sandboxClaims : List SandboxClaim :=
+  [ { kind := .exactTheorem, statement := "finite theorem", admitted := true }
+  , { kind := .finiteShadow, statement := "finite shadow", admitted := true }
+  , { kind := .runtimeCertificate, statement := "runtime certificate", admitted := true }
+  , { kind := .empiricalConjecture, statement := "empirical conjecture", admitted := true }
+  ]
+
+theorem sandboxClaims_no_refused :
+    sandboxClaims.all (fun c => claimKindAdmitted c.kind = c.admitted) = true := by
+  decide
+
+theorem sandboxClaims_are_admitted :
+    sandboxClaims.all (fun c => c.admitted) = true := by
+  decide
+
+theorem refused_is_not_admitted :
+    claimKindAdmitted ClaimKind.refused = false := by
+  rfl
 
 /-! ## Witnesses -/
 

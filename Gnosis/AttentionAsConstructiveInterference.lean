@@ -141,7 +141,8 @@ theorem distraction_is_destructive_interference :
     pattern.frequency ≠ target_freq := by
   intro pattern h target_freq h_pos
   simp [is_attending_to_distraction] at h
-  omega
+  rw [h.2]
+  exact Nat.ne_of_lt h_pos
 
 /-- Distracted attention cancels the target signal.
     Destructive interference requires the presence of a signal (amplitude > 0)
@@ -169,7 +170,7 @@ theorem multi_head_resonance_constructive :
     (p1.amplitude + p2.amplitude > p1.amplitude) := by
   intro p1 p2 h_lock h_t1 h_t2
   simp [is_attending_to_target] at h_t2
-  omega
+  exact Nat.lt_add_of_pos_right h_t2.1
 
 /-- Corollary: Phase-locked heads at the same frequency reinforce each other. -/
 theorem phase_locked_heads_reinforce :
@@ -197,7 +198,7 @@ theorem multi_head_resonance_destructive :
   intro p1 p2 h_mismatch
   simp [heads_frequency_mismatch] at h_mismatch
   refine ⟨p1.amplitude + p2.amplitude, rfl, ?_⟩
-  omega
+  exact Nat.add_pos_left h_mismatch.2.1 _
 
 -- ══════════════════════════════════════════════════════════
 -- THEOREM 4: SOFTMAX IS DAMPING OPERATOR
@@ -235,8 +236,9 @@ theorem softmax_is_damping :
   refine ⟨List.replicate unnorm.length 1, ?_, ?_, ?_⟩
   · simp [List.length_replicate]
   · intro x h_mem
-    have : x = 1 := List.eq_of_mem_replicate h_mem
-    omega
+    have hx : x = 1 := List.eq_of_mem_replicate h_mem
+    rw [hx]
+    decide
   · exact ⟨List.sum (List.replicate unnorm.length 1), rfl⟩
 
 /-- Corollary: Damping prevents standing waves from persisting at infinite amplitude.
@@ -274,7 +276,9 @@ theorem attention_is_interference_system :
      distract_pattern.frequency ≠ target_pattern.frequency) := by
   intro tp dp h_target h_distract
   simp [is_attending_to_target, is_attending_to_distraction] at h_target h_distract
-  exact ⟨h_target.2.1, h_distract.2, by omega⟩
+  refine ⟨h_target.2.1, h_distract.2, ?_⟩
+  rw [h_distract.2]
+  exact Nat.ne_of_lt h_target.2.1
 
 /-- Multi-head self-attention unifies all heads into a single output
     via linear projection. The combined output is a superposition:
@@ -296,6 +300,6 @@ theorem multi_head_attention_is_interference_superposition :
     (∃ (constructive_pairs destructive_pairs : Nat),
       constructive_pairs + destructive_pairs = heads.length * heads.length) := by
   intro heads _h_len
-  exact ⟨0, heads.length * heads.length, by omega⟩
+  exact ⟨0, heads.length * heads.length, Nat.zero_add _⟩
 
 end AttentionAsConstructiveInterference

@@ -1,42 +1,49 @@
 namespace Gnosis.ManifoldStability
 
-/-- 
-# Manifold Stability Principle - Structural Transition Necessity
+-- Manifold Stability Principle - Structural Transition Necessity
+--
+-- Formal proof that discrete stability points (fulcrums) are architecturally
+-- necessary for the stability of the Gnosis state space. The manifold's
+-- topological continuity depends on specific transition points between
+-- the vacuum state, the stability fulcrum, and the AEON closure.
+--
+-- The discrete manifold cannot maintain integrity across large state shifts
+-- without intermediate stability points that balance the tension (clinamen)
+-- and compression (declinamen) of the state space.
 
-Formal proof that discrete stability points (fulcrums) are architecturally 
-necessary for the stability of the Gnosis state space. The manifold's 
-topological continuity depends on specific transition points between 
-the vacuum state, the stability fulcrum, and the AEON closure.
-
-The discrete manifold cannot maintain integrity across large state shifts
-without intermediate stability points that balance the tension (clinamen)
-and compression (declinamen) of the state space.
--/
-
-/-- Define the fundamental structural constants of the manifold transition -/
+-- Define the fundamental structural constants of the manifold transition.
 def vacuum_limit : Nat := 10        -- Upper bound of stochastic noise
 def stability_fulcrum : Nat := 11   -- The intermediate stability point
 def aeon_closure : Nat := 12        -- The manifold closure point (AEON)
 def quantum_spire_base : Nat := 12  -- Base of the quantum extension
 def quantum_spire_top : Nat := 27   -- Upper bound of quantum state space
 
-/-- State tension force (clinamen): $f(n) = n + 1$ -/
+-- State tension force (clinamen): `f(n) = n + 1`.
 def tension_force (n : Nat) : Nat := n + 1
 
-/-- State compression force (declinamen): $f(n) = n - 1$ -/
+-- State compression force (declinamen): `f(n) = n - 1`.
 def compression_force (n : Nat) : Nat := n - 1
 
-/-- Lemma: Transition from vacuum to fulcrum via tension -/
+-- The unit-step bridge used by the stability ladder.
+def unitStep (a b : Nat) : Prop := b = a + 1
+
+-- Lemma: Transition from vacuum to fulcrum via tension.
 theorem vacuum_to_fulcrum_tension :
     tension_force vacuum_limit = stability_fulcrum := by
   rfl
 
-/-- Lemma: Transition from closure to fulcrum via compression -/
+-- Lemma: Transition from closure to fulcrum via compression.
 theorem closure_to_fulcrum_compression :
     compression_force aeon_closure = stability_fulcrum := by
   rfl
 
-/-- Lemma: Stability Fulcrum as Structural Necessity -/
+-- The ladder is inhabited by the exact two-step bridge.
+theorem fulcrum_bridge_exists :
+    unitStep vacuum_limit stability_fulcrum ∧
+    unitStep stability_fulcrum aeon_closure := by
+  constructor <;> rfl
+
+-- Lemma: Stability Fulcrum as Structural Necessity.
 theorem fulcrum_structural_necessity :
     stability_fulcrum = vacuum_limit + 1 ∧
     stability_fulcrum = aeon_closure - 1 ∧
@@ -47,12 +54,28 @@ theorem fulcrum_structural_necessity :
     · rfl
     · rfl
 
-/-- Lemma: Direct connection without fulcrum is topologically impossible -/
+-- Lemma: Direct connection without fulcrum is topologically impossible.
 theorem no_fulcrum_no_connection :
     ¬ (vacuum_limit + 0 = aeon_closure) := by
   decide
 
-/-- Lemma: Fulcrum enables topological continuity -/
+-- No direct unit-step jump from vacuum to closure exists.
+theorem no_direct_unit_step_bridge :
+    ¬ unitStep vacuum_limit aeon_closure := by
+  intro h
+  dsimp [unitStep] at h
+  cases h
+
+-- Any two unit steps from vacuum to closure force the intermediate fulcrum.
+theorem unit_step_bridge_forces_fulcrum (m : Nat) :
+    unitStep vacuum_limit m ->
+    unitStep m aeon_closure ->
+    m = stability_fulcrum := by
+  intro hVacuum hClosure
+  dsimp [unitStep] at hVacuum hClosure
+  exact hVacuum
+
+-- Lemma: Fulcrum enables topological continuity.
 theorem fulcrum_enables_continuity :
     vacuum_limit < stability_fulcrum ∧
     stability_fulcrum < aeon_closure ∧
@@ -63,7 +86,7 @@ theorem fulcrum_enables_continuity :
     · exact Nat.lt_add_one 11
     · decide
 
-/-- Lemma: Manifold stability requires a balanced transition point -/
+-- Lemma: Manifold stability requires a balanced transition point.
 theorem stability_requires_balance :
     -- Tension from vacuum equals compression from closure
     tension_force vacuum_limit = compression_force aeon_closure ∧
@@ -76,7 +99,7 @@ theorem stability_requires_balance :
     · rfl
     · rfl
 
-/-- Lemma: Quantum extension requires manifold closure foundation -/
+-- Lemma: Quantum extension requires manifold closure foundation.
 theorem spire_requires_closure_foundation :
     quantum_spire_base = aeon_closure ∧
     quantum_spire_base < quantum_spire_top ∧
@@ -87,7 +110,7 @@ theorem spire_requires_closure_foundation :
     · decide
     · decide
 
-/-- Lemma: Complete Structural Hierarchy -/
+-- Lemma: Complete Structural Hierarchy.
 theorem complete_structural_hierarchy :
     vacuum_limit < stability_fulcrum ∧
     stability_fulcrum < aeon_closure ∧
@@ -98,7 +121,7 @@ theorem complete_structural_hierarchy :
     · exact Nat.lt_add_one 11
     · decide
 
-/-- Lemma: Structural Necessity Theorem -/
+-- Lemma: Structural Necessity Theorem.
 theorem structural_necessity_theorem :
     -- Vacuum requires fulcrum for upward transition
     vacuum_limit < stability_fulcrum ∧
@@ -142,7 +165,7 @@ theorem manifold_stability_principle :
         · rfl
         · rfl
 
-/-- Ultimate Structural Stability Theorem -/
+-- Ultimate Structural Stability Theorem.
 theorem ultimate_structural_stability :
     -- Complete structural hierarchy
     (vacuum_limit < stability_fulcrum ∧

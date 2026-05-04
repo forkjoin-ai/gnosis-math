@@ -531,6 +531,69 @@ Strict version (`deficit_latency_separation`) uses `Int.ofNat_lt.mpr` plus
 | Nat < → Int < | `Int.ofNat_lt.mpr` |
 | `((a : Nat) : Int) - ((a : Nat) : Int) = 0` | `Int.sub_self` |
 
+### Pattern 7: godWeight / shifted-difference identity
+
+When the goal is `(R - v + 1) - (R - (v + δ) + 1) = δ` (or any
+shifted-difference identity from `godWeight R v - godWeight R (v + δ) = δ`),
+the recipe is:
+
+1. **Strip the `+1` cap** with `Nat.add_sub_add_right` — `(a + 1) - (b + 1) = a - b`.
+2. **Distribute the inner subtraction** with `Nat.sub_add_eq R v δ` — `R - (v + δ) = R - v - δ`.
+3. **Collapse with `Nat.sub_sub_self`** — `(R - v) - ((R - v) - δ) = δ`,
+   which needs the side condition `δ ≤ R - v` (derive from `v + δ ≤ R`
+   via `Nat.le_sub_of_add_le`).
+
+Example (`adversarial_gap` in `Gnosis/AdversarialRobustness.lean`):
+
+```lean
+unfold godWeight
+rw [Nat.min_eq_left hv, Nat.min_eq_left hD]
+rw [Nat.add_sub_add_right]
+rw [Nat.sub_add_eq R v delta]
+have hdle : delta ≤ R - v :=
+  Nat.le_sub_of_add_le (Nat.add_comm v delta ▸ hD)
+exact Nat.sub_sub_self hdle
+```
+
+`adversarial_is_goodhart` (strict <) uses `Nat.sub_lt_sub_left` with the
+extra `v_clean < R` hypothesis (derive via `Nat.lt_of_lt_of_le`), then
+`Nat.add_lt_add_right (… ) 1` to re-introduce the `+1` shift.
+`robust_training` (R-side monotonicity) uses `Nat.sub_lt_sub_right`.
+
+The `robustness_floor : godWeight R v ≥ 1` is just `Nat.le_add_left 1 _` —
+the `+1` clinamen is the floor.
+
+### Pattern 8: Reflexive `Nat.ne_of_lt` after `rw [eq]`
+
+When the goal is `x ≠ y` and you have `x = 0` (or `y = 0`) plus a positivity
+hypothesis on the other side, *don't* destructure manually:
+
+```lean
+rw [h_eq]                  -- rewrites x to 0
+exact Nat.ne_of_lt h_pos   -- 0 < y ⇒ 0 ≠ y
+```
+
+`Nat.ne_of_lt : a < b → a ≠ b`. Direction matters — if you have `y > 0`
+and need `x ≠ y` after `rw`-ing `x = 0`, the result is `0 ≠ y`, which is
+exactly `Nat.ne_of_lt h_pos`. **No `.symm` needed.** Used in
+`distraction_is_destructive_interference` and
+`attention_is_interference_system` (`AttentionAsConstructiveInterference`).
+
+### Pattern 9: `simp only` with `if_neg`/`if_pos` to control branch shape
+
+When `simp [definitionWithIf, hCond]` simplifies *too aggressively* (e.g.
+deciding which side of a conjunction to keep), use surgical `simp only`:
+
+```lean
+simp only [chooseFailureAction, if_neg hKeep, if_pos hVent]
+```
+
+The conjunction shape is preserved. Then close each side with explicit
+term-mode (`Nat.le_of_lt (Nat.lt_of_not_le …)`, etc.). Used in
+`chosen_failure_action_coefficient_minimal`
+(`Gnosis/FailureController.lean`) where `simp [..., hKeep]` was destroying
+the `∧` before the proof could attack it.
+
 ### What still needs omega
 
 Now genuinely the holdouts. Document with `-- TODO(rustic-church):`:

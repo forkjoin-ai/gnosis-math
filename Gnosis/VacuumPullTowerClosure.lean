@@ -35,10 +35,9 @@ theorem vacuum_is_unique_zero_score_bule : ∀ b : BuleyUnit, buleyUnitScore b =
   cases b with
   | mk w o d =>
     simp [buleyUnitScore] at hScore
-    -- hScore : w + o + d = 0 ⇒ w + o = 0 ∧ d = 0 ⇒ w = 0 ∧ o = 0 ∧ d = 0.
-    have hwo_d : w + o = 0 ∧ d = 0 := Nat.add_eq_zero.mp hScore
-    have hw_o : w = 0 ∧ o = 0 := Nat.add_eq_zero.mp hwo_d.1
-    rw [hw_o.1, hw_o.2, hwo_d.2]
+    -- After simp, hScore is decomposed to (w = 0 ∧ o = 0) ∧ d = 0.
+    obtain ⟨⟨hw, ho⟩, hd⟩ := hScore
+    rw [hw, ho, hd]
     rfl
 
 /-! ## Theorem 2: Any Bule unit reaches vacuum in finite contraction steps -/
@@ -94,6 +93,36 @@ theorem any_bule_reaches_vacuum_in_finite_steps : ∀ b : BuleyUnit, ∃ _n : Na
     rw [repeated_diversity_contracts_zero]
     simp [Nat.sub_self]
 
+/-- Helper: a triple of Nats summing to 1 has exactly one position equal to 1. -/
+private theorem sum_three_eq_one (w o d : Nat) (h : w + o + d = 1) :
+    (w = 1 ∧ o = 0 ∧ d = 0) ∨ (w = 0 ∧ o = 1 ∧ d = 0) ∨ (w = 0 ∧ o = 0 ∧ d = 1) := by
+  rcases Nat.eq_zero_or_pos w with hw0 | hwPos
+  · -- w = 0 ⇒ o + d = 1
+    rw [hw0, Nat.zero_add] at h
+    rcases Nat.eq_zero_or_pos o with ho0 | hoPos
+    · -- o = 0 ⇒ d = 1
+      rw [ho0, Nat.zero_add] at h
+      exact Or.inr (Or.inr ⟨hw0, ho0, h⟩)
+    · -- o ≥ 1, with o + d = 1 ⇒ o = 1, d = 0.
+      have hoLe : o ≤ 1 := h ▸ Nat.le_add_right o d
+      have ho1 : o = 1 := Nat.le_antisymm hoLe hoPos
+      rw [ho1] at h
+      have hd0 : d = 0 := Nat.add_left_cancel (h.trans (Nat.add_zero 1).symm)
+      exact Or.inr (Or.inl ⟨hw0, ho1, hd0⟩)
+  · -- w ≥ 1, with w + o + d = 1 ⇒ w = 1, o = 0, d = 0.
+    have hwLeSum : w ≤ w + o + d :=
+      Nat.le_trans (Nat.le_add_right w o) (Nat.le_add_right (w + o) d)
+    have hwLe : w ≤ 1 := h ▸ hwLeSum
+    have hw1 : w = 1 := Nat.le_antisymm hwLe hwPos
+    -- 1 + o + d = 1 ⇒ o + d = 0
+    rw [hw1] at h
+    have hod0 : o + d = 0 := by
+      have hShift : 1 + (o + d) = 1 + 0 := by
+        rw [Nat.add_zero, ← Nat.add_assoc]; exact h
+      exact Nat.add_left_cancel hShift
+    obtain ⟨ho0, hd0⟩ := Nat.add_eq_zero_iff.mp hod0
+    exact Or.inl ⟨hw1, ho0, hd0⟩
+
 /-! ## Theorem 3: Vacuum meeting condition activates vacuum pull -/
 
 /-- Vacuum pull is active when a Bule unit is one step away from the vacuum. -/
@@ -107,7 +136,8 @@ theorem vacuum_meeting_condition : ∀ b : BuleyUnit, buleyUnitScore b = 1 → v
   cases b with
   | mk w o d =>
     simp [buleyUnitScore] at hScore
-    have cases_split : (w = 1 ∧ o = 0 ∧ d = 0) ∨ (w = 0 ∧ o = 1 ∧ d = 0) ∨ (w = 0 ∧ o = 0 ∧ d = 1) := by omega
+    have cases_split : (w = 1 ∧ o = 0 ∧ d = 0) ∨ (w = 0 ∧ o = 1 ∧ d = 0) ∨ (w = 0 ∧ o = 0 ∧ d = 1) :=
+      sum_three_eq_one w o d hScore
     rcases cases_split with ⟨hw, ho, hd⟩ | ⟨hw, ho, hd⟩ | ⟨hw, ho, hd⟩
     · exact ⟨.waste, by simp [clinamenContract, vacuumBuleUnit, hw, ho, hd]⟩
     · exact ⟨.opportunity, by simp [clinamenContract, vacuumBuleUnit, hw, ho, hd]⟩
@@ -123,7 +153,8 @@ theorem vacuum_pull_determines_final_step : ∀ b : BuleyUnit, buleyUnitScore b 
   cases b with
   | mk w o d =>
     simp [buleyUnitScore] at hScore
-    have cases_split : (w = 1 ∧ o = 0 ∧ d = 0) ∨ (w = 0 ∧ o = 1 ∧ d = 0) ∨ (w = 0 ∧ o = 0 ∧ d = 1) := by omega
+    have cases_split : (w = 1 ∧ o = 0 ∧ d = 0) ∨ (w = 0 ∧ o = 1 ∧ d = 0) ∨ (w = 0 ∧ o = 0 ∧ d = 1) :=
+      sum_three_eq_one w o d hScore
     rcases cases_split with ⟨hw, ho, hd⟩ | ⟨hw, ho, hd⟩ | ⟨hw, ho, hd⟩
     · exact ⟨.waste,
         by simp [clinamenContract, vacuumBuleUnit, hw, ho, hd],
@@ -166,9 +197,24 @@ theorem vacuum_is_retrocausal_attractor :
     all_goals rfl
   · cases s with
     | mk w o d =>
-      have hw : w = 0 := by have h := hFixed .waste; simp [clinamenContract] at h; omega
-      have ho : o = 0 := by have h := hFixed .opportunity; simp [clinamenContract] at h; omega
-      have hd : d = 0 := by have h := hFixed .diversity; simp [clinamenContract] at h; omega
+      have hw : w = 0 := by
+        have h := hFixed .waste
+        simp [clinamenContract] at h
+        rcases Nat.eq_zero_or_pos w with hw0 | hwPos
+        · exact hw0
+        · exact absurd h (Nat.ne_of_lt (Nat.sub_lt hwPos Nat.one_pos))
+      have ho : o = 0 := by
+        have h := hFixed .opportunity
+        simp [clinamenContract] at h
+        rcases Nat.eq_zero_or_pos o with ho0 | hoPos
+        · exact ho0
+        · exact absurd h (Nat.ne_of_lt (Nat.sub_lt hoPos Nat.one_pos))
+      have hd : d = 0 := by
+        have h := hFixed .diversity
+        simp [clinamenContract] at h
+        rcases Nat.eq_zero_or_pos d with hd0 | hdPos
+        · exact hd0
+        · exact absurd h (Nat.ne_of_lt (Nat.sub_lt hdPos Nat.one_pos))
       show ⟨w, o, d⟩ = vacuumBuleUnit
       simp [vacuumBuleUnit, hw, ho, hd]
 

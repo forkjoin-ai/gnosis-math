@@ -118,13 +118,15 @@ theorem coverage_speedup_reciprocal (sel : VacuumSelection) :
 theorem standing_le_hidden (sel : VacuumSelection) :
     sel.standing_count ≤ sel.hidden_dim := by
   have h := sel.partition
-  omega
+  exact h ▸ Nat.le_add_right _ _
 
 /-- The destructive count equals hidden minus standing. -/
 theorem destructive_eq_hidden_sub_standing (sel : VacuumSelection) :
     sel.destructive_count = sel.hidden_dim - sel.standing_count := by
   have h := sel.partition
-  omega
+  -- standing + destructive = hidden ⇒ destructive = hidden - standing
+  rw [Nat.add_comm] at h
+  exact Nat.eq_sub_of_add_eq h
 
 /-- Bandwidth saved equals the destructive count (one float per
     non-standing dimension). -/
@@ -146,8 +148,19 @@ theorem coverage_one_iff_no_destructive (sel : VacuumSelection) :
   unfold coverage_num coverage_den
   have h := sel.partition
   constructor
-  · intro hc; omega
-  · intro hd; omega
+  · intro hc
+    -- coverage_num = standing_count, coverage_den = hidden_dim
+    -- hc : standing = hidden, h : standing + destructive = hidden
+    -- ⇒ destructive = 0
+    rw [hc] at h
+    -- h : hidden + destructive = hidden
+    have h' : sel.hidden_dim + sel.destructive_count = sel.hidden_dim + 0 :=
+      h.trans (Nat.add_zero _).symm
+    exact Nat.add_left_cancel h'
+  · intro hd
+    -- destructive = 0 ⇒ standing = hidden
+    rw [hd, Nat.add_zero] at h
+    exact h
 
 -- ══════════════════════════════════════════════════════════
 -- COLLAPSE TRAJECTORY: SCORE-DEPENDENT, NON-TRIVIAL
@@ -181,8 +194,8 @@ theorem active_above_first_light (sel : VacuumSelection) (score : Nat) :
     score ≥ 2 → active_dims_at_score sel score = sel.hidden_dim := by
   intro h
   unfold active_dims_at_score
-  have h0 : score ≠ 0 := by omega
-  have h1 : score ≠ 1 := by omega
+  have h0 : score ≠ 0 := fun heq => absurd (heq ▸ h) (by decide)
+  have h1 : score ≠ 1 := fun heq => absurd (heq ▸ h) (by decide)
   simp [h0, h1]
 
 /-- Persistence: as score decreases (toward vacuum), the active dim
@@ -199,12 +212,15 @@ theorem active_dims_monotone_under_collapse (sel : VacuumSelection)
   · -- s_low = 1: LHS = standing_count
     simp
     rcases s_high with _ | _ | s_high'
-    · omega -- contradicts s_low ≤ s_high
+    · -- s_low = 1, s_high = 0: contradicts s_low ≤ s_high
+      exact absurd h (by decide)
     · simp -- s_high = 1: standing_count ≤ standing_count
     · simp; exact standing_le_hidden sel
   · -- s_low ≥ 2: LHS = hidden_dim, then s_high ≥ 2 also
-    have hh0 : s_high ≠ 0 := by omega
-    have hh1 : s_high ≠ 1 := by omega
+    have hh0 : s_high ≠ 0 := fun heq =>
+      Nat.not_succ_le_zero _ (heq ▸ h)
+    have hh1 : s_high ≠ 1 := fun heq =>
+      Nat.not_succ_le_zero _ (Nat.le_of_succ_le_succ (heq ▸ h))
     simp [hh0, hh1]
 
 /-- The drop from "above first light" to "first light" exactly
@@ -213,7 +229,7 @@ theorem active_dims_monotone_under_collapse (sel : VacuumSelection)
 theorem first_light_collapse_equals_destructive (sel : VacuumSelection) :
     active_dims_at_score sel 2 - active_dims_at_score sel 1 =
       sel.destructive_count := by
-  rw [active_above_first_light sel 2 (by omega), active_at_first_light]
+  rw [active_above_first_light sel 2 (Nat.le_refl _), active_at_first_light]
   rw [destructive_eq_hidden_sub_standing]
 
 -- ══════════════════════════════════════════════════════════
@@ -258,7 +274,7 @@ def mkSelection (hidden : Nat) (standing : Nat)
   { hidden_dim := hidden
   , standing_count := standing
   , destructive_count := hidden - standing
-  , partition := by omega
+  , partition := Nat.add_sub_cancel' h_le
   , standing_nonempty := h_pos }
 
 /-- After contraction (one fewer standing dim), the selection is still
@@ -273,11 +289,12 @@ theorem contraction_preserves_validity (sel : VacuumSelection)
       sel'.standing_count = sel.standing_count - 1 ∧
       sel'.standing_count < sel.standing_count := by
   let sel' := mkSelection sel.hidden_dim (sel.standing_count - 1)
-    (by omega) (by have := standing_le_hidden sel; omega)
+    (Nat.sub_pos_of_lt h)
+    (Nat.le_trans (Nat.sub_le _ _) (standing_le_hidden sel))
   refine ⟨sel', rfl, rfl, ?_⟩
   -- sel'.standing_count is definitionally `sel.standing_count - 1` by mkSelection
   show sel.standing_count - 1 < sel.standing_count
-  omega
+  exact Nat.sub_lt (Nat.lt_trans Nat.zero_lt_one h) Nat.one_pos
 
 -- ══════════════════════════════════════════════════════════
 -- EMPIRICAL CORRESPONDENCE (stated as Nat ratio, honest)
@@ -302,7 +319,7 @@ theorem speedup_implies_destructive_fraction (sel : VacuumSelection)
     sel.destructive_count = (s - 1) * sel.standing_count := by
   rw [destructive_eq_hidden_sub_standing, h]
   cases s with
-  | zero => omega   -- contradicts h_pos
+  | zero => exact absurd h_pos (Nat.lt_irrefl _)
   | succ s' =>
     -- Goal: (s'+1) * standing - standing = (s'+1 - 1) * standing
     --     = s' * standing

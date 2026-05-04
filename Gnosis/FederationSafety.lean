@@ -16,7 +16,7 @@
   - crdt_idempotent              : merge(a, a) = a
   - federation_prevents_data_loss: any local update survives merge
 
-  All proofs closed by omega / rfl — zero sorry.
+  All proofs closed by Init Nat lemmas — zero sorry, zero omega.
 -/
 import Init
 
@@ -35,7 +35,7 @@ def localTrainStep (s : TrainingState) : TrainingState :=
 /-- Each training step strictly increases signal count. -/
 theorem on_device_training_works (s : TrainingState) :
     s.signals < (localTrainStep s).signals := by
-  unfold localTrainStep; show s.signals < s.signals + 1; omega
+  unfold localTrainStep; show s.signals < s.signals + 1; exact Nat.lt_succ_self _
 
 /-- Iterate `localTrainStep` `n` times starting from `s`. -/
 def trainN (s : TrainingState) : Nat → TrainingState
@@ -46,17 +46,18 @@ def trainN (s : TrainingState) : Nat → TrainingState
 theorem training_signals_grow (s : TrainingState) (n : Nat) :
     s.signals + n ≤ (trainN s n).signals := by
   induction n with
-  | zero => show s.signals + 0 ≤ s.signals; omega
+  | zero => show s.signals + 0 ≤ s.signals; exact Nat.le_of_eq (Nat.add_zero _)
   | succ k ih =>
     show s.signals + (k + 1) ≤ (localTrainStep (trainN s k)).signals
     unfold localTrainStep
     show s.signals + (k + 1) ≤ (trainN s k).signals + 1
-    omega
+    rw [Nat.add_succ]
+    exact Nat.succ_le_succ ih
 
 /-- Training steps are monotone in count. -/
 theorem training_steps_monotone (s : TrainingState) :
     s.localSteps ≤ (localTrainStep s).localSteps := by
-  unfold localTrainStep; show s.localSteps ≤ s.localSteps + 1; omega
+  unfold localTrainStep; show s.localSteps ≤ s.localSteps + 1; exact Nat.le_succ _
 
 /-- A CRDT counter state: a simple grow-only counter. -/
 structure GrowOnlyCounter where
@@ -126,7 +127,7 @@ theorem federation_update_preserved (s : FederatedState) (delta : Nat) :
   unfold reconcile crdtMerge
   show Nat.max s.local_.value s.remote.value
        ≤ Nat.max (s.local_.value + delta) s.remote.value
-  have h₁ : s.local_.value ≤ s.local_.value + delta := by omega
+  have h₁ : s.local_.value ≤ s.local_.value + delta := Nat.le_add_right _ _
   have h₂ : s.local_.value + delta ≤ Nat.max (s.local_.value + delta) s.remote.value :=
     Nat.le_max_left _ _
   have h₃ : s.remote.value ≤ Nat.max (s.local_.value + delta) s.remote.value :=
@@ -158,7 +159,7 @@ theorem training_step_increases_federated_value
     Nat.le_max_left _ _
   have h₂ : remote.value ≤ Nat.max (s.signals + 1) remote.value :=
     Nat.le_max_right _ _
-  have h₃ : s.signals ≤ s.signals + 1 := by omega
+  have h₃ : s.signals ≤ s.signals + 1 := Nat.le_succ _
   exact Nat.max_le.mpr ⟨Nat.le_trans h₃ h₁, h₂⟩
 
 end Gnosis.FederationSafety

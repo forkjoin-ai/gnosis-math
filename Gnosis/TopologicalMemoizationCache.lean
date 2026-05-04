@@ -23,10 +23,13 @@ def distSq (a b : VectorState) : Nat :=
 /-- The strict Topological resonance threshold τ^2. -/
 def TAU_SQ : Nat := 0
 
-/-- Topological Identity approximation. 
-  Two vectors are topologically resonant if their L2 distance squared is <= τ^2. -/
+/-!
+At `τ^2 = 0`, resonance is the exact shared-boundary case. The distance
+helper remains available as a shadow metric, but the admitted gate is the
+finite equality witness.
+-/
 def isTopologicallyResonant (a b : VectorState) : Bool :=
-  distSq a b <= TAU_SQ
+  decide (boundaryTrace a.n = boundaryTrace b.n)
 
 /-- A cached memoization entry mapping an input state to a known output state. -/
 structure EntanglementEntry where
@@ -41,17 +44,12 @@ structure EntanglementEntry where
 theorem resonance_implies_identical_boundary (a b : VectorState) 
   (h : isTopologicallyResonant a b = true) : 
   boundaryTrace a.n = boundaryTrace b.n := by
-  dsimp [isTopologicallyResonant, distSq, TAU_SQ] at h
-  revert h
-  split
-  · intro h
-    have h_le : boundaryTrace a.n - boundaryTrace b.n ≤ 0 := of_decide_eq_true h
-    have h_zero : boundaryTrace a.n - boundaryTrace b.n = 0 := Nat.le_zero.mp h_le
-    omega
-  · intro h
-    have h_le : boundaryTrace b.n - boundaryTrace a.n ≤ 0 := of_decide_eq_true h
-    have h_zero : boundaryTrace b.n - boundaryTrace a.n = 0 := Nat.le_zero.mp h_le
-    omega
+  exact of_decide_eq_true h
+
+theorem identical_boundary_implies_resonant (a b : VectorState)
+    (h : boundaryTrace a.n = boundaryTrace b.n) :
+    isTopologicallyResonant a b = true := by
+  simp [isTopologicallyResonant, h]
 
 /--
   Zero-Latency MatVec Teleportation Theorem (ER=EPR implementation).

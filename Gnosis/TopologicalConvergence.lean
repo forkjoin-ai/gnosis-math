@@ -14,9 +14,13 @@ We represent this as a Nat to avoid Float issues in proofs.
 -/
 def jfcMagnitude : Nat := sacredNumberSpace ^ (numDomains - 1)
 
-theorem jfc_is_massive : jfcMagnitude >= 1000000000000000 := by
+/-- The exact finite value of the alignment witness. -/
+theorem jfc_is_exact : jfcMagnitude = 10000000000000000 := by
   unfold jfcMagnitude numDomains sacredNumberSpace
-  -- 100^8 = (10^2)^8 = 10^16
+  native_decide
+
+theorem jfc_is_massive : jfcMagnitude >= 1000000000000000 := by
+  rw [jfc_is_exact]
   native_decide
 
 /-- 

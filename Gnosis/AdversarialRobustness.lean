@@ -38,23 +38,37 @@ open Gnosis (godWeight)
     bounded by the perturbation budget. -/
 theorem adversarial_gap (R v delta : Nat) (hv : v ≤ R) (hD : v + delta ≤ R) :
     godWeight R v - godWeight R (v + delta) = delta := by
-  unfold godWeight; simp [Nat.min_eq_left hv, Nat.min_eq_left hD]; omega
+  unfold godWeight
+  rw [Nat.min_eq_left hv, Nat.min_eq_left hD]
+  rw [Nat.add_sub_add_right]
+  rw [Nat.sub_add_eq R v delta]
+  have hdle : delta ≤ R - v :=
+    Nat.le_sub_of_add_le (Nat.add_comm v delta ▸ hD)
+  exact Nat.sub_sub_self hdle
 
 /-- THM-ROBUSTNESS-FLOOR: No adversarial attack can reduce weight below 1.
     Even maximally perturbed inputs retain the clinamen. The network
     can never be 100% certain of a wrong answer. -/
 theorem robustness_floor (R : Nat) :
     godWeight R R = 1 ∧ (∀ v, godWeight R v ≥ 1) := by
-  constructor
-  · unfold godWeight; omega
-  · intro v; unfold godWeight; omega
+  refine ⟨?_, ?_⟩
+  · unfold godWeight
+    rw [Nat.min_self, Nat.sub_self]
+  · intro v
+    unfold godWeight
+    -- R - min v R + 1 ≥ 1
+    exact Nat.le_add_left 1 _
 
 /-- THM-ADVERSARIAL-is-GOODHART: The adversarial perturbation formalizes the
     manipulation confounder from Goodhart's Law. -/
 theorem adversarial_is_goodhart (R v_clean v_adv : Nat)
     (hC : v_clean ≤ R) (hA : v_adv ≤ R) (hPerturbed : v_clean < v_adv) :
     godWeight R v_clean > godWeight R v_adv := by
-  unfold godWeight; simp [Nat.min_eq_left hC, Nat.min_eq_left hA]; omega
+  unfold godWeight
+  rw [Nat.min_eq_left hC, Nat.min_eq_left hA]
+  -- (R - v_adv + 1) < (R - v_clean + 1) ⇔ R - v_adv < R - v_clean
+  exact Nat.add_lt_add_right
+    (Nat.sub_lt_sub_left (Nat.lt_of_lt_of_le hPerturbed hA) hPerturbed) 1
 
 /-- THM-ROBUST-TRAINING: Adversarial training = increasing R (budget)
     to absorb perturbations. A model trained on adversarial examples
@@ -63,7 +77,10 @@ theorem robust_training (R_normal R_robust v delta : Nat)
     (hN : v + delta ≤ R_normal) (hR : v + delta ≤ R_robust)
     (hMore : R_robust > R_normal) :
     godWeight R_robust (v + delta) > godWeight R_normal (v + delta) := by
-  unfold godWeight; simp [Nat.min_eq_left hN, Nat.min_eq_left hR]; omega
+  unfold godWeight
+  rw [Nat.min_eq_left hN, Nat.min_eq_left hR]
+  -- R_normal - (v + delta) + 1 < R_robust - (v + delta) + 1
+  exact Nat.add_lt_add_right (Nat.sub_lt_sub_right hN hMore) 1
 
 /-- THM-LIPSCHITZ-BOUND: A Lipschitz-continuous classifier limits
     the change in output per unit of input change. The Lipschitz
@@ -71,8 +88,8 @@ theorem robust_training (R_normal R_robust v delta : Nat)
     the weight change is ≤ K·δ. -/
 theorem lipschitz_bound (R v K delta : Nat)
     (hv : v ≤ R) (hBound : v + K * delta ≤ R) :
-    godWeight R v - godWeight R (v + K * delta) = K * delta := by
-  unfold godWeight; simp [Nat.min_eq_left hv, Nat.min_eq_left hBound]; omega
+    godWeight R v - godWeight R (v + K * delta) = K * delta :=
+  adversarial_gap R v (K * delta) hv hBound
 
 -- Concrete: MNIST adversarial example
 -- Clean image: classified correctly with high confidence (v=2/100)
@@ -81,14 +98,11 @@ theorem mnist_adversarial :
     godWeight 100 2 = 99 ∧      -- clean: 99% weight
     godWeight 100 90 = 11 ∧     -- adversarial: 11% weight
     godWeight 100 2 - godWeight 100 90 = 88 := by  -- 88 points lost
-  unfold godWeight; omega
+  unfold godWeight; decide
 
 theorem adversarial_master (R : Nat) :
     (∀ v delta, v ≤ R → v + delta ≤ R → godWeight R v - godWeight R (v + delta) = delta) ∧
-    godWeight R R = 1 ∧ (∀ v, godWeight R v ≥ 1) := by
-  refine ⟨?_, ?_, ?_⟩
-  · intro v d hv hd; unfold godWeight; simp [Nat.min_eq_left hv, Nat.min_eq_left hd]; omega
-  · unfold godWeight; omega
-  · intro v; unfold godWeight; omega
+    godWeight R R = 1 ∧ (∀ v, godWeight R v ≥ 1) :=
+  ⟨adversarial_gap R, (robustness_floor R).1, (robustness_floor R).2⟩
 
 end AdversarialRobustness

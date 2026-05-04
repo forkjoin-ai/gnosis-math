@@ -56,7 +56,7 @@ theorem collapse_gap_positive
     (hLive : 1 < liveBranches) :
     0 < exactCollapseFloor liveBranches := by
   unfold exactCollapseFloor collapseGap
-  omega
+  exact Nat.sub_pos_of_lt hLive
 
 -- theorem branch_isolating_floor_achievable_from_live_count
 --     (start : List BranchSnapshot)
@@ -86,7 +86,7 @@ theorem choose_vent_when_vent_coefficient_min
       ¬ (keepCoefficient alphaWeight betaWeight <= ventCoefficient ventWeight ∧
           keepCoefficient alphaWeight betaWeight <= repairCoefficient betaWeight repairWeight) := by
     intro hKeep
-    omega
+    exact Nat.lt_irrefl _ (Nat.lt_of_lt_of_le hVentKeep hKeep.1)
   simp [chooseFailureAction, hKeepFalse, hVentRepair]
 
 theorem choose_repair_when_repair_coefficient_min
@@ -101,10 +101,10 @@ theorem choose_repair_when_repair_coefficient_min
       ¬ (keepCoefficient alphaWeight betaWeight <= ventCoefficient ventWeight ∧
           keepCoefficient alphaWeight betaWeight <= repairCoefficient betaWeight repairWeight) := by
     intro hKeep
-    omega
+    exact Nat.lt_irrefl _ (Nat.lt_of_lt_of_le hRepairKeep hKeep.2)
   have hVentFalse :
-      ¬ ventCoefficient ventWeight <= repairCoefficient betaWeight repairWeight := by
-    omega
+      ¬ ventCoefficient ventWeight <= repairCoefficient betaWeight repairWeight :=
+    fun hLe => Nat.lt_irrefl _ (Nat.lt_of_lt_of_le hRepairVent hLe)
   simp [chooseFailureAction, hKeepFalse, hVentFalse]
 
 theorem chosen_failure_action_coefficient_minimal
@@ -126,12 +126,20 @@ theorem chosen_failure_action_coefficient_minimal
   · by_cases hVent : ventCoefficient ventWeight <= repairCoefficient betaWeight repairWeight
     · have hKeepVentFalse : ¬ keepCoefficient alphaWeight betaWeight <= ventCoefficient ventWeight := by
         intro hKeepVent
-        have hKeepRepair : keepCoefficient alphaWeight betaWeight <= repairCoefficient betaWeight repairWeight := by omega
+        have hKeepRepair : keepCoefficient alphaWeight betaWeight <= repairCoefficient betaWeight repairWeight :=
+          Nat.le_trans hKeepVent hVent
         exact hKeep ⟨hKeepVent, hKeepRepair⟩
-      simp [chooseFailureAction, hKeep, hVent]
-      omega
-    · simp [chooseFailureAction, hKeep, hVent]
-      omega
+      simp only [chooseFailureAction, if_neg hKeep, if_pos hVent]
+      exact ⟨Nat.le_of_lt (Nat.lt_of_not_le hKeepVentFalse), hVent⟩
+    · simp only [chooseFailureAction, if_neg hKeep, if_neg hVent]
+      have hRV : repairCoefficient betaWeight repairWeight <
+          ventCoefficient ventWeight :=
+        Nat.lt_of_not_le hVent
+      have hRK : repairCoefficient betaWeight repairWeight <
+          keepCoefficient alphaWeight betaWeight :=
+        Nat.lt_of_not_le (fun hKR =>
+          hKeep ⟨Nat.le_trans hKR (Nat.le_of_lt hRV), hKR⟩)
+      exact ⟨Nat.le_of_lt hRK, Nat.le_of_lt hRV⟩
 
 theorem chosen_failure_action_score_minimal
     (liveBranches alphaWeight betaWeight ventWeight repairWeight : Nat) :
