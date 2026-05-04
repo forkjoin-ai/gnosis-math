@@ -30,7 +30,7 @@ theorem zeckendorf_gap_yields_unit_queue_boundary
       boundary.serviceRate = fib (k + 1) := by
   have hlam_nonneg : 0 ≤ n - fib (k + 2) := Nat.zero_le _
   have hlt_nat : n - fib (k + 2) < fib (k + 1) := remainder_bound n k hLower hUpper
-  have hmu_pos : 0 < fib (k + 1) := by omega
+  have hmu_pos : 0 < fib (k + 1) := Nat.lt_of_le_of_lt hlam_nonneg hlt_nat
   have hlam_lt_mu : n - fib (k + 2) < fib (k + 1) := hlt_nat
   exact ⟨canonicalMM1Boundary_ZeckendorfBatchingQueueKernelBridge (n - fib (k + 2)) (fib (k + 1)) hlam_nonneg hmu_pos hlam_lt_mu, rfl, rfl, rfl, rfl⟩
 
@@ -46,8 +46,10 @@ theorem zeckendorf_batching_yields_unit_queue_boundary
       boundary.serviceRate = s.loopQueries := by
   have hlam_nonneg : 0 ≤ s.batchedQueries := Nat.zero_le _
   have hwpos : 0 < wasted := Nat.lt_of_succ_le hwasted
-  have hlt_nat : s.batchedQueries < s.loopQueries := by omega
-  have hmu_pos : 0 < s.loopQueries := by omega
+  have hlt_nat : s.batchedQueries < s.loopQueries :=
+    hloop ▸ Nat.lt_add_of_pos_right hwpos
+  have hmu_pos : 0 < s.loopQueries :=
+    Nat.lt_of_le_of_lt (Nat.zero_le _) hlt_nat
   exact ⟨canonicalMM1Boundary_ZeckendorfBatchingQueueKernelBridge s.batchedQueries s.loopQueries hlam_nonneg hmu_pos hlt_nat, rfl, rfl, rfl, rfl⟩
 
 -- Contrarian anti-theorem
@@ -63,7 +65,8 @@ theorem zeckendorf_batching_does_not_force_positive_beta1
   rcases zeckendorf_batching_yields_unit_queue_boundary s wasted hloop hwasted with
     ⟨boundary, hBetaZero, _hCapacity, hArrival, hService⟩
   have hBetaPos : 0 < boundary.beta1 := hPositive boundary hArrival hService
-  have hNotPos : ¬ (0 < boundary.beta1) := by omega
+  have hNotPos : ¬ (0 < boundary.beta1) := by
+    rw [hBetaZero]; exact Nat.not_lt_zero 0
   exact hNotPos hBetaPos
 
 -- Moonshot fallback: geometric rate certificate
@@ -76,7 +79,7 @@ theorem zeckendorf_batching_yields_geometric_rate_certificate
       rate.rateDenominator = 4 ∧
       rate.initialBound = s.loopQueries + 1 := by
   have hProd : 3 < 4 := by decide
-  have hPos : 0 < s.loopQueries + 1 := by omega
+  have hPos : 0 < s.loopQueries + 1 := Nat.succ_pos _
   let rate := mkGeometricErgodicityRate 3 4 1 2 1 2 (s.loopQueries + 1)
                 (by decide) (by decide) hProd (by decide) (by decide) (by decide) (by decide) hPos
   exact ⟨rate, rfl, rfl, rfl⟩

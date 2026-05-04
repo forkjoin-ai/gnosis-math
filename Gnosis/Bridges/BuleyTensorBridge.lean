@@ -94,7 +94,7 @@ theorem five_head_attention_pair_returns_at_fifteen :
   refine ⟨?_, ?_⟩
   · decide
   · show 3 * (5 * 1) = 15
-    omega
+    decide
 
 /-- Seven-head attention (k₁=3, k₂=7, coprime): parallel cycle returns
 at 21, matching `multiHeadPhaseCount 7`. -/
@@ -104,7 +104,7 @@ theorem seven_head_attention_pair_returns_at_twenty_one :
   refine ⟨?_, ?_⟩
   · decide
   · show 3 * (7 * 1) = 21
-    omega
+    decide
 
 /-! ## Non-coprime regime: parallel period is strictly less than sequential
 
@@ -122,7 +122,7 @@ theorem six_head_attention_parallel_vs_sequential :
   refine ⟨?_, ?_, ?_⟩
   · decide
   · show 3 * (6 * 1) = 18
-    omega
+    decide
   · decide
 
 /-- Twelve-head attention's parallel period is 12 (lcm(3, 12) = 12),
@@ -133,7 +133,7 @@ theorem twelve_head_attention_parallel_vs_sequential :
   refine ⟨?_, ?_⟩
   · decide
   · show 3 * (12 * 1) = 36
-    omega
+    decide
 
 end BuleyTensorBridge
 end Gnosis

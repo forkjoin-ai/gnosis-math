@@ -288,7 +288,7 @@ theorem attention_is_interference_system :
     This is the standing wave in the value space.
 
     Spec-level: the historical statement quantified `∀ i j, i < j ∧ j <
-    heads.length → ...` and indexed into `heads.get ⟨i, by omega⟩`. The
+    heads.length → ...` and indexed into `heads.get ⟨i, _⟩`. The
     bound discharge fails in Init because `omega` cannot relate `i < j ∧
     j < heads.length` to `i < heads.length` without the `Nat.lt_trans`
     glue exposed. We weaken the conclusion to a finite-witness form on

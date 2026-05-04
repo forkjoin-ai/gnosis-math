@@ -133,7 +133,7 @@ theorem decomposition_does_not_increase_crossings (obj : TransformObject) (budge
     (decompose obj budget).residualCrossings ≤ obj.crossings := by
   unfold decompose
   simp only
-  omega
+  exact Nat.sub_le obj.crossings (min budget obj.crossings)
 
 /-! ## Theorem 2: Full decomposition yields featureless -/
 
@@ -147,7 +147,8 @@ theorem full_decomposition_yields_featureless (obj : TransformObject) :
     (decompose obj obj.crossings).residualCrossings = 0 := by
   unfold decompose
   simp only
-  omega
+  rw [Nat.min_self]
+  exact Nat.sub_self obj.crossings
 
 /-! ## Theorem 3: Featureless decomposition is idempotent -/
 
@@ -164,7 +165,7 @@ theorem featureless_decomposition_idempotent (obj : TransformObject) (budget : N
   unfold isFeatureless at h_feat
   unfold yieldFeatureless decompose
   simp only [h_feat]
-  omega
+  rw [Nat.min_zero]
 
 /-! ## Theorem 4: Projection-Reinforcement exclusivity -/
 
@@ -218,7 +219,7 @@ theorem featureless_states_cannot_reinforce (obj : TransformObject)
   unfold isFeatureless at h_feat
   unfold yieldFeatureless decompose
   simp only [h_feat]
-  omega
+  rw [Nat.min_zero]
 
 /-! ## Auxiliary Theorems -/
 
@@ -230,8 +231,8 @@ theorem decomposition_preserves_conservation (obj : TransformObject) (budget : N
   unfold decompose
   simp only
   constructor
-  · omega
-  · omega
+  · exact Nat.min_le_right budget obj.weight
+  · exact Nat.zero_le (obj.capacity - min budget obj.weight)
 
 /-- Zero-budget decomposition is the identity (no change). -/
 theorem zero_budget_is_identity (obj : TransformObject) :
@@ -241,8 +242,9 @@ theorem zero_budget_is_identity (obj : TransformObject) :
   unfold decompose
   simp only
   constructor
-  · omega
-  · omega
+  · rw [Nat.zero_min]
+    exact Nat.sub_zero obj.crossings
+  · exact Nat.zero_min obj.weight
 
 /-- Sufficient budget (≥ crossings) achieves full decomposition. -/
 theorem sufficient_budget_achieves_featureless (obj : TransformObject) (budget : Nat) :
@@ -251,7 +253,8 @@ theorem sufficient_budget_achieves_featureless (obj : TransformObject) (budget :
   intro h_suff
   unfold yieldFeatureless decompose
   simp only
-  omega
+  rw [Nat.min_eq_right h_suff]
+  exact Nat.sub_self obj.crossings
 
 /-- Sequential decompositions preserve monotonicity. -/
 theorem sequential_decomposition_monotonic (obj : TransformObject)
@@ -273,6 +276,6 @@ theorem featureless_is_absorbing (obj : TransformObject) (budget : Nat) :
   unfold isFeatureless at h_feat ⊢
   unfold decompose
   simp only [h_feat]
-  omega
+  rw [Nat.min_zero]
 
 end Gnosis.DecompositionTopology

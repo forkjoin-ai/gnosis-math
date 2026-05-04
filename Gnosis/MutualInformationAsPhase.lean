@@ -72,14 +72,14 @@ theorem mutual_information_scales_with_phase
     let pattern_mi := mutual_information pattern_a
     let _combined_entropy := pattern_a.source_entropy + pattern_b.target_entropy
     phase_score alignment > 0 → pattern_mi ≥ 0 := by
-  intro h_phase
-  omega
+  intro _pattern_a _pattern_b _pattern_mi _combined_entropy _h_phase
+  exact Nat.zero_le _
 
 /-- Independence correlates with zero phase alignment. -/
 theorem independence_iff_low_phase (alignment : PhaseAlignment)
     (_h_indep : alignment.pattern_a.shared_entropy = 0) :
-    phase_score alignment = 0 ∨ phase_score alignment > 0 := by
-  omega
+    phase_score alignment = 0 ∨ phase_score alignment > 0 :=
+  Nat.eq_zero_or_pos (phase_score alignment)
 
 /-- Correlation is constructive phase. -/
 theorem correlation_is_constructive_phase (alignment : PhaseAlignment)
@@ -91,8 +91,8 @@ theorem correlation_is_constructive_phase (alignment : PhaseAlignment)
 /-- Perfect correlation exhibits high phase alignment. -/
 theorem perfect_correlation_high_phase (alignment : PhaseAlignment)
     (_h_perfect : alignment.pattern_a.source_entropy = alignment.pattern_b.target_entropy) :
-    phase_score alignment ≥ 0 := by
-  omega
+    phase_score alignment ≥ 0 :=
+  Nat.zero_le _
 
 /-! ## Information flow under phase alignment -/
 
@@ -117,7 +117,7 @@ theorem high_phase_high_flow (bandwidth : Nat) (signal noise : Nat)
   unfold information_flow_rate
   rw [if_pos h_noise, if_pos h_noise]
   apply Nat.div_le_div_right
-  exact Nat.mul_le_mul_right _ (Nat.mul_le_mul_right _ (by omega))
+  exact Nat.mul_le_mul_right _ (Nat.mul_le_mul_right _ (by decide))
 
 /-- Zero phase alignment zero flow. -/
 theorem zero_phase_zero_flow (bandwidth : Nat) (signal noise : Nat)

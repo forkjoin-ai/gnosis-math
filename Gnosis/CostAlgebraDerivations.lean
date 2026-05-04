@@ -37,10 +37,10 @@ def natCostAlgebra : CostAlgebra Nat :=
     compose := (· + ·)
     score := id
     zero_score := rfl
-    compose_left_zero := by intro s; show 0 + s = s; omega
+    compose_left_zero := by intro s; exact Nat.zero_add s
     compose_right_zero := by intro s; show s + 0 = s; rfl
-    compose_assoc := by intros a b c; show a + b + c = a + (b + c); omega
-    compose_comm := by intros a b; show a + b = b + a; omega
+    compose_assoc := by intros a b c; exact Nat.add_assoc a b c
+    compose_comm := by intros a b; exact Nat.add_comm a b
     score_compose := by intros a b; rfl }
 
 /-! ## Derivation 2: CostAlgebra is closed under product -/
@@ -76,7 +76,7 @@ def productCostAlgebra
       show A.score (A.compose a₁ a₂) + B.score (B.compose b₁ b₂)
             = (A.score a₁ + B.score b₁) + (A.score a₂ + B.score b₂)
       rw [A.score_compose, B.score_compose]
-      omega }
+      ac_rfl }
 
 /-! ## Derivation 3: `Nat × Nat × Nat` and the Bule unit are score-isomorphic -/
 
@@ -109,7 +109,7 @@ theorem bule_score_equals_nat3_score (b : BuleyUnit) :
   cases b with
   | mk w o d =>
     show w + o + d = w + (o + d)
-    omega
+    exact Nat.add_assoc w o d
 
 /-- The Bule cost-algebra and the `Nat^3` cost-algebra agree on
 composition under the bijection. -/
@@ -170,7 +170,7 @@ theorem nat3_total_degree_is_bule_score (b : BuleyUnit) :
   cases b with
   | mk w o d =>
     show w + (o + (d + 0)) = w + o + d
-    omega
+    exact (Nat.add_assoc w o d).symm
 
 end CostAlgebraDerivations
 end Gnosis

@@ -103,7 +103,13 @@ theorem whip_total_time_after_full_sharding {items stageCount correctionCost sha
       stageCount + correctionCost * shardCount := by
   unfold whipTotalTime
   rw [whip_ceiling_term_is_one hItems hShardCount]
-  omega
+  -- Goal: 1 + (stageCount - 1) + correctionCost * shardCount
+  --     = stageCount + correctionCost * shardCount
+  -- Reduce to 1 + (stageCount - 1) = stageCount via add_comm + sub_add_cancel.
+  have hRebuild : 1 + (stageCount - 1) = stageCount := by
+    rw [Nat.add_comm 1 (stageCount - 1)]
+    exact Nat.sub_add_cancel hStageCount
+  rw [hRebuild]
 
 theorem whip_total_time_strictly_increases_after_full_sharding
     {items stageCount correctionCost shardCount : Nat}
@@ -113,7 +119,8 @@ theorem whip_total_time_strictly_increases_after_full_sharding
     (hShardCount : items <= shardCount) :
     whipTotalTime items stageCount correctionCost (shardCount + 1) >
       whipTotalTime items stageCount correctionCost shardCount := by
-  have hNext : items <= shardCount + 1 := by omega
+  have hNext : items <= shardCount + 1 :=
+    Nat.le_trans hShardCount (Nat.le_succ shardCount)
   rw [whip_total_time_after_full_sharding hItems hStageCount hNext]
   rw [whip_total_time_after_full_sharding hItems hStageCount hShardCount]
   have hShardGrowth :
@@ -169,7 +176,10 @@ theorem quantum_speedup_equals_classical_deficit_plus_one {sqrtN : Nat}
   unfold quantumSpeedup classicalRounds quantumRounds searchSize
   unfold classicalDeficit intrinsicBeta1 classicalBeta1
   rw [Nat.mul_div_right sqrtN hSqrtN]
-  omega
+  -- Goal: sqrtN = sqrtN - 1 - 0 + 1.  sub_zero collapses the `- 0`,
+  -- then `(sqrtN - 1) + 1 = sqrtN` via `Nat.sub_add_cancel hSqrtN`.
+  rw [Nat.sub_zero (sqrtN - 1)]
+  exact (Nat.sub_add_cancel hSqrtN).symm
 
 def linearFoldInt (left right : Int) : Int := left + right
 
@@ -319,7 +329,13 @@ theorem protocol_deficits {streamCount : Nat} (hStreams : 1 < streamCount) :
     protocolTopologicalDeficit (protocolIntrinsicBeta1 streamCount) (quicBeta1 streamCount) = 0 /\
     protocolTopologicalDeficit (protocolIntrinsicBeta1 streamCount) (flowBeta1 streamCount) = 0 := by
   unfold protocolTopologicalDeficit protocolIntrinsicBeta1 tcpBeta1 quicBeta1 flowBeta1
-  omega
+  -- Goal: (streamCount - 1) - 0 = streamCount - 1
+  --   ∧ (streamCount - 1) - (streamCount - 1) = 0
+  --   ∧ (streamCount - 1) - (streamCount - 1) = 0
+  refine ⟨?_, ?_, ?_⟩
+  · exact Nat.sub_zero (streamCount - 1)
+  · exact Nat.sub_self (streamCount - 1)
+  · exact Nat.sub_self (streamCount - 1)
 
 inductive SettlementMode where
   | sequential
@@ -415,6 +431,6 @@ theorem local_node_decomposition (inDegree outDegree : Nat) :
   · exact Or.inl hFork
   · by_cases hJoin : 1 < inDegree
     · exact Or.inr (Or.inl hJoin)
-    · exact Or.inr (Or.inr (by constructor <;> omega))
+    · exact Or.inr (Or.inr ⟨Nat.le_of_not_lt hFork, Nat.le_of_not_lt hJoin⟩)
 
 end Gnosis

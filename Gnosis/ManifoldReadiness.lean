@@ -67,7 +67,11 @@ theorem carrier_readiness_linear_law
     carrierReadiness frame signal =
       2 * (frame.stableRows : Int) - signal.saturationWitness := by
   unfold carrierReadiness absorbedInfo leakedInfo unresolvedResidue
-  omega
+  have h1 : signal.saturationWitness - (signal.saturationWitness - frame.stableRows) =
+      frame.stableRows :=
+    Nat.sub_sub_self hOverflow
+  rw [h1, Int.ofNat_sub hOverflow]
+  rw [Int.sub_eq_add_neg, Int.neg_sub, ← Int.add_sub_assoc, ← Int.two_mul]
 
 theorem carrier_ready_iff_half_saturation
     (frame : ObserverFrame) (signal : HigherLayerSignal)
@@ -75,14 +79,23 @@ theorem carrier_ready_iff_half_saturation
     carrierReady frame signal ↔ signal.saturationWitness ≤ 2 * frame.stableRows := by
   unfold carrierReady
   rw [carrier_readiness_linear_law frame signal hOverflow]
-  omega
+  rw [Int.sub_nonneg]
+  constructor
+  · intro h
+    have : ((signal.saturationWitness : Int)) ≤ ((2 * frame.stableRows : Nat) : Int) := by
+      rw [Int.natCast_mul]; exact h
+    exact Int.ofNat_le.mp this
+  · intro h
+    have : ((signal.saturationWitness : Int)) ≤ ((2 * frame.stableRows : Nat) : Int) :=
+      Int.ofNat_le.mpr h
+    rw [Int.natCast_mul] at this; exact this
 
 theorem carrier_not_ready_iff_below_half_saturation
     (frame : ObserverFrame) (signal : HigherLayerSignal)
     (hOverflow : frame.stableRows ≤ signal.saturationWitness) :
     ¬ carrierReady frame signal ↔ 2 * frame.stableRows < signal.saturationWitness := by
   rw [carrier_ready_iff_half_saturation frame signal hOverflow]
-  omega
+  exact Nat.not_le
 
 theorem zero_carrier_readiness_iff_exact_balance
     (frame : ObserverFrame) (signal : HigherLayerSignal)
@@ -90,7 +103,16 @@ theorem zero_carrier_readiness_iff_exact_balance
     carrierReadiness frame signal = 0 ↔
       signal.saturationWitness = 2 * frame.stableRows := by
   rw [carrier_readiness_linear_law frame signal hOverflow]
-  omega
+  rw [Int.sub_eq_zero]
+  constructor
+  · intro h
+    have : ((signal.saturationWitness : Int)) = ((2 * frame.stableRows : Nat) : Int) := by
+      rw [Int.natCast_mul]; exact h.symm
+    exact Int.ofNat_inj.mp this
+  · intro h
+    have : ((signal.saturationWitness : Int)) = ((2 * frame.stableRows : Nat) : Int) :=
+      Int.ofNat_inj.mpr h
+    rw [Int.natCast_mul] at this; exact this.symm
 
 theorem exact_balance_implies_carrier_ready
     (frame : ObserverFrame) (signal : HigherLayerSignal)
@@ -98,7 +120,7 @@ theorem exact_balance_implies_carrier_ready
     (hBalance : signal.saturationWitness = 2 * frame.stableRows) :
     carrierReady frame signal := by
   rw [carrier_ready_iff_half_saturation frame signal hOverflow]
-  omega
+  exact Nat.le_of_eq hBalance
 
 theorem exact_balance_is_vacuum_boundary
     (frame : ObserverFrame) (signal : HigherLayerSignal)
@@ -117,8 +139,11 @@ theorem each_extra_row_adds_two_readiness
       2 * ((r2 : Int) - r1) := by
   rw [carrier_readiness_linear_law ⟨signal.complexity, r2⟩ signal hOverflow,
     carrier_readiness_linear_law ⟨signal.complexity, r1⟩ signal (Nat.le_trans hRows hOverflow)]
-  simp
-  omega
+  show (2 * (r2 : Int) + (-(signal.saturationWitness : Int)))
+       - (2 * (r1 : Int) + (-(signal.saturationWitness : Int)))
+       = 2 * ((r2 : Int) - r1)
+  rw [Int.add_sub_add_right]
+  exact (Int.mul_sub 2 (r2 : Int) (r1 : Int)).symm
 
 theorem carrier_readiness_monotone_in_rows
     (signal : HigherLayerSignal) {r1 r2 : Nat}
@@ -128,8 +153,10 @@ theorem carrier_readiness_monotone_in_rows
       carrierReadiness ⟨signal.complexity, r2⟩ signal := by
   rw [carrier_readiness_linear_law ⟨signal.complexity, r1⟩ signal (Nat.le_trans hRows hOverflow),
     carrier_readiness_linear_law ⟨signal.complexity, r2⟩ signal hOverflow]
-  simp
-  omega
+  show 2 * (r1 : Int) - signal.saturationWitness ≤ 2 * (r2 : Int) - signal.saturationWitness
+  exact Int.sub_le_sub_right
+    (Int.mul_le_mul_of_nonneg_left (Int.ofNat_le.mpr hRows) (by decide))
+    _
 
 theorem pink_aeon_carrier_readiness :
     carrierReadiness aeonObserver pinkSaturationSignal = -6 := by

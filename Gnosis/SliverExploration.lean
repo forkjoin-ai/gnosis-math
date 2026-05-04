@@ -13,7 +13,9 @@ namespace SliverExploration
 
 -- Purity vs diversity
 def diversityScore (alive : Nat) : Nat := alive
-theorem diversity_beats_monoculture (K : Nat) (hK : 2 ≤ K) : diversityScore K > diversityScore 1 := by unfold diversityScore; omega
+theorem diversity_beats_monoculture (K : Nat) (hK : 2 ≤ K) : diversityScore K > diversityScore 1 := by
+  unfold diversityScore
+  exact Nat.lt_of_lt_of_le (by decide : (1 : Nat) < 2) hK
 
 -- Extinction is irreversible
 def optionValue (alive : Bool) (benefit : Nat) : Nat := if alive then benefit else 0
@@ -21,10 +23,12 @@ theorem dead_stays_dead (b : Nat) : optionValue false b = 0 := by unfold optionV
 theorem alive_has_value (b : Nat) (h : 0 < b) : 0 < optionValue true b := by unfold optionValue; simp; exact h
 
 -- The sliver costs something now
-theorem sliver_costs_now (winner sliver : Nat) (h : winner < sliver) : 0 < sliver - winner := by omega
+theorem sliver_costs_now (winner sliver : Nat) (h : winner < sliver) : 0 < sliver - winner :=
+  Nat.sub_pos_of_lt h
 
 -- Extinction count under Nash
-theorem nash_kills (K : Nat) (hK : 2 ≤ K) : K - 1 ≥ 1 := by omega
+theorem nash_kills (K : Nat) (hK : 2 ≤ K) : K - 1 ≥ 1 :=
+  Nat.le_sub_of_add_le (by exact hK : 1 + 1 ≤ K)
 
 -- Exploration cost and value
 def explorationCost (K penalty : Nat) : Nat := (K - 1) * penalty
@@ -48,14 +52,15 @@ theorem skyrms_optimal_myopic (cost : Nat) (h : 0 < cost) : explorationValue 2 1
 -- Forest is optimal for T large (far-sighted)
 theorem forest_optimal_farsighted (K penalty : Nat) (hK : 2 ≤ K) :
     ∃ T, explorationValue K 1 T ≥ explorationCost K penalty := by
-  exact exploration_amortizes K penalty 1 hK (by omega)
+  exact exploration_amortizes K penalty 1 hK (by decide)
 
 -- The oscillation formalizes the fixed point
 theorem fixed_point_is_oscillation (purity diversity : Nat) (h1 : 0 < purity) (h2 : 0 < diversity) :
     0 < purity ∧ 0 < diversity := ⟨h1, h2⟩
 
 -- Disagreement = sliver budget = oscillation amplitude = breathing
-theorem disagreement_is_breathing (K : Nat) (hK : 2 ≤ K) : K - 1 ≥ 1 := by omega
+theorem disagreement_is_breathing (K : Nat) (hK : 2 ≤ K) : K - 1 ≥ 1 :=
+  Nat.le_sub_of_add_le (by exact hK : 1 + 1 ≤ K)
 
 -- Neither force wins. Both are positive. The system lives.
 theorem buleyean_oscillation (diversity purity : Nat) (hd : 0 < diversity) (hp : 0 < purity) :

@@ -38,7 +38,7 @@ def defenseWeight (p : PersonalityProfile) : Nat :=
 theorem defense_always_positive (p : PersonalityProfile) :
     0 < defenseWeight p := by
   show 0 < p.conscientiousness + p.agreeableness + 1
-  omega
+  exact Nat.succ_pos _
 
 /-- Bug density: linear in crossing number (one potential bug per crossing). -/
 def bugDensity (crossings : Nat) : Nat := crossings
@@ -88,8 +88,8 @@ theorem greedy_strict_reduction (high low : Nat) (h : low < high) :
 /-- Greedy refactoring: total savings from removing all crossings in k passes is k*delta. -/
 theorem greedy_savings_linear (crossings delta k : Nat)
     (h : k * delta ≤ crossings) :
-    crossings - k * delta + k * delta = crossings := by
-  omega
+    crossings - k * delta + k * delta = crossings :=
+  Nat.sub_add_cancel h
 
 /-- Each void-walker step reduces crossings by at least 1. -/
 def voidWalkerStep (crossings : Nat) : Nat :=
@@ -99,8 +99,8 @@ def voidWalkerStep (crossings : Nat) : Nat :=
 theorem void_walker_convergence_rate (crossings : Nat) (h : 0 < crossings) :
     voidWalkerStep crossings < crossings := by
   unfold voidWalkerStep
-  simp [h]
-  omega
+  rw [if_pos h]
+  exact Nat.sub_lt h (by decide : 0 < 1)
 
 /-- After exactly n steps, the walker has reduced crossings by at least n. -/
 theorem void_walker_n_steps (crossings n : Nat) (_h : n ≤ crossings) :
@@ -131,7 +131,7 @@ theorem pricing_as_defense_weight (p : PersonalityProfile) :
     0 < scanRevenueCents p := by
   unfold scanRevenueCents centsPerDefenseUnit
   have h := defense_always_positive p
-  exact Nat.mul_pos h (by omega)
+  exact Nat.mul_pos h (by decide : 0 < 900)
 
 /-- Revenue scales linearly with defense weight. -/
 theorem revenue_linear_in_defense (p : PersonalityProfile) :

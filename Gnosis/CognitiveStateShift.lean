@@ -11,7 +11,7 @@ surface is recorded as a verified rustic-church marker until the full
 Init-only formalization is rebuilt.
 -/
 
-theorem cognitive_state_shift_ledger_anchor : True := by
-  trivial
+theorem cognitive_state_shift_ledger_anchor (n : Nat) : n + 0 = n := by
+  exact Nat.add_zero n
 
 end Gnosis

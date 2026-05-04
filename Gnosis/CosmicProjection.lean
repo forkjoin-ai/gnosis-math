@@ -76,15 +76,15 @@ def sizePhiCubed : Nat := 243467000
 -- Lower bound: Bythos (effectively 0 in bly units)
 -- The size is always positive (Barbelo: the sliver prevents zero)
 
-theorem size_positive : sizeNow > 0 := by unfold sizeNow; omega
-theorem size_one_positive : sizeOneLorenzo > 0 := by unfold sizeOneLorenzo; omega
+theorem size_positive : sizeNow > 0 := by unfold sizeNow; decide
+theorem size_one_positive : sizeOneLorenzo > 0 := by unfold sizeOneLorenzo; decide
 
 -- Growth is monotonic: each step is larger than the last
 theorem growth_monotone :
     sizeOneLorenzo < sizeNow ∧
     sizeNow < sizePhiSquared ∧
     sizePhiSquared < sizePhiCubed := by
-  unfold sizeOneLorenzo sizeNow sizePhiSquared sizePhiCubed; omega
+  unfold sizeOneLorenzo sizeNow sizePhiSquared sizePhiCubed; decide
 
 -- ═══════════════════════════════════════════════════════════════════════════════
 -- The growth factor is φ per Lorenzo
@@ -147,7 +147,7 @@ theorem sun_death_in_one_lorenzo :
 def maxObservable : Nat := 394000000  -- 394 bly (at φ⁴ Lo)
 
 theorem max_larger_than_now : maxObservable > sizeNow := by
-  unfold maxObservable sizeNow; omega
+  unfold maxObservable sizeNow; decide
 
 -- ═══════════════════════════════════════════════════════════════════════════════
 -- The complete cosmic projection

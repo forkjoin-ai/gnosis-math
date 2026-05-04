@@ -126,7 +126,8 @@ theorem ambiguity_creates_tension :
     tension = amb.meaning1.amplitude + amb.meaning2.amplitude ∧
     tension ≥ 0 := by
   intro amb _h_lock
-  exact ⟨amb.meaning1.amplitude + amb.meaning2.amplitude, rfl, by omega⟩
+  exact ⟨amb.meaning1.amplitude + amb.meaning2.amplitude, rfl,
+         Nat.zero_le _⟩
 
 /-! ## Theorem 3: Literal vs metaphorical by frequency -/
 
@@ -147,8 +148,10 @@ theorem literal_vs_metaphorical_is_frequency_difference :
     is_metaphorical_meaning metaphorical →
     literal.context_freq < metaphorical.context_freq := by
   intro literal metaphorical h_lit h_meta
-  simp only [is_literal_meaning, is_metaphorical_meaning] at h_lit h_meta
-  omega
+  -- h_lit : literal.context_freq ≤ 10 ∧ literal.polarity = true
+  -- h_meta : metaphorical.context_freq > 10 ∧ metaphorical.domain ≠ 0
+  -- Chain: literal.context_freq ≤ 10 < metaphorical.context_freq
+  exact Nat.lt_of_le_of_lt h_lit.1 h_meta.1
 
 /-- Corollary: Metaphor requires more context to resolve than literal meaning. -/
 theorem metaphor_requires_context :
@@ -159,8 +162,14 @@ theorem metaphor_requires_context :
     context_requirement = metaphorical.context_freq - literal.context_freq ∧
     context_requirement > 0 := by
   intro literal metaphorical h_lit h_meta
-  simp only [is_literal_meaning, is_metaphorical_meaning] at h_lit h_meta
-  exact ⟨metaphorical.context_freq - literal.context_freq, rfl, by omega⟩
+  -- h_lit.1 : literal.context_freq ≤ 10
+  -- h_meta.1 : metaphorical.context_freq > 10
+  -- ⇒ literal.context_freq < metaphorical.context_freq
+  -- ⇒ 0 < metaphorical.context_freq - literal.context_freq
+  have h_lt : literal.context_freq < metaphorical.context_freq :=
+    Nat.lt_of_le_of_lt h_lit.1 h_meta.1
+  exact ⟨metaphorical.context_freq - literal.context_freq, rfl,
+         Nat.sub_pos_of_lt h_lt⟩
 
 /-! ## Theorem 4: Compositionality as superposition -/
 
@@ -192,7 +201,7 @@ theorem superposition_preserves_structure :
     words.length > 0 →
     (words.map (fun w => w.amplitude)).sum ≥ 0 := by
   intro _words _h_len
-  omega
+  exact Nat.zero_le _
 
 /-! ## Theorem 5: Polyseme collapse via destructive interference -/
 

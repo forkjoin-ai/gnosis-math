@@ -106,17 +106,17 @@ attention quantum. -/
 theorem update_Q_score_increment (p : QKVProjection) :
     qkvScore (updateQ p) = qkvScore p + 1 := by
   show p.q + 1 + p.k + p.v = p.q + p.k + p.v + 1
-  omega
+  ac_rfl
 
 theorem update_K_score_increment (p : QKVProjection) :
     qkvScore (updateK p) = qkvScore p + 1 := by
   show p.q + (p.k + 1) + p.v = p.q + p.k + p.v + 1
-  omega
+  ac_rfl
 
 theorem update_V_score_increment (p : QKVProjection) :
     qkvScore (updateV p) = qkvScore p + 1 := by
   show p.q + p.k + (p.v + 1) = p.q + p.k + p.v + 1
-  omega
+  ac_rfl
 
 /-! ## QKV decomposition matches the Bule three-face decomposition -/
 
@@ -146,7 +146,7 @@ def multiHeadPhaseCount (n : Nat) : Nat := towerPhaseCount [3, n]
 theorem multi_head_phase_count_eq (n : Nat) :
     multiHeadPhaseCount n = 3 * n := by
   show 3 * (n * 1) = 3 * n
-  omega
+  rw [Nat.mul_one]
 
 theorem one_head_attention_is_triton :
     multiHeadPhaseCount 1 = 3 := by decide

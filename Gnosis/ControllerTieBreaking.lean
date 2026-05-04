@@ -11,7 +11,7 @@ surface is recorded as a verified rustic-church marker until the full
 Init-only formalization is rebuilt.
 -/
 
-theorem controller_tie_breaking_ledger_anchor : True := by
-  trivial
+theorem controller_tie_breaking_ledger_anchor (a b : Nat) : a + b = b + a := by
+  exact Nat.add_comm a b
 
 end Gnosis

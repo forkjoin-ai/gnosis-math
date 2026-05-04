@@ -131,9 +131,28 @@ theorem entropy_is_unresolved_patterns (pat : InformationPattern) :
   unfold unresolved_amplitude
   constructor
   · intro h
-    omega
+    -- h : 0 < pat.source_entropy + pat.target_entropy
+    -- Case split on pat.source_entropy: zero ⇒ target > 0, succ ⇒ source > 0.
+    cases hs : pat.source_entropy with
+    | zero =>
+      -- After cases, goal is: 0 > 0 ∨ pat.target_entropy > 0.
+      -- h, after the same rewrite, is: 0 < 0 + pat.target_entropy.
+      have h' : 0 < 0 + pat.target_entropy := hs ▸ h
+      have ht : 0 < pat.target_entropy :=
+        (Nat.zero_add pat.target_entropy) ▸ h'
+      exact Or.inr ht
+    | succ n =>
+      -- After cases, goal is: 0 < n + 1 ∨ pat.target_entropy > 0.
+      exact Or.inl (Nat.succ_pos n)
   · intro h
-    omega
+    -- h : pat.source_entropy > 0 ∨ pat.target_entropy > 0
+    cases h with
+    | inl hs =>
+      -- 0 < source ≤ source + target
+      exact Nat.lt_of_lt_of_le hs (Nat.le_add_right pat.source_entropy pat.target_entropy)
+    | inr ht =>
+      -- 0 < target ≤ source + target
+      exact Nat.lt_of_lt_of_le ht (Nat.le_add_left pat.target_entropy pat.source_entropy)
 
 /-- Multiple incompletely resolved interference patterns indicate
     high entropy: the pattern has many weak standing waves instead
@@ -143,7 +162,8 @@ theorem multiple_unresolved_patterns_imply_high_entropy
     (h_many : pat.source_entropy + pat.target_entropy ≥ 4) :
     unresolved_amplitude pat ≥ 4 := by
   unfold unresolved_amplitude
-  omega
+  -- After unfold, goal IS the hypothesis (Pattern 5b: reflexive omega).
+  exact h_many
 
 /-! ## Theorem 5: Channel capacity is resonant bandwidth -/
 
@@ -195,8 +215,8 @@ def perfect_transmission (pat : InformationPattern) : Prop :=
 theorem perfect_transmission_preserves_entropy (pat : InformationPattern)
     (_h_perf : perfect_transmission pat) :
     mutual_information pat ≥ 0 := by
-  unfold perfect_transmission mutual_information at *
-  omega
+  -- mutual_information returns a Nat; every Nat is ≥ 0.
+  exact Nat.zero_le _
 
 /-- Independent patterns have zero shared frequency (destructive phase lock). -/
 def independent_patterns (pat : InformationPattern) : Prop :=
@@ -206,8 +226,8 @@ def independent_patterns (pat : InformationPattern) : Prop :=
 theorem independent_affects_mi (pat : InformationPattern)
     (_h_indep : independent_patterns pat) :
     mutual_information pat ≥ 0 := by
-  unfold independent_patterns mutual_information at *
-  omega
+  -- mutual_information returns a Nat; every Nat is ≥ 0.
+  exact Nat.zero_le _
 
 end InformationAsInterferencePattern
 end Gnosis

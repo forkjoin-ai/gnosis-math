@@ -48,8 +48,17 @@ theorem nonvacuum_has_positive_entropy (b : BuleyUnit) (h : b ≠ vacuumBuleUnit
   cases b with
   | mk waste opportunity diversity =>
       simp [vacuumBuleUnit] at h
+      -- h : waste = 0 → opportunity = 0 → ¬diversity = 0
       simp [buleyEntropy]
-      omega
+      -- goal: 0 < waste + opportunity + diversity
+      apply Nat.pos_of_ne_zero
+      intro hSumZero
+      -- waste + opportunity + diversity = 0 ⇒ each face is 0; contradicts h.
+      have hWO_D : waste + opportunity = 0 ∧ diversity = 0 :=
+        Nat.add_eq_zero_iff.mp hSumZero
+      have hW_O : waste = 0 ∧ opportunity = 0 :=
+        Nat.add_eq_zero_iff.mp hWO_D.left
+      exact h hW_O.left hW_O.right hWO_D.right
 
 /-- The vacuum is the *maximum disorder* state paradoxically: it has zero
     local structure (all faces = 0) but infinite global reach (unbounded
@@ -108,8 +117,8 @@ def second_law_is_lyapunov :
       (∃ f : BuleyFace, b' = clinamenLift b f) →
       buleyUnitScore b ≤ buleyUnitScore b' := by
   intro b b' ⟨f, hb'⟩
-  rw [hb']
-  cases f <;> simp [clinamenLift, buleyUnitScore] <;> omega
+  rw [hb', clinamen_lift_score_strict_increment]
+  exact Nat.le_succ _
 
 /-- The arrow of time is the one-way direction of increasing Bule charge.
     You cannot spontaneously decrease buleyUnitScore (that would require
@@ -132,14 +141,22 @@ theorem arrow_points_from_vacuum_to_structure :
     cases b with
     | mk w o d =>
         simp [vacuumBuleUnit] at hne
+        -- hne : w = 0 → o = 0 → ¬d = 0
         simp [buleyUnitScore]
-        omega
+        -- goal: 0 < w + o + d
+        apply Nat.pos_of_ne_zero
+        intro hSumZero
+        have hWO_D : w + o = 0 ∧ d = 0 := Nat.add_eq_zero_iff.mp hSumZero
+        have hW_O : w = 0 ∧ o = 0 := Nat.add_eq_zero_iff.mp hWO_D.left
+        exact hne hW_O.left hW_O.right hWO_D.right
   · intro b hscore
     cases b with
     | mk w o d =>
         simp [vacuumBuleUnit]
         simp [buleyUnitScore] at hscore
-        omega
+        -- hscore : (w = 0 ∧ o = 0) ∧ d = 0
+        -- goal:    w = 0 ∧ o = 0 ∧ d = 0
+        exact ⟨hscore.left.left, hscore.left.right, hscore.right⟩
 
 -- ══════════════════════════════════════════════════════════
 -- THE FUTURE DETERMINES THE PAST: RETROCAUSAL ARROW
@@ -164,9 +181,32 @@ theorem future_vacuum_determines_past_step :
   cases b with
   | mk w o d =>
     simp [buleyUnitScore] at hscore
+    -- For each off-diagonal face pair, hf and hg jointly pin the two
+    -- faces those contractions touch *and* the third face to 0, so
+    -- hscore : w + o + d = 1 collapses to 0 + 0 + 0 = 1, refuted by decide.
     cases f <;> cases g <;>
-      simp [clinamenContract, vacuumBuleUnit] at hf hg <;>
-      first | rfl | omega
+      simp [clinamenContract, vacuumBuleUnit] at hf hg
+    · rfl
+    · -- f = waste, g = opportunity: hf gives o = 0 ∧ d = 0; hg gives w = 0 ∧ d = 0
+      rw [hg.left, hf.right.left, hf.right.right] at hscore
+      exact absurd hscore (by decide)
+    · -- f = waste, g = diversity: hf gives o = 0 ∧ d = 0; hg gives w = 0 ∧ o = 0
+      rw [hg.left, hg.right.left, hf.right.right] at hscore
+      exact absurd hscore (by decide)
+    · -- f = opportunity, g = waste: hf gives w = 0 ∧ d = 0; hg gives o = 0 ∧ d = 0
+      rw [hf.left, hg.right.left, hf.right.right] at hscore
+      exact absurd hscore (by decide)
+    · rfl
+    · -- f = opportunity, g = diversity: hf gives w = 0 ∧ d = 0; hg gives w = 0 ∧ o = 0
+      rw [hf.left, hg.right.left, hf.right.right] at hscore
+      exact absurd hscore (by decide)
+    · -- f = diversity, g = waste: hf gives w = 0 ∧ o = 0; hg gives o = 0 ∧ d = 0
+      rw [hf.left, hf.right.left, hg.right.right] at hscore
+      exact absurd hscore (by decide)
+    · -- f = diversity, g = opportunity: hf gives w = 0 ∧ o = 0; hg gives w = 0 ∧ d = 0
+      rw [hf.left, hf.right.left, hg.right.right] at hscore
+      exact absurd hscore (by decide)
+    · rfl
 
 /-- The Arrow is not about forward causality but about the constraint
     imposed by the future (the vacuum attractor) reaching backward.
@@ -227,9 +267,18 @@ theorem vacuum_arrow_unifies_all_irreversibility :
       cases b with
       | mk w o d =>
           simp [vacuumBuleUnit] at h
+          -- h : w = 0 → o = 0 → ¬d = 0
           simp [buleyUnitScore]
-          omega
+          -- goal: 0 < w + o + d
+          apply Nat.pos_of_ne_zero
+          intro hSumZero
+          have hWO_D : w + o = 0 ∧ d = 0 := Nat.add_eq_zero_iff.mp hSumZero
+          have hW_O : w = 0 ∧ o = 0 := Nat.add_eq_zero_iff.mp hWO_D.left
+          exact h hW_O.left hW_O.right hWO_D.right
   · intro b f
-    cases f <;> simp [clinamenLift, buleyUnitScore] <;> omega
+    -- A clinamen lift increments the score by exactly 1, so the pre-lift
+    -- score is at most the post-lift score (Nat.le_succ).
+    rw [clinamen_lift_score_strict_increment]
+    exact Nat.le_succ _
 
 end VacuumAsTimeArrow

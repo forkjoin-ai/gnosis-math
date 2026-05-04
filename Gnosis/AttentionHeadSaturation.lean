@@ -73,8 +73,8 @@ theorem saturation_blocks_learning :
       steps < sat.decay_rate ∧
       sat.pattern.frequency = sat.pattern.frequency) := by
   intro sat h_sat
-  simp [is_head_saturated] at h_sat
-  exact ⟨50, by omega, rfl⟩
+  -- h_sat.2.1 : sat.decay_rate ≥ 500; chain 50 < 500 ≤ sat.decay_rate
+  exact ⟨50, Nat.lt_of_lt_of_le (by decide : (50 : Nat) < 500) h_sat.2.1, rfl⟩
 
 /-- Corollary: A saturated head has constant output.
     Because the pattern is frozen, every forward pass through that head
@@ -196,7 +196,8 @@ theorem decay_rate_threshold_separates_learning_from_freeze :
     dr_slow ≥ 500 →
     dr_slow > dr_fast := by
   intro dr_fast dr_slow h_fast h_slow
-  omega
+  -- dr_fast < 100 ≤ 500 ≤ dr_slow
+  exact Nat.lt_of_lt_of_le h_fast (Nat.le_trans (by decide : (100 : Nat) ≤ 500) h_slow)
 
 -- ══════════════════════════════════════════════════════════
 -- THEOREM 5: FIVE-FORCE INTERFERENCE PREVENTS PERMANENT SATURATION
@@ -216,7 +217,7 @@ theorem race_breaks_saturation_asymptotically :
     (∃ (large_time : Nat),
       large_time > sat.decay_rate) := by
   intro sat h_sat
-  exact ⟨sat.decay_rate + 1, by omega⟩
+  exact ⟨sat.decay_rate + 1, Nat.lt_succ_self _⟩
 
 /-- Theorem: In finite time, saturation blocks the race operator.
     For practical training (finite epochs), a frozen attention head
@@ -268,6 +269,9 @@ theorem saturation_vs_learning :
     decay_saturated ≥ 500 ∧
     decay_saturated > decay_unsaturated := by
   intro pattern du ds h_unsat h_sat
-  exact ⟨h_unsat.1, h_sat.2.1, by have h1 := h_unsat.1; have h2 := h_sat.2.1; omega⟩
+  -- h_unsat.1 : du < 100, h_sat.2.1 : ds ≥ 500; chain du < 100 ≤ 500 ≤ ds
+  exact ⟨h_unsat.1, h_sat.2.1,
+    Nat.lt_of_lt_of_le h_unsat.1
+      (Nat.le_trans (by decide : (100 : Nat) ≤ 500) h_sat.2.1)⟩
 
 end AttentionHeadSaturation

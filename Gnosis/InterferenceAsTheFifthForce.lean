@@ -118,8 +118,11 @@ theorem constructive_amplifies :
     buleyUnitScore (constructive_interference a b) =
     buleyUnitScore a + buleyUnitScore b := by
   intro a b _ _
-  simp [constructive_interference, buleyUnitScore]
-  omega
+  -- Unfold to expose the goal in raw `+` form on six free Nat variables.
+  show (a.waste + b.waste) + (a.opportunity + b.opportunity) + (a.diversity + b.diversity)
+        = (a.waste + a.opportunity + a.diversity) + (b.waste + b.opportunity + b.diversity)
+  -- Pure AC rearrangement of `+`.
+  ac_rfl
 
 -- ══════════════════════════════════════════════════════════
 -- DESTRUCTIVE INTERFERENCE: CANCELLATION
@@ -171,8 +174,13 @@ theorem destructive_cancels :
     by_cases hd : a.diversity > b.diversity
     · simp [hd]
     · simp [hd]
-  unfold buleyUnitScore
-  omega
+  -- Goal is `dW + dO + dD ≤ a.waste + a.opportunity + a.diversity`.
+  -- Chain pointwise face inequalities through additive monotonicity.
+  show (destructive_interference a b).waste
+        + (destructive_interference a b).opportunity
+        + (destructive_interference a b).diversity
+      ≤ a.waste + a.opportunity + a.diversity
+  exact Nat.add_le_add (Nat.add_le_add hw ho) hd
 
 -- ══════════════════════════════════════════════════════════
 -- STANDING WAVES: PERSISTENT PATTERNS
@@ -233,9 +241,14 @@ theorem beats_modulate_overflow :
   intro f_a f_b h_ne
   unfold beat_frequency
   by_cases h : f_a > f_b
-  · simp [h]; omega
-  · -- ¬ f_a > f_b means f_a ≤ f_b; combined with f_a ≠ f_b, f_b > f_a.
-    simp [h]; omega
+  · -- `if f_a > f_b then f_a - f_b else _` reduces to `f_a - f_b`; positivity from `h`.
+    simp only [if_pos h]
+    exact Nat.sub_pos_of_lt h
+  · -- `¬ f_a > f_b` ⇒ `f_a ≤ f_b`; combined with `f_a ≠ f_b`, `f_a < f_b`,
+    -- so `0 < f_b - f_a`.
+    simp only [if_neg h]
+    have hle : f_a ≤ f_b := Nat.le_of_not_lt h
+    exact Nat.sub_pos_of_lt (Nat.lt_of_le_of_ne hle h_ne)
 
 -- ══════════════════════════════════════════════════════════
 -- THE TRILL IS SELF-INTERFERENCE
@@ -268,11 +281,38 @@ theorem trill_emerges_from_interference :
     buleyUnitScore sting > 0 →
     buleyUnitScore (trill_is_self_interference sting f) > 0 := by
   intro sting f h_nonzero
-  unfold trill_is_self_interference constructive_interference buleyUnitScore
-  -- Score of constructive_interference is sting.waste + echo.waste + ... ≥ sting's score.
   unfold buleyUnitScore at h_nonzero
-  cases f <;>
-    (simp [clinamenContract]; omega)
+  -- The trill score is `(s.w + e.w) + (s.o + e.o) + (s.d + e.d)` for some echo `e`,
+  -- which dominates `s.w + s.o + s.d` face-by-face via `Nat.le_add_right`, so it is
+  -- ≥ `buleyUnitScore sting`. Combine with `0 < buleyUnitScore sting`.
+  cases f
+  · -- `f = .waste`: echo = ⟨sting.waste - 1, sting.opportunity, sting.diversity⟩.
+    show 0 < (sting.waste + (sting.waste - 1))
+              + (sting.opportunity + sting.opportunity)
+              + (sting.diversity + sting.diversity)
+    refine Nat.lt_of_lt_of_le h_nonzero ?_
+    exact Nat.add_le_add
+      (Nat.add_le_add (Nat.le_add_right sting.waste _)
+                      (Nat.le_add_right sting.opportunity _))
+      (Nat.le_add_right sting.diversity _)
+  · -- `f = .opportunity`: echo = ⟨sting.waste, sting.opportunity - 1, sting.diversity⟩.
+    show 0 < (sting.waste + sting.waste)
+              + (sting.opportunity + (sting.opportunity - 1))
+              + (sting.diversity + sting.diversity)
+    refine Nat.lt_of_lt_of_le h_nonzero ?_
+    exact Nat.add_le_add
+      (Nat.add_le_add (Nat.le_add_right sting.waste _)
+                      (Nat.le_add_right sting.opportunity _))
+      (Nat.le_add_right sting.diversity _)
+  · -- `f = .diversity`: echo = ⟨sting.waste, sting.opportunity, sting.diversity - 1⟩.
+    show 0 < (sting.waste + sting.waste)
+              + (sting.opportunity + sting.opportunity)
+              + (sting.diversity + (sting.diversity - 1))
+    refine Nat.lt_of_lt_of_le h_nonzero ?_
+    exact Nat.add_le_add
+      (Nat.add_le_add (Nat.le_add_right sting.waste _)
+                      (Nat.le_add_right sting.opportunity _))
+      (Nat.le_add_right sting.diversity _)
 
 -- ══════════════════════════════════════════════════════════
 -- FIVE FORCES UNIFIED

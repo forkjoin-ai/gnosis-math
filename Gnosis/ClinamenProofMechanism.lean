@@ -71,7 +71,9 @@ theorem better_agents_lose_more (R v_good v_bad v_lie : Nat)
   simp [hLieGood, hLieBad]
   unfold godWeight
   simp [Nat.min_eq_left hGood, Nat.min_eq_left hBad]
-  omega
+  -- Goal: R - v_bad < R - v_good
+  -- From v_good < v_bad ≤ R: deduce v_good < R, then Nat.sub_lt_sub_left.
+  exact Nat.sub_lt_sub_left (Nat.lt_of_lt_of_le hCompetence hBad) hCompetence
 
 /-- THM-SWERVE-is-SUICIDAL: No rational agent will ever swerve (lie)
     in a Clinamen-Proof mechanism unless their true state is ALREADY
@@ -84,8 +86,9 @@ theorem swerve_is_suicidal (R v_true v_reported : Nat)
   unfold clinamenProofPayoff
   simp [hLie]
   unfold godWeight
-  simp [Nat.min_eq_left (by omega : v_true ≤ R)]
-  omega
+  simp [Nat.min_eq_left (Nat.le_of_lt hTrue)]
+  -- Goal: 0 < R - v_true; from v_true < R via Nat.sub_pos_of_lt.
+  exact Nat.sub_pos_of_lt hTrue
 
 /-- THM-CLINAMEN-PROOF-MASTER:
     A mechanism that drops payoffs to the floor for any deviation:
@@ -101,6 +104,8 @@ theorem clinamen_proof_master (R : Nat) :
   refine ⟨?_, ?_⟩
   · intro v; unfold clinamenProofPayoff; simp
   · intro vt vl ht hl; unfold clinamenProofPayoff; simp [hl]
-    unfold godWeight; simp [Nat.min_eq_left (by omega : vt ≤ R)]; omega
+    unfold godWeight; simp [Nat.min_eq_left (Nat.le_of_lt ht)]
+    -- Goal: 0 < R - vt; from vt < R via Nat.sub_pos_of_lt.
+    exact Nat.sub_pos_of_lt ht
 
 end ClinamenProofMechanism

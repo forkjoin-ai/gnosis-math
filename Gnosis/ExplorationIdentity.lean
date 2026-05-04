@@ -36,29 +36,34 @@ structure CompilerAccounting where
     Given any accounting where Skyrms cost = optimal cost + exploration budget,
     the exploration budget equals the gap. -/
 theorem the_identity (optimal skyrms exploration : Nat)
-    (h_ge : optimal ≤ skyrms)
+    (_h_ge : optimal ≤ skyrms)
     (h_sum : skyrms = optimal + exploration) :
-    skyrms - optimal = exploration := by omega
+    skyrms - optimal = exploration := by
+  rw [h_sum]
+  exact Nat.add_sub_cancel_left optimal exploration
 
 /-- Corollary: when exploration = 0, Skyrms is optimal.
     The God Gap is zero. The system has finished exploring. -/
 theorem zero_exploration_is_optimal (optimal skyrms : Nat)
     (h : skyrms = optimal + 0) :
-    skyrms = optimal := by omega
+    skyrms = optimal := by
+  rw [h, Nat.add_zero]
 
 /-- Corollary: when exploration > 0, Skyrms is NOT optimal.
     But the gap is known and bounded. -/
 theorem positive_exploration_is_gap (optimal skyrms exploration : Nat)
     (h_sum : skyrms = optimal + exploration)
     (h_pos : 0 < exploration) :
-    optimal < skyrms := by omega
+    optimal < skyrms := by
+  rw [h_sum]
+  exact Nat.lt_add_of_pos_right h_pos
 
 /-- The exploration budget = K - 1 for K compilers (one sliver node each). -/
 theorem exploration_budget_is_sliver (K : Nat) (hK : 2 ≤ K) :
-    K - 1 ≥ 1 := by omega
+    K - 1 ≥ 1 := Nat.le_sub_of_add_le hK
 
 /-- The exploration budget = 0 when K = 1 (monoculture). No sliver needed. -/
-theorem monoculture_zero_exploration : 1 - 1 = 0 := by omega
+theorem monoculture_zero_exploration : 1 - 1 = 0 := Nat.sub_self 1
 
 /-- Composing the identity with the God Gap:
     God Gap = (Local Optimum) - (Global Optimum)
@@ -72,6 +77,8 @@ theorem total_gap_decomposition (globalOpt localOpt skyrms exploration godGap : 
     (h_exp : skyrms - localOpt = exploration)
     (h1 : globalOpt ≤ localOpt)
     (h2 : localOpt ≤ skyrms) :
-    skyrms - globalOpt = godGap + exploration := by omega
+    skyrms - globalOpt = godGap + exploration := by
+  rw [← h_god, ← h_exp, Nat.add_comm (localOpt - globalOpt) (skyrms - localOpt)]
+  exact (Nat.sub_add_sub_cancel h2 h1).symm
 
 end ExplorationIdentity

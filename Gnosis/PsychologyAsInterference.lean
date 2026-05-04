@@ -78,8 +78,9 @@ theorem trauma_is_persistent :
     trauma_signature sig →
     sig.decay_rate ≥ 100 := by
   intro sig h
-  simp [trauma_signature, is_standing_wave] at h
-  omega
+  -- `trauma_signature` ≡ `is_standing_wave`; the third conjunct is `decay_rate > 100`.
+  -- Goal `decay_rate ≥ 100` follows from `100 < decay_rate` via `Nat.le_of_lt`.
+  exact Nat.le_of_lt h.2.2
 
 /-- Theorem: Trauma is triggered by stimuli at resonant frequency.
     If the standing wave is locked at frequency f, stimuli at frequency f
@@ -110,8 +111,8 @@ theorem anxiety_is_unresolved :
     anxiety_signature sigs →
     sigs.length ≥ 2 := by
   intro sigs h
-  simp [anxiety_signature, is_cascading_interference] at h
-  omega
+  -- `anxiety_signature` ≡ `is_cascading_interference`; first conjunct is `length ≥ 2`.
+  exact h.1
 
 /-- Theorem: Anxiety blocks normal race (decay) because re-excitation prevents dissipation.
     Each time one frequency starts to decay, another activates (threat detection loop).
@@ -141,8 +142,14 @@ theorem depression_suppresses_joy :
     depression_signature pos neg →
     pos.decay_rate > neg.decay_rate := by
   intro pos neg h
-  simp [depression_signature, is_suppressed_construction] at h
-  omega
+  -- `depression_signature` ≡ `is_suppressed_construction pos neg ∧ ... ∧ ...`.
+  -- The suppressed-construction part has `pos.decay_rate > 2 * neg.decay_rate`.
+  have hSup : pos.decay_rate > 2 * neg.decay_rate := h.1.1
+  -- `neg.decay_rate ≤ 2 * neg.decay_rate = neg.decay_rate + neg.decay_rate`.
+  have hDouble : neg.decay_rate ≤ 2 * neg.decay_rate := by
+    rw [Nat.two_mul]; exact Nat.le_add_left neg.decay_rate neg.decay_rate
+  -- Chain `neg.decay_rate ≤ 2 * neg.decay_rate < pos.decay_rate`.
+  exact Nat.lt_of_le_of_lt hDouble hSup
 
 /-- Theorem: Depression includes rumination — destructive interference between
     hope and despair where despair always wins (phase locked to despair).
@@ -171,8 +178,8 @@ theorem vulnerable_states_resonate_strongly :
     vulnerability_condition state →
     buleyUnitScore state > 3 := by
   intro state h
-  simp [vulnerability_condition] at h
-  omega
+  -- `vulnerability_condition` first conjunct is exactly the goal.
+  exact h.1
 
 /-- Theorem: Vulnerable people experience both positive and negative emotions
     more intensely than others. High amplitude is bidirectional.
@@ -217,8 +224,7 @@ theorem healthy_emotion_damps :
     ∀ (em : EmotionalState),
     em.sig.decay_rate < 50 := by
   intro em
-  have h := em.is_damped
-  simp [is_damped_oscillation] at h
-  omega
+  -- `is_damped_oscillation` is a 3-conjunct; the third conjunct IS the goal.
+  exact em.is_damped.2.2
 
 end PsychologyAsInterference

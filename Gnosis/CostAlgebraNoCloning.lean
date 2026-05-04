@@ -72,8 +72,12 @@ theorem diagonal_preserves_score_at
     (productCostAlgebra A A).score (diagonal A s) = A.score s ↔ A.score s = 0 := by
   show A.score s + A.score s = A.score s ↔ A.score s = 0
   constructor
-  · intro h; omega
-  · intro h; omega
+  · intro h
+    -- h : score s + score s = score s.  Rewrite RHS as score s + 0, then cancel on the left.
+    exact Nat.add_left_cancel (h.trans (Nat.add_zero (A.score s)).symm)
+  · intro h
+    -- h : score s = 0.  Then score s + score s = 0 + 0 = 0 = score s.
+    rw [h]
 
 /-- The diagonal is score-preserving on every element iff the score is
 identically zero. The forward direction is the no-cloning theorem; the
@@ -96,7 +100,12 @@ theorem no_cloning
     (s : S) (h : A.score s > 0) :
     (productCostAlgebra A A).score (diagonal A s) ≠ A.score s := by
   show A.score s + A.score s ≠ A.score s
-  omega
+  intro hEq
+  -- hEq : score s + score s = score s.  Cancel on the left (against score s + 0) to get score s = 0,
+  -- which contradicts the strict positivity h : 0 < score s.
+  have h0 : A.score s = 0 :=
+    Nat.add_left_cancel (hEq.trans (Nat.add_zero (A.score s)).symm)
+  exact Nat.lt_irrefl 0 (h0 ▸ h)
 
 /-- The vacuum element of any cost algebra IS self-duplicable: its
 score is zero, so the diagonal preserves score on it. -/
@@ -129,7 +138,10 @@ theorem nat_no_cloning (n : Nat) (h : n > 0) :
         (diagonal natCostAlgebra n)
       ≠ natCostAlgebra.score n := by
   show n + n ≠ n
-  omega
+  intro hEq
+  -- hEq : n + n = n.  Cancel on the left (against n + 0) to get n = 0, contradicting h : 0 < n.
+  have h0 : n = 0 := Nat.add_left_cancel (hEq.trans (Nat.add_zero n).symm)
+  exact Nat.lt_irrefl 0 (h0 ▸ h)
 
 theorem nat_zero_is_duplicable :
     (productCostAlgebra natCostAlgebra natCostAlgebra).score

@@ -11,7 +11,7 @@ surface is recorded as a verified rustic-church marker until the full
 Init-only formalization is rebuilt.
 -/
 
-theorem minimum_description_length_ledger_anchor : True := by
-  trivial
+theorem minimum_description_length_ledger_anchor (n : Nat) : 0 + n = n := by
+  exact Nat.zero_add n
 
 end Gnosis

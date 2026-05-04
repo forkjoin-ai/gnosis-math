@@ -47,7 +47,8 @@ def reading (rejection : Nat) : Nat := chromaticTotal - rejection
 /-- Conservation: for any rejection count ≤ 12, rejection + reading = 12. -/
 theorem chromatic_conservation (r : Nat) (h : r ≤ 12) :
     r + reading r = chromaticTotal := by
-  unfold reading chromaticTotal; omega
+  unfold reading chromaticTotal
+  exact Nat.add_sub_of_le h
 
 -- ═══════════════════════════════════════════════════════════════════════
 -- §2  Fold orderings — fifths and major thirds
@@ -100,7 +101,18 @@ def innerRing (n : Nat) : Nat := (n + 6) % 12
     drawing is one manifold viewed through two phases. -/
 theorem double_ring_involution (n : Nat) :
     innerRing (innerRing n) = outerRing n := by
-  unfold innerRing outerRing; omega
+  unfold innerRing outerRing
+  -- Goal: ((n + 6) % 12 + 6) % 12 = n % 12
+  -- Strategy: rewrite the LHS via add_mod's reverse direction so the
+  --   inner `% 12` is absorbed back into a single `(n + 6 + 6) % 12`,
+  --   then simplify n + 6 + 6 = n + 12 and use add_mod_right.
+  have h6 : (6 : Nat) % 12 = 6 := Nat.mod_eq_of_lt (by decide)
+  have hStep : ((n + 6) % 12 + 6) % 12 = ((n + 6) + 6) % 12 := by
+    rw [show ((n + 6) % 12 + 6) = ((n + 6) % 12 + 6 % 12) from by rw [h6]]
+    rw [← Nat.add_mod]
+  rw [hStep]
+  rw [show (n + 6) + 6 = n + 12 from by rw [Nat.add_assoc]]
+  exact Nat.add_mod_right n 12
 
 /-- The two rings together cover the chromatic field: every pitch is
     either on the outer ring or its inner-ring image. -/
@@ -108,7 +120,7 @@ theorem double_ring_covers (n : Nat) (h : n < 12) :
     outerRing n = n ∧ innerRing n = (n + 6) % 12 := by
   unfold outerRing innerRing
   refine ⟨?_, rfl⟩
-  omega
+  exact Nat.mod_eq_of_lt h
 
 -- ═══════════════════════════════════════════════════════════════════════
 -- §4  Giant Steps as a major-thirds quorum
@@ -203,7 +215,7 @@ theorem no_harmonic_opposition (r : Nat) (h : r ≤ 12) :
     has zero gradient — every interval reads the same. The first event
     (a privileged tonic) must happen before harmony has direction. -/
 theorem chromatic_featureless (c : Nat) :
-    reading c - reading c = 0 := by
-  omega
+    reading c - reading c = 0 :=
+  Nat.sub_self (reading c)
 
 end Gnosis

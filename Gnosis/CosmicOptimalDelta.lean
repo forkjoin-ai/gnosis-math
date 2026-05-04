@@ -75,7 +75,7 @@ theorem visibility_floor_le_total_gap
     (optimal skyrms : Nat) :
     visibilityDelta ≤ totalObserverDelta optimal skyrms := by
   unfold totalObserverDelta optimalDelta
-  omega
+  exact Nat.le_add_right visibilityDelta (skyrms - optimal)
 
 /-- Under the compiler accounting identity, the total observer gap is
 always positive. The visibility floor prevents complete collapse to
@@ -87,7 +87,7 @@ theorem total_observer_delta_positive
     0 < totalObserverDelta optimal skyrms := by
   rw [total_observer_delta_eq_visibility_plus_exploration optimal skyrms exploration h_ge h_sum]
   have hvis : 0 < visibilityDelta := visibility_delta_positive
-  omega
+  exact Nat.lt_of_lt_of_le hvis (Nat.le_add_right visibilityDelta exploration)
 
 /-- Consequently, the combined observer gap can never be exactly zero
 in the current model. -/
@@ -107,7 +107,7 @@ theorem exploration_strictly_below_total_gap
     exploration < totalObserverDelta optimal skyrms := by
   rw [total_observer_delta_eq_visibility_plus_exploration optimal skyrms exploration h_ge h_sum]
   have hvis : 0 < visibilityDelta := visibility_delta_positive
-  omega
+  exact Nat.lt_add_of_pos_left hvis
 
 /-- The combined observer gap collapses to the pure visibility floor
 exactly when exploration has dropped to zero. -/
@@ -117,7 +117,15 @@ theorem total_observer_delta_eq_visibility_iff_zero_exploration
     (h_sum : skyrms = optimal + exploration) :
     totalObserverDelta optimal skyrms = visibilityDelta ↔ exploration = 0 := by
   rw [total_observer_delta_eq_visibility_plus_exploration optimal skyrms exploration h_ge h_sum]
-  omega
+  refine ⟨?_, ?_⟩
+  · intro h
+    -- h : visibilityDelta + exploration = visibilityDelta
+    -- Rewrite RHS as visibilityDelta + 0 then cancel on the left.
+    have h' : visibilityDelta + exploration = visibilityDelta + 0 := by
+      rw [Nat.add_zero]; exact h
+    exact Nat.add_left_cancel h'
+  · intro h
+    rw [h, Nat.add_zero]
 
 /-- Even when exploration has dropped to zero, a positive cosmic
 visibility gap remains. The compiler can close its local exploration
@@ -127,8 +135,9 @@ theorem zero_exploration_still_leaves_cosmic_gap
     (h_ge : optimal ≤ skyrms)
     (h_sum : skyrms = optimal + 0) :
     0 < totalObserverDelta optimal skyrms := by
-  rw [total_observer_delta_eq_visibility_plus_exploration optimal skyrms 0 h_ge h_sum]
-  simpa using visibility_delta_positive
+  rw [total_observer_delta_eq_visibility_plus_exploration optimal skyrms 0 h_ge h_sum,
+      Nat.add_zero]
+  exact visibility_delta_positive
 
 /-- Positive exploration strictly enlarges the combined observer gap
 above the cosmic visibility floor. -/
@@ -139,6 +148,6 @@ theorem positive_exploration_strictly_increases_total_gap
     (h_pos : 0 < exploration) :
     visibilityDelta < totalObserverDelta optimal skyrms := by
   rw [total_observer_delta_eq_visibility_plus_exploration optimal skyrms exploration h_ge h_sum]
-  omega
+  exact Nat.lt_add_of_pos_right h_pos
 
 end Gnosis

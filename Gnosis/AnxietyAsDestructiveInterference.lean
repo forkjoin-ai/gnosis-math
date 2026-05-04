@@ -74,7 +74,7 @@ theorem anxiety_persists_via_reexcitation :
     (∃ (persistent_time : Nat),
       persistent_time > 50) := by
   intro sigs h_anx
-  exact ⟨100, by omega⟩
+  exact ⟨100, by decide⟩
 
 -- ══════════════════════════════════════════════════════════
 -- ANXIETY EXPERIENCE: RACING MIND, HIGH VARIANCE
@@ -119,12 +119,12 @@ theorem exposure_therapy_consolidates_threats :
   intro _sigs _h_anx
   refine ⟨10, ?_, ?_, ⟨⟨1, 1, 25⟩, ?_, ?_⟩⟩
   · show (10 : Nat) > 0
-    omega
+    decide
   · show (10 : Nat) < 20
-    omega
+    decide
   · show (1 : Nat) > 0
-    omega
+    decide
   · show (25 : Nat) < 50
-    omega
+    decide
 
 end AnxietyAsDestructiveInterference

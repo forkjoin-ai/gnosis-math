@@ -89,7 +89,20 @@ theorem berkson_negative_correlation (vA vB T : Nat)
     (hSelected : vA + vB ≥ T) :
     -- If A increases by 1, B can decrease by 1 and still be selected
     (vA + 1) + (vB - 1) ≥ T ∨ vB = 0 := by
-  omega
+  -- Case split on vB. If vB = 0, right disjunct. Otherwise vB = k+1, and
+  -- (vA + 1) + ((k+1) - 1) = (vA + 1) + k = vA + (k + 1) = vA + vB ≥ T.
+  match vB, hSelected with
+  | 0, _ => exact Or.inr rfl
+  | Nat.succ k, h =>
+    -- (k+1) - 1 = k by Nat.add_sub_cancel
+    -- (vA + 1) + k = vA + (k + 1) = vA + (vB) by definitional Nat.add_succ
+    refine Or.inl ?_
+    show T ≤ (vA + 1) + (Nat.succ k - 1)
+    rw [show Nat.succ k - 1 = k from Nat.add_sub_cancel k 1]
+    show T ≤ vA + 1 + k
+    -- vA + 1 + k = vA + (1 + k) = vA + (k + 1) = vA + Nat.succ k
+    rw [Nat.add_assoc vA 1 k, Nat.add_comm 1 k]
+    exact h
 
 /-- THM-BERKSON-PHANTOM-WEIGHT: Under selection, the "apparent" weight
     of cause B given high cause A is HIGHER than without selection,
@@ -136,7 +149,8 @@ theorem duality_phase (R v_combined v_selected : Nat)
     -- Berkson bias is negative: selected weight is MORE than population
     -- The difference can go either direction
     godWeight R v_combined ≤ godWeight R v_selected ∨
-    godWeight R v_combined ≥ godWeight R v_selected := by omega
+    godWeight R v_combined ≥ godWeight R v_selected :=
+  Nat.le_total (godWeight R v_combined) (godWeight R v_selected)
 
 -- ═══════════════════════════════════════════════════════════════════════
 -- §3. Selection Bias as Retrocausal Constraint
@@ -153,18 +167,18 @@ theorem duality_phase (R v_combined v_selected : Nat)
 
     This is not physical retrocausation — it is information-theoretic
     constraint propagation through the collider. -/
-theorem selection_is_retrocausal (T vA : Nat) (hA : vA ≤ T) :
+theorem selection_is_retrocausal (T vA : Nat) (_hA : vA ≤ T) :
     -- Knowing combined ≥ T and knowing vA determines a LOWER BOUND on vB
     -- vB ≥ T - vA: the collider constrains the unobserved cause
-    T - vA ≤ T := by omega
+    T - vA ≤ T := Nat.sub_le T vA
 
 /-- THM-STRONGER-SELECTION-STRONGER-BIAS: Higher collider threshold
     creates stronger phantom correlation. Selective hospitals see
     more Berkson bias than general hospitals. -/
 theorem stronger_selection_stronger_bias (T1 T2 vA : Nat)
-    (hT : T1 ≤ T2) (hA1 : vA ≤ T1) (hA2 : vA ≤ T2) :
+    (hT : T1 ≤ T2) (_hA1 : vA ≤ T1) (_hA2 : vA ≤ T2) :
     -- Higher threshold → higher minimum for vB
-    T1 - vA ≤ T2 - vA := by omega
+    T1 - vA ≤ T2 - vA := Nat.sub_le_sub_right hT vA
 
 -- ═══════════════════════════════════════════════════════════════════════
 -- §4. Concrete Examples
@@ -184,7 +198,7 @@ theorem celebrity_berkson :
     godWeight 100 40 = 61 ∧
     -- Phantom effect: "more talented celebrities are less attractive"
     godWeight 100 0 > godWeight 100 40 := by
-  unfold godWeight; omega
+  unfold godWeight; decide
 
 -- Example: disease correlation in hospitals
 -- Diabetes and broken bones are independent in population.
@@ -198,7 +212,7 @@ theorem hospital_berkson :
     godWeight 10 0 = 11 ∧
     -- Has broken bones (v_bones ≥ 1) → diabetes can be absent (v_diabetes = 0)
     godWeight 10 0 = 11 := by
-  unfold godWeight; omega
+  unfold godWeight; decide
 
 -- ═══════════════════════════════════════════════════════════════════════
 -- §5. Master Theorem

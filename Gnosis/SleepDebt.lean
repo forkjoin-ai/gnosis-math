@@ -19,7 +19,7 @@ theorem full_recovery_clears_residual_debt
     (hClear : wakeLoad + carriedDebt <= recoveryQuota) :
     residualDebt wakeLoad carriedDebt recoveryQuota = 0 := by
   unfold residualDebt totalRecoveryDemand
-  omega
+  exact Nat.sub_eq_zero_of_le hClear
 
 theorem full_recovery_restores_capacity
     {maxCapacity wakeLoad carriedDebt recoveryQuota : Nat}
@@ -35,7 +35,7 @@ theorem partial_recovery_leaves_positive_debt
     (hShortfall : recoveryQuota < wakeLoad + carriedDebt) :
     0 < residualDebt wakeLoad carriedDebt recoveryQuota := by
   unfold residualDebt totalRecoveryDemand
-  omega
+  exact Nat.sub_pos_of_lt hShortfall
 
 theorem positive_debt_lowers_capacity
     {maxCapacity carriedDebt : Nat}
@@ -46,10 +46,11 @@ theorem positive_debt_lowers_capacity
   cases Nat.le_total maxCapacity carriedDebt with
   | inl hMaxLeDebt =>
       rw [Nat.min_eq_left hMaxLeDebt]
-      omega
+      rw [Nat.sub_self maxCapacity]
+      exact hCap
   | inr hDebtLeMax =>
       rw [Nat.min_eq_right hDebtLeMax]
-      omega
+      exact Nat.sub_lt hCap hDebt
 
 theorem partial_recovery_lowers_next_capacity
     {maxCapacity wakeLoad carriedDebt recoveryQuota : Nat}
@@ -65,14 +66,16 @@ theorem repeated_truncation_preserves_debt
     (hQuota : recoveryQuota <= nextWakeLoad) :
     carriedDebt <= residualDebt nextWakeLoad carriedDebt recoveryQuota := by
   unfold residualDebt totalRecoveryDemand
-  omega
+  exact Nat.le_sub_of_add_le
+    (Nat.add_comm carriedDebt recoveryQuota ▸ Nat.add_le_add_right hQuota carriedDebt)
 
 theorem repeated_truncation_strictly_increases_debt
     {nextWakeLoad carriedDebt recoveryQuota : Nat}
     (hQuota : recoveryQuota < nextWakeLoad) :
     carriedDebt < residualDebt nextWakeLoad carriedDebt recoveryQuota := by
   unfold residualDebt totalRecoveryDemand
-  omega
+  exact Nat.lt_sub_of_add_lt
+    (Nat.add_comm carriedDebt recoveryQuota ▸ Nat.add_lt_add_right hQuota carriedDebt)
 
 theorem debt_at_or_above_intrusion_threshold_enables_intrusion
     {wakeLoad carriedDebt intrusionThreshold : Nat}

@@ -84,7 +84,7 @@ theorem immigration_increases_beta1 (host : HostTopology) (imm : ImmigrantTopolo
     (hImm : 0 < imm.knot.beta1) :
     host.knot.beta1 < postImmigrationPaths host imm := by
   unfold postImmigrationPaths
-  omega
+  exact Nat.lt_add_of_pos_right hImm
 
 theorem assimilation_terminates (host : HostTopology) (imm : ImmigrantTopology) :
     (assimilate host imm).crossingNumber ≤ (postImmigrationKnot host imm).crossingNumber := by
@@ -99,7 +99,7 @@ theorem immigration_grows_concurrency (host : HostTopology) (imm : ImmigrantTopo
     effectiveConcurrency host.knot.beta1 <
       effectiveConcurrency (postImmigrationPaths host imm) := by
   unfold effectiveConcurrency postImmigrationPaths
-  omega
+  exact Nat.lt_add_of_pos_right hImm
 
 theorem immigration_closes_deficit
     {intrinsicBeta : Nat}
@@ -119,16 +119,13 @@ theorem immigration_zero_deficit_at_match
 theorem community_accelerates_integration (d : Int) :
     communityReducedDeficit d < d := by
   unfold communityReducedDeficit
-  omega
+  exact Int.sub_lt_self d (by decide : (0 : Int) < 1)
 
 theorem greedy_rejection_deadlocks (host : HostTopology) (imm : ImmigrantTopology)
     (hImm : 0 < imm.knot.crossingNumber) :
     ¬ greedyPolicy host.knot.crossingNumber (postImmigrationKnot host imm).crossingNumber := by
   unfold greedyPolicy postImmigrationKnot
   intro hLe
-  have hLe' : host.knot.crossingNumber + imm.knot.crossingNumber ≤ host.knot.crossingNumber := by
-    simpa using hLe
-  clear hLe
-  omega
+  exact Nat.not_lt_of_le hLe (Nat.lt_add_of_pos_right hImm)
 
 end Gnosis

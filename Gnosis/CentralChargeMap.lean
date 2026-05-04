@@ -97,7 +97,10 @@ theorem central_charge_vanishes_iff_minimum (n : Nat) :
     centralCharge n = 0 ↔ n = 10 := by
   unfold centralCharge
   constructor
-  · intro h; omega
+  · intro h
+    -- h : (10 : Int) - (n : Int) = 0  ⊢  n = 10
+    have hEq : ((10 : Nat) : Int) = ((n : Nat) : Int) := Int.eq_of_sub_eq_zero h
+    exact (Int.ofNat_inj.mp hEq).symm
   · intro h; rw [h]; rfl
 
 /-- The central charge is non-positive iff the phase count is at
@@ -106,8 +109,12 @@ theorem central_charge_nonpositive_iff_admissible (n : Nat) :
     centralCharge n ≤ 0 ↔ n ≥ 10 := by
   unfold centralCharge
   constructor
-  · intro h; omega
-  · intro h; omega
+  · intro h
+    -- h : (10 : Int) - (n : Int) ≤ 0  ⊢  10 ≤ n
+    exact Int.ofNat_le.mp (Int.le_of_sub_nonpos h)
+  · intro h
+    -- h : 10 ≤ n  ⊢  (10 : Int) - (n : Int) ≤ 0
+    exact Int.sub_nonpos_of_le (Int.ofNat_le.mpr h)
 
 /-- The central charge is positive iff the phase count is below the
 minimum (anomalous regime — insufficient axes). -/
@@ -115,8 +122,12 @@ theorem central_charge_positive_iff_anomalous (n : Nat) :
     centralCharge n > 0 ↔ n < 10 := by
   unfold centralCharge
   constructor
-  · intro h; omega
-  · intro h; omega
+  · intro h
+    -- h : 0 < (10 : Int) - (n : Int)  ⊢  n < 10
+    exact Int.ofNat_lt.mp (Int.lt_of_sub_pos h)
+  · intro h
+    -- h : n < 10  ⊢  0 < (10 : Int) - (n : Int)
+    exact Int.sub_pos_of_lt (Int.ofNat_lt.mpr h)
 
 /-! ## Vanishing at the named dimensions -/
 

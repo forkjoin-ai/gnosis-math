@@ -28,7 +28,8 @@ Complexity is irreducibility quantified as path-length-to-vacuum.
 The proof strategy uses:
 - rfl (definitional equality for vacuum states)
 - simp (simplification of contraction paths)
-- omega (arithmetic reasoning about path lengths)
+- Init-only `Nat.*` lemmas (arithmetic reasoning about path lengths;
+  see `RUSTIC_CHURCH.md` — `omega` removed 2026-05-04)
 - exact (exact term construction)
 - intro (universal quantification over complexity levels)
 - refine (refinement of existence proofs)
@@ -134,7 +135,7 @@ theorem structured_positive_distance (p : ChargePoint) (h : is_structured p) :
     0 < contraction_distance p := by
   unfold is_structured at h
   unfold contraction_distance
-  omega
+  exact h
 
 /-- Irreducibility is positive iff the point is structured. -/
 theorem irreducibility_pos_iff_structured (p : ChargePoint) :
@@ -194,7 +195,7 @@ theorem emergence_from_vacuum_pull :
     unfold contraction_distance
     simp
   · -- For any sufficient path length, we can contract monotonically
-    intro path_length _hlen
+    intro path_length hlen
     -- Construct a greedy contraction path:
     -- Decrease x by 1 each step until we hit 0, then stay at vacuum.
     refine ⟨fun i =>
@@ -208,16 +209,28 @@ theorem emergence_from_vacuum_pull :
       by_cases h : path_length ≤ complexity_level
       · -- Then path_length = complexity_level (by hlen ≥ complexity_level), so x = 0
         simp [h, vacuum]
-        omega
+        -- Goal after simp reduces to: complexity_level - path_length = 0.
+        -- We have h : path_length ≤ complexity_level and hlen : complexity_level ≤ path_length,
+        -- so complexity_level = path_length and the difference vanishes.
+        exact Nat.sub_eq_zero_of_le hlen
       · -- path_length > complexity_level: else branch is vacuum directly
         simp [h]
     · -- Monotonic contraction
       intro i _hi
       by_cases h1 : (i + 1) ≤ complexity_level
       · -- Both i and i+1 are within the contraction range
-        have h0 : i ≤ complexity_level := by omega
+        have h0 : i ≤ complexity_level :=
+          Nat.le_of_succ_le h1
         simp [h0, h1, contraction_distance]
-        omega
+        -- Goal after simp: complexity_level ≤ complexity_level - i + (i + 1)
+        -- Strategy: complexity_level - i + i = complexity_level (via h0),
+        -- so complexity_level - i + (i + 1) = complexity_level + 1 ≥ complexity_level.
+        have hcancel : complexity_level - i + i = complexity_level :=
+          Nat.sub_add_cancel h0
+        have hstep : complexity_level - i + (i + 1) = complexity_level + 1 := by
+          rw [← Nat.add_assoc, hcancel]
+        rw [hstep]
+        exact Nat.le_succ complexity_level
       · -- i+1 is past the contraction range, so path (i+1) = vacuum
         by_cases h0 : i ≤ complexity_level
         · simp [h0, h1, contraction_distance, vacuum]

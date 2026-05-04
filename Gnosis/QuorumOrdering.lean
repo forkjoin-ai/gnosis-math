@@ -26,7 +26,7 @@ theorem committed_multiwriter_reads_monotone_of_acked_order
     (hSecondExact : secondRead = secondAck)
     (hAckOrder : firstAck <= secondAck) :
     firstRead <= secondRead := by
-  omega
+  rw [hFirstExact, hSecondExact]; exact hAckOrder
 
 theorem later_committed_ballot_excludes_stale_read
     {firstAck secondAck firstRead secondRead : Nat}
@@ -34,7 +34,7 @@ theorem later_committed_ballot_excludes_stale_read
     (hSecondExact : secondRead = secondAck)
     (hAckOrder : firstAck < secondAck) :
     firstRead < secondRead := by
-  omega
+  rw [hFirstExact, hSecondExact]; exact hAckOrder
 
 theorem ack_monotone_does_not_force_strict_read_growth :
     ¬ (∀ firstAck secondAck firstRead secondRead : Nat,
@@ -43,8 +43,8 @@ theorem ack_monotone_does_not_force_strict_read_growth :
       firstAck ≤ secondAck →
       firstRead < secondRead) := by
   intro hStrict
-  have hCounterexample := hStrict 1 1 1 1 rfl rfl (by omega)
-  omega
+  have hCounterexample := hStrict 1 1 1 1 rfl rfl (Nat.le_refl 1)
+  exact Nat.lt_irrefl 1 hCounterexample
 
 def partitionBoundaryReadSet : List Nat := [0, 1]
 

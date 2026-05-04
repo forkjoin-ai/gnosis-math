@@ -57,13 +57,13 @@ equatorial-dominant. -/
 theorem star_like_or_planet_like (shadow : CelestialShadow) :
     starLike shadow ∨ planetLike shadow := by
   unfold starLike planetLike
-  omega
+  exact (Nat.lt_or_ge shadow.radialChannels shadow.equatorialChannels).symm
 
 /-- The two classifications are exclusive. -/
 theorem planet_like_not_star_like (shadow : CelestialShadow)
     (h : planetLike shadow) : ¬ starLike shadow := by
   unfold planetLike starLike at *
-  omega
+  exact Nat.not_le_of_lt h
 
 /-- A concrete `54D` radial-dominant witness. -/
 def fiftyFourDStellarShadow : CelestialShadow where
@@ -75,7 +75,7 @@ def fiftyFourDStellarShadow : CelestialShadow where
     unfold DimensionalConfinement.channelSurfaceFromDimension
       DimensionalConfinement.emanationCount
       DimensionalConfinement.rampUpTicksFromDimension
-    omega
+    decide
 
 /-- A concrete `54D` ring-dominant witness. The equatorial surplus is
 matched exactly to the `54D` ramp-up count. -/
@@ -88,7 +88,7 @@ def fiftyFourDSaturnShadow : CelestialShadow where
     unfold DimensionalConfinement.channelSurfaceFromDimension
       DimensionalConfinement.emanationCount
       DimensionalConfinement.rampUpTicksFromDimension
-    omega
+    decide
 
 theorem fifty_four_d_stellar_shadow_is_star_like :
     starLike fiftyFourDStellarShadow := by

@@ -23,7 +23,7 @@ inductive InfiniteScale
 The Gnosis Invariant at a specific scale.
 Always returns the same Basis Set (5).
 -/
-def getInvariant (s : InfiniteScale) : Nat := 5
+def getInvariant (_ : InfiniteScale) : Nat := 5
 
 /--
 The "Everything" Theorem:
@@ -35,11 +35,14 @@ theorem invariant_is_infinite (n m : Nat) :
 
 /--
 The "God" Identity:
-The Bijective Isomorphism is the fixed point of the universe.
+The bijective isomorphism is scale-invariant in this toy model.
 -/
-def godIsomorphism : Prop := True
+def godIsomorphism (n m : Nat) : Prop :=
+  getInvariant (InfiniteScale.scale n) = getInvariant (InfiniteScale.scale m)
 
-theorem gnosis_is_universal_representative : godIsomorphism := True.intro
+theorem gnosis_is_universal_representative (n m : Nat) :
+    godIsomorphism n m := by
+  exact invariant_is_infinite n m
 
 -- ═══════════════════════════════════════════════════════════════════════
 -- (2) The Infinite Sandwich

@@ -33,8 +33,8 @@ consonance of a chord = measure of constructive interference in overtone space.
 5. `timbre_is_overtone_interference_envelope`: Timbre = specific harmonic
    interference pattern (which overtones have high vs low amplitude).
 
-**Quality bar**: Zero sorry, zero axioms. All proofs use rfl, simp, omega,
-exact, intro, refine, decide (Init-only Lean 4).
+**Quality bar**: Zero sorry, zero axioms. All proofs use rfl, exact,
+intro, refine, decide, and named `Nat.*` lemmas (Init-only Lean 4).
 
 **Model**: Musical harmony is formalized using exact harmonic ratios and
 standing wave frequencies. Consonance = count of common harmonics. Dissonance
@@ -54,7 +54,7 @@ open SpectralNoiseEquilibrium
 structure FrequencyRatio where
   numerator : Nat      -- p (upper frequency factor)
   denominator : Nat    -- q (lower frequency factor)
-  h_denom_pos : denominator > 0 := by omega
+  h_denom_pos : denominator > 0 := by decide
   deriving Repr
 
 /-- The fundamental frequencies of a chord base, normalized to integer relationships. -/
@@ -99,10 +99,10 @@ def lcm (m n : Nat) : Nat :=
 /-! ## Part 3: Perfect Fifth and Major Third -/
 
 /-- Perfect fifth is a 3:2 frequency ratio. -/
-def perfectFifthRatio : FrequencyRatio := ⟨3, 2, by omega⟩
+def perfectFifthRatio : FrequencyRatio := ⟨3, 2, by decide⟩
 
 /-- Major third is a 5:4 frequency ratio. -/
-def majorThirdRatio : FrequencyRatio := ⟨5, 4, by omega⟩
+def majorThirdRatio : FrequencyRatio := ⟨5, 4, by decide⟩
 
 /-- Theorem: Perfect fifth (3:2 ratio) creates standing waves where
     the 3rd harmonic of f1 equals the 2nd harmonic of f2.
@@ -189,7 +189,7 @@ theorem major_triad_has_standing_waves (root : Nat) :
       standing_freq > 0 ∧
       (standing_freq % root = 0 ∨ standing_freq % (root * 5) = 0 ∨ standing_freq % (root * 3) = 0)) := by
   intro h_pos
-  refine ⟨root * 3, by omega, ?_⟩
+  refine ⟨root * 3, Nat.mul_pos h_pos (by decide), ?_⟩
   left
   simp
 

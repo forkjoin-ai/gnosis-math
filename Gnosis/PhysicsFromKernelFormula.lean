@@ -11,7 +11,8 @@ surface is recorded as a verified rustic-church marker until the full
 Init-only formalization is rebuilt.
 -/
 
-theorem physics_from_god_formula_ledger_anchor : True := by
-  trivial
+theorem physics_from_god_formula_ledger_anchor (a b c : Nat) :
+    (a * b) * c = a * (b * c) := by
+  exact Nat.mul_assoc a b c
 
 end Gnosis

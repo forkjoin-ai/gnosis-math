@@ -76,7 +76,10 @@ theorem int_central_charge_vanishes_iff_ten (n : Nat) :
     intCentralCharge n = 0 ↔ n = 10 := by
   unfold intCentralCharge
   constructor
-  · intro h; omega
+  · intro h
+    -- 10 - (n : Int) = 0 ⇒ (10 : Int) = (n : Int) ⇒ n = 10
+    have hEq : ((10 : Nat) : Int) = ((n : Nat) : Int) := Int.eq_of_sub_eq_zero h
+    exact (Int.ofNat_inj.mp hEq).symm
   · intro h; rw [h]; rfl
 
 /-! ## Witten's R = g_s × l_s formula (Int sketch) -/
@@ -107,8 +110,14 @@ theorem int_central_charge_nonnegative_iff_subcritical (n : Nat) :
     intCentralCharge n ≥ 0 ↔ n ≤ 10 := by
   unfold intCentralCharge
   constructor
-  · intro h; omega
-  · intro h; omega
+  · intro h
+    -- 0 ≤ 10 - (n : Int) ⇒ (n : Int) ≤ (10 : Int) ⇒ n ≤ 10
+    have hLe : ((n : Nat) : Int) ≤ ((10 : Nat) : Int) := Int.le_of_sub_nonneg h
+    exact Int.ofNat_le.mp hLe
+  · intro h
+    -- n ≤ 10 ⇒ (n : Int) ≤ (10 : Int) ⇒ 0 ≤ 10 - (n : Int)
+    have hLe : ((n : Nat) : Int) ≤ ((10 : Nat) : Int) := Int.ofNat_le.mpr h
+    exact Int.sub_nonneg_of_le hLe
 
 /-- The central charge is negative iff `n > 10` (super-critical
 regime: M-theory at 11, bosonic at 26). -/
@@ -116,8 +125,14 @@ theorem int_central_charge_negative_iff_supercritical (n : Nat) :
     intCentralCharge n < 0 ↔ n > 10 := by
   unfold intCentralCharge
   constructor
-  · intro h; omega
-  · intro h; omega
+  · intro h
+    -- 10 - (n : Int) < 0 ⇒ (10 : Int) < (n : Int) ⇒ 10 < n
+    have hLt : ((10 : Nat) : Int) < ((n : Nat) : Int) := Int.lt_of_sub_neg h
+    exact Int.ofNat_lt.mp hLt
+  · intro h
+    -- 10 < n ⇒ (10 : Int) < (n : Int) ⇒ 10 - (n : Int) < 0
+    have hLt : ((10 : Nat) : Int) < ((n : Nat) : Int) := Int.ofNat_lt.mpr h
+    exact Int.sub_neg_of_lt hLt
 
 /-! ## What a Real-valued continuum extension would add
 

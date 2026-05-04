@@ -83,9 +83,12 @@ def minimal_prime_gt (n : Nat) : Nat :=
     - 7 (the minimal prime > 5)
     We choose 7 because it's smaller and still > 5. -/
 theorem haiku_sting_is_minimal_prime : 7 > 5 ∧ (∀ p : Nat, 5 < p ∧ p < 7 → ¬(p = 2 ∨ p = 3 ∨ p = 5)) := by
-  refine ⟨by omega, ?_⟩
-  intro p ⟨h1, h2⟩ h3
-  omega
+  refine ⟨by decide, ?_⟩
+  intro p ⟨h1, _h2⟩ h3
+  rcases h3 with hp | hp | hp
+  · exact absurd (hp ▸ h1) (by decide)
+  · exact absurd (hp ▸ h1) (by decide)
+  · exact absurd (hp ▸ h1) (by decide)
 
 -- ══════════════════════════════════════════════════════════
 -- FIBONACCI TRITONS
@@ -165,7 +168,10 @@ theorem fib_triton_ropelength_formula (n : Nat) :
   show 2 * fib n + fib (n + 1) = fib (n + 2) + fib n
   have hfib : fib (n + 2) = fib (n + 1) + fib n := by rfl
   rw [hfib]
-  omega
+  -- Goal: 2 * fib n + fib (n + 1) = fib (n + 1) + fib n + fib n
+  rw [Nat.two_mul (fib n)]
+  -- Goal: fib n + fib n + fib (n + 1) = fib (n + 1) + fib n + fib n
+  ac_rfl
 
 /-- Specific examples: -/
 theorem fib_triton_4_ropelength :
@@ -204,7 +210,7 @@ def golden_ratio_denom : Nat := 5   -- denominator
 theorem haiku_ratio_near_golden :
     7 * 5 < 5 * 8 ∧  -- 7/5 < 8/5 (haiku ratio sits just below φ)
     7 > 5 := by      -- Sting > frame
-  omega
+  decide
 
 /-- Frame error-correction: if any one symbol is corrupted in a-b-a,
     the two copies of a allow majority voting recovery. -/
