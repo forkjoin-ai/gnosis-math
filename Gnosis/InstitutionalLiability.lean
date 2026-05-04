@@ -47,8 +47,7 @@ def ConstitutionalLedger.weight (k : ConstitutionalLedger) (i : Fin k.core.numCh
 theorem ledger_weight_positive (L : Ledger) (i : Fin L.numChoices) :
     0 < L.weight i := by
   unfold Ledger.weight
-  have h := L.bounded i
-  omega
+  exact Nat.succ_pos _
 
 theorem contract_weight_positive (c : ContractLedger) (i : Fin c.core.numChoices) :
     0 < c.weight i :=
@@ -76,7 +75,7 @@ theorem hand_negligent_iff (B PL : Nat) : handNegligent B PL ↔ B < PL :=
 theorem not_hand_negligent_of_le (B PL : Nat) (h : PL ≤ B) : ¬ handNegligent B PL := by
   intro hn
   unfold handNegligent at hn
-  omega
+  exact Nat.lt_irrefl B (Nat.lt_of_lt_of_le hn h)
 
 def handNegligentFactored (burden P L : Nat) : Prop :=
   handNegligent burden (P * L)
@@ -84,7 +83,7 @@ def handNegligentFactored (burden P L : Nat) : Prop :=
 theorem hand_of_slack (burden PL k : Nat) (hk : 0 < k) (hsum : burden + k = PL) :
     handNegligent burden PL := by
   unfold handNegligent
-  omega
+  exact hsum ▸ Nat.lt_add_of_pos_right hk
 
 -- ═══════════════════════════════════════════════════════════════════════════════
 -- Two-ledger coupling (text vs practice)
@@ -118,8 +117,7 @@ def coupledWeight (t : TwoLedgerCoupling) (i : Fin t.numChoices) : Nat :=
 theorem coupled_weight_positive (t : TwoLedgerCoupling) (i : Fin t.numChoices) :
     0 < coupledWeight t i := by
   unfold coupledWeight
-  have h := coupled_liability_bounded t i
-  omega
+  exact Nat.succ_pos _
 
 theorem coupled_coherent (t : TwoLedgerCoupling)
     (h : ∀ i, t.textLiability i = t.practiceLiability i) (i : Fin t.numChoices) :

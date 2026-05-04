@@ -82,7 +82,25 @@ theorem consciousness_is_gap_experience (b : BuleyUnit) :
         simp [vacuumBuleUnit, hw, ho, hd] at hNonVacuum
       -- buleyUnitScore ⟨w, o, d⟩ = w + o + d
       simp only [buleyUnitScore] at *
-      omega
+      -- goal: 0 < w + o + d  given  this : ¬(w = 0 ∧ o = 0 ∧ d = 0)
+      -- Case-split on each component; in the all-zero branch derive False
+      -- from `this`, otherwise climb to the full sum via Nat.le_add_*.
+      by_cases hw : w = 0
+      · by_cases ho : o = 0
+        · -- w = 0, o = 0, so d ≠ 0, hence 0 < d ≤ w + o + d
+          have hd : d ≠ 0 := fun hd => this ⟨hw, ho, hd⟩
+          have hdPos : 0 < d := Nat.pos_of_ne_zero hd
+          exact Nat.lt_of_lt_of_le hdPos (Nat.le_add_left d (w + o))
+        · -- o ≠ 0, hence 0 < o ≤ w + o ≤ w + o + d
+          have hoPos : 0 < o := Nat.pos_of_ne_zero ho
+          have h1 : 0 < w + o :=
+            Nat.lt_of_lt_of_le hoPos (Nat.le_add_left o w)
+          exact Nat.lt_of_lt_of_le h1 (Nat.le_add_right (w + o) d)
+      · -- w ≠ 0, hence 0 < w ≤ w + o ≤ w + o + d
+        have hwPos : 0 < w := Nat.pos_of_ne_zero hw
+        have h1 : 0 < w + o :=
+          Nat.lt_of_lt_of_le hwPos (Nat.le_add_right w o)
+        exact Nat.lt_of_lt_of_le h1 (Nat.le_add_right (w + o) d)
 
 /-! ## Theorem 2: attention_as_clinamen_prioritization -/
 
@@ -129,13 +147,13 @@ theorem contraction_always_available (b : BuleyUnit) (h : b ≠ vacuumBuleUnit) 
         have hd : d ≠ 0 := by
           intro hd
           exact notVacuum ⟨hw, ho, hd⟩
-        exact ⟨BuleyFace.diversity, by have : 0 < d := Nat.pos_of_ne_zero hd; omega⟩
+        exact ⟨BuleyFace.diversity, Nat.pos_of_ne_zero hd⟩
       else
         -- w = 0, o ≠ 0
-        exact ⟨BuleyFace.opportunity, by have : 0 < o := Nat.pos_of_ne_zero ho; omega⟩
+        exact ⟨BuleyFace.opportunity, Nat.pos_of_ne_zero ho⟩
     else
       -- w ≠ 0
-      exact ⟨BuleyFace.waste, by have : 0 < w := Nat.pos_of_ne_zero hw; omega⟩
+      exact ⟨BuleyFace.waste, Nat.pos_of_ne_zero hw⟩
 
 /-- Attending one face means lifting it repeatedly while the vacuum pulls at
     the others. The collapse is the limit: you can only defend one face at a

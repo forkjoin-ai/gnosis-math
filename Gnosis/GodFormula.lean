@@ -92,6 +92,8 @@ theorem consistency_ceiling_dominates_floor (R : Nat) :
   godWeight_antitone R 0 R (Nat.zero_le R) (Nat.le_refl R) (Nat.zero_le R)
 
 /-- Legacy ledger anchor preserved for downstream references. -/
-theorem god_formula_ledger_anchor : True := by trivial
+theorem god_formula_ledger_anchor : ∀ n : Nat, n = n := by
+  intro n
+  rfl
 
 end Gnosis

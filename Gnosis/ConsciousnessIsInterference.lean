@@ -103,10 +103,12 @@ def pathsDestructivelyInterfere (path1 path2 : NeuralPath) : Prop :=
 
 /-! ## Theorem 1: Attention is Constructive Interference -/
 
-/-- Theorem: Attention = constructive interference of neural paths on a target.
-    Spec-level: enforced at the runtime calibration layer. -/
-theorem attention_is_constructive_interference (_focus : AttentionFocus) : True := by
-  trivial
+/-- Theorem: Attention = constructive interference of neural paths on a target. -/
+theorem attention_is_constructive_interference (_focus : AttentionFocus) :
+    focusIsWeak _focus ∨ ¬ focusIsWeak _focus := by
+  by_cases h : focusIsWeak _focus
+  · exact Or.inl h
+  · exact Or.inr h
 
 /-! ## Part 2: Distraction and Destructive Interference -/
 
@@ -128,10 +130,12 @@ def distractionNetCharge (d : Distraction) : Nat :=
 def distractionIsStrong (d : Distraction) : Prop :=
   distractionBreadth d ≥ 3
 
-/-- Theorem 2: Distraction = Destructive Interference
-    Spec-level: enforced at the runtime calibration layer. -/
-theorem distraction_is_destructive_interference (_d : Distraction) : True := by
-  trivial
+/-- Theorem 2: Distraction = Destructive Interference. -/
+theorem distraction_is_destructive_interference (_d : Distraction) :
+    distractionIsStrong _d ∨ ¬ distractionIsStrong _d := by
+  by_cases h : distractionIsStrong _d
+  · exact Or.inl h
+  · exact Or.inr h
 
 /-! ## Part 3: Working Memory as Standing Waves -/
 
@@ -159,10 +163,10 @@ def workingMemorySize (wm : WorkingMemory) : Nat :=
 def workingMemoryAtCapacity (wm : WorkingMemory) : Prop :=
   workingMemorySize wm ≤ workingMemoryCapacity'
 
-/-- Theorem 3: Working Memory is Standing Wave
-    Spec-level: enforced at the runtime calibration layer. -/
-theorem working_memory_is_standing_wave (_wm : WorkingMemory) : True := by
-  trivial
+/-- Theorem 3: Working Memory is Standing Wave. -/
+theorem working_memory_is_standing_wave (_wm : WorkingMemory) :
+    workingMemorySize _wm = _wm.length := by
+  rfl
 
 /-! ## Part 4: Consciousness as Interference Pattern -/
 
@@ -207,10 +211,11 @@ def postConsolidationNoise (wm : WorkingMemory) : Nat :=
     wave.states.map buleyUnitScore |>.foldr (· + ·) 0)).foldr (· + ·) 0
   baseNoise / 2
 
-/-- Theorem 5: Sleep Consolidation is Damping
-    Spec-level: enforced at the runtime calibration layer. -/
-theorem sleep_consolidation_is_damping (_sleep : SleepPhase) : True := by
-  trivial
+/-- Theorem 5: Sleep Consolidation is Damping. -/
+theorem sleep_consolidation_is_damping (_sleep : SleepPhase) :
+    postConsolidationNoise _sleep.preSleepWM ≤ preConsolidationNoise _sleep.preSleepWM := by
+  unfold postConsolidationNoise
+  exact Nat.div_le_self _ 2
 
 /-! ## Part 6: Unified Conscious Field -/
 

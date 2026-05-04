@@ -29,10 +29,12 @@ private theorem iterateSucc_succ_eq_addMod (n : Nat) :
     intro i
     show iterateSucc n (k + 1) ((i + 1) % n) = (i + 1 + (k + 1)) % n
     rw [ih ((i + 1) % n)]
-    have h1 : (i + 1) % n + 1 + k = (i + 1) % n + (1 + k) := by omega
+    have h1 : (i + 1) % n + 1 + k = (i + 1) % n + (1 + k) :=
+      Nat.add_assoc ((i + 1) % n) 1 k
     rw [h1, mod_add_left]
     congr 1
-    omega
+    -- goal: (i + 1) + (1 + k) = i + 1 + (k + 1)
+    rw [Nat.add_comm 1 k]
 
 /-- 
   The Fundamental Lemma of Braided Iteration:
@@ -40,11 +42,12 @@ private theorem iterateSucc_succ_eq_addMod (n : Nat) :
 -/
 theorem iterate_succ_positive (k n i : Nat) (_hk : k > 0) (hn : n > 0) :
     iterateSucc k n i = (i + n) % k := by
-  have hn_succ : n = (n - 1) + 1 := by omega
+  have hn_succ : n = (n - 1) + 1 := (Nat.sub_add_cancel hn).symm
   rw [hn_succ]
   rw [iterateSucc_succ_eq_addMod k (n - 1) i]
   congr 1
-  omega
+  -- goal: i + 1 + (n - 1) = i + (n - 1 + 1)
+  rw [Nat.add_assoc i 1 (n - 1), Nat.add_comm 1 (n - 1)]
 
 /-! 
   The Braided Infinity is defined on the phase ring Fin k.

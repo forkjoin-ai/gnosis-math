@@ -17,7 +17,7 @@
   - beta1_additive_pairwise         : pairwise beta1 is additive
   - beta1_emergent_gap_lower_bound  : full beta1 exceeds pairwise sum for Brunnian links
 
-  All proofs closed by omega / rfl / exact — zero sorry.
+  All proofs closed by Init Nat lemmas / rfl / exact — zero sorry, zero omega.
 -/
 import Init
 import Gnosis.BrunnianScanner
@@ -93,7 +93,8 @@ theorem non_brunnian_pairwise_dominates (b : BrunnianBeta1)
     (h : ¬ isBrunnian b) :
     b.full ≤ b.pairwiseSum := by
   unfold isBrunnian at h
-  omega
+  -- h : ¬ b.pairwiseSum < b.full ⇒ b.full ≤ b.pairwiseSum
+  exact Nat.le_of_not_lt h
 
 /-- For a Brunnian link (pairwiseSum = 0, full > 0), emergent gap = full beta1. -/
 theorem beta1_emergent_gap_lower_bound
@@ -118,7 +119,8 @@ theorem brunnian_link_increases_gap (b : BrunnianBeta1)
     isBrunnian { b with full := b.full + bl.fullBeta1 } := by
   rw [isBrunnian_mk]
   have hh : b.pairwiseSum < b.full := h
-  omega
+  -- pairwiseSum < full ≤ full + bl.fullBeta1.
+  exact Nat.lt_of_lt_of_le hh (Nat.le_add_right b.full bl.fullBeta1)
 
 /-- Two Brunnian links merged yield a combined emergent gap. -/
 theorem merged_brunnian_gap
@@ -135,6 +137,8 @@ theorem brunnian_link_always_coverable (bl : BrunnianLink) :
   refine ⟨{ openness := 0, conscientiousness := bl.fullBeta1,
              extraversion := 0, agreeableness := 0, neuroticism := 0 }, ?_⟩
   show bl.fullBeta1 ≤ bl.fullBeta1 + 0 + 1
-  omega
+  -- bl.fullBeta1 ≤ bl.fullBeta1 + 0 ≤ bl.fullBeta1 + 0 + 1.
+  exact Nat.le_trans (Nat.le_add_right bl.fullBeta1 0)
+    (Nat.le_add_right (bl.fullBeta1 + 0) 1)
 
 end Gnosis.KnottyProblems

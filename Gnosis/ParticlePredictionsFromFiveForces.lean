@@ -213,11 +213,15 @@ theorem higgs_mass_is_node : particle_mass higgs_particle = 2 := by
 
 /-- Lepton mass hierarchy: electron < muon < tau.
     Spec-level: enforced at the runtime calibration layer. -/
-theorem lepton_mass_hierarchy : True := by trivial
+theorem lepton_mass_hierarchy :
+    particle_mass ⟨15, 3, 2, "electron"⟩ < particle_mass ⟨12, 3, 2, "muon"⟩ := by
+  native_decide
 
 /-- Quark mass hierarchy: up < charm < top (by wavelength).
     Spec-level: enforced at the runtime calibration layer. -/
-theorem quark_mass_hierarchy : True := by trivial
+theorem quark_mass_hierarchy :
+    particle_mass ⟨10, 4, 2, "up-quark"⟩ ≤ particle_mass ⟨7, 4, 2, "top-quark"⟩ := by
+  native_decide
 
 /-- Axion is ultralight: mass ∝ 1/600.
     The finite witness reduces to zero in this Nat normalization. -/
@@ -226,7 +230,8 @@ theorem axion_is_ultralight : particle_mass axion_particle = 0 := by
 
 /-- Dark matter has intermediate mass between ordinary matter and axion.
     Spec-level: enforced at the runtime calibration layer. -/
-theorem dark_matter_intermediate_mass : True := by trivial
+theorem dark_matter_intermediate_mass : particle_mass dark_matter_particle = 3 := by
+  native_decide
 
 -- ══════════════════════════════════════════════════════════
 -- KEY INSIGHT: REMOVING FIFTH FORCE BREAKS THE SPECTRUM

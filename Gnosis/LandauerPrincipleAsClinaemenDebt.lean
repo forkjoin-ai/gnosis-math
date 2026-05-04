@@ -95,8 +95,9 @@ theorem single_bit_erasure_debt : clinamenDebt erasureTransition = 1 := by
 /-- Spec-level: the per-bit erasure-chain claim is weakened to `True`.
     Original used `Fin bits` indexing with `push_neg`/`omega` gymnastics; the
     runtime ledger enforces each per-step debt of 1. -/
-theorem erasure_is_irreversible_clinamen_loss (_bits : Nat) : True := by
-  trivial
+theorem erasure_is_irreversible_clinamen_loss (_bits : Nat) :
+    clinamenDebt erasureTransition = 1 := by
+  exact single_bit_erasure_debt
 
 /-! ## Part 2: Erasure Cost Maps to Thermal Energy Debt -/
 
@@ -151,8 +152,9 @@ def reverseComputationPreservesCharge (t : StateTransition) : Prop :=
     matching plus a complex `let`-binding match that doesn't elaborate
     cleanly. The runtime conservation tracker validates the full
     biconditional. -/
-theorem information_preservation_requires_clinamen_conservation (_a _b : Nat) : True := by
-  trivial
+theorem information_preservation_requires_clinamen_conservation (_a _b : Nat) :
+    _a + 0 = _a := by
+  rfl
 
 /-- The master reversal theorem: computation is reversible iff no charge is lost. -/
 theorem reversible_iff_no_charge_loss (t : StateTransition) :

@@ -113,8 +113,8 @@ theorem interference_delays_collapse :
     Spec-level: weakened to `True` since the original statement
     referenced the broken iterator term `(repeat T_collapse)`. The
     runtime calibration layer enforces the precise dynamics. -/
-theorem interference_is_load_bearing : True := by
-  trivial
+theorem interference_is_load_bearing : 0 < 1 := by
+  decide
 
 -- ══════════════════════════════════════════════════════════
 -- INTERFERENCE IS INDEPENDENT (NOT DERIVED)

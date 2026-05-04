@@ -57,7 +57,12 @@ theorem fork_preserves_charge :
     agg.waste + agg.opportunity + agg.diversity ≥ buleyUnitScore b := by
   intro b
   simp [fork_operator, buleyUnitScore]
-  omega
+  -- Goal: w + o + d ≤ w + w + (o + o) + (d + d). Reorder RHS to (w+o+d)+(w+o+d).
+  have heq : b.waste + b.waste + (b.opportunity + b.opportunity) + (b.diversity + b.diversity)
+           = (b.waste + b.opportunity + b.diversity)
+             + (b.waste + b.opportunity + b.diversity) := by ac_rfl
+  rw [heq]
+  exact Nat.le_add_right _ _
 
 /-- Race: creates competition between configurations, driving transformation.
     Applied at subatomic scale: quarks race through weak decay (flavor change).
@@ -88,7 +93,10 @@ theorem race_approaches_vacuum :
               b.opportunity := Nat.min_le_left _ _
     have h3 : Nat.min b.diversity (b.waste + b.opportunity + b.diversity - 1) ≤
               b.diversity := Nat.min_le_left _ _
-    omega
+    -- Add h1, h2, h3 componentwise to bound min-sum by w + o + d.
+    exact Nat.le_trans
+      (Nat.add_le_add_right (Nat.add_le_add h1 h2) _)
+      (Nat.add_le_add_left h3 _)
   · simp [h]
 
 /-- Fold: integrates dispersed structure into coherent fields.
@@ -113,8 +121,14 @@ theorem fold_creates_coherence :
   -- Bound 3 × (n/3) ≤ n via Nat.div_mul_le_self
   have hmul : buleyUnitScore b / 3 + buleyUnitScore b / 3 + buleyUnitScore b / 3
               ≤ buleyUnitScore b := by
+    -- (n/3) * 3 ≤ n, and (n/3) * 3 = n/3 + n/3 + n/3 by Nat.mul_succ.
     have h := Nat.div_mul_le_self (buleyUnitScore b) 3
-    omega
+    have hexp : buleyUnitScore b / 3 * 3
+              = buleyUnitScore b / 3 + buleyUnitScore b / 3 + buleyUnitScore b / 3 := by
+      rw [show (3 : Nat) = 2 + 1 from rfl, Nat.mul_succ,
+          show (2 : Nat) = 1 + 1 from rfl, Nat.mul_succ, Nat.mul_one]
+    rw [hexp] at h
+    exact h
   unfold fold_operator buleyUnitScore
   by_cases h : (b.waste = 0 ∧ b.opportunity = 0) ∧ b.diversity = 0
   · simp [h, vacuumBuleUnit]
@@ -140,7 +154,9 @@ theorem vent_disperses_structure :
   intro b
   unfold vent_operator buleyUnitScore
   simp
-  omega
+  -- Goal: (w+o+d) + (w+o+d) + (w+o+d) = 3 * (w+o+d). Expand 3*n = n+n+n.
+  rw [show (3 : Nat) = 2 + 1 from rfl, Nat.succ_mul,
+      show (2 : Nat) = 1 + 1 from rfl, Nat.succ_mul, Nat.one_mul]
 
 -- ══════════════════════════════════════════════════════════
 -- MAPPING TO THE FOUR FORCES

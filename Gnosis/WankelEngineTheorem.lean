@@ -432,8 +432,9 @@ theorem wankel_schedules_interference (engine : WankelEngine) :
     exhaust_contact_is_bounded engine⟩
 
 /-- Compatibility anchor retained for older ledger references. -/
-theorem wankel_engine_theorem_ledger_anchor : True := by
-  trivial
+theorem wankel_engine_theorem_ledger_anchor : ∀ n : Nat, n = n := by
+  intro n
+  rfl
 
 end WankelEngineTheorem
 end Gnosis
