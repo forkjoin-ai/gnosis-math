@@ -73,9 +73,17 @@ theorem activeLayerCount_le_totalLanes
     activeLayerCount cpuLanes gpuLanes npuLanes wasmLanes <=
       totalLanes cpuLanes gpuLanes npuLanes wasmLanes := by
   unfold activeLayerCount totalLanes
-  by_cases h1 : 0 < cpuLanes <;> by_cases h2 : 0 < gpuLanes <;>
-    by_cases h3 : 0 < npuLanes <;> by_cases h4 : 0 < wasmLanes <;>
-    simp [h1, h2, h3, h4] <;> omega
+  -- Per-lane bound: `(if 0 < n then 1 else 0) ≤ n`.
+  have indicator_le : ∀ n : Nat, (if 0 < n then 1 else 0) ≤ n := by
+    intro n
+    by_cases h : 0 < n
+    · rw [if_pos h]; exact h
+    · rw [if_neg h]; exact Nat.zero_le _
+  exact Nat.add_le_add
+    (Nat.add_le_add
+      (Nat.add_le_add (indicator_le cpuLanes) (indicator_le gpuLanes))
+      (indicator_le npuLanes))
+    (indicator_le wasmLanes)
 
 theorem activeLayerCount_pos_of_totalLanes_pos
     {cpuLanes gpuLanes npuLanes wasmLanes : Nat}
@@ -83,9 +91,62 @@ theorem activeLayerCount_pos_of_totalLanes_pos
     0 < activeLayerCount cpuLanes gpuLanes npuLanes wasmLanes := by
   unfold totalLanes at h_total
   unfold activeLayerCount
-  by_cases h1 : 0 < cpuLanes <;> by_cases h2 : 0 < gpuLanes <;>
-    by_cases h3 : 0 < npuLanes <;> by_cases h4 : 0 < wasmLanes <;>
-    simp [h1, h2, h3, h4] <;> omega
+  -- Bound each indicator below by its lane count contribution would not
+  -- close this directly. Instead: show at least one indicator is `1` because
+  -- otherwise all lanes are zero, contradicting `h_total`.
+  -- Strategy: contrapositive — if the sum of indicators is zero, each is zero,
+  -- so each lane is zero, so totalLanes is zero.
+  by_cases h1 : 0 < cpuLanes
+  · -- First summand is `1`. Use `Nat.lt_of_lt_of_le 1 (1 + ...)`.
+    rw [if_pos h1]
+    -- Goal: 0 < ((1 + _) + _) + _.  Bound by 1 ≤ ((1 + _) + _) + _.
+    have h_one : 1 ≤ ((1 + (if 0 < gpuLanes then 1 else 0)) +
+        (if 0 < npuLanes then 1 else 0)) + (if 0 < wasmLanes then 1 else 0) :=
+      Nat.le_trans
+        (Nat.le_trans
+          (Nat.le_add_right 1 (if 0 < gpuLanes then 1 else 0))
+          (Nat.le_add_right (1 + (if 0 < gpuLanes then 1 else 0))
+            (if 0 < npuLanes then 1 else 0)))
+        (Nat.le_add_right ((1 + (if 0 < gpuLanes then 1 else 0)) +
+            (if 0 < npuLanes then 1 else 0))
+          (if 0 < wasmLanes then 1 else 0))
+    exact h_one
+  · rw [if_neg h1]
+    have h_cpu_zero : cpuLanes = 0 := Nat.eq_zero_of_not_pos h1
+    by_cases h2 : 0 < gpuLanes
+    · rw [if_pos h2]
+      -- Goal: 0 < ((0 + 1) + _) + _.
+      have h_one : 1 ≤ ((0 + 1 + (if 0 < npuLanes then 1 else 0)) +
+          (if 0 < wasmLanes then 1 else 0)) :=
+        Nat.le_trans
+          (Nat.le_trans
+            (Nat.le_of_eq (Nat.zero_add 1).symm)
+            (Nat.le_add_right (0 + 1) (if 0 < npuLanes then 1 else 0)))
+          (Nat.le_add_right ((0 + 1) + (if 0 < npuLanes then 1 else 0))
+            (if 0 < wasmLanes then 1 else 0))
+      exact h_one
+    · rw [if_neg h2]
+      have h_gpu_zero : gpuLanes = 0 := Nat.eq_zero_of_not_pos h2
+      by_cases h3 : 0 < npuLanes
+      · rw [if_pos h3]
+        -- Goal: 0 < ((0 + 0) + 1) + _. Note: `0 + 0 + 1 = 1` definitionally.
+        have h_eq : (0 + 0 + 1 : Nat) = 1 := rfl
+        have h_one : 1 ≤ (0 + 0 + 1 + (if 0 < wasmLanes then 1 else 0)) :=
+          Nat.le_trans
+            (Nat.le_of_eq h_eq.symm)
+            (Nat.le_add_right (0 + 0 + 1) (if 0 < wasmLanes then 1 else 0))
+        exact h_one
+      · rw [if_neg h3]
+        have h_npu_zero : npuLanes = 0 := Nat.eq_zero_of_not_pos h3
+        -- All of cpu, gpu, npu are zero. wasm must be positive.
+        have h_wasm : 0 < wasmLanes := by
+          rw [h_cpu_zero, h_gpu_zero, h_npu_zero] at h_total
+          -- h_total : 0 < 0 + 0 + 0 + wasmLanes; reduces to 0 + wasmLanes.
+          rw [Nat.zero_add] at h_total
+          exact h_total
+        rw [if_pos h_wasm]
+        -- Goal: 0 < 0 + 0 + 0 + 1. This reduces to 0 < 1 definitionally.
+        exact Nat.succ_pos 0
 
 theorem activeLayerCount_le_four
     (cpuLanes gpuLanes npuLanes wasmLanes : Nat) :
@@ -112,10 +173,13 @@ theorem activeLayerCount_pos_iff_totalLanes_pos
     (cpuLanes gpuLanes npuLanes wasmLanes : Nat) :
     0 < activeLayerCount cpuLanes gpuLanes npuLanes wasmLanes ↔
       0 < totalLanes cpuLanes gpuLanes npuLanes wasmLanes := by
-  unfold activeLayerCount totalLanes
-  by_cases h1 : 0 < cpuLanes <;> by_cases h2 : 0 < gpuLanes <;>
-    by_cases h3 : 0 < npuLanes <;> by_cases h4 : 0 < wasmLanes <;>
-    simp [h1, h2, h3, h4] <;> omega
+  constructor
+  · intro h_active
+    -- 0 < active ≤ total ⇒ 0 < total.
+    exact Nat.lt_of_lt_of_le h_active
+      (activeLayerCount_le_totalLanes cpuLanes gpuLanes npuLanes wasmLanes)
+  · intro h_total
+    exact activeLayerCount_pos_of_totalLanes_pos h_total
 
 theorem readyBackendCount_pos_of_any_ready
     {cpuReady gpuReady npuReady wasmReady : Bool}
@@ -163,11 +227,51 @@ theorem diverse_ready_backends_of_cpu_and_accelerator
     (h_accel : gpuReady = true ∨ npuReady = true ∨ wasmReady = true) :
     2 <= readyBackendCount cpuReady gpuReady npuReady wasmReady := by
   unfold readyBackendCount
+  rw [h_cpu]
+  -- Goal shape: 2 ≤ ((if true then 1 else 0) + ...).  Reduce the cpu if.
+  rw [if_pos rfl]
+  -- Goal: 2 ≤ ((1 + (if gpu...)) + (if npu...)) + (if wasm...).
   rcases h_accel with h_gpu | h_rest
-  · simp [h_cpu, h_gpu]; omega
+  · -- gpuReady = true ⇒ second indicator is also 1.
+    rw [h_gpu, if_pos rfl]
+    -- Goal: 2 ≤ ((1 + 1) + (if npu...)) + (if wasm...). Use 2 ≤ 1 + 1 ≤ ...
+    have h_two : (2 : Nat) ≤ 1 + 1 := Nat.le_refl 2
+    exact Nat.le_trans h_two
+      (Nat.le_trans
+        (Nat.le_add_right (1 + 1) (if npuReady = true then 1 else 0))
+        (Nat.le_add_right ((1 + 1) + (if npuReady = true then 1 else 0))
+          (if wasmReady = true then 1 else 0)))
   · rcases h_rest with h_npu | h_wasm
-    · simp [h_cpu, h_npu]; omega
-    · simp [h_cpu, h_wasm]; omega
+    · -- npuReady = true.
+      rw [h_npu, if_pos rfl]
+      -- Goal: 2 ≤ ((1 + (if gpu...)) + 1) + (if wasm...).
+      -- Use: 2 = 1 + 1 ≤ (1 + 0) + 1 ≤ (1 + g) + 1 ≤ ((1 + g) + 1) + w.
+      have h_step1 : (2 : Nat) ≤ 1 + (if gpuReady = true then 1 else 0) + 1 := by
+        -- Show 1 + (if g) + 1 = (1 + (if g)) + 1, lower-bound the gpu indicator by 0.
+        have h_ind : 0 ≤ (if gpuReady = true then 1 else 0) := Nat.zero_le _
+        -- 1 + (if g) ≥ 1 by Nat.le_add_right.
+        have h_le : (1 : Nat) ≤ 1 + (if gpuReady = true then 1 else 0) :=
+          Nat.le_add_right 1 _
+        -- Add 1 on the right:
+        have h_plus : (1 + 1 : Nat) ≤ (1 + (if gpuReady = true then 1 else 0)) + 1 :=
+          Nat.add_le_add_right h_le 1
+        exact h_plus
+      exact Nat.le_trans h_step1
+        (Nat.le_add_right ((1 + (if gpuReady = true then 1 else 0)) + 1)
+          (if wasmReady = true then 1 else 0))
+    · -- wasmReady = true.
+      rw [h_wasm, if_pos rfl]
+      -- Goal: 2 ≤ ((1 + (if gpu...)) + (if npu...)) + 1.
+      have h_le : (1 : Nat) ≤ (1 + (if gpuReady = true then 1 else 0)) +
+          (if npuReady = true then 1 else 0) :=
+        Nat.le_trans
+          (Nat.le_add_right 1 (if gpuReady = true then 1 else 0))
+          (Nat.le_add_right (1 + (if gpuReady = true then 1 else 0))
+            (if npuReady = true then 1 else 0))
+      have h_plus : (1 + 1 : Nat) ≤ ((1 + (if gpuReady = true then 1 else 0)) +
+          (if npuReady = true then 1 else 0)) + 1 :=
+        Nat.add_le_add_right h_le 1
+      exact h_plus
 
 theorem cannonCursor_step_mod
     {laneCount cursor waveWidth : Nat}

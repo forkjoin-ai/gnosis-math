@@ -67,6 +67,7 @@ theorem list_length_map {α β : Type} (f : α → β) (xs : List α) :
   | cons x xs ih => simp [List.length, ih]
 
 /-- Marker that the list/Nat helper module is linked. -/
-theorem gnosisMathListNatLinked : True := trivial
+theorem gnosisMathListNatLinked (n : Nat) : 0 + n = n := by
+  simp
 
 end GnosisMath

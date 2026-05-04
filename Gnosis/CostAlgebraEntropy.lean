@@ -127,7 +127,7 @@ theorem bule_entropy_face_lower_bound (b : BuleyUnit) :
   cases b with
   | mk w o d =>
     show d ≤ w + o + d
-    omega
+    exact Nat.le_add_left d (w + o)
 
 /-! ## Specialization to other CostAlgebras -/
 
@@ -157,12 +157,12 @@ theorem replication_entropy_zero {S : Type} (A : CostAlgebra S) (s : S) :
 theorem replication_entropy_one {S : Type} (A : CostAlgebra S) (s : S) :
     replicationEntropy A s 1 = 0 := by
   show 0 * A.score s = 0
-  omega
+  exact Nat.zero_mul (A.score s)
 
 theorem replication_entropy_two {S : Type} (A : CostAlgebra S) (s : S) :
     replicationEntropy A s 2 = A.score s := by
   show 1 * A.score s = A.score s
-  omega
+  exact Nat.one_mul (A.score s)
 
 theorem replication_entropy_three {S : Type} (A : CostAlgebra S) (s : S) :
     replicationEntropy A s 3 = 2 * A.score s := by

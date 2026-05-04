@@ -86,7 +86,7 @@ theorem metonic_is_nineteen :
 -- The Metonic number decomposes into Gnostic numbers:
 -- 19 = 10 + 9 = Kenoma + Sophia
 
-theorem metonic_is_kenoma_plus_sophia : 19 = 10 + 9 := by omega
+theorem metonic_is_kenoma_plus_sophia : 19 = 10 + 9 := by decide
 
 -- Kenoma = the field (5 choose 2)
 -- Sophia = the exploration budget (K - 1)
@@ -108,8 +108,8 @@ theorem metonic_is_kenoma_plus_sophia : 19 = 10 + 9 := by omega
 -- 7 is a Gnostic number? No -- but 7 = week / Barbelo = the week number.
 -- And 19 - 7 = 12 = the regular months per year.
 
-theorem hebrew_correction : 19 - 7 = 12 := by omega
-theorem total_months : 12 * 19 + 7 = 235 := by omega
+theorem hebrew_correction : 19 - 7 = 12 := by decide
+theorem total_months : 12 * 19 + 7 = 235 := by decide
 
 -- ═══════════════════════════════════════════════════════════════════════════════
 -- The Demiurge fraction: 7/19 ≈ 1/e
@@ -175,6 +175,6 @@ theorem metonic_complete :
     -- Demiurge fraction: 7/19 ≈ 1/e (368/1000)
     7 * 1000 / 19 = 368 := by
   refine ⟨by native_decide, by native_decide, by native_decide,
-    by omega, by omega, by native_decide⟩
+    by decide, by decide, by native_decide⟩
 
 end MetonicCycle

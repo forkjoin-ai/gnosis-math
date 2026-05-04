@@ -249,7 +249,7 @@ theorem countSatisfyingAux_acc (p : List Bool → Bool) :
       simp only [countSatisfyingAux, Nat.zero_add]
       rw [countSatisfyingAux_acc p (k + (if p x then 1 else 0)) rest,
           countSatisfyingAux_acc p (if p x then 1 else 0) rest]
-      omega
+      exact Nat.add_assoc k (if p x then 1 else 0) (countSatisfyingAux p 0 rest)
 
 /-- Accumulator lemma for `countFailingAux`. -/
 theorem countFailingAux_acc (p : List Bool → Bool) :
@@ -260,7 +260,7 @@ theorem countFailingAux_acc (p : List Bool → Bool) :
       simp only [countFailingAux, Nat.zero_add]
       rw [countFailingAux_acc p (k + (if p x then 0 else 1)) rest,
           countFailingAux_acc p (if p x then 0 else 1) rest]
-      omega
+      exact Nat.add_assoc k (if p x then 0 else 1) (countFailingAux p 0 rest)
 
 theorem countSplit_generic (p : List Bool → Bool) :
     ∀ (vs : List (List Bool)),
@@ -274,9 +274,20 @@ theorem countSplit_generic (p : List Bool → Bool) :
       rw [countSatisfyingAux_acc p (if p x then 1 else 0) rest,
           countFailingAux_acc p (if p x then 0 else 1) rest]
       by_cases hpx : p x = true
-      · simp [hpx]; omega
+      · -- p x = true: if-branches collapse to 1 and 0
+        rw [if_pos hpx, if_pos hpx]
+        -- Goal: 1 + countSatisfyingAux p 0 rest + (0 + countFailingAux p 0 rest) = rest.length + 1
+        rw [Nat.zero_add, Nat.add_assoc 1 (countSatisfyingAux p 0 rest)
+              (countFailingAux p 0 rest), ih, Nat.add_comm 1 rest.length]
       · have hfalse : p x = false := by cases hx : p x <;> simp_all
-        simp [hfalse]; omega
+        have hpxNot : ¬ (p x = true) := hpx
+        rw [if_neg hpxNot, if_neg hpxNot]
+        -- Goal: 0 + countSatisfyingAux p 0 rest + (1 + countFailingAux p 0 rest) = rest.length + 1
+        rw [Nat.zero_add,
+            ← Nat.add_assoc (countSatisfyingAux p 0 rest) 1 (countFailingAux p 0 rest),
+            Nat.add_comm (countSatisfyingAux p 0 rest) 1,
+            Nat.add_assoc 1 (countSatisfyingAux p 0 rest) (countFailingAux p 0 rest), ih,
+            Nat.add_comm 1 rest.length]
 
 /-- `allBoolVecs n` has exactly `2^n` entries. Closed by `decide` at
 `n = 4`. -/

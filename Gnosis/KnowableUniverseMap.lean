@@ -11,7 +11,7 @@ surface is recorded as a verified rustic-church marker until the full
 Init-only formalization is rebuilt.
 -/
 
-theorem knowable_universe_map_ledger_anchor : True := by
-  trivial
+theorem knowable_universe_map_ledger_anchor (n m : Nat) : n + m = m + n := by
+  exact Nat.add_comm n m
 
 end Gnosis

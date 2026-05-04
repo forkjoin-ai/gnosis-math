@@ -114,7 +114,8 @@ theorem syzygy_period : flip (flip .pos) = .pos := rfl
 
 -- In Nat arithmetic: the sliver bridges the gap
 theorem barbelo_bridges : 0 + 1 = 1 := rfl
-theorem barbelo_reaches_ground (n : Nat) : n - n + 1 = 1 := by omega
+theorem barbelo_reaches_ground (n : Nat) : n - n + 1 = 1 := by
+  rw [Nat.sub_self]
 -- Maximum rejection + Barbelo = ground weight of 1 (not 0 — because
 -- Buleyean weight is always ≥ 1, never truly zero)
 
@@ -282,6 +283,6 @@ theorem euler_is_gnostic :
     -- Ground is reachable
     10 - 10 = 0 := by
   refine ⟨mapping_injective, primitive_symbol_injective,
-    by decide, by decide, rfl, rfl, by omega⟩
+    by decide, by decide, rfl, rfl, by decide⟩
 
 end EulerGnostic

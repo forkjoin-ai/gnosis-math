@@ -58,14 +58,15 @@ theorem monoculture_is_parallel : isParallel monoculture = true := by rfl
 theorem heat_death_is_parallel : isParallel heatDeath = true := by rfl
 
 /-- Monoculture kills K-1 languages. The option value of the dead is zero. -/
-theorem monoculture_kills (K : Nat) (_ : 2 ≤ K) : K - 1 ≥ 1 := by omega
+theorem monoculture_kills (K : Nat) (h : 2 ≤ K) : K - 1 ≥ 1 :=
+  Nat.le_sub_of_add_le h
 
 /-- Heat death has zero discrimination: all strategies look the same.
     A uniform distribution over K options carries zero bits of preference. -/
 theorem heat_death_zero_signal (K : Nat) (_ : 2 ≤ K) :
     -- All weights equal means no winner can be distinguished
     -- Modeled: the "discrimination" between best and worst is zero
-    K - K = 0 := by omega
+    K - K = 0 := Nat.sub_self K
 
 -- ═══════════════════════════════════════════════════════════════════════════════
 -- Antiparallel states are the ground state

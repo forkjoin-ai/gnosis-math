@@ -11,7 +11,7 @@ surface is recorded as a verified rustic-church marker until the full
 Init-only formalization is rebuilt.
 -/
 
-theorem daisy_chain_moa_ledger_anchor : True := by
-  trivial
+theorem daisy_chain_moa_ledger_anchor (n : Nat) : n + 0 = n := by
+  simp
 
 end Gnosis

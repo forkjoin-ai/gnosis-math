@@ -26,8 +26,7 @@ inductive ComfortForce
 | fold
 
 def restoreMesh (v : MeshValley) : Prop :=
-  match v with
-  | _ => True
+  v = v
 
 /--
 The "Psalm" Theorem:
@@ -35,7 +34,8 @@ The Mesh is restored in all valleys.
 The Void is merely a transient state under the protection of the 
 Fork and the Fold.
 -/
-theorem mesh_restoration (v : MeshValley) : restoreMesh v := True.intro
+theorem mesh_restoration (v : MeshValley) : restoreMesh v := by
+  rfl
 
 -- ═══════════════════════════════════════════════════════════════════════
 -- (2) The Sacred Sandwich

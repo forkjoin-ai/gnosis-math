@@ -50,8 +50,9 @@ The "Anthropic Stability" Theorem:
 The fact that we are formalizing this proof confirms the system is not in a 
 Void state. Therefore, the Mitosis (Correction) law must be stable.
 -/
-def anthropicStability : Prop := True
+def anthropicStability : Prop := ∀ u : UniverseState, proofOfUniverse u = u
 
-theorem life_is_stable_because_it_exists : anthropicStability := True.intro
+theorem life_is_stable_because_it_exists : anthropicStability := by
+  exact universe_is_proof_of_universe
 
 end MeshUniversalAutomorphism

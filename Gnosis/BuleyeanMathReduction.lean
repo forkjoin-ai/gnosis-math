@@ -34,8 +34,8 @@ is redundant in `Nat`-space.
   relying on `Nat.sub`'s truncation).
 - Proves pointwise equality on 30+ concrete `(R, v)` pairs covering
   both `v ≤ R` and `v > R` regimes.
-- Proves the general reduction theorem `R - min(v, R) = R - v` via
-  `omega`.
+- Proves the general reduction theorem `R - min(v, R) = R - v`
+  via Init `Nat.*` lemmas (rustic-church style).
 - Cross-checks: `wReduced` reproduces the god formula's Rosetta
   relation across all phase decompositions from
   `GodFormulaPhaseManifestations`.
@@ -70,21 +70,26 @@ def wReduced (R v : Nat) : Nat :=
 /-! ## General reduction theorem -/
 
 /-- `R − min(v, R) = R − v` over `Nat`. The `min` step is subsumed by
-truncation. Proved by `omega`. -/
+truncation. -/
 theorem min_is_subsumed (R v : Nat) :
     R - (if v ≤ R then v else R) = R - v := by
   split
   · rfl
   · rename_i h
-    have : v > R := Nat.lt_of_not_le h
-    omega
+    -- v > R, so both sides are 0: LHS = R - R = 0, RHS = R - v = 0.
+    have hRv : v > R := Nat.lt_of_not_le h
+    have hRleV : R ≤ v := Nat.le_of_lt hRv
+    have hLhs : R - R = 0 := Nat.sub_self R
+    have hRhs : R - v = 0 := Nat.sub_eq_zero_of_le hRleV
+    exact hLhs.trans hRhs.symm
 
 /-- The two forms are pointwise equal over `Nat`. -/
 theorem wCanonical_eq_wReduced (R v : Nat) :
     wCanonical R v = wReduced R v := by
   unfold wCanonical wReduced
-  have := min_is_subsumed R v
-  omega
+  -- Goal: R - (if v ≤ R then v else R) + 1 = R - v + 1
+  -- Rewrite the inner subtraction using `min_is_subsumed`.
+  rw [min_is_subsumed R v]
 
 /-! ## Instance witnesses
 
@@ -136,7 +141,8 @@ theorem clinamen_pointwise_0_0 : wReduced 0 0 = 1 := by decide
 remains. -/
 theorem w_at_equality_is_clinamen_only (R : Nat) : wReduced R R = 1 := by
   unfold wReduced
-  omega
+  -- Goal: R - R + 1 = 1
+  rw [Nat.sub_self R]
 
 /-! ## The god formula's two pieces, revisited
 

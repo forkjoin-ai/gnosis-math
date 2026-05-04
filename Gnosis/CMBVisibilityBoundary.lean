@@ -52,7 +52,7 @@ theorem opaque_epoch_not_photon_visible
     ¬ m.photonVisible emissionTime := by
   intro hVisible
   unfold PhotonVisibilityModel.opaqueEpoch PhotonVisibilityModel.photonVisible at *
-  omega
+  exact Nat.not_le_of_lt hOpaque hVisible.1
 
 /-- Therefore a photon telescope cannot directly see any epoch before
 recombination. -/
@@ -77,7 +77,7 @@ theorem after_observation_not_photon_visible
     ¬ m.photonVisible emissionTime := by
   intro hVisible
   unfold PhotonVisibilityModel.photonVisible at hVisible
-  omega
+  exact Nat.not_le_of_lt hFuture hVisible.2
 
 /-- Therefore a telescope cannot directly see any epoch after the
 observation time either. -/

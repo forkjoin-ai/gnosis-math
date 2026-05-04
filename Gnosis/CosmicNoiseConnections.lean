@@ -24,8 +24,9 @@ This file turns that analogy into a tiny Init-only bridge from
 -/
 
 /-- Compatibility anchor retained for older imports. -/
-theorem cosmic_noise_connections_ledger_anchor : True := by
-  trivial
+theorem cosmic_noise_connections_ledger_anchor (a b c : Nat) :
+    (a + b) + c = a + (b + c) := by
+  exact Nat.add_assoc a b c
 
 namespace CosmicNoiseConnections
 

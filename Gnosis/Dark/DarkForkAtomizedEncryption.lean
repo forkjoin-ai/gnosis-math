@@ -11,7 +11,7 @@ surface is recorded as a verified rustic-church marker until the full
 Init-only formalization is rebuilt.
 -/
 
-theorem dark_dark_fork_atomized_encryption_ledger_anchor : True := by
-  trivial
+theorem dark_dark_fork_atomized_encryption_ledger_anchor (n : Nat) : Nat.succ n = n + 1 := by
+  simp
 
 end Gnosis

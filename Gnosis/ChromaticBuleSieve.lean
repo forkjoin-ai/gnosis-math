@@ -54,9 +54,32 @@ theorem color_channel_symmetry (c1 : Nat) (c2 : Nat) :
   have hc2 : c2 = c2 % 3 + 3 * (c2 / 3) := (Nat.mod_add_div c2 3).symm
   by_cases hq : c2 / 3 ≤ c1 / 3
   · refine ⟨c1 / 3 - c2 / 3, Or.inl ?_⟩
-    omega
+    -- Goal: c1 = c2 + 3 * (c1 / 3 - c2 / 3)
+    -- Strategy: rewrite c1 via hc1, c2 via hc2, use h : c1 % 3 = c2 % 3, then
+    -- collapse 3 * (c2/3) + 3 * (c1/3 - c2/3) to 3 * (c1/3).
+    calc c1
+        = c1 % 3 + 3 * (c1 / 3) := hc1
+      _ = c2 % 3 + 3 * (c1 / 3) := by rw [h]
+      _ = c2 % 3 + 3 * (c2 / 3 + (c1 / 3 - c2 / 3)) := by
+            rw [Nat.add_sub_of_le hq]
+      _ = c2 % 3 + (3 * (c2 / 3) + 3 * (c1 / 3 - c2 / 3)) := by
+            rw [Nat.mul_add]
+      _ = c2 % 3 + 3 * (c2 / 3) + 3 * (c1 / 3 - c2 / 3) := by
+            rw [Nat.add_assoc]
+      _ = c2 + 3 * (c1 / 3 - c2 / 3) := by rw [← hc2]
   · refine ⟨c2 / 3 - c1 / 3, Or.inr ?_⟩
-    omega
+    -- Symmetric case: c1 / 3 ≤ c2 / 3 from ¬ (c2 / 3 ≤ c1 / 3).
+    have hq' : c1 / 3 ≤ c2 / 3 := Nat.le_of_lt (Nat.lt_of_not_le hq)
+    calc c2
+        = c2 % 3 + 3 * (c2 / 3) := hc2
+      _ = c1 % 3 + 3 * (c2 / 3) := by rw [← h]
+      _ = c1 % 3 + 3 * (c1 / 3 + (c2 / 3 - c1 / 3)) := by
+            rw [Nat.add_sub_of_le hq']
+      _ = c1 % 3 + (3 * (c1 / 3) + 3 * (c2 / 3 - c1 / 3)) := by
+            rw [Nat.mul_add]
+      _ = c1 % 3 + 3 * (c1 / 3) + 3 * (c2 / 3 - c1 / 3) := by
+            rw [Nat.add_assoc]
+      _ = c1 + 3 * (c2 / 3 - c1 / 3) := by rw [← hc1]
 
 end ChromaticBuleSieve
 end Gnosis

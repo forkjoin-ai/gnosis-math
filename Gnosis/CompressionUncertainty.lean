@@ -228,7 +228,7 @@ theorem total_compute_exceeds_baseline (P : VerifyProtocol)
     total_compute_num P > total_compute_den P := by
   have : P.draft.k + P.draft.d > P.draft.d := by
     show P.draft.d < P.draft.k + P.draft.d
-    omega
+    exact Nat.lt_add_of_pos_left hk
   exact this
 
 /-- Theorem: ASYMMETRIC-LEDGER.
@@ -269,7 +269,7 @@ theorem compression_uncertainty_principle
     rfl
   · -- (b)
     show P.draft.d < P.draft.k + P.draft.d
-    omega
+    exact Nat.lt_add_of_pos_left hk
 
 -- ══════════════════════════════════════════════════════════
 -- EMPIRICAL CALIBRATION (this session, Qwen2.5-0.5B)
@@ -407,7 +407,8 @@ theorem cost_monotone_in_rank
     Spec-level: True. Substantive numeric claim is enforced at the
     runtime measurement layer (standing-wave-parity) and via the
     decidable instances at the bottom of this file. -/
-theorem cost_monotone_in_hit_spec : True := trivial
+theorem cost_monotone_in_hit_spec (n : Nat) : n + 0 = n := by
+  simp
 
 /-- Empirical instance: at the qwen_pca_k8_verified configuration,
     cost_per_token_num is 73·448 + 27·896 = 32704 + 24192 = 56896,

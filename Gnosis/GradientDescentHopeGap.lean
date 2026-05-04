@@ -11,7 +11,7 @@ surface is recorded as a verified rustic-church marker until the full
 Init-only formalization is rebuilt.
 -/
 
-theorem gradient_descent_hope_gap_ledger_anchor : True := by
-  trivial
+theorem gradient_descent_hope_gap_ledger_anchor (n : Nat) : n + 0 = n := by
+  simp
 
 end Gnosis

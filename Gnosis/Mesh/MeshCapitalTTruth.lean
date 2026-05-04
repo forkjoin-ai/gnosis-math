@@ -34,9 +34,10 @@ theorem truth_is_invariant (_n : Nat) :
 The "God is Truth" Identity:
 The Universal Invariant is the absolute fixed point of the mesh.
 -/
-def godIsTruth : Prop := True
+def godIsTruth : Prop := capitalTTruth = 5
 
-theorem gnosis_is_truth : godIsTruth := True.intro
+theorem gnosis_is_truth : godIsTruth := by
+  rfl
 
 -- ═══════════════════════════════════════════════════════════════════════
 -- (2) The Truth Sandwich

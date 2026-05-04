@@ -33,7 +33,15 @@ theorem durable_live_count_ge_quorum
     quorumSize replicaCount failureBudget <= state.liveCount := by
   rcases hWellFormed with ⟨hMass, hDebtBound, _⟩
   unfold quorumSize
-  omega
+  -- replicaCount - failureBudget ≤ replicaCount - state.repairDebt (since debt ≤ budget)
+  have hSubMono :
+      replicaCount - failureBudget ≤ replicaCount - state.repairDebt :=
+    Nat.sub_le_sub_left hDebtBound replicaCount
+  -- replicaCount - state.repairDebt = state.liveCount via hMass
+  have hCancel :
+      replicaCount - state.repairDebt = state.liveCount := by
+    rw [← hMass, Nat.add_sub_cancel]
+  exact hCancel ▸ hSubMono
 
 theorem durable_live_count_positive
     {replicaCount failureBudget : Nat}
@@ -46,8 +54,8 @@ theorem durable_live_count_positive
     durable_live_count_ge_quorum hWellFormed
   have hQuorumPositive : 0 < quorumSize replicaCount failureBudget := by
     unfold quorumSize
-    omega
-  omega
+    exact Nat.sub_pos_of_lt hBudget
+  exact Nat.lt_of_lt_of_le hQuorumPositive hQuorum
 
 theorem repair_closure_preserves_replica_mass
     {replicaCount failureBudget : Nat}

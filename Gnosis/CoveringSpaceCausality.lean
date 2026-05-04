@@ -72,7 +72,8 @@ def blockingWitnessFromMismatch
   lossPath := ⟨1, Nat.lt_of_lt_of_le (by decide : (1 : Nat) < 2) hPaths⟩
   sharedStream := 0
   pathsDistinct := by intro h; simp [Fin.ext_iff] at h
-  pathsShareStream := trivial
+  pathsShareStream := by
+    decide
 
 -- ─── THM-COVERING-MATCH ───────────────────────────────────────────────
 

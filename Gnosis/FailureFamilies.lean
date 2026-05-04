@@ -111,7 +111,8 @@ theorem contagious_failure_forces_repair_debt :
       rcases h with hHeadContagious | hTailContagious
       · rcases hHeadContagious with ⟨hSurvives, hChanged⟩
         simp [repairDebt, hSurvives, hChanged]
-        omega
+        rw [Nat.add_comm 1 (repairDebt beforeRest afterRest)]
+        exact Nat.succ_pos _
       · have hTailPositive :
           0 < repairDebt beforeRest afterRest :=
             contagious_failure_forces_repair_debt beforeRest afterRest hTailContagious
@@ -119,7 +120,8 @@ theorem contagious_failure_forces_repair_debt :
         · by_cases hOutputEq : beforeHead.output = afterHead.output
           · simp [repairDebt, hSurvives, hOutputEq, hTailPositive]
           · simp [repairDebt, hSurvives, hOutputEq]
-            omega
+            rw [Nat.add_comm 1 (repairDebt beforeRest afterRest)]
+            exact Nat.succ_pos _
         · have hFalse : afterHead.survives = false := by
             cases hValue : afterHead.survives <;> simp_all
           simp [repairDebt, hFalse, hTailPositive]

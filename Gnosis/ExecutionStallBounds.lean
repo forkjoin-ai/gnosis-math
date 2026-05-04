@@ -7,11 +7,11 @@ theorem execution_stall_impossible_in_bounded_graph (nodes transitions currentDe
     (hBound : currentDepth > boundedExecutionDepth nodes transitions) :
     currentDepth > nodes := by
   unfold boundedExecutionDepth at hBound
-  omega
+  exact Nat.lt_of_le_of_lt (Nat.le_add_right nodes transitions) hBound
 
 theorem bounded_oracle_guarantees_termination (nodes transitions : Nat) :
     boundedExecutionDepth nodes transitions >= nodes := by
   unfold boundedExecutionDepth
-  omega
+  exact Nat.le_add_right nodes transitions
 
 end Gnosis

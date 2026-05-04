@@ -75,8 +75,8 @@ theorem no_decider_from_any_finite_list
   have hk : haltingWall.k = 2 := by rfl
   unfold Wall.recoveredBy allDecidersOf
   rw [hk]
-  have hne : listDistinctCount (cands.map (fun _ => haltingWall.phase 0)) ≠ 2 := by
-    omega
+  have hne : listDistinctCount (cands.map (fun _ => haltingWall.phase 0)) ≠ 2 :=
+    Nat.ne_of_lt (Nat.lt_of_le_of_lt hcount (by decide : (1 : Nat) < 2))
   simp [hne]
 
 -- Section 2. Inter-wall bisimulation: Gödel ⟷ Tarski
@@ -163,7 +163,8 @@ theorem proof_length_lower_bound
   unfold proves_unbounded Wall.recoveredBy
   have hgw : goedelWall.k = 2 := by rfl
   rw [hgw]
-  have : listDistinctCount proof ≠ 2 := by omega
+  have : listDistinctCount proof ≠ 2 :=
+    Nat.ne_of_lt (Nat.lt_of_le_of_lt hcount h)
   simp [this]
 
 /-- Concrete corollary: the empty proof and any singleton proof do not
@@ -214,8 +215,8 @@ theorem no_finite_shadow_consistency
   have hk : loebWall.k = 2 := by rfl
   unfold Wall.recoveredBy sameResidueShadow
   rw [hk]
-  have hne : listDistinctCount (depths.map (fun _ => loebWall.phase 0)) ≠ 2 := by
-    omega
+  have hne : listDistinctCount (depths.map (fun _ => loebWall.phase 0)) ≠ 2 :=
+    Nat.ne_of_lt (Nat.lt_of_le_of_lt hcount (by decide : (1 : Nat) < 2))
   simp [hne]
 
 /-- Concrete witness using the cut visit-list: depth-3 Löb cut produces

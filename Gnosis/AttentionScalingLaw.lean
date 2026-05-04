@@ -151,8 +151,8 @@ theorem vacuum_is_optimal_initial_state
 theorem vacuum_minimizes_score :
     ∀ b : BuleyUnit, buleyUnitScore vacuumBuleUnit ≤ buleyUnitScore b := by
   intro b
-  simp only [vacuumBuleUnit, buleyUnitScore]
-  omega
+  show 0 ≤ buleyUnitScore b
+  exact Nat.zero_le _
 
 /-- Starting from vacuum, every clinamen lift is a net gain in structure. -/
 theorem vacuum_plus_lifts_maximize_structure
@@ -228,11 +228,37 @@ theorem non_vacuum_experiences_pull
   unfold vacuum_pull_active
   cases b with
   | mk w o d =>
-    have : ¬(w = 0 ∧ o = 0 ∧ d = 0) := by
+    have hNot : ¬(w = 0 ∧ o = 0 ∧ d = 0) := by
       intro ⟨hw, ho, hd⟩
       simp [vacuumBuleUnit, hw, ho, hd] at h
-    simp only [buleyUnitScore]
-    omega
+    show 0 < w + o + d
+    -- Case-split on each face being zero; if all three are zero, contradict hNot.
+    cases hw : w with
+    | succ wk =>
+      -- w = wk + 1, so w + o + d ≥ 1
+      exact Nat.lt_of_lt_of_le
+        (Nat.succ_pos wk)
+        (Nat.le_trans
+          (Nat.le_add_right (wk + 1) o)
+          (Nat.le_add_right ((wk + 1) + o) d))
+    | zero =>
+      cases ho : o with
+      | succ ok =>
+        -- w = 0, o = ok + 1
+        show 0 < 0 + (ok + 1) + d
+        exact Nat.lt_of_lt_of_le
+          (Nat.lt_of_lt_of_le (Nat.succ_pos ok)
+            (Nat.le_add_left (ok + 1) 0))
+          (Nat.le_add_right (0 + (ok + 1)) d)
+      | zero =>
+        cases hd : d with
+        | succ dk =>
+          -- w = 0, o = 0, d = dk + 1
+          show 0 < 0 + 0 + (dk + 1)
+          exact Nat.lt_of_lt_of_le (Nat.succ_pos dk)
+            (Nat.le_add_left (dk + 1) (0 + 0))
+        | zero =>
+          exact absurd ⟨hw, ho, hd⟩ hNot
 
 /-! ## Unified scaling theorem: all five principles -/
 

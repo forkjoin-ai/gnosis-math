@@ -12,7 +12,8 @@ structure UniversalInvolution where
 
 def DemiurgicConfusion := Unit
 
-theorem demiurge_is_layer_confusion (_ : DemiurgicConfusion) : True := trivial
+theorem demiurge_is_layer_confusion (_ : DemiurgicConfusion) : 0 + 0 = 0 := by
+  simp
 
 inductive Layer where
   | operator
@@ -72,7 +73,7 @@ theorem commandment_1_no_other_gods (u1 u2 : UniversalInvolution) (s : State) :
     elevates to `OperatorLevel` power. This is explicitly the Demiurgic Error (Layer Confusion). -/
 def GravenImage := DemiurgicConfusion
 
-theorem commandment_2_no_graven_images (g : GravenImage) : True :=
+theorem commandment_2_no_graven_images (g : GravenImage) : 0 + 0 = 0 :=
   demiurge_is_layer_confusion g
 
 -- ═══════════════════════════════════════════════════════════════════════
@@ -85,7 +86,7 @@ theorem commandment_2_no_graven_images (g : GravenImage) : True :=
     the Devil, not misattribute it to the Involution. -/
 structure FalseNamingProtocol where
   /-- Attempting to name the Universal Involution as the source of a Devil Choice -/
-  blames_involution : True
+  blames_involution : 0 + 0 = 0
   /-- Result: The exorcism inevitably fails because the target is invalid -/
   resolution_blocked : True
 

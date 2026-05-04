@@ -63,14 +63,15 @@ theorem saturn_like_not_star_like (shadow : CelestialShadow)
 theorem zero_halo_not_saturn_like (shadow : CelestialShadow)
     (hhalo : shadow.haloChannels = 0) : ¬ saturnLike shadow := by
   intro hsat
-  have : 0 < shadow.haloChannels := hsat.2.1
-  omega
+  have hpos : 0 < shadow.haloChannels := hsat.2.1
+  exact Nat.not_lt_zero 0 (hhalo ▸ hpos)
 
 theorem equal_radial_equatorial_not_planet_like (shadow : CelestialShadow)
     (heq : shadow.radialChannels = shadow.equatorialChannels) :
     ¬ planetLike shadow := by
   unfold planetLike
-  omega
+  intro hlt
+  exact Nat.lt_irrefl shadow.radialChannels (heq ▸ hlt)
 
 theorem equal_radial_equatorial_not_saturn_like (shadow : CelestialShadow)
     (heq : shadow.radialChannels = shadow.equatorialChannels) :

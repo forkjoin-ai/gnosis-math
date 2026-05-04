@@ -44,7 +44,11 @@ theorem dependence_inflates (R vIndep vDepend : Nat)
     godWeight R vDepend < godWeight R vIndep := by
   unfold godWeight
   rw [Nat.min_eq_left hI, Nat.min_eq_left hD]
-  omega
+  -- Goal: R - vDepend + 1 < R - vIndep + 1
+  -- vIndep < vDepend (hMore) and vDepend ≤ R (hD) ⇒ vIndep < R
+  -- Then Nat.sub_lt_sub_left : vIndep < R → vIndep < vDepend → R - vDepend < R - vIndep
+  exact Nat.add_lt_add_right
+    (Nat.sub_lt_sub_left (Nat.lt_of_lt_of_le hMore hD) hMore) 1
 
 /-- THM-COLLIDER-DETECTION: A collider (V-structure) X → Z ← Y is
     detected when: X ⊥ Y marginally BUT X ⊬⊥ Y | Z.
@@ -56,7 +60,10 @@ theorem collider_detection (R vX vY vZ_conditioned : Nat)
     godWeight R (vX + vY) > godWeight R vZ_conditioned := by
   unfold godWeight
   rw [Nat.min_eq_left hMarginal, Nat.min_eq_left hCondBound]
-  omega
+  -- Goal: R - vZ_conditioned + 1 < R - (vX + vY) + 1
+  -- vX + vY < vZ_conditioned (hCond) and vZ_conditioned ≤ R (hCondBound) ⇒ vX + vY < R
+  exact Nat.add_lt_add_right
+    (Nat.sub_lt_sub_left (Nat.lt_of_lt_of_le hCond hCondBound) hCond) 1
 
 /-- THM-FAITHFULNESS: If godWeight > 1 everywhere along a path,
     there maps to a real causal connection. The clinamen prevents
@@ -65,7 +72,9 @@ theorem faithfulness (R v : Nat) (hv : v < R) :
     godWeight R v > 1 := by
   unfold godWeight
   rw [Nat.min_eq_left (Nat.le_of_lt hv)]
-  omega
+  -- Goal: 1 < R - v + 1
+  -- v < R ⇒ 0 < R - v, then bump by +1 on the right: 0 + 1 < (R - v) + 1, and 0 + 1 ≡ 1
+  exact Nat.add_lt_add_right (Nat.sub_pos_of_lt hv) 1
 
 /-- THM-SKELETON-FIRST: The PC algorithm first learns the skeleton
     (undirected graph), then orients edges using V-structures.

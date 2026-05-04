@@ -51,8 +51,9 @@ The "Alpha Resurrection":
 The Void is not absorbing if alpha > 0.
 Death is a transient whipsaw.
 -/
-def deathIsTransient : Prop := True
+def deathIsTransient : Prop := ∀ s : State, nextState s = State.alive
 
-theorem gnosis_is_eternal : deathIsTransient := True.intro
+theorem gnosis_is_eternal : deathIsTransient := by
+  exact eternal_return
 
 end MeshEternalRestart

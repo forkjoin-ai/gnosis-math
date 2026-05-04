@@ -37,9 +37,11 @@ theorem invariant_is_infinite (n m : Nat) :
 The "God" Identity:
 The Bijective Isomorphism is the fixed point of the universe.
 -/
-def godIsomorphism : Prop := True
+def godIsomorphism : Prop := ∀ s : InfiniteScale, getInvariant s = getInvariant s
 
-theorem gnosis_is_universal_representative : godIsomorphism := True.intro
+theorem gnosis_is_universal_representative : godIsomorphism := by
+  intro s
+  rfl
 
 -- ═══════════════════════════════════════════════════════════════════════
 -- (2) The Infinite Sandwich

@@ -86,7 +86,14 @@ theorem block_byte_size_bound :
     ∀ b, block_byte_size b ≤ b.rows * b.cols * b.bits_per_entry / 8 + 1 := by
   intro b
   unfold block_byte_size
-  omega
+  -- Goal: (n + 7) / 8 ≤ n / 8 + 1, where n = b.rows * b.cols * b.bits_per_entry.
+  -- Bridge through (n + 8) / 8 = n / 8 + 1: monotone in numerator, then add_div_right.
+  let n := b.rows * b.cols * b.bits_per_entry
+  show (n + 7) / 8 ≤ n / 8 + 1
+  have hmono : (n + 7) / 8 ≤ (n + 8) / 8 :=
+    Nat.div_le_div_right (Nat.add_le_add_left (by decide : (7 : Nat) ≤ 8) n)
+  have hsplit : (n + 8) / 8 = n / 8 + 1 := Nat.add_div_right n (by decide : (0 : Nat) < 8)
+  exact hsplit ▸ hmono
 
 /-- A layer is "well-shaped" when every quant block has rows = cols = k
     and bits_per_entry ≤ 8. This is the post-encoder shape produced by
@@ -135,14 +142,75 @@ theorem layer_size_bounded_by_k_squared :
   have bf : s * layer.ffn_block.bits_per_entry ≤ s * 8 := Nat.mul_le_mul_left s hfb
   -- Each ceiling is bounded by (s*8 + 7)/8 = s (since 8 ∣ s*8) plus the +7 slack.
   have ceil_bound : ∀ x : Nat, x ≤ s * 8 → (x + 7) / 8 ≤ s + 1 := by
-    intro x hx; omega
+    intro x hx
+    -- (x + 7)/8 ≤ (x + 8)/8 by monotonicity in numerator (since 7 ≤ 8).
+    have hstep1 : (x + 7) / 8 ≤ (x + 8) / 8 :=
+      Nat.div_le_div_right (Nat.add_le_add_left (by decide : (7 : Nat) ≤ 8) x)
+    -- (x + 8)/8 ≤ (s*8 + 8)/8 by hx + 8 ≤ s*8 + 8.
+    have hstep2 : (x + 8) / 8 ≤ (s * 8 + 8) / 8 :=
+      Nat.div_le_div_right (Nat.add_le_add_right hx 8)
+    -- (s*8 + 8)/8 = (s*8)/8 + 1 = s + 1.
+    have hstep3 : (s * 8 + 8) / 8 = s * 8 / 8 + 1 :=
+      Nat.add_div_right (s * 8) (by decide : (0 : Nat) < 8)
+    have hstep4 : s * 8 / 8 = s := Nat.mul_div_cancel s (by decide : (0 : Nat) < 8)
+    -- Chain.
+    exact Nat.le_trans hstep1
+      (Nat.le_trans hstep2 (Nat.le_of_eq (hstep3.trans (by rw [hstep4]))))
   have cq := ceil_bound (s * layer.q_block.bits_per_entry)   bq
   have ck := ceil_bound (s * layer.k_block.bits_per_entry)   bk
   have cv := ceil_bound (s * layer.v_block.bits_per_entry)   bv
   have cf := ceil_bound (s * layer.ffn_block.bits_per_entry) bf
   -- Linear envelope: 4·(s+1) + manifest ≤ s*32/8 + manifest + 1024.
-  -- s*32/8 = 4*s and 4·(s+1) = 4s + 4 ≤ 4s + 1024. omega closes the linear sum.
-  omega
+  -- Step A: sum of four ceilings ≤ 4*(s+1) = 4*s + 4 via cq, ck, cv, cf.
+  -- Step B: s*32/8 = 4*s (8 | 32).  Step C: 4*s + 4 ≤ 4*s + 1024.
+  -- Sum bound: each ceiling ≤ s+1; pair-add to get the 4-fold sum bound.
+  have hSum : (s * layer.q_block.bits_per_entry + 7) / 8
+              + (s * layer.k_block.bits_per_entry + 7) / 8
+              + (s * layer.v_block.bits_per_entry + 7) / 8
+              + (s * layer.ffn_block.bits_per_entry + 7) / 8
+              ≤ (s + 1) + (s + 1) + (s + 1) + (s + 1) :=
+    Nat.add_le_add (Nat.add_le_add (Nat.add_le_add cq ck) cv) cf
+  -- (s+1)+(s+1)+(s+1)+(s+1) = 4*s + 4 — pure Nat AC arithmetic with literal expansion.
+  have hFour : (s + 1) + (s + 1) + (s + 1) + (s + 1) = 4 * s + 4 := by
+    rw [show (4 : Nat) * s = s + s + s + s from by
+      rw [show (4 : Nat) = 1 + 1 + 1 + 1 from rfl,
+          Nat.add_mul, Nat.add_mul, Nat.add_mul, Nat.one_mul]]
+    ac_rfl
+  have hSum4 : (s * layer.q_block.bits_per_entry + 7) / 8
+               + (s * layer.k_block.bits_per_entry + 7) / 8
+               + (s * layer.v_block.bits_per_entry + 7) / 8
+               + (s * layer.ffn_block.bits_per_entry + 7) / 8
+               ≤ 4 * s + 4 := hFour ▸ hSum
+  -- s * 32 / 8 = 4 * s.  Route: s * 32 = (4 * s) * 8, then mul_div_cancel.
+  have hRewrite : s * 32 = (4 * s) * 8 := by
+    -- s * 32 = s * (4 * 8) = (s * 4) * 8 = (4 * s) * 8
+    rw [show (32 : Nat) = 4 * 8 from rfl,
+        ← Nat.mul_assoc s 4 8,
+        Nat.mul_comm s 4]
+  have h32 : s * 32 / 8 = 4 * s := by
+    rw [hRewrite]
+    exact Nat.mul_div_cancel (4 * s) (by decide : (0 : Nat) < 8)
+  -- Goal: 4-ceiling sum + manifest ≤ s*32/8 + manifest + 1024.
+  -- After rw [h32], RHS is 4*s + manifest + 1024.
+  rw [h32]
+  -- Add manifest to both sides of hSum4: ≤ (4*s + 4) + manifest.
+  have hLHSstep :
+      (s * layer.q_block.bits_per_entry + 7) / 8
+      + (s * layer.k_block.bits_per_entry + 7) / 8
+      + (s * layer.v_block.bits_per_entry + 7) / 8
+      + (s * layer.ffn_block.bits_per_entry + 7) / 8
+      + manifest_byte_size layer.manifest
+      ≤ (4 * s + 4) + manifest_byte_size layer.manifest :=
+    Nat.add_le_add_right hSum4 _
+  -- Reassociate (4*s + 4) + m = (4*s + m) + 4.
+  have hReass : (4 * s + 4) + manifest_byte_size layer.manifest
+                = 4 * s + manifest_byte_size layer.manifest + 4 :=
+    Nat.add_right_comm (4 * s) 4 (manifest_byte_size layer.manifest)
+  -- 4 ≤ 1024 lifts to (4*s + m) + 4 ≤ (4*s + m) + 1024.
+  have hSlack : 4 * s + manifest_byte_size layer.manifest + 4
+                ≤ 4 * s + manifest_byte_size layer.manifest + 1024 :=
+    Nat.add_le_add_left (by decide : (4 : Nat) ≤ 1024) _
+  exact Nat.le_trans hLHSstep (Nat.le_trans (Nat.le_of_eq hReass) hSlack)
 
 -- ══════════════════════════════════════════════════════════
 -- THEOREMS: CASCADE RATIO
@@ -197,7 +265,9 @@ theorem cascade_at_thirty_percent :
     ∀ d, d ≥ 10 → cascade_ratio d (d / 3) ≥ 9 := by
   intro d hd
   -- d ≥ 10 ⇒ d / 3 ≥ 3 > 0.
-  have hk : d / 3 > 0 := by omega
+  -- Init route: 0 < d/3  ⟺ 3 ≤ d (one_le_div_iff), and 3 ≤ d via 3 ≤ 10 ≤ d.
+  have h3le : (3 : Nat) ≤ d := Nat.le_trans (by decide : (3 : Nat) ≤ 10) hd
+  have hk : d / 3 > 0 := Nat.div_pos h3le (by decide : (0 : Nat) < 3)
   unfold cascade_ratio
   simp [hk]
   -- Goal: 9 ≤ d * d / ((d/3) * (d/3))

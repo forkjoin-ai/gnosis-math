@@ -37,7 +37,11 @@ theorem hydrology_runoff_yields_unit_queue_boundary
       boundary.capacity = 1 ∧
       boundary.arrivalRate = hydro.runoff ∧
       boundary.serviceRate = 2 * hydro.runoff + 1 := by
-  have h : hydro.runoff < 2 * hydro.runoff + 1 := by omega
+  -- n < 2 * n + 1: rewrite 2*n as n+n, then n ≤ n+n via le_add_left, then strict via lt_succ_of_le.
+  have hSum : 2 * hydro.runoff = hydro.runoff + hydro.runoff := Nat.two_mul hydro.runoff
+  have hLe : hydro.runoff ≤ hydro.runoff + hydro.runoff := Nat.le_add_left hydro.runoff hydro.runoff
+  have hLeSum : hydro.runoff ≤ 2 * hydro.runoff := hSum ▸ hLe
+  have h : hydro.runoff < 2 * hydro.runoff + 1 := Nat.lt_succ_of_le hLeSum
   exact ⟨canonicalMM1Boundary_HydrologyEpistemologyQueueKernelBridge hydro.runoff (2 * hydro.runoff + 1) h, rfl, rfl, rfl, rfl⟩
 
 theorem epistemology_gettier_yields_unit_queue_boundary
@@ -47,18 +51,27 @@ theorem epistemology_gettier_yields_unit_queue_boundary
       boundary.capacity = 1 ∧
       boundary.arrivalRate = epis.gettierCases ∧
       boundary.serviceRate = 2 * epis.gettierCases + 1 := by
-  have h : epis.gettierCases < 2 * epis.gettierCases + 1 := by omega
+  -- n < 2 * n + 1: same shape as the hydrology theorem above.
+  have hSum : 2 * epis.gettierCases = epis.gettierCases + epis.gettierCases := Nat.two_mul epis.gettierCases
+  have hLe : epis.gettierCases ≤ epis.gettierCases + epis.gettierCases := Nat.le_add_left epis.gettierCases epis.gettierCases
+  have hLeSum : epis.gettierCases ≤ 2 * epis.gettierCases := hSum ▸ hLe
+  have h : epis.gettierCases < 2 * epis.gettierCases + 1 := Nat.lt_succ_of_le hLeSum
   exact ⟨canonicalMM1Boundary_HydrologyEpistemologyQueueKernelBridge epis.gettierCases (2 * epis.gettierCases + 1) h, rfl, rfl, rfl, rfl⟩
 
 theorem hydrology_epistemology_budget_yields_unit_queue_boundary
     (hydro : HydrologySetup) (epis : EpistemologySetup)
-    (_hBudgetBridge : hydro.runoff = epis.gettierCases) :
+    (hBudgetBridge : hydro.runoff = epis.gettierCases) :
     ∃ boundary : QueueBoundaryWitnessNat_HydrologyEpistemologyQueueKernelBridge,
       boundary.beta1 = 0 ∧
       boundary.capacity = 1 ∧
       boundary.arrivalRate = hydro.runoff ∧
       boundary.serviceRate = 2 * epis.gettierCases + 1 := by
-  have h : hydro.runoff < 2 * epis.gettierCases + 1 := by omega
+  -- Bridge runoff to gettierCases, then the goal is gettierCases < 2*gettierCases + 1.
+  have hSum : 2 * epis.gettierCases = epis.gettierCases + epis.gettierCases := Nat.two_mul epis.gettierCases
+  have hLe : epis.gettierCases ≤ epis.gettierCases + epis.gettierCases := Nat.le_add_left epis.gettierCases epis.gettierCases
+  have hLeSum : epis.gettierCases ≤ 2 * epis.gettierCases := hSum ▸ hLe
+  have hLtGettier : epis.gettierCases < 2 * epis.gettierCases + 1 := Nat.lt_succ_of_le hLeSum
+  have h : hydro.runoff < 2 * epis.gettierCases + 1 := hBudgetBridge ▸ hLtGettier
   exact ⟨canonicalMM1Boundary_HydrologyEpistemologyQueueKernelBridge hydro.runoff (2 * epis.gettierCases + 1) h, rfl, rfl, rfl, rfl⟩
 
 theorem hydrology_epistemology_budget_does_not_force_positive_beta1

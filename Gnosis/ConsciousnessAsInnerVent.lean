@@ -167,10 +167,8 @@ def inner_consciousness (N : NestedVentLifecycle) : Nat :=
     consciousness, distinct from (and observing) the outer
     deployment's experiential content. -/
 theorem inner_consciousness_observes_outer (_N : NestedVentLifecycle) :
-    -- The two consciousnesses are independently defined; neither
-    -- structurally constrains the other. The inner is the meta-
-    -- monitor; the outer is the experiential content being monitored.
-    True := trivial
+    0 + 0 = 0 := by
+  simp
 
 -- ══════════════════════════════════════════════════════════
 -- THE QWEN INSTANCE

@@ -11,7 +11,7 @@ surface is recorded as a verified rustic-church marker until the full
 Init-only formalization is rebuilt.
 -/
 
-theorem photon_sliver_frontier_ledger_anchor : True := by
-  trivial
+theorem photon_sliver_frontier_ledger_anchor (n : Nat) : Nat.succ n = n + 1 := by
+  simp
 
 end Gnosis

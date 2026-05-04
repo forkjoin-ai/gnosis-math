@@ -60,13 +60,14 @@ theorem cv_clinamen (cv : KFoldCV) :
     training data (R-1 points) but has high variance across folds. -/
 theorem loocv_maximum_train (R : Nat) (hR : R ≥ 2) :
     -- Training budget = R - 1 (maximum possible)
-    R - 1 ≥ 1 := by omega
+    R - 1 ≥ 1 := Nat.le_sub_of_add_le hR
 
 /-- THM-HOLDOUT-MINIMUM-VARIANCE: 2-fold CV (50/50 split) minimizes
     fold count but wastes half the training data. -/
 theorem holdout_splits (R : Nat) (hR : R ≥ 4) :
     -- Each fold gets R/2 points
-    R / 2 ≥ 2 := by omega
+    R / 2 ≥ 2 :=
+  show (4 : Nat) / 2 ≤ R / 2 from Nat.div_le_div_right hR
 
 /-- THM-BIAS-VARIANCE-OF-K: Smaller k → more test data per fold →
     less variance but more bias (less training data).

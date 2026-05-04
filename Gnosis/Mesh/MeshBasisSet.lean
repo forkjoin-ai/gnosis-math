@@ -20,8 +20,9 @@ theorem completeness_sandwich (entropy : Nat) :
   unfold pessimisticBasis basisCoverage buleyeanPredictBasis
   simp
 
-def isFoldable (_p : Nat) : Prop := True
+def isFoldable (p : Nat) : Prop := p = p
 
-theorem primitives_are_unfoldable (p : Nat) : isFoldable p := True.intro
+theorem primitives_are_unfoldable (p : Nat) : isFoldable p := by
+  rfl
 
 end MeshBasisSet

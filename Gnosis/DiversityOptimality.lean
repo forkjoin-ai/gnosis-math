@@ -29,7 +29,14 @@ theorem added_diversity_strictly_reduces_deficit
     topologicalDeficit pathCount (streams + 1) <
       topologicalDeficit pathCount streams := by
   unfold topologicalDeficit computationComplexity transportCapacity
-  omega
+  -- Goal: ↑(pathCount-1) - ↑((streams+1)-1) < ↑(pathCount-1) - ↑(streams-1)
+  -- Reduce via Int.sub_lt_sub_left to ↑(streams-1) < ↑((streams+1)-1).
+  -- (streams+1)-1 = streams definitionally; streams-1 < streams via Nat.sub_lt.
+  have hAddCancel : streams + 1 - 1 = streams := Nat.add_sub_cancel streams 1
+  have hSubLt : streams - 1 < streams + 1 - 1 := by
+    rw [hAddCancel]
+    exact Nat.sub_lt hBase (by decide)
+  exact Int.sub_lt_sub_left (Int.ofNat_lt.mpr hSubLt) _
 
 /-- The first fork strictly improves on the single-stream transport. -/
 theorem first_fork_improves_deficit
@@ -45,7 +52,11 @@ theorem below_frontier_deficit_positive
     (hBelow : streams < pathCount) :
     0 < topologicalDeficit pathCount streams := by
   unfold topologicalDeficit computationComplexity transportCapacity
-  omega
+  -- Goal: 0 < ↑(pathCount-1) - ↑(streams-1).
+  -- Use Int.sub_pos_of_lt; reduce to streams-1 < pathCount-1 via
+  -- Nat.sub_lt_sub_right with c=1 ≤ streams (hBase) and streams < pathCount.
+  have hSub : streams - 1 < pathCount - 1 := Nat.sub_lt_sub_right hBase hBelow
+  exact Int.sub_pos_of_lt (Int.ofNat_lt.mpr hSub)
 
 /-- Reaching the frontier closes the deficit exactly. -/
 theorem frontier_is_optimal
@@ -69,7 +80,8 @@ theorem frontier_is_first_zero_deficit_point
     topologicalDeficit pathCount streams ≠ 0 := by
   have hPositive : 0 < topologicalDeficit pathCount streams := by
     simpa [frontierStreamCount] using below_frontier_deficit_positive hBase hBelow
-  omega
+  -- 0 < x ⇒ x ≠ 0, via Int.ne_of_gt (which produces a ≠ b from b < a).
+  exact Int.ne_of_gt hPositive
 
 /-- Diversity improves monotonically toward the frontier. -/
 theorem diversity_progress_monotone

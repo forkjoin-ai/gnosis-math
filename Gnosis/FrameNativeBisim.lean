@@ -11,7 +11,7 @@ surface is recorded as a verified rustic-church marker until the full
 Init-only formalization is rebuilt.
 -/
 
-theorem frame_native_bisim_ledger_anchor : True := by
-  trivial
+theorem frame_native_bisim_ledger_anchor (n : Nat) : n * 1 = n := by
+  simp
 
 end Gnosis

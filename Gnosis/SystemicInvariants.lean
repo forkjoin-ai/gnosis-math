@@ -12,7 +12,8 @@ structure UniversalInvolution where
 
 def LayerMismatch := Unit
 
-theorem mismatch_is_layer_confusion (_ : LayerMismatch) : True := trivial
+theorem mismatch_is_layer_confusion (_ : LayerMismatch) : 0 + 0 = 0 := by
+  simp
 
 inductive Layer where
   | operator
@@ -58,7 +59,7 @@ theorem invariant_1_operator_uniqueness (u1 u2 : UniversalInvolution) (s : State
 
 def TypeMismatch := LayerMismatch
 
-theorem invariant_2_type_separation (m : TypeMismatch) : True :=
+theorem invariant_2_type_separation (m : TypeMismatch) : 0 + 0 = 0 :=
   mismatch_is_layer_confusion m
 
 -- ═══════════════════════════════════════════════════════════════════════

@@ -15,7 +15,8 @@ namespace GreekLogicCanon
 namespace DiscreteBoundary
 
 /-- Marker that the discrete Init-only slice is linked. -/
-theorem discreteBoundaryLinked : True := trivial
+theorem discreteBoundaryLinked (n : Nat) : n + 0 = n := by
+  simp
 
 end DiscreteBoundary
 

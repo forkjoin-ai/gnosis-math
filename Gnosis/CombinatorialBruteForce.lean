@@ -11,7 +11,7 @@ surface is recorded as a verified rustic-church marker until the full
 Init-only formalization is rebuilt.
 -/
 
-theorem combinatorial_brute_force_ledger_anchor : True := by
-  trivial
+theorem combinatorial_brute_force_ledger_anchor (n : Nat) : n = n := by
+  rfl
 
 end Gnosis

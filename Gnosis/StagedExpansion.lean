@@ -95,9 +95,29 @@ theorem staged_wallace_closed_form {peak left right : Nat}
       simpa [stagedExpansionEnvelope] using
         staged_envelope_preserved hPeak hLeft hRight
     rw [hEnvelope]
-    -- TODO(rustic-church): 3 * peak - (peak + (left + right) + 2) = 2 * (peak - 1) - (left + right)
-    -- multi-step Nat sub identity; omega closes directly.
-    omega
+    -- Goal: 3 * peak - ((1 + left) + peak + (1 + right)) = 2 * (peak - 1) - (left + right)
+    -- AC-rearrange the subtrahend so peak sits at the front and the +2 at the back.
+    have hSub : (1 + left) + peak + (1 + right) = peak + (left + right) + 2 := by ac_rfl
+    rw [hSub]
+    -- Goal: 3 * peak - (peak + (left + right) + 2) = 2 * (peak - 1) - (left + right)
+    -- Expand 3 * peak = 2 * peak + peak.
+    have h3p : 3 * peak = 2 * peak + peak := by
+      rw [show (3 : Nat) = 2 + 1 from rfl, Nat.succ_mul]
+    rw [h3p]
+    -- Goal: 2 * peak + peak - (peak + (left + right) + 2) = 2 * (peak - 1) - (left + right)
+    -- Reshape (b + s + 2) = ((s + b) + 2) so the +b cancels with the trailing peak.
+    rw [show peak + (left + right) + 2 = ((left + right) + peak) + 2 from by ac_rfl]
+    -- Peel off the trailing 2 with Nat.sub_sub.
+    rw [← Nat.sub_sub]
+    -- Goal: 2 * peak + peak - ((left + right) + peak) - 2 = 2 * (peak - 1) - (left + right)
+    -- Cancel +peak using Nat.add_sub_add_right.
+    rw [Nat.add_sub_add_right]
+    -- Goal: 2 * peak - (left + right) - 2 = 2 * (peak - 1) - (left + right)
+    -- Swap subtraction order so we can collapse 2 * peak - 2 = 2 * (peak - 1).
+    rw [Nat.sub_right_comm]
+    -- Goal: 2 * peak - 2 - (left + right) = 2 * (peak - 1) - (left + right)
+    rw [show (2 : Nat) * peak - 2 = 2 * (peak - 1) from by
+          rw [Nat.mul_sub]]
   · unfold stagedExpansionWallaceDenominator wallaceDenominator3
     simpa [stagedExpansionEnvelope] using
       staged_envelope_preserved hPeak hLeft hRight
@@ -115,8 +135,16 @@ theorem naive_widen_wallace_closed_form {peak budget : Nat}
       simpa [naiveWidenEnvelope] using
         naive_widen_envelope_closed_form (peak := peak) (budget := budget) hPeak
     rw [hEnvelope]
-    -- TODO(rustic-church): same Nat sub identity as the staged form.
-    omega
+    -- Goal: 3 * (peak + budget) - (1 + (peak + budget) + 1) = 2 * (peak + budget - 1)
+    -- Same shape as Wallace.diamond_wallace_closed_form's middle conjunct:
+    -- 3 * b - (1 + b + 1) = 2 * (b - 1) for any b (no positivity needed —
+    -- both sides become 0 at b = 0).
+    have hSum : (1 : Nat) + (peak + budget) + 1 = (peak + budget) + 2 := by
+      rw [Nat.add_comm 1 (peak + budget)]
+    rw [hSum]
+    have h3b : 3 * (peak + budget) = 2 * (peak + budget) + (peak + budget) := by
+      rw [show (3 : Nat) = 2 + 1 from rfl, Nat.succ_mul]
+    rw [h3b, ← Nat.sub_sub, Nat.add_sub_cancel, Nat.mul_sub]
   · unfold naiveWidenWallaceDenominator wallaceDenominator3
     simpa [naiveWidenEnvelope] using
       naive_widen_envelope_closed_form (peak := peak) (budget := budget) hPeak

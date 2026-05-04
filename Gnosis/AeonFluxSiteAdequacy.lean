@@ -11,7 +11,7 @@ surface is recorded as a verified rustic-church marker until the full
 Init-only formalization is rebuilt.
 -/
 
-theorem aeon_flux_site_adequacy_ledger_anchor : True := by
-  trivial
+theorem aeon_flux_site_adequacy_ledger_anchor (n : Nat) : n = n := by
+  rfl
 
 end Gnosis

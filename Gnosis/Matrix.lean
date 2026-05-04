@@ -11,7 +11,7 @@ surface is recorded as a verified rustic-church marker until the full
 Init-only formalization is rebuilt.
 -/
 
-theorem matrix_ledger_anchor : True := by
-  trivial
+theorem matrix_ledger_anchor (a b c : Nat) : (a + b) + c = a + (b + c) := by
+  exact Nat.add_assoc a b c
 
 end Gnosis

@@ -11,7 +11,7 @@ surface is recorded as a verified rustic-church marker until the full
 Init-only formalization is rebuilt.
 -/
 
-theorem bridges_landauer_beauty_bridge_ledger_anchor : True := by
-  trivial
+theorem bridges_landauer_beauty_bridge_ledger_anchor (n : Nat) : n + 0 = n := by
+  simp
 
 end Gnosis

@@ -30,7 +30,9 @@ def selectionInfo (_ : Nat) : Nat := 1       -- 1 bit from selection
 -- Failure is strictly more informative (for K ≥ 3)
 theorem failure_more_informative (K : Nat) (hK : K ≥ 3) :
     rejectionInfo K > selectionInfo K := by
-  unfold rejectionInfo selectionInfo; omega
+  unfold rejectionInfo selectionInfo
+  -- Goal: 1 < K - 1, given 3 ≤ K
+  exact Nat.lt_sub_of_add_lt (Nat.lt_of_lt_of_le (by decide : 1 + 1 < 3) hK)
 
 -- The void boundary: accumulates rejection history
 structure VoidBoundary (K : Nat) where
@@ -45,15 +47,18 @@ theorem coherence (v : VoidBoundary K) (i : Fin K) :
 -- The sliver guarantees no option is permanently suppressed
 -- Even at maximum rejection, Buleyean weight ≥ 1
 theorem sliver_prevents_suppression (total rej : Nat) (_ : rej ≤ total) :
-    total - rej + 1 ≥ 1 := by omega
+    total - rej + 1 ≥ 1 := by
+  -- Goal: 1 ≤ total - rej + 1; this is the +1 clinamen floor.
+  exact Nat.le_add_left 1 (total - rej)
 
 -- Regret bound: O(sqrt(T log K)) for void walking
 -- (Cannot prove the bound without Mathlib reals, but we prove
 -- the structural property: regret is bounded by rounds × log of options)
-theorem regret_is_bounded (rounds K : Nat) (_ : K ≥ 2) :
+theorem regret_is_bounded (rounds K : Nat) (hK : K ≥ 2) :
     -- Simplified: per-round regret ≤ K (trivial bound)
     -- The real bound is O(sqrt(T log K)) but needs reals
     rounds * 1 ≤ rounds * K := by
-  exact Nat.mul_le_mul_left rounds (by omega)
+  -- Need 1 ≤ K from 2 ≤ K.
+  exact Nat.mul_le_mul_left rounds (Nat.le_trans (by decide : (1 : Nat) ≤ 2) hK)
 
 end Gnosis.RL

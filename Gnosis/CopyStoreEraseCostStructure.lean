@@ -51,8 +51,9 @@ theorem copy_costs_zero :
     0 = 0  -- No additional cost incurred
     := by
   intro source
-  simp [copy_bit]
-  omega
+  refine ⟨?_, rfl⟩
+  show buleyUnitScore source + buleyUnitScore source = 2 * buleyUnitScore source
+  exact (Nat.two_mul (buleyUnitScore source)).symm
 
 /-- The copy operation is fork: clinamen spreads isotropically.
     Spec-level: the parameterised `clinamenLift` invariant is enforced at the
@@ -160,8 +161,11 @@ theorem three_phase_cost_structure :
   intro n t c ⟨_h_n, _h_t, _h_c⟩
   refine ⟨?_, ?_⟩
   · unfold total_information_cost
-    simp
-    omega
+    -- Goal: 0 + n * t * c + n ≥ n + n * t * c
+    -- LHS = n * t * c + n  (zero_add); RHS reorders by add_comm.
+    show 0 + n * t * c + n ≥ n + n * t * c
+    rw [Nat.zero_add, Nat.add_comm (n * t * c) n]
+    exact Nat.le_refl _
   · refine ⟨n * t * c, n, rfl, rfl, ?_⟩
     unfold total_information_cost
     simp
@@ -195,9 +199,13 @@ theorem landauer_incomplete :
   intro bits time ⟨h_b, h_t⟩
   refine ⟨bits, rfl, ?_⟩
   unfold total_information_cost
-  simp
-  have : bits * time ≥ 1 := Nat.mul_le_mul h_b h_t
-  omega
+  -- Goal: bits < 0 + bits * time * 1 + bits
+  -- After zero_add and mul_one collapses: bits < bits * time + bits.
+  -- Use Nat.lt_add_of_pos_left with 0 < bits * time.
+  have hPos : 0 < bits * time := Nat.mul_pos h_b h_t
+  show bits < 0 + bits * time * 1 + bits
+  rw [Nat.zero_add, Nat.mul_one]
+  exact Nat.lt_add_of_pos_left hPos
 
 /-- The true source of the arrow of time is not erasure cost.
     It is STORAGE COST. The longer you hold a state away from vacuum,

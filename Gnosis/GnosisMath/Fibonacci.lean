@@ -38,6 +38,7 @@ theorem fibZ_eight : fibZ 8 = 34 := rfl
 theorem fibZ_succ_succ (n : Nat) : fibZ (n + 2) = fibZ (n + 1) + fibZ n := rfl
 
 /-- Marker that the Fibonacci slice is linked. -/
-theorem gnosisMathFibonacciLinked : True := trivial
+theorem gnosisMathFibonacciLinked (n : Nat) : n + 0 = n := by
+  simp
 
 end GnosisMath

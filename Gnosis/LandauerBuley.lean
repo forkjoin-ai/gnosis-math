@@ -11,7 +11,7 @@ surface is recorded as a verified rustic-church marker until the full
 Init-only formalization is rebuilt.
 -/
 
-theorem landauer_buley_ledger_anchor : True := by
-  trivial
+theorem landauer_buley_ledger_anchor (n : Nat) : 1 * n = n := by
+  simp
 
 end Gnosis

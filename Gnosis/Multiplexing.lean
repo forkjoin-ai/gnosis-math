@@ -13,31 +13,45 @@ def multiplexedWallaceNumerator
 
 theorem multiplexed_capacity_ge_busy
     {busyWork sequentialCapacity recoveredOverlap : Nat}
-    (hBusyPositive : 0 < busyWork)
+    (_hBusyPositive : 0 < busyWork)
     (hBusyFits : busyWork <= sequentialCapacity)
     (hRecoveredLegal : recoveredOverlap <= sequentialCapacity - busyWork) :
     busyWork <= multiplexedCapacity sequentialCapacity recoveredOverlap := by
   unfold multiplexedCapacity
-  omega
+  -- Goal: busyWork ≤ sequentialCapacity - recoveredOverlap
+  -- From hRecoveredLegal + hBusyFits, derive busyWork + recoveredOverlap ≤ sequentialCapacity,
+  -- then conclude via Nat.le_sub_of_add_le.
+  exact Nat.le_sub_of_add_le
+    (Nat.add_le_of_le_sub' hBusyFits hRecoveredLegal)
 
 theorem multiplexing_wallace_numerator_monotone
     {busyWork sequentialCapacity recoveredOverlap : Nat}
-    (hBusyFits : busyWork <= sequentialCapacity)
-    (hRecoveredLegal : recoveredOverlap <= sequentialCapacity - busyWork) :
+    (_hBusyFits : busyWork <= sequentialCapacity)
+    (_hRecoveredLegal : recoveredOverlap <= sequentialCapacity - busyWork) :
     multiplexedWallaceNumerator busyWork sequentialCapacity recoveredOverlap <=
       sequentialWallaceNumerator busyWork sequentialCapacity := by
   unfold multiplexedWallaceNumerator multiplexedCapacity sequentialWallaceNumerator
-  omega
+  -- Goal: (sequentialCapacity - recoveredOverlap) - busyWork
+  --       ≤ sequentialCapacity - busyWork
+  -- Sub on the right is monotone in the minuend; (S - r) ≤ S, so subtract busyWork.
+  exact Nat.sub_le_sub_right
+    (Nat.sub_le sequentialCapacity recoveredOverlap) busyWork
 
 theorem multiplexing_wallace_numerator_drop_equals_overlap
     {busyWork sequentialCapacity recoveredOverlap : Nat}
-    (hBusyFits : busyWork <= sequentialCapacity)
+    (_hBusyFits : busyWork <= sequentialCapacity)
     (hRecoveredLegal : recoveredOverlap <= sequentialCapacity - busyWork) :
     sequentialWallaceNumerator busyWork sequentialCapacity -
         multiplexedWallaceNumerator busyWork sequentialCapacity recoveredOverlap =
       recoveredOverlap := by
   unfold multiplexedWallaceNumerator multiplexedCapacity sequentialWallaceNumerator
-  omega
+  -- Goal: (sequentialCapacity - busyWork)
+  --     - ((sequentialCapacity - recoveredOverlap) - busyWork)
+  --     = recoveredOverlap
+  -- Swap (S - r) - b to (S - b) - r via sub_right_comm, then collapse with sub_sub_self
+  -- using hRecoveredLegal : recoveredOverlap ≤ sequentialCapacity - busyWork.
+  rw [Nat.sub_right_comm sequentialCapacity recoveredOverlap busyWork]
+  exact Nat.sub_sub_self hRecoveredLegal
 
 theorem multiplexing_fill_monotone
     {busyWork sequentialCapacity recoveredOverlap : Nat} :
@@ -120,8 +134,10 @@ theorem multiplexing_wallace_ratio_strict
     unfold muxCap
     exact multiplexed_capacity_ge_busy hBusyPositive hBusyFits hRecoveredLegal
   have hMuxWallLtCap : muxWall < muxCap := by
-    unfold muxWall muxCap multiplexedWallaceNumerator
-    omega
+    show multiplexedCapacity sequentialCapacity recoveredOverlap - busyWork
+        < multiplexedCapacity sequentialCapacity recoveredOverlap
+    -- 0 < busyWork and busyWork ≤ muxCap ⇒ muxCap - busyWork < muxCap
+    exact Nat.sub_lt_self hBusyPositive hMuxBusy
   calc
     muxWall * sequentialCapacity
       = muxWall * (muxCap + recoveredOverlap) := by rw [hSeqCapSplit]

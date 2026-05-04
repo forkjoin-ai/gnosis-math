@@ -65,7 +65,9 @@ theorem same_data_different_conclusions (d : CausalDisagreement)
     agentA_estimate d > agentB_estimate d := by
   unfold agentA_estimate agentB_estimate godWeight
   rw [Nat.min_eq_left hA, Nat.min_eq_left hB]
-  omega
+  -- Goal: d.budget - d.agentB_treatment + 1 < d.budget - d.agentA_treatment + 1
+  exact Nat.add_lt_add_right
+    (Nat.sub_lt_sub_left (Nat.lt_of_lt_of_le hAB hB) hAB) 1
 
 /-- THM-OBSERVATION-CANNOT-RESOLVE: No amount of additional observation
     can resolve the disagreement because both models explain the SAME
@@ -83,7 +85,19 @@ theorem intervention_resolves (R v_if_A_right v_if_B_right : Nat)
     godWeight R v_if_A_right ≠ godWeight R v_if_B_right := by
   unfold godWeight
   rw [Nat.min_eq_left hA, Nat.min_eq_left hB]
-  omega
+  -- Goal: R - v_if_A_right + 1 ≠ R - v_if_B_right + 1
+  -- Split hDiff via Nat.lt_or_gt_of_ne; each side gives a strict inequality.
+  match Nat.lt_or_gt_of_ne hDiff with
+  | Or.inl hAB =>
+    -- v_if_A_right < v_if_B_right ⇒ R - v_if_B_right + 1 < R - v_if_A_right + 1
+    exact Nat.ne_of_gt
+      (Nat.add_lt_add_right
+        (Nat.sub_lt_sub_left (Nat.lt_of_lt_of_le hAB hB) hAB) 1)
+  | Or.inr hBA =>
+    -- v_if_B_right < v_if_A_right ⇒ R - v_if_A_right + 1 < R - v_if_B_right + 1
+    exact Nat.ne_of_lt
+      (Nat.add_lt_add_right
+        (Nat.sub_lt_sub_left (Nat.lt_of_lt_of_le hBA hA) hBA) 1)
 
 /-- THM-SECOND-ORDER-CLINAMEN: Even with unlimited interventions,
     agents can disagree about ONE causal arrow (the clinamen of
@@ -117,7 +131,18 @@ theorem multi_agent_master (R : Nat) :
     godWeight R R = 1 := by
   refine ⟨?_, ?_, ?_⟩
   · intro v; exact Gnosis.godWeight_pos R v
-  · intro v1 v2 h1 h2 hne; unfold godWeight; rw [Nat.min_eq_left h1, Nat.min_eq_left h2]; omega
+  · intro v1 v2 h1 h2 hne
+    unfold godWeight
+    rw [Nat.min_eq_left h1, Nat.min_eq_left h2]
+    match Nat.lt_or_gt_of_ne hne with
+    | Or.inl h12 =>
+      exact Nat.ne_of_gt
+        (Nat.add_lt_add_right
+          (Nat.sub_lt_sub_left (Nat.lt_of_lt_of_le h12 h2) h12) 1)
+    | Or.inr h21 =>
+      exact Nat.ne_of_lt
+        (Nat.add_lt_add_right
+          (Nat.sub_lt_sub_left (Nat.lt_of_lt_of_le h21 h1) h21) 1)
   · exact Gnosis.godWeight_floor R
 
 end MultiAgentCausal

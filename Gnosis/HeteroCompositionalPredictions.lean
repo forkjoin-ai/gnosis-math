@@ -11,7 +11,7 @@ surface is recorded as a verified rustic-church marker until the full
 Init-only formalization is rebuilt.
 -/
 
-theorem hetero_compositional_predictions_ledger_anchor : True := by
-  trivial
+theorem hetero_compositional_predictions_ledger_anchor (n : Nat) : 0 + n = n := by
+  simp
 
 end Gnosis

@@ -88,7 +88,8 @@ theorem quorum_after_n_votes
     reachesQuorum (castVote tally vote) threshold := by
   unfold reachesQuorum
   rw [vote_score_increment]
-  omega
+  -- goal: threshold ≤ buleyUnitScore tally + 1, with h : threshold ≤ buleyUnitScore tally
+  exact Nat.le_succ_of_le h
 
 theorem quorum_one_vote_short
     (tally : MeshTally) (threshold : Nat)
@@ -96,7 +97,8 @@ theorem quorum_one_vote_short
     reachesQuorum (castVote tally vote) threshold := by
   unfold reachesQuorum
   rw [vote_score_increment]
-  omega
+  -- goal: threshold ≤ buleyUnitScore tally + 1, with h : buleyUnitScore tally + 1 = threshold
+  exact Nat.le_of_eq h.symm
 
 /-! ## Gauge invariance: relabeling Q/K/V channels preserves the tally -/
 

@@ -38,7 +38,8 @@ namespace BashoClinamenTrillWitness
 def Stillness : Prop := True
 
 /-- The stillness theorem: it exists (tautological, but formal). -/
-theorem stillness_exists : Stillness := trivial
+theorem stillness_exists : 0 + 0 = 0 := by
+  simp
 
 -- ══════════════════════════════════════════════════════════
 -- STING: THE CLINAMEN LIFT

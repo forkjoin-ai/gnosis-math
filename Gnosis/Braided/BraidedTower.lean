@@ -138,7 +138,8 @@ theorem tower_unbounded (N : Nat) :
     ∃ levels : List Nat, towerPhaseCount levels > N := by
   refine ⟨[N + 1], ?_⟩
   show (N + 1) * 1 > N
-  omega
+  rw [Nat.mul_one]
+  exact Nat.lt_succ_self N
 
 /-! ## Closure on infinity — the tower's "limit" is the braided
 asymptote family already formalized in `Gnosis.BraidedInfinity` -/
@@ -158,7 +159,7 @@ theorem every_phase_count_is_a_tower (n : Nat) :
     ∃ levels : List Nat, towerPhaseCount levels = n := by
   refine ⟨[n], ?_⟩
   show n * 1 = n
-  omega
+  exact Nat.mul_one n
 
 /-- Combined infinity-closure: for any `N`, the tower contains a level
 beyond `N`, and every such level is a `BraidedAsymptote`. The tower is
@@ -170,7 +171,8 @@ theorem tower_closes_on_braided_infinity (N : Nat) :
   refine ⟨[N + 1], towerBraid [N + 1], ?_, ?_⟩
   · rfl
   · show (N + 1) * 1 > N
-    omega
+    rw [Nat.mul_one]
+    exact Nat.lt_succ_self N
 
 /-! ## Tower instances return after their phaseCount
 

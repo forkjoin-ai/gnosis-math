@@ -109,7 +109,23 @@ theorem cost_algebra_dimension_at_least_ten (a : CostAlgebraAxisSet) :
   have h3 : a.temporal ≥ 3 := a.temporal_at_least_three
   have h4 : a.vacuum = 1 := a.vacuum_exactly_one
   have h5 : a.clinamen = 1 := a.clinamen_exactly_one
-  omega
+  rw [h4, h5]
+  -- Goal: 10 ≤ a.buleFaces + a.biSided + a.temporal + 1 + 1 + a.gauge + a.doubledOctagon
+  have step1 : (3 : Nat) + 2 ≤ a.buleFaces + a.biSided :=
+    Nat.add_le_add h1 h2
+  have step2 : (3 : Nat) + 2 + 3 ≤ a.buleFaces + a.biSided + a.temporal :=
+    Nat.add_le_add step1 h3
+  have step3 : (3 : Nat) + 2 + 3 + 1 ≤ a.buleFaces + a.biSided + a.temporal + 1 :=
+    Nat.add_le_add step2 (Nat.le_refl 1)
+  have hPrefix : (10 : Nat) ≤ a.buleFaces + a.biSided + a.temporal + 1 + 1 :=
+    Nat.add_le_add step3 (Nat.le_refl 1)
+  have hG : a.buleFaces + a.biSided + a.temporal + 1 + 1
+            ≤ a.buleFaces + a.biSided + a.temporal + 1 + 1 + a.gauge :=
+    Nat.le_add_right _ _
+  have hD : a.buleFaces + a.biSided + a.temporal + 1 + 1 + a.gauge
+            ≤ a.buleFaces + a.biSided + a.temporal + 1 + 1 + a.gauge + a.doubledOctagon :=
+    Nat.le_add_right _ _
+  exact Nat.le_trans (Nat.le_trans hPrefix hG) hD
 
 /-- The minimum is achieved: there exists an axis set with total
 dimension exactly 10. -/
@@ -158,7 +174,22 @@ theorem cost_algebra_dimension_at_least_eleven_with_gauge
   have h3 : a.temporal ≥ 3 := a.temporal_at_least_three
   have h4 : a.vacuum = 1 := a.vacuum_exactly_one
   have h5 : a.clinamen = 1 := a.clinamen_exactly_one
-  omega
+  rw [h4, h5, h]
+  -- Goal: 11 ≤ a.buleFaces + a.biSided + a.temporal + 1 + 1 + 1 + a.doubledOctagon
+  have step1 : (3 : Nat) + 2 ≤ a.buleFaces + a.biSided :=
+    Nat.add_le_add h1 h2
+  have step2 : (3 : Nat) + 2 + 3 ≤ a.buleFaces + a.biSided + a.temporal :=
+    Nat.add_le_add step1 h3
+  have step3 : (3 : Nat) + 2 + 3 + 1 ≤ a.buleFaces + a.biSided + a.temporal + 1 :=
+    Nat.add_le_add step2 (Nat.le_refl 1)
+  have step4 : (3 : Nat) + 2 + 3 + 1 + 1 ≤ a.buleFaces + a.biSided + a.temporal + 1 + 1 :=
+    Nat.add_le_add step3 (Nat.le_refl 1)
+  have hPrefix : (11 : Nat) ≤ a.buleFaces + a.biSided + a.temporal + 1 + 1 + 1 :=
+    Nat.add_le_add step4 (Nat.le_refl 1)
+  have hD : a.buleFaces + a.biSided + a.temporal + 1 + 1 + 1
+            ≤ a.buleFaces + a.biSided + a.temporal + 1 + 1 + 1 + a.doubledOctagon :=
+    Nat.le_add_right _ _
+  exact Nat.le_trans hPrefix hD
 
 def minimalMTheoryAxisSet : CostAlgebraAxisSet :=
   { buleFaces := 3
@@ -206,7 +237,25 @@ theorem cost_algebra_dimension_at_least_twentysix_with_doubled_octagon
   have h3 : a.temporal ≥ 3 := a.temporal_at_least_three
   have h4 : a.vacuum = 1 := a.vacuum_exactly_one
   have h5 : a.clinamen = 1 := a.clinamen_exactly_one
-  omega
+  rw [h4, h5, h]
+  -- Goal: 26 ≤ a.buleFaces + a.biSided + a.temporal + 1 + 1 + a.gauge + 16
+  have step1 : (3 : Nat) + 2 ≤ a.buleFaces + a.biSided :=
+    Nat.add_le_add h1 h2
+  have step2 : (3 : Nat) + 2 + 3 ≤ a.buleFaces + a.biSided + a.temporal :=
+    Nat.add_le_add step1 h3
+  have step3 : (3 : Nat) + 2 + 3 + 1 ≤ a.buleFaces + a.biSided + a.temporal + 1 :=
+    Nat.add_le_add step2 (Nat.le_refl 1)
+  have hPrefix : (10 : Nat) ≤ a.buleFaces + a.biSided + a.temporal + 1 + 1 :=
+    Nat.add_le_add step3 (Nat.le_refl 1)
+  -- Drop a.gauge: S ≤ S + a.gauge
+  have hG : a.buleFaces + a.biSided + a.temporal + 1 + 1
+            ≤ a.buleFaces + a.biSided + a.temporal + 1 + 1 + a.gauge :=
+    Nat.le_add_right _ _
+  -- Tack on +16 on both sides
+  have hPrefix16 : (10 : Nat) + 16
+                 ≤ a.buleFaces + a.biSided + a.temporal + 1 + 1 + a.gauge + 16 :=
+    Nat.add_le_add (Nat.le_trans hPrefix hG) (Nat.le_refl 16)
+  exact hPrefix16
 
 def minimalBosonicStringAxisSet : CostAlgebraAxisSet :=
   { buleFaces := 3

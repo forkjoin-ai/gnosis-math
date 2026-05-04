@@ -66,8 +66,8 @@ theorem anhedonia_is_accelerated_decay :
     anhedonia joy →
     joy.decay_rate > 20 := by
   intro joy h
-  simp [anhedonia] at h
-  omega
+  -- h : anhedonia joy unfolds to a 3-way And; pull the third conjunct.
+  exact h.2.2
 
 -- ══════════════════════════════════════════════════════════
 -- RUMINATION LOOP: DESTRUCTIVE INTERFERENCE LOCKED TO DESPAIR
@@ -134,7 +134,9 @@ theorem antidepressant_slows_positive_decay :
   -- positive_decay > 2 * negative_decay ≥ 0, so positive_decay ≥ 1, so 0 < positive_decay
   refine ⟨⟨0, initial.negative_decay⟩, ?_⟩
   show (0 : Nat) < initial.positive_decay
-  omega
+  -- h_dep : 2 * initial.negative_decay < initial.positive_decay
+  -- 0 ≤ 2 * negative_decay < positive_decay ⇒ 0 < positive_decay
+  exact Nat.lt_of_le_of_lt (Nat.zero_le _) h_dep
 
 theorem cognitive_therapy_disrupts_rumination :
     ∀ (hope despair : InterferenceSignature),
@@ -145,6 +147,6 @@ theorem cognitive_therapy_disrupts_rumination :
   intro hope _despair _h_rum
   refine ⟨⟨hope.frequency, hope.amplitude + 1, 30⟩, rfl, ?_⟩
   show hope.amplitude + 1 > hope.amplitude
-  omega
+  exact Nat.lt_succ_self _
 
 end DepressionAsDampedOscillation

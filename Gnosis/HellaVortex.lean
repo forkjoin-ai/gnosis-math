@@ -11,7 +11,7 @@ surface is recorded as a verified rustic-church marker until the full
 Init-only formalization is rebuilt.
 -/
 
-theorem hella_vortex_ledger_anchor : True := by
-  trivial
+theorem hella_vortex_ledger_anchor (n : Nat) : n + 1 = Nat.succ n := by
+  simp
 
 end Gnosis

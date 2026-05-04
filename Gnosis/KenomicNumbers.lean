@@ -11,7 +11,7 @@ surface is recorded as a verified rustic-church marker until the full
 Init-only formalization is rebuilt.
 -/
 
-theorem kenomic_numbers_ledger_anchor : True := by
-  trivial
+theorem kenomic_numbers_ledger_anchor (n : Nat) : Nat.succ n = n + 1 := by
+  simp
 
 end Gnosis

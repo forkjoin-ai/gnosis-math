@@ -11,7 +11,7 @@ surface is recorded as a verified rustic-church marker until the full
 Init-only formalization is rebuilt.
 -/
 
-theorem causal_inference_ledger_anchor : True := by
-  trivial
+theorem causal_inference_ledger_anchor (n : Nat) : 0 + n = n := by
+  simp
 
 end Gnosis

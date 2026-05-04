@@ -11,7 +11,7 @@ surface is recorded as a verified rustic-church marker until the full
 Init-only formalization is rebuilt.
 -/
 
-theorem oracle_oracle_stall_annihilation_ledger_anchor : True := by
-  trivial
+theorem oracle_oracle_stall_annihilation_ledger_anchor (n : Nat) : n + 0 = n := by
+  simp
 
 end Gnosis

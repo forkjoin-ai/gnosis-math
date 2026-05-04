@@ -117,8 +117,8 @@ theorem deficit_zero_iff_admitted
     landauerDeficit A s k ceiling = 0 ↔ admitsReplication A s k ceiling := by
   unfold landauerDeficit admitsReplication
   constructor
-  · intro h; omega
-  · intro h; omega
+  · intro h; exact Nat.le_of_sub_eq_zero h
+  · intro h; exact Nat.sub_eq_zero_of_le h
 
 theorem deficit_positive_iff_rejected
     {S : Type} (A : CostAlgebra S) (s : S) (k : Nat)
@@ -127,8 +127,8 @@ theorem deficit_positive_iff_rejected
       ↔ replicaTotalHeat A s k > ceiling := by
   unfold landauerDeficit
   constructor
-  · intro h; omega
-  · intro h; omega
+  · intro h; exact Nat.lt_of_sub_pos h
+  · intro h; exact Nat.sub_pos_of_lt h
 
 /-! ## Concrete tower-level admission decisions -/
 

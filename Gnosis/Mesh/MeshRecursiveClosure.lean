@@ -44,8 +44,9 @@ theorem closure_sandwich :
 The "Gold" Theorem:
 If the system is self-similar, then the proof of the law is the law itself.
 -/
-def goldTheorem : Prop := True
+def goldTheorem : Prop := ∀ b : GnosisBasis, reduceGnosis b = b
 
-theorem gnosis_is_gold : goldTheorem := True.intro
+theorem gnosis_is_gold : goldTheorem := by
+  exact gnosis_is_recursive_fixed_point
 
 end MeshRecursiveClosure
