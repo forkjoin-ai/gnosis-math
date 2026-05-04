@@ -114,9 +114,13 @@ theorem destructive_is_ignorable :
 -- ══════════════════════════════════════════════════════════
 
 /-- Bool-valued standing-wave check (decidable on Float comparisons via
-    runtime calibration; here we use a placeholder that always returns
-    `true` for the spec layer). -/
-def is_standing_wave_bool (_wave : AttentionWavePattern) : Bool := true
+    runtime calibration; here we use the same thresholded predicate
+    shape directly as a decidable Bool. -/
+def is_standing_wave_bool (wave : AttentionWavePattern) : Bool :=
+  wave.query_amplitude > 0.5 &&
+  wave.key_amplitude > 0.5 &&
+  wave.phase_alignment > 0.7 &&
+  wave.output_amplitude > 0.7
 
 /-- A compressed attention layer keeps only standing waves, zeros out the rest.
     This is equivalent to sparse projection: multiply by diagonal matrix

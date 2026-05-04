@@ -534,6 +534,7 @@ import Gnosis.LiabilityEquilibrium
 import Gnosis.LindemannWeierstrassShadow
 import Gnosis.LiouvilleIrrationalityShadow
 import Gnosis.LocalLanglandsGLn
+import Gnosis.LocalizedOverflowConsciousness
 import Gnosis.LoebFixedPointShadow
 import Gnosis.Logic
 import Gnosis.LucasComplement

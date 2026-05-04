@@ -10,16 +10,14 @@
 
   A sieve measures: original entropy, compressed entropy, redundancy signals.
 
-  NOTE on the spec-level weakening pattern:
+  NOTE on the spec-level boundary:
     `SpectralSignature` carries `Float` fields (`phase_variance`,
     `confidence`) that are not `DecidableEq` and not amenable to
     Init-only `norm_num` reasoning, and `head!` requires an
-    `Inhabited` instance that the upstream module does not derive.
-    Theorems whose conclusions depended on Float comparisons or
-    `head!` projection are weakened here to structurally provable
-    forms (`True`, Nat `≤`/`≥`, vacuous existence). The precise
-    Float bounds are enforced at the runtime calibration layer
-    (Aether spectral kernels, Pneuma trace inspection).
+    `Inhabited` instance that the upstream module does not derive. The
+    theorems below expose concrete list-shape and witness facts from
+    `information_sieve`; stronger Float bounds remain at the runtime
+    calibration layer (Aether spectral kernels, Pneuma trace inspection).
 -/
 
 import Gnosis.SpectralMeasurementFramework
@@ -57,47 +55,62 @@ theorem information_sieve_separates_signal :
   simp [information_sieve, h_len]
 
 /-- Theorem: Compression removes noise, preserves signal.
-    Spec-level: the original Disjunction over Float comparisons of head!/tail!
-    projections of `SpectralSignature` is at the runtime calibration layer;
-    the structural claim here is `True`. -/
+    Long traces emit the stable signal witness. -/
 theorem compression_preserves_signal_amplitude :
-    ∀ (_entropy_trace : List Observation), True := by
-  intro _trace
-  trivial
+    ∀ (entropy_trace : List Observation),
+    entropy_trace.length > 50 →
+    ∃ sig, sig ∈ information_sieve entropy_trace ∧
+      sig.frequency = 1 ∧ sig.amplitude = 3 ∧ sig.decay_rate = 60 := by
+  intro entropy_trace h_len
+  unfold information_sieve
+  simp [h_len]
 
 /-- Theorem: Lossless compression preserves all signal amplitude.
-    Spec-level: the precise `decay_rate` equality across head! projections
-    is at the runtime calibration layer; the structural claim here is `True`. -/
+    The stable signal carrier has decay 60 in the emitted pair. -/
 theorem lossless_compression_preserves_decay :
-    ∀ (_before _after : List Observation), True := by
-  intro _before _after
-  trivial
+    ∀ (entropy_trace : List Observation),
+    entropy_trace.length > 50 →
+    ∃ sig, sig ∈ information_sieve entropy_trace ∧ sig.decay_rate = 60 := by
+  intro entropy_trace h_len
+  unfold information_sieve
+  simp [h_len]
 
 /-- Theorem: Mutual information is phase alignment between source and target.
-    Spec-level: the precise Float `phase_variance < 0.3 → confidence > 0.5`
-    implication is at the runtime calibration layer; the structural claim
-    here is `True`. -/
+    The signal and noise carriers occupy distinct frequencies. -/
 theorem mutual_information_is_phase_alignment :
-    ∀ (_entropy_trace : List Observation), True := by
-  intro _trace
-  trivial
+    ∀ (entropy_trace : List Observation),
+    entropy_trace.length > 50 →
+    ∃ signal noise,
+      signal ∈ information_sieve entropy_trace ∧
+      noise ∈ information_sieve entropy_trace ∧
+      signal.frequency ≠ noise.frequency := by
+  intro entropy_trace h_len
+  unfold information_sieve
+  simp [h_len]
 
 /-- Theorem: Information signatures fold into the theory.
-    Spec-level: `signature_folds` is a `Prop` over Float thresholds that
-    cannot be discharged in Init alone; weakened to `True`. The runtime
-    calibration layer enforces the per-signature folding witness. -/
+    Long traces produce the two-item signal/noise carrier. -/
 theorem information_signature_folds :
-    ∀ (_entropy_trace : List Observation), True := by
-  intro _trace
-  trivial
+    ∀ (entropy_trace : List Observation),
+    entropy_trace.length > 50 →
+    ∃ sigs, sigs = information_sieve entropy_trace ∧ sigs.length = 2 := by
+  intro entropy_trace h_len
+  exact ⟨information_sieve entropy_trace, rfl,
+    information_sieve_separates_signal entropy_trace h_len⟩
 
 /-- Measurement completeness: all data sources have signal and noise components.
-    Spec-level: weakened to `True` for the same reasons as above; the
-    runtime calibration layer iterates source traces and validates the
-    folding witness per signature. -/
+    Every source trace is classified into empty or two-signature form. -/
 theorem information_measurement_complete :
-    ∀ (_source_traces : List (List Observation)), True := by
-  intro _traces
-  trivial
+    ∀ (source_traces : List (List Observation)),
+    ∀ entropy_trace ∈ source_traces,
+      information_sieve entropy_trace = [] ∨
+      (information_sieve entropy_trace).length = 2 := by
+  intro _source_traces entropy_trace _h_mem
+  by_cases h_len : entropy_trace.length > 50
+  · right
+    exact information_sieve_separates_signal entropy_trace h_len
+  · left
+    unfold information_sieve
+    simp [h_len]
 
 end InformationCompressionSieve

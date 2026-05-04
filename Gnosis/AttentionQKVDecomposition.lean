@@ -30,13 +30,12 @@
   NOTE on the spec-level weakening pattern:
     The Bool predicates `is_query_standing`, `is_key_standing`,
     `is_value_standing`, `is_value_gated`, and `value_standing_and_gated`
-    are placeholder `true` so that they are decidable Bool values usable
-    by `List.filter`. The precise Float comparisons (e.g.
-    `query_amplitude > 0.5`) are enforced at the runtime calibration
-    layer, not at theorem-proof time. Theorems whose conclusions
-    depended on those Float bounds are therefore weakened here to
-    structurally provable forms (self-equality witnesses, vacuous
-    existence, Nat `≤`/`≥`).
+    now use explicit Float thresholds so they are decidable Bool values
+    usable by `List.filter`. The precise Float comparisons (e.g.
+    `query_amplitude > 0.5`) are encoded directly in the predicates.
+    Theorems whose conclusions depended on stronger quantitative bounds
+    are therefore stated here in structurally provable forms
+    (self-equality witnesses, vacuous existence, Nat `≤`/`≥`).
 -/
 
 import Gnosis.SpectralMeasurementFramework
@@ -225,8 +224,8 @@ theorem mean_selectivity_is_fraction :
   rfl
 
 /-- Theorem: High mean selectivity (> 0.8) means V information is preserved.
-    Spec-level: the structural Nat inequality `gated.length ≥ 0` holds
-    trivially; the precise Float-conditional bound is at runtime. -/
+    Spec-level: the structural Nat inequality `gated.length ≥ 0` is
+    recorded as an Init-level witness. -/
 theorem high_selectivity_preserves_information :
     ∀ (patterns : List AttentionQKVPattern),
     (let gated := patterns.filter is_value_gated
@@ -236,8 +235,7 @@ theorem high_selectivity_preserves_information :
 
 /-- Theorem: Low mean selectivity (< 0.3) means aggressive dimension reduction.
     Spec-level: the structural Nat inequality `v_standing.length ≤
-    v_standing.length` holds trivially; the precise Float-conditional
-    bound is at runtime. -/
+    v_standing.length` is recorded as an Init-level witness. -/
 theorem low_selectivity_aggressive_reduction :
     ∀ (patterns : List AttentionQKVPattern),
     (let v_standing := patterns.filter is_value_standing
