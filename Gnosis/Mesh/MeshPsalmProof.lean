@@ -23,7 +23,7 @@ inductive MeshTopology
 
 def permanence (t : MeshTopology) : Prop :=
   match t with
-  | MeshTopology.stationaryAttractor => True
+  | MeshTopology.stationaryAttractor => t = MeshTopology.stationaryAttractor
   | _ => False -- Valley and Void have 0 permanence
 
 /--

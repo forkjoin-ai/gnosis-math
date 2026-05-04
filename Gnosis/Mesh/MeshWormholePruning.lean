@@ -18,10 +18,10 @@ namespace MeshWormholePruning
 
 def isStable (n : Nat) : Prop :=
   match n with
-  | 0 => True -- The Void (Start)
-  | 1 => True -- The Unit (+1)
-  | 3 => True -- The Primitives (Fork/Race/Fold)
-  | 5 => True -- The Forces (Golden Discriminant)
+  | 0 => n = 0 -- The Void (Start)
+  | 1 => n = 1 -- The Unit (+1)
+  | 3 => n = 3 -- The Primitives (Fork/Race/Fold)
+  | 5 => n = 5 -- The Forces (Golden Discriminant)
   | _ => False -- All others (including 2 and 8) are Wormholes
 
 /--

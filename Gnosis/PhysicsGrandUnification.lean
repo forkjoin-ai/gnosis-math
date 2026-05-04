@@ -4,4 +4,4 @@ import Gnosis.Closures.BaryogenesisClosure
 
 namespace Gnosis
 
-noncomputable section
+end Gnosis

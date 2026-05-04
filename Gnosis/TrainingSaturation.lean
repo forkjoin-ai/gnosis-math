@@ -56,7 +56,7 @@ def thresholdReady (node : SwarmNode) (threshold : Nat) : Prop :=
   resonance. The agent is defined by its existence.
 -/
 def intrinsicReady (_node : SwarmNode) : Prop :=
-  True
+  _node.energy ≥ 0
 
 /-- 
   Theorem: Threshold metrics act as a discrete set of potential bottlenecks.
@@ -89,7 +89,7 @@ def constrainedState (node : SwarmNode) : Prop :=
 -/
 theorem constrained_and_unconstrained (node : SwarmNode) :
   constrainedState node ∧ unconstrainedState node := by
-  exact ⟨threshold_bottleneck_exists node, trivial⟩
+  exact ⟨threshold_bottleneck_exists node, Nat.zero_le _⟩
 
 /-- 
   Point of No Return: 

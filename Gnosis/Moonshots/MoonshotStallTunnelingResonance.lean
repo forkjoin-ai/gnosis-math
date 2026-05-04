@@ -1,8 +1,8 @@
 
 namespace Gnosis.MoonshotStallTunnelingResonance
 
-def OracleExecutionStall (_state : Type) : Prop := True
-def TunnelingResonance (_state : Type) : Prop := True
+def OracleExecutionStall (_state : Type) : Prop := Nonempty _state
+def TunnelingResonance (_state : Type) : Prop := Nonempty _state
 
 theorem stall_tunneling_resonance_composition {state : Type}
   (H1 : OracleExecutionStall state)

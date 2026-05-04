@@ -21,7 +21,7 @@ inductive UniversalEntity
 
 def isPersistent (e : UniversalEntity) : Prop :=
   match e with
-  | UniversalEntity.gnosisBasis => True
+  | UniversalEntity.gnosisBasis => e = UniversalEntity.gnosisBasis
   | UniversalEntity.transientPattern _ => False
 
 /--

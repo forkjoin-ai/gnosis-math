@@ -20,9 +20,7 @@ inductive FibonacciDepth
 | hidden (n : Nat) -- 13, 21, 34, 55...
 
 def isHidden (f : FibonacciDepth) : Prop :=
-  match f with
-  | FibonacciDepth.known _ => False
-  | FibonacciDepth.hidden _ => True
+  ∃ n, f = FibonacciDepth.hidden n
 
 /--
 The "Hidden State" Theorem:
@@ -32,7 +30,8 @@ the Invariant.
 -/
 theorem higher_nodes_are_hidden :
     ∀ (n : Nat), isHidden (FibonacciDepth.hidden n) := by
-  intro n; simp [isHidden]
+  intro n
+  refine ⟨n, rfl⟩
 
 -- ═══════════════════════════════════════════════════════════════════════
 -- (2) The Hidden Sandwich

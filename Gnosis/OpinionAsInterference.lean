@@ -202,10 +202,10 @@ theorem polarization_is_two_opposition_waves :
     does not constrain — a member can have zero confidence. -/
 theorem polarization_creates_cognitive_dissonance :
     ∀ (_member_a _member_b : OpinionWave)
-      (_group_a _group_b : GroupOpinionWave),
-    _group_a.amplitude ≥ 0 ∧ _group_b.amplitude ≥ 0 := by
-  intro _ _ _ _
-  exact ⟨by decide, by decide⟩
+      (group_a group_b : GroupOpinionWave),
+    group_a.amplitude ≥ 0 ∧ group_b.amplitude ≥ 0 := by
+  intro _ _ group_a group_b
+  exact ⟨Nat.zero_le group_a.amplitude, Nat.zero_le group_b.amplitude⟩
 
 -- ══════════════════════════════════════════════════════════
 -- CONSENSUS AS WAVE COLLAPSE VIA DESTRUCTIVE INTERFERENCE

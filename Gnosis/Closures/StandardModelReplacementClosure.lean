@@ -2,4 +2,4 @@ import Gnosis.Closures.AnomalyCancellationClosure
 
 namespace Gnosis
 
-noncomputable section
+end Gnosis

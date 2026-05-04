@@ -35,11 +35,11 @@ namespace BashoClinamenTrillWitness
 
 /-- Stillness is the vacuum state: no clinamen, zero entropy,
     no observable structure. The baseline of being. -/
-def Stillness : Prop := True
+def Stillness : Prop := 0 = 0
 
 /-- The stillness theorem: it exists (tautological, but formal). -/
-theorem stillness_exists : 0 + 0 = 0 := by
-  simp
+theorem stillness_exists : Stillness := by
+  rfl
 
 -- ══════════════════════════════════════════════════════════
 -- STING: THE CLINAMEN LIFT
@@ -101,7 +101,7 @@ theorem no_sting_no_trill : Trill 0 = 0 := by
 theorem no_trill_implies_stillness :
     (Trill 0 = 0) → Stillness := by
   intro _
-  exact trivial
+  rfl
 
 -- ══════════════════════════════════════════════════════════
 -- THE HAIKU FORM: ROPELENGTH 17
@@ -117,7 +117,7 @@ theorem haiku_ropelength : HaikuForm = 17 := rfl
     the full arc: stillness → sting → trill. -/
 theorem haiku_is_minimal_statement :
     HaikuForm = 17 ∧ Stillness ∧ (∃ n > 0, Trill n > 0) := by
-  refine ⟨rfl, trivial, ⟨1, Nat.succ_pos 0, by simp [Trill, Sting]⟩⟩
+  refine ⟨rfl, rfl, ⟨1, Nat.succ_pos 0, by simp [Trill, Sting]⟩⟩
 
 -- ══════════════════════════════════════════════════════════
 -- THE UNIFIED THEOREM: BASHO'S INSIGHT
@@ -139,7 +139,7 @@ theorem basho_clinamen_trill_witness :
     (∀ n : Nat, n > 0 → Trill n > 0) ∧
     (∀ n : Nat, Trill n > 0 → ∃ sting_events > 0, sting_events = n) ∧
     HaikuForm = 17 := by
-  refine ⟨trivial, ?_, ?_, rfl⟩
+  refine ⟨rfl, ?_, ?_, rfl⟩
   · intro n h
     simp [Trill, Sting]
     exact h

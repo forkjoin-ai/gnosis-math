@@ -1,4 +1,3 @@
-
 namespace Gnosis
 
-noncomputable section
+end Gnosis

@@ -22,17 +22,15 @@ inductive MeshState
 | voidAbsorbing          -- Total systemic collapse (Non-being)
 
 def isBeing (s : MeshState) : Prop :=
-  match s with
-  | MeshState.voidAbsorbing => False
-  | _ => True
+  s ≠ MeshState.voidAbsorbing
 
 /--
 The "Cogito" Theorem:
 If the state is 'thinking', then it must be a state of 'being' (non-void).
 -/
 theorem i_think_therefore_i_am (s : MeshState) :
-    s = MeshState.thinking d → isBeing s := by
-  intro h
+    (∀ d, s = MeshState.thinking d → isBeing s) := by
+  intro d h
   rw [h]
   simp [isBeing]
 
