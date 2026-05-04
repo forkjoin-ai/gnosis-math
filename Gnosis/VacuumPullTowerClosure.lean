@@ -35,9 +35,10 @@ theorem vacuum_is_unique_zero_score_bule : ∀ b : BuleyUnit, buleyUnitScore b =
   cases b with
   | mk w o d =>
     simp [buleyUnitScore] at hScore
-    have : w = 0 ∧ o = 0 ∧ d = 0 := by omega
-    rcases this with ⟨hw, ho, hd⟩
-    rw [hw, ho, hd]
+    -- hScore : w + o + d = 0 ⇒ w + o = 0 ∧ d = 0 ⇒ w = 0 ∧ o = 0 ∧ d = 0.
+    have hwo_d : w + o = 0 ∧ d = 0 := Nat.add_eq_zero.mp hScore
+    have hw_o : w = 0 ∧ o = 0 := Nat.add_eq_zero.mp hwo_d.1
+    rw [hw_o.1, hw_o.2, hwo_d.2]
     rfl
 
 /-! ## Theorem 2: Any Bule unit reaches vacuum in finite contraction steps -/
@@ -56,7 +57,7 @@ theorem repeated_waste_contracts_zero : ∀ (w o d : Nat) (n : Nat),
   | zero => simp [repeatedContract]
   | succ k ih =>
       simp [repeatedContract, clinamenContract, ih]
-      omega
+      exact Nat.sub_sub w k 1
 
 /-- Contracting the opportunity face reduces it by saturating subtraction. -/
 theorem repeated_opportunity_contracts_zero : ∀ (w o d n : Nat),
@@ -66,7 +67,7 @@ theorem repeated_opportunity_contracts_zero : ∀ (w o d n : Nat),
   | zero => simp [repeatedContract]
   | succ k ih =>
       simp [repeatedContract, clinamenContract, ih]
-      omega
+      exact Nat.sub_sub o k 1
 
 /-- Contracting the diversity face reduces it by saturating subtraction. -/
 theorem repeated_diversity_contracts_zero : ∀ (w o d n : Nat),
@@ -76,7 +77,7 @@ theorem repeated_diversity_contracts_zero : ∀ (w o d n : Nat),
   | zero => simp [repeatedContract]
   | succ k ih =>
       simp [repeatedContract, clinamenContract, ih]
-      omega
+      exact Nat.sub_sub d k 1
 
 /-- Any Bule unit reaches the vacuum by contracting all three faces to zero. -/
 theorem any_bule_reaches_vacuum_in_finite_steps : ∀ b : BuleyUnit, ∃ _n : Nat,

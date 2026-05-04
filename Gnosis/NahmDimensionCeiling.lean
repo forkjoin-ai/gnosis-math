@@ -90,7 +90,9 @@ theorem nahm_dimension_at_most_eleven
       h.doubled_octagon_zero]
   -- Goal: 3 + 2 + 3 + 1 + 1 + a.gauge + 0 ≤ 11
   have hg : a.gauge ≤ 1 := h.gauge_at_most_one
-  omega
+  show 3 + 2 + 3 + 1 + 1 + a.gauge + 0 ≤ 11
+  rw [show (3 + 2 + 3 + 1 + 1 + a.gauge + 0) = 10 + a.gauge from by ac_rfl]
+  exact Nat.add_le_add_left hg 10
 
 /-! ## The sandwich: 10 ≤ d ≤ 11 -/
 
@@ -140,9 +142,13 @@ theorem nahm_dimension_exactly_ten_or_eleven
   have hg : a.gauge ≤ 1 := h.gauge_at_most_one
   -- a.gauge is 0 or 1
   match hcases : a.gauge with
-  | 0 => left; omega
-  | 1 => right; omega
-  | n + 2 => exfalso; omega
+  | 0 => left; decide
+  | 1 => right; decide
+  | n + 2 =>
+    exfalso
+    -- After matching a.gauge = n + 2, hg : n + 2 ≤ 1 contradicts 2 ≤ n + 2.
+    rw [hcases] at hg
+    exact absurd (Nat.le_trans (Nat.le_add_left 2 n) hg) (by decide)
 
 /-- The dimension is exactly 10 iff the gauge axis is zero. -/
 theorem nahm_ten_iff_no_gauge
@@ -152,10 +158,15 @@ theorem nahm_ten_iff_no_gauge
   rw [h.bule_exact, h.bisided_exact, h.temporal_exact,
       a.vacuum_exactly_one, a.clinamen_exactly_one,
       h.doubled_octagon_zero]
-  have hg : a.gauge ≤ 1 := h.gauge_at_most_one
+  have _hg : a.gauge ≤ 1 := h.gauge_at_most_one
   constructor
-  · intro hSum; omega
-  · intro hg0; omega
+  · intro hSum
+    -- hSum : 3 + 2 + 3 + 1 + 1 + a.gauge + 0 = 10 ⇒ 10 + a.gauge = 10 + 0 ⇒ a.gauge = 0.
+    have hRearrange : 3 + 2 + 3 + 1 + 1 + a.gauge + 0 = 10 + a.gauge := by ac_rfl
+    rw [hRearrange] at hSum
+    exact Nat.add_left_cancel (hSum.trans (Nat.add_zero 10).symm)
+  · intro hg0
+    rw [hg0]
 
 /-- The dimension is exactly 11 iff the gauge axis is one. -/
 theorem nahm_eleven_iff_gauge_one
@@ -165,10 +176,15 @@ theorem nahm_eleven_iff_gauge_one
   rw [h.bule_exact, h.bisided_exact, h.temporal_exact,
       a.vacuum_exactly_one, a.clinamen_exactly_one,
       h.doubled_octagon_zero]
-  have hg : a.gauge ≤ 1 := h.gauge_at_most_one
+  have _hg : a.gauge ≤ 1 := h.gauge_at_most_one
   constructor
-  · intro hSum; omega
-  · intro hg1; omega
+  · intro hSum
+    -- hSum : 3 + 2 + 3 + 1 + 1 + a.gauge + 0 = 11 ⇒ 10 + a.gauge = 10 + 1 ⇒ a.gauge = 1.
+    have hRearrange : 3 + 2 + 3 + 1 + 1 + a.gauge + 0 = 10 + a.gauge := by ac_rfl
+    rw [hRearrange] at hSum
+    exact Nat.add_left_cancel hSum
+  · intro hg1
+    rw [hg1]
 
 /-! ## Bosonic string explicitly outside the Nahm regime -/
 

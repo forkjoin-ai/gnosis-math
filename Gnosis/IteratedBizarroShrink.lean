@@ -87,13 +87,20 @@ theorem shrinkStep_27 : shrinkStep 27 = 20 := by decide
 
 theorem shrinkStep_le (n : Nat) : shrinkStep n ≤ n := by
   unfold shrinkStep
-  omega
+  -- (n * 3) / 4 ≤ (n * 4) / 4 = n.
+  calc (n * 3) / 4
+      ≤ (n * 4) / 4 := Nat.div_le_div_right (Nat.mul_le_mul_left n (by decide : (3 : Nat) ≤ 4))
+    _ = n := Nat.mul_div_cancel n (by decide : 0 < 4)
 
 theorem shrinkStep_strict (n : Nat) (h : 4 ∣ n) :
     shrinkStep n * 4 = n * 3 := by
   unfold shrinkStep
   obtain ⟨k, rfl⟩ := h
-  omega
+  -- Goal: (4 * k * 3) / 4 * 4 = 4 * k * 3.
+  -- Rewrite (4 * k * 3) = 4 * (k * 3) (assoc), then mul_div_cancel_left.
+  rw [Nat.mul_assoc 4 k 3, Nat.mul_div_cancel_left (k * 3) (by decide : (0 : Nat) < 4)]
+  -- Goal: k * 3 * 4 = 4 * (k * 3).
+  ac_rfl
 
 /-! ## Iterated shrink -/
 
@@ -166,13 +173,22 @@ theorem backChannel_strict (n : Nat) (h : 4 ∣ n) :
     backChannel n = n / 4 := by
   unfold backChannel shrinkStep
   obtain ⟨k, rfl⟩ := h
-  omega
+  -- Goal: 4 * k - (4 * k * 3) / 4 = 4 * k / 4.
+  -- (4 * k * 3) / 4 = k * 3 (assoc + mul_div_cancel_left).
+  -- 4 * k / 4 = k (mul_div_cancel_left).
+  -- Need: 4 * k - k * 3 = k. Equivalently (3 + 1) * k - 3 * k = k, i.e., 3*k + k - 3*k = k.
+  rw [Nat.mul_assoc 4 k 3, Nat.mul_div_cancel_left (k * 3) (by decide : (0 : Nat) < 4),
+      Nat.mul_div_cancel_left k (by decide : (0 : Nat) < 4)]
+  -- Goal: 4 * k - k * 3 = k.
+  show 4 * k - k * 3 = k
+  rw [show 4 * k = k * 3 + k from by
+        rw [Nat.mul_comm 4 k, show (4 : Nat) = 3 + 1 from rfl, Nat.mul_add, Nat.mul_one]]
+  exact Nat.add_sub_cancel_left (k * 3) k
 
 theorem shrinkStep_plus_backChannel (n : Nat) :
     shrinkStep n + backChannel n = n := by
   unfold backChannel
-  have := shrinkStep_le n
-  omega
+  exact Nat.add_sub_of_le (shrinkStep_le n)
 
 /-! ## Total back-channel bits across `k` iterations -/
 
@@ -202,7 +218,7 @@ theorem iterShrink_plus_total_back (n : Nat) :
   induction k generalizing n with
   | zero =>
     show n + 0 = n
-    omega
+    exact Nat.add_zero n
   | succ j ih =>
     show iterShrink j (shrinkStep n)
        + (backChannel n + totalBackChannel j (shrinkStep n)) = n
@@ -211,7 +227,7 @@ theorem iterShrink_plus_total_back (n : Nat) :
         iterShrink j (shrinkStep n)
           + (backChannel n + totalBackChannel j (shrinkStep n))
         = (iterShrink j (shrinkStep n) + totalBackChannel j (shrinkStep n))
-          + backChannel n := by omega
+          + backChannel n := by ac_rfl
     rw [rearrange, ih_at]
     exact shrinkStep_plus_backChannel n
 
@@ -245,8 +261,8 @@ theorem fp48_wire_savings : 48 * 4 = 64 * 3 := by decide
 /-- The wire-byte ratio for a strict shrink: output / input = 3/4. -/
 theorem strict_wire_ratio (s : BitwiseShrink) (_h : s.inputBits > 0) :
     4 * s.outputBits = 3 * s.inputBits := by
-  have := s.hShrink
-  omega
+  rw [Nat.mul_comm 4 _, Nat.mul_comm 3 _]
+  exact s.hShrink
 
 /-! ## Cost-resistance bridge
 

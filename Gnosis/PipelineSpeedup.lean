@@ -41,12 +41,20 @@ structure SpeedupRatio where
 /-- Helper: for any naturals `n b`, `(n+1) + (b+1) ≤ (n+1)*(b+1) + 1`. -/
 private theorem succ_succ_add_le_mul_succ (n b : Nat) :
     (n + 1) + (b + 1) ≤ (n + 1) * (b + 1) + 1 := by
+  -- Polynomial expansion: (n+1)(b+1) = n*b + n + b + 1.
   have hexp : (n + 1) * (b + 1) = n * b + n + b + 1 := by
-    show (n + 1) * (b + 1) = n * b + n + b + 1
     rw [Nat.mul_add, Nat.add_mul, Nat.add_mul]
     simp [Nat.mul_one, Nat.one_mul]
-    omega
-  omega
+    ac_rfl
+  rw [hexp]
+  -- Goal: (n+1) + (b+1) ≤ n*b + n + b + 1 + 1.
+  -- Both sides reorganize to {n + b + 2} on LHS and {n*b + n + b + 2} on RHS.
+  -- Diff is n*b ≥ 0; structural: (n+b+2) ≤ (n*b + n + b + 2).
+  calc (n + 1) + (b + 1)
+      = n + b + 2 := by ac_rfl
+    _ ≤ n * b + (n + b + 2) := Nat.le_add_left _ _
+    _ = n * b + n + b + 1 + 1 := by
+        rw [show (2 : Nat) = 1 + 1 from rfl]; ac_rfl
 
 /-- pipelineTime ≤ seqTime always (pipeline is never slower). -/
 theorem pipeline_not_slower (cfg : PipelineConfig) :
@@ -57,7 +65,8 @@ theorem pipeline_not_slower (cfg : PipelineConfig) :
   | n + 1, b + 1, _, _ =>
     have h := succ_succ_add_le_mul_succ n b
     show n + 1 + (b + 1) - 1 ≤ (n + 1) * (b + 1)
-    omega
+    -- h : (n+1) + (b+1) ≤ (n+1)*(b+1) + 1; subtract 1 from both sides.
+    exact Nat.sub_le_of_le_add h
 
 /-- Anti-thesis refutation (lower bound): speedup ≥ 1. -/
 theorem pipeline_speedup_lower (cfg : PipelineConfig) :

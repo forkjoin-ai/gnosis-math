@@ -427,6 +427,70 @@ private theorem mod_add_left (a b n : Nat) :
   rw [Nat.add_mod, Nat.mod_mod, ← Nat.add_mod]
 ```
 
+### Pattern 5c: Polynomial expansion `(n+1)(b+1) = n*b + n + b + 1`
+
+For a single-step factorization (helper lemmas like
+`succ_succ_add_le_mul_succ` in `Gnosis/PipelineSpeedup.lean`):
+
+```lean
+have hexp : (n + 1) * (b + 1) = n * b + n + b + 1 := by
+  rw [Nat.mul_add, Nat.add_mul, Nat.add_mul]
+  simp [Nat.mul_one, Nat.one_mul]
+  ac_rfl  -- handles the residual reordering
+```
+
+When the next step needs `(n+1)+(b+1) ≤ (n+1)*(b+1) + 1`, chain via
+`calc` with `Nat.le_add_left` between two `ac_rfl` rearrangements:
+
+```lean
+calc (n + 1) + (b + 1)
+    = n + b + 2 := by ac_rfl
+  _ ≤ n * b + (n + b + 2) := Nat.le_add_left _ _
+  _ = n * b + n + b + 1 + 1 := by
+      rw [show (2 : Nat) = 1 + 1 from rfl]; ac_rfl
+```
+
+`ac_rfl` doesn't split numeric literals, so reify `2 = 1 + 1` (or
+`3 = 1 + 1 + 1` etc.) before invoking it.
+
+### Pattern 5d: Bounded division `(n * a) / b ≤ n` (with `a ≤ b`)
+
+`(n * 3) / 4 ≤ n`, the `shrinkStep` shape from
+`Gnosis/IteratedBizarroShrink.lean`:
+
+```lean
+calc (n * 3) / 4
+    ≤ (n * 4) / 4 := Nat.div_le_div_right
+        (Nat.mul_le_mul_left n (by decide : (3 : Nat) ≤ 4))
+  _ = n := Nat.mul_div_cancel n (by decide : 0 < 4)
+```
+
+Generalisation: when you have a quotient bounded by a constant ratio,
+inflate the dividend until the divisor cancels exactly, then collapse.
+
+### Pattern 5e: Divisibility-strict `obtain ⟨k, rfl⟩` peeling
+
+When you have `h : k ∣ n` and need to compute `n / k` exactly, peel `n`
+to `k * j` and use `Nat.mul_div_cancel_left`:
+
+```lean
+unfold shrinkStep
+obtain ⟨k, rfl⟩ := h  -- n becomes 4 * k
+-- Goal: (4 * k * 3) / 4 * 4 = 4 * k * 3
+rw [Nat.mul_assoc 4 k 3, Nat.mul_div_cancel_left (k * 3) (by decide : 0 < 4)]
+ac_rfl
+```
+
+For the partner identity `4*k - k*3 = k`, peel `4*k` as `k*3 + k` first
+(via `4 = 3 + 1` and `Nat.mul_add`), then `Nat.add_sub_cancel_left`:
+
+```lean
+rw [show 4 * k = k * 3 + k from by
+      rw [Nat.mul_comm 4 k, show (4 : Nat) = 3 + 1 from rfl,
+          Nat.mul_add, Nat.mul_one]]
+exact Nat.add_sub_cancel_left (k * 3) k
+```
+
 ### Pattern 6: Int-cast arithmetic over `Nat` differences
 
 When a definition reads `def deficit (a b : Nat) : Int := (a : Int) - (b : Int)`
