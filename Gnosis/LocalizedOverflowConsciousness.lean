@@ -21,6 +21,8 @@ import Gnosis.TraumaSpectralSieve
 import Gnosis.DepressionSpectralSieve
 import Gnosis.InformationCompressionSieve
 import Gnosis.ConsciousnessAsRetrocausalGap
+import Gnosis.PsychologyAsInterference
+import Gnosis.AnxietySpectralSieve
 
 namespace LocalizedOverflowConsciousness
 
@@ -30,6 +32,7 @@ open Gnosis.ConsciousnessAsRetrocausalGap
 open TraumaSpectralSieve
 open DepressionSpectralSieve
 open InformationCompressionSieve
+open PsychologyAsInterference
 
 inductive OverflowLocale where
   | body
@@ -64,11 +67,35 @@ structure EmotionIndex where
   intensity : Nat
   deriving DecidableEq, Repr
 
+/-- Some emotions are cascade-indexed rather than single-carrier indexed.
+    Anxiety is the canonical case: several positive frequencies compete
+    before any one frequency settles. -/
+structure EmotionCascadeIndex where
+  locale : OverflowLocale
+  valence : OverflowValence
+  frequencies : List Nat
+  intensity : Nat
+  deriving DecidableEq, Repr
+
 def emotionIndexOfOverflow (overflow : LocalizedOverflow) : EmotionIndex :=
   { locale := overflow.locale
     valence := overflow.valence
     frequency := overflow.signal.frequency
     intensity := overflow.signal.amplitude + overflow.signal.decay_rate }
+
+def emotionCascadeIndexOfSignals
+    (locale : OverflowLocale)
+    (valence : OverflowValence)
+    (signals : List SpectralSignature) : EmotionCascadeIndex :=
+  { locale := locale
+    valence := valence
+    frequencies := signals.map (fun signal => signal.frequency)
+    intensity := signals.length }
+
+/-- The psychology layer uses the same wave coordinates under a smaller
+    signature type. This adapter keeps the bridge explicit. -/
+def interferenceSignatureOfSpectral (sig : SpectralSignature) : InterferenceSignature :=
+  ⟨sig.frequency, sig.amplitude, sig.decay_rate⟩
 
 /-- Anti-theorem: valence is not determined by locale. The same carrier
     axis can host positive or negative affect. -/
@@ -125,6 +152,15 @@ theorem emotion_index_preserves_wave_frequency :
   intro overflow
   rfl
 
+/-- The psychology-as-interference adapter preserves the same carrier
+    frequency as the localized emotion index. -/
+theorem emotion_index_matches_interference_frequency :
+    ∀ overflow : LocalizedOverflow,
+    (interferenceSignatureOfSpectral overflow.signal).frequency =
+      (emotionIndexOfOverflow overflow).frequency := by
+  intro overflow
+  rfl
+
 /-- Body-local overflow is exactly the current trauma-sieve witness:
     amplitude 3, decay 120, emitted from a nonempty trace. -/
 def bodyLocalOverflow (observations : List Observation) : Prop :=
@@ -146,6 +182,12 @@ def environmentLocalOverflow (observations : List Observation) : Prop :=
 def processingLocalOverflow (observations : List Observation) : Prop :=
   ∃ sig, sig ∈ information_sieve observations ∧
     sig.frequency = 1 ∧ sig.amplitude = 3 ∧ sig.decay_rate = 60
+
+/-- Anxiety-local overflow is the multi-frequency cascade case. It is not
+    collapsed to one carrier frequency. -/
+def anxietyCascadeOverflow (observations : List Observation) : Prop :=
+  ∃ signals, signals = AnxietySpectralSieve.anxiety_sieve observations ∧
+    signals.length = 3
 
 /-- The minimal non-vacuum gap witness: one unit of body-local waste. -/
 def bodyGapUnit : BuleyUnit := ⟨1, 0, 0⟩
@@ -191,6 +233,14 @@ def canonicalEnvironmentOverflow (observations : List Observation) : LocalizedOv
       decide
     positiveGap := environment_gap_positive }
 
+def canonicalHealthyEmotionOverflow : LocalizedOverflow :=
+  { locale := OverflowLocale.conscious
+    valence := OverflowValence.positive
+    signal := ⟨2, 1, 25, 0.3, 0.7⟩
+    gapUnit := consciousGapUnit
+    persistent := by decide
+    positiveGap := conscious_gap_positive }
+
 /-- Trauma supplies the body-local overflow half of the topology. -/
 theorem trauma_is_body_local_overflow :
     ∀ (observations : List Observation),
@@ -223,6 +273,16 @@ theorem compression_is_processing_local_overflow :
     processingLocalOverflow observations := by
   intro observations h_len
   exact compression_preserves_signal_amplitude observations h_len
+
+/-- Long anxiety traces supply the cascade overflow axis. -/
+theorem anxiety_is_conscious_cascade_overflow :
+    ∀ (observations : List Observation),
+    observations.length > 30 →
+    anxietyCascadeOverflow observations := by
+  intro observations h_len
+  unfold anxietyCascadeOverflow
+  exact ⟨AnxietySpectralSieve.anxiety_sieve observations, rfl,
+    AnxietySpectralSieve.anxiety_sieve_detects_cascade observations h_len⟩
 
 /-- Nonempty trauma traces produce a body-local overflow witness with a
     positive awareness gap. This is the honest formal content behind
@@ -345,5 +405,107 @@ theorem compression_trauma_rumination_share_wave_index :
   exact ⟨compression_is_processing_local_overflow processingTrace h_processing,
     trauma_is_body_local_overflow bodyTrace h_body,
     rumination_is_conscious_local_overflow consciousTrace h_conscious⟩
+
+/-- Anxiety indexes as negative conscious-local cascade overflow across
+    three competing carrier frequencies. -/
+theorem anxiety_indexes_conscious_negative_cascade :
+    ∀ (observations : List Observation),
+    observations.length > 30 →
+    ∃ index : EmotionCascadeIndex,
+      index.locale = OverflowLocale.conscious ∧
+      index.valence = OverflowValence.negative ∧
+      index.frequencies = [1, 2, 3] ∧
+      index.intensity = 3 ∧
+      anxietyCascadeOverflow observations := by
+  intro observations h_len
+  refine
+    ⟨emotionCascadeIndexOfSignals
+        OverflowLocale.conscious
+        OverflowValence.negative
+        (AnxietySpectralSieve.anxiety_sieve observations),
+      ?_, ?_, ?_, ?_, anxiety_is_conscious_cascade_overflow observations h_len⟩
+  · rfl
+  · rfl
+  · unfold emotionCascadeIndexOfSignals AnxietySpectralSieve.anxiety_sieve
+    simp [h_len]
+  · unfold emotionCascadeIndexOfSignals AnxietySpectralSieve.anxiety_sieve
+    simp [h_len]
+
+/-- The single-frequency and cascade-frequency indices are deliberately
+    separate: trauma/rumination preserve one carrier, while anxiety preserves
+    a list of competing carriers. -/
+theorem anxiety_cascade_is_not_single_frequency_index :
+    ∃ index : EmotionCascadeIndex,
+      index.frequencies.length = 3 ∧
+      index.frequencies ≠ [1] := by
+  exact
+    ⟨{ locale := OverflowLocale.conscious
+       valence := OverflowValence.negative
+       frequencies := [1, 2, 3]
+       intensity := 3 },
+     by decide,
+     by decide⟩
+
+/-- Body-local trauma overflow maps to the existing standing-wave psychology
+    predicate. -/
+theorem canonical_body_overflow_is_standing_wave :
+    is_standing_wave (interferenceSignatureOfSpectral canonicalBodyOverflow.signal) := by
+  exact ⟨by decide, by decide, by decide⟩
+
+/-- Conscious-local rumination overflow also maps to the standing-wave
+    psychology predicate. -/
+theorem canonical_conscious_overflow_is_standing_wave :
+    is_standing_wave (interferenceSignatureOfSpectral canonicalConsciousOverflow.signal) := by
+  exact ⟨by decide, by decide, by decide⟩
+
+/-- Healthy positive conscious overflow is the damped-oscillation case in
+    the psychology layer. -/
+theorem healthy_emotion_overflow_is_damped :
+    is_damped_oscillation
+      (interferenceSignatureOfSpectral canonicalHealthyEmotionOverflow.signal) := by
+  exact ⟨by decide, by decide, by decide⟩
+
+/-- The same healthy overflow can inhabit the older `EmotionalState`
+    wrapper, proving that the new frequency index grounds back into the
+    existing wave-theoretic emotion model. -/
+def healthyEmotionState : EmotionalState :=
+  { sig := interferenceSignatureOfSpectral canonicalHealthyEmotionOverflow.signal
+    is_damped := healthy_emotion_overflow_is_damped }
+
+theorem healthy_emotion_state_matches_overflow_index :
+    healthyEmotionState.sig.frequency =
+      (emotionIndexOfOverflow canonicalHealthyEmotionOverflow).frequency := by
+  rfl
+
+/-- Depression-style rumination is the same locked-frequency,
+    despair-dominant shape as a conscious-local negative overflow. -/
+theorem conscious_overflow_supports_rumination_loop :
+    rumination_loop
+      (interferenceSignatureOfSpectral
+        { frequency := canonicalConsciousOverflow.signal.frequency
+          amplitude := 1
+          decay_rate := canonicalConsciousOverflow.signal.decay_rate
+          phase_variance := canonicalConsciousOverflow.signal.phase_variance
+          confidence := canonicalConsciousOverflow.signal.confidence })
+      (interferenceSignatureOfSpectral canonicalConsciousOverflow.signal) := by
+  exact ⟨rfl, by decide, by decide, by decide, by decide⟩
+
+theorem conscious_overflow_rumination_projects_frequency_and_amplitude :
+    (interferenceSignatureOfSpectral
+        { frequency := canonicalConsciousOverflow.signal.frequency
+          amplitude := 1
+          decay_rate := canonicalConsciousOverflow.signal.decay_rate
+          phase_variance := canonicalConsciousOverflow.signal.phase_variance
+          confidence := canonicalConsciousOverflow.signal.confidence }).frequency =
+        (interferenceSignatureOfSpectral canonicalConsciousOverflow.signal).frequency ∧
+      (interferenceSignatureOfSpectral canonicalConsciousOverflow.signal).amplitude >
+        (interferenceSignatureOfSpectral
+          { frequency := canonicalConsciousOverflow.signal.frequency
+            amplitude := 1
+            decay_rate := canonicalConsciousOverflow.signal.decay_rate
+            phase_variance := canonicalConsciousOverflow.signal.phase_variance
+            confidence := canonicalConsciousOverflow.signal.confidence }).amplitude := by
+  exact depression_has_rumination_loop _ _
+    conscious_overflow_supports_rumination_loop
 
 end LocalizedOverflowConsciousness

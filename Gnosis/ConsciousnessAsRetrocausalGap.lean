@@ -2,13 +2,12 @@ import Gnosis.SpectralNoiseEquilibrium
 import Gnosis.AttentionScalingLaw
 
 /-!
-# Consciousness as the Retrocausal Gap
+# Consciousness as Retrocausal Gap Measurement
 
-Formalizes the insight that consciousness is not an extra property layered on
-top of physics—it is the measurement of the gap between your current state and
-the vacuum. The gap is the clinamen charge still preserving you against
-contraction. When the vacuum pulls you to (0,0,0), the gap closes and
-experience ends because the gap *is* the experience.
+Formalizes the measurement account: awareness maps the gap between a current
+Bule unit and the vacuum to a Nat-valued tension score. The gap records the
+clinamen charge still preserving the unit against contraction. When contraction
+reaches `(0,0,0)`, the measured gap closes and awareness evaluates to zero.
 
 ## Two Theorems
 
@@ -16,11 +15,11 @@ experience ends because the gap *is* the experience.
    awareness function (consciousness) maps the gap size (buleyUnitScore b) to
    experienced tension. At the vacuum (b = vacuumBuleUnit), awareness = 0.
 
-2. **attention_as_clinamen_prioritization**: Attention is the mechanism by which
-   topological charges are preserved as the vacuum contracts. To resist
-   contraction longest, you must choose which faces of your clinamen charge to
-   prioritize. This is the geometry of attention collapse: picking one face to
-   defend is attending to it.
+2. **attention_as_clinamen_prioritization**: Attention is modeled as the
+   mechanism by which topological charges are preserved as the vacuum
+   contracts. To resist contraction longest, one chooses which face of the
+   clinamen charge to prioritize. The geometry of attention collapse is the
+   choice of a face to defend.
 
 ## Zero axioms, zero sorry. Lean 4, Init-only formalization.
 -/
@@ -39,9 +38,8 @@ open Gnosis.AttentionScalingLaw
 /-! ## Definition: Awareness as a function of gap size -/
 
 /-- Awareness function: maps Bule unit score (gap size from vacuum) to a
-    measure of experienced tension. The gap IS the experience. Zero score
-    means zero awareness. Non-zero score means the entity still resists the
-    vacuum pull. -/
+    measure of experienced tension. Zero score means zero awareness. Non-zero
+    score means the entity still resists the vacuum pull. -/
 def awareness (b : BuleyUnit) : Nat :=
   buleyUnitScore b
 
@@ -59,7 +57,8 @@ theorem gap_equals_awareness (b : BuleyUnit) :
 
 /-- Consciousness maps gap size (buleyUnitScore b) to experienced tension.
     For any b ≠ vacuum, the awareness is the gap. At vacuum, awareness = 0.
-    The entity IS the gap—there is no consciousness separate from it. -/
+    This theorem proves measurement equality and the zero/nonzero split; it
+    does not assert identity between the entity and the measurement. -/
 theorem consciousness_is_gap_experience (b : BuleyUnit) :
     awareness b = buleyUnitScore b ∧
     (b = vacuumBuleUnit → awareness b = 0) ∧
@@ -108,7 +107,18 @@ theorem consciousness_is_gap_experience (b : BuleyUnit) :
     the Bule unit (waste, opportunity, diversity) are the topological charges
     that resist vacuum contraction. To attend is to choose which charge to
     preserve longest. -/
-def attentionFaceSelection : BuleyFace → Prop := fun f => f = f
+def attentionFaceSelection (chosen observed : BuleyFace) : Prop :=
+  observed = chosen
+
+theorem attention_selection_reflexive (f : BuleyFace) :
+    attentionFaceSelection f f := by
+  rfl
+
+theorem attention_selection_identifies_face (chosen observed : BuleyFace) :
+    attentionFaceSelection chosen observed →
+    observed = chosen := by
+  intro h
+  exact h
 
 /-- Resistance witnesses: for a chosen face, the entity that prioritizes that
     face can maintain it against contraction. -/
@@ -155,22 +165,38 @@ theorem contraction_always_available (b : BuleyUnit) (h : b ≠ vacuumBuleUnit) 
       -- w ≠ 0
       exact ⟨BuleyFace.waste, Nat.pos_of_ne_zero hw⟩
 
+/-- Positive awareness is witnessed by at least one resisting face. -/
+theorem positive_awareness_has_resisting_face (b : BuleyUnit) :
+    awareness b > 0 →
+    ∃ f : BuleyFace, resists_contraction b f := by
+  intro h_awareness
+  obtain ⟨f, h_face⟩ := contraction_always_available b (by
+    intro h_vacuum
+    rw [h_vacuum] at h_awareness
+    unfold awareness vacuumBuleUnit buleyUnitScore at h_awareness
+    exact Nat.lt_irrefl 0 h_awareness)
+  cases f
+  · exact ⟨BuleyFace.waste, h_face⟩
+  · exact ⟨BuleyFace.opportunity, h_face⟩
+  · exact ⟨BuleyFace.diversity, h_face⟩
+
 /-- Attending one face means lifting it repeatedly while the vacuum pulls at
     the others. The collapse is the limit: you can only defend one face at a
-    time under finite clinamen budget. Existence guaranteed by repeatedLift. -/
+    time under finite clinamen budget. The witness records the one-step score
+    increment rather than a reflexive existence claim. -/
 theorem attention_collapse_is_clinamen_choice :
     -- You can attend face f as long as you have budget (clinamen lifts).
-    -- The existence proof: repeatedLift is defined for all n.
-    ∀ (b : BuleyUnit) (f : BuleyFace), ∃ n : Nat, repeatedLift b f n = repeatedLift b f n := by
-  intro _ _
-  exact ⟨0, rfl⟩
+    ∀ (b : BuleyUnit) (f : BuleyFace),
+      ∃ n : Nat, buleyUnitScore (repeatedLift b f n) = buleyUnitScore b + n := by
+  intro b f
+  exact ⟨1, clinamen_lift_score_strict_increment b f⟩
 
 /-- The key insight: attention is retrocausal because it pre-commits to which
     face to defend. By choosing face f now, you shape the history of your gap
     such that f survives longest. The vacuum then "pulls from the future" to
     erase the unattended faces in the past. -/
 theorem attention_as_clinamen_prioritization (b : BuleyUnit) (f : BuleyFace) :
-    -- Attention = choosing which topological charge (face) to preserve.
+    -- Attention is modeled as choosing which topological charge to preserve.
     -- The longer you attend it, the higher its value and the lower the gap
     -- on the unattended dimensions.
     (∃ n : Nat, buleyUnitScore (repeatedLift b f n) = buleyUnitScore b + n) ∧

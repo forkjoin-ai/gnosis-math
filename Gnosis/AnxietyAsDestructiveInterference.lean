@@ -2,7 +2,7 @@
   AnxietyAsDestructiveInterference.lean
   ===================================
 
-  Anxiety = cascading destructive interference.
+  Anxiety is modeled as cascading destructive interference.
 
   Multiple threat-detection frequencies competing simultaneously,
   none achieving stable closure, all in destructive phase lock.
@@ -58,13 +58,14 @@ def anxiety_cascade (sigs : List InterferenceSignature) : Prop :=
 
     In anxiety, just as one threat pattern starts to damp,
     another threat pattern activates (re-excitation). The original
-    pattern's decay is interrupted. Result: perpetual oscillation.
-    Spec-level: the per-index `get!` extraction is unavailable in `Init`;
-    the structural claim here is `True`. -/
+    pattern's decay is interrupted. Result: perpetual oscillation. -/
 theorem anxiety_blocks_decay :
-    ∀ (_sigs : List InterferenceSignature), True := by
-  intro _s
-  trivial
+    ∀ (sigs : List InterferenceSignature),
+    anxiety_cascade sigs →
+    sigs.length ≥ 2 ∧
+      ∃ (cycle_period : Nat), cycle_period > 0 ∧ cycle_period < 20 := by
+  intro _sigs h_cascade
+  exact ⟨h_cascade.1, h_cascade.2.2.2⟩
 
 /-- Theorem: Anxiety persists because race is blocked by re-excitation.
     Unlike trauma (one locked wave), anxiety is a cascade of unresolved patterns. -/

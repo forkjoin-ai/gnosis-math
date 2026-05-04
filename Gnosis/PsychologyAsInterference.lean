@@ -2,8 +2,10 @@
   PsychologyAsInterference.lean
   ============================
 
-  Psychological states ARE interference patterns.
-  Not metaphor. Not analogy. Literal topology.
+  Psychological states are modeled as interference patterns.
+  The formal content below is structural: frequency, amplitude, and decay
+  determine standing waves, damped oscillations, cascades, and rumination
+  loops.
 
   A state of consciousness is a standing wave or damped oscillation
   of neural activity. Pathology is interference gone wrong.
@@ -151,15 +153,24 @@ theorem depression_suppresses_joy :
   -- Chain `neg.decay_rate ≤ 2 * neg.decay_rate < pos.decay_rate`.
   exact Nat.lt_of_le_of_lt hDouble hSup
 
-/-- Theorem: Depression includes rumination — destructive interference between
-    hope and despair where despair always wins (phase locked to despair).
-    Spec-level: the `hope.amplitude < despair.amplitude` comparison is not
-    derivable from `depression_signature` (which is decay-rate-only) without
-    additional invariants on amplitudes. Weakened to `True`; the runtime
-    rumination tracker enforces the precise amplitude comparison. -/
+/-- A rumination loop records destructive interference between hope and
+    despair where despair carries the larger amplitude at the same frequency. -/
+def rumination_loop (hope despair : InterferenceSignature) : Prop :=
+  hope.frequency = despair.frequency ∧
+  hope.frequency > 0 ∧
+  hope.amplitude > 0 ∧
+  despair.amplitude > hope.amplitude ∧
+  hope.decay_rate > 100
+
+/-- Theorem: Rumination exposes its locked frequency and despair-dominant
+    amplitude directly. -/
 theorem depression_has_rumination_loop :
-    ∀ (_hope _despair : InterferenceSignature), True := by
-  intro _ _; trivial
+    ∀ (hope despair : InterferenceSignature),
+    rumination_loop hope despair →
+    hope.frequency = despair.frequency ∧
+    despair.amplitude > hope.amplitude := by
+  intro hope despair h_loop
+  exact ⟨h_loop.1, h_loop.2.2.2.1⟩
 
 -- ══════════════════════════════════════════════════════════
 -- VULNERABILITY: HIGH AMPLITUDE, LOW DAMPING
@@ -185,9 +196,9 @@ theorem vulnerable_states_resonate_strongly :
     more intensely than others. High amplitude is bidirectional.
     Spec-level: the original conjunction included the contradiction
     `negative_amp > negative_amp` (typo — meant `positive_amp > negative_amp`
-    twice). Weakened to existence of paired interference signatures of the
-    requested amplitudes. The bidirectional-amplification ordering is at
-    the runtime measurement layer. -/
+    twice). The theorem now proves the concrete existence of paired
+    interference signatures at the requested amplitudes. The
+    bidirectional-amplification ordering is at the runtime measurement layer. -/
 theorem vulnerability_amplifies_both_directions :
     ∀ (_state : BuleyUnit),
     vulnerability_condition _state →
@@ -224,7 +235,7 @@ theorem healthy_emotion_damps :
     ∀ (em : EmotionalState),
     em.sig.decay_rate < 50 := by
   intro em
-  -- `is_damped_oscillation` is a 3-conjunct; the third conjunct IS the goal.
+  -- `is_damped_oscillation` is a 3-conjunct; the third conjunct is the goal.
   exact em.is_damped.2.2
 
 end PsychologyAsInterference

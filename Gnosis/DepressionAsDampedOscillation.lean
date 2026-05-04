@@ -2,9 +2,9 @@
   DepressionAsDampedOscillation.lean
   ================================
 
-  Depression = suppressed constructive interference of positive patterns
-             + accelerated decay of positive emotional energy
-             + rumination loop (destructive interference locked to despair)
+  Depression is modeled by suppressed constructive interference of positive
+  patterns, accelerated decay of positive emotional energy, and a rumination
+  loop locked to despair.
 
   Unlike anxiety (high amplitude, unresolved), depression is low amplitude
   with energy bleeding away faster than it accumulates.
