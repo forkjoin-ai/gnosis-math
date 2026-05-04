@@ -45,28 +45,48 @@ private theorem stable_from (cost : Nat → Nat) (h : ∀ n, cost (n + 1) ≤ co
   induction v generalizing s with
   | zero =>
     intro hle
-    exact ⟨s, Nat.le_refl _, fun n hn => by have := monotone_descent cost h s n hn; omega⟩
+    refine ⟨s, Nat.le_refl _, fun n hn => ?_⟩
+    -- cost s ≤ 0 and cost n ≤ cost s ⇒ both 0.
+    have hCnLeS : cost n ≤ cost s := monotone_descent cost h s n hn
+    have hCsZero : cost s = 0 := Nat.le_zero.mp hle
+    have hCnZero : cost n = 0 := Nat.le_zero.mp (Nat.le_trans hCnLeS hle)
+    rw [hCnZero, hCsZero]
   | succ v ih =>
     intro hle
     by_cases hdrop : cost (s + 1) < cost s
-    · obtain ⟨N, hN1, hN2⟩ := ih (s + 1) (by omega)
-      exact ⟨N, by omega, hN2⟩
+    · -- cost(s+1) < cost s ≤ v+1 ⇒ cost(s+1) ≤ v
+      have hStepLeV : cost (s + 1) ≤ v :=
+        Nat.le_of_lt_succ (Nat.lt_of_lt_of_le hdrop hle)
+      obtain ⟨N, hN1, hN2⟩ := ih (s + 1) hStepLeV
+      exact ⟨N, Nat.le_trans (Nat.le_succ s) hN1, hN2⟩
     · by_cases hle2 : cost (s + 1) ≤ v
       · obtain ⟨N, hN1, hN2⟩ := ih (s + 1) hle2
-        exact ⟨N, by omega, hN2⟩
-      · have hval : cost s = v + 1 := by have := h s; omega
+        exact ⟨N, Nat.le_trans (Nat.le_succ s) hN1, hN2⟩
+      · -- ¬(cost(s+1) < cost s) ⇒ cost s ≤ cost(s+1); combined with h s gives equality.
+        -- ¬(cost(s+1) ≤ v) ⇒ v < cost(s+1) ⇒ v+1 ≤ cost(s+1).
+        -- Hence cost s = cost(s+1) ≥ v+1, and cost s ≤ v+1 ⇒ cost s = v+1.
+        have hSleStep : cost s ≤ cost (s + 1) := Nat.le_of_not_lt hdrop
+        have hStepEqS : cost (s + 1) = cost s := Nat.le_antisymm (h s) hSleStep
+        have hVLtStep : v < cost (s + 1) := Nat.lt_of_not_le hle2
+        have hSuccLeStep : v + 1 ≤ cost (s + 1) := Nat.succ_le_of_lt hVLtStep
+        have hSuccLeS : v + 1 ≤ cost s := hStepEqS ▸ hSuccLeStep
+        have hval : cost s = v + 1 := Nat.le_antisymm hle hSuccLeS
         by_cases hever : ∃ j, s < j ∧ cost j < v + 1
-        · obtain ⟨j, _, hjv⟩ := hever
-          obtain ⟨N, hN1, hN2⟩ := ih j (by omega)
-          exact ⟨N, by omega, hN2⟩
+        · obtain ⟨j, hsj, hjv⟩ := hever
+          have hjLeV : cost j ≤ v := Nat.le_of_lt_succ hjv
+          obtain ⟨N, hN1, hN2⟩ := ih j hjLeV
+          exact ⟨N, Nat.le_trans (Nat.le_of_lt hsj) hN1, hN2⟩
         · have hflat : ∀ n, s ≤ n → cost n = v + 1 := by
             intro n hn
             by_cases hsn : s = n
             · rw [← hsn]; exact hval
-            · have h1 := monotone_descent cost h s n hn
+            · have hCnLeS : cost n ≤ cost s := monotone_descent cost h s n hn
               by_cases hlt : cost n < v + 1
-              · exact absurd ⟨n, by omega, hlt⟩ hever
-              · omega
+              · exact absurd ⟨n, Nat.lt_of_le_of_ne hn hsn, hlt⟩ hever
+              · -- cost n ≥ v+1 (¬<), cost n ≤ cost s = v+1 ⇒ cost n = v+1
+                have hCnGe : v + 1 ≤ cost n := Nat.le_of_not_lt hlt
+                have hCnLeVSucc : cost n ≤ v + 1 := hval ▸ hCnLeS
+                exact Nat.le_antisymm hCnLeVSucc hCnGe
           exact ⟨s, Nat.le_refl _, fun n hn => by rw [hflat n hn, hflat s (Nat.le_refl _)]⟩
 
 theorem system_converges (sys : ForkRaceFoldSystem) :
@@ -113,9 +133,9 @@ theorem any_frf_system_satisfies (sys : ForkRaceFoldSystem) (observer : DualRole
   obtain ⟨N, hN⟩ := system_converges sys
   exact ⟨{
     sys := sys
-    hasPositivity := by have := sys.nontrivial; omega
+    hasPositivity := Nat.lt_of_lt_of_le (by decide : (0 : Nat) < 2) sys.nontrivial
     hasConvergence := ⟨N, hN⟩
-    hasFailureDominance := by have := sys.nontrivial; omega
+    hasFailureDominance := Nat.le_sub_of_add_le sys.nontrivial
     hasLearnability := ⟨N, fun n hn => by simp [deficit, hN n hn]⟩
     hasObserverSeparation := observer
   }, rfl⟩
@@ -125,6 +145,6 @@ theorem mindfulness_converges
     (reflect : Nat → Nat) (h_pos : ∀ n, 0 < reflect n)
     (h_mono : ∀ n, reflect (n + 1) ≤ reflect n) :
     ∃ N, ∀ n, N ≤ n → reflect n = reflect N :=
-  system_converges ⟨2, by omega, reflect, h_pos, h_mono⟩
+  system_converges ⟨2, Nat.le_refl 2, reflect, h_pos, h_mono⟩
 
 end HumanCompiler

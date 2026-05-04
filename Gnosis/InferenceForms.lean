@@ -20,7 +20,7 @@
     F4: Propagated + Rejected (A1 + A2 + A3)
     F5: Self-loop (A1 + A2 + A3 composed on same node)
 
-  All proofs closed by omega / rfl / exact — zero sorry.
+  All proofs closed by Init `Nat.*` lemmas, `rfl`, or `exact` — zero sorry.
 -/
 import Init
 
@@ -69,44 +69,42 @@ def form5_selfloop (n : InferenceNode) : Nat :=
 
 theorem form1_pos (n : InferenceNode) : 0 < form1_direct n := by
   show 0 < n.signal + 1
-  omega
+  exact Nat.succ_pos _
 
 theorem form2_pos (n : InferenceNode) : 0 < form2_propagated n := by
   show 0 < (n.signal + 1) + (n.signal / (n.distance + 1) + 1)
-  have hd : 0 ≤ n.signal / (n.distance + 1) := Nat.zero_le _
-  omega
+  exact Nat.lt_of_lt_of_le (Nat.succ_pos _) (Nat.le_add_right _ _)
 
 theorem form3_pos (n : InferenceNode) : 0 < form3_rejected n := by
   show 0 < (n.signal + 1) + n.rejections
-  omega
+  exact Nat.lt_of_lt_of_le (Nat.succ_pos _) (Nat.le_add_right _ _)
 
 theorem form4_pos (n : InferenceNode) : 0 < form4_full n := by
   show 0 < (n.signal + 1) + (n.signal / (n.distance + 1) + 1) + n.rejections
-  have hd : 0 ≤ n.signal / (n.distance + 1) := Nat.zero_le _
-  omega
+  exact Nat.lt_of_lt_of_le (Nat.succ_pos _)
+    (Nat.le_trans (Nat.le_add_right _ _) (Nat.le_add_right _ _))
 
 theorem form5_pos (n : InferenceNode) : 0 < form5_selfloop n := by
   show 0 < (n.signal + 1) + (n.signal / (0 + 1) + 1) + n.rejections
-  have hd : 0 ≤ n.signal / (0 + 1) := Nat.zero_le _
-  omega
+  exact Nat.lt_of_lt_of_le (Nat.succ_pos _)
+    (Nat.le_trans (Nat.le_add_right _ _) (Nat.le_add_right _ _))
 
 theorem form1_lt_form2 (n : InferenceNode) :
     form1_direct n ≤ form2_propagated n := by
   show n.signal + 1 ≤ (n.signal + 1) + (n.signal / (n.distance + 1) + 1)
-  have hd : 0 ≤ n.signal / (n.distance + 1) := Nat.zero_le _
-  omega
+  exact Nat.le_add_right _ _
 
 theorem form3_gt_form1_when_rejected (n : InferenceNode)
     (h : 0 < n.rejections) :
     form1_direct n < form3_rejected n := by
   show n.signal + 1 < (n.signal + 1) + n.rejections
-  omega
+  exact Nat.lt_add_of_pos_right h
 
 theorem form4_ge_form2 (n : InferenceNode) :
     form2_propagated n ≤ form4_full n := by
   show (n.signal + 1) + (n.signal / (n.distance + 1) + 1)
        ≤ (n.signal + 1) + (n.signal / (n.distance + 1) + 1) + n.rejections
-  omega
+  exact Nat.le_add_right _ _
 
 theorem form5_ge_form4_at_zero_distance (n : InferenceNode)
     (hd : n.distance = 0) :
@@ -150,6 +148,8 @@ theorem defense_covers_direct_inference (p : PersonalityProfile) :
     form1_direct (profileToNode p) ≤ godFormulaWeight p := by
   show p.openness + 1
        ≤ p.openness + p.conscientiousness + p.agreeableness + p.neuroticism + 1
-  omega
+  exact Nat.add_le_add_right
+    (Nat.le_trans (Nat.le_add_right _ _)
+      (Nat.le_trans (Nat.le_add_right _ _) (Nat.le_add_right _ _))) 1
 
 end Gnosis.InferenceForms

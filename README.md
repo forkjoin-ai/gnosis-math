@@ -178,6 +178,18 @@ Current integration plan: [ROADMAP.md](./ROADMAP.md)
 - If a runtime package cites this project, it should cite the module/theorem
   boundary it actually depends on.
 
+## Proof style
+
+The kernel aspires to the **Rustic Church** ideal: theorems closed by
+definitional unfolding plus Init-level `Nat.*` lemmas only — no `omega`,
+no `simp`, no Mathlib. `Gnosis.GodFormula` is the canonical exemplar
+(every base law of the formula proven via `Nat.sub_add_cancel`,
+`Nat.add_right_comm`, etc., and four cross-checks for internal consistency).
+
+[`RUSTIC_CHURCH.md`](./RUSTIC_CHURCH.md) is the cookbook: lemma vocabulary,
+substitution patterns for the recurring `omega` shapes, a per-file migration
+workflow, and the cases where keeping `omega` is still the right call.
+
 ## Development
 
 ```bash

@@ -17,16 +17,17 @@ namespace SelfHostingOptimality
 -- ANTI-THEOREM
 theorem self_optimality_not_universal :
     ∃ (specialized generic : Nat), 0 < specialized ∧ 0 < generic ∧ generic < specialized :=
-  ⟨10, 1, by omega, by omega, by omega⟩
+  ⟨10, 1, by decide, by decide, by decide⟩
 
 -- Bootstrap deficit
 def bootstrapDeficit (selfCost fixedPointCost : Nat) : Nat := selfCost - fixedPointCost
 
 theorem deficit_zero_at_fixed_point (c : Nat) : bootstrapDeficit c c = 0 := by
-  unfold bootstrapDeficit; omega
+  unfold bootstrapDeficit; exact Nat.sub_self c
 
 theorem deficit_positive_off_fixed_point (s fp : Nat) (h : fp < s) :
-    0 < bootstrapDeficit s fp := by unfold bootstrapDeficit; omega
+    0 < bootstrapDeficit s fp := by
+  unfold bootstrapDeficit; exact Nat.sub_pos_of_lt h
 
 -- Monotone descent
 theorem monotone_descent (cost : Nat → Nat) (h : ∀ n, cost (n + 1) ≤ cost n)
@@ -87,12 +88,17 @@ theorem bootstrap_convergence (cost : Nat → Nat) (h : ∀ n, cost (n + 1) ≤ 
 
 -- Self-optimality ↔ zero deficit
 theorem self_optimality_iff_zero_deficit (s c : Nat) :
-    s ≤ c ↔ bootstrapDeficit s c = 0 := by unfold bootstrapDeficit; omega
+    s ≤ c ↔ bootstrapDeficit s c = 0 := by
+  unfold bootstrapDeficit
+  exact ⟨Nat.sub_eq_zero_of_le, Nat.le_of_sub_eq_zero⟩
 
 -- Failure shapes success
-theorem failure_shapes_success (N : Nat) (hN : 2 ≤ N) : N - 1 ≥ 1 := by omega
-theorem rejection_dominates (N : Nat) (hN : 3 ≤ N) : N - 1 > 1 := by omega
-theorem five_compiler_void : 5 - 1 = 4 ∧ (4 : Nat) > 1 := by omega
+theorem failure_shapes_success (N : Nat) (hN : 2 ≤ N) : N - 1 ≥ 1 :=
+  Nat.le_sub_of_add_le hN
+theorem rejection_dominates (N : Nat) (hN : 3 ≤ N) : N - 1 > 1 :=
+  Nat.lt_sub_of_add_lt
+    (Nat.lt_of_lt_of_le (by decide : (1 + 1 : Nat) < 3) hN)
+theorem five_compiler_void : 5 - 1 = 4 ∧ (4 : Nat) > 1 := by decide
 
 -- Deficit is learnable
 theorem deficit_is_learnable (deficit : Nat → Nat) (h : ∀ n, deficit (n + 1) ≤ deficit n) :

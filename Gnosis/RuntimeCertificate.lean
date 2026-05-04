@@ -308,6 +308,111 @@ theorem wankel_fast_path_equivalence_carries_fifth_force_mechanism
   exact ⟨wankel_fast_path_preserves_runtime_result_equivalence,
     wankel_fifth_force_mechanism_has_runtime_certificate steps hSteps⟩
 
+/-- A measured cost witness for a fast-path claim. The witness is deliberately
+    external to the certificate: Lean certifies the shape of the claim, while
+    benchmark/runtime surfaces supply concrete measured costs. -/
+structure FastPathCostWitness where
+  baselineCost : Nat
+  fastPathCost : Nat
+  baselinePositive : 0 < baselineCost
+  fastPathDominates : fastPathCost < baselineCost
+
+/-- A certified speedup claim requires result equivalence plus a measured
+    strict cost improvement. Without the cost witness, a fast path may be
+    semantically valid but cannot honestly claim runtime speedup. -/
+def FastPathCostDominatesBaseline
+    (candidate baseline : RuntimeCertificate)
+    (witness : FastPathCostWitness) : Prop :=
+  FastPathResultEquivalent candidate baseline ∧
+  0 < witness.baselineCost ∧
+  witness.fastPathCost < witness.baselineCost
+
+theorem fast_path_cost_dominance_requires_result_equivalence
+    (candidate baseline : RuntimeCertificate)
+    (witness : FastPathCostWitness)
+    (hDominance :
+      FastPathCostDominatesBaseline candidate baseline witness) :
+    FastPathResultEquivalent candidate baseline :=
+  hDominance.1
+
+/-- The Wankel fast path can claim a runtime speedup exactly when a benchmark
+    supplies a measured strict cost-dominance witness. -/
+theorem wankel_fast_path_cost_dominates_baseline
+    (witness : FastPathCostWitness) :
+    FastPathCostDominatesBaseline
+      wankel_scheduler_certificate
+      qwen_pca_only_certificate
+      witness := by
+  exact ⟨wankel_fast_path_preserves_runtime_result_equivalence,
+    witness.baselinePositive,
+    witness.fastPathDominates⟩
+
+/-- An aggregate measured cost witness for repeated benchmark samples. The
+    certificate does not choose a statistical model; it records the operational
+    boundary that a repeated-sample speedup claim must expose a positive sample
+    count and strictly lower aggregate fast-path cost. -/
+structure FastPathAggregateCostWitness where
+  sampleCount : Nat
+  baselineTotalCost : Nat
+  fastPathTotalCost : Nat
+  sampleCountPositive : 0 < sampleCount
+  baselineTotalPositive : 0 < baselineTotalCost
+  fastPathTotalPositive : 0 < fastPathTotalCost
+  aggregateFastPathDominates : fastPathTotalCost < baselineTotalCost
+
+/-- Aggregate speedup claims require the same semantic equivalence as a
+    single-pair speedup claim, plus repeated-sample aggregate cost dominance. -/
+def FastPathAggregateCostDominatesBaseline
+    (candidate baseline : RuntimeCertificate)
+    (witness : FastPathAggregateCostWitness) : Prop :=
+  FastPathResultEquivalent candidate baseline ∧
+  0 < witness.sampleCount ∧
+  0 < witness.baselineTotalCost ∧
+  0 < witness.fastPathTotalCost ∧
+  witness.fastPathTotalCost < witness.baselineTotalCost
+
+/-- Forgetting the sample count projects an aggregate witness to the existing
+    measured-cost witness boundary. -/
+def FastPathAggregateCostWitness.toCostWitness
+    (witness : FastPathAggregateCostWitness) : FastPathCostWitness :=
+  { baselineCost := witness.baselineTotalCost,
+    fastPathCost := witness.fastPathTotalCost,
+    baselinePositive := witness.baselineTotalPositive,
+    fastPathDominates := witness.aggregateFastPathDominates }
+
+theorem aggregate_cost_dominance_requires_result_equivalence
+    (candidate baseline : RuntimeCertificate)
+    (witness : FastPathAggregateCostWitness)
+    (hDominance :
+      FastPathAggregateCostDominatesBaseline candidate baseline witness) :
+    FastPathResultEquivalent candidate baseline :=
+  hDominance.1
+
+theorem aggregate_cost_dominance_implies_cost_dominance
+    (candidate baseline : RuntimeCertificate)
+    (witness : FastPathAggregateCostWitness)
+    (hDominance :
+      FastPathAggregateCostDominatesBaseline candidate baseline witness) :
+    FastPathCostDominatesBaseline
+      candidate
+      baseline
+      witness.toCostWitness := by
+  exact ⟨hDominance.1, hDominance.2.2.1, hDominance.2.2.2.2⟩
+
+/-- The Wankel fast path can claim a repeated-sample runtime speedup exactly
+    when a benchmark supplies aggregate strict cost dominance. -/
+theorem wankel_aggregate_fast_path_cost_dominates_baseline
+    (witness : FastPathAggregateCostWitness) :
+    FastPathAggregateCostDominatesBaseline
+      wankel_scheduler_certificate
+      qwen_pca_only_certificate
+      witness := by
+  exact ⟨wankel_fast_path_preserves_runtime_result_equivalence,
+    witness.sampleCountPositive,
+    witness.baselineTotalPositive,
+    witness.fastPathTotalPositive,
+    witness.aggregateFastPathDominates⟩
+
 -- ══════════════════════════════════════════════════════════
 -- PROJECTIONS APPLIED TO THE QWEN INSTANCE
 -- ══════════════════════════════════════════════════════════
