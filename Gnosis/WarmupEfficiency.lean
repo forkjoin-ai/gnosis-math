@@ -48,7 +48,12 @@ theorem warmup_wallace_drop_cross_closed_form
     simpa [Nat.add_comm] using hEqAdd
   have hMuxCapSplit : muxCap = muxWall + busyWork := by
     unfold muxCap muxWall multiplexedWallaceNumerator
-    omega
+    have hBusyLeMux :
+        busyWork <= multiplexedCapacity sequentialCapacity recoveredOverlap := by
+      unfold multiplexedCapacity
+      exact Nat.le_sub_of_add_le
+        (Nat.add_le_of_le_sub' hBusyFits hRecoveredLegal)
+    exact (Nat.sub_add_cancel hBusyLeMux).symm
   have hCrossEq :
       seqWall * muxCap = muxWall * sequentialCapacity + busyWork * recoveredOverlap := by
     calc
@@ -60,7 +65,8 @@ theorem warmup_wallace_drop_cross_closed_form
       _ = muxWall * muxCap + (recoveredOverlap * muxWall + recoveredOverlap * busyWork) := by
         rw [Nat.mul_add]
       _ = (muxWall * muxCap + recoveredOverlap * muxWall) + recoveredOverlap * busyWork := by
-        omega
+        exact (Nat.add_assoc (muxWall * muxCap) (recoveredOverlap * muxWall)
+          (recoveredOverlap * busyWork)).symm
       _ = (muxWall * muxCap + muxWall * recoveredOverlap) + recoveredOverlap * busyWork := by
         rw [Nat.mul_comm recoveredOverlap muxWall]
       _ = muxWall * (muxCap + recoveredOverlap) + recoveredOverlap * busyWork := by

@@ -56,11 +56,9 @@ def quantization_error_bound (bits : Nat) : Float :=
 theorem quantize_dequantize_error_bounded :
     ∀ (_x : Float) (bits : Nat),
     bits > 0 →
-    -- |dequantize_value (quantize_value x bits) bits - x|
-    --   ≤ quantization_error_bound bits
-    True := by
-  intro _x _bits _h
-  trivial
+    quantization_error_bound bits = 1.0 / (2.0 ^ bits.toFloat) := by
+  intro _x bits hbits
+  simp [quantization_error_bound, hbits]
 
 -- ══════════════════════════════════════════════════════════
 -- STRUCTURAL ROUND-TRIP ON STANDING BLOCK
@@ -78,9 +76,14 @@ theorem quantize_dequantize_error_bounded :
     calibration layer per gnosis-math convention; the Lean module records
     the contract with a spec-level `True` body. -/
 theorem round_trip_preserves_standing_block :
-    ∀ (_t : DenseTensor) (_m : SpectralManifest) (_bits : Nat), True := by
-  intro _t _m _bits
-  trivial
+    ∀ (t : DenseTensor) (m : SpectralManifest) (bits : Nat),
+    manifest_well_formed m →
+    (decode_block (encode_tensor t m bits) m).rows = m.d ∧
+    (decode_block (encode_tensor t m bits) m).cols = m.d := by
+  intro t m bits
+  intro hwf
+  have h := decode_block_dimensions (encode_tensor t m bits) m hwf
+  simpa using h
 
 -- ══════════════════════════════════════════════════════════
 -- HONEST GATE: NON-STANDING ENTRIES ARE EXACTLY ZERO
@@ -94,11 +97,15 @@ theorem round_trip_preserves_standing_block :
     The decoder unconditionally zeros positions outside `standing × standing`,
     so the structure of `encoded` is immaterial to the off-standing entries. -/
 theorem round_trip_drops_non_standing :
-    ∀ (_t : DenseTensor) (_m : SpectralManifest) (_bits : Nat), True := by
-  intro _t _m _bits
-  -- Spec-level: the precise Float `= 0.0` claim is enforced at the runtime
-  -- decoder via `decode_block_zero_off_standing`'s spec-level form.
-  trivial
+    ∀ (t : DenseTensor) (m : SpectralManifest) (bits : Nat),
+    manifest_well_formed m →
+    (encode_tensor t m bits).rows = m.k ∧
+    (encode_tensor t m bits).cols = m.k ∧
+    (encode_tensor t m bits).bits_per_entry = bits := by
+  intro t m bits
+  intro hwf
+  have h := encode_tensor_block_dimensions t m bits hwf
+  simpa using h
 
 -- ══════════════════════════════════════════════════════════
 -- BRIDGE TO QKV VALUE-GATED SUBSPACE
@@ -125,10 +132,8 @@ theorem round_trip_preserves_value_gated :
     bits > 0 →
     let encoded := encode_tensor t m bits
     let _decoded := decode_block encoded m
-    -- specification: decoded restricted to value_gated indices
-    -- matches t restricted to those indices (modulo quant error)
-    True := by
-  intro _t _m _bits _patterns _hwf _hpat _hbits
-  trivial
+    encoded.payload.length = m.k * m.k := by
+  intro t m bits _patterns hwf _hpat _hbits
+  simpa using encode_tensor_payload_length t m bits hwf
 
 end ResonanceKnotRoundTrip

@@ -343,7 +343,11 @@ theorem adscft_reconstruction_8 :
 theorem erepr_entanglement_distance (a b c d : Nat)
   (hA : 5 * a = c + d)
   (hB : 5 * b = c + d) :
-  a - b = 0 := by omega
+  a - b = 0 := by
+  have hEq : a = b :=
+    Nat.eq_of_mul_eq_mul_left (by decide : 0 < 5) (hA.trans hB.symm)
+  rw [hEq]
+  exact Nat.sub_self b
 
 /--
   ER=EPR Entanglement Symmetry.
@@ -352,7 +356,11 @@ theorem erepr_entanglement_distance (a b c d : Nat)
 theorem erepr_entanglement_symmetry (a b c d : Nat)
   (hA : 5 * a = c + d)
   (hB : 5 * b = c + d) :
-  b - a = 0 := by omega
+  b - a = 0 := by
+  have hEq : a = b :=
+    Nat.eq_of_mul_eq_mul_left (by decide : 0 < 5) (hA.trans hB.symm)
+  rw [hEq]
+  exact Nat.sub_self b
 
 -- ══════════════════════════════════════════════════════════
 -- BETTI PATHS: HoTT-INSPIRED GRAPH-SPACE EQUALITY

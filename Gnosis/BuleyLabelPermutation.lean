@@ -186,7 +186,8 @@ theorem permutation_preserves_total_score (b : BuleyUnit) :
   cases b with
   | mk w o d =>
     show o + d + w = w + o + d
-    omega
+    -- (o + d) + w = w + (o + d) = (w + o) + d
+    exact (Nat.add_comm (o + d) w).trans (Nat.add_assoc w o d).symm
 
 end BuleyLabelPermutation
 end Gnosis

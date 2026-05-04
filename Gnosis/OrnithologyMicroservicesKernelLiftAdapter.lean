@@ -12,7 +12,7 @@ theorem ornithology_microservices_budget_yields_geometric_rate_certificate
       rate.initialBound = microserviceBudget + 1 := by
   have hEps1 : 0 < 1 := by decide
   have hEps2 : 0 < 2 := by decide
-  have hM : 0 < microserviceBudget + 1 := by omega
+  have hM : 0 < microserviceBudget + 1 := Nat.succ_pos microserviceBudget
   have hProd : 3 < 4 := by decide
   let rate := mkGeometricErgodicityRate 3 4 1 2 1 2 (microserviceBudget + 1)
                 (by decide) (by decide) hProd hEps1 hEps2 hEps1 hEps2 hM

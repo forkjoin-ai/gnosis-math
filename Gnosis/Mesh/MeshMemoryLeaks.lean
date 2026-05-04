@@ -21,11 +21,14 @@ theorem oom_inevitability_sandwich (t leakRate : Nat) :
   · unfold pessimisticStability availableMemory
     by_cases h : leakRate > 0
     · simp [h]
-    · have h_zero : leakRate = 0 := by omega
+    · have h_zero : leakRate = 0 :=
+        Nat.le_zero.mp (Nat.le_of_not_lt h)
       simp [h_zero]
   · constructor
     · unfold buleyeanPredictStability; apply Nat.le_refl
     · unfold buleyeanPredictStability availableMemory
-      split <;> omega
+      split
+      · exact Nat.zero_le 1000
+      · exact Nat.sub_le 1000 (t * leakRate)
 
 end MeshMemoryLeaks

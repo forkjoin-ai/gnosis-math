@@ -30,14 +30,19 @@ theorem absorption_plus_leakage
     (hRows : frame.stableRows ≤ signal.saturationWitness) :
     absorbedInfo frame signal + leakedInfo frame signal = signal.saturationWitness := by
   unfold absorbedInfo leakedInfo unresolvedResidue
-  omega
+  -- Goal: (sat - (sat - rows)) + (sat - rows) = sat
+  -- Let c = sat - rows.  c ≤ sat (Nat.sub_le), so (sat - c) + c = sat by Nat.sub_add_cancel.
+  exact Nat.sub_add_cancel
+    (Nat.sub_le signal.saturationWitness frame.stableRows)
 
 theorem absorption_limit
     (frame : ObserverFrame) (signal : HigherLayerSignal)
     (hRows : frame.stableRows ≤ signal.saturationWitness) :
     absorbedInfo frame signal ≤ frame.stableRows := by
   unfold absorbedInfo unresolvedResidue
-  omega
+  -- Goal: sat - (sat - rows) ≤ rows.  With rows ≤ sat, sat - (sat - rows) = rows.
+  rw [Nat.sub_sub_self hRows]
+  exact Nat.le_refl _
 
 theorem under_saturation_absorbs_all
     (frame : ObserverFrame) (signal : HigherLayerSignal)

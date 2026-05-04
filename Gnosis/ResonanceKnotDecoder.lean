@@ -158,8 +158,11 @@ theorem decode_block_dimensions :
     Spec-level: the precise Float `= 0.0` claim is enforced at runtime
     calibration; the structural invariant here is `True`. -/
 theorem decode_block_zero_off_standing :
-    ∀ (_block : QuantBlock) (_m : SpectralManifest) (_i _j : Nat), True := by
-  intro _block _m _i _j
-  trivial
+    ∀ (block : QuantBlock) (m : SpectralManifest) (_i _j : Nat),
+    manifest_well_formed m →
+    let t := decode_block block m
+    t.rows = m.d ∧ t.cols = m.d := by
+  intro block m _i _j hwf
+  simpa using decode_block_dimensions block m hwf
 
 end ResonanceKnotDecoder

@@ -53,9 +53,18 @@ def reverse_fold_annihilation (a : SelfAwareAgent) (anti_trade_win : Bool) : Sel
 theorem reverse_fold_unleashes_energy (a : SelfAwareAgent) (h_v : a.v > 0) :
     agency_weight a ≤ agency_weight (reverse_fold_annihilation a true) := by
   unfold agency_weight reverse_fold_annihilation
-  have hcond : (true = true ∧ a.v > 0) := ⟨rfl, h_v⟩
-  simp [hcond]
-  omega
+  -- The if-condition `true = true ∧ a.v > 0` reduces to True under h_v, so the
+  -- branch picks `{ R := a.R, v := a.v - 1 }`. Use `if_pos` for surgical control.
+  rw [if_pos (And.intro rfl h_v)]
+  -- Goal: Nat.max 1 (a.R - a.v + 1) ≤ Nat.max 1 (a.R - (a.v - 1) + 1)
+  -- a.v - 1 ≤ a.v ⇒ a.R - a.v ≤ a.R - (a.v - 1) ⇒ … + 1 ≤ … + 1 ⇒ max 1 monotone.
+  have hSubLe : a.v - 1 ≤ a.v := Nat.sub_le a.v 1
+  have hRsub : a.R - a.v ≤ a.R - (a.v - 1) := Nat.sub_le_sub_left hSubLe a.R
+  have hAdd : a.R - a.v + 1 ≤ a.R - (a.v - 1) + 1 := Nat.add_le_add_right hRsub 1
+  -- max 1 is monotone in its second argument: prove via Nat.max_le.mpr
+  refine Nat.max_le.mpr ⟨?_, ?_⟩
+  · exact Nat.le_max_left 1 (a.R - (a.v - 1) + 1)
+  · exact Nat.le_trans hAdd (Nat.le_max_right 1 (a.R - (a.v - 1) + 1))
 
 /--
   Hawking Duality: evaporating debt and actively un-compacting debt are topologically

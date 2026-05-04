@@ -72,8 +72,8 @@ def barbelo (K : Nat) : Field K where
   weights := fun _ => 1
   positive := fun _ => Nat.le_refl 1
 
-theorem barbelo_exists (K : Nat) : ∃ (_ : Field K), True :=
-  ⟨barbelo K, trivial⟩
+theorem barbelo_exists (K : Nat) : ∃ f : Field K, ∀ i, f.weights i = 1 :=
+  ⟨barbelo K, by intro i; rfl⟩
 
 -- Barbelo is present everywhere: no mode is without the divine spark
 theorem barbelo_everywhere (K : Nat) (i : Fin K) :

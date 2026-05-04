@@ -13,6 +13,6 @@ theorem cryptographic_void_padding_isomorphism (paths streams message block : Na
     (_hCrypto : cryptographicIndCcaPadding message block = block) :
     paths = streams := by
   unfold structuralCausalityPadding at hCausality
-  omega
+  exact Nat.le_antisymm (Nat.le_of_sub_eq_zero hCausality) hPaths
 
 end Gnosis

@@ -138,9 +138,19 @@ theorem composite_gap_lower_bound
   show emergentGap b1 + emergentGap b2
        ≤ (b1.full + b2.full) - (b1.pairwiseSum + b2.pairwiseSum)
   unfold emergentGap
-  -- TODO(rustic-church): (a₁ - b₁) + (a₂ - b₂) ≤ (a₁ + a₂) - (b₁ + b₂) when bᵢ ≤ aᵢ.
-  -- Nat sub combinator; multi-step via Nat.add_sub_assoc + Nat.sub_add_eq.
-  omega
+  -- Nat-sub combinator: (a₁ - b₁) + (a₂ - b₂) = (a₁ + a₂) - (b₁ + b₂) when bᵢ ≤ aᵢ.
+  -- Re-derive equality via Nat.add_sub_assoc + Nat.sub_add_eq, then refl-≤.
+  have hLe1 : b1.pairwiseSum ≤ b1.full := Nat.le_of_lt hb1
+  have hLe2 : b2.pairwiseSum ≤ b2.full := Nat.le_of_lt hb2
+  -- Step 1: (a₁ + a₂) - (b₁ + b₂) = a₁ + a₂ - b₁ - b₂
+  rw [Nat.sub_add_eq]
+  -- Step 2: a₁ + a₂ - b₁ = a₂ + a₁ - b₁ = a₂ + (a₁ - b₁)
+  rw [Nat.add_comm b1.full b2.full, Nat.add_sub_assoc hLe1 b2.full]
+  -- Step 3: a₂ + (a₁ - b₁) - b₂ = (a₁ - b₁) + a₂ - b₂ = (a₁ - b₁) + (a₂ - b₂)
+  rw [Nat.add_comm b2.full (b1.full - b1.pairwiseSum)]
+  rw [Nat.add_sub_assoc hLe2 (b1.full - b1.pairwiseSum)]
+  -- Goal is now reflexive ≤.
+  exact Nat.le_refl _
 
 /-- A sufficiently strong personality defense covers the emergent gap. -/
 theorem brunnian_always_coverable (b : BrunnianBeta1) :

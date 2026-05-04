@@ -20,18 +20,21 @@ theorem monkey_sandwich (t : Nat) (h : t >= 1) :
     by_cases h1 : t > 1
     · simp [h1]
       split
-      · omega
-      · have h_ge_2 : 2 ≤ t := by omega
+      · rename_i ht0
+        exact absurd (ht0 ▸ h1) (Nat.not_lt_zero 1)
+      · -- h1 : t > 1 is definitionally 2 ≤ t in Lean 4 Nat
+        have h_ge_2 : 2 ≤ t := h1
         have h_div_val : 1000 / t ≤ 500 := Nat.div_le_div_left h_ge_2 (by decide)
         apply Nat.le_trans (by decide : 1 ≤ 1000 - 500)
         exact Nat.sub_le_sub_left h_div_val 1000
-    · have h1_eq : t = 1 := by omega
+    · have h_le_1 : t ≤ 1 := Nat.le_of_not_gt h1
+      have h1_eq : t = 1 := Nat.le_antisymm h_le_1 h
       simp [h1_eq]
   constructor
   · unfold buleyeanPredictReachability; apply Nat.le_refl
   · unfold buleyeanPredictReachability pShakespeare
     split
-    · omega
+    · exact Nat.zero_le 1000
     · apply Nat.sub_le
 
 

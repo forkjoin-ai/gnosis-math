@@ -40,7 +40,7 @@ def BuleyeanSpace.weight (bs : BuleyeanSpace) (i : Fin bs.numChoices) : Nat :=
 theorem buleyean_positivity (bs : BuleyeanSpace) (i : Fin bs.numChoices) :
     0 < bs.weight i := by
   unfold BuleyeanSpace.weight
-  omega
+  exact Nat.succ_pos _
 
 -- ═══════════════════════════════════════════════════════════════════════
 -- Axiom 3: Monotone updating
@@ -59,7 +59,22 @@ theorem buleyean_monotone_nonrejected
     (bu_rounds - Nat.min (bu_voidBoundary_before i) bu_rounds + 1) ≤
     (bu_rounds + 1 - Nat.min (bu_voidBoundary_after i) (bu_rounds + 1) + 1) := by
   rw [h_others]
-  simp [Nat.min_def]
-  split <;> split <;> omega
+  -- Convert Nat.min to generic min so Nat.min_eq_left/right rewrites apply
+  show bu_rounds - min (bu_voidBoundary_before i) bu_rounds + 1 ≤
+       bu_rounds + 1 - min (bu_voidBoundary_before i) (bu_rounds + 1) + 1
+  -- Reduce to: R - min b R ≤ (R+1) - min b (R+1)
+  refine Nat.add_le_add_right ?_ 1
+  -- Case split on b ≤ R vs R ≤ b
+  rcases Nat.le_total (bu_voidBoundary_before i) bu_rounds with hbR | hRb
+  · -- Case b ≤ R: min b R = b, and b ≤ R ≤ R+1 so min b (R+1) = b
+    have hbR1 : bu_voidBoundary_before i ≤ bu_rounds + 1 :=
+      Nat.le_trans hbR (Nat.le_succ bu_rounds)
+    rw [Nat.min_eq_left hbR, Nat.min_eq_left hbR1]
+    -- Goal: R - b ≤ (R+1) - b
+    exact Nat.sub_le_sub_right (Nat.le_succ bu_rounds) (bu_voidBoundary_before i)
+  · -- Case R ≤ b: min b R = R, so LHS = R - R = 0
+    rw [Nat.min_eq_right hRb]
+    rw [Nat.sub_self]
+    exact Nat.zero_le _
 
 end Gnosis

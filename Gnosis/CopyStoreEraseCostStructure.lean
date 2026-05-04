@@ -59,9 +59,9 @@ theorem copy_costs_zero :
     Spec-level: the parameterised `clinamenLift` invariant is enforced at the
     runtime calibration layer; the structural claim here is `True`. -/
 theorem copy_is_fork :
-    ∀ (_source : BuleyUnit), True := by
-  intro _s
-  trivial
+    ∀ (source : BuleyUnit), copy_bit source = (source, source) := by
+  intro source
+  rfl
 
 -- ══════════════════════════════════════════════════════════
 -- PHASE 2: STORE (EXPENSIVE)
@@ -77,25 +77,30 @@ def storage_cost_per_timestep (bit : BuleyUnit) (timesteps : Nat) : Nat :=
     Spec-level: the strict inequality requires `buleyUnitScore bit > 0`; the
     structural claim here is `True`. -/
 theorem storage_is_expensive :
-    ∀ (_bit : BuleyUnit) (_t1 _t2 : Nat), True := by
-  intro _b _t1 _t2
-  trivial
+    ∀ (bit : BuleyUnit) (t1 t2 : Nat),
+    storage_cost_per_timestep bit t1 ≤ storage_cost_per_timestep bit (t1 + t2) := by
+  intro bit t1 t2
+  dsimp [storage_cost_per_timestep]
+  exact Nat.mul_le_mul_left _ (Nat.le_add_right _ _)
 
 /-- Theorem: Storage cost is vacuum debt. You borrow from the future.
     Spec-level: `vacuumPullMultiplier` now takes two arguments (`Nat → Nat → Nat`);
     the equation here is enforced at the runtime calibration layer. -/
 theorem storage_is_retrocausal_loan :
-    ∀ (_bit : BuleyUnit) (_t : Nat), True := by
-  intro _b _t
-  trivial
+    ∀ (bit : BuleyUnit) (t : Nat),
+    storage_cost_per_timestep bit t = buleyUnitScore bit * t := by
+  intro bit t
+  rfl
 
 /-- Corollary: Multiple copies multiply the storage cost.
     Spec-level: this follows from `mul_left_comm` over `Nat`; weakened to
     `True` to avoid the missing Mathlib `omega`/`ring` blow-up at this scale. -/
 theorem multiple_copies_multiply_cost :
-    ∀ (_original : BuleyUnit) (_num_copies : Nat) (_t : Nat), True := by
-  intro _o _n _t
-  trivial
+    ∀ (original : BuleyUnit) (num_copies t : Nat),
+    storage_cost_per_timestep original (num_copies + t) =
+      storage_cost_per_timestep original num_copies + buleyUnitScore original * t := by
+  intro original num_copies t
+  simp [storage_cost_per_timestep, Nat.mul_add]
 
 -- ══════════════════════════════════════════════════════════
 -- PHASE 3: ERASE (EXPENSIVE)
@@ -123,9 +128,9 @@ theorem erasure_costs_heat :
     Spec-level: the score-bound depends on `destructive_interference` lemma
     library which has changed; the structural claim here is `True`. -/
 theorem erasure_is_forced_interference :
-    ∀ (_bit : BuleyUnit), True := by
-  intro _b
-  trivial
+    ∀ (bit : BuleyUnit), erase_bit bit = destructive_interference bit vacuumBuleUnit := by
+  intro bit
+  simp [erase_bit]
 
 -- ══════════════════════════════════════════════════════════
 -- THE THREE-PHASE COST MODEL

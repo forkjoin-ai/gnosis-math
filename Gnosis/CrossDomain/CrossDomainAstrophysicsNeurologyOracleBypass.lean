@@ -9,12 +9,12 @@ theorem cross_domain_bypass (time synapses rate : Nat)
   (h : time = synapses) :
   cosmicExpansion time rate = neuralFiring synapses rate := by
   unfold cosmicExpansion neuralFiring
-  omega
+  exact congrArg (· + rate) h
 
 theorem oracle_stall_bypass (time rate stall : Nat)
   (h_rate : rate > stall) :
   cosmicExpansion time rate > time + stall := by
   unfold cosmicExpansion
-  omega
+  exact Nat.add_lt_add_left h_rate time
 
 end CrossDomainAstrophysicsNeurologyOracleBypass

@@ -16,7 +16,7 @@ def fisherScalarCurvatureX4 (n : Nat) : Nat := 4 * n
 theorem data_fisher_interpretation_strict_majority (n : Nat) :
     2 * dataProcessingFailureBudget n < fisherReplicaCount (dataProcessingFailureBudget n) := by
   unfold dataProcessingFailureBudget fisherReplicaCount
-  omega
+  exact Nat.lt_succ_self (2 * n)
 
 structure QueueBoundaryWitnessNat_DataProcessingFisherQueueKernelBridge where
   beta1 : Nat

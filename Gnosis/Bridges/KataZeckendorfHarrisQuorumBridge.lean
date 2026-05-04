@@ -100,8 +100,11 @@ theorem kata_zeckendorf_quorum_embedding_yields_unit_boundary
   refine ⟨?_, ?_⟩
   · unfold quorumSize
     rw [hReplica]
-    have : kataZeckendorfBudget = 4 := kataZeckendorfBudget_eq_four
-    omega
+    -- Goal: kataZeckendorfBudget < 2 * kataZeckendorfBudget + 1 - kataZeckendorfBudget
+    -- 2*K = K + K, reorder to (K + 1) + K, cancel trailing K, leave K + 1.
+    rw [Nat.two_mul, Nat.add_right_comm kataZeckendorfBudget kataZeckendorfBudget 1,
+        Nat.add_sub_cancel (kataZeckendorfBudget + 1) kataZeckendorfBudget]
+    exact Nat.lt_succ_self kataZeckendorfBudget
   · refine ⟨canonicalMM1Boundary_KataZeckendorfHarrisQuorumBridge kataZeckendorfBudget (kataZeckendorfBudget + 1)
         (Nat.lt_succ_self _), rfl, rfl, ?_⟩
     show kataZeckendorfBudget = kataZeckendorfBudget * 1

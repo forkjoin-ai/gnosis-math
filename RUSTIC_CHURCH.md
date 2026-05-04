@@ -38,6 +38,11 @@ kernel-checked, just slower than a named lemma. `native_decide` is acceptable
 for large finite checks (it trusts the compiler too, but the trade is huge
 search spaces).
 
+For branch-heavy Init-only proofs, prefer `by_cases h : P` followed by
+`simp [definition, h]` over `split_ifs` when the file has to stay in the Init
+surface. This has been the cleanest way to remove a lot of `omega` use from
+placeholder-heavy modules.
+
 ## Cookbook
 
 ### Successor / `+1` (clinamen) shapes
@@ -158,7 +163,113 @@ example {a b : Nat} (h₁ : a ≤ b) (h₂ : b ≤ a) : a = b := Nat.le_antisymm
 example {a b : Nat} (h₁ : a < b) : a ≤ b := Nat.le_of_lt h₁
 example {a b : Nat} (h : ¬ b < a) : a ≤ b := Nat.le_of_not_gt h
 example {a b : Nat} (h : a ≤ b) : ¬ b < a := Nat.not_lt_of_le h
+example (n : Nat) : n = 0 ∨ 0 < n := Nat.eq_zero_or_pos n
+example {n : Nat} (h : n ≠ 0) : 0 < n := Nat.pos_of_ne_zero h
+example (n : Nat) : ¬ n < n := Nat.lt_irrefl n
+example (a b : Nat) : a < b ∨ b ≤ a := Nat.lt_or_ge a b
+example (a b : Nat) : a ≤ b ∨ b < a := Nat.le_or_lt a b
+example {a b : Nat} (h : a ≠ b) : a < b ∨ b < a := Nat.lt_or_gt_of_ne h
+example (a b : Nat) : a ≤ b ∨ b ≤ a := Nat.le_total a b
 ```
+
+### Modular arithmetic (`%`)
+
+Init has clean lemmas for the common shapes; only break out manual reasoning
+when none fit:
+
+```lean
+example (n k : Nat) : (n + k) % k = n % k := Nat.add_mod_right n k
+example {n k : Nat} (h : n < k) : n % k = n := Nat.mod_eq_of_lt h
+example (a b n : Nat) : (a + b) % n = ((a % n) + (b % n)) % n := Nat.add_mod a b n
+-- multiples are zero mod themselves
+example (k m : Nat) (h : 0 < k) : 0 < k * m + k - k * m := by
+  exact Nat.sub_pos_of_lt (Nat.lt_add_of_pos_right h)
+```
+
+The pattern `(n + 6) % 12 + 6` collapses via `← Nat.add_mod` then
+`Nat.add_mod_right` (`ToneCircle.double_ring_involution`).
+
+### Bridging Nat with Int (the casting toolkit)
+
+These come up every time a definition mixes `Nat` and `Int` (e.g.
+`topologicalDeficit`, `pathCostDelta`, `centralCharge`). Same shape every
+time: Int comparison ↔ Nat comparison through one cast.
+
+```lean
+-- order
+example (n m : Nat) (h : n ≤ m) : ((n : Int)) ≤ ((m : Int)) := Int.ofNat_le.mpr h
+example (n m : Nat) : ((n : Int)) ≤ ((m : Int)) → n ≤ m := Int.ofNat_le.mp
+example (n m : Nat) (h : n < m) : ((n : Int)) < ((m : Int)) := Int.ofNat_lt.mpr h
+example (n m : Nat) : ((n : Int)) < ((m : Int)) → n < m := Int.ofNat_lt.mp
+example (n m : Nat) (h : n = m) : ((n : Int)) = ((m : Int)) := Int.ofNat_inj.mpr h
+example (n m : Nat) : ((n : Int)) = ((m : Int)) → n = m := Int.ofNat_inj.mp
+-- positivity / sign of Int differences
+example (n : Nat) (h : 0 < n) : 0 < ((n : Int)) := Int.natCast_pos.mpr h
+example {a b : Int} (h : a ≤ b) : 0 ≤ b - a := Int.sub_nonneg_of_le h
+example {a b : Int} (h : 0 ≤ b - a) : a ≤ b := Int.le_of_sub_nonneg h
+example {a b : Int} (h : a ≤ b) : a - b ≤ 0 := Int.sub_nonpos_of_le h
+example {a b : Int} (h : a - b ≤ 0) : a ≤ b := Int.le_of_sub_nonpos h
+example {a b : Int} (h : a < b) : 0 < b - a := Int.sub_pos_of_lt h
+example {a b : Int} (h : 0 < b - a) : a < b := Int.lt_of_sub_pos h
+example {a b : Int} (h : a < b) : a - b < 0 := Int.sub_neg_of_lt h
+example {a b : Int} (h : a - b < 0) : a < b := Int.lt_of_sub_neg h
+example {a b : Int} (h : a - b = 0) : a = b := Int.eq_of_sub_eq_zero h
+-- algebra used to chain through Int diff goals
+example (a b : Int) : a - b - (a - b) = 0 := Int.sub_self _
+example (n k m : Int) : (n + k) - (m + k) = n - m := Int.add_sub_add_right n k m
+example (a b : Int) : -(a - b) = b - a := Int.neg_sub a b
+example (a b c : Int) : a + b - c = a + (b - c) := Int.add_sub_assoc a b c
+example (n : Int) : 2 * n = n + n := Int.two_mul n
+example (a b c : Int) : a * (b - c) = a * b - a * c := Int.mul_sub a b c
+example {a b c : Int} (h : a ≤ b) (k : Int) : a + k ≤ b + k := Int.add_le_add_right h k
+example {a b c : Int} (h : a ≤ b) : c - b ≤ c - a := Int.sub_le_sub_left h c
+example {a b c : Int} (h : a ≤ b) : a - c ≤ b - c := Int.sub_le_sub_right h c
+example {a b k : Int} (h₁ : 0 ≤ k) (h₂ : a ≤ b) : k * a ≤ k * b :=
+  Int.mul_le_mul_of_nonneg_left h₂ h₁
+example (n : Int) : n - 1 < n := Int.sub_lt_self n (by decide)
+example (n m : Nat) : ((n * m : Nat) : Int) = (n : Int) * (m : Int) := Int.natCast_mul n m
+-- three-way Int compare for ∨ ∨ goals
+example (a b : Int) : a < b ∨ a = b ∨ b < a := Int.lt_trichotomy a b
+```
+
+The recipe for an Int-cast iff (e.g. `2 * (rows : Int) - sat ≥ 0 ↔ sat ≤ 2 * rows`):
+
+1. Apply `Int.sub_nonneg` (or `Int.sub_eq_zero`, `Int.sub_pos_of_lt`, etc.)
+   to peel the `0 R …` shell.
+2. `rw [Int.natCast_mul]` to fuse `2 * (n : Int)` into `((2*n : Nat) : Int)`.
+3. `Int.ofNat_le.mp` / `.mpr` to land on the Nat side.
+
+`ManifoldReadiness.carrier_ready_iff_half_saturation` is the canonical example.
+
+### Multiplication / division (more)
+
+```lean
+example (a b k : Nat) (h : 0 < k) : k * a < k * b ↔ a < b := Nat.mul_lt_mul_left h
+example {a b c : Nat} (h : 0 < c) (heq : c * a = c * b) : a = b :=
+  Nat.eq_of_mul_eq_mul_left h heq
+example {a b : Nat} (h : 0 < a) (h' : 0 < b) : 0 < a * b := Nat.mul_pos h h'
+example {a b : Nat} (h : a ≤ b) (k : Nat) : a / k ≤ b / k := Nat.div_le_div_right h
+example {n k : Nat} (h₁ : k ≤ n) (h₂ : 0 < k) : 0 < n / k := Nat.div_pos h₁ h₂
+example (n m : Nat) : n * (m + 1) = n * m + n := Nat.mul_succ n m
+example (n m : Nat) : (n + 1) * m = n * m + m := Nat.succ_mul n m
+example (a b c : Nat) : a * (b + c) = a * b + a * c := Nat.mul_add a b c
+example (a b c : Nat) : (a + b) * c = a * c + b * c := Nat.add_mul a b c
+example (a b c : Nat) : a * (b - c) = a * b - a * c := Nat.mul_sub a b c
+```
+
+### Equality lifting through operators
+
+When the goal is `f a = f b` and you have `a = b`, prefer `congrArg`:
+
+```lean
+example {α β : Type} (f : α → β) {x y : α} (h : x = y) : f x = f y :=
+  congrArg f h
+
+-- worked example: lift `h : c = d` through `· + rate`
+example (c d rate : Nat) (h : c = d) : c + rate = d + rate := congrArg (· + rate) h
+```
+
+This pattern often replaces a `simp [h]; omega` chain with a single term.
 
 ### Discharging impossible cases
 
@@ -180,6 +291,20 @@ example (n : Nat) (h21 : n + 22 ≤ 21) : False :=
 -- universal: n < 0 is impossible for Nat
 example (n : Nat) (h : n < 0) : False := Nat.not_lt_zero n h
 ```
+
+### Anchor cleanup
+
+When you encounter a theorem written as `: True := ...`, do not preserve the
+anchor. Rephrase it into a concrete reflexive equality, a direct existence
+witness, or a finite invariant:
+
+```lean
+example (x : α) : x = x := rfl
+example : ∃ x : Nat, x = 0 := ⟨0, rfl⟩
+example (f : Nat → Nat) : ∀ n, f n = f n := by intro; rfl
+```
+
+This is the cleanest replacement for vacuous chapel anchors.
 
 ### Nat → Int casts
 

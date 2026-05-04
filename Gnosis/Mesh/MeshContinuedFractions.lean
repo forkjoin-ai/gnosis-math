@@ -23,17 +23,21 @@ theorem gauss_kuzmin_sandwich (K : Nat) (hK : K ≤ 1000) :
   | 1 => 
     simp
     decide
-  | n + 2 => 
-    have h_pos : 0 < n + 2 := by omega
+  | n + 2 =>
+    have h_pos : 0 < n + 2 := Nat.succ_pos (n + 1)
     have h_not_zero : (n + 2 == 0) = false := by rfl
     simp [h_pos, h_not_zero]
     constructor
     · -- 1 ≤ 1000 / (n + 2)
       match h_div : 1000 / (n + 2) with
-      | 0 => 
+      | 0 =>
         have h_contra := Nat.div_eq_zero_iff.mp h_div
-        omega
-      | _ + 1 => omega
+        -- h_contra : n + 2 = 0 ∨ 1000 < n + 2
+        -- both impossible: n+2 ≠ 0 (succ), and n+2 ≤ 1000 from hK
+        exact h_contra.elim
+          (fun hZero => absurd hZero (Nat.succ_ne_zero (n + 1)))
+          (fun hGt => absurd hK (Nat.not_le_of_lt hGt))
+      | k + 1 => exact Nat.succ_le_succ (Nat.zero_le k)
     · constructor
       · apply Nat.le_refl
       · apply Nat.div_le_self

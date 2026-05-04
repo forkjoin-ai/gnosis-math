@@ -58,7 +58,7 @@ def hasCollided (k : CollisionKernel) : Prop :=
 def generateItem (k : CollisionKernel) (n : Nat) : CollisionKernel :=
   { itemsGenerated := k.itemsGenerated + n
     domain := k.domain
-    validMeasure := by omega }
+    validMeasure := Nat.zero_le _ }
 
 theorem collision_is_inevitable (k : CollisionKernel) :
     ∃ (n : Nat), hasCollided (generateItem k n) := by

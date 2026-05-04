@@ -82,7 +82,7 @@ theorem sign_after_3 : signAfter 3 = -1 := by decide
 theorem sign_returns_after_2 (n : Nat) :
     signAfter (n + 2) = signAfter n := by
   unfold signAfter
-  have h : (n + 2) % 2 = n % 2 := by omega
+  have h : (n + 2) % 2 = n % 2 := Nat.add_mod_right n 2
   rw [h]
 
 /-! ## The unbraidability witness

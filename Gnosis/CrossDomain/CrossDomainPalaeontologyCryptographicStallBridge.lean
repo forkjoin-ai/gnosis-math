@@ -8,6 +8,6 @@ def cryptographicStall (fossilAge : Nat) (shield : Nat) : Nat :=
 theorem stall_bridge_bounded (fossilAge : Nat) (shield : Nat) :
   cryptographicStall fossilAge shield ≥ fossilAge := by
   unfold cryptographicStall
-  omega
+  exact Nat.le_add_right fossilAge shield
 
 end CrossDomainPalaeontologyCryptographicStallBridge

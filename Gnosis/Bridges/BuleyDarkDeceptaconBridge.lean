@@ -81,7 +81,7 @@ theorem bule_omniscience_overflow_witness (memoryBound : Nat) :
     ∃ b : BuleyUnit, VoidPenalty (buleyUnitScore b) > memoryBound := by
   refine ⟨⟨memoryBound + 1, 0, 0⟩, ?_⟩
   show (memoryBound + 1) + 0 + 0 > memoryBound
-  omega
+  exact Nat.lt_succ_self memoryBound
 
 end BuleyDarkDeceptaconBridge
 end Gnosis

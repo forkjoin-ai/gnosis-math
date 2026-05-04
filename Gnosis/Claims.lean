@@ -324,7 +324,7 @@ def flowBeta1 (streamCount : Nat) : Nat := streamCount - 1
 
 def protocolTopologicalDeficit (intrinsic implementation : Nat) : Nat := intrinsic - implementation
 
-theorem protocol_deficits {streamCount : Nat} (hStreams : 1 < streamCount) :
+theorem protocol_deficits {streamCount : Nat} (_hStreams : 1 < streamCount) :
     protocolTopologicalDeficit (protocolIntrinsicBeta1 streamCount) tcpBeta1 = streamCount - 1 /\
     protocolTopologicalDeficit (protocolIntrinsicBeta1 streamCount) (quicBeta1 streamCount) = 0 /\
     protocolTopologicalDeficit (protocolIntrinsicBeta1 streamCount) (flowBeta1 streamCount) = 0 := by

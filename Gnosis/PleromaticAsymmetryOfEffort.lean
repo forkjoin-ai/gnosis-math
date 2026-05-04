@@ -74,7 +74,12 @@ theorem ascent_cost_is_double_closure (n : Nat) :
   unfold ascentCost
   rw [closure_chain_step_alt]
   -- Goal: 3 * closureChain n - closureChain n = 2 * closureChain n
-  omega
+  -- Strategy: 3 * c = c + 2 * c, then Nat.add_sub_cancel_left c (2*c).
+  have h3 : 3 * closureChain n = closureChain n + 2 * closureChain n := by
+    show (1 + 2) * closureChain n = closureChain n + 2 * closureChain n
+    rw [Nat.add_mul, Nat.one_mul]
+  rw [h3]
+  exact Nat.add_sub_cancel_left (closureChain n) (2 * closureChain n)
 
 /-- Concrete ascent costs for the first few closures. -/
 theorem ascent_costs_concrete :

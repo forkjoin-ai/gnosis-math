@@ -14,7 +14,8 @@ def missingEnergy (_ : Nat) : Nat := 1
 
 theorem confinement_universal (K : Nat) :
     fullEnergy K < missingEnergy K := by
-  unfold fullEnergy missingEnergy; omega
+  unfold fullEnergy missingEnergy
+  exact Nat.zero_lt_one
 
 theorem confinement_3 : fullEnergy 3 < missingEnergy 3 := confinement_universal 3
 theorem confinement_5 : fullEnergy 5 < missingEnergy 5 := confinement_universal 5

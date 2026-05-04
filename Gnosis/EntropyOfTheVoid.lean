@@ -287,9 +287,9 @@ theorem void_entropy_plus_bule_paid_equals_initial_entropy
   unfold void_entropy_perthou initial_entropy_bits
   -- Goal: (log2_void total - bits_resolved) * 1000 + bits_resolved * 1000
   --       = log2_void total * 1000
-  -- Use h to discharge the saturating subtraction, then omega.
-  have hKL := Nat.sub_add_cancel h
-  omega
+  -- Factor out *1000, then collapse the saturating subtraction with h.
+  -- (K - r) * 1000 + r * 1000 = ((K - r) + r) * 1000 = K * 1000.
+  rw [← Nat.add_mul, Nat.sub_add_cancel h]
 
 -- ══════════════════════════════════════════════════════════
 -- THE "VOID IS NEVER ZERO" THEOREM

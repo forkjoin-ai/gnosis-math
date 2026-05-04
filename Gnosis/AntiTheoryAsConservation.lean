@@ -229,6 +229,37 @@ def derive_visibility (L : Ledger) : VisibilityGained :=
       vacuous_admissions := 0 }
 
 -- ══════════════════════════════════════════════════════════
+-- AC HELPER: 6-SUMMAND REGROUP (Init-only)
+-- ══════════════════════════════════════════════════════════
+
+/-- Pure associative-commutative regrouping for the six-summand split
+    induced by `visibility_add`. Spells out the rearrangement via
+    `Nat.add_assoc` / `Nat.add_right_comm` so the proof's shape is
+    visible structurally rather than hidden in `omega`. -/
+private theorem six_sum_regroup
+    (A1 A2 A3 B1 B2 B3 : Nat) :
+    A1 + B1 + (A2 + B2) + (A3 + B3)
+      = A1 + A2 + A3 + (B1 + B2 + B3) := by
+  calc A1 + B1 + (A2 + B2) + (A3 + B3)
+      = A1 + B1 + (A2 + B2) + A3 + B3 := by
+          rw [Nat.add_assoc (A1 + B1 + (A2 + B2)) A3 B3]
+    _ = A1 + B1 + ((A2 + B2) + A3) + B3 := by
+          rw [Nat.add_assoc (A1 + B1) (A2 + B2) A3]
+    _ = A1 + B1 + (A2 + B2 + A3) + B3 := rfl
+    _ = A1 + B1 + (A2 + A3 + B2) + B3 := by
+          rw [Nat.add_right_comm A2 B2 A3]
+    _ = A1 + B1 + (A2 + A3) + B2 + B3 := by
+          rw [← Nat.add_assoc (A1 + B1) (A2 + A3) B2]
+    _ = A1 + (A2 + A3) + B1 + B2 + B3 := by
+          rw [Nat.add_right_comm A1 B1 (A2 + A3)]
+    _ = A1 + A2 + A3 + B1 + B2 + B3 := by
+          rw [← Nat.add_assoc A1 A2 A3]
+    _ = A1 + A2 + A3 + (B1 + B2) + B3 := by
+          rw [Nat.add_assoc (A1 + A2 + A3) B1 B2]
+    _ = A1 + A2 + A3 + (B1 + B2 + B3) := by
+          rw [Nat.add_assoc (A1 + A2 + A3) (B1 + B2) B3]
+
+-- ══════════════════════════════════════════════════════════
 -- KEY LEMMA: PER-EVENT CONSERVATION
 -- ══════════════════════════════════════════════════════════
 
@@ -307,7 +338,17 @@ theorem derived_budget_equals_derived_visibility (L : Ledger) :
             + ((derive_visibility rest).claims_resolved
               + (derive_visibility rest).falsifications_recorded
               + (derive_visibility rest).vacuous_admissions)
-        omega
+        -- Pure AC regroup of six Nat summands (three from `visibility_of_event`,
+        -- three from `derive_visibility rest`). Spelled out structurally in
+        -- `six_sum_regroup` above via `Nat.add_assoc` / `Nat.add_right_comm`
+        -- — no `omega`, no `simp`.
+        exact six_sum_regroup
+          (visibility_of_event evt).claims_resolved
+          (visibility_of_event evt).falsifications_recorded
+          (visibility_of_event evt).vacuous_admissions
+          (derive_visibility rest).claims_resolved
+          (derive_visibility rest).falsifications_recorded
+          (derive_visibility rest).vacuous_admissions
       rw [hBudgetSplit, hVisSplit, per_event_conservation evt, ih]
 
 /-- Phrased as the conservation law spelled out at the top of the

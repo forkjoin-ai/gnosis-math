@@ -17,16 +17,16 @@ theorem committed_read_exact_of_coverage
 theorem committed_read_is_read_your_writes
     {sessionWriteVersion sessionReadVersion : Nat}
     (hExact : sessionReadVersion = sessionWriteVersion) :
-    sessionReadVersion >= sessionWriteVersion := by
-  omega
+    sessionReadVersion >= sessionWriteVersion :=
+  hExact ▸ Nat.le_refl sessionWriteVersion
 
 theorem committed_reads_monotone_of_monotone_acks
     {firstAck secondAck firstRead secondRead : Nat}
     (hFirstExact : firstRead = firstAck)
     (hSecondExact : secondRead = secondAck)
     (hAckMonotone : firstAck <= secondAck) :
-    firstRead <= secondRead := by
-  omega
+    firstRead <= secondRead :=
+  hFirstExact ▸ hSecondExact ▸ hAckMonotone
 
 def pendingBoundaryFirstRead : Nat := 1
 def pendingBoundarySecondRead : Nat := 0

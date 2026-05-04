@@ -50,7 +50,11 @@ theorem strict_majority_failure_budget_lt_quorum
     (hMajority : 2 * failureBudget < replicaCount) :
     failureBudget < quorumSize replicaCount failureBudget := by
   unfold quorumSize
-  omega
+  -- 2 * failureBudget < replicaCount ⇒ failureBudget + failureBudget < replicaCount
+  -- ⇒ failureBudget < replicaCount - failureBudget  (Nat.lt_sub_of_add_lt)
+  have hSum : failureBudget + failureBudget < replicaCount :=
+    (Nat.two_mul failureBudget) ▸ hMajority
+  exact Nat.lt_sub_of_add_lt hSum
 
 /-- Existential intersection between two list-quorums. -/
 def QuorumsIntersect (a b : List Nat) : Prop :=
@@ -86,7 +90,14 @@ theorem weak_quorum_boundary_disjoint :
   intro h
   rcases h with ⟨r, hW, hR⟩
   simp [weakBoundaryWriteQuorum, weakBoundaryReadQuorum] at hW hR
-  omega
+  -- hW : r = 0 ∨ r = 1, hR : r = 2 ∨ r = 3 — every pairing contradicts via decide.
+  rcases hW with hW0 | hW1
+  · rcases hR with hR2 | hR3
+    · exact absurd (hW0.symm.trans hR2) (by decide)
+    · exact absurd (hW0.symm.trans hR3) (by decide)
+  · rcases hR with hR2 | hR3
+    · exact absurd (hW1.symm.trans hR2) (by decide)
+    · exact absurd (hW1.symm.trans hR3) (by decide)
 
 theorem weak_quorum_boundary_read_misses_acked_write :
     readValue weakBoundaryReadQuorum weakBoundaryStoredVersion = 0 := by

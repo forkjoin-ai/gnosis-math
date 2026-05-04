@@ -85,25 +85,25 @@ theorem lucas_gnostic_surprise :
 -- ═══════════════════════════════════════════════════════════════════════
 
 -- godWeight(1, 0) = 2 = F(3) = Syzygy
-theorem echo_god_1_0 : godWeight 1 0 = 2 := by unfold godWeight; (first | omega | decide | rfl)
+theorem echo_god_1_0 : godWeight 1 0 = 2 := by native_decide
 -- godWeight(2, 0) = 3 = F(4) = Proton
-theorem echo_god_2_0 : godWeight 2 0 = 3 := by unfold godWeight; (first | omega | decide | rfl)
+theorem echo_god_2_0 : godWeight 2 0 = 3 := by native_decide
 -- godWeight(4, 0) = 5 = F(5) = Primitives
-theorem echo_god_4_0 : godWeight 4 0 = 5 := by unfold godWeight; (first | omega | decide | rfl)
+theorem echo_god_4_0 : godWeight 4 0 = 5 := by native_decide
 -- godWeight(7, 0) = 8 = F(6)
-theorem echo_god_7_0 : godWeight 7 0 = 8 := by unfold godWeight; (first | omega | decide | rfl)
+theorem echo_god_7_0 : godWeight 7 0 = 8 := by native_decide
 -- godWeight(12, 0) = 13 = F(7)
-theorem echo_god_12_0 : godWeight 12 0 = 13 := by unfold godWeight; (first | omega | decide | rfl)
+theorem echo_god_12_0 : godWeight 12 0 = 13 := by native_decide
 -- godWeight(20, 0) = 21 = F(8) = Void value
-theorem echo_god_20_0 : godWeight 20 0 = 21 := by unfold godWeight; (first | omega | decide | rfl)
+theorem echo_god_20_0 : godWeight 20 0 = 21 := by native_decide
 -- godWeight(54, 0) = 55 = F(10) = Pleroma value
-theorem echo_god_54_0 : godWeight 54 0 = 55 := by unfold godWeight; (first | omega | decide | rfl)
+theorem echo_god_54_0 : godWeight 54 0 = 55 := by native_decide
 
 /-- THM-GOD-CEILING-is-SUCCESSOR: godWeight(n, 0) = n + 1 for all n.
     The God Formula at zero rejection formalizes the successor function.
     Every Fibonacci value F(k) is godWeight(F(k) - 1, 0). -/
 theorem god_ceiling_is_successor (n : Nat) : godWeight n 0 = n + 1 := by
-  unfold godWeight; (first | omega | decide | rfl)
+  exact Gnosis.godWeight_ceiling n
 
 /-- THM-FIBONACCI-FROM-GOD: Every F(k) for k ≥ 1 is the God Formula
     applied to F(k) - 1 with zero rejection. -/
@@ -111,7 +111,7 @@ theorem fibonacci_from_god :
     godWeight (fib 5 - 1) 0 = fib 5 ∧
     godWeight (fib 8 - 1) 0 = fib 8 ∧
     godWeight (fib 10 - 1) 0 = fib 10 := by
-  unfold godWeight fib; (first | omega | decide | rfl)
+  native_decide
 
 -- ═══════════════════════════════════════════════════════════════════════
 -- §4. Cross-System Products (Multiplicative Echoes)
@@ -193,6 +193,6 @@ theorem echo_map_master :
   refine ⟨rfl, ?_, ?_, god_ceiling_is_successor, ?_⟩
   · native_decide
   · native_decide
-  · unfold godWeight fib; (first | omega | decide | rfl)
+  · native_decide
 
 end CrossLevelEchoMap

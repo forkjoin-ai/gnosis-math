@@ -9,12 +9,13 @@ theorem absence_induces_max_speed (base_speed interpretation_overhead : Nat)
   (h_overhead : interpretation_overhead = 0) :
   executionSpeed base_speed interpretation_overhead = base_speed := by
   unfold executionSpeed
-  omega
+  rw [h_overhead]
+  exact Nat.sub_zero base_speed
 
 theorem overhead_strictly_reduces_speed (base_speed interpretation_overhead : Nat)
   (h_overhead : interpretation_overhead > 0) (h_bound : interpretation_overhead ≤ base_speed) :
   executionSpeed base_speed interpretation_overhead < base_speed := by
   unfold executionSpeed
-  omega
+  exact Nat.sub_lt_self h_overhead h_bound
 
 end ContrarianInterpretationAbsenceInducesSpeed

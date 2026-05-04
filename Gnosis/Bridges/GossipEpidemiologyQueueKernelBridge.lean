@@ -151,7 +151,7 @@ theorem gossip_sir_budget_does_not_force_beta1_equals_budget
     ⟨_hG, _hS, _hB, boundary, hBetaZero, _hCap, hArr, hSrv⟩
   have hEq : boundary.beta1 = gossipSirFailureBudget gossip sir := hForces boundary hArr hSrv
   rw [hBetaZero] at hEq
-  omega
+  exact Nat.lt_irrefl 0 (hEq ▸ hBudgetPos)
 
 structure GeometricErgodicityRateNat_GossipEpidemiologyQueueKernelBridge where
   numerator : Nat

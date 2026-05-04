@@ -97,6 +97,7 @@ theorem vacuum_is_universal_destiny :
     buleyUnitScore state = 0 → state.waste = 0 ∧ state.opportunity = 0 := by
   intro state h_score
   simp [buleyUnitScore] at h_score
-  exact ⟨by omega, by omega⟩
+  -- simp normalizes to: (state.waste = 0 ∧ state.opportunity = 0) ∧ state.diversity = 0
+  exact ⟨h_score.left.left, h_score.left.right⟩
 
 end DestinyAsRetrocausalAttractor

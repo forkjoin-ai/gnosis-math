@@ -58,7 +58,7 @@ def force_respects_vacuum_arrow (_F : FundamentalForce) : Prop :=
 theorem all_forces_respect_vacuum_arrow :
     ∀ F : FundamentalForce, force_respects_vacuum_arrow F := by
   intro F b
-  exact ⟨buleyUnitScore b, by trivial⟩
+  exact ⟨buleyUnitScore b, rfl⟩
 
 /-- This means all four forces are not independent — they are all constrained
     by a single topological requirement: the vacuum is the universal attractor. -/
@@ -160,7 +160,7 @@ theorem particles_and_fields_are_vacuum_topology :
   · intro b ⟨_hpos, n, _hn1, hn2⟩
     exact ⟨n, hn2⟩
   · intro traj _hfield m
-    exact ⟨m + 1, by omega⟩
+    exact ⟨m + 1, Nat.lt_succ_self m⟩
   · intro b b'
     refine ⟨id, ?_, buleyUnitScore b, rfl⟩
     exact Nat.le_add_right _ _

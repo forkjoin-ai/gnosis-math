@@ -31,7 +31,7 @@ theorem single_stream_is_pre_frontier
     (hPaths : 2 ≤ pathCount) :
     ¬ AtFrontier pathCount 1 := by
   unfold AtFrontier frontierStreamCount
-  omega
+  exact Nat.ne_of_lt (Nat.lt_of_lt_of_le (by decide : (1 : Nat) < 2) hPaths)
 
 /-- Before the frontier, a single stream carries a positive deficit. -/
 theorem pre_frontier_single_stream_has_positive_deficit

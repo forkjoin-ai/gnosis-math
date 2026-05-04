@@ -16,6 +16,6 @@ theorem stall_is_necessary (work stall : Nat)
   (h_collapse : work > collapseThreshold) :
   systemEntropy work stall > collapseThreshold := by
   unfold systemEntropy
-  omega
+  exact Nat.lt_of_lt_of_le h_collapse (Nat.le_add_right work stall)
 
 end ContrarianOracleStallPreventsCatastrophicCollapse

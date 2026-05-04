@@ -62,7 +62,10 @@ def applyInteraction (k : QuantumKernel) (alpha : Nat) : QuantumKernel :=
     interactionChaos := k.interactionChaos + alpha
     validMeasure := by
       have h : k.reversalGravity + k.interactionChaos > 0 := k.validMeasure
-      omega }
+      -- Goal: k.reversalGravity + (k.interactionChaos + alpha) > 0
+      -- Reassociate to ((k.rG + k.iC) + alpha) > 0, then use h ≤ that sum.
+      rw [← Nat.add_assoc]
+      exact Nat.lt_of_lt_of_le h (Nat.le_add_right _ _) }
 
 theorem interaction_shifts_baseline (k : QuantumKernel) :
     ∃ (alpha : Nat), ¬ isCoherenceTrapped (applyInteraction k alpha) := by

@@ -231,7 +231,7 @@ theorem interference_coarsening_zero_vent_requires_repair
   · exact hDebt
   · have hSingle := assumptions.survivorFaithfulQuotient hCollapse
     rw [hSingle] at hMultiplicity
-    omega
+    exact absurd hMultiplicity (by decide)
 
 theorem interference_coarsening_schema
     (assumptions : InterferenceCoarseningAssumptions) :

@@ -20,7 +20,13 @@ theorem next_cycle_debt_eq_add_surplus
     nextCycleDebt scheduledWake recoveryQuota carriedDebt =
       carriedDebt + scheduleSurplus scheduledWake recoveryQuota := by
   unfold nextCycleDebt SleepDebt.residualDebt SleepDebt.totalRecoveryDemand scheduleSurplus
-  omega
+  -- Goal: (scheduledWake + carriedDebt) - recoveryQuota
+  --       = carriedDebt + (scheduledWake - recoveryQuota)
+  -- Step 1: commute the inner sum so recoveryQuota lands on the second summand.
+  rw [Nat.add_comm scheduledWake carriedDebt]
+  -- Step 2: pull recoveryQuota inside via add_sub_assoc, valid since
+  -- hThreshold : recoveryQuota ≤ scheduledWake.
+  exact Nat.add_sub_assoc hThreshold carriedDebt
 
 theorem iterated_debt_eq_mul_surplus
     {scheduledWake recoveryQuota : Nat}

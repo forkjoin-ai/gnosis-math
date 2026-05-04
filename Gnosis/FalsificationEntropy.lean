@@ -384,7 +384,42 @@ theorem admitting_vacuous_claims_raises_measured_entropy
     --           = 5000 - 2000 = 3000 > 0.
     show (n_vac + 1) * 5000 + k * 2000 + n_cont * 4000
         > n_vac * 5000 + (k + 1) * 2000 + n_cont * 4000
-    omega
+    -- Let A = n_vac * 5000 + k * 2000 + n_cont * 4000.
+    -- Then LHS = A + 5000 and RHS = A + 2000, both via Nat.succ_mul +
+    -- add_assoc / add_right_comm, and the strict inequality reduces to
+    -- 2000 < 5000.
+    have hLHS_step1 : (n_vac + 1) * 5000 = n_vac * 5000 + 5000 :=
+      Nat.succ_mul n_vac 5000
+    have hRHS_step1 : (k + 1) * 2000 = k * 2000 + 2000 :=
+      Nat.succ_mul k 2000
+    -- Reshape LHS: n_vac*5000 + 5000 + k*2000 + n_cont*4000
+    --           = (n_vac*5000 + k*2000 + n_cont*4000) + 5000
+    have hLHS_reshape :
+        (n_vac + 1) * 5000 + k * 2000 + n_cont * 4000
+          = (n_vac * 5000 + k * 2000 + n_cont * 4000) + 5000 := by
+      rw [hLHS_step1]
+      -- Goal: n_vac*5000 + 5000 + k*2000 + n_cont*4000
+      --     = n_vac*5000 + k*2000 + n_cont*4000 + 5000
+      rw [Nat.add_right_comm (n_vac * 5000) 5000 (k * 2000)]
+      -- Goal: n_vac*5000 + k*2000 + 5000 + n_cont*4000
+      --     = n_vac*5000 + k*2000 + n_cont*4000 + 5000
+      exact Nat.add_right_comm (n_vac * 5000 + k * 2000) 5000 (n_cont * 4000)
+    -- Reshape RHS: n_vac*5000 + (k*2000 + 2000) + n_cont*4000
+    --           = (n_vac*5000 + k*2000 + n_cont*4000) + 2000
+    have hRHS_reshape :
+        n_vac * 5000 + (k + 1) * 2000 + n_cont * 4000
+          = (n_vac * 5000 + k * 2000 + n_cont * 4000) + 2000 := by
+      rw [hRHS_step1]
+      -- Goal: n_vac*5000 + (k*2000 + 2000) + n_cont*4000
+      --     = n_vac*5000 + k*2000 + n_cont*4000 + 2000
+      rw [← Nat.add_assoc (n_vac * 5000) (k * 2000) 2000]
+      -- Goal: n_vac*5000 + k*2000 + 2000 + n_cont*4000
+      --     = n_vac*5000 + k*2000 + n_cont*4000 + 2000
+      exact Nat.add_right_comm (n_vac * 5000 + k * 2000) 2000 (n_cont * 4000)
+    rw [hLHS_reshape, hRHS_reshape]
+    -- Goal: A + 2000 < A + 5000, which is Nat.add_lt_add_left on 2000 < 5000.
+    exact Nat.add_lt_add_left (by decide : (2000 : Nat) < 5000)
+            (n_vac * 5000 + k * 2000 + n_cont * 4000)
 
 -- ══════════════════════════════════════════════════════════
 -- FALSIFICATION INFORMATION YIELD

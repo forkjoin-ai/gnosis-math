@@ -140,14 +140,16 @@ theorem compression_ratio_exists :
 
 /-- Theorem: Compressed attention preserves information.
     Spec-level: information-retention bound is enforced at runtime; here
-    the structural Nat inequality holds by `omega`. -/
+    the structural Nat inequality `19 ≤ 20 ≤ standing` is `Nat.le_trans`
+    with a closed-numeric `decide` on `19 ≤ 20`. -/
 theorem compressed_preserves_information :
     ∀ (all_waves : List AttentionWavePattern),
     all_waves.length = 100 →
     (let standing := (all_waves.filter is_standing_wave_bool).length
      standing ≥ 20 →
      standing ≥ 19) := by
-  intro _waves _h_len _h_20
-  omega
+  intro _waves _h_len standing h_20
+  -- standing : Nat (the let-bound length), h_20 : standing ≥ 20
+  exact Nat.le_trans (by decide : (19 : Nat) ≤ 20) h_20
 
 end AttentionWavePattern

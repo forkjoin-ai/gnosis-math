@@ -35,9 +35,14 @@ theorem arithmetic_is_gnosis (n m : Nat) :
     gnosisAdd n m = n + m := by
   induction m with
   | zero => rfl
-  | succ k ih => 
-      simp [gnosisAdd, gnosisSucc, ih]
-      omega
+  | succ k ih =>
+      -- gnosisAdd n (k+1) = gnosisSucc (gnosisAdd n k) by defn of gnosisAdd
+      -- gnosisSucc (gnosisAdd n k) = (gnosisAdd n k) + 1 by defn of gnosisSucc
+      -- (gnosisAdd n k) + 1 = (n + k) + 1 by ih
+      -- (n + k) + 1 = n + (k + 1) is definitional (Nat.add reduces on right arg)
+      show gnosisSucc (gnosisAdd n k) = n + (k + 1)
+      show (gnosisAdd n k) + 1 = n + (k + 1)
+      exact congrArg (· + 1) ih
 
 -- ═══════════════════════════════════════════════════════════════════════
 -- (2) The Arithmetic Sandwich

@@ -21,8 +21,8 @@ structure Particle where
   stable : persists pair = true
 
 -- A particle exists (constructive witness: pos/neg pair)
-theorem particles_exist : ∃ (_ : Particle), True :=
-  ⟨⟨⟨.pos, .neg⟩, by rfl⟩, trivial⟩
+theorem particles_exist : ∃ p : Particle, persists p.pair = true :=
+  ⟨⟨⟨.pos, .neg⟩, by rfl⟩, rfl⟩
 
 -- Exactly two ground states, two excited states
 theorem two_ground_two_excited :

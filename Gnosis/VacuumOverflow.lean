@@ -225,7 +225,7 @@ theorem cup_runneth_over_theorem :
         rw [h_eq]; exact vacuum_has_zero_score
       have h_pos : buleyUnitScore (first_lift .waste) > 0 :=
         first_lift_is_nonzero .waste
-      omega
+      exact Nat.lt_irrefl 0 (h_score ▸ h_pos)
   · intro state h_nonvac
     exact nonvacuum_always_branches state h_nonvac
   · intro steps

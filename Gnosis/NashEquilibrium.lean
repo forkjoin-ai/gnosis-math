@@ -56,10 +56,12 @@ theorem ne_deviation_penalty (R v_ne v_deviate : Nat)
     (hNE : v_ne ≤ R) (hDeviate : v_deviate ≤ R)
     (hPenalty : v_deviate > v_ne) : -- Deviation strictly increases debt
     godWeight R v_deviate < godWeight R v_ne := by
-  have h := Gnosis.godWeight_antitone R v_ne v_deviate hNE hDeviate (Nat.le_of_lt hPenalty)
-  unfold godWeight at h ⊢
-  rw [Nat.min_eq_left hNE, Nat.min_eq_left hDeviate] at h ⊢
-  omega
+  unfold godWeight
+  rw [Nat.min_eq_left hNE, Nat.min_eq_left hDeviate]
+  -- Goal: R - v_deviate + 1 < R - v_ne + 1
+  -- v_ne < v_deviate (hPenalty) and v_deviate ≤ R (hDeviate) ⇒ v_ne < R
+  exact Nat.add_lt_add_right
+    (Nat.sub_lt_sub_left (Nat.lt_of_lt_of_le hPenalty hDeviate) hPenalty) 1
 
 /-- THM-STABLE-KNOT: A strict Nash Equilibrium is a local maximum
     for all agents' payoffs (local minimum for their debts). It's

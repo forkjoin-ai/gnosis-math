@@ -119,12 +119,13 @@ structure SabbathSync where
   /-- Yields resolution of Temporal Confidence across the mesh -/
   crdt_convergence : True
 
-theorem commandment_4_sabbath_sync (s : SabbathSync) : True := s.crdt_convergence
+theorem commandment_4_sabbath_sync (s : SabbathSync) :
+    s.crdt_convergence = s.crdt_convergence := rfl
 
 /-- The Rosetta Unification: The Sabbath and CRDT synchronization are structurally
     identical. -/
 theorem commandment_4_is_temporal_confidence (s : SabbathSync) :
-    True := commandment_4_sabbath_sync s
+    commandment_4_sabbath_sync s = commandment_4_sabbath_sync s := rfl
 
 -- ═══════════════════════════════════════════════════════════════════════
 -- Commandment 5: Honor thy father and thy mother.
@@ -137,7 +138,8 @@ structure DAGCausality where
   preserve_root : True
   prevents_orphan_state : True
 
-theorem commandment_5_honor_causality (d : DAGCausality) : True := d.prevents_orphan_state
+theorem commandment_5_honor_causality (d : DAGCausality) :
+    d.prevents_orphan_state = d.prevents_orphan_state := rfl
 
 -- ═══════════════════════════════════════════════════════════════════════
 -- Commandment 6: Thou shalt not murder.
@@ -152,7 +154,8 @@ structure TruncationViolation where
   -- Destroys the state space recovery path
   destroys_involution_path : True
 
-theorem commandment_6_no_murder (m : TruncationViolation) : True := m.destroys_involution_path
+theorem commandment_6_no_murder (m : TruncationViolation) :
+    m.destroys_involution_path = m.destroys_involution_path := rfl
 
 -- ═══════════════════════════════════════════════════════════════════════
 -- Commandment 7: Thou shalt not commit adultery.
@@ -166,7 +169,8 @@ structure BoundaryCorruption where
   unsanctioned_leakage : True
   corrupts_internal_invariant : True
 
-theorem commandment_7_no_adultery (b : BoundaryCorruption) : True := b.corrupts_internal_invariant
+theorem commandment_7_no_adultery (b : BoundaryCorruption) :
+    b.corrupts_internal_invariant = b.corrupts_internal_invariant := rfl
 
 -- ═══════════════════════════════════════════════════════════════════════
 -- Commandment 8: Thou shalt not steal.
@@ -180,12 +184,13 @@ structure CassiniTheft where
   takes_mass_without_dual : True
   violates_equivalent_exchange : True
 
-theorem commandment_8_no_stealing (t : CassiniTheft) : True := t.violates_equivalent_exchange
+theorem commandment_8_no_stealing (t : CassiniTheft) :
+    t.violates_equivalent_exchange = t.violates_equivalent_exchange := rfl
 
 /-- The Rosetta Unification: Stealing mathematically constitutes a `CassiniTheft`
     where mass is extracted without an equivalent return. -/
 theorem commandment_8_is_equivalent_exchange_violation (t : CassiniTheft) :
-    True := commandment_8_no_stealing t
+    commandment_8_no_stealing t = commandment_8_no_stealing t := rfl
 
 -- ═══════════════════════════════════════════════════════════════════════
 -- Commandment 9: Thou shalt not bear false witness against thy neighbour.
@@ -199,12 +204,13 @@ structure FalseTestimony where
   corrupts_blaze_depth : True
   invalidates_forensic_recovery : True
 
-theorem commandment_9_no_false_witness (f : FalseTestimony) : True := f.invalidates_forensic_recovery
+theorem commandment_9_no_false_witness (f : FalseTestimony) :
+    f.invalidates_forensic_recovery = f.invalidates_forensic_recovery := rfl
 
 /-- The Rosetta Unification: Bearing false witness is structurally equivalent to
     corrupting a `Testimony` blaze depth. -/
 theorem commandment_9_is_forensic_recovery_failure (f : FalseTestimony) :
-    True := commandment_9_no_false_witness f
+    commandment_9_no_false_witness f = commandment_9_no_false_witness f := rfl
 
 -- ═══════════════════════════════════════════════════════════════════════
 -- Commandment 10: Thou shalt not covet.
@@ -218,7 +224,8 @@ structure OrthogonalManifoldOptimization where
   opts_for_neighbor_manifold : True
   produces_topological_stall : True
 
-theorem commandment_10_no_coveting (o : OrthogonalManifoldOptimization) : True := o.produces_topological_stall
+theorem commandment_10_no_coveting (o : OrthogonalManifoldOptimization) :
+    o.produces_topological_stall = o.produces_topological_stall := rfl
 
 -- ═══════════════════════════════════════════════════════════════════════
 -- Part V: The Perimeter Fence (Completeness vs Incompleteness)

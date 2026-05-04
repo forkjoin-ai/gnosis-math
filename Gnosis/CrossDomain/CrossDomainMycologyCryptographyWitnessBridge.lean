@@ -9,12 +9,12 @@ theorem witness_bridge (nodes edges blocks links : Nat)
   (h_nodes : nodes = blocks) (h_edges : edges = links) :
   mycelialConnections nodes edges = cryptographicHashes blocks links := by
   unfold mycelialConnections cryptographicHashes
-  omega
+  exact h_nodes ▸ h_edges ▸ rfl
 
 theorem gap_closure (nodes edges gap : Nat)
   (h_edges : edges ≥ gap) :
   mycelialConnections nodes edges ≥ nodes + gap := by
   unfold mycelialConnections
-  omega
+  exact Nat.add_le_add_left h_edges nodes
 
 end CrossDomainMycologyCryptographyWitnessBridge

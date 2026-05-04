@@ -13,5 +13,8 @@ theorem positive_debt_embedding_yields_strict_majority
     2 * quorumFailureBudgetFromPositiveDebt debt <
       quorumReplicaCountFromPositiveDebt debt := by
   unfold quorumFailureBudgetFromPositiveDebt quorumReplicaCountFromPositiveDebt
-  omega
+  -- Goal: 2 * (debt - 1) < 2 * debt
+  -- debt - 1 < debt because debt > 0; then multiply by 2 > 0.
+  exact (Nat.mul_lt_mul_left (by decide : 0 < 2)).mpr
+    (Nat.sub_lt hDebt (by decide : 0 < 1))
 

@@ -180,7 +180,14 @@ theorem triton_is_atomic :
   · decide
   · decide
   · intro p h
-    omega
+    -- p < 3 ⇒ p ∈ {0, 1, 2}, by structural cases on p.
+    match p, h with
+    | 0, _ => exact Or.inl rfl
+    | 1, _ => exact Or.inr (Or.inl rfl)
+    | 2, _ => exact Or.inr (Or.inr rfl)
+    | (n + 3), hLt =>
+        -- n + 3 < 3 is impossible: Nat.not_succ_le_self chains.
+        exact absurd hLt (Nat.not_lt_of_le (Nat.le_add_left 3 n))
 
 /-! ## Master witness -/
 

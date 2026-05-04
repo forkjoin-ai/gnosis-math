@@ -63,10 +63,10 @@ def intrinsicReady (_node : SwarmNode) : Prop :=
   For any finite energy state, there exists a threshold that is not satisfied.
 -/
 theorem threshold_bottleneck_exists (node : SwarmNode) :
-  ∃ (threshold : Nat), ¬thresholdReady node threshold := by
-  use node.energy + 1
-  intro hReady
-  exact Nat.not_lt_of_ge hReady (Nat.lt_add_one node.energy)
+  ∃ (threshold : Nat), ¬thresholdReady node threshold :=
+  ⟨node.energy + 1, fun hReady =>
+    -- hReady : thresholdReady node (node.energy + 1), i.e. node.energy ≥ node.energy + 1
+    Nat.not_lt_of_ge hReady (Nat.lt_add_one node.energy)⟩
 
 /-- 
   Unconstrained State: A manifold state satisfying intrinsic availability.
@@ -114,34 +114,22 @@ theorem saturation_implies_pedagogical_cutoff
   rw [hZero]
   exact Nat.not_lt_zero 0
 
-/-- 
+/--
   The fundamental impossibility of "Universal" Threshold Closure:
-  There is no finite energy threshold that satisfies all possible nodes.
+  There is no positive finite energy threshold that satisfies all possible nodes.
+  (The trivial threshold `0` is admitted by every node by reflexivity, so
+  positivity is the natural premise — a "threshold" of `0` does not filter.)
 -/
 theorem no_universal_threshold_closure :
   ¬∃ (universalThreshold : Nat),
-    ∀ (node : SwarmNode), thresholdReady node universalThreshold := by
-  intro hUniversal
-  cases hUniversal with
-  | intro ut hAll =>
+    0 < universalThreshold ∧
+    ∀ (node : SwarmNode), thresholdReady node universalThreshold :=
+  fun ⟨ut, hUtPos, hAll⟩ =>
     let zeroNode : SwarmNode := ⟨0, 0, 0, 0, 0⟩
+    -- zeroNode.energy = 0 is reflexive; readiness specialises to 0 ≥ ut.
     have hZeroReady : thresholdReady zeroNode ut := hAll zeroNode
-    by_cases hUt : ut > 0
-    · have hZeroEnergy : zeroNode.energy = 0 := rfl
-      have hContradiction : 0 ≥ ut := by rw [←hZeroEnergy]; exact hZeroReady
-      exact Nat.not_lt_of_ge hContradiction hUt
-    · -- For a degenerate threshold ut = 0, we demonstrate that non-trivial 
-      -- thresholds still admit bottlenecks.
-      let higherThreshold := ut + 1
-      have hHigher : ¬∀ (node : SwarmNode), thresholdReady node higherThreshold := by
-        intro hAllHigher
-        have hZeroReadyHigher : thresholdReady zeroNode higherThreshold := hAllHigher zeroNode
-        exact Nat.not_lt_of_ge hZeroReadyHigher (Nat.lt_add_one ut)
-      -- Thresholds can be increased arbitrarily, showing non-universality.
-      have hOne : ¬thresholdReady zeroNode 1 := Nat.not_le_of_gt (Nat.succ_pos 0)
-      if hUtZero : ut = 0 then
-         skip
-      exact Nat.not_lt_of_ge hZeroReady (Nat.pos_of_ne_zero (by intro h; rw [h] at hUt; exact hUt (Nat.zero_lt_succ 0)))
+    -- thresholdReady zeroNode ut unfolds to (0 : Nat) ≥ ut, so ut ≤ 0.
+    Nat.not_lt_of_ge hZeroReady hUtPos
 
 /-- 
   Thermodynamic Buffer: The prediction metric for training stability.
@@ -172,7 +160,12 @@ theorem stable_buffer_enables_learning
     (hStable : isPredictablyStable node failures) :
     learnFromFailure (nodeAfterFailures node failures) := by
   unfold isPredictablyStable thermodynamicBuffer learnFromFailure nodeAfterFailures energyAfterFailures at *
-  omega
+  -- hStable : 0 < (node.energy : Int) - (failures : Int)
+  -- ⊢ 0 < node.energy - failures
+  -- Bridge Int positivity of difference to Nat strict order, then to Nat sub positivity.
+  have hLtInt : (failures : Int) < (node.energy : Int) := Int.lt_of_sub_pos hStable
+  have hLtNat : failures < node.energy := Int.ofNat_lt.mp hLtInt
+  exact Nat.sub_pos_of_lt hLtNat
 
 /-- 
   Theorem: Buffer exhaustion predicts the exact transition to the 
@@ -183,9 +176,14 @@ theorem buffer_exhaustion_predicts_cutoff
     (hExhausted : thermodynamicBuffer node failures ≤ 0) :
     pointOfNoReturn node failures := by
   unfold thermodynamicBuffer at hExhausted
+  -- hExhausted : (node.energy : Int) - (failures : Int) ≤ 0
   have hSat : failureSaturated node failures := by
     unfold failureSaturated
-    omega
+    -- ⊢ node.energy ≤ failures
+    -- Bridge Int non-positivity of difference back to Nat order via the cast.
+    have hLeInt : (node.energy : Int) ≤ (failures : Int) :=
+      Int.le_of_sub_nonpos hExhausted
+    exact Int.ofNat_le.mp hLeInt
   exact saturation_implies_pedagogical_cutoff node failures hSat
 
 end TrainingSaturation

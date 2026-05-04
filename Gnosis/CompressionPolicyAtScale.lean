@@ -176,7 +176,8 @@ theorem derived_policy_satisfies_invariants (d : Nat) :
     policy_satisfies_lifecycle_invariants (derive_policy d) = true := by
   unfold policy_satisfies_lifecycle_invariants derive_policy
   have h8 : (8 : Nat) ≤ max 8 (d * 8 / 1000) := Nat.le_max_left _ _
-  have hpos : 0 < max 8 (d * 8 / 1000) := by omega
+  have hpos : 0 < max 8 (d * 8 / 1000) :=
+    Nat.lt_of_lt_of_le (by decide : (0 : Nat) < 8) h8
   by_cases h : d ≤ 1024
   · simp [h, hpos]
   · simp [h, hpos]

@@ -93,7 +93,7 @@ theorem word_meaning_is_context_interference :
     word.amplitude := by
   intro word context _h_phase
   simp only [constructive_interference]
-  omega
+  exact Nat.le_add_right word.amplitude context.amplitude
 
 /-- Corollary: Constructive interference preserves word frequency. -/
 theorem constructive_preserves_word_freq :
@@ -206,7 +206,7 @@ theorem constructive_increases_amplitude :
     (constructive_interference w1 w2).amplitude ≥ w1.amplitude := by
   intro w1 w2
   simp only [constructive_interference]
-  omega
+  exact Nat.le_add_right w1.amplitude w2.amplitude
 
 /-- Theorem: Stable meanings have positive amplitude. -/
 theorem stable_meanings_are_positive :

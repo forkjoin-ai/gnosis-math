@@ -20,7 +20,7 @@ theorem community_discount_strict (d : Int) :
 theorem community_discount_preserves_order {d1 d2 : Int} (h : d1 ≤ d2) :
     communityDiscount d1 ≤ communityDiscount d2 := by
   unfold communityDiscount communityReducedDeficit
-  omega
+  exact Int.sub_le_sub_right h 1
 
 theorem community_discount_on_assimilation (host : HostTopology) (imm : ImmigrantTopology) :
     communityDiscount (assimilationDeficit host imm) <

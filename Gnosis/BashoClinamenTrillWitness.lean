@@ -117,7 +117,7 @@ theorem haiku_ropelength : HaikuForm = 17 := rfl
     the full arc: stillness → sting → trill. -/
 theorem haiku_is_minimal_statement :
     HaikuForm = 17 ∧ Stillness ∧ (∃ n > 0, Trill n > 0) := by
-  refine ⟨rfl, trivial, ⟨1, by omega, by simp [Trill, Sting]⟩⟩
+  refine ⟨rfl, trivial, ⟨1, Nat.succ_pos 0, by simp [Trill, Sting]⟩⟩
 
 -- ══════════════════════════════════════════════════════════
 -- THE UNIFIED THEOREM: BASHO'S INSIGHT

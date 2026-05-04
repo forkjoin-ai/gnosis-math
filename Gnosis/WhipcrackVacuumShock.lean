@@ -98,8 +98,12 @@ theorem bule_whipcrack_at_golden_ratio :
       -- exceeds the integer-quantized golden ratio threshold.
       bule_shock_condition b ↔ buleyUnitScore b ≥ 2 := by
   intro b
-  simp [bule_shock_condition, bule_sound_velocity, bule_wave_velocity]
-  omega
+  -- Unfold definitions: `bule_shock_condition b` reduces to
+  --   `bule_sound_velocity b > bule_wave_velocity`
+  -- = `buleyUnitScore b > 1` = `1 < buleyUnitScore b`
+  -- Goal becomes `1 < buleyUnitScore b ↔ 2 ≤ buleyUnitScore b`.
+  -- In Lean 4 Init, `1 < n` is definitionally `Nat.succ 1 ≤ n` = `2 ≤ n`.
+  exact Iff.rfl
 
 -- ══════════════════════════════════════════════════════════
 -- THE SONIC BOOM OF TIME: VACUUM SHOCK

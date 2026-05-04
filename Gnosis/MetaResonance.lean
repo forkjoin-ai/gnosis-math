@@ -39,12 +39,12 @@ theorem magnetism_zero_at_resonance (c : Nat) :
   simp [resonance_force]
 
 /-- Principle 4: The 'Rustic Church' (Init-Only) Sufficiency -/
-def is_rustic_church_sufficient : Prop := 
-  -- Every claim in this module is provable in Init + kernel decide
-  True
+def is_rustic_church_sufficient : Prop :=
+  ∀ s : IntentionalState, mudraToConstant s.mudra = s.manifold_constant
 
 theorem rustic_church_master : is_rustic_church_sufficient := by
-  trivial
+  intro s
+  exact s.is_resonant
 
 /-- 
   The Grand Synthesis: 

@@ -469,8 +469,8 @@ theorem sovereign_sieve_enforces_anti_theory_directive
     simp at h
     -- After `simp`, `h` is `e.witness_count + e.counterexamples = 0`
     -- (or, in some versions, a conjunction). Robustly extract both.
-    have hW : e.witness_count = 0 := by omega
-    have hC : e.counterexamples = 0 := by omega
+    have hW : e.witness_count = 0 := h.1
+    have hC : e.counterexamples = 0 := h.2
     -- Walk the four branches of apply_sieve.
     rw [hM, hC, hW]
     decide

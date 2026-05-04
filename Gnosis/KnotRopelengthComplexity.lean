@@ -203,7 +203,8 @@ theorem betti_lattice_gap_explicit (k : Nat) (hk : k ≤ 10) :
   | 10 => exact gap_polynomial_degree_10
   | k + 11 =>
       -- hk : k + 11 ≤ 10, which is absurd for any k : Nat
-      omega
+      -- 11 ≤ k + 11 by Nat.le_add_left, transitivity gives 11 ≤ 10, contradiction
+      exact False.elim (absurd (Nat.le_trans (Nat.le_add_left 11 k) hk) (by decide))
 
 /-- For every polynomial degree k up to 10, the NP ropelength exceeds it.
     This follows from the explicit witnesses and the exponential growth rate of 2^n. -/

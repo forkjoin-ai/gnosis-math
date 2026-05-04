@@ -59,7 +59,7 @@ def isMixed (k : MixingKernel) : Prop :=
 def applyStep (k : MixingKernel) (n : Nat) : MixingKernel :=
   { stepsTaken := k.stepsTaken + n
     domain := k.domain
-    validMeasure := by omega }
+    validMeasure := Nat.zero_le _ }
 
 theorem threshold_is_reachable (k : MixingKernel) :
     ∃ (n : Nat), isMixed (applyStep k n) := by

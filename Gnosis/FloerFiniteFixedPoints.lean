@@ -66,7 +66,7 @@ def swap01Fin3 : Fin 3 → Fin 3 := fun i =>
   | 0, _ => ⟨1, by decide⟩
   | 1, _ => ⟨0, by decide⟩
   | 2, _ => ⟨2, by decide⟩
-  | _ + 3, h => absurd h (by omega)
+  | n + 3, h => absurd h (Nat.not_lt_of_le (Nat.le_add_left 3 n))
 
 /-- The swap-and-fix map on `Fin 3` has exactly one fixed point. -/
 theorem fix_swap01_fin3 : fixCount 3 swap01Fin3 = 1 := by

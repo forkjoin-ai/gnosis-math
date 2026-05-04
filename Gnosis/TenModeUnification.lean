@@ -67,8 +67,12 @@ def tenModeKenoma : Kenoma 10 where
   total_ge := by decide
   bounded := fun _ => by decide
 
-theorem ten_mode_exists : ∃ (_ : Kenoma 10), True :=
-  ⟨tenModeKenoma, trivial⟩
+theorem ten_mode_exists : ∃ k : Kenoma 10, k.total = 10 ∧ ∀ i, k.rejections i = 0 :=
+  ⟨tenModeKenoma, by
+    constructor
+    · rfl
+    · intro i
+      rfl⟩
 
 -- Exploration budget for 10 modes = 9
 theorem exploration_budget_is_nine : 10 - 1 = 9 := by decide
