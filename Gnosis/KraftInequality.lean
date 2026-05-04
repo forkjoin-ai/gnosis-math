@@ -126,9 +126,10 @@ theorem empty_code_minimum (c : PrefixFreeCode)
     (hMinimal : c.usedAddresses = 1) :
     godWeight c.totalAddresses c.wastedCapacity = 2 := by
   unfold PrefixFreeCode.wastedCapacity godWeight
-  have h := c.kraft
-  rw [hMinimal] at h ⊢
-  omega
+  have h : 1 ≤ c.totalAddresses := by rw [← hMinimal]; exact c.kraft
+  rw [hMinimal,
+      Nat.min_eq_left (Nat.sub_le c.totalAddresses 1),
+      Nat.sub_sub_self h]
 
 /-- THM-WASTED-CAPACITY-BOUNDED: Wasted capacity ≤ total - 1.
     At least 1 address is always used (the clinamen prevents
@@ -136,7 +137,8 @@ theorem empty_code_minimum (c : PrefixFreeCode)
 theorem wasted_capacity_bounded (c : PrefixFreeCode)
     (hUsed : c.usedAddresses ≥ 1) :
     c.wastedCapacity ≤ c.totalAddresses - 1 := by
-  unfold PrefixFreeCode.wastedCapacity; omega
+  unfold PrefixFreeCode.wastedCapacity
+  exact Nat.sub_le_sub_left hUsed c.totalAddresses
 
 -- ═══════════════════════════════════════════════════════════════════════
 -- §4. Shannon Entropy Connection
@@ -157,11 +159,13 @@ theorem shannon_lower_bound (numSymbols usedAddresses : Nat)
     
     Verified for specific cases. -/
 -- 4 symbols: need 4 addresses (2-bit code: 00, 01, 10, 11)
-theorem shannon_4_symbols : 4 ≤ 2^2 := by omega
+theorem shannon_4_symbols : 4 ≤ 2^2 := by decide
+
 -- 8 symbols: need 8 addresses (3-bit code)
-theorem shannon_8_symbols : 8 ≤ 2^3 := by omega
+theorem shannon_8_symbols : 8 ≤ 2^3 := by decide
+
 -- 5 symbols: need 8 addresses (3-bit code, 3 wasted)
-theorem shannon_5_symbols : 5 ≤ 2^3 ∧ 2^3 - 5 = 3 := by omega
+theorem shannon_5_symbols : 5 ≤ 2^3 ∧ 2^3 - 5 = 3 := by decide
 
 -- ═══════════════════════════════════════════════════════════════════════
 -- §5. McMillan Extension: Uniquely Decodable
@@ -192,7 +196,8 @@ theorem mcmillan_equivalence (usedPF usedUD : Nat)
 theorem fibonacci_satisfies_kraft (used total : Nat)
     (hKraft : used ≤ total) :
     godWeight total (total - used) = used + 1 := by
-  unfold godWeight; omega
+  unfold godWeight
+  rw [Nat.min_eq_left (Nat.sub_le _ _), Nat.sub_sub_self hKraft]
 
 /-- THM-FIBONACCI-NOT-COMPLETE: Fibonacci coding is NOT a complete
     code (strict Kraft inequality). The "11" terminator and
@@ -200,7 +205,7 @@ theorem fibonacci_satisfies_kraft (used total : Nat)
     capacity is the cost of self-delimiting + error robustness. -/
 theorem fibonacci_not_complete (total used : Nat)
     (hStrict : used < total) :
-    total - used ≥ 1 := by omega
+    total - used ≥ 1 := Nat.sub_pos_of_lt hStrict
 
 -- ═══════════════════════════════════════════════════════════════════════
 -- §7. Kraft as Probability
@@ -218,7 +223,8 @@ theorem kraft_probability (used total : Nat) (hKraft : used ≤ total) :
     -- Used fraction ≤ 1 (in discrete: used ≤ total)
     used ≤ total ∧
     -- Leftover = total - used (the complement)
-    total - used + used = total := by omega
+    total - used + used = total :=
+  ⟨hKraft, Nat.sub_add_cancel hKraft⟩
 
 -- ═══════════════════════════════════════════════════════════════════════
 -- §8. Master Theorem

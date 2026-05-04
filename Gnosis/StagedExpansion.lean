@@ -30,7 +30,8 @@ theorem staged_frontier_area_matches_naive (peak left right : Nat) :
     stagedExpansionFrontierArea peak left right =
       naiveWidenFrontierArea peak (left + right) := by
   unfold stagedExpansionFrontierArea naiveWidenFrontierArea frontierArea3
-  omega
+  -- (1 + left) + peak + (1 + right) = 1 + (peak + (left + right)) + 1; pure AC.
+  ac_rfl
 
 theorem staged_peak_preserved {peak left right : Nat}
     (hPeak : 0 < peak)
@@ -38,9 +39,13 @@ theorem staged_peak_preserved {peak left right : Nat}
     (hRight : right <= peak - 1) :
     peakFrontier3 (1 + left) peak (1 + right) = peak := by
   have hLeftLe : 1 + left <= peak := by
-    omega
+    rw [Nat.add_comm 1 left]
+    exact Nat.le_trans (Nat.add_le_add_right hLeft 1)
+      (Nat.le_of_eq (Nat.sub_add_cancel hPeak))
   have hRightLe : 1 + right <= peak := by
-    omega
+    rw [Nat.add_comm 1 right]
+    exact Nat.le_trans (Nat.add_le_add_right hRight 1)
+      (Nat.le_of_eq (Nat.sub_add_cancel hPeak))
   unfold peakFrontier3
   rw [Nat.max_eq_left hRightLe]
   exact Nat.max_eq_right hLeftLe
@@ -56,8 +61,8 @@ theorem staged_envelope_preserved {peak left right : Nat}
 theorem naive_widen_envelope_closed_form {peak budget : Nat}
     (hPeak : 0 < peak) :
     naiveWidenEnvelope peak budget = 3 * (peak + budget) := by
-  have hPeakBudgetGeOne : 1 <= peak + budget := by
-    omega
+  have hPeakBudgetGeOne : 1 <= peak + budget :=
+    Nat.le_trans hPeak (Nat.le_add_right peak budget)
   unfold naiveWidenEnvelope envelopeArea3 peakFrontier3
   rw [Nat.max_eq_left hPeakBudgetGeOne]
   rw [Nat.max_eq_right hPeakBudgetGeOne]
@@ -66,14 +71,14 @@ theorem staged_budget_supported_by_positive_deficit
     {left right deficit : Nat}
     (hBudgetPositive : 0 < left + right)
     (hBudgetFits : left + right <= deficit) :
-    0 < deficit := by
-  omega
+    0 < deficit := Nat.lt_of_lt_of_le hBudgetPositive hBudgetFits
 
 theorem staged_budget_feasible {peak left right : Nat}
     (hLeft : left <= peak - 1)
     (hRight : right <= peak - 1) :
     left + right <= 2 * (peak - 1) := by
-  omega
+  rw [Nat.two_mul]
+  exact Nat.add_le_add hLeft hRight
 
 theorem staged_wallace_closed_form {peak left right : Nat}
     (hPeak : 0 < peak)
@@ -90,6 +95,8 @@ theorem staged_wallace_closed_form {peak left right : Nat}
       simpa [stagedExpansionEnvelope] using
         staged_envelope_preserved hPeak hLeft hRight
     rw [hEnvelope]
+    -- TODO(rustic-church): 3 * peak - (peak + (left + right) + 2) = 2 * (peak - 1) - (left + right)
+    -- multi-step Nat sub identity; omega closes directly.
     omega
   · unfold stagedExpansionWallaceDenominator wallaceDenominator3
     simpa [stagedExpansionEnvelope] using
@@ -108,16 +115,21 @@ theorem naive_widen_wallace_closed_form {peak budget : Nat}
       simpa [naiveWidenEnvelope] using
         naive_widen_envelope_closed_form (peak := peak) (budget := budget) hPeak
     rw [hEnvelope]
+    -- TODO(rustic-church): same Nat sub identity as the staged form.
     omega
   · unfold naiveWidenWallaceDenominator wallaceDenominator3
     simpa [naiveWidenEnvelope] using
       naive_widen_envelope_closed_form (peak := peak) (budget := budget) hPeak
 
 theorem staged_frontier_area_positive {peak left right : Nat}
-    (hPeak : 0 < peak) :
+    (_hPeak : 0 < peak) :
     0 < stagedExpansionFrontierArea peak left right := by
   unfold stagedExpansionFrontierArea frontierArea3
-  omega
+  -- (1 + left) + peak + (1 + right) ≥ 1 + 0 + 0 + 0 = 1 > 0.
+  exact Nat.lt_of_lt_of_le Nat.one_pos
+    (Nat.le_trans (Nat.le_add_right 1 left)
+      (Nat.le_trans (Nat.le_add_right (1 + left) peak)
+        (Nat.le_add_right (1 + left + peak) (1 + right))))
 
 theorem staged_fill_dominates_naive
     {peak left right deficit : Nat}
@@ -138,7 +150,9 @@ theorem staged_fill_dominates_naive
         naiveWidenEnvelope peak (left + right) := by
     rw [staged_envelope_preserved hPeak hLeft hRight]
     rw [naive_widen_envelope_closed_form hPeak]
-    omega
+    -- 3 * peak < 3 * (peak + (left + right)): from positive budget.
+    exact Nat.mul_lt_mul_of_pos_left
+      (Nat.lt_add_of_pos_right hBudgetPositive) (by decide : (0 : Nat) < 3)
   have hAreaPos : 0 < stagedExpansionFrontierArea peak left right :=
     staged_frontier_area_positive hPeak
   have hNaiveAreaPos : 0 < naiveWidenFrontierArea peak (left + right) := by

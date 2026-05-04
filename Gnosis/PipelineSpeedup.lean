@@ -72,9 +72,9 @@ theorem seq_time_is_NB (cfg : PipelineConfig) :
 theorem pipeline_time_pos (cfg : PipelineConfig) :
     0 < pipelineTime cfg := by
   unfold pipelineTime
-  have hN := cfg.hN
-  have hB := cfg.hB
-  omega
+  -- 0 < N + B - 1, with N ≥ 1, B ≥ 1: N + B ≥ 2, so N + B - 1 ≥ 1 > 0.
+  have hSum : 2 ≤ cfg.N + cfg.B := Nat.add_le_add cfg.hN cfg.hB
+  exact Nat.le_sub_of_add_le hSum
 
 /-- Anti-thesis refutation (upper bound): seqTime ≤ N × B = B × N. -/
 theorem pipeline_speedup_upper_tasks (cfg : PipelineConfig) :
@@ -106,14 +106,14 @@ theorem single_task_no_speedup (cfg : PipelineConfig) (hN1 : cfg.N = 1) :
 
 /-- Configuration with one extra task (preserves positivity). -/
 def addTask (cfg : PipelineConfig) : PipelineConfig :=
-  { N := cfg.N + 1, B := cfg.B, hN := by omega, hB := cfg.hB }
+  { N := cfg.N + 1, B := cfg.B, hN := Nat.succ_pos _, hB := cfg.hB }
 
 /-- Adding an independent task increases sequential time by B. -/
 theorem seq_time_grows_with_task (cfg : PipelineConfig) :
     seqTime cfg ≤ seqTime (addTask cfg) := by
   unfold seqTime addTask
   show cfg.N * cfg.B ≤ (cfg.N + 1) * cfg.B
-  exact Nat.mul_le_mul_right cfg.B (by omega)
+  exact Nat.mul_le_mul_right cfg.B (Nat.le_succ _)
 
 /-- Pipeline time grows more slowly than sequential time as tasks increase. -/
 theorem pipeline_scales_sublinearly (cfg : PipelineConfig) :
@@ -123,10 +123,8 @@ theorem pipeline_scales_sublinearly (cfg : PipelineConfig) :
 /-- Two independent pipelines composed give additive speedup. -/
 theorem pipeline_speedup_additive (cfg1 cfg2 : PipelineConfig) :
     pipelineTime cfg1 + pipelineTime cfg2 ≤
-    seqTime cfg1 + seqTime cfg2 := by
-  have h1 := pipeline_speedup_lower cfg1
-  have h2 := pipeline_speedup_lower cfg2
-  omega
+    seqTime cfg1 + seqTime cfg2 :=
+  Nat.add_le_add (pipeline_speedup_lower cfg1) (pipeline_speedup_lower cfg2)
 
 /-- In a fork/race/fold scheduler, pipelined tasks finish before sequential. -/
 theorem fold_latency_bounded (cfg : PipelineConfig) :

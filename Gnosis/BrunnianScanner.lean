@@ -57,7 +57,9 @@ theorem brunnian_coupling_detectable (b : BrunnianBeta1) (h : isBrunnian b) :
 /-- Scanner rule soundness: a Brunnian system has positive beta1. -/
 theorem scanner_rule_soundness (b : BrunnianBeta1) (h : isBrunnian b) :
     0 < b.full := by
-  unfold isBrunnian at h; omega
+  unfold isBrunnian at h
+  -- h : pairwiseSum < full ⇒ 0 ≤ pairwiseSum < full ⇒ 0 < full.
+  exact Nat.lt_of_le_of_lt (Nat.zero_le _) h
 
 /-- Completeness: the rule fires if and only if the gap is positive. -/
 theorem emergent_coupling_pos_iff_brunnian (b : BrunnianBeta1) :
@@ -67,13 +69,15 @@ theorem emergent_coupling_pos_iff_brunnian (b : BrunnianBeta1) :
 /-- The emergent gap is positive whenever the system is Brunnian. -/
 theorem emergent_gap_pos (b : BrunnianBeta1) (h : isBrunnian b) :
     0 < emergentGap b := by
-  unfold emergentGap isBrunnian at *; omega
+  unfold emergentGap isBrunnian at *
+  exact Nat.sub_pos_of_lt h
 
 /-- A non-Brunnian system has zero emergent gap. -/
 theorem non_brunnian_zero_gap (b : BrunnianBeta1)
     (h : b.full ≤ b.pairwiseSum) :
     emergentGap b = 0 := by
-  unfold emergentGap; omega
+  unfold emergentGap
+  exact Nat.sub_eq_zero_of_le h
 
 /-- Adding more crossings to the full system preserves Brunnian status. -/
 theorem brunnian_nary_detectable (b : BrunnianBeta1) (extra : Nat)
@@ -81,14 +85,14 @@ theorem brunnian_nary_detectable (b : BrunnianBeta1) (extra : Nat)
     isBrunnian { b with full := b.full + extra } := by
   unfold isBrunnian at *
   show b.pairwiseSum < b.full + extra
-  omega
+  exact Nat.lt_of_lt_of_le h (Nat.le_add_right b.full extra)
 
 /-- Pairwise sum grows when new pairwise terms are added. -/
 theorem brunnian_sum_monotone (b : BrunnianBeta1) (extra : Nat) :
     b.pairwiseSum ≤
     { b with pairwiseSum := b.pairwiseSum + extra }.pairwiseSum := by
   show b.pairwiseSum ≤ b.pairwiseSum + extra
-  omega
+  exact Nat.le_add_right b.pairwiseSum extra
 
 /-- Emergent gap grows when full beta1 grows (pairwise fixed). -/
 theorem gap_grows_with_full (b : BrunnianBeta1) (δ : Nat)
@@ -97,7 +101,7 @@ theorem gap_grows_with_full (b : BrunnianBeta1) (δ : Nat)
     emergentGap { b with full := b.full + δ } := by
   unfold emergentGap
   show b.full - b.pairwiseSum ≤ b.full + δ - b.pairwiseSum
-  omega
+  exact Nat.sub_le_sub_right (Nat.le_add_right b.full δ) b.pairwiseSum
 
 /-- Helper: isBrunnian of a struct literal reduces to the obvious comparison. -/
 theorem isBrunnian_mk (full pairwiseSum : Nat) :
@@ -117,7 +121,8 @@ theorem brunnian_merge_is_brunnian
       pairwiseSum := b1.pairwiseSum + b2.pairwiseSum } := by
   rw [isBrunnian_mk]
   unfold isBrunnian at h1 h2
-  omega
+  -- h1 : b1.pair < b1.full, h2 : b2.pair < b2.full ⇒ sum < sum.
+  exact Nat.add_lt_add h1 h2
 
 /-- The composite emergent gap is at least the sum of individual gaps. -/
 theorem composite_gap_lower_bound
@@ -133,6 +138,8 @@ theorem composite_gap_lower_bound
   show emergentGap b1 + emergentGap b2
        ≤ (b1.full + b2.full) - (b1.pairwiseSum + b2.pairwiseSum)
   unfold emergentGap
+  -- TODO(rustic-church): (a₁ - b₁) + (a₂ - b₂) ≤ (a₁ + a₂) - (b₁ + b₂) when bᵢ ≤ aᵢ.
+  -- Nat sub combinator; multi-step via Nat.add_sub_assoc + Nat.sub_add_eq.
   omega
 
 /-- A sufficiently strong personality defense covers the emergent gap. -/
@@ -141,6 +148,8 @@ theorem brunnian_always_coverable (b : BrunnianBeta1) :
   refine ⟨{ openness := 0, conscientiousness := emergentGap b,
              extraversion := 0, agreeableness := 0, neuroticism := 0 }, ?_⟩
   show emergentGap b ≤ emergentGap b + 0 + 1
-  omega
+  -- emergentGap b + 0 + 1 ≥ emergentGap b: by Nat.le_add_right.
+  exact Nat.le_trans (Nat.le_add_right (emergentGap b) 0)
+    (Nat.le_add_right (emergentGap b + 0) 1)
 
 end Gnosis.BrunnianScanner

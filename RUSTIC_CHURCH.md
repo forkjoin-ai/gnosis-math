@@ -394,6 +394,26 @@ The supporting lemmas are `Nat.dvd_of_mod_eq_zero`, `Nat.sub_pos_of_lt`,
 For the simpler `(i + N) % N = i` case (`i < N`), use
 `Nat.add_mod_right` followed by `Nat.mod_eq_of_lt hi`.
 
+### Pattern 5b: Reflexive omega — when the hypothesis IS the goal
+
+Watch for `theorem foo (h : P) : P := by omega` — omega is being asked to
+re-derive `P` from `P`, so the proof is just `h`. The `Gnosis/Dewey*ThinTopology.lean`
+files held ~80 omegas of this shape; they all collapse to `:= h` term-mode.
+
+Companion micro-patterns from the same files:
+
+| Goal | Hypothesis | Replacement |
+|---|---|---|
+| `x = 0` | `h : x = nodes * 0` | `h.trans (Nat.mul_zero nodes)` |
+| `x = y` | `h : x = y * 1` | `h.trans (Nat.mul_one y)` |
+| `x ≥ y` | `h : x = y + z` | `h ▸ Nat.le_add_right y z` |
+| `x ≤ y` | `h : x = y - z` | `h ▸ Nat.sub_le y z` |
+| `n ≥ 0` | (anything) | `Nat.zero_le _` (drop the trivial hypothesis) |
+| `parser + m ≥ parser` | `h : m ≥ 0` | `Nat.le_add_right parser m` (h is unused) |
+
+If you see `theorem foo (h : trivial_for_Nat) : ...` and the proof is omega,
+the hypothesis is probably noise. Mark it `_h` and use the structural lemma.
+
 ### Pattern 5: `iterateSucc`-style period lemmas
 
 `iterateSucc n (m + 1) i = (i + 1 + m) % n` is provable by induction on
@@ -407,21 +427,62 @@ private theorem mod_add_left (a b n : Nat) :
   rw [Nat.add_mod, Nat.mod_mod, ← Nat.add_mod]
 ```
 
+### Pattern 6: Int-cast arithmetic over `Nat` differences
+
+When a definition reads `def deficit (a b : Nat) : Int := (a : Int) - (b : Int)`
+and you need an inequality on `deficit`, the recipe is:
+
+1. **Reduce the goal to `Nat` form** by canceling Nat-cast layers via
+   `Int.ofNat_le.mpr` / `Int.ofNat_lt.mpr`.
+2. **Bridge `≤ 0` / `0 <`** with `Int.sub_nonpos_of_le` and
+   `Int.sub_pos_of_lt`.
+3. **Bridge `≤` between two diffs** with `Int.sub_le_sub_left` /
+   `Int.sub_le_sub_right`.
+4. **Cancel constants** like `((1 - 1 : Nat) : Int) = 0` via `rfl` then
+   `Int.sub_zero`.
+
+Example (`covering_match` from `CoveringSpaceCausality.lean`):
+
+```lean
+theorem covering_match
+    (hMatch : pathCount ≤ transportStreams)
+    (_hPathCount : 0 < pathCount) :
+    topologicalDeficit pathCount transportStreams ≤ 0 := by
+  unfold topologicalDeficit computationComplexity transportCapacity
+  -- (pathCount - 1) ≤ (transportStreams - 1) in Nat, cast to Int, then sub_nonpos.
+  exact Int.sub_nonpos_of_le
+    (Int.ofNat_le.mpr (Nat.sub_le_sub_right hMatch 1))
+```
+
+Strict version (`deficit_latency_separation`) uses `Int.ofNat_lt.mpr` plus
+`Nat.sub_pos_of_lt`. Symmetric subtraction (`a - a = 0`) collapses with
+`Int.sub_self`. The full set of lemma names that show up:
+
+| Direction | Lemma |
+|---|---|
+| `a ≤ b → a - b ≤ 0` (Int) | `Int.sub_nonpos_of_le` |
+| `b < a → 0 < a - b` (Int) | `Int.sub_pos_of_lt` |
+| `a ≤ b → c - b ≤ c - a` (Int) | `Int.sub_le_sub_left` |
+| Nat ≤ → Int ≤ | `Int.ofNat_le.mpr` |
+| Nat < → Int < | `Int.ofNat_lt.mpr` |
+| `((a : Nat) : Int) - ((a : Nat) : Int) = 0` | `Int.sub_self` |
+
 ### What still needs omega
 
 Now genuinely the holdouts. Document with `-- TODO(rustic-church):`:
 
-- **Int linear chains spanning multiple sub/neg ops.** Doable but ~6 lines
-  per step. See `meta_truth_constancy` in `Gnosis/TopologicalMetabolism.lean`
-  for the working pattern.
+- **Pure Int linear chains spanning multiple sub/neg ops without Nat-cast
+  shortcuts.** Doable but ~6 lines per step. See `meta_truth_constancy`
+  in `Gnosis/TopologicalMetabolism.lean` for the working pattern.
 - **Free-variable search across two unfolds with mul + sub.** E.g.
-  `Gnosis/BosonPosition.lean`'s `propagator_toward_sophia` (Int-cast bridge
-  on top of the sub algebra).
+  `Gnosis/BosonPosition.lean`'s `propagator_toward_sophia`.
 - **`simp + omega` cascades after `by_cases` over 4 boolean conditions.**
   Each of 16 branches has a free-variable linear-arithmetic residual after
   simp. The `by_cases h_cpu/h_gpu/h_npu/h_wasm` pattern in
   `Gnosis/HeteroMoAFabric.lean` falls here. Tractable, but each branch
   needs its own targeted Init-lemma chain.
+- **Nat-sub combinator** `(a₁ - b₁) + (a₂ - b₂) ≤ (a₁ + a₂) - (b₁ + b₂)`.
+  See `composite_gap_lower_bound` in `Gnosis/BrunnianScanner.lean`.
 
 ## Why this matters
 

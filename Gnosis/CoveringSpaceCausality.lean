@@ -55,8 +55,11 @@ theorem covering_causality
     ∃ (p1 p2 : Fin pathCount), p1 ≠ p2 ∧
       pathToStream pathCount 1 p1 = pathToStream pathCount 1 p2 := by
   constructor
-  · unfold computationComplexity; omega
-  · refine ⟨⟨0, by omega⟩, ⟨1, by omega⟩, ?_, ?_⟩
+  · unfold computationComplexity
+    -- pathCount - 1 > 0 ⇔ pathCount > 1, follows from 2 ≤ pathCount.
+    exact Nat.sub_pos_of_lt (Nat.lt_of_lt_of_le (by decide : (1 : Nat) < 2) hPaths)
+  · refine ⟨⟨0, Nat.lt_of_lt_of_le (by decide : (0 : Nat) < 2) hPaths⟩,
+            ⟨1, Nat.lt_of_lt_of_le (by decide : (1 : Nat) < 2) hPaths⟩, ?_, ?_⟩
     · intro h; simp [Fin.ext_iff] at h
     · simp [pathToStream]
 
@@ -65,8 +68,8 @@ def blockingWitnessFromMismatch
     {pathCount : Nat}
     (hPaths : 2 ≤ pathCount) :
     BlockingWitness pathCount where
-  stalledPath := ⟨0, by omega⟩
-  lossPath := ⟨1, by omega⟩
+  stalledPath := ⟨0, Nat.lt_of_lt_of_le (by decide : (0 : Nat) < 2) hPaths⟩
+  lossPath := ⟨1, Nat.lt_of_lt_of_le (by decide : (1 : Nat) < 2) hPaths⟩
   sharedStream := 0
   pathsDistinct := by intro h; simp [Fin.ext_iff] at h
   pathsShareStream := trivial
@@ -84,7 +87,9 @@ theorem covering_match
     (_hPathCount : 0 < pathCount) :
     topologicalDeficit pathCount transportStreams ≤ 0 := by
   unfold topologicalDeficit computationComplexity transportCapacity
-  omega
+  -- (pathCount - 1) ≤ (transportStreams - 1) in Nat, cast to Int, then sub_nonpos.
+  exact Int.sub_nonpos_of_le
+    (Int.ofNat_le.mpr (Nat.sub_le_sub_right hMatch 1))
 
 /-- Under matched topology, distinct paths map to distinct streams. -/
 theorem matched_paths_isolated
@@ -108,10 +113,16 @@ theorem matched_paths_isolated
     multiplicative latency inflation proportional to Δ. -/
 theorem deficit_latency_separation
     {pathCount : Nat}
-    (_hPaths : 2 ≤ pathCount) :
+    (hPaths : 2 ≤ pathCount) :
     0 < topologicalDeficit pathCount 1 := by
   unfold topologicalDeficit computationComplexity transportCapacity
-  omega
+  -- Goal: 0 < ((pathCount - 1) : Int) - ((1 - 1) : Int) = (pathCount - 1 : Int).
+  -- 0 < pathCount - 1 (Nat) since 2 ≤ pathCount; cast to Int.
+  show (0 : Int) < ((pathCount - 1 : Nat) : Int) - ((1 - 1 : Nat) : Int)
+  rw [show ((1 - 1 : Nat) : Int) = 0 from rfl, Int.sub_zero]
+  have hNatPos : 0 < pathCount - 1 :=
+    Nat.sub_pos_of_lt (Nat.lt_of_lt_of_le (by decide : (1 : Nat) < 2) hPaths)
+  exact Int.ofNat_lt.mpr hNatPos
 
 -- `tcp_deficit_is_path_count_minus_one` and `matched_deficit_is_zero`
 -- live canonically in `Gnosis.DeficitCapacity`.
@@ -120,10 +131,13 @@ theorem deficit_latency_separation
 theorem deficit_decreasing_in_streams
     {pathCount s1 s2 : Nat}
     (hS : s1 ≤ s2)
-    (hS1 : 1 ≤ s1) :
+    (_hS1 : 1 ≤ s1) :
     topologicalDeficit pathCount s2 ≤ topologicalDeficit pathCount s1 := by
   unfold topologicalDeficit computationComplexity transportCapacity
-  omega
+  -- (s1 - 1) ≤ (s2 - 1) (Nat); cast to Int; sub_le_sub_left flips to give the goal.
+  exact Int.sub_le_sub_left
+    (Int.ofNat_le.mpr (Nat.sub_le_sub_right hS 1))
+    ((pathCount - 1 : Nat) : Int)
 
 -- ─── Protocol ordering ────────────────────────────────────────────────
 
@@ -134,7 +148,13 @@ theorem protocol_deficit_ordering
     topologicalDeficit pathCount pathCount <
     topologicalDeficit pathCount 1 := by
   unfold topologicalDeficit computationComplexity transportCapacity
-  omega
+  -- LHS = (pathCount - 1) - (pathCount - 1) = 0; RHS = (pathCount - 1) - 0 = pathCount - 1.
+  -- Need 0 < pathCount - 1, which holds since 2 ≤ pathCount.
+  show ((pathCount - 1 : Nat) : Int) - ((pathCount - 1 : Nat) : Int) <
+       ((pathCount - 1 : Nat) : Int) - ((1 - 1 : Nat) : Int)
+  rw [Int.sub_self, show ((1 - 1 : Nat) : Int) = 0 from rfl, Int.sub_zero]
+  exact Int.ofNat_lt.mpr
+    (Nat.sub_pos_of_lt (Nat.lt_of_lt_of_le (by decide : (1 : Nat) < 2) hPaths))
 
 /-- The covering-space analogy is constructive: the frame header
     (streamId field) formalizes the covering map from computation to transport. -/
