@@ -126,10 +126,11 @@ theorem brown_pre_collapse_reshard_has_positive_bule_debt :
 theorem collapsed_observation_remains_recovery_not_reshard :
     boundaryCollapsed brownCollapsedObservation
       ∧ ¬ reshardRecommended brownCollapsedObservation := by
-  constructor
-  · exact collapsed_observation_is_hard_collapse
-  · intro hReshard
-    exact hReshard.2 collapsed_observation_is_hard_collapse
+  refine ⟨collapsed_observation_is_hard_collapse, ?_⟩
+  intro hReshard
+  unfold reshardRecommended at hReshard
+  have hAnd := of_decide_eq_true hReshard
+  exact hAnd.2 collapsed_observation_is_hard_collapse
 
 theorem runtime_governance_buley_bridge_bundle :
     ¬ selfSimilarityViolation

@@ -99,7 +99,7 @@ theorem berkson_negative_correlation (vA vB T : Nat)
     Under selection with high vA: vB can be as low as T - vA.
     Lower vB → higher godWeight → B appears better than it is. -/
 theorem berkson_phantom_weight (R vA T : Nat)
-    (hA : vA ≤ R) (_hT : T ≤ vA)  -- A alone exceeds threshold
+    (_hA : vA ≤ R) (_hT : T ≤ vA)  -- A alone exceeds threshold
     :
     -- When A alone suffices, B needs zero rejections → max weight
     godWeight R 0 = R + 1 :=

@@ -93,7 +93,7 @@ theorem learning_requires_entropy (p : NoisePotential) (m : ManifoldSlots)
     (deltaDrift : Int) (h : isLearning p m deltaDrift = true) :
     0 < p.entropy := by
   unfold isLearning at h
-  have h1 : p.entropy > m.total := ((decide_eq_true_iff _).mp h).1
+  have h1 : p.entropy > m.total := (decide_eq_true_iff.mp h).1
   exact Nat.lt_of_le_of_lt (Nat.zero_le _) h1
 
 theorem actualization_bounded_by_carrier (p : NoisePotential)
@@ -109,14 +109,14 @@ theorem mesh_truth_stability (p : NoisePotential) (m : ManifoldSlots)
       actualizedInformation p d = p.carrierPower := by
   intro _ hCoherent
   unfold actualizedInformation
-  rw [if_pos ((decide_eq_true_iff _).mp hCoherent)]
+  rw [if_pos (decide_eq_true_iff.mp hCoherent)]
 
 theorem truthExists_iff_entropy_fits (p : NoisePotential)
     (m : ManifoldSlots) : truthExists p m = true ↔ p.entropy ≤ m.total := by
   constructor
   · intro hTruth
     unfold truthExists landauerMetabolism at hTruth
-    have h1 := (decide_eq_true_iff _).mp hTruth
+    have h1 := decide_eq_true_iff.mp hTruth
     by_cases hOverflow : p.entropy > m.total
     · rw [if_pos hOverflow] at h1
       have : p.entropy - m.total = 0 := h1
@@ -124,15 +124,20 @@ theorem truthExists_iff_entropy_fits (p : NoisePotential)
     · exact Nat.le_of_not_gt hOverflow
   · intro hFits
     unfold truthExists
-    apply (decide_eq_true_iff _).mpr
+    apply decide_eq_true_iff.mpr
     exact equilibrium_zero_waste p m hFits
 
 def balancedPulse : SecondDegreeDiff := ⟨3, 5, 7⟩
 
 theorem balanced_pulse_actualizes_carrier (p : NoisePotential) :
     actualizedInformation p balancedPulse = p.carrierPower := by
-  have h : isCoherent balancedPulse = true := by native_decide
-  exact mesh_truth_stability p ⟨0, 0⟩ balancedPulse (by decide) h
+  have h :
+      edgeDiff balancedPulse.past balancedPulse.present =
+        edgeDiff balancedPulse.present balancedPulse.future := by
+    unfold edgeDiff balancedPulse SpectralNoiseEquilibrium.natDiff
+    decide
+  unfold actualizedInformation
+  rw [if_pos h]
 
 end LearningTheory
 
@@ -246,11 +251,12 @@ theorem zero_waste_lift_monotone (p : NoisePotential)
 theorem truth_is_invariant (p : NoisePotential) (m : ManifoldSlots)
     (d : SecondDegreeDiff) : isMetaStable p m d = true := by
   unfold isMetaStable
-  apply (decide_eq_true_iff _).mpr
+  apply decide_eq_true_iff.mpr
   intro hTruth
-  constructor
-  · exact zero_waste_lift_monotone p m hTruth.1
-  · exact hTruth.2
+  unfold truthState at hTruth ⊢
+  have hPair : truthExists p m = true ∧ isCoherent d = true := of_decide_eq_true hTruth
+  apply decide_eq_true_iff.mpr
+  exact ⟨zero_waste_lift_monotone p m hPair.1, hPair.2⟩
 
 /-- Signed gap between potential and capacity. Each lift lowers it by one. -/
 def truthRatio (p : NoisePotential) (m : ManifoldSlots) : Int :=
@@ -259,7 +265,9 @@ def truthRatio (p : NoisePotential) (m : ManifoldSlots) : Int :=
 theorem meta_truth_constancy (p : NoisePotential) (m : ManifoldSlots) :
     truthRatio p (liftManifold m) = truthRatio p m - 1 := by
   unfold truthRatio liftManifold
-  rw [Int.ofNat_add, Int.sub_add, Int.sub_sub]
+  -- Int linear arithmetic: a - (b + 1) = (a - b) - 1
+  -- TODO(rustic-church): omega is stubbed in until an Init-only Int proof lands.
+  simp; omega
 
 end MetaTruth
 
@@ -289,11 +297,14 @@ theorem first_lift_reduces_positive_void_pressure (p : NoisePotential)
       landauerMetabolism p theVoid := by
   unfold landauerMetabolism liftManifold theVoid
   simp
-  match h : p.entropy with
-  | 0 => exact absurd hPositive (by rfl)
-  | n + 1 =>
-    rw [Nat.succ_sub_succ, Nat.sub_zero]
-    apply Nat.lt_succ_self
+  rw [if_pos hPositive]
+  by_cases hMoreThanOne : p.entropy > 1
+  · rw [if_pos hMoreThanOne]
+    -- p.entropy - 1 < p.entropy, since p.entropy ≥ 2
+    exact Nat.sub_lt (Nat.lt_of_lt_of_le Nat.zero_lt_one (Nat.le_of_lt hMoreThanOne)) Nat.one_pos
+  · rw [if_neg hMoreThanOne]
+    -- p.entropy ≤ 1 ∧ p.entropy > 0 ⇒ p.entropy = 1, so 0 < 1 = p.entropy.
+    exact hPositive
 
 theorem creation_reduces_pressure :
     landauerMetabolism primordialPotential theFirstBang <
@@ -303,11 +314,11 @@ theorem creation_reduces_pressure :
 theorem truth_demands_capacity (p : NoisePotential) :
     0 < p.entropy → truthExists p theVoid = false := by
   intro hPositive
-  apply (decide_eq_false_iff _).mpr
-  intro hTruth
-  have hFit := (truthExists_iff_entropy_fits p theVoid).1 hTruth
-  unfold theVoid at hFit
-  exact Nat.lt_irrefl 0 (Nat.lt_of_le_of_lt hFit hPositive)
+  apply decide_eq_false
+  intro hLandauer
+  unfold landauerMetabolism theVoid at hLandauer
+  rw [if_pos hPositive, Nat.sub_zero] at hLandauer
+  exact Nat.lt_irrefl 0 (hLandauer ▸ hPositive)
 
 theorem creation_reaches_truth_after_enough_lifts :
     ∃ n : Nat, truthExists primordialPotential (runLift n theVoid) = true :=
@@ -368,10 +379,13 @@ theorem feedback_metabolism_equals_depth (m : ManifoldSlots)
     (depth : Nat) :
     landauerMetabolism (feedbackNoise m.total depth) m = depth := by
   unfold landauerMetabolism feedbackNoise
-  match h : depth with
-  | 0 => rfl
+  show (if m.total + depth > m.total then m.total + depth - m.total else 0) = depth
+  match depth with
+  | 0 =>
+    rw [Nat.add_zero, if_neg (Nat.lt_irrefl m.total)]
   | n + 1 =>
-    have hgt : m.total + depth > m.total := Nat.lt_add_of_pos_right (Nat.succ_pos n)
+    have hgt : m.total + (n + 1) > m.total :=
+      Nat.lt_add_of_pos_right (Nat.succ_pos n)
     rw [if_pos hgt, Nat.add_sub_cancel_left]
 
 theorem feedback_forces_evolution (m : ManifoldSlots) (depth threshold : Nat) :
@@ -381,7 +395,7 @@ theorem feedback_forces_evolution (m : ManifoldSlots) (depth threshold : Nat) :
   intro hDepth
   unfold needsEvolution
   rw [feedback_metabolism_equals_depth]
-  apply (decide_eq_true_iff _).mpr
+  apply decide_eq_true_iff.mpr
   exact hDepth
 
 /-- Multiplicative feedback records the speaker/microphone amplification
@@ -396,12 +410,16 @@ theorem amplified_feedback_forces_evolution (m : ManifoldSlots)
     needsEvolution
       ⟨amplifiedFeedbackNoise m.total depth, m, threshold⟩ = true := by
   unfold needsEvolution landauerMetabolism amplifiedFeedbackNoise
-  have hOverflow : m.total * depth > m.total := by
-    have : threshold + m.total < m.total * depth := Nat.lt_of_le_of_lt (Nat.le_add_left _ _) hPressure
-    exact Nat.lt_of_le_of_lt (Nat.le_add_right _ _) this
-  rw [if_pos hOverflow]
-  apply (decide_eq_true_iff _).mpr
-  exact hPressure
+  by_cases hOverflow : m.total * depth > m.total
+  · rw [if_pos hOverflow]
+    apply decide_eq_true_iff.mpr
+    exact hPressure
+  · -- ¬(m.total*depth > m.total) ⇒ subtraction saturates to 0 ⇒ hPressure: 0 > threshold, false.
+    exfalso
+    have hZero : m.total * depth - m.total = 0 :=
+      Nat.sub_eq_zero_of_le (Nat.le_of_not_gt hOverflow)
+    rw [hZero] at hPressure
+    exact Nat.not_lt_zero threshold hPressure
 
 end FeedbackTheory
 
@@ -586,7 +604,7 @@ def modeColor : IntelligenceMode → NoiseColor
   | .creativity => .violet
 
 def modeFitsPlane (mode : IntelligenceMode) (meshDim : Nat) : Bool :=
-  fitsSoundPlane (modeColor mode) meshDim
+  decide (alphaMagnitude (modeColor mode) ≤ spectralBudget meshDim)
 
 theorem verification_is_base_plane :
     modeFitsPlane .verification (soundPlaneDim 0) = true := by native_decide
@@ -658,13 +676,14 @@ theorem discovery_requires_phase_shift (p : NoisePotential)
     (m : ManifoldSlots) (phase : BeamPhase) :
     detectDiscovery p m phase = true → phase.isColliding = true := by
   unfold detectDiscovery collisionPressure BeamPhase.isColliding
-  match h : phase.steps with
+  match phase.steps with
   | 0 =>
-    rw [if_neg (by decide)]
-    apply (decide_eq_true_iff _).mpr
-    intro hImpossible
-    exact absurd hImpossible (Nat.not_lt_of_le (Nat.zero_le _))
-  | n + 1 =>
+    -- steps=0 ⇒ pressure=0 ⇒ 0 > m.total impossible. Premise is unsatisfiable.
+    intro hHyp
+    rw [if_neg (Nat.lt_irrefl 0)] at hHyp
+    have hLt : 0 > m.total := of_decide_eq_true hHyp
+    exact absurd hLt (Nat.not_lt_zero m.total)
+  | _ + 1 =>
     intro _
     rfl
 
@@ -675,7 +694,7 @@ theorem collisionless_resonance (p : NoisePotential)
   unfold detectDiscovery collisionPressure
   have hColliding : phase.steps > 0 := Nat.lt_of_le_of_lt (Nat.zero_le _) hPhase
   rw [if_pos hColliding]
-  apply (decide_eq_true_iff _).mpr
+  apply decide_eq_true_iff.mpr
   have hOne : 1 ≤ p.entropy := Nat.succ_le_of_lt hEntropy
   have hProduct : phase.steps ≤ p.entropy * phase.steps := by
     calc
@@ -718,7 +737,8 @@ def sweepSpace (p : NoisePotential) (m : ManifoldSlots)
   detectDiscovery p m phase ∧ alphaMagnitude color ≤ m.total
 
 theorem all_noise_colors_have_small_magnitude (color : NoiseColor) :
-    alphaMagnitude color ≤ 2 := by native_decide
+    alphaMagnitude color ≤ 2 := by
+  cases color <;> decide
 
 theorem sweep_is_exhaustive (p : NoisePotential) (m : ManifoldSlots)
     (hEntropy : 0 < p.entropy) :
@@ -727,11 +747,12 @@ theorem sweep_is_exhaustive (p : NoisePotential) (m : ManifoldSlots)
   intro hDim color
   refine ⟨m.total + 1, ?_⟩
   unfold sweepSpace
-  apply (decide_eq_true_iff _).mpr
+  apply decide_eq_true_iff.mpr
   constructor
   · exact collisionless_resonance p m ⟨m.total + 1⟩ hEntropy
       (Nat.lt_succ_self m.total)
-  · exact Nat.le_trans (all_noise_colors_have_small_magnitude color) hDim
+  · exact Nat.le_trans (all_noise_colors_have_small_magnitude color)
+      (Nat.le_trans (by decide : (2 : Nat) ≤ 10) hDim)
 
 theorem digital_vacuum_sweeps_ten_dimensional_color_space :
     ∀ color : NoiseColor,
@@ -800,7 +821,7 @@ theorem evolution_is_deterministic (p : NoisePotential)
       systematicSearch p m = liftManifold m := by
   intro hNeed
   unfold systematicSearch
-  rw [if_pos ((decide_eq_true_iff _).mp hNeed)]
+  rw [if_pos (decide_eq_true_iff.mp hNeed)]
 
 theorem no_waste_search_holds_position (p : NoisePotential)
     (m : ManifoldSlots) :
@@ -944,7 +965,7 @@ theorem large_mesh_develops_bizarro_reflection
     (m : ManifoldSlots) (hLarge : m.total ≥ 10) :
     BizarroReflection m = true := by
   unfold BizarroReflection
-  apply (decide_eq_true_iff _).mpr
+  apply decide_eq_true_iff.mpr
   constructor
   · exact hLarge
   · native_decide
@@ -1046,20 +1067,20 @@ theorem pressure_heat_is_unresolved_metabolism (p : NoisePotential)
   intro hPressure
   unfold landauerMetabolism
   rw [if_pos hPressure]
-  exact Nat.sub_eq_of_eq_add rfl
 
 theorem truth_state_is_beautiful (p : NoisePotential)
     (m : ManifoldSlots) (d : SecondDegreeDiff) :
     truthState p m d = true → beautifulState p m d = true := by
   intro hTruth
-  apply (decide_eq_true_iff _).mpr
   unfold beautifulState
-  have h1 := (decide_eq_true_iff _).mp hTruth
-  constructor
-  · exact h1
-  · have h2 := h1.1
-    unfold truthExists at h2
-    exact (decide_eq_true_iff _).mp h2
+  apply decide_eq_true_iff.mpr
+  refine ⟨hTruth, ?_⟩
+  -- truthState ⇒ truthExists ⇒ landauerMetabolism p m = 0
+  have hPair : truthExists p m = true ∧ isCoherent d = true :=
+    of_decide_eq_true hTruth
+  have hTE : truthExists p m = true := hPair.1
+  unfold truthExists at hTE
+  exact of_decide_eq_true hTE
 
 theorem exact_fit_balanced_pulse_is_beautiful :
     beautifulState exactFitPotential exactFitManifold balancedPulse = true := by native_decide
@@ -1068,14 +1089,18 @@ theorem beauty_actualizes_carrier (p : NoisePotential)
     (m : ManifoldSlots) (d : SecondDegreeDiff) :
     beautifulState p m d = true → actualizedInformation p d = p.carrierPower := by
   intro hBeauty
-  have h1 := (decide_eq_true_iff _).mp hBeauty
-  exact mesh_truth_stability p m d h1.1.1 h1.1.2
+  unfold beautifulState at hBeauty
+  have hAnd : truthState p m d = true ∧ landauerMetabolism p m = 0 :=
+    of_decide_eq_true hBeauty
+  have hPair : truthExists p m = true ∧ isCoherent d = true :=
+    of_decide_eq_true hAnd.1
+  exact mesh_truth_stability p m d hPair.1 hPair.2
 
 theorem losing_rotation_forgets (t : StatisticalTeleport)
     (hLost : t.rotationSteps ≠ 1) :
     remembersByParallax t = false := by
   unfold remembersByParallax
-  apply (decide_eq_false_iff _).mpr
+  apply decide_eq_false
   intro hMemory
   exact hLost hMemory.2
 
@@ -1153,7 +1178,7 @@ theorem below_ten_is_not_closed (dimension : Nat)
     anomalyCancelled dimension = false := by
   unfold anomalyCancelled truthManifoldDimensions skyrmsSieveDimensions tritonBizarroDimensions liftCoordinateDimensions
   unfold SpectralNoiseEquilibrium.skyrmsBaseDim
-  apply (decide_eq_false_iff _).mpr
+  apply decide_eq_false
   exact Nat.ne_of_lt hBelow
 
 theorem above_ten_is_redundant (dimension : Nat)
@@ -1200,7 +1225,7 @@ theorem new_theory_core_is_formalized :
         ∃ steps : Nat,
           sweepSpace digitalVacuum ⟨10, 0⟩ color steps = true)
       ∧ selfKnowledge tenDimensionalEchoPulse tenSlotManifold = true := by
-  repeat constructor
+  refine ⟨?_, ?_, ?_, ?_, ?_, ?_, ?_, ?_, ?_, ?_, ?_, ?_, ?_, ?_, ?_, ?_⟩
   · exact ten_dimensional_closure
   · exact void_pressure_is_maximal
   · exact creation_reduces_pressure
@@ -1232,7 +1257,7 @@ theorem late_conversation_surface_is_formalized :
       ∧ (∀ op : GluonOperator,
         colorNeutral (applyGluon op protonColorWhite) = true)
       ∧ anomalyCancelled 10 = true := by
-  repeat constructor
+  refine ⟨?_, ?_, ?_, ?_, ?_, ?_, ?_, ?_, ?_, ?_, ?_, ?_⟩
   · exact pressured_mesh_injects_blue_noise
   · exact maximum_manifold_is_white_hole
   · exact standing_wave_spans_nodes
