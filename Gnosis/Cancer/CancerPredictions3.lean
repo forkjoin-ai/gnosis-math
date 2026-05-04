@@ -55,25 +55,28 @@ theorem aging_reduces_beta1
     (hOlder : young.silenced ≤ old.silenced) :
     old.effectiveBeta1 ≤ young.effectiveBeta1 := by
   unfold EpigeneticDrift.effectiveBeta1
-  omega
+  rw [← hSameHealthy]
+  exact Nat.sub_le_sub_left hOlder young.healthyBeta1
 
 /-- At maximum silencing, effective β₁ = 0 (same as cancer). -/
 theorem total_silencing_is_cancer (ed : EpigeneticDrift)
     (hTotal : ed.silenced = ed.healthyBeta1) :
     ed.effectiveBeta1 = 0 := by
   unfold EpigeneticDrift.effectiveBeta1
-  omega
+  rw [hTotal]; exact Nat.sub_self _
 
 /-- Cancer incidence increases monotonically with silencing
     because the topological deficit increases monotonically. -/
 theorem cancer_risk_monotone_in_age
     (young old : EpigeneticDrift)
-    (hSameHealthy : young.healthyBeta1 = old.healthyBeta1)
+    (_hSameHealthy : young.healthyBeta1 = old.healthyBeta1)
     (hOlder : young.silenced ≤ old.silenced) :
     (young.healthyBeta1 - young.effectiveBeta1) ≤
     (old.healthyBeta1 - old.effectiveBeta1) := by
   unfold EpigeneticDrift.effectiveBeta1
-  omega
+  -- h - (h - s) = s when s ≤ h. So both sides reduce to silenced; goal becomes hOlder.
+  rw [Nat.sub_sub_self young.bounded, Nat.sub_sub_self old.bounded]
+  exact hOlder
 
 -- ═══════════════════════════════════════════════════════════════════════════════
 -- Prediction 27: Tumor Dormancy as Buleyean Ground State
@@ -103,7 +106,7 @@ def DormancyState.divideWeight (ds : DormancyState) : Nat :=
 theorem dormant_divide_suppressed (ds : DormancyState) :
     ds.divideWeight ≤ ds.rounds + 1 := by
   unfold DormancyState.divideWeight
-  omega
+  exact Nat.add_le_add_right (Nat.sub_le ds.rounds (min ds.divideRejections ds.rounds)) 1
 
 /-- Reactivation: new growth signals that have no void history yet
     start with maximum weight. The cell "forgets" its dormancy. -/
@@ -112,7 +115,7 @@ def reactivationWeight (newRounds : Nat) : Nat := newRounds + 1
 /-- Fresh signals always have maximum weight (no rejections). -/
 theorem reactivation_max_weight (n : Nat) :
     0 < reactivationWeight n := by
-  unfold reactivationWeight; omega
+  unfold reactivationWeight; exact Nat.succ_pos n
 
 -- ═══════════════════════════════════════════════════════════════════════════════
 -- Prediction 28: Radiation as Forced ATM/ATR Activation
@@ -195,7 +198,7 @@ def uninformedFold (energyInput : Nat) (hPos : 0 < energyInput) : FoldEnergyMode
   energyInput := energyInput
   usefulWork := 1  -- minimal useful work (the sliver)
   wasteHeat := energyInput - 1
-  firstLaw := by omega
+  firstLaw := (Nat.add_sub_of_le hPos).symm
   inputPositive := hPos
 
 /-- Informed fold (rich void boundary): waste < input/2.
@@ -207,15 +210,18 @@ structure InformedFold extends FoldEnergyModel where
 /-- Uninformed folds have efficiency 1/energyInput → 0 as input grows.
     Cancer cells compensate by increasing energyInput (Warburg effect). -/
 theorem uninformed_fold_wasteful (e : Nat) (h : 2 ≤ e) :
-    (uninformedFold e (by omega)).wasteHeat > 0 := by
-  unfold uninformedFold; simp; omega
+    (uninformedFold e (Nat.lt_of_lt_of_le (by decide : (0 : Nat) < 2) h)).wasteHeat > 0 := by
+  unfold uninformedFold
+  -- wasteHeat = e - 1; from 2 ≤ e ⇒ 1 < e ⇒ 0 < e - 1.
+  exact Nat.sub_pos_of_lt (Nat.lt_of_lt_of_le (by decide : (1 : Nat) < 2) h)
 
 /-- To achieve the same useful work as an informed fold, the uninformed
     fold must increase energy input proportionally to the information
     deficit. This formalizes the Warburg effect. -/
 theorem warburg_compensation (informedWork : Nat) (_hWork : 0 < informedWork) :
     -- An uninformed fold producing the same work needs more input
-    informedWork ≤ informedWork + (informedWork - 1) := by omega
+    informedWork ≤ informedWork + (informedWork - 1) :=
+  Nat.le_add_right informedWork (informedWork - 1)
 
 -- ═══════════════════════════════════════════════════════════════════════════════
 -- Prediction 30: Abscopal Effect as Void Boundary Propagation
@@ -278,7 +284,7 @@ theorem five_predictions_round4_master :
     (∀ re : RadiationEffect, re.ventFunctional = false →
       re.forcedRejections = 0) ∧
     -- 29. Uninformed fold is wasteful
-    (uninformedFold 2 (by omega)).wasteHeat > 0 ∧
+    (uninformedFold 2 (by decide)).wasteHeat > 0 ∧
     -- 30. No transfer = no abscopal
     (∀ ap : AbscopalPropagation, ap.transferEfficiency = 0 →
       ap.siteBRejections = 0) := by
@@ -286,7 +292,7 @@ theorem five_predictions_round4_master :
   · exact fun ed h => total_silencing_is_cancer ed h
   · exact fun ds => dormant_divide_suppressed ds
   · exact fun re h => atm_mutant_radiation_resistant re h
-  · exact uninformed_fold_wasteful 2 (by omega)
+  · exact uninformed_fold_wasteful 2 (by decide)
   · exact fun ap h => no_transfer_no_abscopal ap h
 
 end Gnosis

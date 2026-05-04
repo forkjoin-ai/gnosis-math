@@ -56,14 +56,14 @@ def isGloballyOptimal (c : Compiler) (competitors : List Compiler) : Prop :=
     correct, halting) is undecidable. -/
 theorem always_a_hypothetical_better (c : Compiler) (h : 1 < c.cost) :
     ∃ (better : Compiler), better.cost < c.cost :=
-  ⟨⟨1, by omega⟩, by omega⟩
+  ⟨⟨1, Nat.one_pos⟩, h⟩
 
 /-- You cannot prove global optimality by enumeration: the set of all
     possible compilers is unbounded. For any finite set of competitors
     you have checked, there exists a larger set you have not. -/
 theorem competitors_always_extensible (competitors : List Compiler) :
-    ∃ (extended : List Compiler), competitors.length < extended.length := by
-  exact ⟨⟨1, by omega⟩ :: competitors, by simp⟩
+    ∃ (extended : List Compiler), competitors.length < extended.length :=
+  ⟨⟨1, Nat.one_pos⟩ :: competitors, by simp⟩
 
 -- ═══════════════════════════════════════════════════════════════════════════════
 -- But local optimality is provable
@@ -124,37 +124,50 @@ theorem local_optimality_is_provable
   induction v with
   | zero =>
     intro s hle
-    exact ⟨s, Nat.le_refl _, fun n hn => by
-      have : cost n ≤ cost s := by
-        induction hn with
-        | refl => exact Nat.le_refl _
-        | step _ ih => exact Nat.le_trans (h _) ih
-      omega⟩
+    refine ⟨s, Nat.le_refl _, fun n hn => ?_⟩
+    have hCnLeS : cost n ≤ cost s := by
+      induction hn with
+      | refl => exact Nat.le_refl _
+      | step _ ih => exact Nat.le_trans (h _) ih
+    have hCsZero : cost s = 0 := Nat.le_zero.mp hle
+    have hCnZero : cost n = 0 := Nat.le_zero.mp (Nat.le_trans hCnLeS hle)
+    rw [hCnZero, hCsZero]
   | succ v ih =>
     intro s hle
     by_cases hdrop : cost (s + 1) < cost s
-    · obtain ⟨N, hN1, hN2⟩ := ih (s + 1) (by omega)
-      exact ⟨N, by omega, hN2⟩
+    · have hStepLeV : cost (s + 1) ≤ v :=
+        Nat.le_of_lt_succ (Nat.lt_of_lt_of_le hdrop hle)
+      obtain ⟨N, hN1, hN2⟩ := ih (s + 1) hStepLeV
+      exact ⟨N, Nat.le_trans (Nat.le_succ s) hN1, hN2⟩
     · by_cases hle2 : cost (s + 1) ≤ v
       · obtain ⟨N, hN1, hN2⟩ := ih (s + 1) hle2
-        exact ⟨N, by omega, hN2⟩
-      · have hval : cost s = v + 1 := by have := h s; omega
+        exact ⟨N, Nat.le_trans (Nat.le_succ s) hN1, hN2⟩
+      · have hSleStep : cost s ≤ cost (s + 1) := Nat.le_of_not_lt hdrop
+        have heq : cost (s + 1) = cost s := Nat.le_antisymm (h s) hSleStep
+        have hVLtStep : v < cost (s + 1) := Nat.lt_of_not_le hle2
+        have hSuccLeStep : v + 1 ≤ cost (s + 1) := Nat.succ_le_of_lt hVLtStep
+        have hSuccLeS : v + 1 ≤ cost s := heq ▸ hSuccLeStep
+        have hval : cost s = v + 1 := Nat.le_antisymm hle hSuccLeS
         by_cases hever : ∃ j, s < j ∧ cost j < v + 1
-        · obtain ⟨j, _, hjv⟩ := hever
-          obtain ⟨N, hN1, hN2⟩ := ih j (by omega)
-          exact ⟨N, by omega, hN2⟩
-        · exact ⟨s, Nat.le_refl _, fun n hn => by
-            have h1 : cost n ≤ cost s := by
-              induction hn with
-              | refl => exact Nat.le_refl _
-              | step _ ih => exact Nat.le_trans (h _) ih
-            by_cases hsn : s = n
-            · rw [← hsn]
-            · have : cost n = v + 1 := by
-                by_cases hlt : cost n < v + 1
-                · exact absurd ⟨n, by omega, hlt⟩ hever
-                · omega
-              rw [this, hval]⟩
+        · obtain ⟨j, hjs, hjv⟩ := hever
+          have hjLeV : cost j ≤ v := Nat.le_of_lt_succ hjv
+          obtain ⟨N, hN1, hN2⟩ := ih j hjLeV
+          exact ⟨N, Nat.le_trans (Nat.le_of_lt hjs) hN1, hN2⟩
+        · refine ⟨s, Nat.le_refl _, fun n hn => ?_⟩
+          have h1 : cost n ≤ cost s := by
+            induction hn with
+            | refl => exact Nat.le_refl _
+            | step _ ih => exact Nat.le_trans (h _) ih
+          by_cases hsn : s = n
+          · rw [← hsn]
+          · have hsltn : s < n := Nat.lt_of_le_of_ne hn hsn
+            have hCnEq : cost n = v + 1 := by
+              by_cases hlt : cost n < v + 1
+              · exact absurd ⟨n, hsltn, hlt⟩ hever
+              · have hCnGe : v + 1 ≤ cost n := Nat.le_of_not_lt hlt
+                have hCnLeVSucc : cost n ≤ v + 1 := hval ▸ h1
+                exact Nat.le_antisymm hCnLeVSucc hCnGe
+            rw [hCnEq, hval]
 
 -- ═══════════════════════════════════════════════════════════════════════════════
 -- The optimality gap: what we can know vs what we cannot
@@ -186,7 +199,7 @@ theorem optimality_gap :
     (∀ (cost : Nat → Nat), (∀ n, cost (n + 1) ≤ cost n) →
       ∃ N, isLocallyOptimal cost N) := by
   constructor
-  · exact ⟨⟨2, by omega⟩, fun h => ⟨⟨1, by omega⟩, by omega⟩⟩
+  · exact ⟨⟨2, by decide⟩, fun h => ⟨⟨1, Nat.one_pos⟩, h⟩⟩
   · intro cost h
     exact local_optimality_is_provable cost h
 

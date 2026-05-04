@@ -62,23 +62,23 @@ def universeScale : Nat := 616 -- log scale, observable universe
 -- ═══════════════════════════════════════════════════════════════════════════════
 
 theorem planck_smallest : planckScale < protonScale := by
-  unfold planckScale protonScale; omega
+  unfold planckScale protonScale; decide
 
 theorem proton_smaller_than_strong : protonScale ≤ strongScale := by
-  unfold protonScale strongScale; omega
+  unfold protonScale strongScale; decide
 
 theorem strong_smaller_than_bohr : strongScale < bohrScale := by
-  unfold strongScale bohrScale; omega
+  unfold strongScale bohrScale; decide
 
 theorem bohr_smaller_than_universe : bohrScale < universeScale := by
-  unfold bohrScale universeScale; omega
+  unfold bohrScale universeScale; decide
 
 theorem full_hierarchy :
     planckScale < protonScale ∧
     protonScale ≤ strongScale ∧
     strongScale < bohrScale ∧
     bohrScale < universeScale := by
-  unfold planckScale protonScale strongScale bohrScale universeScale; omega
+  unfold planckScale protonScale strongScale bohrScale universeScale; decide
 
 -- ═══════════════════════════════════════════════════════════════════════════════
 -- The dimensional ladder predicts the scale assignments
@@ -97,7 +97,7 @@ theorem ladder_monotone :
     barbelo_dim < proton_dim ∧
     proton_dim < primitive_dim ∧
     primitive_dim < kenoma_dim := by
-  unfold bythos_dim barbelo_dim proton_dim primitive_dim kenoma_dim embeddingDim; omega
+  unfold bythos_dim barbelo_dim proton_dim primitive_dim kenoma_dim embeddingDim; decide
 
 -- The scale assignments match the dimension ordering
 -- (larger dimension → larger physical scale)
@@ -112,7 +112,7 @@ theorem ladder_monotone :
 -- So the ratio spans 19.7 decades
 
 theorem proton_planck_gap : protonScale - planckScale = 197 := by
-  unfold protonScale planckScale; omega
+  unfold protonScale planckScale; decide
 
 -- This gap (19.7 decades) is the "first emanation gap":
 -- from Bythos (Planck) to Proton (femtometer).
@@ -127,7 +127,7 @@ theorem proton_planck_gap : protonScale - planckScale = 197 := by
 -- So the ratio spans 61.4 decades
 
 theorem universe_planck_gap : universeScale - planckScale = 614 := by
-  unfold universeScale planckScale; omega
+  unfold universeScale planckScale; decide
 
 -- The total scale range of the universe: 61.4 orders of magnitude.
 -- From Bythos (10⁻³⁵ m) to the observable horizon (10²⁶ m).
@@ -150,12 +150,12 @@ def ageMillionths : Nat := 1604651
 def phiMillionths : Nat := 1618034
 
 theorem age_near_phi : ageMillionths < phiMillionths := by
-  unfold ageMillionths phiMillionths; omega
+  unfold ageMillionths phiMillionths; decide
 
 -- Within 1%: age × 100 > phi × 99
 theorem age_within_one_percent :
     ageMillionths * 100 > phiMillionths * 99 := by
-  unfold ageMillionths phiMillionths; omega
+  unfold ageMillionths phiMillionths; decide
 
 -- The universe is φ Lorenzos old. The golden ratio is the age of
 -- the universe in its own units. Not exactly φ — the God Gap is 0.8%.
@@ -197,6 +197,6 @@ theorem bythos_to_universe :
   unfold planckScale protonScale strongScale bohrScale universeScale
     ageMillionths phiMillionths bythos_dim barbelo_dim proton_dim
     primitive_dim kenoma_dim embeddingDim
-  omega
+  decide
 
 end BythosScale

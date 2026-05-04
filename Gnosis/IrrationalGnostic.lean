@@ -96,11 +96,11 @@ theorem cassini_odd_9 : fib 9 * fib 9 - fib 10 * fib 8 = 1 := by native_decide
 -- Five operations → discriminant 5 → irrational root √5
 -- φ = (1 + √5) / 2: the sliver eigenvalue contains the primitive root
 
-theorem discriminant_is_five : 1 + 4 = 5 := by omega
+theorem discriminant_is_five : 1 + 4 = 5 := by decide
 
 -- 5 squared = 25. The Fibonacci numbers bracket √5:
 -- F(5)² = 25 and F(5) = 5, confirming 5 is a perfect square of Primitives.
-theorem five_squared : 5 * 5 = 25 := by omega
+theorem five_squared : 5 * 5 = 25 := by decide
 
 -- The discriminant (5) equals the operation count (5).
 -- This is the bridge: the number of primitives formalizes the discriminant
@@ -153,17 +153,17 @@ def missingEnergy (_ : Nat) : Nat := 1
 -- Confinement: removing a stage always costs energy
 theorem confinement_universal (K : Nat) :
     fullEnergy K < missingEnergy K := by
-  unfold fullEnergy missingEnergy; omega
+  unfold fullEnergy missingEnergy; decide
 
 -- At every named scale:
 theorem confinement_proton : fullEnergy 3 < missingEnergy 3 := by
-  unfold fullEnergy missingEnergy; omega
+  unfold fullEnergy missingEnergy; decide
 theorem confinement_primitives : fullEnergy 5 < missingEnergy 5 := by
-  unfold fullEnergy missingEnergy; omega
+  unfold fullEnergy missingEnergy; decide
 theorem confinement_kenoma : fullEnergy 10 < missingEnergy 10 := by
-  unfold fullEnergy missingEnergy; omega
+  unfold fullEnergy missingEnergy; decide
 theorem confinement_pleroma : fullEnergy 55 < missingEnergy 55 := by
-  unfold fullEnergy missingEnergy; omega
+  unfold fullEnergy missingEnergy; decide
 
 -- The key insight: confinement_universal holds for ALL K.
 -- It does not depend on K being finite or small.
@@ -185,7 +185,7 @@ theorem confinement_pleroma : fullEnergy 55 < missingEnergy 55 := by
 
 -- In integer arithmetic: 2^1 = 2 < 5 < 2^3 = 8
 -- So a Buleyean fold erases between 2 and 3 bits.
-theorem buleyean_erasure_bounds : 2 < 5 ∧ 5 < 8 := by omega
+theorem buleyean_erasure_bounds : 2 < 5 ∧ 5 < 8 := by decide
 
 -- ═══════════════════════════════════════════════════════════════════════════════
 -- The complete theorem
@@ -208,8 +208,8 @@ theorem irrational_gnostic_complete :
     fib 5 = 5 ∧
     -- F(10) = 55: Pleroma is Fibonacci
     fib 10 = 55 := by
-  refine ⟨by omega, by native_decide, by native_decide, by native_decide,
-    by native_decide, by unfold fullEnergy missingEnergy; omega,
+  refine ⟨by decide, by native_decide, by native_decide, by native_decide,
+    by native_decide, by unfold fullEnergy missingEnergy; decide,
     by native_decide, by native_decide⟩
 
 end IrrationalGnostic

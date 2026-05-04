@@ -413,6 +413,71 @@ theorem wankel_aggregate_fast_path_cost_dominates_baseline
     witness.fastPathTotalPositive,
     witness.aggregateFastPathDominates⟩
 
+/-- A robust estimator witness sits above aggregate dominance. It keeps the
+    repeated-sample aggregate witness, then adds the operational checks needed
+    to reject one-sample or best-sample-only speedup claims: minimum sample
+    coverage, a bounded jitter witness, a bounded outlier budget, and strict
+    dominance under the chosen robust estimator. -/
+structure FastPathRobustEstimatorWitness where
+  aggregate : FastPathAggregateCostWitness
+  minimumSampleCount : Nat
+  baselineRobustCost : Nat
+  fastPathRobustCost : Nat
+  observedJitter : Nat
+  jitterBudget : Nat
+  outlierBudget : Nat
+  minimumSampleCountPositive : 0 < minimumSampleCount
+  sampleCoverage : minimumSampleCount ≤ aggregate.sampleCount
+  baselineRobustPositive : 0 < baselineRobustCost
+  fastPathRobustPositive : 0 < fastPathRobustCost
+  observedJitterWithinBudget : observedJitter ≤ jitterBudget
+  outlierBudgetWithinSamples : outlierBudget < aggregate.sampleCount
+  robustFastPathDominates : fastPathRobustCost < baselineRobustCost
+
+/-- Robust speedup claims require aggregate dominance plus the estimator
+    stability boundary. Lean does not choose the estimator; runtime/benchmark
+    surfaces supply that witness explicitly. -/
+def FastPathRobustEstimatorDominatesBaseline
+    (candidate baseline : RuntimeCertificate)
+    (witness : FastPathRobustEstimatorWitness) : Prop :=
+  FastPathAggregateCostDominatesBaseline candidate baseline witness.aggregate ∧
+  0 < witness.minimumSampleCount ∧
+  witness.minimumSampleCount ≤ witness.aggregate.sampleCount ∧
+  0 < witness.baselineRobustCost ∧
+  0 < witness.fastPathRobustCost ∧
+  witness.observedJitter ≤ witness.jitterBudget ∧
+  witness.outlierBudget < witness.aggregate.sampleCount ∧
+  witness.fastPathRobustCost < witness.baselineRobustCost
+
+theorem robust_estimator_dominance_implies_aggregate_dominance
+    (candidate baseline : RuntimeCertificate)
+    (witness : FastPathRobustEstimatorWitness)
+    (hDominance :
+      FastPathRobustEstimatorDominatesBaseline candidate baseline witness) :
+    FastPathAggregateCostDominatesBaseline
+      candidate
+      baseline
+      witness.aggregate :=
+  hDominance.1
+
+/-- The Wankel fast path may claim a robust repeated-sample speedup exactly
+    when the benchmark supplies aggregate dominance plus estimator stability
+    evidence. -/
+theorem wankel_robust_fast_path_estimator_dominates_baseline
+    (witness : FastPathRobustEstimatorWitness) :
+    FastPathRobustEstimatorDominatesBaseline
+      wankel_scheduler_certificate
+      qwen_pca_only_certificate
+      witness := by
+  exact ⟨wankel_aggregate_fast_path_cost_dominates_baseline witness.aggregate,
+    witness.minimumSampleCountPositive,
+    witness.sampleCoverage,
+    witness.baselineRobustPositive,
+    witness.fastPathRobustPositive,
+    witness.observedJitterWithinBudget,
+    witness.outlierBudgetWithinSamples,
+    witness.robustFastPathDominates⟩
+
 -- ══════════════════════════════════════════════════════════
 -- PROJECTIONS APPLIED TO THE QWEN INSTANCE
 -- ══════════════════════════════════════════════════════════

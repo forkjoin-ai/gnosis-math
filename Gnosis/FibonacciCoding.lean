@@ -87,20 +87,21 @@ theorem prefix_free_from_greedy_gap (n k : Nat)
     (hUpper : n < fib (k + 3)) :
     n - fib (k + 2) < fib (k + 1) := by
   have hRec : fib (k + 3) = fib (k + 2) + fib (k + 1) := rfl
-  omega
+  rw [hRec] at hUpper
+  exact Nat.sub_lt_left_of_lt_add hLower hUpper
 
 /-- THM-NO-CONSECUTIVE-ONES: In a valid Fibonacci codeword, indices
     differ by at least 2. Verified for multi-term decompositions. -/
 -- 4 = F(4) + F(2): indices 4 and 2, gap = 2 ≥ 2 ✓
-theorem no_consecutive_4 : 4 - 2 ≥ 2 := by omega
+theorem no_consecutive_4 : 4 - 2 ≥ 2 := by decide
 -- 6 = F(5) + F(2): indices 5 and 2, gap = 3 ≥ 2 ✓
-theorem no_consecutive_6 : 5 - 2 ≥ 2 := by omega
+theorem no_consecutive_6 : 5 - 2 ≥ 2 := by decide
 -- 12 = F(6) + F(4) + F(2): gaps 6-4=2, 4-2=2 ✓
-theorem no_consecutive_12a : 6 - 4 ≥ 2 := by omega
-theorem no_consecutive_12b : 4 - 2 ≥ 2 := by omega
+theorem no_consecutive_12a : 6 - 4 ≥ 2 := by decide
+theorem no_consecutive_12b : 4 - 2 ≥ 2 := by decide
 -- 20 = F(7) + F(5) + F(3): gaps 7-5=2, 5-3=2 ✓
-theorem no_consecutive_20a : 7 - 5 ≥ 2 := by omega
-theorem no_consecutive_20b : 5 - 3 ≥ 2 := by omega
+theorem no_consecutive_20a : 7 - 5 ≥ 2 := by decide
+theorem no_consecutive_20b : 5 - 3 ≥ 2 := by decide
 
 -- ═══════════════════════════════════════════════════════════════════════
 -- §3. Fibonacci Numbers Grow as φ^n
@@ -137,21 +138,19 @@ theorem fib_exp_lower :
     The clinamen (+1) is the terminator cost — you always need at
     least 1 bit to mark "end of message." -/
 theorem coding_conservation (R C : Nat) (hC : C ≤ R) :
-    godWeight R C + C = R + 1 := by
-  unfold godWeight; simp [Nat.min_eq_left hC]; omega
+    godWeight R C + C = R + 1 := Gnosis.godWeight_conservation R C hC
 
 /-- THM-CODING-CLINAMEN: Even encoding the empty message (nothing to
     say) costs 1 bit (the clinamen). You cannot encode "nothing" in
     zero bits — there must be a signal that says "nothing follows." -/
-theorem coding_clinamen : godWeight 0 0 = 1 := by
-  unfold godWeight; omega
+theorem coding_clinamen : godWeight 0 0 = 1 := Gnosis.godWeight_floor 0
 
 /-- THM-MAXIMUM-COMPRESSION: The maximum number of integers encodable
     in R bits is bounded by R (one bit per integer minimum, plus
     overhead). The God Formula ceiling at zero rejection = R + 1
     is the theoretical maximum capacity. -/
 theorem maximum_capacity (R : Nat) :
-    godWeight R 0 = R + 1 := by unfold godWeight; omega
+    godWeight R 0 = R + 1 := Gnosis.godWeight_ceiling R
 
 -- ═══════════════════════════════════════════════════════════════════════
 -- §5. Error Robustness: Single-Bit Corruption
@@ -166,14 +165,40 @@ theorem maximum_capacity (R : Nat) :
     the weight by exactly 1. The error is contained because the
     clinamen bounds the minimum weight at 1 — the system never
     crashes to zero from a single error. -/
-theorem single_bit_error_bounded (R v : Nat) (hv : v ≤ R) (_hR : R ≥ 1) :
+theorem single_bit_error_bounded (R v : Nat) (_hv : v ≤ R) (_hR : R ≥ 1) :
     -- Flipping one bit up: weight decreases by 1
     godWeight R v - godWeight R (v + 1) ≤ 1 ∧
     -- But never below 1 (clinamen floor)
     godWeight R (v + 1) ≥ 1 := by
-  constructor
-  · unfold godWeight; omega
-  · unfold godWeight; omega
+  refine ⟨?_, Gnosis.godWeight_pos R (v + 1)⟩
+  -- godWeight R v - godWeight R (v+1) ≤ 1: bumping rejection by 1 drops weight by ≤1.
+  -- Reduce (a + 1) - (b + 1) = a - b, then bound (R - min v R) - (R - min (v+1) R) ≤ 1.
+  unfold godWeight
+  rw [Nat.add_sub_add_right (R - min v R) 1 (R - min (v + 1) R)]
+  -- Bound the diff via Nat.sub_le composed with the min step.
+  -- min v R ≤ min (v+1) R, so R - min (v+1) R ≤ R - min v R; the diff is min (v+1) R - min v R.
+  -- min (v+1) R - min v R ≤ 1 because incrementing v by 1 increases min by ≤ 1.
+  by_cases hLeR : v + 1 ≤ R
+  · -- Both mins exact: min v R = v, min (v+1) R = v + 1.
+    rw [Nat.min_eq_left (Nat.le_trans (Nat.le_succ v) hLeR), Nat.min_eq_left hLeR]
+    -- Goal: (R - v) - (R - (v + 1)) ≤ 1.
+    -- Use Nat.sub_sub: R - (v + 1) = R - v - 1.
+    rw [← Nat.sub_sub R v 1]
+    -- Goal: (R - v) - (R - v - 1) ≤ 1.
+    -- For any n: n - (n - 1) ≤ 1 (it's 1 if n ≥ 1, else 0).
+    rcases Nat.eq_zero_or_pos (R - v) with hRv0 | hRvPos
+    · rw [hRv0]; decide
+    · rw [Nat.sub_sub_self hRvPos]
+      exact Nat.le_refl 1
+  · -- v + 1 > R ⇒ min (v+1) R = R; the diff has 0 left for v+1 side.
+    have hRleSucc : R ≤ v + 1 := Nat.le_of_not_le hLeR
+    rw [Nat.min_eq_right hRleSucc, Nat.sub_self R]
+    -- Goal: (R - min v R) - 0 ≤ 1. Need to bound (R - min v R).
+    -- Key: from R ≤ v + 1 and v + 1 > R (i.e., R < v + 1, so R ≤ v), min v R = R, so R - R = 0.
+    -- From ¬(v + 1 ≤ R) we have R < v + 1, i.e., R ≤ v.
+    have hRleV : R ≤ v := Nat.le_of_lt_succ (Nat.lt_of_not_le hLeR)
+    rw [Nat.min_eq_right hRleV, Nat.sub_self R, Nat.sub_zero]
+    exact Nat.zero_le 1
 
 -- ═══════════════════════════════════════════════════════════════════════
 -- §6. Comparison with Binary Coding
@@ -222,9 +247,9 @@ theorem fibonacci_coding_master :
     -- Error bounded
     (∀ R v, godWeight R v ≥ 1) := by
   refine ⟨rfl, rfl, rfl, ?_, ?_, ?_, ?_⟩
-  · intro n k h1 h2; have : fib (k + 3) = fib (k + 2) + fib (k + 1) := rfl; omega
-  · intro R C hC; unfold godWeight; simp [Nat.min_eq_left hC]; omega
-  · unfold godWeight; omega
-  · intro R v; unfold godWeight; omega
+  · exact prefix_free_from_greedy_gap
+  · exact Gnosis.godWeight_conservation
+  · exact Gnosis.godWeight_floor 0
+  · intro R v; exact Gnosis.godWeight_pos R v
 
 end FibonacciCoding

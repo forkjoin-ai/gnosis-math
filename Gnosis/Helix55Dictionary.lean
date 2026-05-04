@@ -78,10 +78,11 @@ private theorem iterateSucc_succ_eq_addMod (n : Nat) :
     intro i
     show iterateSucc n (k + 1) ((i + 1) % n) = (i + 1 + (k + 1)) % n
     rw [ih ((i + 1) % n)]
-    have h1 : (i + 1) % n + 1 + k = (i + 1) % n + (1 + k) := by omega
+    have h1 : (i + 1) % n + 1 + k = (i + 1) % n + (1 + k) := Nat.add_assoc _ 1 k
     rw [h1, mod_add_left]
     congr 1
-    omega
+    -- (i + 1) + (1 + k) = i + 1 + (k + 1) — by add_comm on the inner pair.
+    rw [Nat.add_comm 1 k]
 
 /-! ## Period-55 return: the dictionary closes -/
 
@@ -90,21 +91,27 @@ theorem helix55_period_55 (i : Nat) (hi : i < 55) :
   have h := iterateSucc_succ_eq_addMod 55 54 i
   show iterateSucc 55 (54 + 1) i = i
   rw [h]
-  have h2 : i + 1 + 54 = i + 55 := by omega
+  -- i + 1 + 54 = i + 55: associativity (1 + 54 = 55).
+  have h2 : i + 1 + 54 = i + 55 := by
+    rw [Nat.add_assoc]
   rw [h2]
-  omega
+  -- (i + 55) % 55 = i % 55 = i (since i < 55).
+  rw [Nat.add_mod_right, Nat.mod_eq_of_lt hi]
 
 /-! ## No shorter period at zero: genuine 55-cycle -/
 
 theorem helix55_no_period_at_zero (k : Nat) (hk_pos : 0 < k) (hk_lt : k < 55) :
     iterateSucc 55 k 0 ≠ 0 := by
-  have hk_succ : k = (k - 1) + 1 := by omega
+  have hk_succ : k = (k - 1) + 1 := (Nat.sub_add_cancel hk_pos).symm
   rw [hk_succ]
   rw [iterateSucc_succ_eq_addMod 55 (k - 1) 0]
-  have h : 0 + 1 + (k - 1) = k := by omega
+  -- 0 + 1 + (k - 1) = 1 + (k - 1) = k.
+  have h : 0 + 1 + (k - 1) = k := by
+    rw [Nat.zero_add, Nat.add_comm 1 (k - 1), Nat.sub_add_cancel hk_pos]
   rw [h]
   rw [Nat.mod_eq_of_lt hk_lt]
-  omega
+  -- k ≠ 0 from 0 < k.
+  exact Nat.pos_iff_ne_zero.mp hk_pos
 
 /-! ## Transitivity: every position reaches every other -/
 
@@ -122,18 +129,55 @@ theorem helix55_encode_decode (p q : Nat) (hp : p < 55) (hq : q < 55) :
   by_cases hk_zero : (q + 55 - p) % 55 = 0
   · rw [hk_zero]
     show p = q
-    omega
+    -- (q + 55 - p) % 55 = 0 with p, q < 55 forces q + 55 - p = 55, hence p = q.
+    -- The divisibility argument: q + 55 - p ∈ (0, 110), only multiple of 55 is 55.
+    have hDvd : 55 ∣ (q + 55 - p) := Nat.dvd_of_mod_eq_zero hk_zero
+    have hpLeQ55 : p ≤ q + 55 := Nat.le_trans (Nat.le_of_lt hp) (Nat.le_add_left 55 q)
+    -- q + 55 - p > 0 (since p < 55 ≤ q + 55, and we have hp).
+    have hPos : 0 < q + 55 - p := Nat.sub_pos_of_lt
+      (Nat.lt_of_lt_of_le hp (Nat.le_add_left 55 q))
+    -- q + 55 - p < 110 (since q + 55 < 55 + 55 = 110).
+    have hLt110 : q + 55 - p < 110 := Nat.lt_of_le_of_lt
+      (Nat.sub_le (q + 55) p)
+      (Nat.add_lt_add_right hq 55)
+    -- The only multiple of 55 in (0, 110) is 55.
+    obtain ⟨k, hkEq⟩ := hDvd
+    -- k must be 1.
+    have hkPos : 0 < k := by
+      rcases Nat.eq_zero_or_pos k with hk0 | hkp
+      · exfalso; rw [hk0, Nat.mul_zero] at hkEq; exact Nat.lt_irrefl 0 (hkEq ▸ hPos)
+      · exact hkp
+    have hkLt2 : k < 2 := by
+      rcases Nat.lt_or_ge k 2 with hlt | hge
+      · exact hlt
+      · exfalso
+        have : 110 ≤ q + 55 - p := by
+          rw [hkEq]
+          exact Nat.le_trans (by decide : (110 : Nat) ≤ 55 * 2) (Nat.mul_le_mul_left 55 hge)
+        exact absurd this (Nat.not_le_of_lt hLt110)
+    have hkOne : k = 1 := Nat.le_antisymm (Nat.le_of_lt_succ hkLt2) hkPos
+    rw [hkOne, Nat.mul_one] at hkEq
+    -- hkEq : q + 55 - p = 55. With p ≤ q + 55: q + 55 - p = 55 ⇒ q = p.
+    have : q + 55 = p + 55 := by
+      have hAdd : (q + 55 - p) + p = 55 + p := by rw [hkEq]
+      rw [Nat.sub_add_cancel hpLeQ55] at hAdd
+      rw [hAdd, Nat.add_comm 55 p]
+    exact (Nat.add_right_cancel this).symm
   · have hk_pos : 0 < (q + 55 - p) % 55 := Nat.pos_of_ne_zero hk_zero
     have hk_lt : (q + 55 - p) % 55 < 55 := Nat.mod_lt _ (by decide)
-    have hk_succ : (q + 55 - p) % 55 = ((q + 55 - p) % 55 - 1) + 1 := by omega
+    have hk_succ : (q + 55 - p) % 55 = ((q + 55 - p) % 55 - 1) + 1 :=
+      (Nat.sub_add_cancel hk_pos).symm
     rw [hk_succ]
     rw [iterateSucc_succ_eq_addMod 55 ((q + 55 - p) % 55 - 1) p]
-    have h1 : p + 1 + ((q + 55 - p) % 55 - 1) = p + (q + 55 - p) % 55 := by omega
+    have h1 : p + 1 + ((q + 55 - p) % 55 - 1) = p + (q + 55 - p) % 55 := by
+      rw [Nat.add_assoc, Nat.add_comm 1 _, Nat.sub_add_cancel hk_pos]
     rw [h1]
     rw [add_mod_right]
-    have h2 : p + (q + 55 - p) = q + 55 := by omega
+    have hpLeQ55 : p ≤ q + 55 :=
+      Nat.le_trans (Nat.le_of_lt hp) (Nat.le_add_left 55 q)
+    have h2 : p + (q + 55 - p) = q + 55 := Nat.add_sub_of_le hpLeQ55
     rw [h2]
-    omega
+    rw [Nat.add_mod_right, Nat.mod_eq_of_lt hq]
 
 theorem helix55_transitive (p q : Nat) (hp : p < 55) (hq : q < 55) :
     ∃ k, k < 55 ∧ iterateSucc 55 k p = q :=
@@ -142,7 +186,7 @@ theorem helix55_transitive (p q : Nat) (hp : p < 55) (hq : q < 55) :
 theorem helix55_distance_self (p : Nat) (_hp : p < 55) :
     helixDistance p p = 0 := by
   unfold helixDistance
-  have h : p + 55 - p = 55 := by omega
+  have h : p + 55 - p = 55 := Nat.add_sub_cancel_left p 55
   rw [h]
 
 /-! ## 54 strands + 1 parity partition -/
@@ -164,15 +208,13 @@ theorem helixStrands_all_lt_54 (s : Nat) (hs : s ∈ helixStrands) : s < 54 := b
   unfold helixStrands at hs
   exact List.mem_range.mp hs
 
-theorem helixStrands_all_lt_55 (s : Nat) (hs : s ∈ helixStrands) : s < 55 := by
-  have := helixStrands_all_lt_54 s hs
-  omega
+theorem helixStrands_all_lt_55 (s : Nat) (hs : s ∈ helixStrands) : s < 55 :=
+  Nat.lt_of_lt_of_le (helixStrands_all_lt_54 s hs) (by decide : (54 : Nat) ≤ 55)
 
 theorem helixParity_distinct_from_strands (s : Nat) (hs : s ∈ helixStrands) :
     s ≠ helixParity := by
-  have := helixStrands_all_lt_54 s hs
   unfold helixParity
-  omega
+  exact Nat.ne_of_lt (helixStrands_all_lt_54 s hs)
 
 theorem helix54_plus_parity_covers_55 (i : Nat) (hi : i < 55) :
     i ∈ helixStrands ∨ i = helixParity := by
@@ -181,7 +223,8 @@ theorem helix54_plus_parity_covers_55 (i : Nat) (hi : i < 55) :
   · left
     exact List.mem_range.mpr h
   · right
-    omega
+    -- ¬(i < 54) ⇒ 54 ≤ i; combined with i < 55 ⇒ i = 54.
+    exact Nat.le_antisymm (Nat.le_of_lt_succ hi) (Nat.le_of_not_lt h)
 
 /-! ## BraidedAsymptote bridge -/
 

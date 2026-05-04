@@ -93,7 +93,7 @@ theorem activeLayerCount_le_four
   unfold activeLayerCount
   by_cases h1 : 0 < cpuLanes <;> by_cases h2 : 0 < gpuLanes <;>
     by_cases h3 : 0 < npuLanes <;> by_cases h4 : 0 < wasmLanes <;>
-    simp [h1, h2, h3, h4] <;> omega
+    simp [h1, h2, h3, h4] <;> decide
 
 theorem activeLayerCount_eq_four_of_all_positive
     {cpuLanes gpuLanes npuLanes wasmLanes : Nat}
@@ -284,7 +284,7 @@ theorem binaryFrameBytes_injective :
     ∀ a b : Nat, binaryFrameBytes a = binaryFrameBytes b → a = b := by
   intro a b h
   unfold binaryFrameBytes binaryHeaderBytes at h
-  omega
+  exact Nat.add_left_cancel h
 
 theorem binaryFrameBytes_eq_header_of_zero_payload :
     binaryFrameBytes 0 = binaryHeaderBytes := by
@@ -294,18 +294,22 @@ theorem binaryFrameBytes_eq_header_iff
     (payloadBytes : Nat) :
     binaryFrameBytes payloadBytes = binaryHeaderBytes ↔ payloadBytes = 0 := by
   unfold binaryFrameBytes binaryHeaderBytes
-  omega
+  constructor
+  · intro h
+    -- 10 + payloadBytes = 10 = 10 + 0 ⇒ payloadBytes = 0.
+    exact Nat.add_left_cancel (h.trans (Nat.add_zero 10).symm)
+  · intro h; rw [h]
 
 theorem binaryFrameBytes_pos (payloadBytes : Nat) :
     0 < binaryFrameBytes payloadBytes := by
   unfold binaryFrameBytes binaryHeaderBytes
-  omega
+  exact Nat.lt_of_lt_of_le (by decide : (0 : Nat) < 10) (Nat.le_add_right 10 payloadBytes)
 
 theorem payloadBytes_le_binaryFrameBytes
     (payloadBytes : Nat) :
     payloadBytes <= binaryFrameBytes payloadBytes := by
   unfold binaryFrameBytes binaryHeaderBytes
-  omega
+  exact Nat.le_add_left payloadBytes 10
 
 theorem skippedWithinBudget_of_le
     {skippedHedges scheduledShadows : Nat}
@@ -343,13 +347,13 @@ theorem metaLaminarHeight_ge_streamLayers_succ
     (streamLayers backendLayers : Nat) :
     streamLayers + 1 <= metaLaminarHeight streamLayers backendLayers := by
   unfold metaLaminarHeight
-  omega
+  exact Nat.add_le_add_right (Nat.le_add_right streamLayers backendLayers) 1
 
 theorem metaLaminarHeight_ge_backendLayers_succ
     (streamLayers backendLayers : Nat) :
     backendLayers + 1 <= metaLaminarHeight streamLayers backendLayers := by
   unfold metaLaminarHeight
-  omega
+  exact Nat.add_le_add_right (Nat.le_add_left backendLayers streamLayers) 1
 
 theorem metaLaminarHeight_eq_one_iff
     (streamLayers backendLayers : Nat) :
@@ -358,8 +362,8 @@ theorem metaLaminarHeight_eq_one_iff
   unfold metaLaminarHeight
   constructor
   · intro h_height
-    have h_sum : streamLayers + backendLayers = 0 := by
-      omega
+    have h_sum : streamLayers + backendLayers = 0 :=
+      Nat.add_right_cancel (h_height.trans (Nat.zero_add 1).symm)
     have h_stream : streamLayers = 0 := Nat.eq_zero_of_add_eq_zero_right h_sum
     have h_backend : backendLayers = 0 := Nat.eq_zero_of_add_eq_zero_left h_sum
     exact ⟨h_stream, h_backend⟩

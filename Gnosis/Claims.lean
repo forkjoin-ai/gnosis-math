@@ -7,7 +7,9 @@ def worthingtonDen (shards : Nat) : Nat := 2 * shards
 theorem worthington_num_lt_den {shards : Nat} (hShards : 0 < shards) :
     worthingtonNum shards < worthingtonDen shards := by
   unfold worthingtonNum worthingtonDen
-  omega
+  -- shards - 1 < 2 * shards when shards ≥ 1: shards - 1 ≤ shards - 1 < shards ≤ 2 * shards.
+  have h1 : shards - 1 < shards := Nat.sub_lt hShards Nat.one_pos
+  exact Nat.lt_of_lt_of_le h1 (Nat.le_mul_of_pos_left shards (by decide : (0 : Nat) < 2))
 
 private theorem pow_strict_mono_succ {p q n : Nat} (h : p < q) :
     p ^ (n + 1) < q ^ (n + 1) := by
@@ -16,7 +18,7 @@ private theorem pow_strict_mono_succ {p q n : Nat} (h : p < q) :
       simpa using h
   | succ n ih =>
       have hPLeQ : p ≤ q := Nat.le_of_lt h
-      have hQPos : 0 < q := by omega
+      have hQPos : 0 < q := Nat.lt_of_le_of_lt (Nat.zero_le p) h
       have hLeft : p ^ (n + 1) * p ≤ p ^ (n + 1) * q := by
         exact Nat.mul_le_mul_left (p ^ (n + 1)) hPLeQ
       have hRight : p ^ (n + 1) * q < q ^ (n + 1) * q := by
@@ -38,7 +40,7 @@ theorem speculative_tree_denominator_positive {p q n : Nat}
     (hPQ : p < q) :
     0 < (q - p) * q ^ n := by
   have hGap : 0 < q - p := Nat.sub_pos_of_lt hPQ
-  have hQPos : 0 < q := by omega
+  have hQPos : 0 < q := Nat.lt_of_le_of_lt (Nat.zero_le p) hPQ
   have hPowPos : 0 < q ^ n := Nat.pow_pos hQPos
   exact Nat.mul_pos hGap hPowPos
 
@@ -48,17 +50,16 @@ def turbulentIdleDen (stageCount chunkCount : Nat) : Nat :=
   chunkCount * (stageCount + chunkCount - 1)
 
 theorem turbulent_idle_num_nonnegative (chunkCount : Nat) :
-    0 <= turbulentIdleNum chunkCount := by
-  unfold turbulentIdleNum
-  omega
+    0 <= turbulentIdleNum chunkCount :=
+  Nat.zero_le _
 
 theorem turbulent_idle_bounds {stageCount chunkCount : Nat}
-    (hStageCount : 0 < stageCount)
-    (hChunkCount : 0 < chunkCount) :
+    (_hStageCount : 0 < stageCount)
+    (_hChunkCount : 0 < chunkCount) :
     turbulentIdleNum chunkCount <= turbulentIdleDen stageCount chunkCount := by
   unfold turbulentIdleNum turbulentIdleDen
-  have hInner : chunkCount - 1 <= stageCount + chunkCount - 1 := by
-    omega
+  have hInner : chunkCount - 1 <= stageCount + chunkCount - 1 :=
+    Nat.sub_le_sub_right (Nat.le_add_left chunkCount stageCount) 1
   exact Nat.mul_le_mul_left chunkCount hInner
 
 theorem turbulent_idle_den_positive {stageCount chunkCount : Nat}
@@ -67,7 +68,10 @@ theorem turbulent_idle_den_positive {stageCount chunkCount : Nat}
     0 < turbulentIdleDen stageCount chunkCount := by
   unfold turbulentIdleDen
   have hInnerPos : 0 < stageCount + chunkCount - 1 := by
-    omega
+    -- 1 ≤ stageCount + chunkCount - 1: from stageCount ≥ 1, chunkCount ≥ 1, sum ≥ 2.
+    have hSum : 2 ≤ stageCount + chunkCount :=
+      Nat.add_le_add hStageCount hChunkCount
+    exact Nat.le_sub_of_add_le hSum
   exact Nat.mul_pos hChunkCount hInnerPos
 
 def whipTotalTime (items stageCount correctionCost shardCount : Nat) : Nat :=
@@ -77,11 +81,19 @@ theorem whip_ceiling_term_is_one {items shardCount : Nat}
     (hItems : 0 < items)
     (hShardCount : items <= shardCount) :
     (items + shardCount - 1) / shardCount = 1 := by
-  have hShardPos : 0 < shardCount := by omega
+  have hShardPos : 0 < shardCount := Nat.lt_of_lt_of_le hItems hShardCount
   apply (Nat.div_eq_iff hShardPos).2
-  constructor
-  · omega
-  · omega
+  refine ⟨?_, ?_⟩
+  · -- 1 * shardCount ≤ items + shardCount - 1, since items ≥ 1.
+    rw [Nat.one_mul]
+    -- shardCount + 1 ≤ items + shardCount comes from 1 ≤ items + add_comm.
+    have hSC : shardCount + 1 ≤ items + shardCount :=
+      Nat.le_trans (Nat.add_le_add_left hItems shardCount)
+        (Nat.le_of_eq (Nat.add_comm shardCount items))
+    exact Nat.le_sub_of_add_le hSC
+  · -- items + shardCount - 1 ≤ 1 * shardCount + shardCount - 1, since items ≤ shardCount.
+    rw [Nat.one_mul]
+    exact Nat.sub_le_sub_right (Nat.add_le_add_right hShardCount shardCount) 1
 
 theorem whip_total_time_after_full_sharding {items stageCount correctionCost shardCount : Nat}
     (hItems : 0 < items)

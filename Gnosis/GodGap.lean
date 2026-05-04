@@ -39,7 +39,7 @@ theorem god_gap_nonneg (local_ min_ : Nat) (_ : min_ ≤ local_) :
     the gap is at most the total cost (minimum could be zero). -/
 theorem god_gap_bounded_above (initialCost : Nat) :
     godGap initialCost 0 = initialCost := by
-  unfold godGap; omega
+  unfold godGap; exact Nat.sub_zero initialCost
 
 /-- Each bootstrap iteration narrows the God Gap (or holds it constant).
     If cost(n+1) <= cost(n), then gap(n+1) <= gap(n). -/
@@ -48,8 +48,7 @@ theorem god_gap_nonincreasing
     (n : Nat) :
     godGap (cost (n + 1)) min_ ≤ godGap (cost n) min_ := by
   unfold godGap
-  have := h n
-  omega
+  exact Nat.sub_le_sub_right (h n) min_
 
 /-- The God Gap converges: since the cost sequence stabilizes (bootstrap
     convergence), the gap stabilizes too. It reaches a final value that
@@ -74,35 +73,48 @@ theorem god_gap_converges
   induction v with
   | zero =>
     intro s hle
-    exact ⟨s, Nat.le_refl _, fun n hn => by
-      have : cost n ≤ cost s := by
-        induction hn with
-        | refl => exact Nat.le_refl _
-        | step _ ih => exact Nat.le_trans (h _) ih
-      omega⟩
+    refine ⟨s, Nat.le_refl _, fun n hn => ?_⟩
+    have hCnLeS : cost n ≤ cost s := by
+      induction hn with
+      | refl => exact Nat.le_refl _
+      | step _ ih => exact Nat.le_trans (h _) ih
+    have hCsZero : cost s = 0 := Nat.le_zero.mp hle
+    have hCnZero : cost n = 0 := Nat.le_zero.mp (Nat.le_trans hCnLeS hle)
+    rw [hCnZero, hCsZero]
   | succ v ih =>
     intro s hle
     by_cases hdrop : cost (s + 1) < cost s
-    · obtain ⟨N, hN1, hN2⟩ := ih (s + 1) (by omega)
-      exact ⟨N, by omega, hN2⟩
+    · have hStepLeV : cost (s + 1) ≤ v :=
+        Nat.le_of_lt_succ (Nat.lt_of_lt_of_le hdrop hle)
+      obtain ⟨N, hN1, hN2⟩ := ih (s + 1) hStepLeV
+      exact ⟨N, Nat.le_trans (Nat.le_succ s) hN1, hN2⟩
     · by_cases hle2 : cost (s + 1) ≤ v
       · obtain ⟨N, hN1, hN2⟩ := ih (s + 1) hle2
-        exact ⟨N, by omega, hN2⟩
-      · have hval : cost s = v + 1 := by have := h s; omega
+        exact ⟨N, Nat.le_trans (Nat.le_succ s) hN1, hN2⟩
+      · have hSleStep : cost s ≤ cost (s + 1) := Nat.le_of_not_lt hdrop
+        have heq : cost (s + 1) = cost s := Nat.le_antisymm (h s) hSleStep
+        have hVLtStep : v < cost (s + 1) := Nat.lt_of_not_le hle2
+        have hSuccLeStep : v + 1 ≤ cost (s + 1) := Nat.succ_le_of_lt hVLtStep
+        have hSuccLeS : v + 1 ≤ cost s := heq ▸ hSuccLeStep
+        have hval : cost s = v + 1 := Nat.le_antisymm hle hSuccLeS
         by_cases hever : ∃ j, s < j ∧ cost j < v + 1
-        · obtain ⟨j, _, hjv⟩ := hever
-          obtain ⟨N, hN1, hN2⟩ := ih j (by omega)
-          exact ⟨N, by omega, hN2⟩
-        · exact ⟨s, Nat.le_refl _, fun n hn => by
-            have h1 : cost n ≤ cost s := by
-              induction hn with
-              | refl => exact Nat.le_refl _
-              | step _ ih => exact Nat.le_trans (h _) ih
-            by_cases hsn : s = n
-            · rw [← hsn]
-            · by_cases hlt : cost n < v + 1
-              · exact absurd ⟨n, by omega, hlt⟩ hever
-              · omega⟩
+        · obtain ⟨j, hjs, hjv⟩ := hever
+          have hjLeV : cost j ≤ v := Nat.le_of_lt_succ hjv
+          obtain ⟨N, hN1, hN2⟩ := ih j hjLeV
+          exact ⟨N, Nat.le_trans (Nat.le_of_lt hjs) hN1, hN2⟩
+        · refine ⟨s, Nat.le_refl _, fun n hn => ?_⟩
+          have h1 : cost n ≤ cost s := by
+            induction hn with
+            | refl => exact Nat.le_refl _
+            | step _ ih => exact Nat.le_trans (h _) ih
+          by_cases hsn : s = n
+          · rw [← hsn]
+          · have hsltn : s < n := Nat.lt_of_le_of_ne hn hsn
+            by_cases hlt : cost n < v + 1
+            · exact absurd ⟨n, hsltn, hlt⟩ hever
+            · have hCnGe : v + 1 ≤ cost n := Nat.le_of_not_lt hlt
+              have hCnLeVSucc : cost n ≤ v + 1 := hval ▸ h1
+              exact (Nat.le_antisymm hCnLeVSucc hCnGe).trans hval.symm
 
 /-- The God Gap at convergence can be computed from the benchmark data.
     Betty's local optimum: 0.726ms. Theoretical minimum (aeon-logic): 0.065ms.
@@ -112,19 +124,19 @@ theorem god_gap_converges
     The 0.661ms is an upper bound on the God Gap.
     The true gap is somewhere in [0, 0.661]. -/
 theorem god_gap_upper_bound_from_data :
-    godGap 726 65 = 661 := by unfold godGap; omega
+    godGap 726 65 = 661 := by unfold godGap; decide
 
 /-- The God Gap for Betti on its own source is tighter.
     Betti: 0.074ms. aeon-logic: 0.065ms.
     God Gap <= 0.074 - 0.065 = 0.009ms.
     Betti is closer to god on self-compilation than Betty is. -/
 theorem betti_god_gap_tighter :
-    godGap 74 65 = 9 := by unfold godGap; omega
+    godGap 74 65 = 9 := by unfold godGap; decide
 
 /-- Betty's God Gap > Betti's God Gap on self-source.
     The self-hosted compiler that finished becoming itself is closer
     to the unreachable optimum than the compiler that watches over all. -/
 theorem self_hosted_closer_to_god :
-    godGap 74 65 < godGap 726 65 := by unfold godGap; omega
+    godGap 74 65 < godGap 726 65 := by unfold godGap; decide
 
 end GodGap

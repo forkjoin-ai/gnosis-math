@@ -124,7 +124,7 @@ theorem multi_bit_heat (n : Nat) :
         buleyUnitScore vacuumBuleUnit) * 1 = n
   rw [repeated_lift_score, vacuum_has_zero_score]
   show (0 + n - 0) * 1 = n
-  omega
+  rw [Nat.zero_add, Nat.sub_zero, Nat.mul_one]
 
 /-- The debt-to-heat mapping: clinamen debt is exactly the heat cost. -/
 theorem erasure_cost_is_thermal_debt (t : StateTransition)
@@ -132,14 +132,14 @@ theorem erasure_cost_is_thermal_debt (t : StateTransition)
     heatDissipated t = clinamenDebt t := by
   unfold heatDissipated landauer_bound_per_bit thermalQuantum
   show clinamenDebt t * 1 = clinamenDebt t
-  omega
+  exact Nat.mul_one _
 
 /-- Heat dissipation as vacuum's collection of debt. -/
 theorem heat_dissipation_is_vacuum_collection (t : StateTransition)
     (_h : irreversibleTransition t) :
     heatDissipated t = buleyUnitScore t.inputState - buleyUnitScore t.outputState := by
   unfold heatDissipated clinamenDebt erasureCost landauer_bound_per_bit thermalQuantum
-  omega
+  exact Nat.mul_one _
 
 /-! ## Part 3: Reversible Computation Requires Charge Conservation -/
 
@@ -163,7 +163,11 @@ theorem reversible_iff_no_charge_loss (t : StateTransition) :
   constructor
   · intro h
     obtain ⟨_, _, _, hinput, _⟩ := h
-    exact ⟨hinput, by omega⟩
+    -- ¬ irreversibleTransition t = ¬ score output < score input.
+    -- From hinput : score input = score output, this is ¬ x < x.
+    refine ⟨hinput, ?_⟩
+    intro hLt
+    exact Nat.lt_irrefl _ (hinput ▸ hLt)
   · intro ⟨heq, _⟩
     refine ⟨⟨t.outputState, t.inputState⟩, rfl, rfl, heq, ?_⟩
     show buleyUnitScore t.outputState = buleyUnitScore t.inputState
@@ -256,12 +260,10 @@ theorem landauer_bound_is_clinamen_per_bit (n : Nat) :
   refine ⟨?_, ?_⟩
   · show buleyUnitScore (repeatedLift vacuumBuleUnit .waste n) -
          buleyUnitScore vacuumBuleUnit = n
-    rw [repeated_lift_score, vacuum_has_zero_score]
-    omega
+    rw [repeated_lift_score, vacuum_has_zero_score, Nat.zero_add, Nat.sub_zero]
   · show (buleyUnitScore (repeatedLift vacuumBuleUnit .waste n) -
           buleyUnitScore vacuumBuleUnit) * 1 = n
-    rw [repeated_lift_score, vacuum_has_zero_score]
-    omega
+    rw [repeated_lift_score, vacuum_has_zero_score, Nat.zero_add, Nat.sub_zero, Nat.mul_one]
 
 /-- The bound is tight. -/
 theorem landauer_bound_is_tight (n : Nat) (_hPos : 0 < n) :
@@ -272,8 +274,7 @@ theorem landauer_bound_is_tight (n : Nat) (_hPos : 0 < n) :
       clinamenDebt t = n := by
   intro t ⟨hin, hout, _h_irrev⟩
   unfold clinamenDebt erasureCost
-  rw [hin, hout]
-  omega
+  rw [hin, hout, Nat.sub_zero]
 
 /-- Theorem: The minimum thermal cost of erasing one bit is exactly one clinamen unit. -/
 theorem landauer_principle_clinamen_cost :
@@ -287,8 +288,7 @@ theorem landauer_principle_clinamen_cost :
   intro n _
   show (buleyUnitScore (repeatedLift vacuumBuleUnit .waste n) -
         buleyUnitScore vacuumBuleUnit) * 1 = n * 1
-  rw [repeated_lift_score, vacuum_has_zero_score]
-  omega
+  rw [repeated_lift_score, vacuum_has_zero_score, Nat.zero_add, Nat.sub_zero]
 
 /-! ## Part 6: Master Theorem - Information, Reversibility, and Vacuum -/
 
@@ -337,12 +337,10 @@ theorem vacuum_collects_all_clinamen_debt :
   refine ⟨rfl, ?_, ?_⟩
   · show buleyUnitScore (repeatedLift vacuumBuleUnit .waste nBits) -
          buleyUnitScore vacuumBuleUnit = nBits
-    rw [repeated_lift_score, vacuum_has_zero_score]
-    omega
+    rw [repeated_lift_score, vacuum_has_zero_score, Nat.zero_add, Nat.sub_zero]
   · show (buleyUnitScore (repeatedLift vacuumBuleUnit .waste nBits) -
           buleyUnitScore vacuumBuleUnit) * 1 = nBits
-    rw [repeated_lift_score, vacuum_has_zero_score]
-    omega
+    rw [repeated_lift_score, vacuum_has_zero_score, Nat.zero_add, Nat.sub_zero, Nat.mul_one]
 
 end LandauerPrincipleAsClinaemenDebt
 end Gnosis

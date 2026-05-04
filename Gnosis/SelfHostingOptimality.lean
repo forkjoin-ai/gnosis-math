@@ -43,41 +43,45 @@ private theorem stable_from (cost : Nat → Nat) (h : ∀ n, cost (n + 1) ≤ co
   induction v generalizing s with
   | zero =>
     intro hle
-    exact ⟨s, Nat.le_refl _, fun n hn => by
-      have := monotone_descent cost h s n hn; omega⟩
+    refine ⟨s, Nat.le_refl _, fun n hn => ?_⟩
+    have hCnLeS : cost n ≤ cost s := monotone_descent cost h s n hn
+    have hCsZero : cost s = 0 := Nat.le_zero.mp hle
+    have hCnZero : cost n = 0 := Nat.le_zero.mp (Nat.le_trans hCnLeS hle)
+    rw [hCnZero, hCsZero]
   | succ v ih =>
     intro hle
     by_cases hdrop : cost (s + 1) < cost s
-    · have : cost (s + 1) ≤ v := by omega
-      obtain ⟨N, hN1, hN2⟩ := ih (s + 1) this
-      exact ⟨N, by omega, hN2⟩
-    · have heq : cost (s + 1) = cost s := by have := h s; omega
+    · have hStepLeV : cost (s + 1) ≤ v :=
+        Nat.le_of_lt_succ (Nat.lt_of_lt_of_le hdrop hle)
+      obtain ⟨N, hN1, hN2⟩ := ih (s + 1) hStepLeV
+      exact ⟨N, Nat.le_trans (Nat.le_succ s) hN1, hN2⟩
+    · have hSleStep : cost s ≤ cost (s + 1) := Nat.le_of_not_lt hdrop
+      have heq : cost (s + 1) = cost s := Nat.le_antisymm (h s) hSleStep
       by_cases hle2 : cost (s + 1) ≤ v
       · obtain ⟨N, hN1, hN2⟩ := ih (s + 1) hle2
-        exact ⟨N, by omega, hN2⟩
-      · -- cost(s) = cost(s+1) = v+1. Either cost drops later or stays v+1 forever.
-        have hval : cost s = v + 1 := by omega
+        exact ⟨N, Nat.le_trans (Nat.le_succ s) hN1, hN2⟩
+      · -- cost(s) = cost(s+1) = v+1.
+        have hVLtStep : v < cost (s + 1) := Nat.lt_of_not_le hle2
+        have hSuccLeStep : v + 1 ≤ cost (s + 1) := Nat.succ_le_of_lt hVLtStep
+        have hSuccLeS : v + 1 ≤ cost s := heq ▸ hSuccLeStep
+        have hval : cost s = v + 1 := Nat.le_antisymm hle hSuccLeS
         by_cases hever : ∃ j, s < j ∧ cost j < v + 1
         · obtain ⟨j, hjs, hjv⟩ := hever
-          have : cost j ≤ v := by omega
-          obtain ⟨N, hN1, hN2⟩ := ih j this
-          exact ⟨N, by omega, hN2⟩
-        · -- cost stays ≥ v+1 forever. With monotonicity, cost = v+1 everywhere ≥ s.
-          have hflat : ∀ n, s ≤ n → cost n = v + 1 := by
+          have hjLeV : cost j ≤ v := Nat.le_of_lt_succ hjv
+          obtain ⟨N, hN1, hN2⟩ := ih j hjLeV
+          exact ⟨N, Nat.le_trans (Nat.le_of_lt hjs) hN1, hN2⟩
+        · have hflat : ∀ n, s ≤ n → cost n = v + 1 := by
             intro n hn
-            have h1 := monotone_descent cost h s n hn
-            -- cost n ≤ cost s = v+1
-            -- Need: cost n ≥ v+1. Suppose cost n < v+1.
-            -- Then s < n (since cost s = v+1 > cost n) and cost n < v+1.
-            -- But hever says no such j exists with s < j ∧ cost j < v+1.
-            -- If n = s, cost n = v+1 by hval. If s < n, hever gives contradiction.
+            have hCnLeS : cost n ≤ cost s := monotone_descent cost h s n hn
             by_cases hsn : s = n
             · rw [← hsn]; exact hval
-            · -- s < n
-              have : s < n := by omega
+            · have hsltn : s < n := Nat.lt_of_le_of_ne hn hsn
               by_cases hlt : cost n < v + 1
-              · exact absurd ⟨n, this, hlt⟩ hever
-              · omega
+              · exact absurd ⟨n, hsltn, hlt⟩ hever
+              · -- cost n ≥ v+1 (from ¬<) and cost n ≤ cost s = v+1 ⇒ cost n = v+1
+                have hCnGe : v + 1 ≤ cost n := Nat.le_of_not_lt hlt
+                have hCnLeVSucc : cost n ≤ v + 1 := hval ▸ hCnLeS
+                exact Nat.le_antisymm hCnLeVSucc hCnGe
           exact ⟨s, Nat.le_refl _, fun n hn => by
             rw [hflat n hn, hflat s (Nat.le_refl _)]⟩
 

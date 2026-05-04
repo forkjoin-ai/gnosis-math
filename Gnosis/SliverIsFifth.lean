@@ -37,13 +37,13 @@ inductive Primitive where
 def pairwise (n : Nat) : Nat := n * (n - 1) / 2
 
 -- Five primitives → 10 interactions (the ten bosons)
-theorem five_gives_ten : pairwise 5 = 10 := by unfold pairwise; omega
+theorem five_gives_ten : pairwise 5 = 10 := by unfold pairwise; decide
 
 -- Four primitives → only 6 interactions (incomplete)
-theorem four_gives_six : pairwise 4 = 6 := by unfold pairwise; omega
+theorem four_gives_six : pairwise 4 = 6 := by unfold pairwise; decide
 
 -- The gap: 10 - 6 = 4 missing interactions without the fifth
-theorem gap_is_four : 10 - 6 = 4 := by omega
+theorem gap_is_four : 10 - 6 = 4 := by decide
 
 -- ═══════════════════════════════════════════════════════════════════════════════
 -- The sliver is the fifth: without it, monoculture
@@ -59,9 +59,10 @@ def withSliver (K : Nat) : Nat := K
 def withoutSliver (_ : Nat) : Nat := 1
 
 -- The sliver preserves all strategies
-theorem sliver_preserves (K : Nat) (_ : K ≥ 2) :
+theorem sliver_preserves (K : Nat) (h : K ≥ 2) :
     withSliver K > withoutSliver K := by
-  unfold withSliver withoutSliver; omega
+  unfold withSliver withoutSliver
+  exact Nat.lt_of_lt_of_le (by decide : (1 : Nat) < 2) h
 
 -- Without sliver, diversity dies
 theorem without_sliver_monoculture (K : Nat) :
@@ -71,7 +72,7 @@ theorem without_sliver_monoculture (K : Nat) :
 -- The sliver is the difference between monoculture and diversity
 theorem sliver_is_diversity (K : Nat) (_ : K ≥ 2) :
     withSliver K - withoutSliver K = K - 1 := by
-  unfold withSliver withoutSliver; omega
+  unfold withSliver withoutSliver; rfl
 
 -- ═══════════════════════════════════════════════════════════════════════════════
 -- The sliver completes the field: removing any primitive drops below 10
@@ -80,13 +81,13 @@ theorem sliver_is_diversity (K : Nat) (_ : K ≥ 2) :
 -- 10 modes require 5 primitives. 4 gives only 6. The tenth mode needs the fifth.
 theorem sliver_completes_field :
     pairwise 5 = 10 ∧ pairwise 4 < 10 := by
-  unfold pairwise; omega
+  unfold pairwise; decide
 
 -- Each primitive contributes exactly (K-1) new interactions when added
 -- Adding the 5th primitive adds 4 new interactions: 6 + 4 = 10
 theorem fifth_adds_four :
     pairwise 5 - pairwise 4 = 4 := by
-  unfold pairwise; omega
+  unfold pairwise; decide
 
 -- Those 4 new interactions are: sliver×fork, sliver×race, sliver×fold, sliver×vent
 -- The sliver interacts with every other primitive
@@ -105,17 +106,17 @@ def bareWeight (total rejections : Nat) : Nat := total - rejections
 theorem sliver_guarantees_positivity (total rejections : Nat)
     (_ : rejections ≤ total) :
     buleyeanWeight total rejections ≥ 1 := by
-  unfold buleyeanWeight; omega
+  unfold buleyeanWeight; exact Nat.le_add_left 1 _
 
 -- Without the sliver, maximum rejection kills the mode
 theorem bare_allows_extinction (total : Nat) :
     bareWeight total total = 0 := by
-  unfold bareWeight; omega
+  unfold bareWeight; exact Nat.sub_self total
 
 -- The sliver prevents exactly this extinction
 theorem sliver_prevents_extinction (total : Nat) :
     buleyeanWeight total total = 1 := by
-  unfold buleyeanWeight; omega
+  unfold buleyeanWeight; rw [Nat.sub_self]
 
 -- ═══════════════════════════════════════════════════════════════════════════════
 -- The sliver/vent duality: +1 and -1
@@ -131,19 +132,19 @@ def sliverOp (w : Nat) : Nat := w + 1
 def ventOp (w : Nat) : Nat := w - 1
 
 -- Sliver then vent = identity (for w ≥ 1)
-theorem sliver_vent_identity (w : Nat) (hw : w ≥ 1) :
+theorem sliver_vent_identity (w : Nat) (_hw : w ≥ 1) :
     ventOp (sliverOp w) = w := by
-  unfold sliverOp ventOp; omega
+  unfold sliverOp ventOp; exact Nat.add_sub_cancel w 1
 
 -- Vent then sliver = identity (always)
 theorem vent_sliver_identity (w : Nat) :
     sliverOp (ventOp w) = w - 1 + 1 := by
-  unfold sliverOp ventOp; omega
+  unfold sliverOp ventOp; rfl
 
 -- For w ≥ 1: vent then sliver restores
 theorem vent_sliver_restores (w : Nat) (hw : w ≥ 1) :
     sliverOp (ventOp w) = w := by
-  unfold sliverOp ventOp; omega
+  unfold sliverOp ventOp; exact Nat.sub_add_cancel hw
 
 -- ═══════════════════════════════════════════════════════════════════════════════
 -- The complete theorem: the sliver formalizes the fifth primitive
@@ -164,6 +165,6 @@ theorem sliver_is_fifth :
     buleyeanWeight 100 100 = 1 ∧
     -- Without it: extinction
     bareWeight 100 100 = 0 := by
-  unfold pairwise withoutSliver withSliver buleyeanWeight bareWeight; omega
+  unfold pairwise withoutSliver withSliver buleyeanWeight bareWeight; decide
 
 end SliverIsFifth

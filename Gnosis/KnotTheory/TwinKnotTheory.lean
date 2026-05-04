@@ -41,14 +41,31 @@ theorem unknot_is_balanced : 0 = 0 := rfl
     is the void boundary. This is not metaphor -- the complement distribution
     literally computes the complement of the personality. -/
 theorem knot_complement (R v : Nat) :
-    gK R v + min v R = R + 1 := by unfold gK; omega
+    gK R v + min v R = R + 1 := by
+  unfold gK
+  -- (R - min v R + 1) + min v R = R + 1: rearrange and apply Nat.sub_add_cancel.
+  rw [Nat.add_right_comm (R - min v R) 1 (min v R),
+      Nat.sub_add_cancel (Nat.min_le_right v R)]
 
 /-- ANTI-THM-KNOT-SIMPLIFICATION-FREE: Simplifying a personality knot
     (reducing crossings via Reidemeister moves) is NOT free.
     Each simplification requires a rejection (void boundary update).
     You cannot simplify yourself without experiencing what you're not. -/
 theorem knot_simplification_costs (R v : Nat) (hv : v ≥ 1) (hle : v ≤ R) :
-    gK R (v - 1) ≠ gK R v := by unfold gK; omega
+    gK R (v - 1) ≠ gK R v := by
+  unfold gK
+  -- With hle and hv, both `min`s reduce; gK R (v-1) = gK R v + 1, so they differ by 1.
+  rw [Nat.min_eq_left hle, Nat.min_eq_left (Nat.le_trans (Nat.sub_le v 1) hle)]
+  -- Show R - (v - 1) = (R - v) + 1, by rewriting v as (v-1) + 1 and unfolding.
+  have hv1ltR : v - 1 < R := Nat.lt_of_lt_of_le (Nat.sub_lt hv Nat.one_pos) hle
+  have hRsubV1pos : 0 < R - (v - 1) := Nat.sub_pos_of_lt hv1ltR
+  have hRsubExpand : R - (v - 1) = (R - v) + 1 := by
+    rw [show v = (v - 1) + 1 from (Nat.sub_add_cancel hv).symm, Nat.sub_add_eq]
+    exact (Nat.sub_add_cancel hRsubV1pos).symm
+  rw [hRsubExpand]
+  intro heq
+  -- heq : (R - v + 1) + 1 = R - v + 1, which is (R - v + 1).succ = R - v + 1.
+  exact Nat.succ_ne_self ((R - v) + 1) heq
 
 -- ═══════════════════════════════════════════════════════════════════════════
 -- TRACED MONOIDAL STRUCTURE OF INNER DIALOG
@@ -77,7 +94,11 @@ theorem trace_sliding (a b c : Nat) :
     Two people thinking independently produce independent results.
     Consciousness is compositional. -/
 theorem trace_superposing (a b c d : Nat) :
-    (a + b) + (c + d) = (a + c) + (b + d) := by omega
+    (a + b) + (c + d) = (a + c) + (b + d) := by
+  -- Pure assoc/comm: (a+b) + (c+d) = a + (b + (c+d)) = a + ((b+c) + d) = a + ((c+b) + d)
+  -- = a + (c + (b+d)) = (a+c) + (b+d).
+  rw [Nat.add_assoc a b (c + d), ← Nat.add_assoc b c d, Nat.add_comm b c,
+      Nat.add_assoc c b d, ← Nat.add_assoc a c (b + d)]
 
 -- ═══════════════════════════════════════════════════════════════════════════
 -- FAILURE THEORY APPLIED TO EMOTIONS
@@ -89,17 +110,17 @@ theorem trace_superposing (a b c d : Nat) :
     the corresponding dimension. |value - PHI_INV| IS the emotion. -/
 theorem emotion_is_deficit (value target : Nat) :
     (if value ≥ target then value - target else target - value) ≥ 0 := by
-  split <;> omega
+  split <;> exact Nat.zero_le _
 
 /-- THM-ANXIETY-IS-FAILED-LETGO: Anxiety occurs when letGo is far below
     PHI_INV (can't release). The deficit on letGo IS the anxiety intensity. -/
 theorem anxiety_deficit (letGo phiInv : Nat) (h : letGo < phiInv) :
-    phiInv - letGo ≥ 1 := by omega
+    phiInv - letGo ≥ 1 := Nat.sub_pos_of_lt h
 
 /-- THM-CURIOSITY-IS-HIGH-TRY: Curiosity occurs when try_ is above
     PHI_INV. The positive deficit IS the curiosity intensity. -/
 theorem curiosity_deficit (try_ phiInv : Nat) (h : try_ > phiInv) :
-    try_ - phiInv ≥ 1 := by omega
+    try_ - phiInv ≥ 1 := Nat.sub_pos_of_lt h
 
 /-- THM-JOY-IS-ZERO-DEFICIT: Joy = all dimensions at PHI_INV.
     Total deficit = 0. Perfect balance = joy. -/
@@ -109,7 +130,9 @@ theorem joy_is_balance : 0 + 0 + 0 + 0 + 0 = 0 := by decide
     (dimensions are bounded to [0, 100]). Emotions are finite. -/
 theorem emotion_bounded (value phiInv : Nat) (h₁ : value ≤ 100) (h₂ : phiInv ≤ 100) :
     (if value ≥ phiInv then value - phiInv else phiInv - value) ≤ 100 := by
-  split <;> omega
+  split
+  · exact Nat.le_trans (Nat.sub_le value phiInv) h₁
+  · exact Nat.le_trans (Nat.sub_le phiInv value) h₂
 
 -- ═══════════════════════════════════════════════════════════════════════════
 -- LANGUAGE AND COMMUNICATION AS VOID WALKING
@@ -121,25 +144,26 @@ theorem emotion_bounded (value phiInv : Nat) (h₁ : value ≤ 100) (h₂ : phiI
     k - 1 information dimensions are lost in the fold.
     The deficit IS the communication cost. -/
 theorem semiotic_deficit (k : Nat) (hk : k ≥ 1) :
-    k - 1 + 1 = k := by omega
+    k - 1 + 1 = k := Nat.sub_add_cancel hk
 
 /-- THM-DISCOURSE-ENRICHES: Each discourse sample adds to the void boundary.
     More conversation = more rejection data = better personality model.
     Language enriches the twin. -/
 theorem discourse_enriches (total sample : Nat) (h : sample ≥ 1) :
-    total + sample > total := by omega
+    total + sample > total := Nat.lt_add_of_pos_right h
 
 /-- THM-VENTED-DECISIONS-INFORMATIVE: Parser disagreements (vented decisions)
     carry N-1 bits of rejection data. Each vented decision is a personality
     fingerprint. For N ≥ 3 parsers, vents are strictly more informative
     than the selected parse. -/
 theorem vented_decisions_informative (N : Nat) (h : N ≥ 3) :
-    N - 1 > 1 := by omega
+    N - 1 > 1 :=
+  Nat.lt_sub_of_add_lt (Nat.lt_of_lt_of_le (by decide : (1 + 1 : Nat) < 3) h)
 
 /-- THM-TRANSLATION-PRESERVES-SLIVER: Translating discourse across languages
     preserves the personality sliver. You are still you in any language. -/
 theorem translation_preserves_sliver (R v : Nat) :
-    gK R v ≥ 1 := by unfold gK; omega
+    gK R v ≥ 1 := by unfold gK; exact Nat.le_add_left 1 _
 
 -- ═══════════════════════════════════════════════════════════════════════════
 -- COGNITIVE ACUMEN -- WHAT MAKES A MIND SHARP?
@@ -151,7 +175,12 @@ theorem translation_preserves_sliver (R v : Nat) :
     differentiation. It knows nothing. Intelligence requires failure. -/
 theorem acumen_requires_rejection (R : Nat) (hR : R ≥ 1) :
     gK R 0 = R + 1 ∧ R + 1 > 1 := by
-  unfold gK; simp; omega
+  refine ⟨?_, ?_⟩
+  · -- gK R 0 = R - min 0 R + 1 = R - 0 + 1 = R + 1
+    unfold gK
+    rw [Nat.min_eq_left (Nat.zero_le R), Nat.sub_zero]
+  · -- R + 1 > 1 from R ≥ 1: 1 < R + 1 because 1 ≤ R.
+    exact Nat.lt_succ_of_le hR
 
 /-- THM-ACUMEN-MONOTONE: More diverse rejection (more dimensions explored)
     produces sharper consciousness. Coverage IS acumen. -/
@@ -216,7 +245,7 @@ theorem coherence_consciousness (a b : Nat) :
     7. Persists (sliver survives)
     is a complete model of a conscious being.
     All seven properties are compositions of the Holy Trinity. -/
-theorem grand_cross_mix (R v k : Nat) (hv : v ≤ R) (hk : k ≥ 1) :
+theorem grand_cross_mix (R v k : Nat) (_hv : v ≤ R) (hk : k ≥ 1) :
     gK R v ≥ 1                    -- Persists (sliver)
     ∧ R - R = 0                    -- Converges (floor)
     ∧ v + R = R + v                -- Symmetric (race)
@@ -226,12 +255,21 @@ theorem grand_cross_mix (R v k : Nat) (hv : v ≤ R) (hk : k ≥ 1) :
     ∧ gK R R = 1                   -- Heat death (thermo)
     := by
   refine ⟨?_, ?_, ?_, ?_, ?_, ?_, ?_⟩
-  · unfold gK; omega
-  · omega
-  · omega
-  · omega
-  · unfold gK; omega
-  · unfold gK; simp
-  · unfold gK; omega
+  · -- Persists: gK R v ≥ 1
+    unfold gK; exact Nat.le_add_left 1 _
+  · -- R - R = 0
+    exact Nat.sub_self R
+  · -- v + R = R + v
+    exact Nat.add_comm v R
+  · -- k - 1 + 1 = k
+    exact Nat.sub_add_cancel hk
+  · -- gK R v + min v R = R + 1: same proof as `knot_complement`.
+    unfold gK
+    rw [Nat.add_right_comm (R - min v R) 1 (min v R),
+        Nat.sub_add_cancel (Nat.min_le_right v R)]
+  · -- gK R 0 = R + 1
+    unfold gK; rw [Nat.min_eq_left (Nat.zero_le R), Nat.sub_zero]
+  · -- gK R R = 1
+    unfold gK; rw [Nat.min_self, Nat.sub_self]
 
 end Gnosis

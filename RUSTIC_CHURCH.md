@@ -298,25 +298,130 @@ free-variable goals (hand-translate using the cookbook). The hand-translate
 work usually compresses 3-5 omegas per Init lemma name once you spot the
 shape.
 
-## What still needs omega
+## Cracking 3+ saturating-sub proofs
 
-Document these so the next person doesn't waste an hour rediscovering it:
+*This used to be in "what still needs omega". After
+[`Gnosis/HumanCompiler.lean`](Gnosis/HumanCompiler.lean),
+[`Gnosis/SelfHostingOptimality.lean`](Gnosis/SelfHostingOptimality.lean),
+and [`Gnosis/TenModeUnification.lean`](Gnosis/TenModeUnification.lean)
+all landed Init-only, the recipe is known.*
 
-- **3+ saturating-sub facts in one proof.** `omega` solves; manual proofs
-  end up rebuilding the decision procedure inline. See
-  `Gnosis/HumanCompiler.lean`'s `stable_from` induction and
-  `Gnosis/SelfHostingOptimality.lean`'s identical structure.
-- **Modular arithmetic.** `% n` proofs need real lemmas like
-  `Nat.mod_add_div` that compose painfully outside omega. See
-  `Gnosis/Helix55Dictionary.lean`.
-- **Int linear chains spanning multiple sub/neg ops.** Doable but
-  6-8 lines per step (see `meta_truth_constancy`). Gate on demand.
+The trick is naming each fact and chaining them — `omega` does this in one
+opaque step, but the manual version reads cleaner once you do it.
+
+### Pattern 1: Convergence by induction on cost ladder (`stable_from`)
+
+The shape: `∀ v, cost s ≤ v → ∃ N, ...`. Induct on `v`. Two key sub-cases:
+
+- **Strict drop, recurse one budget tighter.** From `cost (s+1) < cost s`
+  and `cost s ≤ v + 1`, derive `cost (s+1) ≤ v` by
+  `Nat.le_of_lt_succ (Nat.lt_of_lt_of_le hdrop hle)`.
+  Then bump the existential's `N` upper bound from `s+1 ≤ N` to `s ≤ N` via
+  `Nat.le_trans (Nat.le_succ s) hN1`.
+- **Plateau (no drop, no slack).** From `¬(cost (s+1) < cost s)` get
+  `cost s ≤ cost (s+1)` via `Nat.le_of_not_lt`, then `cost (s+1) = cost s`
+  via `Nat.le_antisymm (h s) hSleStep`. From `¬(cost (s+1) ≤ v)` get
+  `v + 1 ≤ cost (s+1)` via `Nat.succ_le_of_lt (Nat.lt_of_not_le hle2)`.
+  Bridge through the equality and you have `cost s = v + 1`.
+
+The pattern that closes the inner "every later step also equals v+1" lemma:
+`Nat.le_antisymm (hval ▸ monotone_descent ...) (Nat.le_of_not_lt hlt)`.
+
+### Pattern 2: `n - r_j < n - r_i` via difference peeling
+
+Given `r_i < r_j ≤ n`, prove `n - r_j < n - r_i`. Don't reach for sub
+inequalities directly — peel `n - r_j = (n - r_i) - (r_j - r_i)` and apply
+`Nat.sub_lt_self`:
+
+```lean
+have hLe : r_i ≤ r_j := Nat.le_of_lt h
+have hDiffPos : 0 < r_j - r_i := Nat.sub_pos_of_lt h
+have hDiffLeT : r_j - r_i ≤ n - r_i := Nat.sub_le_sub_right bj r_i
+have hPeel : n - r_j = (n - r_i) - (r_j - r_i) := by
+  rw [Nat.sub_sub, Nat.add_sub_of_le hLe]
+rw [hPeel]
+exact Nat.sub_lt_self hDiffPos hDiffLeT
+```
+
+### Pattern 3: Master-bundle by `Nat.lt_or_ge` + bound-style refute
+
+When the goal is `f x = K ↔ x = K_value`, split on `x` against `K_value + 1`,
+then split the lower side on `K_value`, and refute each off-band case with
+`absurd h_after_rw (by decide)` — once you `rw [h]` into the bound, the
+remaining inequality is a closed-numeric `66 ≤ 55` (or similar) that
+`by decide` flatly contradicts.
+
+Useful disjunction shaper:
+
+```lean
+-- worlds < N+1 → (worlds ≤ N-1 ∨ N ≤ worlds)
+example (worlds N : Nat) (hLt : worlds < N + 1) : worlds ≤ N ∨ N ≤ worlds :=
+  (Nat.lt_or_ge worlds N).imp Nat.le_of_lt_succ id
+```
+
+The "= 10" closer in the band is just `Nat.le_antisymm (Nat.le_of_lt_succ hLt) hGeTen`.
+
+### Pattern 4: Modular arithmetic with bounded operands
+
+Goal shape: `(a + N - b) % N = 0` with `a, b < N` ⇒ `a = b`. The divisibility
+argument decomposes into "0 < (sum) < 2N, only multiple of N in that range
+is N itself."
+
+```lean
+have hDvd : N ∣ (q + N - p) := Nat.dvd_of_mod_eq_zero hk_zero
+have hpLeQN : p ≤ q + N := Nat.le_trans (Nat.le_of_lt hp) (Nat.le_add_left N q)
+have hPos  : 0 < q + N - p := Nat.sub_pos_of_lt (Nat.lt_of_lt_of_le hp (Nat.le_add_left N q))
+have hLt2N : q + N - p < 2 * N := by
+  -- left as exercise; bound q + N < N + N = 2N, then sub_le.
+  ...
+obtain ⟨k, hkEq⟩ := hDvd
+-- k must be 1: k = 0 ⇒ q + N - p = 0 (contradicts hPos);
+-- k ≥ 2 ⇒ q + N - p ≥ 2N (contradicts hLt2N).
+have hkOne : k = 1 := ...
+rw [hkOne, Nat.mul_one] at hkEq
+-- hkEq : q + N - p = N. Add p to both sides; cancel.
+have : q + N = p + N := by
+  have hAdd : (q + N - p) + p = N + p := by rw [hkEq]
+  rw [Nat.sub_add_cancel hpLeQN] at hAdd
+  rw [hAdd, Nat.add_comm N p]
+exact (Nat.add_right_cancel this).symm
+```
+
+The supporting lemmas are `Nat.dvd_of_mod_eq_zero`, `Nat.sub_pos_of_lt`,
+`Nat.add_right_cancel`. Worked example: `helix55_encode_decode` in
+`Gnosis/Helix55Dictionary.lean`.
+
+For the simpler `(i + N) % N = i` case (`i < N`), use
+`Nat.add_mod_right` followed by `Nat.mod_eq_of_lt hi`.
+
+### Pattern 5: `iterateSucc`-style period lemmas
+
+`iterateSucc n (m + 1) i = (i + 1 + m) % n` is provable by induction on
+`m`. The recurring shape inside the proof is `(x % n + (1 + k)) % n =
+(x + (1 + k)) % n`, which is `mod_add_left` (or `add_mod_right` for the
+mirror). Both are one-line `rw` chains:
+
+```lean
+private theorem mod_add_left (a b n : Nat) :
+    (a % n + b) % n = (a + b) % n := by
+  rw [Nat.add_mod, Nat.mod_mod, ← Nat.add_mod]
+```
+
+### What still needs omega
+
+Now genuinely the holdouts. Document with `-- TODO(rustic-church):`:
+
+- **Int linear chains spanning multiple sub/neg ops.** Doable but ~6 lines
+  per step. See `meta_truth_constancy` in `Gnosis/TopologicalMetabolism.lean`
+  for the working pattern.
 - **Free-variable search across two unfolds with mul + sub.** E.g.
-  `Gnosis/BosonPosition.lean`'s `propagator_toward_sophia`.
-
-If a proof you're migrating falls into one of these, it's reasonable to
-land the rest of the file omega-free and leave a `-- TODO(rustic-church):`
-on the holdouts.
+  `Gnosis/BosonPosition.lean`'s `propagator_toward_sophia` (Int-cast bridge
+  on top of the sub algebra).
+- **`simp + omega` cascades after `by_cases` over 4 boolean conditions.**
+  Each of 16 branches has a free-variable linear-arithmetic residual after
+  simp. The `by_cases h_cpu/h_gpu/h_npu/h_wasm` pattern in
+  `Gnosis/HeteroMoAFabric.lean` falls here. Tractable, but each branch
+  needs its own targeted Init-lemma chain.
 
 ## Why this matters
 

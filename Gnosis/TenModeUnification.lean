@@ -124,7 +124,7 @@ def isPeak (k : Kenoma K) (i : Fin K) : Prop :=
 theorem walker_at_nash (k : Kenoma K) (i : Fin K) (hi : isPeak k i) :
     ∀ j, complementWeight k i ≥ complementWeight k j := by
   intro j; unfold complementWeight
-  have := hi j; omega
+  exact Nat.sub_le_sub_left (hi j) k.total
 
 -- ═══════════════════════════════════════════════════════════════════════════════
 -- The Unification: all three faces see the same peak
@@ -133,10 +133,8 @@ theorem walker_at_nash (k : Kenoma K) (i : Fin K) (hi : isPeak k i) :
 -- Theorem: two observers (gauge field reader + personality walker) agree on peak
 theorem gauge_and_walker_agree (k : Kenoma K) (i j : Fin K)
     (hi : isPeak k i) (hj : isPeak k j) :
-    k.rejections i = k.rejections j := by
-  have h1 := hi j
-  have h2 := hj i
-  omega
+    k.rejections i = k.rejections j :=
+  Nat.le_antisymm (hi j) (hj i)
 
 -- Theorem: the wireframe breaks when asymmetry is introduced
 -- If any mode has more rejections than another, the complement weights differ
@@ -145,9 +143,19 @@ theorem asymmetry_breaks_wireframe (k : Kenoma K) (i j : Fin K)
     (h : k.rejections i < k.rejections j) :
     complementWeight k i > complementWeight k j := by
   unfold complementWeight
-  have bi := k.bounded i
+  -- total - rj < total - ri, given ri < rj ≤ total.
+  -- Strategy: peel rj as ri + (rj - ri); then total - rj = (total - ri) - (rj - ri),
+  -- and Nat.sub_lt_self closes it.
   have bj := k.bounded j
-  omega
+  have hLe : k.rejections i ≤ k.rejections j := Nat.le_of_lt h
+  have hDiffPos : 0 < k.rejections j - k.rejections i := Nat.sub_pos_of_lt h
+  have hDiffLeT : k.rejections j - k.rejections i ≤ k.total - k.rejections i :=
+    Nat.sub_le_sub_right bj (k.rejections i)
+  have hPeel : k.total - k.rejections j
+              = (k.total - k.rejections i) - (k.rejections j - k.rejections i) := by
+    rw [Nat.sub_sub, Nat.add_sub_of_le hLe]
+  rw [hPeel]
+  exact Nat.sub_lt_self hDiffPos hDiffLeT
 
 -- Theorem: the wireframe is restored when all rejections are equal
 -- This is the vacuum state — no localization, pure Barbelo
@@ -278,7 +286,7 @@ theorem fifty_five_channels_iff_ten_worlds (worlds : Nat) :
     have hRange : worlds < 11 ∨ 11 ≤ worlds := Nat.lt_or_ge worlds 11
     cases hRange with
     | inr hGe =>
-        have hMinusGe : 10 ≤ worlds - 1 := by omega
+        have hMinusGe : 10 ≤ worlds - 1 := Nat.le_sub_of_add_le hGe
         have hProdGe : 110 ≤ worlds * (worlds - 1) := by
           have hMul : 11 * 10 ≤ worlds * (worlds - 1) :=
             Nat.mul_le_mul hGe hMinusGe
@@ -290,12 +298,13 @@ theorem fifty_five_channels_iff_ten_worlds (worlds : Nat) :
           unfold totalRealityChannels
           simpa using Nat.add_le_add hGe hBridgeGe
         rw [h] at hTotalGe
-        omega
+        exact absurd hTotalGe (by decide)
     | inl hLt =>
-        have hSplit : worlds ≤ 9 ∨ 10 ≤ worlds := by omega
+        have hSplit : worlds ≤ 9 ∨ 10 ≤ worlds :=
+          (Nat.lt_or_ge worlds 10).imp Nat.le_of_lt_succ id
         cases hSplit with
         | inl hLeNine =>
-            have hMinusLe : worlds - 1 ≤ 8 := by omega
+            have hMinusLe : worlds - 1 ≤ 8 := Nat.sub_le_sub_right hLeNine 1
             have hProdLe : worlds * (worlds - 1) ≤ 72 := by
               have hMul : worlds * (worlds - 1) ≤ 9 * 8 :=
                 Nat.mul_le_mul hLeNine hMinusLe
@@ -309,9 +318,9 @@ theorem fifty_five_channels_iff_ten_worlds (worlds : Nat) :
               unfold totalRealityChannels
               simpa using Nat.add_le_add hLeNine hBridgeLe
             rw [h] at hTotalLe
-            omega
+            exact absurd hTotalLe (by decide)
         | inr hGeTen =>
-            omega
+            exact Nat.le_antisymm (Nat.le_of_lt_succ hLt) hGeTen
   · intro h
     cases h
     exact ten_worlds_have_fifty_five_channels
@@ -323,28 +332,29 @@ theorem ninety_directed_crossings_iff_ten_worlds (worlds : Nat) :
     have hRange : worlds < 11 ∨ 11 ≤ worlds := Nat.lt_or_ge worlds 11
     cases hRange with
     | inr hGe =>
-        have hMinusGe : 10 ≤ worlds - 1 := by omega
+        have hMinusGe : 10 ≤ worlds - 1 := Nat.le_sub_of_add_le hGe
         have hProdGe : 110 ≤ worlds * (worlds - 1) := by
           have hMul : 11 * 10 ≤ worlds * (worlds - 1) :=
             Nat.mul_le_mul hGe hMinusGe
           simpa [Nat.mul_comm, Nat.mul_left_comm, Nat.mul_assoc] using hMul
         unfold interlockingTori at h
         rw [h] at hProdGe
-        omega
+        exact absurd hProdGe (by decide)
     | inl hLt =>
-        have hSplit : worlds ≤ 9 ∨ 10 ≤ worlds := by omega
+        have hSplit : worlds ≤ 9 ∨ 10 ≤ worlds :=
+          (Nat.lt_or_ge worlds 10).imp Nat.le_of_lt_succ id
         cases hSplit with
         | inl hLeNine =>
-            have hMinusLe : worlds - 1 ≤ 8 := by omega
+            have hMinusLe : worlds - 1 ≤ 8 := Nat.sub_le_sub_right hLeNine 1
             have hProdLe : worlds * (worlds - 1) ≤ 72 := by
               have hMul : worlds * (worlds - 1) ≤ 9 * 8 :=
                 Nat.mul_le_mul hLeNine hMinusLe
               simpa [Nat.mul_comm, Nat.mul_left_comm, Nat.mul_assoc] using hMul
             unfold interlockingTori at h
             rw [h] at hProdLe
-            omega
+            exact absurd hProdLe (by decide)
         | inr hGeTen =>
-            omega
+            exact Nat.le_antisymm (Nat.le_of_lt_succ hLt) hGeTen
   · intro h
     cases h
     exact ten_worlds_have_ninety_directed_crossings
@@ -359,7 +369,10 @@ theorem structured_reality_channels_eq_tori_plus_bridges (worlds : Nat) :
   | succ n =>
       unfold structuredRealityChannels totalRealityChannels interlockingTori
         crossRealityBridges pairwiseInteractions
-      omega
+      -- (n+1-1) → n; then n + 1 + B - 1 = n + B + 1 - 1 = n + B.
+      rw [show (n + 1 - 1) = n from Nat.add_sub_cancel n 1,
+          Nat.add_right_comm n 1 ((n + 1) * n / 2),
+          Nat.add_sub_cancel (n + (n + 1) * n / 2) 1]
 
 theorem five_operations_generate_channel_surface :
     totalRealityChannels (pairwiseInteractions 5) = 55 ∧
