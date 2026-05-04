@@ -80,7 +80,11 @@ theorem zero_leakage_maximizes_local_observability
       (absorbedInfo frame signal : Int) + witnessScore problem := by
   unfold observabilityScore
   rw [hLeak]
-  omega
+  -- After rewrite the goal is
+  --   ↑(absorbedInfo frame signal) + ↑(witnessScore problem) - ↑(0 : Nat)
+  --     = ↑(absorbedInfo frame signal) + ↑(witnessScore problem)
+  -- ((0 : Nat) : Int) = 0 by `Int.ofNat_zero` (Init); then `Int.sub_zero`.
+  rw [Int.ofNat_zero, Int.sub_zero]
 
 end ObservabilityMetrics
 end Gnosis

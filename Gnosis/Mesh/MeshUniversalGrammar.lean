@@ -37,8 +37,10 @@ def applyLanguageContact (k : GrammarKernel) (alpha : Nat) : GrammarKernel :=
   { isolationDrift := k.isolationDrift + alpha
     biologicalConstraint := k.biologicalConstraint
     validLang := by
-      have h : k.isolationDrift + k.biologicalConstraint > 0 := k.validLang
-      omega }
+      have h : 0 < k.isolationDrift + k.biologicalConstraint := k.validLang
+      have h' : 0 < (k.isolationDrift + k.biologicalConstraint) + alpha :=
+        Nat.lt_of_lt_of_le h (Nat.le_add_right _ _)
+      simpa [Nat.add_comm, Nat.add_left_comm, Nat.add_assoc] using h' }
 
 theorem contact_breaks_fossilization (k : GrammarKernel) :
     ∃ (alpha : Nat), ¬ isGrammarFossilized (applyLanguageContact k alpha) := by

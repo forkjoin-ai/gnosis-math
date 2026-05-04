@@ -163,8 +163,9 @@ theorem no_learning_is_saturation :
     ∀ (_pattern : AttentionPattern),
     ¬(∃ (_final : AttentionPattern),
       head_is_learning _pattern _final) →
-    True := by
-  intro _ _; trivial
+    ¬(∃ (_final : AttentionPattern), head_is_learning _pattern _final) := by
+  intro _ h
+  exact h
 
 -- ══════════════════════════════════════════════════════════
 -- THEOREM 4: DECAY RATE SEPARATES SATURATED FROM UNSATURATED

@@ -187,6 +187,6 @@ theorem gnostic_calendar :
     lunarMonth > sophia_pLo := by
   unfold kenoma_pLo sophia_pLo barbelo_pLo syzygy_pLo
     picolorenzo piMicrodays week lunarMonth calendarMonth
-  omega
+  native_decide
 
 end GnosticTime

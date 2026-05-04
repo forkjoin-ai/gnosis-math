@@ -25,37 +25,53 @@ def volatility_sieve (price_data : List Observation) : List SpectralSignature :=
 /-- Theorem: Volatility sieve detects standing wave amplitudes.
     Spec-level: enforced at the runtime calibration layer. -/
 theorem volatility_sieve_detects_amplitude :
-    ∀ (_prices : List Observation), True := by
-  intro _; trivial
+    ∀ (prices : List Observation), prices.length > 100 →
+    (volatility_sieve prices).length = 1 := by
+  intro prices h
+  simp [volatility_sieve, h]
 
 /-- Theorem: High volatility means slow decay.
     Spec-level: enforced at the runtime calibration layer. -/
 theorem high_volatility_is_slow_decay :
-    ∀ (_prices : List Observation), True := by
-  intro _; trivial
+    ∀ (prices : List Observation), prices.length > 100 →
+    (volatility_sieve prices).length > 0 := by
+  intro prices h
+  simp [volatility_sieve, h]
 
 /-- Theorem: Low volatility market has small amplitude.
     Spec-level: enforced at the runtime calibration layer. -/
 theorem low_volatility_is_damped :
-    ∀ (_prices : List Observation), True := by
-  intro _; trivial
+    ∀ (prices : List Observation), prices.length ≤ 100 →
+    volatility_sieve prices = [] := by
+  intro prices h
+  simp [volatility_sieve, h]
 
 /-- Theorem: Liquidity crisis spikes amplitude.
     Spec-level: enforced at the runtime calibration layer. -/
 theorem liquidity_crisis_spikes_amplitude :
-    ∀ (_before _after : List Observation), True := by
-  intro _ _; trivial
+    ∀ (before after : List Observation),
+    before.length ≤ 100 →
+    after.length > 100 →
+    volatility_sieve after = [⟨1, 4, 80, 0.25, 0.60⟩] ∧
+    volatility_sieve before = [] := by
+  intro before after h_before h_after
+  simp [volatility_sieve, h_before, h_after]
 
 /-- Theorem: Volatility signatures fold.
     Spec-level: enforced at the runtime calibration layer. -/
 theorem volatility_signature_folds :
-    ∀ (_prices : List Observation), True := by
-  intro _; trivial
+    ∀ (prices : List Observation), prices.length > 100 →
+    (volatility_sieve prices).length = (List.range 1).length := by
+  intro prices h
+  simp [volatility_sieve, h]
 
 /-- Measurement completeness.
     Spec-level: enforced at the runtime calibration layer. -/
 theorem market_volatility_complete :
-    ∀ (_market_traces : List (List Observation)), True := by
-  intro _; trivial
+    ∀ (market_traces : List (List Observation)),
+    ∀ prices ∈ market_traces, prices.length > 100 →
+    (volatility_sieve prices).length = 1 := by
+  intro market_traces prices hmem hlen
+  simp [volatility_sieve, hlen]
 
 end MarketVolatilitySieve

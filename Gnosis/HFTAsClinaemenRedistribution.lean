@@ -26,7 +26,6 @@ namespace HFTAsClinaemenRedistribution
 open RetrocausalDynamicsOfMarkets
 open SpectralNoiseEquilibrium
 open VacuumIsOnlyForce
-open Classical
 
 /-! ## HFT Market State -/
 
@@ -268,7 +267,7 @@ theorem hft_complete_clinamen_redistribution
     (setup : LatencyArbitrageSetup)
     (hArb : arbitrageIsImbalanceDetection opp)
     (hLiq : 0 < lp.bidVolume ∧ 0 < lp.askVolume ∧ 0 < lp.secondsActive)
-    (hLat : latencyArbitrageIsVacuumLag setup) :
+    (_hLat : latencyArbitrageIsVacuumLag setup) :
     -- All three HFT mechanisms move market toward equilibrium
     (∃ arbitrageCharge, buleyUnitScore arbitrageCharge = opp.imbalanceSize + opp.imbalanceSize) ∧
     (∃ liquidityCharge,
@@ -282,9 +281,7 @@ theorem hft_complete_clinamen_redistribution
      0 < buleyUnitScore totalCost) := by
   refine ⟨?_, ?_, ?_, ?_⟩
   · exact ⟨clinamenAccumulation opp.imbalanceSize,
-           by
-             simp [clinamenAccumulation, buleyUnitScore]
-             exact Nat.lt_of_lt_of_le hArb.2.1 (Nat.le_add_right _ _)⟩
+           by simp [clinamenAccumulation, buleyUnitScore]⟩
   · exact ⟨equilibrationCost lp,
            by
              simp [equilibrationCost, buleyUnitScore, spreadWidth, redistributionRate]
@@ -292,7 +289,9 @@ theorem hft_complete_clinamen_redistribution
   · exact ⟨clinamenCapturedDuringLag setup,
            by simp [clinamenCapturedDuringLag, lag, buleyUnitScore]⟩
   · exact ⟨clinamenAccumulation opp.imbalanceSize,
-           by simp [clinamenAccumulation, buleyUnitScore]⟩
+           by
+             simp [clinamenAccumulation, buleyUnitScore]
+             exact Nat.lt_of_lt_of_le hArb.2.1 (Nat.le_add_right _ _)⟩
 
 end HFTAsClinaemenRedistribution
 end Gnosis

@@ -43,7 +43,7 @@ theorem failure_saturated_iff_zero_remaining
     (node : SwarmNode) (failures : Nat) :
     failureSaturated node failures ↔ energyAfterFailures node failures = 0 := by
   unfold failureSaturated energyAfterFailures
-  omega
+  exact ⟨Nat.sub_eq_zero_of_le, Nat.le_of_sub_eq_zero⟩
 
 theorem failure_saturation_zeroes_node_energy
     (node : SwarmNode) (failures : Nat)

@@ -17,10 +17,11 @@ theorem poincare_recurrence_sandwich (t : Nat) :
     buleyeanPredictReturn t ≤ 1000 := by
   constructor
   · unfold pessimisticReturn pReturn
-    split <;> omega
+    simp
   · constructor
-    · unfold buleyeanPredictReturn; apply Nat.le_refl
+    · unfold buleyeanPredictReturn
+      apply Nat.le_refl
     · unfold buleyeanPredictReturn pReturn
-      split <;> omega
+      simp
 
 end MeshPoincareRecurrence

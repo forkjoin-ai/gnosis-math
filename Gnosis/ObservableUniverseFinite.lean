@@ -62,7 +62,7 @@ theorem named_observable_epochs_not_infinite :
   unfold CosmicProjection.sizeOneLorenzo CosmicProjection.sizeNow
     CosmicProjection.sizePhiSquared CosmicProjection.sizePhiCubed
     CosmicProjection.maxObservable
-  omega
+  decide
 
 theorem observable_universe_finitude :
     (∃ bound : Nat, ∀ epoch : ObservableEpoch, observableUniverseSize epoch ≤ bound) ∧

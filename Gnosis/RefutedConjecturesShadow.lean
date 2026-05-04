@@ -77,16 +77,22 @@ open RiemannHypothesisShadow
 --   * Honest scale wall: the famous counterexample is unreachable.
 
 /-- Ω(n): number of prime factors of n counted WITH multiplicity.
-    Computed by repeated trial division; n = 0 returns 0.  -/
-partial def bigOmegaAux (n : Nat) (p : Nat) (acc : Nat) : Nat :=
-  if n ≤ 1 then acc
-  else if p * p > n then acc + 1
-  else if n % p = 0 then bigOmegaAux (n / p) p (acc + 1)
-  else bigOmegaAux n (p + 1) acc
+    Computed by repeated trial division; n = 0 returns 0.
+
+    `fuel` bounds the recursion depth — for `bigOmega n` we pass `fuel = n`
+    which is generous enough since each recursive step either divides `n`
+    by `p ≥ 2` or increments `p`, and `p ≤ √n` is checked. -/
+def bigOmegaAux : (fuel n p acc : Nat) → Nat
+  | 0,         _, _, acc => acc
+  | fuel + 1,  n, p, acc =>
+    if n ≤ 1 then acc
+    else if p * p > n then acc + 1
+    else if n % p = 0 then bigOmegaAux fuel (n / p) p (acc + 1)
+    else bigOmegaAux fuel n (p + 1) acc
 
 /-- Number of prime factors with multiplicity. -/
 def bigOmega (n : Nat) : Nat :=
-  if n ≤ 1 then 0 else bigOmegaAux n 2 0
+  if n ≤ 1 then 0 else bigOmegaAux (n + 1) n 2 0
 
 theorem bigOmega_1 : bigOmega 1 = 0 := by native_decide
 theorem bigOmega_2 : bigOmega 2 = 1 := by native_decide

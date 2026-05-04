@@ -74,7 +74,9 @@ theorem ascent_cost_is_double_closure (n : Nat) :
   unfold ascentCost
   rw [closure_chain_step_alt]
   -- Goal: 3 * closureChain n - closureChain n = 2 * closureChain n
-  omega
+  -- Rustic Church: 3 * c = (2 + 1) * c = 2 * c + c, then cancel one c on the right.
+  show (2 + 1) * closureChain n - closureChain n = 2 * closureChain n
+  rw [Nat.succ_mul 2 (closureChain n), Nat.add_sub_cancel]
 
 /-- Concrete ascent costs for the first few closures. -/
 theorem ascent_costs_concrete :

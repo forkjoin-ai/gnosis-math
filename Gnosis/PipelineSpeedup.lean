@@ -13,7 +13,7 @@
   - pipeline_speedup_sandwich      : 1 ≤ speedup ≤ B × N
   - pipeline_speedup_additive      : speedup for independent tasks composes additively
 
-  All proofs closed by omega — zero sorry.
+  All proofs closed by Init Nat.* — zero sorry, zero `omega`.
 -/
 import Init
 

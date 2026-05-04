@@ -183,7 +183,9 @@ theorem aeon_manifold_structure :
     | 2 => simp [noise_spectrum_level, WhiteNoise]
     | 3 => simp [noise_spectrum_level, VioletNoise]
     | 4 => simp [noise_spectrum_level, UltravioletNoise]
-    | n + 5 => omega
+    | n + 5 =>
+        -- Unreachable: hypothesis `h : n + 5 < 5` contradicts `5 ≤ n + 5`.
+        exact absurd h (Nat.not_lt_of_le (Nat.le_add_left 5 n))
   · simp [h]
 
 -- ══════════════════════════════════════════════════════════

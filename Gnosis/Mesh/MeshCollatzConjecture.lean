@@ -32,9 +32,9 @@ theorem collatz_sandwich (n : Nat) (h : n >= 1) :
     pessimisticStability n ≤ buleyeanPredictStability n ∧
     buleyeanPredictStability n ≤ 1000 := by
   unfold pessimisticStability buleyeanPredictStability
-  have h_pos : 0 < n := by omega
+  have h_pos : 0 < n := h
   simp [h_pos]
-  split <;> omega
+  split <;> decide
 
 
 end MeshCollatzConjecture

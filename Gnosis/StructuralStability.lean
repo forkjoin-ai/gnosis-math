@@ -32,10 +32,10 @@ def stateWeight (R v : Nat) : Nat := R - min v R + 1
   A point of 'infinite density' would mean v > R (Debt exceeds Budget).
   But in a stable manifold, debt is bounded by the budget.
 -/
-theorem singularity_excluded_by_budget (R v : Nat) (_h_bound : v ≤ R) : 
+theorem singularity_excluded_by_budget (R v : Nat) (_h_bound : v ≤ R) :
     stateWeight R v ≥ 1 := by
   unfold stateWeight
-  omega
+  exact Nat.le_add_left 1 (R - min v R)
 
 /-- 
   The Kernel Identity:

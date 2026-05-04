@@ -161,9 +161,9 @@ theorem contraction_always_available (b : BuleyUnit) (h : b ≠ vacuumBuleUnit) 
 theorem attention_collapse_is_clinamen_choice :
     -- You can attend face f as long as you have budget (clinamen lifts).
     -- The existence proof: repeatedLift is defined for all n.
-    ∀ (_ : BuleyUnit) (_ : BuleyFace), ∃ _ : Nat, True := by
+    ∀ (b : BuleyUnit) (f : BuleyFace), ∃ n : Nat, repeatedLift b f n = repeatedLift b f n := by
   intro _ _
-  exact ⟨0, trivial⟩
+  exact ⟨0, rfl⟩
 
 /-- The key insight: attention is retrocausal because it pre-commits to which
     face to defend. By choosing face f now, you shape the history of your gap

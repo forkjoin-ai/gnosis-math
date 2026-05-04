@@ -57,8 +57,9 @@ theorem repeated_triggering_locks_wave :
   unfold trauma_lock_condition at h
   refine ⟨buleyUnitScore shock, rfl, ?_⟩
   -- h.2.1 : buleyUnitScore shock > 1, hence > 0
-  have : buleyUnitScore shock > 1 := h.2.1
-  omega
+  have hgt1 : buleyUnitScore shock > 1 := h.2.1
+  -- 0 < 1 and 1 < buleyUnitScore shock ⇒ 0 < buleyUnitScore shock
+  exact Nat.lt_trans (by decide : (0 : Nat) < 1) hgt1
 
 -- ══════════════════════════════════════════════════════════
 -- THE LOCKED STANDING WAVE

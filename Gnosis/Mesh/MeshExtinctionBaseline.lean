@@ -37,8 +37,10 @@ def applyNewSpeciation (k : ExtinctionKernel) (alpha : Nat) : ExtinctionKernel :
   { stressLevel := k.stressLevel
     adaptiveRadiation := k.adaptiveRadiation + alpha
     validBiosphere := by
-      have h : k.stressLevel + k.adaptiveRadiation > 0 := k.validBiosphere
-      omega }
+      have h : 0 < k.stressLevel + k.adaptiveRadiation := k.validBiosphere
+      have h' : 0 < (k.stressLevel + k.adaptiveRadiation) + alpha :=
+        Nat.lt_of_lt_of_le h (Nat.le_add_right _ _)
+      simpa [Nat.add_comm, Nat.add_left_comm, Nat.add_assoc] using h' }
 
 theorem radiation_restores_equilibrium (k : ExtinctionKernel) :
     ∃ (alpha : Nat), ¬ isBiosphereCollapsing (applyNewSpeciation k alpha) := by

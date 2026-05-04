@@ -12,8 +12,8 @@ def Finset.sum {α : Type _} [BuleFintype α] [Add β] [Zero β] (f : α → β)
 class BuleMeasurableSpace (α : Type _) where
   measurableSets : α → Prop -- Structural placeholder
 
-def BuleMeasurable {α β : Type _} [BuleMeasurableSpace α] [BuleMeasurableSpace β] (_f : α → β) : Prop :=
-  True -- Structural placeholder
+def BuleMeasurable {α β : Type _} [BuleMeasurableSpace α] [BuleMeasurableSpace β] (f : α → β) : Prop :=
+  ∀ x : α, BuleMeasurableSpace.measurableSets (f x)
 
 namespace Tactics
 -- Re-export for convenience

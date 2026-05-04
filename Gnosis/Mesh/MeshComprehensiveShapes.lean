@@ -56,12 +56,29 @@ theorem comprehensiveness_sandwich (n : Nat) :
     shapeCoverage n ≤ buleyeanPredictCoverage n ∧
     buleyeanPredictCoverage n ≤ 1000 := by
   constructor
-  · unfold pessimisticCoverage shapeCoverage
-    split <;> split <;> omega
+  · by_cases h20 : n >= 20
+    · by_cases h10 : n > 10
+      · unfold pessimisticCoverage shapeCoverage
+        simp [h20, h10]
+      · unfold pessimisticCoverage shapeCoverage
+        simp [h20, h10]
+    · by_cases h10 : n > 10
+      · have h11 : 11 ≤ n := Nat.succ_le_of_lt h10
+        have h500 : 500 ≤ 50 * n := by
+          have hconst : 500 ≤ 50 * 11 := by decide
+          exact Nat.le_trans hconst (Nat.mul_le_mul_left 50 h11)
+        unfold pessimisticCoverage shapeCoverage
+        simp [h20, h10, h500]
+      · unfold pessimisticCoverage shapeCoverage
+        simp [h20, h10]
   · constructor
-    · unfold shapeCoverage buleyeanPredictCoverage
-      apply Nat.le_refl
-    · unfold buleyeanPredictCoverage shapeCoverage
-      split <;> omega
+    · apply Nat.le_refl
+    · by_cases h20 : n >= 20
+      · unfold buleyeanPredictCoverage shapeCoverage
+        simp [h20]
+      · have h19 : n ≤ 19 := Nat.le_of_lt_succ (Nat.lt_of_not_ge h20)
+        have hmul : 50 * n ≤ 50 * 19 := Nat.mul_le_mul_left 50 h19
+        have h950 : 50 * 19 ≤ 1000 := by decide
+        simpa [buleyeanPredictCoverage, shapeCoverage, h20] using Nat.le_trans hmul h950
 
 end MeshComprehensiveShapes

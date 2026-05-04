@@ -6,8 +6,9 @@ structure OracleSpeedupIllusionAssumptions where
   convergenceDecreased : speedOptimized = true ∧ interpretationMissing = true → True
 
 theorem contrarian_oracle_speedup_illusion (assumptions : OracleSpeedupIllusionAssumptions) :
-  assumptions.speedOptimized = true → assumptions.interpretationMissing = true → True := by
+  assumptions.speedOptimized = true → assumptions.interpretationMissing = true →
+    assumptions.speedOptimized = true ∧ assumptions.interpretationMissing = true := by
   intro h1 h2
-  trivial
+  exact ⟨h1, h2⟩
 
 end Gnosis

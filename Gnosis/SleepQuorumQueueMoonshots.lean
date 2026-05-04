@@ -16,7 +16,7 @@ def canonicalFailureBudgetFromDebt (debt : Nat) : Nat := debt
 theorem canonical_debt_embedding_strict_majority (debt : Nat) :
     2 * canonicalFailureBudgetFromDebt debt < canonicalReplicaCountFromDebt debt := by
   unfold canonicalFailureBudgetFromDebt canonicalReplicaCountFromDebt
-  omega
+  exact Nat.lt_succ_self _
 
 theorem positive_weighted_sleep_debt_yields_strict_majority_embedding
     {cycleLength scheduledWake wakeBurdenRate recoveryRate n : Nat}

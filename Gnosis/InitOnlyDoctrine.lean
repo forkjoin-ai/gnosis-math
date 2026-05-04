@@ -27,29 +27,22 @@ tensor product, every Cut-theorem defense, every god-formula
 manifestation — across 78 domains — then `Init` is not a restricted
 substrate. It is the honest one.
 
-## What mathlib is for
+## Out of Bounds and The Topological Bridge
 
-Mathlib remains appropriate when:
+We do not aim to be Mathlib. Our ideal state is to have the surface power to explain computation and logic entirely within `open-source/gnosis-math` by reframing continuous and infinite problems into discrete, verifiable topologies. 
 
-- **Continuous analysis is genuinely needed**: `ℝ`, limits,
-  integrals, differential geometry of smooth manifolds.
-- **Category-theoretic structure is the content**: functors with
-  naturality, adjunctions, derived categories, ∞-categories.
-- **Algebraic number fields** beyond small concrete instances: rings
-  of integers, class groups, Galois cohomology at scale.
-- **Explicit constructions that benefit from existing libraries**:
-  `ZMod`, `Finset`, `Polynomial` when the proof is shorter with
-  them than without.
+The following classical domains are explicitly **Out of Bounds** for direct representation, and we cover their gaps via the Topological Bridge:
 
-Mathlib is NOT appropriate when:
+- **Continuous Analysis and Reals (`ℝ`, limits, calculus, measure theory)**: 
+  Out of bounds. We bridge this by mapping continuous dynamics to discrete Buleyean topologies (`+1` clinamen increments, exact rational phase decompositions, and bounded deficits). A real number is modeled as the limit of a discrete, terminating rejection process.
+- **Infinite Category Theory (∞-categories, derived categories)**: 
+  Out of bounds. We bridge this by modeling categorical coherence using explicit Buleyean Ranked DAGs. Naturality and adjunctions are expressed as `FORK`, `RACE`, `FOLD`, and `VENT` edges ensuring `beta1` topological complexity conservation.
+- **Non-constructive Mathematics and Infinite Set Theory (Axiom of Choice over uncountables)**: 
+  Out of bounds. We bridge this via explicit finite witnesses. Instead of proving an existential over an infinite domain, we provide a deterministic, finite search space that exhaustively closes the topological gap via kernel `decide`.
+- **Algebraic Number Fields at Scale (Galois cohomology over infinite fields)**:
+  Out of bounds. We bridge this by restricting to finite characteristic rings (`ZMod` equivalents built from `Nat`) and explicit combinatorial bounding.
 
-- The claim reduces to a finite decidable check.
-- The claim is a specific numerical instance, not a general
-  quantified theorem.
-- The claim's "natural setting" is a closed form we can project
-  onto finite witnesses.
-- The only reason to use mathlib is rhetorical — "this looks more
-  serious because it imports `Mathlib.Analysis.Reals`."
+We do not import Mathlib because our goal is not to heuristic-search an infinite space, but to prove that the finite state machine routing the deficit to zero is structurally inevitable.
 
 ## The doctrine
 

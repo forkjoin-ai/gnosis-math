@@ -175,6 +175,7 @@ import Gnosis.Closures.BaryogenesisClosure
 import Gnosis.Closures.JacksonEnvelopeClosure
 import Gnosis.Closures.JacksonRawClosure
 import Gnosis.Closures.MatterExplanationClosure
+import Gnosis.TopologicalBridgeAntiTheorems
 import Gnosis.Closures.PleromaticClosure
 import Gnosis.Closures.PleromaticHigherClosures
 import Gnosis.Closures.StandardModelReplacementClosure

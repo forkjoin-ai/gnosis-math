@@ -21,8 +21,9 @@ theorem folding_sandwich (d : Nat) (_h : d >= 1) :
     by_cases h_many : d > 10
     · simp [h_many]
       split
-      · omega
-      · have h_ge_11 : 11 ≤ d := by omega
+      · next h_eq =>
+          exact absurd (h_eq ▸ h_many) (by decide)
+      · have h_ge_11 : 11 ≤ d := h_many
         have h_div : 1000 / d ≤ 90 := Nat.div_le_div_left h_ge_11 (by decide)
         apply Nat.le_trans (by decide : 500 ≤ 1000 - 90)
         exact Nat.sub_le_sub_left h_div 1000
@@ -31,7 +32,7 @@ theorem folding_sandwich (d : Nat) (_h : d >= 1) :
     · unfold buleyeanPredictConfidence; apply Nat.le_refl
     · unfold buleyeanPredictConfidence foldingConfidence
       split
-      · omega
+      · exact Nat.zero_le _
       · apply Nat.sub_le
 
 end MeshTransientFolding

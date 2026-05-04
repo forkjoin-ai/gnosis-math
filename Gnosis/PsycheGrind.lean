@@ -269,7 +269,28 @@ theorem emotion_not_bijective :
 /-- THM-MOOD-BOUNDED -/
 theorem mood_bounded (a b : Nat) :
     (a + b) / 2 ≥ min a b ∧ (a + b) / 2 ≤ max a b := by
-  constructor <;> omega
+  -- Lower / upper bounds collapse to `false_memory_interpolation`-shape on whichever
+  -- of {a ≤ b, b ≤ a} actually holds.  Lower bound: e1 ≤ (e1+e2)/2.  Upper: ≤ e2.
+  have step : ∀ x y : Nat, x ≤ y → x ≤ (x + y) / 2 ∧ (x + y) / 2 ≤ y := by
+    intro x y hxy
+    have heqx : (x + x) / 2 = x := by
+      rw [← Nat.two_mul x]; exact Nat.mul_div_cancel_left x (by decide : 0 < 2)
+    have heqy : (y + y) / 2 = y := by
+      rw [← Nat.two_mul y]; exact Nat.mul_div_cancel_left y (by decide : 0 < 2)
+    refine ⟨?lo, ?hi⟩
+    · have hsum : x + x ≤ x + y := Nat.add_le_add_left hxy x
+      have hdiv : (x + x) / 2 ≤ (x + y) / 2 := Nat.div_le_div_right hsum
+      exact Nat.le_trans (Nat.le_of_eq heqx.symm) hdiv
+    · have hsum : x + y ≤ y + y := Nat.add_le_add_right hxy y
+      have hdiv : (x + y) / 2 ≤ (y + y) / 2 := Nat.div_le_div_right hsum
+      exact Nat.le_trans hdiv (Nat.le_of_eq heqy)
+  rcases Nat.le_total a b with hab | hba
+  · -- a ≤ b: min a b = a, max a b = b
+    rw [Nat.min_eq_left hab, Nat.max_eq_right hab]
+    exact step a b hab
+  · -- b ≤ a: min a b = b, max a b = a, and a + b = b + a
+    rw [Nat.min_eq_right hba, Nat.max_eq_left hba, Nat.add_comm a b]
+    exact step b a hba
 
 /-- THM-NAMING-EXPANDS -/
 theorem naming_expands (old w : Nat) (h : w ≥ 1) : old + w > old :=
@@ -288,7 +309,9 @@ theorem self_empathy_zero (p : PersonalityProfile) :
 
 /-- THM-CONTAGION-BOUNDED -/
 theorem contagion_bounded (a b : Nat) (ha : a ≤ 100) (hb : b ≤ 100) :
-    (a + b) / 2 ≤ 100 := by omega
+    (a + b) / 2 ≤ 100 :=
+  Nat.le_trans (Nat.div_le_div_right (Nat.add_le_add ha hb))
+    (by decide : (100 + 100) / 2 ≤ 100)
 
 /-- THM-GRIEF-EXPANDS-VOID -/
 theorem grief_expands_void (c s : Nat) : c + s ≥ c := Nat.le_add_right c s
@@ -430,7 +453,20 @@ theorem dissonance_resolution (b : Nat) (h : b ≥ 1) : b - 1 < b :=
 
 /-- THM-FALSE-MEMORY-INTERPOLATION -/
 theorem false_memory_interpolation (e1 e2 : Nat) (h : e1 ≤ e2) :
-    (e1 + e2) / 2 ≥ e1 ∧ (e1 + e2) / 2 ≤ e2 := by constructor <;> omega
+    (e1 + e2) / 2 ≥ e1 ∧ (e1 + e2) / 2 ≤ e2 := by
+  have heq1 : (e1 + e1) / 2 = e1 := by
+    rw [← Nat.two_mul e1]; exact Nat.mul_div_cancel_left e1 (by decide : 0 < 2)
+  have heq2 : (e2 + e2) / 2 = e2 := by
+    rw [← Nat.two_mul e2]; exact Nat.mul_div_cancel_left e2 (by decide : 0 < 2)
+  refine ⟨?lo, ?hi⟩
+  · -- e1 ≤ (e1 + e2) / 2.  Use e1 + e1 ≤ e1 + e2, divide by 2.
+    have hsum : e1 + e1 ≤ e1 + e2 := Nat.add_le_add_left h e1
+    have hdiv : (e1 + e1) / 2 ≤ (e1 + e2) / 2 := Nat.div_le_div_right hsum
+    exact Nat.le_trans (Nat.le_of_eq heq1.symm) hdiv
+  · -- (e1 + e2) / 2 ≤ e2.  Use e1 + e2 ≤ e2 + e2 = 2*e2, divide by 2.
+    have hsum : e1 + e2 ≤ e2 + e2 := Nat.add_le_add_right h e2
+    have hdiv : (e1 + e2) / 2 ≤ (e2 + e2) / 2 := Nat.div_le_div_right hsum
+    exact Nat.le_trans hdiv (Nat.le_of_eq heq2)
 
 /-- THM-LEARNING-is-REJECTION -/
 theorem learning_grows_void (b r : Nat) : b + r ≥ b := Nat.le_add_right b r

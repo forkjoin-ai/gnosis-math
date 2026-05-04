@@ -9,9 +9,9 @@ def priceOfAnarchyNash (selfishCost optimalCost : Nat) : Nat :=
 theorem game_theoretic_protocol_isomorphism (paths streams selfish optimal : Nat)
     (hPaths : paths = selfish)
     (hStreams : streams = optimal)
-    (hValid : paths >= streams) :
+    (_hValid : paths >= streams) :
     protocolDeficit paths streams = priceOfAnarchyNash selfish optimal := by
   unfold protocolDeficit priceOfAnarchyNash
-  omega
+  exact hPaths ▸ hStreams ▸ rfl
 
 end Gnosis

@@ -23,15 +23,21 @@ theorem pi_unknowable_sandwich (n : Nat) (h : n >= 1) :
         match n with | 0 => contradiction | _ + 1 => rfl
       simp [h1, h_not_zero]
       match h_div : 1000 / n with
-      | 0 => 
-        have h_contra := Nat.div_eq_zero_iff.mp h_div
-        omega
-      | m + 1 => omega
+      | 0 =>
+        -- h_div : 1000 / n = 0. From Nat.div_eq_zero_iff: n = 0 ∨ 1000 < n.
+        -- Both disjuncts contradict our hypotheses (h : n ≥ 1, h1 : ¬ n > 1000).
+        have h_contra : n = 0 ∨ 1000 < n := Nat.div_eq_zero_iff.mp h_div
+        exact h_contra.elim
+          (fun hn0 => absurd (hn0 ▸ h) (by decide))
+          (fun hgt => absurd hgt h1)
+      | m + 1 =>
+        -- Match's motive substitutes 1000/n ↦ m+1, so goal is `1 ≤ m + 1`.
+        exact Nat.succ_le_succ (Nat.zero_le m)
   · constructor
     · unfold buleyeanLimit; apply Nat.le_refl
     · unfold buleyeanLimit unknowability
       split
-      · omega
+      · exact Nat.le_refl 1000
       · apply Nat.div_le_self
 
 end MeshPiTopology

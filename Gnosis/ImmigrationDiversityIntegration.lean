@@ -21,9 +21,12 @@ theorem immigration_grows_diversity
     (host : HostTopology) (imm : ImmigrantTopology)
     (hImm : 0 < imm.knot.beta1) :
     diversityCount host.knot.beta1 <
-      diversityCount (postImmigrationPaths host imm) := by
-  unfold diversityCount postImmigrationPaths
-  omega
+      diversityCount (postImmigrationPaths host imm) :=
+  -- Init-only: `diversityCount` is the identity on `Nat`, and
+  -- `postImmigrationPaths host imm = host.knot.beta1 + imm.knot.beta1`,
+  -- so the goal reduces by `rfl` to `host.knot.beta1 < host.knot.beta1 + imm.knot.beta1`,
+  -- which is exactly `Nat.lt_add_of_pos_right` from the `Init` core.
+  Nat.lt_add_of_pos_right hImm
 
 theorem immigration_grows_diversity_and_concurrency
     (host : HostTopology) (imm : ImmigrantTopology)

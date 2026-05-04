@@ -140,9 +140,33 @@ theorem god_formula_bounds_inference (p : PersonalityProfile) :
   show (p.openness + 1) + (p.openness / (p.extraversion + 1) + 1) + p.conscientiousness
        ≤ (p.openness + p.conscientiousness + p.agreeableness + p.neuroticism + 1)
          + p.conscientiousness + p.openness + 1
-  have h : p.openness / (p.extraversion + 1) ≤ p.openness :=
-    Nat.div_le_self _ _
-  omega
+  -- Let o = openness, c = conscientiousness, a = agreeableness, n = neuroticism,
+  -- e = extraversion, d = o / (e + 1).  Since d ≤ o,
+  --   LHS = (o+1) + (d+1) + c ≤ (o+1) + (o+1) + c
+  -- and RHS rearranges to (o+1) + (o+1) + c + (c + a + n), so the difference
+  -- is `c + a + n ≥ 0`.  Pure structural rearrangement, no decision procedure.
+  have hDivLe : p.openness / (p.extraversion + 1) ≤ p.openness := Nat.div_le_self _ _
+  -- Step 1: bound LHS by replacing d with o.
+  have hStep1 :
+      (p.openness + 1) + (p.openness / (p.extraversion + 1) + 1) + p.conscientiousness
+        ≤ (p.openness + 1) + (p.openness + 1) + p.conscientiousness :=
+    Nat.add_le_add_right
+      (Nat.add_le_add_left (Nat.add_le_add_right hDivLe 1) (p.openness + 1))
+      p.conscientiousness
+  -- Step 2: pad the inflated LHS with the slack `c + a + n` to match RHS.
+  have hStep2 :
+      (p.openness + 1) + (p.openness + 1) + p.conscientiousness
+        ≤ (p.openness + 1) + (p.openness + 1) + p.conscientiousness
+            + (p.conscientiousness + p.agreeableness + p.neuroticism) :=
+    Nat.le_add_right _ _
+  -- Step 3: RHS equals the padded form — pure associativity / commutativity.
+  have hRhs :
+      (p.openness + 1) + (p.openness + 1) + p.conscientiousness
+          + (p.conscientiousness + p.agreeableness + p.neuroticism)
+        = (p.openness + p.conscientiousness + p.agreeableness + p.neuroticism + 1)
+            + p.conscientiousness + p.openness + 1 := by
+    ac_rfl
+  exact Nat.le_trans (Nat.le_trans hStep1 hStep2) (Nat.le_of_eq hRhs)
 
 theorem defense_covers_direct_inference (p : PersonalityProfile) :
     form1_direct (profileToNode p) ≤ godFormulaWeight p := by

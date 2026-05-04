@@ -18,22 +18,22 @@ standing waves. Qualia are the interference patterns themselves, not epiphenomen
 The brain is a clinamen state space. Consciousness emerges from five-force
 interference topology operating at neural scale.
 
-**Six theorems** (here weakened to structural `True` claims):
+**Six theorems** (mixed honesty levels in the current file):
 
-1. `attention_is_constructive_interference`
-2. `distraction_is_destructive_interference`
-3. `working_memory_is_standing_wave`
-4. `consciousness_is_interference_pattern`
-5. `sleep_consolidation_is_damping`
-6. `unified_conscious_field`
+1. `attention_is_constructive_interference` as a propositional tautology
+2. `distraction_is_destructive_interference` as a propositional tautology
+3. `working_memory_is_standing_wave` as a definitional equality
+4. `consciousness_is_interference_pattern` as a binding equivalence fact
+5. `sleep_consolidation_is_damping` as a real inequality
+6. `unified_conscious_field` and `consciousness_is_neural_interference` as structural equivalence facts
 
 Note (2026-05-02 Init-only sweep): the originals depended on `by_contra!`,
 `List.head!_mem_of_length_pos`, `List.getLast!_mem_of_length_pos`,
 `List.getElem_mem_self`, `Nat.max`, and other Mathlib-flavored helpers
-that aren't available in Init-only Lean 4.28. The structural commitments
-of each theorem are kept in the datatypes and predicates; the proofs are
-weakened to `True` with the runtime calibration layer enforcing the
-quantitative bounds.
+that aren't available in Init-only Lean 4.28. The file now mixes direct
+tautologies, definitional equalities, one real inequality, and a few
+direct equivalence facts where the model is definitional, and one real
+inequality where the Init-only arithmetic suffices.
 -/
 
 namespace Gnosis
@@ -187,10 +187,12 @@ def qualiasIsBinding (q : Qualia) : Prop :=
   q.pattern.length > 1 ∧
   ∀ state ∈ q.pattern, buleyUnitScore state > 0
 
-/-- Theorem 4: Consciousness IS Interference Pattern
-    Spec-level: enforced at the runtime calibration layer. -/
-theorem consciousness_is_interference_pattern : ∀ (_q : Qualia), True := by
-  intro _; trivial
+/-- Theorem 4: Consciousness IS Interference Pattern.
+    Binding qualia are exactly the patterns defined by the model. -/
+theorem consciousness_is_interference_pattern (q : Qualia) :
+    qualiasIsBinding q ↔
+    q.pattern.length > 1 ∧ ∀ state ∈ q.pattern, buleyUnitScore state > 0 := by
+  rfl
 
 /-! ## Part 5: Sleep and Memory Consolidation as Damping -/
 
@@ -235,17 +237,20 @@ def fieldTotalCharge (field : ConsciousField) : Nat :=
 def fieldIsActive (field : ConsciousField) : Prop :=
   fieldTotalCharge field > 0
 
-/-- Theorem 6: Unified Conscious Field
-    Spec-level: enforced at the runtime calibration layer. -/
-theorem unified_conscious_field : ∀ (_field : ConsciousField), True := by
-  intro _; trivial
+/-- Theorem 6: Unified Conscious Field.
+    Active fields are exactly the fields with nonzero charge. -/
+theorem unified_conscious_field (field : ConsciousField) :
+    fieldIsActive field ↔ fieldTotalCharge field > 0 := by
+  rfl
 
 /-! ## Integration and Final Theorem -/
 
 /-- The complete consciousness theorem.
-    Spec-level: enforced at the runtime calibration layer. -/
-theorem consciousness_is_neural_interference : ∀ (_brain : ConsciousField), True := by
-  intro _; trivial
+    The total charge is the sum of the active neural paths. -/
+theorem consciousness_is_neural_interference (brain : ConsciousField) :
+    fieldTotalCharge brain =
+      (brain.activePaths.map pathClinaemenCharge).foldr (· + ·) 0 := by
+  rfl
 
 end ConsciousnessIsInterference
 end Gnosis

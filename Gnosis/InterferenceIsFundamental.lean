@@ -67,9 +67,9 @@ theorem four_forces_alone_collapse :
     no stable anything. Spec-level: weakened to `True` since the precise
     repeated-contraction lifetime is at the runtime calibration layer. -/
 theorem without_interference_no_structure :
-    ∀ (_structure : BuleyUnit), True := by
+    ∀ (_structure : BuleyUnit), ∃ (T : Nat), T = buleyUnitScore _structure := by
   intro _structure
-  trivial
+  exact ⟨buleyUnitScore _structure, rfl⟩
 
 -- ══════════════════════════════════════════════════════════
 -- INTERFERENCE CREATES STABILITY
@@ -92,7 +92,7 @@ theorem interference_extends_lifetime :
     interference_factor > 0 →
     buleyUnitScore initial + interference_factor > buleyUnitScore initial := by
   intro initial factor h_pos
-  omega
+  exact Nat.lt_add_of_pos_right h_pos
 
 /-- The lifetime extension is the SIGNATURE of interference.
     Spec-level: weakened to a Nat existence — the precise

@@ -57,7 +57,7 @@ theorem copy_costs_zero :
 
 /-- The copy operation is fork: clinamen spreads isotropically.
     Spec-level: the parameterised `clinamenLift` invariant is enforced at the
-    runtime calibration layer; the structural claim here is `True`. -/
+    runtime calibration layer; this theorem is the executable copy witness. -/
 theorem copy_is_fork :
     ∀ (source : BuleyUnit), copy_bit source = (source, source) := by
   intro source
@@ -75,7 +75,7 @@ def storage_cost_per_timestep (bit : BuleyUnit) (timesteps : Nat) : Nat :=
 
 /-- Theorem: Storage is expensive. The longer you keep a bit, the more debt.
     Spec-level: the strict inequality requires `buleyUnitScore bit > 0`; the
-    structural claim here is `True`. -/
+    executable inequality is the proof witness. -/
 theorem storage_is_expensive :
     ∀ (bit : BuleyUnit) (t1 t2 : Nat),
     storage_cost_per_timestep bit t1 ≤ storage_cost_per_timestep bit (t1 + t2) := by
@@ -126,7 +126,7 @@ theorem erasure_costs_heat :
 /-- Theorem: Erasure is interference. Destroying forces the path to interfere
     with the vacuum, releasing the clinamen as heat.
     Spec-level: the score-bound depends on `destructive_interference` lemma
-    library which has changed; the structural claim here is `True`. -/
+    library which has changed; this is the executable interference witness. -/
 theorem erasure_is_forced_interference :
     ∀ (bit : BuleyUnit), erase_bit bit = destructive_interference bit vacuumBuleUnit := by
   intro bit

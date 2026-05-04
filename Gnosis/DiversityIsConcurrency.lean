@@ -26,7 +26,7 @@ theorem immigration_strictly_grows_both_when_positive
         effectiveConcurrency (postImmigrationPaths host imm) := by
   constructor
   · unfold diversityCount postImmigrationPaths
-    omega
+    exact Nat.lt_add_of_pos_right hImm
   · exact immigration_grows_concurrency host imm hImm
 
 end Gnosis

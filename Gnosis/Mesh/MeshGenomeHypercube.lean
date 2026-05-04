@@ -34,9 +34,13 @@ def isFitnessTrapped (k : HypercubeKernel) : Prop :=
 def applySexualRecombination (k : HypercubeKernel) (alpha : Nat) : HypercubeKernel :=
   { mutationRate := k.mutationRate
     selectionPressure := k.selectionPressure + alpha
-    validGenome := by
-      have h := k.validGenome
-      omega }
+    validGenome :=
+      -- h : k.mutationRate + k.selectionPressure > 0
+      -- Goal : k.mutationRate + (k.selectionPressure + alpha) > 0
+      -- Rewrite to (k.mutationRate + k.selectionPressure) + alpha and bound.
+      (Nat.add_assoc k.mutationRate k.selectionPressure alpha) ▸
+        Nat.lt_of_lt_of_le k.validGenome
+          (Nat.le_add_right (k.mutationRate + k.selectionPressure) alpha) }
 
 theorem sex_restores_evolutionary_velocity (k : HypercubeKernel) :
     ∃ (alpha : Nat), ¬ isFitnessTrapped (applySexualRecombination k alpha) := by

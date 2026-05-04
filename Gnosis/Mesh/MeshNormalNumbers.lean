@@ -17,11 +17,24 @@ theorem normal_number_sandwich (digit : Nat) (h : digit < 10) :
     frequencyAtDigit digit 1000 ≤ buleyeanPredictFrequency digit ∧
     buleyeanPredictFrequency digit ≤ 1000 := by
   constructor
-  · unfold pessimisticFrequency frequencyAtDigit
-    split <;> split <;> omega
+  · have hp : pessimisticFrequency digit = 10 := by
+      unfold pessimisticFrequency
+      simp [h]
+    have hf : frequencyAtDigit digit 1000 = 100 := by
+      unfold frequencyAtDigit
+      simp [h]
+    rw [hp, hf]
+    decide
   · constructor
-    · unfold buleyeanPredictFrequency; apply Nat.le_refl
-    · unfold buleyeanPredictFrequency frequencyAtDigit
-      split <;> omega
+    · unfold buleyeanPredictFrequency
+      apply Nat.le_refl
+    · have hf : frequencyAtDigit digit 1000 = 100 := by
+        unfold frequencyAtDigit
+        simp [h]
+      have hb : buleyeanPredictFrequency digit = 100 := by
+        unfold buleyeanPredictFrequency
+        rw [hf]
+      rw [hb]
+      decide
 
 end MeshNormalNumbers

@@ -5,9 +5,9 @@ structure SemanticPhase where
   density : Nat
   threshold : Nat
 
-theorem semantic_phase_transition_criticality (p : SemanticPhase) (h : p.threshold < p.density) : 
-  p.threshold + 1 <= p.density := by
-  omega
+theorem semantic_phase_transition_criticality (p : SemanticPhase) (h : p.threshold < p.density) :
+  p.threshold + 1 <= p.density :=
+  Nat.succ_le_of_lt h
 
 end MoonshotSemanticPhaseTransitionTopology
 

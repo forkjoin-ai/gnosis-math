@@ -357,6 +357,186 @@ If a `def f : Bool := P` won't elaborate because `P : Prop` needs an
 explicit `decide`, write `def f : Bool := decide P`. Lean does not auto-coerce
 Prop → Bool inside `def` bodies even though it does so inside expressions.
 
+### Recurring patterns from semantic-space
+
+These are the shapes that show up over and over once you've migrated a few
+dozen modules — recognize them in the goal and reach straight for the named
+lemma.
+
+#### Reflexive omega: hypothesis *is* the goal
+
+`omega` often closes a goal that — after `unfold` and Lean's defeq — is
+literally one of the hypotheses, because of definitional equalities like
+`0 < n ≡ 1 ≤ n` or `Nat.succ_le ≡ Nat.lt`. Try `exact h` *first*.
+
+```lean
+-- 0 < x ⊢ 1 ≤ x  →  exact h  (defeq)
+-- a > b ⊢ a ≥ b + 1  →  exact h  (Nat.lt unfolds to Nat.succ_le)
+-- score > 0 ⊢ score ≥ 1  →  exact h
+```
+
+If that fails, try `Nat.le_of_lt h`, `Nat.lt_of_le_of_ne h hne`,
+`Nat.succ_le_of_lt h`, `Nat.le_of_succ_le_succ h`.
+
+#### `congrArg`: lift equality through a function
+
+```lean
+example (c d rate : Nat) (h : c = d) : c + rate = d + rate := congrArg (· + rate) h
+```
+
+Almost any `simp [h]; omega` chain on a free-variable goal where the
+simp-step is just substituting an equality reduces to one `congrArg`.
+
+#### Substitution-then-`Nat.lt_irrefl` for impossible `<`
+
+When a hypothesis combined with a substitution produces `n < n`, refute
+directly:
+
+```lean
+exact Nat.lt_irrefl 0 (h_score ▸ h_pos)   -- h_score : x = 0, h_pos : x > 0
+```
+
+#### Concrete-Nat-cast `decide` after `▸`
+
+Closed-numeric goals with a free var after substitution: `▸` to substitute,
+then `decide` for the residual literal.
+
+```lean
+exact h ▸ (by decide : (10 : Nat) ≥ 5)   -- h : x = 10, goal : x ≥ 5
+```
+
+#### Three-summand Nat sum = 0 ⇒ each summand = 0
+
+When you need `w = 0`, `o = 0`, `d = 0` from `w + o + d = 0`, peel via two
+applications of `Nat.add_eq_zero_iff.mp`:
+
+```lean
+have ⟨hwo, hd⟩ := Nat.add_eq_zero_iff.mp h_sum  -- (w + o) + d = 0
+have ⟨hw, ho⟩ := Nat.add_eq_zero_iff.mp hwo    -- w + o = 0
+```
+
+Same trick generalizes to any `(((a + b) + c) + d) + ... = 0` chain.
+
+#### Three-summand Nat sum > 0 from one summand > 0
+
+The mirror image: when `0 < w + o + d` from `0 < w` (or `0 < o`, `0 < d`):
+
+```lean
+exact Nat.lt_of_lt_of_le h_w (Nat.le_add_right w (o + d))   -- if 0 < w
+exact Nat.lt_of_lt_of_le h_d (Nat.le_add_left d (w + o))    -- if 0 < d
+-- Middle summand: combine with Nat.add_assoc
+```
+
+Or universal: case-split with `cases w`, `cases o`, `cases d` and refute the
+all-zero case from the contrapositive. Used in
+`AttentionScalingLaw.non_vacuum_experiences_pull` and
+`VacuumAsTimeArrow.everything_else_is_temporary`.
+
+#### `simp only [if_pos h]` / `simp only [if_neg h]` to surface a branch
+
+When goal is `(if cond then A else B) ≤ ...` and you have `h : cond` (or
+`¬cond`):
+
+```lean
+simp only [if_pos h]   -- replaces the if-expr with A
+-- now prove A ≤ ...
+```
+
+This avoids `simp [definitionWithIf, h]` which can over-aggressively
+collapse the surrounding goal shape (e.g. destroying a needed `∧`).
+Used in `FailureController.chosen_failure_action_coefficient_minimal`.
+
+#### `match Int.lt_trichotomy …` for ∨ ∨ goals over Int
+
+```lean
+match Int.lt_trichotomy a b with
+| Or.inl hLt => exact Or.inr (Or.inr hLt)
+| Or.inr (Or.inl hEq) => exact Or.inr (Or.inl hEq)
+| Or.inr (Or.inr hGt) => exact Or.inl hGt
+```
+
+Used in `ComputationalStateTransitionsAsPathDivergence.paths_from_same_state_comparable`.
+
+#### `cases p.field` over enum + `decide` per branch for closed bound
+
+For goals like `flagsByte p < 16` where `p` has 4 Bool-flag fields,
+`cases` per field and let `decide` close each:
+
+```lean
+cases p.flag1 <;> cases p.flag2 <;> cases p.flag3 <;> cases p.flag4 <;>
+  cases p.optionField <;> simp <;> decide
+```
+
+#### Closed-form Nat sub identity peel: `Nat.sub_sub_self`
+
+When the goal is `x - (x - y) = y` (with `y ≤ x`), the recipe is exactly
+`Nat.sub_sub_self h`. This shows up after every saturating-subtraction
+unfold. Don't manually decompose — use the lemma.
+
+#### `n + (k + 1) = (n + k) + 1` for free
+
+`Nat.add` is defined by recursion on the right argument, so the right-shift
+of `+1` reduces by `rfl`. Use this to make goals match named lemma shapes
+without an explicit `Nat.add_succ` rewrite.
+
+#### Hypothesis projection from simp-decomposed `∧`
+
+When `simp [definitionThatIsAnAnd] at h` produces `h : (A ∧ B) ∧ C`,
+the components are `h.left.left`, `h.left.right`, `h.right`. Use these
+directly in term-mode rather than re-introducing fresh names.
+
+```lean
+exact ⟨h.left.left, h.left.right, h.right⟩   -- reshape (A ∧ B) ∧ C as A ∧ B ∧ C
+```
+
+Used pervasively in `*Predictions*` and `Anti*` modules.
+
+#### Polynomial expansion via `Nat.mul_add` + `Nat.add_mul` + `ac_rfl`
+
+For shapes like `(n + 1) * (b + 1) = n*b + n + b + 1`:
+
+```lean
+rw [Nat.mul_add, Nat.add_mul, Nat.add_mul]
+simp [Nat.mul_one, Nat.one_mul]
+ac_rfl
+```
+
+The `simp [Nat.mul_one, Nat.one_mul]` removes the `* 1` artifacts; `ac_rfl`
+normalizes the AC tree.
+
+#### `← Nat.add_mod` to fold modular sums
+
+The pattern `((n + k) % m + k) % m` collapses via reverse `Nat.add_mod`
+combined with `Nat.add_mod_right`:
+
+```lean
+rw [show (n + 6) % 12 + 6 = ((n + 6) + 6) % 12 from ...]
+-- then Nat.add_assoc + Nat.add_mod_right
+```
+
+Used in `ToneCircle.double_ring_involution`.
+
+#### `Nat.add_sub_cancel_left` requires explicit args in Lean 4.28
+
+```lean
+example (a b : Nat) : a + b - a = b := Nat.add_sub_cancel_left a b
+```
+
+Bare `Nat.add_sub_cancel_left` won't elaborate — both args must be
+supplied. Same for `Nat.add_sub_cancel` (no explicit args, it's the
+saturating one).
+
+#### Deriving `≠` from `=` + positivity
+
+```lean
+-- From x = 0 and y > 0, prove x ≠ y:
+rw [h_eq]                  -- rewrites x to 0
+exact Nat.ne_of_lt h_pos   -- 0 < y ⇒ 0 ≠ y
+```
+
+Direction matters — `Nat.ne_of_lt : a < b → a ≠ b`. After `rw [eq_to_zero]`,
+no `.symm` is needed.
+
 ### `repeat constructor` does not descend
 
 In Lean 4.28, `repeat tac` only repeats on the current main goal until `tac`
@@ -745,3 +925,20 @@ honest but opaque; an explicit `Nat.sub_add_cancel h` makes the proof's
 inductive lemmas, internal consistency reduces to "the kernel accepts the
 file", and the formula's structure carries through every downstream
 theorem unchanged.
+
+## Out of Bounds and The Topological Bridge
+
+We deliberately do not aim to replicate Mathlib's surface area. Instead, our ideal state is to explain computation, logic, and physics entirely within `gnosis-math` by reframing continuous and infinite problems into discrete, verifiable topologies. 
+
+The following classical domains are explicitly **Out of Bounds** for direct representation in the Rustic Church, and we cover their gaps via the Topological Bridge:
+
+- **Continuous Analysis and Reals (`ℝ`, limits, calculus, measure theory)**: 
+  Out of bounds. We bridge this by mapping continuous dynamics to discrete Buleyean topologies (`+1` clinamen increments, exact rational phase decompositions, and bounded deficits). A real number is modeled as the limit of a discrete, terminating rejection process.
+- **Infinite Category Theory (∞-categories, derived categories)**: 
+  Out of bounds. We bridge this by modeling categorical coherence using explicit Buleyean Ranked DAGs. Naturality and adjunctions are expressed as `FORK`, `RACE`, `FOLD`, and `VENT` edges ensuring `beta1` topological complexity conservation.
+- **Non-constructive Mathematics and Infinite Set Theory (Axiom of Choice over uncountables)**: 
+  Out of bounds. We bridge this via explicit finite witnesses. Instead of proving an existential over an infinite domain, we provide a deterministic, finite search space that exhaustively closes the topological gap via kernel `decide`.
+- **Algebraic Number Fields at Scale (Galois cohomology over infinite fields)**:
+  Out of bounds. We bridge this by restricting to finite characteristic rings (`ZMod` equivalents built from `Nat`) and explicit combinatorial bounding.
+
+We do not import Mathlib because our goal is not to heuristic-search an infinite space, but to prove that the finite state machine routing the deficit to zero is structurally inevitable.

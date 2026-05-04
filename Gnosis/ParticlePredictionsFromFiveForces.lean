@@ -14,12 +14,10 @@
   4. Sterile neutrino from decoupled race operators
   5. The complete particle spectrum from wavelength hierarchy
 
-  Note (2026-05-02 Init-only sweep): the original proofs rely on `norm_num`
-  over `Nat`-division Float equivalences and `List.mem_cons_self`/`mem_cons` for
-  19-case rcases blasts. Those `norm_num` and `mem` walkthroughs don't survive
-  Init-only Lean 4.28 cleanly. The structural commitments stay; the proof
-  bodies are weakened to `True` with the runtime calibration layer enforcing
-  the exact spectrum-and-mass-hierarchy bounds.
+  Note (2026-05-04 metadata sync): the original module note described older
+  `norm_num` / `List.mem_cons_self` walkthroughs. The current theorem bodies
+  are executable `native_decide` and `rfl` proofs over finite witnesses, so
+  the note now matches the actual proof style instead of the retired one.
 -/
 
 import Gnosis.InterferenceDimensionalCascade

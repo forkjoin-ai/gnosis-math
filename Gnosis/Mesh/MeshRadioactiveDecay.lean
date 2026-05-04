@@ -61,8 +61,12 @@ def applyEmission (k : NuclearKernel) (alpha : Nat) : NuclearKernel :=
   { instabilityGravity := k.instabilityGravity
     emissionChaos := k.emissionChaos + alpha
     validMeasure := by
+      -- Init-only: lift `0 < ig + ec` through `ec ≤ ec + alpha`.
       have h : k.instabilityGravity + k.emissionChaos > 0 := k.validMeasure
-      omega }
+      have hLe : k.instabilityGravity + k.emissionChaos
+                  ≤ k.instabilityGravity + (k.emissionChaos + alpha) :=
+        Nat.add_le_add_left (Nat.le_add_right k.emissionChaos alpha) k.instabilityGravity
+      exact Nat.lt_of_lt_of_le h hLe }
 
 theorem emission_shifts_baseline (k : NuclearKernel) :
     ∃ (alpha : Nat), ¬ isIsotopeTrapped (applyEmission k alpha) := by
@@ -90,13 +94,17 @@ theorem isotope_deficit_conservation :
   unfold absoluteParentWitness chaoticLeadWitness buleDeficit
   decide
 
-theorem varied_nuclear_forces_chaos (f : ArrowFailure) 
+theorem varied_nuclear_forces_chaos (f : ArrowFailure)
     (hDeficit : buleDeficit f > 0)
     (hNoDictator : f.dictatorshipWeight = 0)
-    (hNoUnanimityFail : f.unanimityFailure = 0) : 
+    (hNoUnanimityFail : f.unanimityFailure = 0) :
     f.iiaFailure > 0 := by
+  -- Init-only: peel the two zero summands from `unanimity + iia + dictator > 0`.
   unfold buleDeficit at hDeficit
-  omega
+  rw [hNoDictator, hNoUnanimityFail] at hDeficit
+  -- hDeficit : 0 + f.iiaFailure + 0 > 0
+  rw [Nat.add_zero, Nat.zero_add] at hDeficit
+  exact hDeficit
 
 theorem meshNuclearDecayMaster :
     reduceDecayState DecayState.stableLeadFixation = NuclearForce.pauliExclusion ∧

@@ -34,9 +34,10 @@ def isKesslerCascading (k : AsteroidKernel) : Prop :=
 def applyOrbitalEjection (k : AsteroidKernel) (alpha : Nat) : AsteroidKernel :=
   { collisionDensity := k.collisionDensity
     orbitalVelocity := k.orbitalVelocity + alpha
-    validBelt := by
-      have h := k.validBelt
-      omega }
+    validBelt :=
+      -- Init-only: rewrite associativity and use `h < a + b ≤ (a + b) + alpha`.
+      (Nat.add_assoc k.collisionDensity k.orbitalVelocity alpha) ▸
+        Nat.lt_of_lt_of_le k.validBelt (Nat.le_add_right _ alpha) }
 
 theorem ejection_clears_cascade (k : AsteroidKernel) :
     ∃ (alpha : Nat), ¬ isKesslerCascading (applyOrbitalEjection k alpha) := by

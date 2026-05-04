@@ -164,7 +164,10 @@ theorem poetry_lattice_is_irreducible_tower :
       (poetry_lattice_level n).total_ropelength ≥ 17 := by
   intro n
   refine ⟨by simp [poetry_lattice_level], by simp [poetry_lattice_level], ?_⟩
-  simp [poetry_lattice_level]
-  omega
+  show (poetry_lattice_level n).total_ropelength ≥ 17
+  unfold poetry_lattice_level
+  show 17 * (n + 1) ≥ 17
+  rw [Nat.mul_succ 17 n]
+  exact Nat.le_add_left 17 (17 * n)
 
 end PoetryLattice

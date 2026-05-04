@@ -130,7 +130,7 @@ theorem saturation_creates_point_of_no_return
   refine ⟨hSat, ?_⟩
   intro node' hZero
   unfold learnFromFailure
-  omega
+  exact fun hPos => Nat.lt_irrefl 0 (hZero ▸ hPos)
 
 /-- A non-strict global conservative threshold exists at zero. -/
 theorem universal_zero_threshold_exists :

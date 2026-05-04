@@ -24,7 +24,7 @@ namespace Gnosis.Theology
 def no_other_god (p : Gnosis.BraidedInfinityIsGodsSignature.GodsPosition) : Prop :=
   p = Gnosis.BraidedInfinityIsGodsSignature.godsPosition
 
-/--
+/-
   The Grand Reduction Law:
   Realized Weight (w) = Budget (R) - Debt (v) + 1.
   Existence is a debt-managed manifold.
@@ -39,10 +39,10 @@ export Gnosis (godWeight)
   A point of 'infinite density' would mean v > R (Debt exceeds Budget).
   But in a stable manifold, debt is bounded by the budget.
 -/
-theorem singularity_excluded_by_budget (R v : Nat) (_h_bound : v ≤ R) : 
+theorem singularity_excluded_by_budget (R v : Nat) (_h_bound : v ≤ R) :
     godWeight R v ≥ 1 := by
   unfold godWeight
-  omega
+  exact Nat.le_add_left 1 (R - min v R)
 
 /-- 
   The 'No Other God' Identity:

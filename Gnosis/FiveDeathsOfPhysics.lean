@@ -250,9 +250,8 @@ Corollary: the fold residue is always strictly less than payload + 1.
 This makes every Swarm routing result a computable, finite natural number.
 -/
 theorem safeFold_finite (success : Bool) (payload : Nat) :
-    safeFold success payload < payload + 1 := by
-  have h := death_of_infinity success payload
-  omega
+    safeFold success payload < payload + 1 :=
+  Nat.lt_succ_of_le (death_of_infinity success payload)
 
 /--
 Corollary: the renormalized residue is zero or the payload — no intermediate

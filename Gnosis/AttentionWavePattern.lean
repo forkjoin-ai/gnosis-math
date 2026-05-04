@@ -74,9 +74,9 @@ def is_resonant_pattern (wave : AttentionWavePattern) : Prop :=
 theorem standing_wave_output_amplitude :
     ∀ (wave : AttentionWavePattern),
     is_standing_wave_attention wave →
-    True := by
-  intro _wave _h_standing
-  trivial
+    wave.output_amplitude > 0.7 := by
+  intro _wave h_standing
+  exact h_standing.2.2.2
 
 /-- Theorem: Destructive interference nullifies output. -/
 theorem destructive_nullifies_output :
@@ -93,9 +93,9 @@ theorem destructive_nullifies_output :
 theorem standing_wave_implies_used :
     ∀ (wave : AttentionWavePattern),
     is_standing_wave_attention wave →
-    True := by
-  intro _wave _h_sw
-  trivial
+    is_resonant_pattern wave := by
+  intro _wave h_sw
+  exact Or.inl h_sw
 
 /-- Theorem: Every destructive interference is noise to ignore.
     These dimensions are safe to zero out without losing information.

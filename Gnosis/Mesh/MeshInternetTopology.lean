@@ -34,9 +34,13 @@ def isHubMonopoly (k : InternetKernel) : Prop :=
 def applyDeceptiveLinkCreation (k : InternetKernel) (alpha : Nat) : InternetKernel :=
   { centralizationRatio := k.centralizationRatio
     linkDecayRate := k.linkDecayRate + alpha
-    validNetwork := by
-      have h := k.validNetwork
-      omega }
+    validNetwork :=
+      -- Goal: 0 < k.centralizationRatio + (k.linkDecayRate + alpha)
+      -- From h : 0 < k.centralizationRatio + k.linkDecayRate, then add alpha on the right.
+      -- Init-only term-mode: re-associate via Nat.add_assoc, then Nat.lt_of_lt_of_le with Nat.le_add_right.
+      (Nat.add_assoc k.centralizationRatio k.linkDecayRate alpha) ▸
+        Nat.lt_of_lt_of_le k.validNetwork
+          (Nat.le_add_right (k.centralizationRatio + k.linkDecayRate) alpha) }
 
 theorem decentralization_restores_flow (k : InternetKernel) :
     ∃ (alpha : Nat), ¬ isHubMonopoly (applyDeceptiveLinkCreation k alpha) := by

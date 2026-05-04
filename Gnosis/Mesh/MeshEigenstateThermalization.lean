@@ -93,13 +93,16 @@ theorem thermal_deficit_conservation :
   unfold absoluteUnitaryWitness chaoticThermalWitness buleDeficit
   decide
 
-theorem varied_quantum_forces_chaos (f : ArrowFailure) 
+theorem varied_quantum_forces_chaos (f : ArrowFailure)
     (hDeficit : buleDeficit f > 0)
     (hNoDictator : f.dictatorshipWeight = 0)
-    (hNoUnanimityFail : f.unanimityFailure = 0) : 
+    (hNoUnanimityFail : f.unanimityFailure = 0) :
     f.iiaFailure > 0 := by
   unfold buleDeficit at hDeficit
-  omega
+  -- hDeficit : f.unanimityFailure + f.iiaFailure + f.dictatorshipWeight > 0
+  -- After rewriting the two zero-fields, this collapses to f.iiaFailure > 0.
+  rw [hNoUnanimityFail, hNoDictator, Nat.zero_add, Nat.add_zero] at hDeficit
+  exact hDeficit
 
 theorem meshQuantumChaosMaster :
     reduceQuantumState QuantumState.entropySaturation = QuantumForce.pauliExclusion ∧

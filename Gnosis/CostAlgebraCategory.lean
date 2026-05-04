@@ -162,7 +162,7 @@ def buleyOfNat3Hom : CostHom nat3CostAlgebra buleyCostAlgebra :=
     preserve_score := by
       intro ⟨w, o, d⟩
       show w + o + d = w + (o + (d + 0))
-      omega }
+      rw [Nat.add_zero, Nat.add_assoc] }
 
 /-- And the inverse `nat3OfBuley` is also a `CostHom`. -/
 def nat3OfBuleyHom : CostHom buleyCostAlgebra nat3CostAlgebra :=

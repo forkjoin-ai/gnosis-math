@@ -184,8 +184,13 @@ theorem propagator_toward_sophia (k : Kenoma K) (i j : Fin K)
     propagatorAmplitude k i j > 0 := by
   unfold propagatorAmplitude sophiaWeight
   have bi := k.bounded i
-  have bj := k.bounded j
-  omega
+  -- rj < ri ≤ R, so rj < R, hence R - ri < R - rj in Nat (Pattern 6)
+  have hrj_lt_R : k.rejections j < k.totalRejections :=
+    Nat.lt_of_lt_of_le hi bi
+  have hNat : k.totalRejections - k.rejections i
+            < k.totalRejections - k.rejections j :=
+    Nat.sub_lt_sub_left hrj_lt_R hi
+  exact Int.sub_pos_of_lt (Int.ofNat_lt.mpr hNat)
 
 -- At the aletheia peak, the propagator has no outward flow (equilibrium)
 theorem equilibrium_at_aletheia (k : Kenoma K) (i : Fin K)
@@ -193,10 +198,12 @@ theorem equilibrium_at_aletheia (k : Kenoma K) (i : Fin K)
     ∀ j, propagatorAmplitude k i j ≤ 0 := by
   intro j
   unfold propagatorAmplitude sophiaWeight
-  have := hi j
-  have bi := k.bounded i
-  have bj := k.bounded j
-  omega
+  have hij : k.rejections i ≤ k.rejections j := hi j
+  -- ri ≤ rj ⇒ R - rj ≤ R - ri in Nat, lift to Int (Pattern 6)
+  have hNat : k.totalRejections - k.rejections j
+            ≤ k.totalRejections - k.rejections i :=
+    Nat.sub_le_sub_left hij k.totalRejections
+  exact Int.sub_nonpos_of_le (Int.ofNat_le.mpr hNat)
 
 -- ═══════════════════════════════════════════════════════════════════════════════
 -- Gauge invariance: relabeling colors preserves physics
@@ -219,9 +226,11 @@ theorem two_mode_prediction (k : Kenoma 2)
     (h : k.rejections ⟨0, by decide⟩ < k.rejections ⟨1, by decide⟩) :
     sophiaWeight k ⟨0, by decide⟩ > sophiaWeight k ⟨1, by decide⟩ := by
   unfold sophiaWeight
-  have b0 := k.bounded ⟨0, by decide⟩
   have b1 := k.bounded ⟨1, by decide⟩
-  omega
+  -- r0 < r1 ≤ R ⇒ r0 < R, hence R - r1 < R - r0 (Nat.sub_lt_sub_left)
+  have h0_lt_R : k.rejections ⟨0, by decide⟩ < k.totalRejections :=
+    Nat.lt_of_lt_of_le h b1
+  exact Nat.sub_lt_sub_left h0_lt_R h
 
 -- ═══════════════════════════════════════════════════════════════════════════════
 -- The Skyrms-Boson Correspondence (summary)

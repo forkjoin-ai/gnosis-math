@@ -5,6 +5,6 @@ structure ToposAdapter where
   topos_dimension : Nat
 
 theorem topos_adapter_bypasses_missing_layer (t : ToposAdapter) (h : t.topos_dimension > t.missing_interpretation) :
-  t.topos_dimension ≥ t.missing_interpretation + 1 := by omega
+  t.topos_dimension ≥ t.missing_interpretation + 1 := h
 
 end Gnosis

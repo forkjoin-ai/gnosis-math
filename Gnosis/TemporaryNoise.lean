@@ -51,8 +51,35 @@ theorem everything_else_is_temporary :
   cases state with
   | mk w o d =>
       simp [vacuumBuleUnit] at h_ne
-      simp [buleyUnitScore]
-      omega
+      -- h_ne : w = 0 → o = 0 → ¬ d = 0
+      -- Goal: 0 < buleyUnitScore { waste := w, opportunity := o, diversity := d }
+      --       i.e. 0 < w + o + d
+      show 0 < w + o + d
+      cases w with
+      | succ w' =>
+          -- w = w'+1, so w + o + d = (w'+1) + o + d ≥ 1
+          show 0 < (w' + 1) + o + d
+          exact Nat.lt_of_lt_of_le (Nat.succ_pos w')
+            (Nat.le_trans (Nat.le_add_right (w' + 1) o)
+                          (Nat.le_add_right ((w' + 1) + o) d))
+      | zero =>
+          -- w = 0, so 0 + o + d = o + d
+          show 0 < 0 + o + d
+          cases o with
+          | succ o' =>
+              show 0 < 0 + (o' + 1) + d
+              exact Nat.lt_of_lt_of_le
+                (Nat.lt_of_lt_of_le (Nat.succ_pos o')
+                  (Nat.le_of_eq (Nat.zero_add (o' + 1)).symm))
+                (Nat.le_add_right (0 + (o' + 1)) d)
+          | zero =>
+              -- w = 0, o = 0, so h_ne forces d ≠ 0, hence 0 < d
+              have hd_ne : ¬ d = 0 := h_ne rfl rfl
+              have hd_pos : 0 < d := Nat.pos_of_ne_zero hd_ne
+              show 0 < 0 + 0 + d
+              calc 0 < d := hd_pos
+                _ = 0 + d := (Nat.zero_add d).symm
+                _ = 0 + 0 + d := by rw [Nat.zero_add]
 
 -- ══════════════════════════════════════════════════════════
 -- ALL PATHS RETURN

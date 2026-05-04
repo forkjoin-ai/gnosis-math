@@ -37,8 +37,12 @@ def applySocialIntervention (k : EconKernel) (alpha : Nat) : EconKernel :=
   { inequalityLevel := k.inequalityLevel
     socialSafetyNet := k.socialSafetyNet + alpha
     validEconomy := by
+      -- Init-only: lift `0 < ineq + safety` through `safety ≤ safety + alpha`.
       have h : k.inequalityLevel + k.socialSafetyNet > 0 := k.validEconomy
-      omega }
+      have hLe : k.inequalityLevel + k.socialSafetyNet
+                  ≤ k.inequalityLevel + (k.socialSafetyNet + alpha) :=
+        Nat.add_le_add_left (Nat.le_add_right k.socialSafetyNet alpha) k.inequalityLevel
+      exact Nat.lt_of_lt_of_le h hLe }
 
 theorem intervention_restores_ergodicity (k : EconKernel) :
     ∃ (alpha : Nat), ¬ isNonErgodicTrapped (applySocialIntervention k alpha) := by

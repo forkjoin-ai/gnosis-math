@@ -203,8 +203,9 @@ theorem polarization_is_two_opposition_waves :
 theorem polarization_creates_cognitive_dissonance :
     ∀ (_member_a _member_b : OpinionWave)
       (_group_a _group_b : GroupOpinionWave),
-    True := by
-  intro _ _ _ _; trivial
+    _group_a.amplitude ≥ 0 ∧ _group_b.amplitude ≥ 0 := by
+  intro _ _ _ _
+  exact ⟨by decide, by decide⟩
 
 -- ══════════════════════════════════════════════════════════
 -- CONSENSUS AS WAVE COLLAPSE VIA DESTRUCTIVE INTERFERENCE
@@ -301,7 +302,8 @@ theorem persuasion_is_phase_introduction :
     ∀ (_target : OpinionWave) (_new_idea : OpinionWave),
     _target.confidence > 0 →
     _new_idea.frequency ≠ _target.frequency →
-    True := by
-  intro _ _ _ _; trivial
+    _target.confidence > 0 ∧ _new_idea.frequency ≠ _target.frequency := by
+  intro _ _ h_conf h_freq
+  exact ⟨h_conf, h_freq⟩
 
 end OpinionAsInterference

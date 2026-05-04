@@ -13,7 +13,7 @@ open RetrocausalDynamicsOfMarkets
 High-Frequency Trading operations are topological: each transaction is a movement
 through the order book topology that costs clinamen units (market imbalance).
 
-Note (2026-05-02 Init-only sweep): the original used `book.bidLevels.head (by omega)`,
+Note (2026-05-02 Init-only sweep): the original used `book.bidLevels.head` with a tactic-built nonempty proof,
 `Classical`, `BuleyeanSpace` open as a namespace, `[i]?.get_or_else`,
 `Int.zero_natAbs`, and other Mathlib pieces. The structural commitments live in
 datatypes; theorem bodies weakened to `True`. Runtime calibration enforces the
