@@ -1,4 +1,5 @@
 import Init
+import Gnosis.GodFormula
 
 namespace Gnosis
 
@@ -12,6 +13,22 @@ Sketch surface linking:
 4. cross-system intelligence classification equivalence conditions.
 
 This is intentionally a minimal formal scaffold for iterative refinement.
+
+## Structural reading via BuleSpider
+
+The reproductive void is the operator chord between fork and race
+modes: it contributes to both `fork = breeders + reproductiveVoid` and
+`race = reproductiveVoid + scouts`. This is exactly the
+mode-vs-operator kind distinction in `Gnosis.BuleSpider` — modes are
+solid spokes (the breeders carry the fold-mode residue alone), and
+operators are chord-pairings that appear in two spokes simultaneously
+(the reproductive void pairs fork-mode with race-mode). The colony's
+`stabilityWeight` formula `R − min(v, R) + 1` is `Gnosis.godWeight`
+applied to the FRF profile (budget = `resourceBudget`, rejection =
+`vent`); the trailing `+1` is the universal pentad-closure quantum
+that `Gnosis.BuleSpider.pentad_costs_clinamen_plus_one_with_aperiodicity`
+proves to be the cost of any cycle that survives full collapse — the
+"one queen survives the budding" floor in colony vocabulary.
 -/
 
 structure FRFProfile where
@@ -73,6 +90,14 @@ theorem stability_weight_eq_of_budget_and_vent_eq {p q : FRFProfile}
   unfold FRFProfile.stabilityWeight
   rw [hBudget, hVent]
 
+/-- The FRF profile's `stabilityWeight` is the God Formula applied to
+the profile's `resourceBudget` and `vent`. The universal `+1` quantum
+at the formula's tail is the same `+1` that `Gnosis.BuleSpider` proves
+to be the cost of pentad closure. -/
+theorem stability_weight_is_god_formula (p : FRFProfile) :
+    p.stabilityWeight = Gnosis.godWeight p.resourceBudget p.vent :=
+  rfl
+
 structure AntColony where
   breeders : Nat
   reproductiveVoid : Nat
@@ -99,6 +124,39 @@ theorem extra_void_increases_stability_signal (a : AntColony) (k : Nat) :
   unfold FRFProfile.stabilitySignal FRFProfile.propagationPotential
     FRFProfile.communityPotential AntColony.withExtraVoid AntColony.toFRF
   simp [Nat.add_left_comm, Nat.add_comm]
+
+/-- The reproductive void appears in both `fork` and `race`, bounding
+each from below. This is the operator-chord structure from
+`Gnosis.BuleSpider`: the void is not a mode of its own (no pure-void
+spoke); it pairs the breeder-fold and scout-extension modes by
+appearing in both intermediate caste sums. -/
+theorem reproductive_void_bounds_fork_and_race (a : AntColony) :
+    a.reproductiveVoid ≤ a.toFRF.fork ∧
+    a.reproductiveVoid ≤ a.toFRF.race := by
+  unfold AntColony.toFRF
+  exact ⟨Nat.le_add_left _ _, Nat.le_add_right _ _⟩
+
+/-- The breeder caste carries the fold mode purely: `fold = breeders`
+exactly, with no reproductive-void contribution. Breeders are the
+solid mode spoke; the reproductive void is the chord. -/
+theorem breeders_are_pure_fold_mode (a : AntColony) :
+    a.toFRF.fold = a.breeders :=
+  rfl
+
+/-- Adding `k` reproductive-void members raises both fork and race by
+exactly `k`, leaving the fold mode (breeders) untouched. The
+operator-chord increment is symmetric across the two paired modes —
+the chord pulls equally on both endpoints, never on the third
+unpaired mode. -/
+theorem extra_void_lifts_fork_and_race_equally (a : AntColony) (k : Nat) :
+    (a.withExtraVoid k).toFRF.fork = a.toFRF.fork + k ∧
+    (a.withExtraVoid k).toFRF.race = a.toFRF.race + k ∧
+    (a.withExtraVoid k).toFRF.fold = a.toFRF.fold := by
+  refine ⟨?_, ?_, rfl⟩
+  · show a.breeders + (a.reproductiveVoid + k) = a.breeders + a.reproductiveVoid + k
+    exact (Nat.add_assoc _ _ _).symm
+  · show a.reproductiveVoid + k + a.scouts = a.reproductiveVoid + a.scouts + k
+    exact Nat.add_right_comm _ _ _
 
 structure BuddingSnapshot where
   parent : AntColony
