@@ -1,16 +1,8 @@
-import Init
-
-def mapInstruction : String → List Nat
-  | "AND" => [1]
-  | "OR"  => [1]
-  | "XOR" => [1]
-  | _     => []
-
-theorem test (op : String) (h : op ∈ ["AND", "OR", "XOR"]) : (mapInstruction op).length > 0 := by
-  repeat (cases h)
-  · simp [mapInstruction]; decide
-  · repeat (cases h)
-    · simp [mapInstruction]; decide
-    · repeat (cases h)
-      · simp [mapInstruction]; decide
-      · cases h
+def my_test (l : List Nat) (h : l.length = 3) : ∃ x ∈ l, x = x := by
+  match eq : l with
+  | [a, b, c] =>
+    exact ⟨a, List.Mem.head _, rfl⟩
+  | [] => simp at h
+  | [_] => simp at h
+  | [_, _] => simp at h
+  | _ :: _ :: _ :: _ :: _ => simp at h
