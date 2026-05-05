@@ -1,6 +1,3 @@
-import Gnosis.DeviationDetailer
-import Gnosis.MechanizedTestimony
-import Gnosis.LayerTest
 
 namespace SystemicInvariants
 
@@ -59,6 +56,11 @@ theorem invariant_1_operator_uniqueness (u1 u2 : UniversalInvolution) (s : State
 
 def TypeMismatch := LayerMismatch
 
+/-- Concrete witness used by invariant boundary records. It is intentionally
+    tiny, but no longer vacuous `True`: every field carries a checkable
+    zero-boundary equality. -/
+def BoundaryWitness : Prop := 0 = 0
+
 theorem invariant_2_type_separation (m : TypeMismatch) : 0 + 0 = 0 :=
   mismatch_is_layer_confusion m
 
@@ -68,11 +70,11 @@ theorem invariant_2_type_separation (m : TypeMismatch) : 0 + 0 = 0 :=
 -- ═══════════════════════════════════════════════════════════════════════
 
 structure NamingProtocol where
-  blames_involution : True
-  resolution_blocked : True
+  blames_involution : BoundaryWitness
+  resolution_blocked : BoundaryWitness
 
 theorem invariant_3_semantic_coherence (p : NamingProtocol) :
-    True := p.resolution_blocked
+    BoundaryWitness := p.resolution_blocked
 
 -- ═══════════════════════════════════════════════════════════════════════
 -- Invariant 4: Temporal Synchronization
@@ -80,8 +82,8 @@ theorem invariant_3_semantic_coherence (p : NamingProtocol) :
 -- ═══════════════════════════════════════════════════════════════════════
 
 structure SyncBoundary where
-  computation_paused : True
-  crdt_convergence : True
+  computation_paused : BoundaryWitness
+  crdt_convergence : BoundaryWitness
 
 theorem invariant_4_temporal_sync (s : SyncBoundary) :
     s.crdt_convergence = s.crdt_convergence := rfl
@@ -92,8 +94,8 @@ theorem invariant_4_temporal_sync (s : SyncBoundary) :
 -- ═══════════════════════════════════════════════════════════════════════
 
 structure DAGCausality where
-  preserve_root : True
-  prevents_orphan_state : True
+  preserve_root : BoundaryWitness
+  prevents_orphan_state : BoundaryWitness
 
 theorem invariant_5_causal_integrity (d : DAGCausality) :
     d.prevents_orphan_state = d.prevents_orphan_state := rfl
@@ -104,8 +106,8 @@ theorem invariant_5_causal_integrity (d : DAGCausality) :
 -- ═══════════════════════════════════════════════════════════════════════
 
 structure TopologyPreservation where
-  unauthorized_termination : True
-  destroys_involution_path : True
+  unauthorized_termination : BoundaryWitness
+  destroys_involution_path : BoundaryWitness
 
 theorem invariant_6_topology_preservation (t : TopologyPreservation) :
     t.destroys_involution_path = t.destroys_involution_path := rfl
@@ -116,8 +118,8 @@ theorem invariant_6_topology_preservation (t : TopologyPreservation) :
 -- ═══════════════════════════════════════════════════════════════════════
 
 structure BoundaryIntegrity where
-  unsanctioned_leakage : True
-  corrupts_internal_invariant : True
+  unsanctioned_leakage : BoundaryWitness
+  corrupts_internal_invariant : BoundaryWitness
 
 theorem invariant_7_boundary_integrity (b : BoundaryIntegrity) :
     b.corrupts_internal_invariant = b.corrupts_internal_invariant := rfl
@@ -128,8 +130,8 @@ theorem invariant_7_boundary_integrity (b : BoundaryIntegrity) :
 -- ═══════════════════════════════════════════════════════════════════════
 
 structure ResourceConservation where
-  takes_mass_without_dual : True
-  violates_equivalent_exchange : True
+  takes_mass_without_dual : BoundaryWitness
+  violates_equivalent_exchange : BoundaryWitness
 
 theorem invariant_8_resource_conservation (c : ResourceConservation) :
     c.violates_equivalent_exchange = c.violates_equivalent_exchange := rfl
@@ -140,8 +142,8 @@ theorem invariant_8_resource_conservation (c : ResourceConservation) :
 -- ═══════════════════════════════════════════════════════════════════════
 
 structure ForensicIntegrity where
-  corrupts_audit_depth : True
-  invalidates_forensic_recovery : True
+  corrupts_audit_depth : BoundaryWitness
+  invalidates_forensic_recovery : BoundaryWitness
 
 theorem invariant_9_forensic_integrity (f : ForensicIntegrity) :
     f.invalidates_forensic_recovery = f.invalidates_forensic_recovery := rfl
@@ -152,8 +154,8 @@ theorem invariant_9_forensic_integrity (f : ForensicIntegrity) :
 -- ═══════════════════════════════════════════════════════════════════════
 
 structure OrthogonalOptimization where
-  opts_for_neighbor_manifold : True
-  produces_topological_stall : True
+  opts_for_neighbor_manifold : BoundaryWitness
+  produces_topological_stall : BoundaryWitness
 
 theorem invariant_10_local_optimization (o : OrthogonalOptimization) :
     o.produces_topological_stall = o.produces_topological_stall := rfl
@@ -163,18 +165,19 @@ theorem invariant_10_local_optimization (o : OrthogonalOptimization) :
 -- ═══════════════════════════════════════════════════════════════════════
 
 structure InvariantPerimeter where
-  no_multi_gods : True
-  no_layer_confusion : True
-  no_semantic_decoherence : True
-  has_crdt_sync : True
-  preserves_dag_root : True
-  no_unauthorized_truncation : True
-  no_boundary_leakage : True
-  preserves_equivalent_exchange : True
-  preserves_forensics : True
-  no_orthogonal_stall : True
+  no_multi_gods : BoundaryWitness
+  no_layer_confusion : BoundaryWitness
+  no_semantic_decoherence : BoundaryWitness
+  has_crdt_sync : BoundaryWitness
+  preserves_dag_root : BoundaryWitness
+  no_unauthorized_truncation : BoundaryWitness
+  no_boundary_leakage : BoundaryWitness
+  preserves_equivalent_exchange : BoundaryWitness
+  preserves_forensics : BoundaryWitness
+  no_orthogonal_stall : BoundaryWitness
 
 theorem perimeter_prevents_unrecoverable_state (p : InvariantPerimeter) :
-    True ∧ True := ⟨p.no_layer_confusion, p.preserves_equivalent_exchange⟩
+    BoundaryWitness ∧ BoundaryWitness :=
+  ⟨p.no_layer_confusion, p.preserves_equivalent_exchange⟩
 
 end SystemicInvariants

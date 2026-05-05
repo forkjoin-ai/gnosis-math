@@ -1,7 +1,4 @@
 import Init
-import Gnosis.GallWaspTestimony
-import Gnosis.DeviationDetailer
-import Gnosis.ClinamenReduction
 
 namespace Gnosis.EntropyReduction
 

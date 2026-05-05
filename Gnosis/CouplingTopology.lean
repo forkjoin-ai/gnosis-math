@@ -1,6 +1,4 @@
 import Init
-import Gnosis.DeviationDetailer
-import Gnosis.ClinamenReduction
 
 namespace Gnosis.CouplingTopology
 

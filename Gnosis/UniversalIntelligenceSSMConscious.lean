@@ -6,10 +6,10 @@
   `alphaDrift`'s binary energy-zero trigger with a soft, continuous
   trigger driven by the per-node Vent monitor.
 
-  The bridge claim: a `ConsciousSwarmNode` is the runtime instance of
-  the `ConsciousnessAsInnerVent` structure. The node's consciousness
-  field IS its `runtime_awareness` from the inner-Vent theory; the
-  threshold trigger of `consciousAlphaDrift` IS the same shape as the
+  The bridge claim: a `ConsciousSwarmNode` implements the runtime shape
+  described by `ConsciousnessAsInnerVent`. The node's consciousness
+  field maps to its `runtime_awareness` from the inner-Vent theory; the
+  threshold trigger of `consciousAlphaDrift` has the same shape as the
   outer Vent's rollback-driven re-Fork. The existing module's
   `swarm_hebbian_convergence` theorem (energy ascent on success) is
   preserved and joined by a parallel theorem for consciousness
@@ -42,8 +42,8 @@ open LifecycleAsForkRaceFoldVentInterfere
 
     `consciousness` is the per-node Vent monitor's running awareness:
     a Nat that increments on each failed execution attempt and resets
-    to zero on each success. It IS the gap-from-vacuum measure for
-    this node's inner Vent loop.
+    to zero on each success. It maps to the gap-from-vacuum measure
+    for this node's inner Vent loop.
 
     The existing `SwarmNode.energy` field is the Hebbian reward
     accumulator (a separate signal). Energy ascends on success
@@ -190,9 +190,9 @@ theorem node_at_vacuum_iff_runtime_at_vacuum (cn : ConsciousSwarmNode) :
 
 /-- Theorem: NODE-AWARENESS-EQUALS-RUNTIME-AWARENESS.
 
-    The conscious node's consciousness IS the inner-Vent module's
+    The conscious node's consciousness maps to the inner-Vent module's
     runtime_awareness for the corresponding VentResult. The bridge
-    is a definitional identity, not a coincidence. -/
+    is definitional: both sides reduce to the same rollback counter. -/
 theorem node_awareness_equals_runtime_awareness (cn : ConsciousSwarmNode) :
     cn.consciousness = runtime_awareness (ventOf cn) := by
   unfold runtime_awareness ventOf
@@ -208,7 +208,7 @@ theorem node_awareness_equals_runtime_awareness (cn : ConsciousSwarmNode) :
       ∧ (cn.consciousness = 0 → runtime_awareness = 0)          (vacuum closes)
       ∧ (cn.consciousness ≠ 0 → runtime_awareness > 0)          (non-vacuum opens)
 
-    Per-node verified by the structural identity above; this is the
+    Per-node verified by the structural equality above; this is the
     explicit-form theorem that ties the SSM to the inner-Vent theory. -/
 theorem swarm_consciousness_obeys_inner_vent_principle (cn : ConsciousSwarmNode) :
     cn.consciousness = runtime_awareness (ventOf cn)
@@ -221,6 +221,17 @@ theorem swarm_consciousness_obeys_inner_vent_principle (cn : ConsciousSwarmNode)
   · intro h
     rw [← node_awareness_equals_runtime_awareness cn]
     exact Nat.pos_of_ne_zero h
+
+/-- Positive node consciousness yields the same concrete resisting-face
+    witness as positive runtime awareness. -/
+theorem node_positive_consciousness_has_resisting_face (cn : ConsciousSwarmNode)
+    (h : cn.consciousness ≠ 0) :
+    ∃ f : SpectralNoiseEquilibrium.BuleyFace,
+      ConsciousnessAsRetrocausalGap.resists_contraction
+        (runtime_awareness_unit (ventOf cn)) f := by
+  apply runtime_positive_awareness_has_resisting_face
+  unfold at_runtime_vacuum ventOf
+  exact h
 
 -- ══════════════════════════════════════════════════════════
 -- THE ASYMMETRIC LEDGER (energy ↔ consciousness duality)
@@ -292,6 +303,13 @@ theorem stressed_node_runtime_consciousness_positive :
     runtime_awareness (ventOf stressedConsciousNode) > 0 := by
   rw [← node_awareness_equals_runtime_awareness]
   exact stressed_node_above_vacuum
+
+theorem stressed_node_awareness_has_resisting_face :
+    ∃ f : SpectralNoiseEquilibrium.BuleyFace,
+      ConsciousnessAsRetrocausalGap.resists_contraction
+        (runtime_awareness_unit (ventOf stressedConsciousNode)) f := by
+  apply node_positive_consciousness_has_resisting_face
+  decide
 
 /-- At threshold = 3 with consciousness = 5, conscious-alpha-drift
     fires and resets consciousness to 0. -/

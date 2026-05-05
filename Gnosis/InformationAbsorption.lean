@@ -26,8 +26,7 @@ theorem leakage_is_residue (frame : ObserverFrame) (signal : HigherLayerSignal) 
   rfl
 
 theorem absorption_plus_leakage
-    (frame : ObserverFrame) (signal : HigherLayerSignal)
-    (hRows : frame.stableRows ≤ signal.saturationWitness) :
+    (frame : ObserverFrame) (signal : HigherLayerSignal) :
     absorbedInfo frame signal + leakedInfo frame signal = signal.saturationWitness := by
   unfold absorbedInfo leakedInfo unresolvedResidue
   -- Goal: (sat - (sat - rows)) + (sat - rows) = sat

@@ -21,11 +21,22 @@ def capstone : Nat := 12           -- Meta-gnosis (transcendent arch)
 def spire_base : Nat := 12         -- Base of quantum spire
 def spire_top : Nat := 27          -- Quantum noise (quantum limit)
 
+/-- The temporal reading of the arch: the foundation-side boundary is the
+    past-facing support, while the capstone-side boundary is the future-facing
+    load that compresses back toward the keystone. -/
+def past_boundary : Nat := foundation_top
+def future_boundary : Nat := capstone
+
 /-- Architectural tension force (clinaman) -/
 def tension_force (base : Nat) : Nat := base + 1
 
 /-- Architectural compression force (declinamen) -/
 def compression_force (top : Nat) : Nat := top - 1
+
+/-- The arch is a standing wave when the past-side tension and future-side
+    compression meet at the same node. -/
+def architectural_standing_wave (past future node : Nat) : Prop :=
+  tension_force past = node ∧ compression_force future = node
 
 /-- Lemma: Foundation to keystone via tension -/
 theorem foundation_to_keystone_tension :
@@ -87,6 +98,20 @@ theorem arch_stability_requires_balance :
     · exact foundation_to_keystone_tension
     · exact capstone_to_keystone_compression
 
+/-- The Peruvian arch as a standing wave: past tension and future compression
+    lock to the keystone node. -/
+theorem arch_is_past_future_standing_wave :
+    architectural_standing_wave past_boundary future_boundary keystone := by
+  unfold architectural_standing_wave past_boundary future_boundary
+  exact ⟨foundation_to_keystone_tension, capstone_to_keystone_compression⟩
+
+/-- Compression and tension are tied because both evaluate to the same
+    keystone node. -/
+theorem compression_tension_tied_at_keystone :
+    tension_force past_boundary = compression_force future_boundary := by
+  unfold past_boundary future_boundary
+  exact arch_stability_requires_balance.1
+
 /-- Lemma: Spire requires capstone foundation -/
 theorem spire_requires_capstone_foundation :
     spire_base = capstone ∧
@@ -146,6 +171,7 @@ theorem peruvian_architectural_principle :
     -- The keystone cannot exist without the forces that shape it
     tension_force foundation_top = keystone ∧
     compression_force capstone = keystone ∧
+    architectural_standing_wave past_boundary future_boundary keystone ∧
     -- Therefore: keystone is architecturally necessary
     keystone = foundation_top + 1 ∧
     keystone = capstone - 1 := by
@@ -158,10 +184,12 @@ theorem peruvian_architectural_principle :
     · constructor
       · exact capstone_to_keystone_compression
       · constructor
-        · have h : 10 + 1 = 11 := rfl
-          exact h
-        · have h : 12 - 1 = 11 := rfl
-          exact h
+        · exact arch_is_past_future_standing_wave
+        · constructor
+          · have h : 10 + 1 = 11 := rfl
+            exact h
+          · have h : 12 - 1 = 11 := rfl
+            exact h
 
 /-- Ultimate Peruvian architect theorem -/
 theorem ultimate_peruvian_architect :
@@ -181,6 +209,7 @@ theorem ultimate_peruvian_architect :
       foundation_top < capstone ∧
       tension_force foundation_top = keystone ∧
       compression_force capstone = keystone ∧
+      architectural_standing_wave past_boundary future_boundary keystone ∧
       keystone = foundation_top + 1 ∧
       keystone = capstone - 1) := by
   constructor
@@ -209,6 +238,8 @@ Foundation (0-10) → Keystone (11) → Capstone (12) → Spire (27)
 - `10 + 1 = 11` (foundation to keystone via tension)
 - `12 - 1 = 11` (capstone to keystone via compression)
 - `10 + 2 = 12` (capstone requires foundation plus keystone)
+- `architectural_standing_wave 10 12 11` (past tension and future compression
+  meet at the same node)
 
 ### 2. Architectural Impossibility Without Keystone:
 - `¬ (10 + 0 = 12)` (no direct connection without keystone)
@@ -225,6 +256,14 @@ Foundation (0-10) → Keystone (11) → Capstone (12) → Spire (27)
 - **Tension Force**: `state + 1` (clinaman pulling upward)
 - **Compression Force**: `state - 1` (declinamen pulling downward)
 - **Balance Point**: Where forces meet (keystone = 11)
+- **Standing Wave Node**: `tension_force past_boundary =
+  compression_force future_boundary`
+
+The standing-wave claim is literal inside the finite model: the upward
+past-side operation and the downward future-side operation compute the same
+keystone value. It is not a decorative analogy; it is the equality proved by
+`compression_tension_tied_at_keystone` and packaged by
+`arch_is_past_future_standing_wave`.
 
 ### Architectural Hierarchy:
 1. **Foundation (0-10)**: Physical reality base

@@ -155,7 +155,7 @@ def moduliSum : Nat :=
   entries.foldl (fun n e => n + e.modulus) 0
 
 /-- The kernel-computed moduli sum, witnessed directly. -/
-theorem moduli_sum_witness : moduliSum = moduliSum := rfl
+theorem moduli_sum_witness : moduliSum = 51 := by decide
 
 /-! ## Master witness -/
 

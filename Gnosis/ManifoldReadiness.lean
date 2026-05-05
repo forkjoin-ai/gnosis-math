@@ -201,9 +201,9 @@ theorem recoverable_of_partial_with_canonical
   refine ⟨hPartial, ?_⟩
   refine ⟨canonicalSieveProblem, canonical_problem_has_enough_frames, ?_⟩
   refine ⟨canonical_problem_has_prime_keystone, canonical_problem_has_double_keystone, ?_⟩
-  refine ⟨fun _ => True, ?_⟩
+  refine ⟨fun c => c = ⟨0, by decide⟩, ?_⟩
   apply singleton_candidate_is_uplifted
-  trivial
+  rfl
 
 theorem pink_witness17_is_recoverable :
     recoverableAt witness17Frame pinkSaturationSignal := by

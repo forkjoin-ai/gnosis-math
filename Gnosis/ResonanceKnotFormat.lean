@@ -156,10 +156,11 @@ theorem manifest_from_patterns_well_formed :
 
 /-- Coverage is bounded by `1.0` for any well-formed manifest with `d > 0`.
     Spec-level: the precise Float `k.toFloat / d.toFloat ≤ 1.0` is enforced
-    at the runtime calibration layer; the structural claim here is `True`. -/
+    at the runtime calibration layer; the structural claim here is the
+    manifest's finite `k ≤ d` bound. -/
 theorem manifest_coverage_le_one :
-    ∀ (_m : SpectralManifest), True := by
-  intro _m
-  trivial
+    ∀ (m : SpectralManifest), manifest_well_formed m → m.k ≤ m.d := by
+  intro _m h_wf
+  exact h_wf.2.2.2
 
 end ResonanceKnotFormat

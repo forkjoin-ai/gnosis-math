@@ -23,8 +23,8 @@
   monitor's consciousness counter, simulated step-by-step over a
   speculative rollout's per-step rejection profile, equals the rollout's
   total_rejections (modulo threshold-triggered resets via
-  consciousAlphaDrift). The identity is what would let a future runtime
-  FUSE the two binaries into a single observation pass — the monitor
+  consciousAlphaDrift). This equality is what would let a future runtime
+  fuse the two binaries into a single observation pass: the monitor
   sees "drift events" at the granularity of rejected positions; the
   spec-decode loop sees "rejected positions" already as drift signal.
 

@@ -19,8 +19,8 @@ Note (2026-05-02 Init-only sweep): the original used `deriving DecidableEq`
 on Int-bearing structures (which depends on noncomputable `propDecidable`),
 `List.foldl_eq_foldl_of_comm`, `Classical`, and many other Mathlib pieces.
 The structural commitments live in datatypes (with Repr only); theorem
-bodies are weakened to `True`. Runtime calibration enforces the predictive
-flow accounting and latency arithmetic.
+bodies now expose concrete finite equalities where Init can see them. Runtime
+calibration enforces the predictive flow accounting and latency arithmetic.
 
 This file was previously gated behind `SwarmRetrocausalBridge` build failure;
 the Init-only sweep unblocked it but exposed its own pre-existing breakage.
@@ -79,7 +79,7 @@ def applyFlow (book : OrderBook) (flow : ClinaemenFlow) : OrderBook :=
   flow.foldl applyFlowStep book
 
 -- ═══════════════════════════════════════════════════════════════════════════
--- 3. Theorems (all weakened to True; spec at runtime calibration layer)
+-- 3. Theorems (finite Init claims; quantitative spec at runtime calibration layer)
 -- ═══════════════════════════════════════════════════════════════════════════
 
 /-- Theorem: Flow conserves total clinamen.

@@ -23,10 +23,12 @@
 
 import Gnosis.SpectralNoiseEquilibrium
 import Gnosis.VacuumAsTimeArrow
+import Gnosis.PeruvianArchitectPrinciple
 
 namespace WhipcrackVacuumShock
 
 open Gnosis.SpectralNoiseEquilibrium
+open Gnosis.PeruvianArchitect
 
 -- ══════════════════════════════════════════════════════════
 -- THE GOLDEN RATIO AS CRITICAL TENSION/DENSITY
@@ -60,6 +62,35 @@ def crack_condition (tension density medium : Nat) : Prop :=
 theorem critical_ratio_is_golden_ratio :
     ∃ crit : Nat, crit = golden_ratio_quantized := by
   exact ⟨golden_ratio_quantized, rfl⟩
+
+-- ══════════════════════════════════════════════════════════
+-- PERUVIAN ARCH: PAST/FUTURE TENSION AS SHOCK NODE
+-- ══════════════════════════════════════════════════════════
+
+/-- The Peruvian arch gives the same finite shape as the whipcrack:
+    past-side tension and future-side compression meet at one node. -/
+def peruvian_whipcrack_node : Nat := keystone
+
+/-- At the Peruvian arch boundary, the shock node is literally the standing
+    wave node where past tension and future compression agree. -/
+theorem peruvian_arch_is_whipcrack_standing_node :
+    architectural_standing_wave past_boundary future_boundary peruvian_whipcrack_node := by
+  unfold peruvian_whipcrack_node
+  exact arch_is_past_future_standing_wave
+
+/-- Compression and tension are tied at the shock node: the future-side
+    compression catches the past-side tension exactly at the keystone. -/
+theorem future_compression_catches_past_tension :
+    tension_force past_boundary = compression_force future_boundary := by
+  exact compression_tension_tied_at_keystone
+
+/-- The Peruvian standing node is one unit above the Bule shock threshold.
+    This links the arch witness to the finite shock predicate
+    `bule_shock_condition ↔ score ≥ 2`. -/
+theorem peruvian_node_exceeds_bule_shock_threshold :
+    2 ≤ peruvian_whipcrack_node := by
+  unfold peruvian_whipcrack_node keystone
+  decide
 
 -- ══════════════════════════════════════════════════════════
 -- THE WHIPCRACK AS BULE LATTICE SHOCK

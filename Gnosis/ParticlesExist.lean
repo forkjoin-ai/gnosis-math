@@ -6,7 +6,7 @@ import Init
 From two opposing forces and the stability of antiparallel pairing,
 persistent oscillating structures emerge. That is all a particle is.
 
-Three axioms. One existence theorem. Constructive.
+Three explicit hypotheses. One existence theorem. Constructive.
 -/
 
 namespace ParticlesExist
@@ -78,12 +78,12 @@ theorem orbits_disjoint :
     (⟨Force.neg, Force.pos⟩ : Pair) ≠ ⟨.neg, .neg⟩ := by
   exact ⟨by decide, by decide, by decide, by decide⟩
 
--- FROM THREE AXIOMS: particles exist constructively.
--- Axiom 1: two distinct forces
--- Axiom 2: antiparallel persists
--- Axiom 3: the pair oscillates
+-- FROM THREE HYPOTHESES: particles exist constructively.
+-- Hypothesis 1: two distinct forces
+-- Hypothesis 2: antiparallel persists
+-- Hypothesis 3: the pair oscillates
 -- Conclusion: a persistent oscillating structure exists = a particle
-theorem from_axioms :
+theorem from_hypotheses :
     -- Given: two forces exist and are distinct
     Force.pos ≠ Force.neg →
     -- Given: their antiparallel pairing persists
@@ -93,5 +93,12 @@ theorem from_axioms :
     -- Then: a particle exists
     ∃ (p : Particle), persists p.pair.flip = true :=
   fun _ h_persist h_flip => ⟨⟨⟨.pos, .neg⟩, h_persist⟩, h_flip⟩
+
+theorem from_axioms :
+    Force.pos ≠ Force.neg →
+    persists ⟨.pos, .neg⟩ = true →
+    persists (Pair.flip ⟨.pos, .neg⟩) = true →
+    ∃ (p : Particle), persists p.pair.flip = true :=
+  from_hypotheses
 
 end ParticlesExist

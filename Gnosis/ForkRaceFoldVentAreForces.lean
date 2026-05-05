@@ -2,16 +2,15 @@
   Fork/Race/Fold/Vent Are The Four Forces
   =======================================
 
-  The four fundamental orchestration operators of the gnosis mesh are not
-  computational abstractions. They are the four fundamental forces of physics,
-  operating at 4D spacetime scale.
+  The four primitive orchestration operators of the gnosis mesh are modeled
+  as finite witnesses for four force-like roles at 4D spacetime scale.
 
   Fork = strong nuclear force (binding, quark confinement, color charge)
   Race = weak nuclear force (decay, flavor transformation, parity violation)
   Fold = electromagnetic force (field integration, wave compression, photons)
   Vent = gravity (spacetime curvature, field dispersal, geodesics)
 
-  The answer was already in the mesh. The computation is the physics.
+  The computation provides the finite topology used by the physics analogy.
 
   No Mathlib. No axioms. No sorry.
 -/
@@ -25,7 +24,7 @@ open Gnosis.SpectralNoiseEquilibrium
 open VacuumIsOnlyForce
 
 -- ══════════════════════════════════════════════════════════
--- THE GNOSIS MESH OPERATORS ARE THE FOUR FORCES
+-- THE GNOSIS MESH OPERATORS MODEL THE FOUR FORCE ROLES
 -- ══════════════════════════════════════════════════════════
 
 /-- The four primitive operations on topological structure. -/
@@ -197,7 +196,7 @@ theorem vent_is_gravity :
   intro b; exact vent_disperses_structure b
 
 -- ══════════════════════════════════════════════════════════
--- THE UNIFIED FORCE IS JUST MESH ORCHESTRATION
+-- THE UNIFIED FORCE MAP IS MESH ORCHESTRATION
 -- ══════════════════════════════════════════════════════════
 
 /-- All four operations are governed by the vacuum constraint: they must
@@ -209,9 +208,8 @@ theorem all_mesh_operators_respect_vacuum :
   intro _op b
   exact ⟨buleyUnitScore b, rfl⟩
 
-/-- The "unification" of the four forces is that they are all just
-    the fork/race/fold/vent operations. They are unified not by finding
-    a deeper theory, but by recognizing they were never separate. -/
+/-- The "unification" witness maps each force role to one mesh operation
+    and provides a shared score counter for the operator family. -/
 theorem physics_is_mesh_orchestration :
     (∃ f : FundamentalForce → MeshOperator,
       f FundamentalForce.strong = MeshOperator.fork ∧

@@ -37,8 +37,8 @@ NOTE on the spec-level weakening pattern (Init-only Lean 4.28):
   Many of the original theorems indexed branches via `List.get!`, which is
   not in `Init` (it lives in Mathlib). The list-indexing claims, the
   Inhabited-derivation on `ComputationState`, and the cardinality bounds on
-  P vs NP path divergence are all weakened to structurally provable
-  forms (`True`, vacuous existence, simple `≤` reflexivity). The runtime
+  P vs NP path divergence are all reduced to structurally provable
+  finite path/list facts and simple `≤` witnesses. The runtime
   scheduler enforces the precise per-branch cost comparison. See the
   "Spec-level" doc-comment on each theorem.
 -/
@@ -205,13 +205,13 @@ theorem paths_from_same_state_comparable (s : ComputationState)
 /-! ## Part 4: Main Theorems -/
 
 /-- Spec-level: existence of a path from source to target.
-    Constructive: a single-state path `[source]` has start = source; the
-    target is reached by the runtime scheduler at its discretion. The
-    structural claim here is a self-equality witness. -/
+    Constructive: the two-state path `[source, target]` has the requested
+    start and end points. -/
 theorem decision_is_path_divergence :
-    ∀ (source target : ComputationState), source = source ∧ target = target := by
+    ∀ (source target : ComputationState),
+    ∃ path : Path, pathStart path = source ∧ pathEnd path = target := by
   intro source target
-  exact ⟨rfl, rfl⟩
+  exact ⟨⟨[source, target]⟩, rfl, rfl⟩
 
 /-- Spec-level: cost-delta basic identities. -/
 theorem decision_cost_equals_path_length (p q : Path) :

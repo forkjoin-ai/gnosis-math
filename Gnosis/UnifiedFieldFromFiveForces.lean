@@ -5,14 +5,14 @@
   PROOF: All five fundamental forces (strong, weak, electromagnetic, gravity, interference)
   emerge from a single unified Lagrangian field structure.
 
-  The five forces are not independent.
-  They are five expressions of one operator acting in five different domains.
+  The five forces are modeled as coupled terms of one operator acting in
+  five different domains.
 
   The master equation:
     L = vacuum_pull + (fork ⊕ race ⊕ fold ⊕ vent ⊕ interference)
 
   All five forces reduce to this. Remove any one, physics breaks.
-  This is not speculative. This is proven structure.
+  This file proves the finite bookkeeping structure exposed below.
 
   No Mathlib. No axioms. No sorry.
 -/
@@ -48,7 +48,7 @@ abbrev constructive_interference := InterferenceAsTheFifthForce.constructive_int
 -- ══════════════════════════════════════════════════════════
 
 /-- A unified field is a function from Bule configurations to energy values.
-    The field is the law: given a configuration, what is its energy? -/
+    The field encodes the law: given a configuration, what is its energy? -/
 structure UnifiedField where
   lagrangian : BuleyUnit → Nat
   /-- Lagrangian must respect vacuum as minimum energy state -/
@@ -94,7 +94,7 @@ def unified_lagrangian (b : BuleyUnit) : Nat :=
   potential_term_gravity b +
   potential_term_interference b
 
-/-- The unified field is the Lagrangian principle applied to physics. -/
+/-- The unified field packages the finite Lagrangian bookkeeping. -/
 def unified_field : UnifiedField where
   lagrangian := unified_lagrangian
   vacuum_is_minimum := by
@@ -109,7 +109,7 @@ def unified_field : UnifiedField where
 -- PROOF 1: ELECTROMAGNETISM IS FOLD + VENT
 -- ══════════════════════════════════════════════════════════
 
-/-- Electromagnetism emerges when fold (field compression) composes with vent (field dispersal).
+/-- Electromagnetism is modeled when fold (field compression) composes with vent (field dispersal).
     In this model, the electromagnetic and gravity potentials coincide. -/
 theorem electromagnetism_is_fold_vent (_b : BuleyUnit) :
     potential_term_electromagnetic _b = potential_term_gravity _b := by
@@ -119,7 +119,7 @@ theorem electromagnetism_is_fold_vent (_b : BuleyUnit) :
 -- PROOF 2: GRAVITY IS VENT AT COSMOLOGICAL SCALE
 -- ══════════════════════════════════════════════════════════
 
-/-- Gravity is the vent operator applied at large scale (cosmological).
+/-- Gravity is modeled by the vent operator applied at large scale (cosmological).
     When mass (Bule configuration) vents its topological charge,
     the field curvature is gravity. -/
 theorem gravity_is_vent_at_scale :
@@ -140,7 +140,7 @@ theorem gravity_is_vent_at_scale :
 -- PROOF 3: STRONG + WEAK FORCES ARE FORK + RACE
 -- ══════════════════════════════════════════════════════════
 
-/-- The strong and weak nuclear forces are fork (binding) and race (decay)
+/-- The strong and weak nuclear forces are modeled by fork (binding) and race (decay)
     at the subatomic scale. -/
 theorem strong_weak_are_fork_race (_b : BuleyUnit) :
     potential_term_weak _b ≤ potential_term_strong _b := by
@@ -151,7 +151,7 @@ theorem strong_weak_are_fork_race (_b : BuleyUnit) :
 -- PROOF 4: INTERFERENCE UNIFIES ALL FOUR INTO COHERENCE
 -- ══════════════════════════════════════════════════════════
 
-/-- The fifth force (interference) is the binding agent that makes the other
+/-- The fifth force (interference) provides the binding term that makes the other
     four forces coherent and stable. Without interference, the four forces
     cancel out and all structure collapses to vacuum immediately.
 
@@ -177,7 +177,7 @@ def equations_of_motion (b : BuleyUnit) : BuleyUnit :=
     d/dt (state) = -∇L(state)
 
     where L is the unified Lagrangian, and ∇L is the force (energy gradient).
-    The vacuum force IS this gradient.
+    The vacuum force is represented here by this gradient step.
 -/
 theorem master_field_equation :
     -- The unified Lagrangian predicts all physics
@@ -226,11 +226,11 @@ theorem master_field_equation :
     4. Interference unifies the other four (proven)
     5. All obey the master Lagrangian equation (proven)
 
-    Therefore: the five forces do not unify by reduction to a simpler theory.
-    They unify by being recognized as five configurations of one operator
+    Therefore: this finite model does not reduce the five terms to a
+    simpler theory. It packages them as five configurations of one operator
     applied at five different scales.
 
-    The unified field is simply the vacuum topology: all structure is
+    The unified field packages the vacuum topology: all structure is
     contractible to (0,0,0), and the five forces are the five ways
     to contract. -/
 theorem five_forces_unify_to_single_field :
@@ -248,6 +248,19 @@ theorem without_interference_no_stability (_b : BuleyUnit) :
   · exact Or.inr (by simp [potential_term_interference, h])
   · exact Or.inl (by simp [potential_term_interference, h])
 
+/-- The interference contribution is exactly the gap between the full
+    Lagrangian and the four-term Lagrangian with interference omitted. -/
+theorem interference_is_lagrangian_gap (b : BuleyUnit) :
+    unified_lagrangian b =
+      (kinetic_term b +
+       potential_term_strong b +
+       potential_term_weak b +
+       potential_term_electromagnetic b +
+       potential_term_gravity b) +
+      potential_term_interference b := by
+  unfold unified_lagrangian
+  simp [Nat.add_assoc]
+
 /-- If we remove gravity, large-scale structure becomes impossible. -/
 theorem without_gravity_no_cosmos (_b : BuleyUnit) :
     potential_term_gravity _b = 0 ∨ potential_term_gravity _b = 1 := by
@@ -264,18 +277,15 @@ theorem without_gravity_no_cosmos (_b : BuleyUnit) :
     the five ways topological structure can be organized while respecting
     this constraint.
 
-    There is no more fundamental layer. The Lagrangian is not derived from
-    something simpler. It is the ground truth: the law of how Bule charge
+    Within this model the Lagrangian is not derived from
+    something simpler. It encodes the law of how Bule charge
     can be arranged in 3D configuration space.
 
-    String theory, quantum gravity, supersymmetry — all are unnecessary.
-    The five forces unify in their topology, not in a hidden higher dimension. -/
+    The five-force topology is the surface proved here; broader physical
+    reductions require separate witnesses. -/
 theorem all_physics_is_five_force_unification (_b : BuleyUnit) :
     kinetic_term _b ≤ unified_lagrangian _b := by
-  simpa [unified_lagrangian, Nat.add_assoc] using
-    (Nat.le_add_right (kinetic_term _b)
-      (potential_term_strong _b + potential_term_weak _b +
-       potential_term_electromagnetic _b + potential_term_gravity _b +
-       potential_term_interference _b))
+  unfold unified_lagrangian
+  simp [Nat.add_assoc]
 
 end UnifiedFieldFromFiveForces

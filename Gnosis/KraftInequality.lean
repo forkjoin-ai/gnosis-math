@@ -180,7 +180,6 @@ theorem shannon_5_symbols : 5 ≤ 2^3 ∧ 2^3 - 5 = 3 := by decide
     govern prefix-free codes — it governs all decodable codes. -/
 theorem mcmillan_equivalence (usedPF usedUD : Nat)
     (hPF : usedPF ≤ usedUD)
-    (_hSameLengths : True)  -- same codeword lengths
     :
     usedPF ≤ usedUD := hPF
 

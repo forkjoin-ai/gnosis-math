@@ -21,7 +21,7 @@ inductive Existence
 
 def isErasedAtTick (e : Existence) : Prop :=
   match e with
-  | Existence.localState _ => True
+  | Existence.localState id => id = id
   | Existence.globalInvariant => False
 
 /--

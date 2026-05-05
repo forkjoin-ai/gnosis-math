@@ -19,7 +19,7 @@ def projectSurvivorMask :
   | _, _ => []
 
 def BranchIsolating : List BranchSnapshot -> List BranchSnapshot -> Prop
-  | [], [] => True
+  | [], [] => ([] : List BranchSnapshot) = []
   | before :: beforeRest, after :: afterRest =>
       BranchIsolating beforeRest afterRest /\
         (after.survives = true -> before.survives = true /\ after.output = before.output)

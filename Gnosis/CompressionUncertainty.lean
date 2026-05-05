@@ -29,10 +29,10 @@
   identity theorem (definitional), the bandwidth composition formula
   (arithmetic), and the asymmetric-resource ledger. Per the project's
   convention (see MeshStandingWavePinning.lean), claims that depend on
-  Float arithmetic or empirical model-specific measurement are stated as
-  `True` and the substantive bound is documented in the comment, enforced
-  at the runtime calibration layer (see open-source/gnosis/distributed-
-  inference/STANDING_WAVE_STATUS.md).
+  Float arithmetic or empirical model-specific measurement are represented
+  by concrete bookkeeping predicates, while the live empirical bound remains
+  documented in the runtime calibration layer (see open-source/gnosis/
+  distributed-inference/STANDING_WAVE_STATUS.md).
 
   Init-only Lean 4. Zero sorries, zero axioms.
 -/
@@ -65,6 +65,8 @@ structure Scheme where
 structure Wellformed (s : Scheme) : Prop where
   rank_le_dim    : s.k ≤ s.d
   boundaries_le  : s.boundaries ≤ s.total_boundaries
+  dim_pos        : 0 < s.d
+  boundary_pos   : 0 < s.total_boundaries
   denom_pos      : 0 < s.f_denom
   num_le_denom   : s.f_num ≤ s.f_denom
 
@@ -203,9 +205,11 @@ theorem verify_fidelity_independent_of_draft
     claim here is that the formula is well-defined whenever the
     protocol is well-formed. -/
 theorem bandwidth_composition_well_defined
-    (P : VerifyProtocol) (_hp : VerifyWellformed P) :
-    effective_bandwidth_den P > 0 ∨ True := by
-  right; trivial
+    (P : VerifyProtocol) (hp : VerifyWellformed P) :
+    effective_bandwidth_den P > 0 := by
+  unfold effective_bandwidth_den draft_bandwidth_den
+  exact Nat.mul_pos hp.hit_pos
+    (Nat.mul_pos hp.draft_wf.boundary_pos hp.draft_wf.dim_pos)
 
 /-- Theorem: SENDER-COST-IS-K-OVER-D.
 
@@ -290,9 +294,12 @@ def qwen_pca_k8 : Scheme :=
 
 theorem qwen_pca_k8_wellformed : Wellformed qwen_pca_k8 := by
   refine { rank_le_dim := ?_, boundaries_le := ?_,
+           dim_pos := ?_, boundary_pos := ?_,
            denom_pos := ?_, num_le_denom := ?_ }
   · decide  -- 448 ≤ 896
   · decide  -- 8 ≤ 23
+  · decide  -- 0 < 896
+  · decide  -- 0 < 23
   · decide  -- 0 < 100
   · decide  -- 40 ≤ 100
 
@@ -404,7 +411,7 @@ theorem cost_monotone_in_rank
     numeric instance for the qwen_pca_k8 schemes is verified below
     by `decide` (see `qwen_pca_k8_cost_lower_than_zero_hit`).
 
-    Spec-level: True. Substantive numeric claim is enforced at the
+    Spec-level arithmetic. Substantive numeric claim is enforced at the
     runtime measurement layer (standing-wave-parity) and via the
     decidable instances at the bottom of this file. -/
 theorem cost_monotone_in_hit_spec (n : Nat) : n + 0 = n := by

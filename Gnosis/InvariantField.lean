@@ -1,6 +1,4 @@
 import Init
-import Gnosis.GallWaspTestimony
-import Gnosis.DeviationDetailer
 
 namespace Gnosis.InvariantField
 

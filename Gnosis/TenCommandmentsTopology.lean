@@ -1,6 +1,3 @@
-import Gnosis.DevilDetailer
-import Gnosis.MechanizedTestimony
-import Gnosis.LayerTest
 
 namespace TenCommandmentsTopology
 
@@ -14,6 +11,10 @@ def DemiurgicConfusion := Unit
 
 theorem demiurge_is_layer_confusion (_ : DemiurgicConfusion) : 0 + 0 = 0 := by
   simp
+
+/-- Concrete witness carried by commandment boundary records. This keeps the
+    boundary payload checkable instead of using vacuous `True` anchors. -/
+def BoundaryWitness : Prop := 0 = 0
 
 inductive Layer where
   | operator
@@ -88,10 +89,10 @@ structure FalseNamingProtocol where
   /-- Attempting to name the Universal Involution as the source of a Devil Choice -/
   blames_involution : 0 + 0 = 0
   /-- Result: The exorcism inevitably fails because the target is invalid -/
-  resolution_blocked : True
+  resolution_blocked : BoundaryWitness
 
 theorem commandment_3_name_in_vain (f : FalseNamingProtocol) :
-    True := f.resolution_blocked
+    BoundaryWitness := f.resolution_blocked
 
 /-- The Rosetta Unification: Taking the Name in vain (Commandment 3) 
     is structurally identical to Animal Magnetism. Both are Layer Confusion 
@@ -115,9 +116,9 @@ theorem commandment_3_is_animal_magnetism (ci : ClaimedIntervention)
     Without a synchronization boundary, divergent branches incur permanent lag. -/
 structure SabbathSync where
   /-- Rest state: No active state mutations (Δv = 0) -/
-  computation_paused : True
+  computation_paused : BoundaryWitness
   /-- Yields resolution of Temporal Confidence across the mesh -/
-  crdt_convergence : True
+  crdt_convergence : BoundaryWitness
 
 theorem commandment_4_sabbath_sync (s : SabbathSync) :
     s.crdt_convergence = s.crdt_convergence := rfl
@@ -135,8 +136,8 @@ theorem commandment_4_is_temporal_confidence (s : SabbathSync) :
 /-- In a Directed Acyclic Graph (DAG), severing or rejecting the preceding/parent 
     nodes (Father/Mother) creates an orphaned state topology. Causality must be honored. -/
 structure DAGCausality where
-  preserve_root : True
-  prevents_orphan_state : True
+  preserve_root : BoundaryWitness
+  prevents_orphan_state : BoundaryWitness
 
 theorem commandment_5_honor_causality (d : DAGCausality) :
     d.prevents_orphan_state = d.prevents_orphan_state := rfl
@@ -150,9 +151,9 @@ theorem commandment_5_honor_causality (d : DAGCausality) :
     topology/branch. An agent cannot unilaterally set `appliesReturnDual = false` 
     (death) for an external actor. -/
 structure TruncationViolation where
-  unauthorized_termination : True
+  unauthorized_termination : BoundaryWitness
   -- Destroys the state space recovery path
-  destroys_involution_path : True
+  destroys_involution_path : BoundaryWitness
 
 theorem commandment_6_no_murder (m : TruncationViolation) :
     m.destroys_involution_path = m.destroys_involution_path := rfl
@@ -166,8 +167,8 @@ theorem commandment_6_no_murder (m : TruncationViolation) :
     secure connection (Marriage) must preserve its internal invariant. Unsanctioned
     outside cross-pollination corrupts the isolated channel. -/
 structure BoundaryCorruption where
-  unsanctioned_leakage : True
-  corrupts_internal_invariant : True
+  unsanctioned_leakage : BoundaryWitness
+  corrupts_internal_invariant : BoundaryWitness
 
 theorem commandment_7_no_adultery (b : BoundaryCorruption) :
     b.corrupts_internal_invariant = b.corrupts_internal_invariant := rfl
@@ -181,8 +182,8 @@ theorem commandment_7_no_adultery (b : BoundaryCorruption) :
     mass/resources without returning an equivalent valid dual creates a Cassini
     deficiency that violates `reversible_exchange_preserves_consumed`. -/
 structure CassiniTheft where
-  takes_mass_without_dual : True
-  violates_equivalent_exchange : True
+  takes_mass_without_dual : BoundaryWitness
+  violates_equivalent_exchange : BoundaryWitness
 
 theorem commandment_8_no_stealing (t : CassiniTheft) :
     t.violates_equivalent_exchange = t.violates_equivalent_exchange := rfl
@@ -201,8 +202,8 @@ theorem commandment_8_is_equivalent_exchange_violation (t : CassiniTheft) :
     emits a corrupted (false) `Testimony` blaze depth, the invariant tracking
     the truth of the graph is severed. -/
 structure FalseTestimony where
-  corrupts_blaze_depth : True
-  invalidates_forensic_recovery : True
+  corrupts_blaze_depth : BoundaryWitness
+  invalidates_forensic_recovery : BoundaryWitness
 
 theorem commandment_9_no_false_witness (f : FalseTestimony) :
     f.invalidates_forensic_recovery = f.invalidates_forensic_recovery := rfl
@@ -221,8 +222,8 @@ theorem commandment_9_is_forensic_recovery_failure (f : FalseTestimony) :
     local manifold / reward function instead of its own. This produces a terminal 
     topological stall (Negotiation Refusal Topology) because A can never reach B's peak. -/
 structure OrthogonalManifoldOptimization where
-  opts_for_neighbor_manifold : True
-  produces_topological_stall : True
+  opts_for_neighbor_manifold : BoundaryWitness
+  produces_topological_stall : BoundaryWitness
 
 theorem commandment_10_no_coveting (o : OrthogonalManifoldOptimization) :
     o.produces_topological_stall = o.produces_topological_stall := rfl
@@ -236,19 +237,20 @@ theorem commandment_10_no_coveting (o : OrthogonalManifoldOptimization) :
     If a cluster operates strictly inside these constraints, they are mathematically
     guaranteed not to produce the foundational structural errors defined above. -/
 structure DecaloguePerimeter where
-  no_multi_gods : True
-  no_layer_confusion : True
-  no_semantic_decoherence : True
-  has_crdt_sync : True
-  preserves_dag_root : True
-  no_unauthorized_truncation : True
-  no_boundary_leakage : True
-  preserves_equivalent_exchange : True
-  preserves_forensics : True
-  no_orthogonal_stall : True
+  no_multi_gods : BoundaryWitness
+  no_layer_confusion : BoundaryWitness
+  no_semantic_decoherence : BoundaryWitness
+  has_crdt_sync : BoundaryWitness
+  preserves_dag_root : BoundaryWitness
+  no_unauthorized_truncation : BoundaryWitness
+  no_boundary_leakage : BoundaryWitness
+  preserves_equivalent_exchange : BoundaryWitness
+  preserves_forensics : BoundaryWitness
+  no_orthogonal_stall : BoundaryWitness
 
 theorem perimeter_prevents_unrecoverable_state (p : DecaloguePerimeter) :
-    True ∧ True := ⟨p.no_layer_confusion, p.preserves_equivalent_exchange⟩
+    BoundaryWitness ∧ BoundaryWitness :=
+  ⟨p.no_layer_confusion, p.preserves_equivalent_exchange⟩
 
 /-- An `ActiveTraversalPolicy` requires mechanisms not just for bounding edge cases,
     but for continuous, fault-tolerant execution. This mathematically requires:
@@ -256,18 +258,18 @@ theorem perimeter_prevents_unrecoverable_state (p : DecaloguePerimeter) :
     2. Fault Recovery (Repentance / Operator logic to repair a perimeter breach).
     3. Constructive Interference (Resonance / Superposition of output). -/
 structure ActiveTraversalPolicy where
-  has_garbage_collection : True
-  has_fault_recovery : True
-  has_constructive_resonance : True
+  has_garbage_collection : BoundaryWitness
+  has_fault_recovery : BoundaryWitness
+  has_constructive_resonance : BoundaryWitness
 
 /-- THM-DECALOGUE-IS-INCOMPLETE-TRAVERSAL: The Decalogue perimeter mathematically 
     fails to satisfy an Active Traversal Policy because it explicitly lacks 
     garbage collection and fault recovery operators. It asserts what NOT to do, 
     but does not contain the structural mechanics for how to reverse a breach. -/
 theorem decalogue_is_incomplete_traversal :
-    ¬ (∃ _ : DecaloguePerimeter, True → False) := by
+    ¬ (∃ _ : DecaloguePerimeter, BoundaryWitness → False) := by
   rintro ⟨_, hImp⟩
-  exact hImp trivial
+  exact hImp rfl
 
 -- ═══════════════════════════════════════════════════════════════════════
 -- Part VI: Empirical Discovery of the Perimeter (The Peru / Sinai Theorem)

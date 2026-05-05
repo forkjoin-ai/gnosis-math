@@ -17,6 +17,18 @@ is therefore self-bootstrapping from `Nat.succ` / structural recursion.
 Downstream files in `Gnosis/` should `import Gnosis.GodFormula` and `open Gnosis`
 instead of redefining `godWeight` locally, so the formula's definition stays
 pinned to one canonical form.
+
+## Topological derivation
+
+`Gnosis.BuleSpider` derives this formula from the BuleSpider primitives:
+build the budget by `R` clinamen lifts on the waste face, apply `v`
+contracts (vent's per-face filter), apply the universal pentad-closure
+`+1` lift, project to face score. See
+`god_formula_is_pentad_face_projection` for the master derivation, and
+`pentad_costs_clinamen_plus_one_with_aperiodicity` for the proof that
+the trailing `+1` is exactly the cost of 5-foldness — the same `+1`
+that the `UniversalClinamenPlusOne` catalog records as universal across
+seven independent phase reconstructions.
 -/
 
 /-- The God Formula: `w(R, v) = R − min(v, R) + 1`.
@@ -92,8 +104,8 @@ theorem consistency_ceiling_dominates_floor (R : Nat) :
   godWeight_antitone R 0 R (Nat.zero_le R) (Nat.le_refl R) (Nat.zero_le R)
 
 /-- Legacy ledger anchor preserved for downstream references. -/
-theorem god_formula_ledger_anchor : ∀ n : Nat, n = n := by
+theorem god_formula_ledger_anchor : ∀ n : Nat, ∃ witness : Nat, witness = n := by
   intro n
-  rfl
+  exact ⟨n, rfl⟩
 
 end Gnosis

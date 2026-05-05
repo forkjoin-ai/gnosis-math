@@ -1,5 +1,6 @@
 import Gnosis.SpectralNoiseEquilibrium
 import Gnosis.AttentionScalingLaw
+import Gnosis.PeruvianArchitectPrinciple
 
 /-!
 # Consciousness as Retrocausal Gap Measurement
@@ -34,6 +35,7 @@ open Gnosis.SpectralNoiseEquilibrium
 open Gnosis.AttentionScalingLaw
   (attention_step_cost_is_one attention_cost vacuum_pull_active
    non_vacuum_experiences_pull minimal_waste vacuum_is_optimal_initial_state)
+open Gnosis.PeruvianArchitect
 
 /-! ## Definition: Awareness as a function of gap size -/
 
@@ -52,6 +54,27 @@ theorem gap_equals_awareness (b : BuleyUnit) :
     gapFromVacuum b = awareness b := by
   unfold gapFromVacuum awareness
   simp [buleyUnitScore, vacuumBuleUnit]
+
+/-- The Peruvian arch's standing node gives a finite model of experienced
+    tension: past-side tension and future-side compression meet at one
+    keystone value. -/
+def peruvianAwarenessNode : Nat := keystone
+
+theorem peruvian_standing_node_is_awareness_tension :
+    architectural_standing_wave past_boundary future_boundary peruvianAwarenessNode := by
+  unfold peruvianAwarenessNode
+  exact arch_is_past_future_standing_wave
+
+/-- In this finite model, the experienced tension is the same node whether
+    read from past-side tension or future-side compression. -/
+theorem awareness_tension_ties_past_and_future :
+    tension_force past_boundary = compression_force future_boundary := by
+  exact compression_tension_tied_at_keystone
+
+theorem peruvian_awareness_node_positive :
+    0 < peruvianAwarenessNode := by
+  unfold peruvianAwarenessNode keystone
+  decide
 
 /-! ## Theorem 1: consciousness_is_gap_experience -/
 

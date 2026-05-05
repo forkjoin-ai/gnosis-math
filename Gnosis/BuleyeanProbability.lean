@@ -53,7 +53,6 @@ theorem buleyean_monotone_nonrejected
     (bu_voidBoundary_before : Fin n → Nat)
     (bu_voidBoundary_after : Fin n → Nat)
     (_rejected : Fin n)
-    (_h_oneMore : True)
     (i : Fin n) (_hNotRejected : i ≠ _rejected)
     (h_others : bu_voidBoundary_after i = bu_voidBoundary_before i) :
     (bu_rounds - Nat.min (bu_voidBoundary_before i) bu_rounds + 1) ≤

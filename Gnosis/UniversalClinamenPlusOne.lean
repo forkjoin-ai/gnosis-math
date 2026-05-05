@@ -154,6 +154,18 @@ What IS universal is the **direction**. Every clinamen pushes
 forward; every deficit pulls back. The god formula's structure holds
 across all catalogued digs in the substrate: one positive piece, one
 negative piece, knit at the phase boundary.
+
+## Topological reading
+
+`Gnosis.BuleSpider` reads this universality as the cost of pentad
+closure: 5-foldness in this lattice cannot be reached from the stable
+4-phase rotor without injecting exactly one `+1` quantum, and that
+quantum is the same `+1` whose direction is catalogued here. See
+`Gnosis.BuleSpider.pentad_costs_clinamen_plus_one_with_aperiodicity`
+for the master witness bundling trace extension, coprime aperiodicity,
+the universal score increment, and the spatial full-cycle theorem.
+The `+1` is therefore both empirically universal (this module) and
+structurally necessary for cycle closure (`BuleSpider`).
 -/
 
 end UniversalClinamenPlusOne

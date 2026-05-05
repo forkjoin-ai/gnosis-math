@@ -25,6 +25,10 @@ to constructive theorem: the frame header formalizes the covering map.
 
 -- (Topological definitions anchored in Gnosis.DeficitCapacity)
 
+/- Path-to-stream mapping under multiplexed transport. -/
+def pathToStream (pathCount transportStreams : Nat) (path : Fin pathCount) : Nat :=
+  path.val % transportStreams
+
 -- ─── Blocking witness ──────────────────────────────────────────────────
 
 /-- A blocking witness certifies that loss on one path stalls another path.
@@ -34,11 +38,8 @@ structure BlockingWitness (pathCount : Nat) where
   lossPath : Fin pathCount
   sharedStream : Nat
   pathsDistinct : stalledPath ≠ lossPath
-  pathsShareStream : True  -- simplified: witness existence suffices
-
-/-- Path-to-stream mapping under multiplexed transport. -/
-def pathToStream (pathCount transportStreams : Nat) (path : Fin pathCount) : Nat :=
-  path.val % transportStreams
+  pathsShareStream : sharedStream = pathToStream pathCount 1 stalledPath ∧
+    sharedStream = pathToStream pathCount 1 lossPath
 
 -- ─── THM-COVERING-CAUSALITY ───────────────────────────────────────────
 
@@ -73,7 +74,7 @@ def blockingWitnessFromMismatch
   sharedStream := 0
   pathsDistinct := by intro h; simp [Fin.ext_iff] at h
   pathsShareStream := by
-    decide
+    simp [pathToStream]
 
 -- ─── THM-COVERING-MATCH ───────────────────────────────────────────────
 

@@ -33,13 +33,11 @@ import Gnosis.AlgorithmicExploitationOfFiveForces
 import Gnosis.AlignmentAsVacuumConvergence
 import Gnosis.AlphaOmegaGodsKingdom
 import Gnosis.AmericanFrontier
-import Gnosis.AnimalMagnetismCatalog
 import Gnosis.AntColonyCollectiveIntelligence
 import Gnosis.AntiFrequencySyzygy
 import Gnosis.AntiTheorems.AntiTheoremStallInevitable
 import Gnosis.AntiThmPaleoclimatologySeismologyBudgetNotPositiveBeta1
 import Gnosis.AnxietyAsDestructiveInterference
-import Gnosis.ApologyPsalm
 import Gnosis.AttentionAsConstructiveInterference
 import Gnosis.AttentionHeadSaturation
 import Gnosis.AttentionQKVDecomposition
@@ -112,6 +110,7 @@ import Gnosis.Bridges.TopologicalMetabolismBuleyBridge
 import Gnosis.Bridges.ZeckendorfBatchingQueueKernelBridge
 import Gnosis.BrunnianScanner
 import Gnosis.BuleIsValue
+import Gnosis.BuleSpider
 import Gnosis.BuleyBiSidedBit
 import Gnosis.BuleyClinamenBraid
 import Gnosis.BuleyEquilibrium
@@ -166,21 +165,16 @@ import Gnosis.ChurchPillars
 import Gnosis.CircadianGnosisAlignment
 import Gnosis.Claims
 import Gnosis.ClassFieldTheoryArtinReciprocity
-import Gnosis.ClinamenCompleteness
 import Gnosis.ClinamenDeclinamenTheorem
 import Gnosis.ClinamenProofMechanism
-import Gnosis.ClinamenReduction
 import Gnosis.Closures.AnomalyCancellationClosure
-import Gnosis.Closures.BaryogenesisClosure
 import Gnosis.Closures.JacksonEnvelopeClosure
 import Gnosis.Closures.JacksonRawClosure
 import Gnosis.Closures.MatterExplanationClosure
 import Gnosis.TopologicalBridgeAntiTheorems
 import Gnosis.Closures.PleromaticClosure
 import Gnosis.Closures.PleromaticHigherClosures
-import Gnosis.Closures.StandardModelReplacementClosure
 import Gnosis.Closures.StrongerCosmologyClosure
-import Gnosis.Closures.UnifiedReplacementClosure
 import Gnosis.CoarseningThermodynamics
 import Gnosis.CodecRacing
 import Gnosis.CognitiveStateShift
@@ -198,7 +192,6 @@ import Gnosis.ComputationalStateTransitionsAsPathDivergence
 import Gnosis.CondensedMathematics
 import Gnosis.Confinement
 import Gnosis.ConformalFieldTheoryVOA
-import Gnosis.ConscienceLadder
 import Gnosis.ConsciousnessIsInterference
 import Gnosis.ConsciousnessSyzygyPolicy
 import Gnosis.ConsciousnessVsObjectivity
@@ -258,7 +251,6 @@ import Gnosis.CountBadLucasPhaseReconstruction
 import Gnosis.CouplingCost
 import Gnosis.CoveringSpaceCausality
 import Gnosis.CopyStoreEraseCostStructure
-import Gnosis.CreationSequence
 import Gnosis.CrossDomain.CrossDomainAstrobiologyMeteorologyStallBridge
 import Gnosis.CrossDomain.CrossDomainAstrobiologyPsychologyStallBridge
 import Gnosis.CrossDomain.CrossDomainAstronomyCulinary
@@ -314,16 +306,13 @@ import Gnosis.Dark.DarkForkAtomizedEncryption
 import Gnosis.Dark.DarkForkMeshCrossPollination
 import Gnosis.Dark.DarkSectorEquilibria
 import Gnosis.DataProcessingInequality
-import Gnosis.DeathVsStrategicDefense
 import Gnosis.DeceptaconVariants
 import Gnosis.DeepCompositions
 import Gnosis.DeepReduction
-import Gnosis.DeescalationTechniques
 import Gnosis.DeficitCapacity
 import Gnosis.DepressionAsDampedOscillation
 import Gnosis.DestinyAsRetrocausalAttractor
 import Gnosis.DeterminantAnomalyUnified
-import Gnosis.DevilDetailer
 import Gnosis.Dewey000ThinTopology
 import Gnosis.Dewey100ThinTopology
 import Gnosis.Dewey200ThinTopology
@@ -334,9 +323,9 @@ import Gnosis.Dewey600ThinTopology
 import Gnosis.Dewey700ThinTopology
 import Gnosis.Dewey800ThinTopology
 import Gnosis.Dewey900ThinTopology
-import Gnosis.DharmaField
 import Gnosis.DiagonalCobordismQuine
 import Gnosis.DiagonalLemmaToy
+import Gnosis.DickinsonNeverSawMoorTopology
 import Gnosis.DigitalHadronCollider
 import Gnosis.DimensionalConfinement
 import Gnosis.DimensionalLadder
@@ -346,8 +335,6 @@ import Gnosis.DiversityUnwound
 import Gnosis.DomainComposition
 import Gnosis.DouglasiiPerpetualRun63
 import Gnosis.DualProtocol
-import Gnosis.DukkhaReduction
-import Gnosis.DynamicPermutation
 import Gnosis.DynamicalOrbitColoring
 import Gnosis.EchoChamberAsStandingWave
 import Gnosis.DynkinCoxeterClassification
@@ -358,7 +345,6 @@ import Gnosis.EnergyConservationFromVacuum
 import Gnosis.EnrichedConvergence
 import Gnosis.EnriquesKodairaSurfaces
 import Gnosis.EntropicRefinementCalculus
-import Gnosis.EntropyBridge.LayerC
 import Gnosis.EnvelopeConvergence
 import Gnosis.EtaleCohomology
 import Gnosis.EulerGnostic
@@ -394,8 +380,6 @@ import Gnosis.FoldErasure
 import Gnosis.FoldHeatHierarchy
 import Gnosis.FoldedBuleyeanView
 import Gnosis.ForkRaceFoldDynamics
-import Gnosis.ForkRaceFoldTrinity
-import Gnosis.FractalTrinity
 import Gnosis.FrameNativeBisim
 import Gnosis.FrameOverheadBound
 import Gnosis.FreeCollapseAnomaly
@@ -404,8 +388,9 @@ import Gnosis.FrobeniusPantsComposition
 import Gnosis.FukayaMirrorSymmetry
 import Gnosis.FulcrumPatternTheorem
 import Gnosis.FulcrumRatioTest
-import Gnosis.GallWaspTestimony
 import Gnosis.GameTheoreticProtocolDeficit
+import Gnosis.Gatekeeping
+import Gnosis.GatekeepingGames
 import Gnosis.GaussBonnetBraid
 import Gnosis.GaussBonnetBurnsideIndex
 import Gnosis.GaussBonnetPolytopes
@@ -435,7 +420,6 @@ import Gnosis.GodelIncompletenessShadow
 import Gnosis.GodelUniverseIncompleteness
 import Gnosis.GoldenVolatilityBreakout
 import Gnosis.GoodhartsLaw
-import Gnosis.GospelResistanceTopology
 import Gnosis.GossipProtocol
 import Gnosis.GradientDescentHopeGap
 import Gnosis.GradientOfIgnorance
@@ -529,7 +513,6 @@ import Gnosis.LandauerHotReplica
 import Gnosis.LandauerPrincipleAsClinaemenDebt
 import Gnosis.LastQuestion
 import Gnosis.LaunchOffsetDominance
-import Gnosis.LayerTest
 import Gnosis.LiabilityEquilibrium
 import Gnosis.LindemannWeierstrassShadow
 import Gnosis.LiouvilleIrrationalityShadow
@@ -546,14 +529,11 @@ import Gnosis.Matrix
 import Gnosis.MeasureQueueing
 import Gnosis.MechanismDesign
 import Gnosis.MeshStandingWavePinning
-import Gnosis.MechanizedTestimony
-import Gnosis.MenIsDimension
 import Gnosis.MemoryAsRetrocausalLoan
 import Gnosis.Mesh.MeshAgelessUniverse
 import Gnosis.Mesh.MeshArithmeticOrigin
 import Gnosis.Mesh.MeshAsteroidCascade
 import Gnosis.Mesh.MeshAsymmetricEternity
-import Gnosis.Mesh.MeshAttentionAsVoting
 import Gnosis.Mesh.MeshBasisSet
 import Gnosis.Mesh.MeshBenfordsLaw
 import Gnosis.Mesh.MeshBijectiveBasis
@@ -707,7 +687,6 @@ import Gnosis.NovelTripleCompositions2
 import Gnosis.Numbers
 import Gnosis.ObjectivityIsIllusion
 import Gnosis.ObservableUniverseFinite
-import Gnosis.ObservationRequired
 import Gnosis.OceanographyCybernetics
 import Gnosis.OneCobFrobenius
 import Gnosis.OpinionAsInterference
@@ -722,7 +701,6 @@ import Gnosis.Oracle.OracleStallThermodynamicReversal
 import Gnosis.OrbitAvoidanceLucasProbe
 import Gnosis.OrbitColoringDiscreteIndex
 import Gnosis.OrnithologyMicroservicesKernelLiftAdapter
-import Gnosis.PIERootsArePrimitives
 import Gnosis.ParticlesExist
 import Gnosis.ParticlePredictionsFromFiveForces
 import Gnosis.PellCatLucasTraceFamily
@@ -738,7 +716,6 @@ import Gnosis.PhoneticAetherSieve
 import Gnosis.PhotonSliverFrontier
 import Gnosis.PhysicalConstantsSignatures
 import Gnosis.PhysicsFromGodFormula
-import Gnosis.PhysicsGrandUnification
 import Gnosis.PickTheoremInstances
 import Gnosis.PipelineSpeedup
 import Gnosis.PisotMitosisManifold
@@ -771,7 +748,6 @@ import Gnosis.PsycheGrind
 import Gnosis.PsycheReduction
 import Gnosis.PsychologyAsInterference
 import Gnosis.PublicationBias
-import Gnosis.PullTopology
 import Gnosis.PureExtendedNoiseTheorem
 import Gnosis.PvsNPComplexityBarriers
 import Gnosis.PythagoreanTriples
@@ -780,7 +756,6 @@ import Gnosis.QuadraticReciprocityInstances
 import Gnosis.Quantum.QuantumCancerTriples
 import Gnosis.Quantum.QuantumCryptoSymbiosis
 import Gnosis.Quantum.QuantumGroupsDrinfeldJimbo
-import Gnosis.Quantum.QuantumInspiredFFN
 import Gnosis.Quantum.QuantumObserver
 import Gnosis.QuarkConfinement
 import Gnosis.QuarkPersonality
@@ -831,12 +806,10 @@ import Gnosis.RiemannHypothesisShadow
 import Gnosis.RotationPatterns
 import Gnosis.SchedulerComposition
 import Gnosis.SchedulingMatter
-import Gnosis.SealingTopology
 import Gnosis.SecondTierMysteries
 import Gnosis.SelfAwareBudget
 import Gnosis.SelfDelimitingGodel
 import Gnosis.SelfHostingOptimality
-import Gnosis.SelfSimilarity
 import Gnosis.Semantic.NoncomputableSemanticDrift
 import Gnosis.Semantic.SemanticCompatibility
 import Gnosis.Semantic.SemanticTopologyDrift
@@ -865,7 +838,6 @@ import Gnosis.SolomonoffInduction
 import Gnosis.SolvableGroupS3
 import Gnosis.SpectralMeasurementFramework
 import Gnosis.SpectralNoiseEquilibrium
-import Gnosis.SpectralSparsification
 import Gnosis.TraumaSpectralSieve
 import Gnosis.AnxietySpectralSieve
 import Gnosis.DepressionSpectralSieve
@@ -885,9 +857,7 @@ import Gnosis.StaticAnalysis
 import Gnosis.StatisticalTeleportation
 import Gnosis.StirlingBellSmall
 import Gnosis.StoneDualityProfiniteSieve
-import Gnosis.StrategicWithdrawal
 import Gnosis.StringTheoryCorrespondence
-import Gnosis.SubmissionTopology
 import Gnosis.SubstrateBoundaries
 import Gnosis.SubstrateSieve
 import Gnosis.SuperstringDimensionDerivation
@@ -899,8 +869,6 @@ import Gnosis.Synthesize
 import Gnosis.Syzygy
 import Gnosis.SyzygyParticle
 import Gnosis.Tactics
-import Gnosis.TalkingCricketTopology
-import Gnosis.TaoNaming
 import Gnosis.TarskiTruthUndefinability
 import Gnosis.TectonicTensorKernelLiftContinuousErgodicity
 import Gnosis.TeleportationEvidencePredictions
@@ -937,7 +905,6 @@ import Gnosis.TowerResonance
 import Gnosis.TracedMonoidal
 import Gnosis.TradeTopology
 import Gnosis.TraumaAsStandingWave
-import Gnosis.TriadTopology
 import Gnosis.TriadicCosmicBreath
 import Gnosis.TriadicNormalForm
 import Gnosis.TripleCompositions
@@ -960,7 +927,6 @@ import Gnosis.ValentinianSinDiagnostic
 import Gnosis.Void.VoidArchaeology
 import Gnosis.Void.VoidMineGodsPosition
 import Gnosis.Void.VoidResonancePrevention
-import Gnosis.Void.VoidRuntime
 import Gnosis.Void.VoidSingularityBoundary
 import Gnosis.Void.VoidWalking
 import Gnosis.WallEnabledProofs

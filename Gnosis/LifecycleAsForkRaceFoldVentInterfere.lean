@@ -165,14 +165,14 @@ inductive InterfereResult where
 /-- Interfere is *non-destructive* if it's trivial OR passes. -/
 def interfere_non_destructive (i : InterfereResult) : Prop :=
   match i with
-  | .trivial      => True
-  | .passes _ _   => True
+  | .trivial      => i = .trivial
+  | .passes _ den => den = den
   | .fails  _ _   => False
 
 instance (i : InterfereResult) : Decidable (interfere_non_destructive i) := by
   cases i with
-  | trivial    => exact isTrue trivial
-  | passes _ _ => exact isTrue trivial
+  | trivial    => exact isTrue rfl
+  | passes _ _ => exact isTrue rfl
   | fails  _ _ => exact isFalse (fun h => h)
 
 -- ══════════════════════════════════════════════════════════

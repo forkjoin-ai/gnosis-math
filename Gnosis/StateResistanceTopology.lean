@@ -1,11 +1,4 @@
 import Init
-import Gnosis.GallWaspTestimony
-import Gnosis.DeviationDetailer
-import Gnosis.MechanizedTestimony
-import Gnosis.ClinamenReduction
-import Gnosis.TaoNaming
-import Gnosis.LayerTest
-import Gnosis.CreationSequence
 
 namespace Gnosis.StateResistance
 

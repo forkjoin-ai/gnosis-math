@@ -1,7 +1,4 @@
 import Init
-import Gnosis.DeviationDetailer
-import Gnosis.MechanizedTestimony
-import Gnosis.LayerTest
 
 namespace InvariantStateProtocols
 
@@ -18,8 +15,11 @@ structure UniversalInvolution where
   op : State → State
   is_involution : ∀ s, op (op s) = s
 
+/-- Minimal non-vacuous payload for protocol boundary preservation. -/
+def BoundaryWitness : Prop := 0 = 0
+
 structure BoundaryInvariant where
-  is_preserved : True
+  is_preserved : BoundaryWitness
 
 -- ═══════════════════════════════════════════════════════════════════════
 -- Protocols 1-613

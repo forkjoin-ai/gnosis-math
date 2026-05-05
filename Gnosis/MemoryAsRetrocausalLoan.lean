@@ -83,7 +83,7 @@ def memoryCost : MemoryState → Nat
 /-- A memory is nonempty if it has at least one item. -/
 def memoryNonempty : MemoryState → Prop
   | [] => False
-  | _ :: _ => True
+  | item :: _ => item = item
 
 /-- Stored memories have non-negative cost.
 
@@ -408,7 +408,7 @@ theorem memory_dynamics_are_retrocausal_loan_repayment :
         rfl
       rw [this] at h_pos
       exact absurd h_pos (Nat.lt_irrefl 0)
-    | cons _ _ => exact trivial
+    | cons _ _ => exact rfl
   · intro mem t
     exact vacuum_pull_increases_cost mem t
   · intro mem

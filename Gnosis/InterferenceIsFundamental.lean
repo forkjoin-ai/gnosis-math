@@ -198,7 +198,7 @@ def FifthForceCompatibility : Prop :=
     ∃ (interference_op : BuleyUnit → BuleyUnit → BuleyUnit),
       interference_op = constructive_interference) ∧
   (-- Fundamentality: irreducible at all scales (compatibility witness)
-    ∀ (_b : BuleyUnit), True)
+    ∀ (b : BuleyUnit), ∃ (n : Nat), n = buleyUnitScore b)
 
 /-- Stronger fifth-force claim: finite standing-wave machinery, branch
 contact, constructive amplification, destructive cancellation, and operator
@@ -225,7 +225,7 @@ def FifthForceMechanism : Prop :=
       buleyUnitScore a) ∧
   (∃ interference_op : BuleyUnit → BuleyUnit → BuleyUnit,
     interference_op = constructive_interference) ∧
-  (∀ (_b : BuleyUnit), True)
+  (∀ (b : BuleyUnit), ∃ (n : Nat), n = buleyUnitScore b)
 
 /-- Stronger mechanism theorem: the fifth-force claim is witnessed by the
 actual finite interference machinery, not only by vacuous structure.
@@ -241,7 +241,7 @@ theorem fifth_force_has_standing_wave_mechanism :
     constructive_amplifies,
     destructive_cancels,
     interference_is_independent_force,
-    (fun _b => trivial)⟩
+    (fun b => ⟨buleyUnitScore b, rfl⟩)⟩
 
 /-- The Fifth Fundamental Force is INTERFERENCE.
 

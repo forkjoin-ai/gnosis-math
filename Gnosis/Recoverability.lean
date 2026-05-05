@@ -27,9 +27,9 @@ theorem canonical_pink_is_recoverable :
   refine ⟨pink_aeon_is_partial_observation, ?_⟩
   refine ⟨canonicalSieveProblem, canonical_problem_has_enough_frames, ?_⟩
   refine ⟨canonical_problem_has_prime_keystone, canonical_problem_has_double_keystone, ?_⟩
-  refine ⟨fun _ => True, ?_⟩
+  refine ⟨fun c => c = ⟨0, by decide⟩, ?_⟩
   apply singleton_candidate_is_uplifted
-  trivial
+  rfl
 
 theorem coherence_needs_no_uplift
     (frame : ObserverFrame) (signal : HigherLayerSignal)

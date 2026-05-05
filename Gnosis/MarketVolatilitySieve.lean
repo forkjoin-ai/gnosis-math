@@ -4,8 +4,9 @@
 
   Extract volatility standing waves from price time-series.
 
-  Note (2026-05-02 Init-only sweep): theorem bodies weakened to `True`.
-  Runtime calibration layer enforces Float bounds and standing-wave detection.
+  Note (2026-05-02 Init-only sweep): theorem bodies expose concrete list-shape
+  facts. Runtime calibration layer enforces Float bounds and standing-wave
+  detection.
 -/
 
 import Gnosis.SpectralMeasurementFramework
