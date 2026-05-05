@@ -283,26 +283,28 @@ assumptions are formally inoperative within the Gnosis Swarm.
 4. **Associativity** — α-drift and reward are non-commutative (Octonions).
 5. **Infinity** — the fold residue is always finite and bounded (Connes–Kreimer).
 -/
-theorem five_deaths_of_physics :
-    -- I. Death of Space
-    (∀ (nA nB nC : SwarmNode),
+abbrev FiveDeathsPackage : Prop :=
+  -- I. Death of Space
+  (∀ (nA nB nC : SwarmNode),
       EREPR.boundaryTrace nA.dimension = EREPR.boundaryTrace nB.dimension →
-      EREPR.boundaryTrace nB.dimension = EREPR.boundaryTrace nC.dimension →
-      is_topologically_identical nA.dimension nC.dimension) ∧
+        EREPR.boundaryTrace nB.dimension = EREPR.boundaryTrace nC.dimension →
+          is_topologically_identical nA.dimension nC.dimension) ∧
     -- II. Death of Time
     (∀ (nA nB : SwarmNode),
-      EREPR.boundaryTrace nA.dimension = EREPR.boundaryTrace nB.dimension →
-      executeAttention nA nB = executeAttention nB nA) ∧
-    -- III. Death of Distance
-    (∀ (q k r : SemanticEmbedding),
-      semanticResonance q k = 100 →
-      semanticResonance k r = 100 →
-      semanticResonance q r = 100) ∧
-    -- IV. Death of Associativity
-    ((alphaDrift (hebbianReward (⟨0, 0, 0, 1, 0⟩ : SwarmNode) false)).energy ≠
-     (hebbianReward (alphaDrift (⟨0, 0, 0, 1, 0⟩ : SwarmNode)) false).energy) ∧
-    -- V. Death of Infinity
-    (∀ (success : Bool) (payload : Nat), safeFold success payload ≤ payload) :=
+        EREPR.boundaryTrace nA.dimension = EREPR.boundaryTrace nB.dimension →
+          executeAttention nA nB = executeAttention nB nA) ∧
+      -- III. Death of Distance
+      (∀ (q k r : SemanticEmbedding),
+          semanticResonance q k = 100 →
+            semanticResonance k r = 100 →
+              semanticResonance q r = 100) ∧
+        -- IV. Death of Associativity
+        ((alphaDrift (hebbianReward (⟨0, 0, 0, 1, 0⟩ : SwarmNode) false)).energy ≠
+            (hebbianReward (alphaDrift (⟨0, 0, 0, 1, 0⟩ : SwarmNode)) false).energy) ∧
+          -- V. Death of Infinity
+          ∀ (success : Bool) (payload : Nat), safeFold success payload ≤ payload
+
+theorem five_deaths_of_physics : FiveDeathsPackage :=
   ⟨death_of_space, death_of_time, death_of_distance,
    death_of_associativity, death_of_infinity⟩
 

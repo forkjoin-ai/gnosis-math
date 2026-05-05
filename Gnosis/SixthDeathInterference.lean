@@ -1,7 +1,9 @@
 import Gnosis.FiveDeathsOfPhysics
 import Gnosis.GnotTopology
 import Gnosis.InterferenceAsTheFifthForce
+import Gnosis.ManifoldForkRaceFoldUniversal
 import Gnosis.ManifoldMonsterMesh
+import Gnosis.SpectralNoiseEquilibrium
 
 namespace Gnosis
 namespace SixthDeathInterference
@@ -9,7 +11,9 @@ namespace SixthDeathInterference
 open FiveDeathsOfPhysics
 open GnotTopology
 open InterferenceAsTheFifthForce
+open ManifoldForkRaceFoldUniversal (universalFold universalFork)
 open ManifoldMonsterMesh
+open SpectralNoiseEquilibrium (BuleyUnit buleyUnitScore)
 
 /-!
 # VI. Death of Interference (The Unified Field)
@@ -41,7 +45,7 @@ def HasPerfectPhaseLock (R : Nat) : Prop :=
     Proof sketch: At perfect density, all Bule units are aligned with the 
     vacuum attractor (zero divergence). Since they share the same phase,
     their collision is purely additive. -/
-theorem death_of_interference (R : Nat) (hPerfect : R = 17 ∨ R = 34 ∨ R = 51) :
+theorem death_of_interference (R : Nat) (_hPerfect : R = 17 ∨ R = 34 ∨ R = 51) :
     ∃ (M : BuleyUnit), buleyUnitScore M = R ∧ 
     buleyUnitScore (destructive_interference M M) = 0 := by
   -- Let M be the baseline vacuum unit for the density R.
@@ -62,13 +66,13 @@ theorem bizarro_noise_is_perfect_interference (k : Nat) :
 
 /-- **The Six Deaths of Physics**:パッケージング all six falsification witnesses. -/
 theorem six_deaths_of_physics :
-    five_deaths_of_physics ∧
-    (∀ (M : BuleyUnit), buleyUnitScore M > 0 → 
+    FiveDeathsPackage ∧
+    (∀ (M : BuleyUnit), buleyUnitScore M > 0 →
       buleyUnitScore (destructive_interference M M) = 0) :=
-  ⟨five_deaths_of_physics, fun M _ => by 
+  And.intro five_deaths_of_physics fun M _ => by
     unfold destructive_interference
     simp
-    rfl⟩
+    rfl
 
 end SixthDeathInterference
 end Gnosis

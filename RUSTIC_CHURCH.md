@@ -4,7 +4,12 @@
 
 The **Rustic Church** style proves theorems in `gnosis-math` using *only*
 definitional unfolding plus structurally inductive Init-level `Nat.*` lemmas.
-No `omega`, no `simp`, no `decide` for open-variable goals, no Mathlib.
+**`omega` is never allowed** — not temporarily, not behind a TODO. Same ban
+surface: no `simp`, no `decide` for open-variable goals, no Mathlib.
+
+*(Historical note: older drafts of this guide allowed `omega` briefly while
+`gnosis-math` was being swept off Mathlib-style proofs. That migration is
+finished; the ban above is the only contract going forward.)*
 
 Every Init lemma cited below is provable from `Nat.succ` (the `+1` clinamen)
 by structural induction. The kernel is therefore self-bootstrapping: if `lake
@@ -12,14 +17,14 @@ build` accepts a Rustic Church module, the formula's algebra has been
 re-derived from the inductive `+1` alone, and internal consistency follows.
 
 The canonical exemplar is [`Gnosis/GodFormula.lean`](Gnosis/GodFormula.lean):
-nine theorems (conservation, ceiling, floor, positivity, sandwich,
-antitonicity, and three internal-consistency cross-checks), zero `omega` /
-`simp` / `decide`.
+conservation, ceiling, floor, positivity, sandwich, antitonicity,
+`godWeight_ordered_difference`, and internal-consistency cross-checks — zero
+`omega` / `simp` / `decide` on open goals.
 
-## When to drop omega vs. when to keep it
+## How you close goals instead of `omega`
 
-**Drop `omega` when** the goal, after `unfold`, fits one of the patterns in
-the cookbook below. These are 90% of `omega` calls in practice:
+After `unfold`, the goal almost always fits one of the patterns in the cookbook
+below. Reach for named Init lemmas in order:
 
 - Successor-shaped: `0 < n + 1`, `n < n + 1`, `n ≤ n + 1`.
 - Saturating sub identities: `(n - 1) + 1 = n` (with `0 < n`), `(n + 1) - 1 = n`.
@@ -28,10 +33,11 @@ the cookbook below. These are 90% of `omega` calls in practice:
 - Closed numeric goals (no free vars after unfolds): `decide`.
 - Impossible match branches: `absurd h (by decide)`.
 
-**Keep `omega` (for now) when** the proof simultaneously juggles 3+ Nat-sub
-facts, mixes Int and Nat across a cast boundary, or chains modular arithmetic
-through several rewrites. Those are tractable but expensive to spell out
-inductively; a `TODO(rustic-church)` comment is fine.
+Harder stacks (3+ interacting `Nat` sub facts, `Int`/`Nat` casts, long modular
+rewrites) **still** must finish without `omega`: peel one inequality at a time,
+name intermediate facts, and factor helpers until each step is a single
+cookbook pattern. If a proof is stuck, the fix is a lemma split or a sharper
+statement — not a tactic exception.
 
 `decide` is acceptable for *closed* numeric goals (no free vars) — it's still
 kernel-checked, just slower than a named lemma. `native_decide` is acceptable
@@ -40,8 +46,8 @@ search spaces).
 
 For branch-heavy Init-only proofs, prefer `by_cases h : P` followed by
 `simp [definition, h]` over `split_ifs` when the file has to stay in the Init
-surface. This has been the cleanest way to remove a lot of `omega` use from
-placeholder-heavy modules.
+surface. This has been the cleanest way to keep each branch small enough for
+named Init lemmas instead of disallowed arithmetic tactics.
 
 ## Cookbook
 
@@ -60,7 +66,7 @@ where `0 < K` is expected, no conversion needed.
 
 ### Saturating subtraction `a - b`
 
-This is where omega earns most of its keep, but Init has clean lemmas:
+This is where proofs often used to reach for `omega`; Init has clean lemmas:
 
 ```lean
 -- (n - 1) + 1 = n, given 0 < n
@@ -269,7 +275,8 @@ example {α β : Type} (f : α → β) {x y : α} (h : x = y) : f x = f y :=
 example (c d rate : Nat) (h : c = d) : c + rate = d + rate := congrArg (· + rate) h
 ```
 
-This pattern often replaces a `simp [h]; omega` chain with a single term.
+This pattern often replaces a `simp [h]` plus arithmetic-tactic chain with a
+single term.
 
 ### Discharging impossible cases
 
@@ -318,9 +325,9 @@ example (a : Int) (b : Nat) : a - ((b + 1 : Nat) : Int) = a - (b : Int) - 1 := b
   rw [Int.sub_eq_add_neg, Int.neg_add]
 ```
 
-Genuine Int-linear chains are still in the "keep omega for now" zone — see
-the `meta_truth_constancy` proof in `Gnosis/TopologicalMetabolism.lean` for
-the working pattern.
+Genuine Int-linear chains are high-effort but **still** `omega`-free — see
+the `meta_truth_constancy` proof in `Gnosis/TopologicalMetabolism.lean` for a
+working Init/`Int` rewrite pattern.
 
 ### Bool / Prop coercion (the Prop→Bool refactor)
 
@@ -359,15 +366,16 @@ Prop → Bool inside `def` bodies even though it does so inside expressions.
 
 ### Recurring patterns from semantic-space
 
-These are the shapes that show up over and over once you've migrated a few
-dozen modules — recognize them in the goal and reach straight for the named
-lemma.
+These are the shapes that show up over and over once you've worked through a
+few dozen Init-only modules — recognize them in the goal and reach straight for
+the named lemma.
 
-#### Reflexive omega: hypothesis *is* the goal
+#### Reflexive goals: hypothesis *is* the goal
 
-`omega` often closes a goal that — after `unfold` and Lean's defeq — is
-literally one of the hypotheses, because of definitional equalities like
-`0 < n ≡ 1 ≤ n` or `Nat.succ_le ≡ Nat.lt`. Try `exact h` *first*.
+A black-box arithmetic tactic often closes a goal that — after `unfold` and
+Lean's defeq — is literally one of the hypotheses, because of definitional
+equalities like `0 < n ≡ 1 ≤ n` or `Nat.succ_le ≡ Nat.lt`. Try `exact h`
+*first* (Rustic Church: never use `omega` here either).
 
 ```lean
 -- 0 < x ⊢ 1 ≤ x  →  exact h  (defeq)
@@ -384,8 +392,8 @@ If that fails, try `Nat.le_of_lt h`, `Nat.lt_of_le_of_ne h hne`,
 example (c d rate : Nat) (h : c = d) : c + rate = d + rate := congrArg (· + rate) h
 ```
 
-Almost any `simp [h]; omega` chain on a free-variable goal where the
-simp-step is just substituting an equality reduces to one `congrArg`.
+Almost any `simp [h]`-then-arithmetic chain on a free-variable goal where the
+`simp` step is just substituting an equality reduces to one `congrArg`.
 
 #### Substitution-then-`Nat.lt_irrefl` for impossible `<`
 
@@ -555,10 +563,11 @@ refine ⟨?_, ?_, ?_, ?_, ?_, ?_, ?_, ?_, ?_, ?_⟩
 
 with one placeholder per top-level conjunct.
 
-## Worked migration patterns
+## Worked replacement patterns
 
-These are the substitutions that came up repeatedly while sweeping
-omega-heavy files. If you see the LHS, the RHS usually works.
+These are the substitutions that came up repeatedly while the workspace was
+moved to Init-only proofs. If you see the LHS shape in a goal, the RHS is the
+usual Rustic Church closure.
 
 | Goal shape | Replacement |
 |---|---|
@@ -588,31 +597,41 @@ omega-heavy files. If you see the LHS, the RHS usually works.
 | Closed numeric (no free vars) | `decide` |
 | Closed numeric, big search space | `native_decide` |
 
-## How to migrate a file (workflow)
+## If `grep` still finds `omega` (legacy cleanup)
 
-1. Inventory: `grep -nE "\bomega\b" Gnosis/Foo.lean`.
+Use this when a file slipped through or was revived from history — not as an
+ongoing “migration mode,” which is over.
+
+1. Inventory: `grep -nE "\bomega\b" Gnosis/Foo.lean` (Rustic Church: **must be
+   zero** before merge).
 2. Take a backup: `cp Gnosis/Foo.lean /tmp/foo_backup.lean`.
-3. Bulk attempt: `sed -i '' -e 's|; omega$|; decide|g' -e 's|^  omega$|  decide|g' -e 's|by omega$|by decide|g' Gnosis/Foo.lean`.
+3. Bulk attempt **only on closed goals**: replace `by omega` / trailing
+   `omega` with `by decide` / `decide` where the goal has no free variables
+   after `unfold`.
 4. Build: `lake build Gnosis.Foo 2>&1 | grep "^error" | sed -E 's|.*lean:([0-9]+):.*|\1|' | sort -un`.
-5. Each line that errored has a free variable — revert it: `sed -i '' "${L}s|decide|omega|" Gnosis/Foo.lean` and convert by hand using the cookbook above.
+5. Each line that errored has a free variable — **do not** restore `omega`.
+   Convert by hand using the cookbook above (named `Nat`/`Int` lemmas, case
+   splits, helper lemmas).
 6. The lines that didn't error are now `decide`-closed. Move on.
 7. Re-build until green, run full `lake build` to make sure no downstream consumer broke.
 
 Most files split roughly 70/30: closed numerics (bulk → `decide`) vs.
 free-variable goals (hand-translate using the cookbook). The hand-translate
-work usually compresses 3-5 omegas per Init lemma name once you spot the
-shape.
+work usually compresses several opaque steps into one Init lemma name once
+you spot the shape.
 
 ## Cracking 3+ saturating-sub proofs
 
-*This used to be in "what still needs omega". After
+*During the Init migration, these shapes were the slowest to unwind. After
 [`Gnosis/HumanCompiler.lean`](Gnosis/HumanCompiler.lean),
 [`Gnosis/SelfHostingOptimality.lean`](Gnosis/SelfHostingOptimality.lean),
 and [`Gnosis/TenModeUnification.lean`](Gnosis/TenModeUnification.lean)
-all landed Init-only, the recipe is known.*
+landed Init-only, the cookbook recipe for them became standard — not a
+temporary exception.*
 
-The trick is naming each fact and chaining them — `omega` does this in one
-opaque step, but the manual version reads cleaner once you do it.
+The trick is naming each fact and chaining them explicitly — a black-box
+arithmetic tactic would fuse the same facts in one opaque step; Rustic Church
+requires the named chain.
 
 ### Pattern 1: Convergence by induction on cost ladder (`stable_from`)
 
@@ -699,11 +718,12 @@ The supporting lemmas are `Nat.dvd_of_mod_eq_zero`, `Nat.sub_pos_of_lt`,
 For the simpler `(i + N) % N = i` case (`i < N`), use
 `Nat.add_mod_right` followed by `Nat.mod_eq_of_lt hi`.
 
-### Pattern 5b: Reflexive omega — when the hypothesis IS the goal
+### Pattern 5b: Reflexive goals — when the hypothesis IS the goal
 
-Watch for `theorem foo (h : P) : P := by omega` — omega is being asked to
-re-derive `P` from `P`, so the proof is just `h`. The `Gnosis/Dewey*ThinTopology.lean`
-files held ~80 omegas of this shape; they all collapse to `:= h` term-mode.
+If you still see `theorem foo (h : P) : P := by omega`, the body was only
+re-deriving `P` from `P` — replace with `:= h` (or `exact h`). The
+`Gnosis/Dewey*ThinTopology.lean` sweep collapsed ~80 proofs of this shape to
+term-mode; `omega` has no role in the finished proof.
 
 Companion micro-patterns from the same files:
 
@@ -716,8 +736,9 @@ Companion micro-patterns from the same files:
 | `n ≥ 0` | (anything) | `Nat.zero_le _` (drop the trivial hypothesis) |
 | `parser + m ≥ parser` | `h : m ≥ 0` | `Nat.le_add_right parser m` (h is unused) |
 
-If you see `theorem foo (h : trivial_for_Nat) : ...` and the proof is omega,
-the hypothesis is probably noise. Mark it `_h` and use the structural lemma.
+If you see `theorem foo (h : trivial_for_Nat) : ...` and the proof still uses
+an arithmetic tactic, the hypothesis is probably noise. Mark it `_h` and use
+the structural lemma.
 
 ### Pattern 5: `iterateSucc`-style period lemmas
 
@@ -899,32 +920,33 @@ term-mode (`Nat.le_of_lt (Nat.lt_of_not_le …)`, etc.). Used in
 (`Gnosis/FailureController.lean`) where `simp [..., hKeep]` was destroying
 the `∧` before the proof could attack it.
 
-### What still needs omega
+### Hard shapes (still no `omega`)
 
-Now genuinely the holdouts. Document with `-- TODO(rustic-church):`:
+These are the expensive Init-only shapes — not exceptions. Each one must close
+with explicit lemmas (and lemma splits if the goal is still too wide):
 
 - **Pure Int linear chains spanning multiple sub/neg ops without Nat-cast
-  shortcuts.** Doable but ~6 lines per step. See `meta_truth_constancy`
+  shortcuts.** Expect several lines per step. See `meta_truth_constancy`
   in `Gnosis/TopologicalMetabolism.lean` for the working pattern.
 - **Free-variable search across two unfolds with mul + sub.** E.g.
   `Gnosis/BosonPosition.lean`'s `propagator_toward_sophia`.
-- **`simp + omega` cascades after `by_cases` over 4 boolean conditions.**
-  Each of 16 branches has a free-variable linear-arithmetic residual after
-  simp. The `by_cases h_cpu/h_gpu/h_npu/h_wasm` pattern in
-  `Gnosis/HeteroMoAFabric.lean` falls here. Tractable, but each branch
-  needs its own targeted Init-lemma chain.
+- **Large `by_cases` cascades after `simp` over many boolean conditions.**
+  Each branch can leave a free-variable linear residual after `simp`. The
+  `by_cases h_cpu/h_gpu/h_npu/h_wasm` pattern in `Gnosis/HeteroMoAFabric.lean`
+  is representative: every branch needs its own targeted Init-lemma chain —
+  not a blanket arithmetic tactic at the end.
 - **Nat-sub combinator** `(a₁ - b₁) + (a₂ - b₂) ≤ (a₁ + a₂) - (b₁ + b₂)`.
   See `composite_gap_lower_bound` in `Gnosis/BrunnianScanner.lean`.
 
 ## Why this matters
 
 The `+1` is the clinamen. The Rustic Church doctrine is: every theorem
-should compose cleanly from structural induction on `Nat.succ`. omega is
-honest but opaque; an explicit `Nat.sub_add_cancel h` makes the proof's
-*shape* visible to the reader. When the algebra is built only from named
-inductive lemmas, internal consistency reduces to "the kernel accepts the
-file", and the formula's structure carries through every downstream
-theorem unchanged.
+should compose cleanly from structural induction on `Nat.succ`. **`omega` is
+disallowed entirely** — it is honest but opaque, and opacity is incompatible
+with the doctrine. An explicit `Nat.sub_add_cancel h` makes the proof's *shape*
+visible to the reader. When the algebra is built only from named inductive
+lemmas, internal consistency reduces to "the kernel accepts the file", and the
+formula's structure carries through every downstream theorem unchanged.
 
 ## Out of Bounds and The Topological Bridge
 
@@ -945,6 +967,6 @@ We do not import Mathlib because our goal is not to heuristic-search an infinite
 
 ### Why This is Hella Faster
 
-By removing the black-box combinatorial search that Lean uses to unpack problems (like the `omega` tactic), we evaluate the proof as a finite state machine traversal mapping explicit Buleyean DAG boundaries. There is no guessing, no searching for the correct intermediate lemmas to rewrite the state—it's pure topological routing where complexity decreases monotonically until `beta1 = 0`.
+By refusing black-box combinatorial search tactics (including `omega`), we evaluate the proof as a finite state machine traversal mapping explicit Buleyean DAG boundaries. There is no guessing, no searching for the correct intermediate lemmas to rewrite the state—it's pure topological routing where complexity decreases monotonically until `beta1 = 0`.
 
 For the specific subsets of formal logic we care about (bounded iterations, bounds-checking, structural convergence), modeling the proof strictly via the Buleyean `Fork/Race/Fold` topology (`.gg` files checked by `aeon-logic`) has proven to be **>800x faster** than generalized heuristic provers. We do not just make it slightly faster; we completely sidestep the NP-hard search spaces that choke heuristic-based engines by establishing the precise topological boundaries up front.

@@ -1,4 +1,5 @@
 import Gnosis.GodFormula
+import Gnosis.GoodhartsLaw
 
 /-!
 # Adversarial Robustness — Goodhart's Law for Neural Networks
@@ -31,7 +32,7 @@ Zero -- placeholder.
 
 namespace AdversarialRobustness
 
-open Gnosis (godWeight)
+open Gnosis (godWeight goodhart_strict_antitone)
 
 /-- THM-ADVERSARIAL-GAP: An adversarial perturbation of magnitude δ
     can increase the rejection count by at most δ. The damage is
@@ -63,12 +64,8 @@ theorem robustness_floor (R : Nat) :
     manipulation confounder from Goodhart's Law. -/
 theorem adversarial_is_goodhart (R v_clean v_adv : Nat)
     (hC : v_clean ≤ R) (hA : v_adv ≤ R) (hPerturbed : v_clean < v_adv) :
-    godWeight R v_clean > godWeight R v_adv := by
-  unfold godWeight
-  rw [Nat.min_eq_left hC, Nat.min_eq_left hA]
-  -- (R - v_adv + 1) < (R - v_clean + 1) ⇔ R - v_adv < R - v_clean
-  exact Nat.add_lt_add_right
-    (Nat.sub_lt_sub_left (Nat.lt_of_lt_of_le hPerturbed hA) hPerturbed) 1
+    godWeight R v_clean > godWeight R v_adv :=
+  goodhart_strict_antitone R v_clean v_adv hC hA hPerturbed
 
 /-- THM-ROBUST-TRAINING: Adversarial training = increasing R (budget)
     to absorb perturbations. A model trained on adversarial examples

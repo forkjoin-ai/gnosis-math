@@ -66,6 +66,28 @@ theorem perfect_clause_weight (c : GnotClause) (h : IsPerfectClause c) :
   dsimp [clause_syllables]
   rw [h.1, h.2.1, h.2.2.1, h.2.2.2.1, h.2.2.2.2]
 
+/-! ### Clause-list fold (shared by perfect density and sandwich bookkeeping) -/
+
+private theorem foldl_clause_sum_acc (L : List GnotClause) (acc : Nat)
+    (h₃ : ∀ c ∈ L, clause_syllables c = 3) :
+    L.foldl (fun a c => a + clause_syllables c) acc = acc + 3 * L.length := by
+  induction L generalizing acc with
+  | nil =>
+    simp [List.foldl, List.length, Nat.mul_zero, Nat.add_zero]
+  | cons x xs ih =>
+    have hx : clause_syllables x = 3 :=
+      h₃ x (List.Mem.head _)
+    have hrest : ∀ c ∈ xs, clause_syllables c = 3 := fun c hc =>
+      h₃ c (List.Mem.tail _ hc)
+    simp [List.foldl, hx]
+    rw [ih (acc + 3) hrest, Nat.mul_succ 3 xs.length, Nat.add_assoc acc 3 (3 * xs.length),
+      Nat.add_comm 3 (3 * xs.length)]
+
+theorem foldl_clause_sum_eq_three_mul_length (L : List GnotClause)
+    (h₃ : ∀ c ∈ L, clause_syllables c = 3) :
+    L.foldl (fun acc c => acc + clause_syllables c) 0 = 3 * L.length := by
+  simpa [Nat.zero_add] using foldl_clause_sum_acc L 0 h₃
+
 -- A Gnot Stanza that perfectly matches a Triton topology
 def IsPerfectTriton (b : GnotBlock) : Prop :=
   block_fold b = 3 ∧ -- Triton.parts
@@ -107,19 +129,10 @@ theorem perfect_hexon_is_dense (b : GnotBlock) (h : IsPerfectHexon b) :
     block_syllables b = 34 := by
   dsimp [block_syllables]
   rw [h.2.1, h.2.2.1, h.2.2.2.1, h.2.2.2.2.1]
-  have h_len : b.clauses.length = 6 := h.1
-  match eq : b.clauses with
-  | [c1, c2, c3, c4, c5, c6] =>
-    have h_ci : ∀ c ∈ [c1, c2, c3, c4, c5, c6], clause_syllables c = 3 := fun c hc => 
-      perfect_clause_weight c (h.2.2.2.2.2 c (by rw [eq]; exact hc))
-    have w1 : clause_syllables c1 = 3 := h_ci c1 (by simp)
-    have w2 : clause_syllables c2 = 3 := h_ci c2 (by simp)
-    have w3 : clause_syllables c3 = 3 := h_ci c3 (by simp)
-    have w4 : clause_syllables c4 = 3 := h_ci c4 (by simp)
-    have w5 : clause_syllables c5 = 3 := h_ci c5 (by simp)
-    have w6 : clause_syllables c6 = 3 := h_ci c6 (by simp)
-    simp only [List.foldl, w1, w2, w3, w4, w5, w6, Nat.zero_add, Nat.add_assoc]
-  | _ => rw [eq] at h_len; injection h_len -- Length mismatch
+  have h_ci : ∀ c ∈ b.clauses, clause_syllables c = 3 :=
+    fun c hc => perfect_clause_weight c (h.2.2.2.2.2 c hc)
+  have hL : b.clauses.length = 6 := by simpa [block_fold] using h.1
+  rw [foldl_clause_sum_eq_three_mul_length b.clauses h_ci, hL]
 
 -- A Gnot Stanza that perfectly matches an Enneon topology
 def IsPerfectEnneon (b : GnotBlock) : Prop :=
@@ -134,22 +147,10 @@ theorem perfect_enneon_is_dense (b : GnotBlock) (h : IsPerfectEnneon b) :
     block_syllables b = 51 := by
   dsimp [block_syllables]
   rw [h.2.1, h.2.2.1, h.2.2.2.1, h.2.2.2.2.1]
-  have h_len : b.clauses.length = 9 := h.1
-  match eq : b.clauses with
-  | [c1, c2, c3, c4, c5, c6, c7, c8, c9] =>
-    have h_ci : ∀ c ∈ [c1, c2, c3, c4, c5, c6, c7, c8, c9], clause_syllables c = 3 := fun c hc => 
-      perfect_clause_weight c (h.2.2.2.2.2 c (by rw [eq]; exact hc))
-    have w1 : clause_syllables c1 = 3 := h_ci c1 (by simp)
-    have w2 : clause_syllables c2 = 3 := h_ci c2 (by simp)
-    have w3 : clause_syllables c3 = 3 := h_ci c3 (by simp)
-    have w4 : clause_syllables c4 = 3 := h_ci c4 (by simp)
-    have w5 : clause_syllables c5 = 3 := h_ci c5 (by simp)
-    have w6 : clause_syllables c6 = 3 := h_ci c6 (by simp)
-    have w7 : clause_syllables c7 = 3 := h_ci c7 (by simp)
-    have w8 : clause_syllables c8 = 3 := h_ci c8 (by simp)
-    have w9 : clause_syllables c9 = 3 := h_ci c9 (by simp)
-    simp only [List.foldl, w1, w2, w3, w4, w5, w6, w7, w8, w9, Nat.zero_add, Nat.add_assoc]
-  | _ => rw [eq] at h_len; injection h_len
+  have h_ci : ∀ c ∈ b.clauses, clause_syllables c = 3 :=
+    fun c hc => perfect_clause_weight c (h.2.2.2.2.2 c hc)
+  have hL : b.clauses.length = 9 := by simpa [block_fold] using h.1
+  rw [foldl_clause_sum_eq_three_mul_length b.clauses h_ci, hL]
 
 -- ==========================================
 -- Topology Collapse & Friction Formalization
@@ -230,56 +231,121 @@ theorem clause_over_3_has_friction (c : GnotClause)
     have heq : clause_syllables c = 3 := by dsimp [clause_syllables]; rw [hs1, hv1, ha, hq, ht1]
     rw [heq] at h_weight; exact absurd h_weight (Nat.lt_irrefl _)
 
+private theorem Nat_list_foldl_add_eq_add_foldl_zero (xs : List Nat) (x : Nat) :
+    xs.foldl (·+·) x = x + xs.foldl (·+·) 0 := by
+  induction xs generalizing x with
+  | nil =>
+    simp [List.foldl, Nat.add_zero]
+  | cons y ys ih =>
+    simp [List.foldl]
+    rw [ih (x + y), ih y]
+    exact Nat.add_assoc x y (ys.foldl (·+·) 0)
+
+private theorem foldl_add_clause_eq_map_sum_acc (L : List GnotClause) (acc : Nat) :
+    L.foldl (fun a c => a + clause_syllables c) acc =
+      (L.map clause_syllables).foldl (·+·) acc := by
+  induction L generalizing acc with
+  | nil =>
+    simp [List.foldl, List.map]
+  | cons x xs ih =>
+    simp [List.foldl, List.map]
+    exact ih (acc + clause_syllables x)
+
+theorem foldl_add_clause_eq_map_sum (L : List GnotClause) :
+    L.foldl (fun acc c => acc + clause_syllables c) 0 =
+      (L.map clause_syllables).foldl (·+·) 0 :=
+  foldl_add_clause_eq_map_sum_acc L 0
+
+private theorem exists_lt_three_of_sum_lt_mul (L : List Nat)
+    (hsum : L.foldl (·+·) 0 < 3 * L.length) : ∃ x ∈ L, x < 3 := by
+  induction L with
+  | nil =>
+    simp [List.foldl, Nat.mul_zero] at hsum
+  | cons x xs ih =>
+    simp [List.foldl, Nat.mul_succ] at hsum
+    cases Classical.em (x < 3) with
+    | inl hx => exact ⟨x, List.Mem.head _, hx⟩
+    | inr hnx =>
+      have hx3 : 3 ≤ x := by
+        match x with
+        | 0 => exact absurd (hnx (by decide : (0 : Nat) < 3)) id
+        | 1 => exact absurd (hnx (by decide : (1 : Nat) < 3)) id
+        | 2 => exact absurd (hnx (by decide : (2 : Nat) < 3)) id
+        | n + 3 => exact Nat.le_add_left 3 n
+      have hsum' : x + xs.foldl (·+·) 0 < 3 + 3 * xs.length := by
+        simpa [Nat_list_foldl_add_eq_add_foldl_zero xs x, Nat.add_comm (3 * xs.length)] using hsum
+      have hlt3 : 3 + xs.foldl (·+·) 0 < 3 + 3 * xs.length :=
+        Nat.lt_of_le_of_lt (Nat.add_le_add hx3 (Nat.le_refl (xs.foldl (·+·) 0))) hsum'
+      have hxs : xs.foldl (·+·) 0 < 3 * xs.length :=
+        Nat.lt_of_add_lt_add_left hlt3
+      have ⟨y, hy, hy3⟩ := ih hxs
+      exact ⟨y, List.Mem.tail _ hy, hy3⟩
+
 private theorem sum_lt_parts (L : List Nat) (n : Nat) (h : L.length = n) (h_sum : L.foldl (·+·) 0 < 3 * n) :
     ∃ x ∈ L, x < 3 := by
-  match n, L with
-  | 0, [] => simp at h_sum
-  | k + 1, x :: xs =>
-    match Classical.em (x < 3) with
-    | Or.inl hx => exact ⟨x, List.Mem.head _, hx⟩
-    | Or.inr hnx =>
-      have h3 : 3 ≤ x := Nat.le_of_not_lt hnx
-      have h_sum_xs : xs.foldl (·+·) 0 < 3 * k := by
-        simp [List.foldl] at h_sum
-        rw [Nat.mul_succ, Nat.add_comm 3] at h_sum
-        exact Nat.lt_of_add_lt_add_left (Nat.lt_of_le_of_lt (Nat.add_le_add_right h3 _) h_sum)
-      have ⟨x', hx', hw'⟩ := sum_lt_parts xs k (by simp at h; exact h) h_sum_xs
-      exact ⟨x', List.Mem.tail _ hx', hw'⟩
+  subst h
+  exact exists_lt_three_of_sum_lt_mul L h_sum
 
-theorem block_under_ideal_is_collapse (b : GnotBlock) (parts ideal header : Nat)
+theorem block_under_ideal_is_collapse (b : GnotBlock) (parts ideal : Nat)
+    (hp : parts = 3 ∨ parts = 6 ∨ parts = 9)
     (h_len : b.clauses.length = parts)
     (h_header : HasPerfectHeader b parts)
-    (h_ideal : ideal = header + 3 * parts)
+    (h_ideal :
+      ideal =
+        b.kind_syllables + b.name_syllables + b.params_syllables + b.yields_syllables + 3 * parts)
     (h_weight : block_syllables b < ideal) :
     ∃ c ∈ b.clauses, IsStructurallyCollapsed c := by
   dsimp [block_syllables] at h_weight
   rw [h_ideal] at h_weight
-  match parts with
-  | 3 => 
+  have h_map_fold :
+      (List.map clause_syllables b.clauses).foldl (·+·) 0 =
+        b.clauses.foldl (fun acc c => acc + clause_syllables c) 0 :=
+    (foldl_add_clause_eq_map_sum b.clauses).symm
+  cases hp with
+  | inl hp3 =>
+    subst hp3
     have ⟨h1, h2, h3, h4⟩ := h_header
     rw [h1, h2, h3, h4] at h_weight
-    have h_pigeon : ∃ c ∈ b.clauses, clause_syllables c < 3 := sum_lt_parts (b.clauses.map clause_syllables) 3 (by simp [h_len]) (by
-      simp [List.foldl_map] at h_weight; exact Nat.lt_of_add_lt_add_left h_weight)
-    have ⟨c_val, hc_mem, hc_lt⟩ := h_pigeon
-    have ⟨c, hc_in, hc_eq⟩ := List.mem_map.1 hc_mem
-    exact ⟨c, hc_in, hc_eq ▸ clause_under_3_is_collapsed c hc_lt⟩
-  | 6 => 
-    have ⟨h1, h2, h3, h4⟩ := h_header
-    rw [h1, h2, h3, h4] at h_weight
-    have h_pigeon : ∃ c ∈ b.clauses, clause_syllables c < 3 := sum_lt_parts (b.clauses.map clause_syllables) 6 (by simp [h_len]) (by
-      simp [List.foldl_map] at h_weight; exact Nat.lt_of_add_lt_add_left h_weight)
-    have ⟨c_val, hc_mem, hc_lt⟩ := h_pigeon
-    have ⟨c, hc_in, hc_eq⟩ := List.mem_map.1 hc_mem
-    exact ⟨c, hc_in, hc_eq ▸ clause_under_3_is_collapsed c hc_lt⟩
-  | 9 => 
-    have ⟨h1, h2, h3, h4⟩ := h_header
-    rw [h1, h2, h3, h4] at h_weight
-    have h_pigeon : ∃ c ∈ b.clauses, clause_syllables c < 3 := sum_lt_parts (b.clauses.map clause_syllables) 9 (by simp [h_len]) (by
-      simp [List.foldl_map] at h_weight; exact Nat.lt_of_add_lt_add_left h_weight)
-    have ⟨c_val, hc_mem, hc_lt⟩ := h_pigeon
-    have ⟨c, hc_in, hc_eq⟩ := List.mem_map.1 hc_mem
-    exact ⟨c, hc_in, hc_eq ▸ clause_under_3_is_collapsed c hc_lt⟩
-  | _ => exact absurd h_header (fun h => match h with | _ => by contradiction)
+    have h_sum_lt :
+        (List.map clause_syllables b.clauses).foldl (·+·) 0 < 3 * 3 := by
+      have := Nat.lt_of_add_lt_add_left h_weight
+      rwa [← h_map_fold] at this
+    have h_pigeon :=
+      sum_lt_parts (b.clauses.map clause_syllables) 3 (by simp [List.length_map, h_len])
+        h_sum_lt
+    rcases h_pigeon with ⟨w, hw_mem, hw_lt⟩
+    rcases List.mem_map.mp hw_mem with ⟨c, hc_in, rfl⟩
+    exact ⟨c, hc_in, clause_under_3_is_collapsed c hw_lt⟩
+  | inr hp69 =>
+    cases hp69 with
+    | inl hp6 =>
+      subst hp6
+      have ⟨h1, h2, h3, h4⟩ := h_header
+      rw [h1, h2, h3, h4] at h_weight
+      have h_sum_lt :
+          (List.map clause_syllables b.clauses).foldl (·+·) 0 < 3 * 6 := by
+        have := Nat.lt_of_add_lt_add_left h_weight
+        rwa [← h_map_fold] at this
+      have h_pigeon :=
+        sum_lt_parts (b.clauses.map clause_syllables) 6 (by simp [List.length_map, h_len])
+          h_sum_lt
+      rcases h_pigeon with ⟨w, hw_mem, hw_lt⟩
+      rcases List.mem_map.mp hw_mem with ⟨c, hc_in, rfl⟩
+      exact ⟨c, hc_in, clause_under_3_is_collapsed c hw_lt⟩
+    | inr hp9 =>
+      subst hp9
+      have ⟨h1, h2, h3, h4⟩ := h_header
+      rw [h1, h2, h3, h4] at h_weight
+      have h_sum_lt :
+          (List.map clause_syllables b.clauses).foldl (·+·) 0 < 3 * 9 := by
+        have := Nat.lt_of_add_lt_add_left h_weight
+        rwa [← h_map_fold] at this
+      have h_pigeon :=
+        sum_lt_parts (b.clauses.map clause_syllables) 9 (by simp [List.length_map, h_len])
+          h_sum_lt
+      rcases h_pigeon with ⟨w, hw_mem, hw_lt⟩
+      rcases List.mem_map.mp hw_mem with ⟨c, hc_in, rfl⟩
+      exact ⟨c, hc_in, clause_under_3_is_collapsed c hw_lt⟩
 
 end GnotTopology
 end Gnosis

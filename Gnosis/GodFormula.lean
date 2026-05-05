@@ -75,6 +75,29 @@ theorem godWeight_antitone (R v₁ v₂ : Nat) (h₁ : v₁ ≤ R) (h₂ : v₂ 
   rw [Nat.min_eq_left h₁, Nat.min_eq_left h₂]
   exact Nat.add_le_add_right (Nat.sub_le_sub_left h R) 1
 
+/-- **Ordered weight gap**: along a fixed budget `R`, the drop in God-weight
+    from the lower-rejection side `a` to the higher-rejection side `b` equals
+    exactly the extra rejections `b - a` when `a ≤ b ≤ R`.
+
+    This is the algebraic spine behind VCG-style externality accounting
+    (`MechanismDesign.vcg_externality`) and Goodhart wedge bookkeeping
+    (`Gnosis.GoodhartsLaw`). Init-only: same `Nat.sub_sub` / `Nat.sub_sub_self`
+    chain as the mechanism-design proof. -/
+theorem godWeight_ordered_difference (R a b : Nat)
+    (ha : a ≤ R) (hb : b ≤ R) (hab : a ≤ b) :
+    godWeight R a - godWeight R b = b - a := by
+  unfold godWeight
+  rw [Nat.min_eq_left ha, Nat.min_eq_left hb]
+  rw [Nat.add_sub_add_right]
+  have hAdd : a + (b - a) = b := Nat.add_sub_of_le hab
+  have hKey : R - a - (b - a) = R - b := by
+    rw [Nat.sub_sub, hAdd]
+  rw [← hKey]
+  have hCommAdd : (b - a) + a ≤ R := by
+    rw [Nat.sub_add_cancel hab]; exact hb
+  have hDeltaLe : b - a ≤ R - a := Nat.le_sub_of_add_le hCommAdd
+  exact Nat.sub_sub_self hDeltaLe
+
 /-! ## Internal consistency
 
 These small theorems show that the four base laws above derive each other
