@@ -838,6 +838,7 @@ import Gnosis.SolomonoffInduction
 import Gnosis.SolvableGroupS3
 import Gnosis.SpectralMeasurementFramework
 import Gnosis.SpectralNoiseEquilibrium
+import Gnosis.StructurallyForced
 import Gnosis.TraumaSpectralSieve
 import Gnosis.AnxietySpectralSieve
 import Gnosis.DepressionSpectralSieve
