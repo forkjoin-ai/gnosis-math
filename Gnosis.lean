@@ -179,6 +179,7 @@ import Gnosis.CoarseningThermodynamics
 import Gnosis.CodecRacing
 import Gnosis.CognitiveStateShift
 import Gnosis.CosmologicalEvolutionFromFiveForces
+import Gnosis.CosmologicalGuitarString
 import Gnosis.CollatzOneTwoFourBraid
 import Gnosis.CombinatorialBruteForce
 import Gnosis.CommunityCompositions
@@ -674,6 +675,7 @@ import Gnosis.NestedWallingtonTower
 import Gnosis.NetflixFrontier
 import Gnosis.NoiseLedgerTheorem
 import Gnosis.NoiseTopology
+import Gnosis.NoiseIsObservational
 import Gnosis.NonAbelianBraid
 import Gnosis.NonEmpiricalPrediction
 import Gnosis.NonlinearLyapunov
