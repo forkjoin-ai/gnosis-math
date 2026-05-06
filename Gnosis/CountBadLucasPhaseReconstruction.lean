@@ -201,17 +201,17 @@ theorem countBad_lucas_phase_master :
 
 /-! ## Epistemic status
 
-Under the `VoidArchaeology` classification, this module upgrades the
-`orbitAvoidanceLucas` dig from:
+Under the `VoidArchaeology` classification, this module is the peer
+witness for `dig_orbitAvoidanceLucas`:
 
-  `projections = [10], voidScrapes = [3]` (archaeology-outline, below
-  reconstruction quality bar)
+  `projections = [3, 4, 5, 6, 7, 8, 9, 10, 11, 12]` (phase-lifted
+  positives at every depth in the window) with deliberate scrapes of
+  the naive `+1` form at `voidScrapes = [3, 6, 9, 12]`.
 
-to:
-
-  `projections = [3, 4, 5, 6, 7, 8, 9, 10, 11, 12]` (all phase-lifted
-  positives) with deliberate scrapes of the naive form at
-  `voidScrapes = [3, 6, 9, 12]`.
+That sample satisfies the catalog's reconstruction heuristic
+(≥ 3 projections and ≥ 1 scrape), so the void-archaeology record now
+marks this dig as **outline reconstructed** — still `archaeologyOutline`
+mode (mixed pos/neg), not a proof of the global closed form.
 
 The wall (ring-extension — general `p(n+4) = p(n+2) + 2p(n+1) + p(n)`
 closed form in terms of Lucas would require roots of the quartic

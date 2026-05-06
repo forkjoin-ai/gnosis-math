@@ -31,7 +31,7 @@ etc.) is unreachable. But we can:
   scrapes).
 - Defines `EpistemicMode` and a decidable classification function.
 - Provides a catalog of real digs drawn from modules already in the
-  corpus (`FibLucasExtendedIdentities`, `OrbitAvoidanceLucasProbe`,
+  corpus (`FibLucasExtendedIdentities`, `CountBadLucasPhaseReconstruction`,
   `PellUltrametricConvergents`, `CatalanNumbersIdentity`, etc.).
 - Counts projections, scrapes, and archaeologically-reconstructed digs
   via kernel `decide`.
@@ -115,12 +115,16 @@ def Dig.outlineReconstructed (d : Dig) : Bool :=
 
 /-! ## Catalog — real digs from the corpus -/
 
-/-- From `OrbitAvoidanceLucasProbe`: `countBad_n + 1 = L_n`. One
-projection at n = 10, one scrape at n = 3. Sparse outline. -/
+/-- From `CountBadLucasPhaseReconstruction`: phase-lifted witnesses on
+`traceSeq` vs Lucas at **all** depths `n = 3 .. 12`, plus deliberate
+void scrapes of the naive `+1` form at `n ∈ {3, 6, 9, 12}`. This is
+the catalog encoding of the reconstruction-dense dig (≥ 3 projections
+and ≥ 1 scrape — **outline reconstructed** under the design bar). -/
 def dig_orbitAvoidanceLucas : Dig :=
-  { claim       := "countBad_n + 1 = L_n (cyclic orbit-avoidance matches Lucas)"
-    projections := [10]
-    voidScrapes := [3] }
+  { claim :=
+      "countBad_n vs Lucas (phase-shifted reconstruction; naive +1 form fails on 3ℤ)"
+    projections := [3, 4, 5, 6, 7, 8, 9, 10, 11, 12]
+    voidScrapes := [3, 6, 9, 12] }
 
 /-- From `FibLucasExtendedIdentities`: Fibonacci Cassini
 `F_{n-1} F_{n+1} - F_n^2 = (-1)^n`. Seven projections, no scrape
@@ -246,8 +250,8 @@ theorem scrape_only_count : scrapeOnlyCount = 0 := by decide
 theorem archaeology_outline_count : archaeologyOutlineCount = 4 := by decide
 theorem unprobed_count : unprobedCount = 0 := by decide
 
-theorem total_projections : totalProjections = 35 := by decide
-theorem total_scrapes : totalScrapes = 4 := by decide
+theorem total_projections : totalProjections = 44 := by decide
+theorem total_scrapes : totalScrapes = 7 := by decide
 
 theorem mode_partition_sums :
     projectionOnlyCount + scrapeOnlyCount + archaeologyOutlineCount + unprobedCount
@@ -264,19 +268,21 @@ a positive and a negative witness. -/
 theorem orbitAvoidanceLucas_is_archaeological :
     dig_orbitAvoidanceLucas.mode = EpistemicMode.archaeologyOutline := by decide
 
-/-- The jonesModPPeriod dig reconstructs an outline (≥ 3 projections
-would be needed for full reconstruction, but it has 2 projections + 1
-scrape — "archaeologyOutline" mode, not yet at the reconstruction
-quality bar). -/
+/-- The jonesModPPeriod dig is archaeology-outline (2 projections + 1
+scrape) and **does not** satisfy `outlineReconstructed` until at least
+one more projection depth is added to the catalog record. -/
 theorem jonesModPPeriod_is_outline_not_reconstructed :
     dig_jonesModPPeriod.mode = EpistemicMode.archaeologyOutline
     ∧ dig_jonesModPPeriod.outlineReconstructed = false := by decide
 
 /-- Count of digs that have reached the reconstruction quality bar
-(≥ 3 projections and ≥ 1 scrape). With the current catalog, none of
-the archaeological digs have reached the bar — they all sit at 1-2
-projections. Honest current state. -/
-theorem no_dig_yet_reconstructed : reconstructedCount = 0 := by decide
+(≥ 3 projections and ≥ 1 scrape). With the current catalog, exactly
+the `orbitAvoidanceLucas` dig (synced to `CountBadLucasPhaseReconstruction`)
+meets the bar. -/
+theorem reconstructed_count_eq_one : reconstructedCount = 1 := by decide
+
+theorem orbitAvoidanceLucas_outline_reconstructed :
+    dig_orbitAvoidanceLucas.outlineReconstructed = true := by decide
 
 /-! ## The master witness -/
 
@@ -287,11 +293,11 @@ theorem no_dig_yet_reconstructed : reconstructedCount = 0 := by decide
 - 4 archaeology-outline (both positive and negative witnesses, sketching
   the shape of a wall-blocked claim)
 - 0 scrape-only, 0 unprobed
-- 36 total projections, 4 total scrapes
-- 0 digs at the reconstruction quality bar (≥ 3 proj + ≥ 1 scrape).
-  The four archaeological digs each have exactly 1 or 2 projections.
-  Closing one more projection on `orbitAvoidanceLucas` or
-  `jonesModPPeriod` would push it to reconstructed.
+- 44 total projections, 7 total scrapes
+- 1 dig at the reconstruction quality bar: `orbitAvoidanceLucas`
+  (dense `CountBadLucasPhaseReconstruction` witness). The remaining
+  archaeological sketches (`jonesModPPeriod`, `ramseyR33`, …) still sit
+  below the bar until more `decide`-closed projections land.
 -/
 theorem void_archaeology_master :
     catalog.length = 9
@@ -299,29 +305,34 @@ theorem void_archaeology_master :
     ∧ archaeologyOutlineCount = 4
     ∧ scrapeOnlyCount = 0
     ∧ unprobedCount = 0
-    ∧ totalProjections = 35
-    ∧ totalScrapes = 4
-    ∧ reconstructedCount = 0
+    ∧ totalProjections = 44
+    ∧ totalScrapes = 7
+    ∧ reconstructedCount = 1
     ∧ projectionOnlyCount + scrapeOnlyCount
         + archaeologyOutlineCount + unprobedCount = catalog.length := by
   decide
 
 /-! ## What this suggests for the next moves
 
-Every archaeological dig with only 1 or 2 projections is one
-`decide`-closable theorem away from crossing the reconstruction bar:
+`orbitAvoidanceLucas` **crossed** the reconstruction bar once
+`CountBadLucasPhaseReconstruction` was folded into the catalog record
+(10 projections + 4 scrapes).
 
-- `orbitAvoidanceLucas` — add `countBad_n + 1 = L_n` witnesses at
-  `n = 4, 5, 6, 7` (compute via transfer-matrix trace) to reach 5
-  projections. If some match and some fail, the outline sharpens.
-- `jonesModPPeriod` — add `p = 11, 13` instances. If both hold, the
-  `p = 7` scrape becomes isolated; if they fail, pattern emerges.
-- `ramseyR33` — add `R(3, k)` witnesses for `k = 3, 4, 5` to
-  triangulate the forcing boundary.
+The remaining **one-projection-away** pressure now sits primarily on:
 
-The **prediction**: the first dig to reach the reconstruction bar will
-be `jonesModPPeriod`. Two more `decide`-closable primes would suffice,
-and the scrape at `p = 7` is already anchored.
+- `jonesModPPeriod` — add empirically `decide`-closed bracket-period rows
+  in `JonesModPFermat` at **`p = 11` and `p = 13`** (heavy `LPoly`
+  arithmetic; not yet in-repo). Two more primes would raise
+  `projCount` from 2 to 4 while preserving the anchored `p = 7` scrape.
+- `ramseyR33` — add `R(3, k)`-style finite witnesses for `k = 3, 4, 5`
+  (or equivalent coloring tables) to lift `projCount` toward 3.
+- `dig_dynOrbitForcing` — already outline-shaped; optional extra
+  projections at small `n` if a peer module closes them.
+
+**Prediction (contingent on compute cost):** after the orbit sync,
+`jonesModPPeriod` is the **next** likely first-cross among digs that are
+still sub-bar, **if** `p = 11, 13` instances prove as cheap to kernel-close
+as `p = 3, 5, 7` were.
 -/
 
 end VoidArchaeology
