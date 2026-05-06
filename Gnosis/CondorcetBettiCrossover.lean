@@ -22,12 +22,21 @@ This is the **crossover** to manifold vocabulary already in-repo: tag the obstru
 
 This does **not** import smooth preference manifolds or continuous Chichilnisky maps — only the
 finite skeleton certificate.
+
+## Combinatorial **Δ²** carrier (onwards)
+
+The **2-simplex** has three **0-faces**; its **boundary 1-skeleton** is a triangle with three
+undirected edges. Identifying those corners with `Alt3`, the cyclic Condorcet profile induces a
+**tournament** with **exactly one** strict majority direction per unordered pair — the same
+`(V, E, ω) = (3, 3, 1)` as the abstract skeleton above. No `ℝ²` interior is needed for this count;
+an open-set refinement would be additional structure.
 -/
 
 namespace Gnosis
 namespace CondorcetBettiCrossover
 
-open Ranking (Alt3)
+open Ranking (Alt3 majorityPrefers majority_cycle_0_1 majority_cycle_1_0 majority_cycle_1_2
+  majority_cycle_2_1 majority_cycle_2_0 majority_cycle_0_2)
 open SocialFoldObstruction (MajorityStrict)
 open HomologyOfManifold (HomologyLayer)
 open KnotRopelengthComplexity (BettiSig ropelength)
@@ -43,6 +52,70 @@ def condorcetMajoritySkeletonBeta1 : Nat :=
     condorcetMajoritySkeletonVertices
 
 theorem condorcet_majority_skeleton_beta1_eq_one : condorcetMajoritySkeletonBeta1 = 1 := rfl
+
+/-! ### Combinatorial **Δ²** carrier (boundary = majority undirected support)
+
+Vertices are the three **0-faces** of a combinatorial `2`-simplex; the boundary **1-skeleton** has
+three edges. Counts agree with the Condorcet majority triangle used above. -/
+
+def combinatorialTwoSimplexVertexCount : Nat :=
+  3
+
+def combinatorialTwoSimplexBoundaryEdgeCount : Nat :=
+  3
+
+def combinatorialTwoSimplexComponents : Nat :=
+  1
+
+def combinatorialTwoSimplexBoundaryBeta1 : Nat :=
+  combinatorialTwoSimplexBoundaryEdgeCount + combinatorialTwoSimplexComponents -
+    combinatorialTwoSimplexVertexCount
+
+theorem combinatorial_two_simplex_counts_eq_condorcet_skeleton :
+    combinatorialTwoSimplexVertexCount = condorcetMajoritySkeletonVertices ∧
+      combinatorialTwoSimplexBoundaryEdgeCount = condorcetMajoritySkeletonEdges ∧
+        combinatorialTwoSimplexComponents = condorcetMajoritySkeletonComponents ∧
+          combinatorialTwoSimplexBoundaryBeta1 = condorcetMajoritySkeletonBeta1 :=
+  ⟨rfl, rfl, rfl, rfl⟩
+
+private theorem nat_lt_three (n : Nat) (h : n < 3) : n = 0 ∨ n = 1 ∨ n = 2 := by
+  cases n with
+  | zero => left; rfl
+  | succ n =>
+    cases n with
+    | zero => right; left; rfl
+    | succ n =>
+      cases n with
+      | zero => right; right; rfl
+      | succ n2 =>
+        rw [Nat.succ_lt_succ_iff, Nat.succ_lt_succ_iff, Nat.succ_lt_succ_iff] at h
+        exact absurd h (Nat.not_lt_zero n2)
+
+private theorem fin3_tri (i : Alt3) :
+    i = ⟨0, by decide⟩ ∨ i = ⟨1, by decide⟩ ∨ i = ⟨2, by decide⟩ := by
+  rcases nat_lt_three i.val i.isLt with h0 | h1 | h2
+  · left; exact Fin.ext h0
+  · right; left; exact Fin.ext h1
+  · right; right; exact Fin.ext h2
+
+/--
+On the cyclic profile, for distinct alternatives the strict-majority `Bool` **cannot agree** on
+both orientations: each unordered pair supports **exactly one** direction. Equivalently: the
+underlying undirected graph of strict majority edges is the **triangle** (three edges, one
+component, **β₁ = 1**).
+-/
+theorem majority_prefers_ne_of_ne (a b : Alt3) (hne : a ≠ b) :
+    majorityPrefers a b ≠ majorityPrefers b a := by
+  rcases fin3_tri a with ha0 | ha1 | ha2 <;> rcases fin3_tri b with hb0 | hb1 | hb2
+  · simp [ha0, hb0] at hne
+  · rw [ha0, hb1]; native_decide
+  · rw [ha0, hb2]; native_decide
+  · rw [ha1, hb0]; native_decide
+  · simp [ha1, hb1] at hne
+  · rw [ha1, hb2]; native_decide
+  · rw [ha2, hb0]; native_decide
+  · rw [ha2, hb1]; native_decide
+  · simp [ha2, hb2] at hne
 
 /-- Ledger `BettiSig` clip: one component, one independent 1-cycle. -/
 def condorcetBettiSig : BettiSig :=

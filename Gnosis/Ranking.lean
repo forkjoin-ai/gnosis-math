@@ -135,6 +135,14 @@ theorem majority_cycle_1_2 : majorityPrefers (⟨1, by decide⟩ : Alt3) (⟨2, 
 theorem majority_cycle_2_0 : majorityPrefers (⟨2, by decide⟩ : Alt3) (⟨0, by decide⟩ : Alt3) = true := by
   native_decide
 
+/-- Reverse of `majority_cycle_0_1`: `1` does not beat `0` under strict majority. -/
+theorem majority_cycle_1_0 : majorityPrefers (⟨1, by decide⟩ : Alt3) (⟨0, by decide⟩ : Alt3) = false := by
+  native_decide
+
+/-- Reverse of `majority_cycle_1_2`. -/
+theorem majority_cycle_2_1 : majorityPrefers (⟨2, by decide⟩ : Alt3) (⟨1, by decide⟩ : Alt3) = false := by
+  native_decide
+
 theorem voter_prefers_count_0_2 : voterPrefersCount (⟨0, by decide⟩ : Alt3) (⟨2, by decide⟩ : Alt3) = 1 := by
   native_decide
 
@@ -148,6 +156,10 @@ theorem majority_not_transitive :
   unfold majorityPrefers
   rw [voter_prefers_count_0_2]
   native_decide
+
+/-- `0` does not beat `2` under strict majority (the missing transitive chord). -/
+theorem majority_cycle_0_2 : majorityPrefers (⟨0, by decide⟩ : Alt3) (⟨2, by decide⟩ : Alt3) = false :=
+  majority_not_transitive.2.2
 
 /-- Bool XOR: disagreement on a single unordered pair `{x,y}`. -/
 def boolXor (a b : Bool) : Bool :=
