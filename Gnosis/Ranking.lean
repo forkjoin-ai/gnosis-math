@@ -16,6 +16,12 @@ This module mechanizes a **small but honest** slice of the mathematics of rankin
   cross-multiplication monotonicity lemma in `πᵢ` at fixed `πⱼ`.
 - **Elo-style update** as an integer step `sᵢ ← sᵢ + η * (o - p)` with `p` the modeled win probability
   expressed as a scaled integer rounding (`pScaled`).
+- **`Fin 2` electorate on `Alt3`:** profiles as per-voter rank matrices (`Profile2`), strict **Pareto**
+  lift into a **dictator** social strict preference (`pareto_strict_implies_dictator_strict`), and
+  **pairwise independence** for the dictator slice (`dictator_pairwise_independence` — society’s
+  `{a,b}` strict comparison depends only on the dictator’s `{a,b}` strict comparison). The dictator’s
+  induced **weak** social ranking `λ a b ↦ p d a ≤ p d b` is a **`TotalPreorderS`** on `Alt3`
+  (`dictator_weak_social_is_total_preorder`).
 
 What is **not** here (and would require a heavier library stack): full Arrow / Gibbard–Satterthwaite
 machinery over arbitrary finite electorates, spectral PageRank on large sparse graphs, or Kemeny
@@ -215,6 +221,57 @@ theorem ranking_impossibility_count (desired achieved : Nat)
     (hDesired : desired = 3) (hAchieved : achieved ≤ 2) : desired > achieved := by
   rw [hDesired]
   exact Nat.lt_of_le_of_lt hAchieved (by decide : (2 : Nat) < 3)
+
+/-! ## `Fin 2` profiles, dictator SWF, Pareto, and pairwise independence -/
+
+abbrev Voter2 := Fin 2
+
+/-- Rank matrix: each of two voters assigns a natural rank to each alternative (lower is better). -/
+abbrev Profile2 :=
+  Voter2 → Alt3 → Nat
+
+/-- Individual strict preference from numeric ranks. -/
+def indivStrict (p : Profile2) (v : Voter2) (a b : Alt3) : Prop :=
+  p v a < p v b
+
+/-- Unanimous strict preference: every voter strictly prefers `a` over `b`. -/
+def paretoStrict (p : Profile2) (a b : Alt3) : Prop :=
+  ∀ v : Voter2, indivStrict p v a b
+
+/-- Dictator social strict preference: copy voter `d`’s strict order. -/
+def dictSocStrict (d : Voter2) (p : Profile2) (a b : Alt3) : Prop :=
+  indivStrict p d a b
+
+/-- **Pareto ⇒ dictator:** if both voters strictly prefer `a` over `b`, then so does the dictator. -/
+theorem pareto_strict_implies_dictator_strict (d : Voter2) (p : Profile2) (a b : Alt3)
+    (h : paretoStrict p a b) : dictSocStrict d p a b :=
+  h d
+
+/-- **Pairwise independence (IIA-style) on the dictator slice:** if each voter’s strict `{a,b}`
+comparison agrees between two profiles, then the dictator social strict comparison agrees. -/
+theorem dictator_pairwise_independence (d : Voter2) (p p' : Profile2) (a b : Alt3)
+    (h : ∀ v : Voter2, indivStrict p v a b ↔ indivStrict p' v a b) :
+    dictSocStrict d p a b ↔ dictSocStrict d p' a b :=
+  h d
+
+/-- Weak dictator social order: society ranks `a` at least as high as `b` iff the dictator’s ranks say so. -/
+def dictSocWeak (d : Voter2) (p : Profile2) (a b : Alt3) : Prop :=
+  p d a ≤ p d b
+
+theorem dictator_weak_social_is_total_preorder (d : Voter2) (p : Profile2) :
+    TotalPreorderS (fun a b : Alt3 => dictSocWeak d p a b) := by
+  refine ⟨⟨fun a => Nat.le_refl (p d a), fun a b c hab hbc => Nat.le_trans hab hbc⟩, fun a b => Nat.le_total (p d a) (p d b)⟩
+
+/-- Closed certificate: Pareto lifts to the dictator’s strict order, pairwise agreement lifts to
+social strict agreement, and the dictator’s weak social order is a total preorder on `Alt3`. -/
+theorem ranking_dictator_slice_certificate (d : Voter2) (p : Profile2) :
+    (∀ a b, paretoStrict p a b → dictSocStrict d p a b) ∧
+      (∀ p' a b, (∀ v : Voter2, indivStrict p v a b ↔ indivStrict p' v a b) →
+        (dictSocStrict d p a b ↔ dictSocStrict d p' a b)) ∧
+      TotalPreorderS (fun a b : Alt3 => dictSocWeak d p a b) :=
+  ⟨fun a b h => pareto_strict_implies_dictator_strict d p a b h,
+    fun p' a b h => dictator_pairwise_independence d p p' a b h,
+    dictator_weak_social_is_total_preorder d p⟩
 
 end Ranking
 end Gnosis
