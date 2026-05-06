@@ -209,6 +209,7 @@ import Gnosis.CompositeParticles
 import Gnosis.CompositionalErgodicity
 import Gnosis.ComputationalStateTransitionsAsPathDivergence
 import Gnosis.CondensedMathematics
+import Gnosis.CondorcetBettiCrossover
 import Gnosis.Confinement
 import Gnosis.ConformalFieldTheoryVOA
 import Gnosis.ConsciousnessIsInterference
