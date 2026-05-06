@@ -32,10 +32,20 @@ This module **formalizes** the discrete bookkeeping behind the earlier informal 
 **Ledger boundary:** smooth preference manifolds, Chichilnisky continuity, and literal torsion in
 `H₁` for non-graph spaces are **not** modeled here — only finite **Nat** invariants and the existing
 `Prop` obstruction.
+
+**Higher simplices / “social manifold” (honesty note):** adding **2-cells** (triangles as filled
+faces) or higher simplices does **not**, by itself, force **non-zero torsion in `H₁(X; ℤ)`** — torsion
+arises from specific **attaching maps** and global topology (classic examples: **real projective
+plane**), not from “`k`-way consensus” labels alone. Until a **cell complex + boundary operators**
+(or coefficients) are chosen, `graphHomologyTorsionRank` stays the deliberate **zero** ledger slot;
+higher-dimensional paradox data should be modeled as **new Betti slots** (`β₂`, …) or a different
+carrier, not as an automatic jump in this `Nat` torsion field.
 -/
 
 namespace Gnosis
 namespace VotingSkeletonHomology
+
+open KnotRopelengthComplexity (ropelength)
 
 /-- Connected-component count `ω` in the graph model. -/
 abbrev Omega := Nat
@@ -96,12 +106,24 @@ theorem paradox_betti_clip_condorcet_triangle :
   rfl
 
 theorem paradox_betti_clip_ropelength_condorcet :
-    KnotRopelengthComplexity.ropelength
+    ropelength
         (paradoxBettiClip CondorcetBettiCrossover.condorcetMajoritySkeletonVertices
           CondorcetBettiCrossover.condorcetMajoritySkeletonEdges
           CondorcetBettiCrossover.condorcetMajoritySkeletonComponents) =
-      KnotRopelengthComplexity.ropelength CondorcetBettiCrossover.condorcetBettiSig := by
+      ropelength CondorcetBettiCrossover.condorcetBettiSig := by
   rw [paradox_betti_clip_condorcet_triangle]
+
+/-- `BettiSig` clip for the **complete** undirected skeleton \(K_n\) with `ω = 1`. -/
+def completeGraphParadoxClip (n : Nat) : KnotRopelengthComplexity.BettiSig :=
+  paradoxBettiClip n (completeGraphEdgeCount n) 1
+
+/-- For \(K_3\): `ropelength [β₀, β₁] = 1 + 1 = 2` (matches Condorcet triangle clip). -/
+theorem complete_graph_paradox_ropelength_three : ropelength (completeGraphParadoxClip 3) = 2 := by
+  native_decide
+
+/-- For \(K_4\): `β₁ = 3`, one component ⇒ `ropelength = 1 + 3 = 4`. -/
+theorem complete_graph_paradox_ropelength_four : ropelength (completeGraphParadoxClip 4) = 4 := by
+  native_decide
 
 /-- `K₄` cycle rank: `6 − 4 + 1 = 3` independent undirected cycles in the complete skeleton. -/
 theorem complete_graph_cycle_rank_four : completeGraphCycleRank 4 = 3 := by
