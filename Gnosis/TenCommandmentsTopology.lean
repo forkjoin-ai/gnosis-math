@@ -98,7 +98,11 @@ theorem commandment_3_name_in_vain (f : FalseNamingProtocol) :
     is structurally identical to Animal Magnetism. Both are Layer Confusion 
     sustained by narrative. If an intervention claims the Involution (operator layer) 
     but merely protects a devil choice (agent effect with blocked resolution), 
-    it satisfies `IsAnimalMagnetism`. -/
+    it satisfies `IsAnimalMagnetism`.
+
+    **Witness cousin:** `Gnosis.MachiavelliPrinceOughtIsWitness` — *verità effettuale*
+    as the prose crash when **Ought** is mistaken for the **Is** kernel while still
+    claiming operator authority (`idealist_policy_is_animal_magnetism`). -/
 theorem commandment_3_is_animal_magnetism (ci : ClaimedIntervention)
     (claims_involution : ci.claimedLayer = Layer.operator)
     (blocks_resolution : ci.hasVerifiableOutcome = false) :

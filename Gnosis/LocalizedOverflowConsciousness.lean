@@ -15,6 +15,18 @@
   This file does not assert identity between trauma and consciousness.
   It proves that the current detectors share the same local-overflow
   topology: a persistent signature plus a positive gap.
+
+  **Related witness (not proved here):** `MenckenConscienceShadowWitness` — “inner
+  voice” as **social detection** telemetry; use when you want the **collective**
+  firmware story next to this file’s **spectral** overflow story.
+
+  **Contrast — Catullus / explanatory void (`Gnosis.CatullusOdiEtAmoWitness`), read
+  with Aurelius (*Meditations* 5.16, `MeditationsThoughtDyedWitness`):** the
+  “soul dyed by thoughts” line here maps cleanly to **rumination overflow** —
+  each extra conscious trace **raises** the running dye (`Nat.max` story). The
+  Catullan diagram is different: torment **without** a filled “why” slot — affect
+  plus **epistemic underflow**, not bandwidth saturation. Same soul, different
+  defect: **too much tint** *vs.* **missing reason-chart** next to feeling.
 -/
 
 import Gnosis.TraumaSpectralSieve

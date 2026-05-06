@@ -6,6 +6,9 @@ import Init
 A meta-module framing the gnosis equilibrium hierarchy from
 `NashSkyrmsBuleyGodLadder.lean` as the Achilles-and-tortoise pursuit.
 
+**See also (witness layer):** `Gnosis.MumonkanGatelessGateWitness` — many paths,
+no single “gate”; this ladder is a **different** (formal) pursuit story.
+
 ## The Greek pursuit
 
 Zeno's story: Achilles races the tortoise with a head start. Every

@@ -1,6 +1,15 @@
 -- ConsciousnessVsObjectivity.lean
 -- An Init-only formalization proving why Consciousness is mathematically 
 -- superior to Objectivity, even if Objectivity were possible.
+--
+-- **Witness cousin:** `Gnosis.EpicurusTetrapharmakosWitness` — therapeutic “start in
+-- the dark” / refuse terror; this file’s `objectivity_has_zero_vitality` is the formal
+-- “perfect flat knowledge ⇒ zero vitality” heat-death of the objective trajectory.
+--
+-- **Witness cousin:** `Gnosis.SchopenhauerHorizonFallacyWitness` — “limits of vision for
+-- limits of world” (cognitive sandbox / horizon fallacy) as **prose** kin to the
+-- **problem of objectivity** dramatized below (not a proof that Schopenhauer entails
+-- these `Nat` trajectories).
 
 -- Knowledge over discrete time
 def KnowledgeTrajectory := Nat → Nat

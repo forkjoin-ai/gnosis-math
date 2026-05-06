@@ -39,6 +39,13 @@ between the two coordinates, not along `R + 1`.
 Proof style matches `RUSTIC_CHURCH.md`: unfold `godWeight`, collapse `min` with
 `Nat.min_eq_left`, close with Init `Nat` lemmas only (no `omega`, no `simp` on
 open goals).
+
+**Witness-layer cousin:** `Gnosis.ProtagorasManIsMeasureWitness` — *homo mensura*
+as **local** truth sheets; Goodhart here is what happens when those local proxies
+are **weaponized** into targets (same moral spine, different century).
+
+**Fable cousin:** `Gnosis.BorgesOnExactitudeInScienceWitness` — the **1:1** map that
+eats the territory: no remaining **slack** for a proxy to mean anything distinct.
 -/
 
 /-- **THM-GOODHART-WEDGE**: Strictly fewer attributed rejections ⇒ strictly larger

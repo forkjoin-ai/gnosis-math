@@ -35,6 +35,9 @@ already braided.
 
 Imports `Gnosis.BraidedInfinity` and `Gnosis.HexonBraid`. Zero `sorry`,
 zero new `axiom`.
+
+**See also (witness layer):** `Gnosis.MumonkanGatelessGateWitness` — “many paths,
+one closure” as **pedagogy**, not as this tower’s `towerPhaseCount` math.
 -/
 
 namespace Gnosis
