@@ -157,6 +157,7 @@ import Gnosis.CatMapOrbitBraid
 import Gnosis.CatalanNumbersIdentity
 import Gnosis.CatullusOdiEtAmoWitness
 import Gnosis.Category
+import Gnosis.CellularHomologyZMod
 import Gnosis.CausalDiscovery
 import Gnosis.CausalInference
 import Gnosis.CausalMediation
