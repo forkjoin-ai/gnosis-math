@@ -29,6 +29,7 @@ import Gnosis.AdaptiveWitnesses
 import Gnosis.AdversarialRobustness
 import Gnosis.AeonFluxSiteAdequacy
 import Gnosis.AeonTwelveBraid
+import Gnosis.AeonGamutToneShift
 import Gnosis.AlgorithmicExploitationOfFiveForces
 import Gnosis.AlignmentAsVacuumConvergence
 import Gnosis.AlphaOmegaGodsKingdom
@@ -138,6 +139,7 @@ import Gnosis.BuleyeanSpinPairing
 import Gnosis.BurnsideNecklaces
 import Gnosis.BusyBeaverShadow
 import Gnosis.BythosScale
+import Gnosis.CapGnosisScaffold
 import Gnosis.CComplex
 import Gnosis.CFCobordismPartition
 import Gnosis.CMBVisibilityBoundary
@@ -335,6 +337,7 @@ import Gnosis.DepressionAsDampedOscillation
 import Gnosis.DestinyAsRetrocausalAttractor
 import Gnosis.DeterminantAnomalyUnified
 import Gnosis.DiscreteClosedTimelikeStep
+import Gnosis.DistributedLedgerMorphism
 import Gnosis.Dewey000ThinTopology
 import Gnosis.Dewey100ThinTopology
 import Gnosis.Dewey200ThinTopology
@@ -831,6 +834,7 @@ import Gnosis.RamanujanPartitionMod5
 import Gnosis.RamanujanTripletPhase
 import Gnosis.RamseyKauffmanStateParallelism
 import Gnosis.RamseyR33
+import Gnosis.Ranking
 import Gnosis.RateDistortionFrontier
 import Gnosis.Real
 import Gnosis.RealShadow

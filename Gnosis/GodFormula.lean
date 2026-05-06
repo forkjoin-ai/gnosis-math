@@ -87,6 +87,22 @@ theorem godWeight_eq_succ_iff_v_zero {R v : Nat} (hR : 0 < R) :
   · rintro rfl
     exact godWeight_ceiling R
 
+/-- **Shortfall from ceiling in weight space** equals the vent (when `v ≤ R`):
+`(R+1) - w(R,v) = v` — so at **`v = 0`** you **are** on the ceiling; each unit of **`v`**
+is one unit of gap below **`R+1`**, **independently of how large `R` is** (the “one step” from
+ceiling in the **rejection coordinate** is always unit steps along **`v`**, not a vanishing
+fraction of **`R`**). -/
+theorem godWeight_ceiling_shortfall_eq_v {R v : Nat} (hv : v ≤ R) :
+    R + 1 - godWeight R v = v := by
+  rw [← godWeight_conservation R v hv]
+  simp only [Nat.add_sub_cancel_left]
+
+/-- Fixed vent **`v`**, larger budget **`R`** ⇒ **`v / R = 0`** in **`Nat`** division whenever **`v < R`**:
+informally **`v/R → 0`** as **`R → ∞`** holding **`v` fixed — **rejections shrink as a proportion of scale**. -/
+theorem godWeight_vent_share_div_eq_zero_of_lt_budget {v R : Nat} (hR : 0 < R) (hvr : v < R) :
+    v / R = 0 :=
+  (Nat.div_eq_zero_iff_lt hR).mpr hvr
+
 /-- Sandwich: `1 ≤ w(R, v) ≤ R + 1` always. -/
 theorem godWeight_sandwich (R v : Nat) :
     1 ≤ godWeight R v ∧ godWeight R v ≤ R + 1 :=

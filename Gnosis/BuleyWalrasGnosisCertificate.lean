@@ -7,7 +7,8 @@ namespace Gnosis
 namespace BuleyWalrasGnosisCertificate
 
 open AkerlofLemons CoaseTheorem SkyrmsBuleyEquilibria
-open Gnosis (godWeight godWeight_eq_succ_iff_v_zero)
+open Gnosis (godWeight godWeight_eq_succ_iff_v_zero godWeight_ceiling_shortfall_eq_v
+  godWeight_vent_share_div_eq_zero_of_lt_budget)
 
 /-!
 # Buley–Walras layered certificate (“general equilibrium’’ scaffold)
@@ -25,7 +26,29 @@ This is **not** a continuum Walras–Arrow–Debreu equilibrium; **not** a uniqu
 
 It **is** a **ledger-level** coincidence certificate: simultaneous **triple ceiling** — what you formalize below as **`TriplePillarCeiling`**.
 
-See also **`tripleVentSumPooling`** / **`fusedPoolingGodWeight`** below: **`fork`** (three parallel pillar vents summed), **`fold`** into one **`Nat`** fed to a single **`godWeight`** — interdependence packaged as **`add = 0 ↔` each storey zero** (**`tripleVentSumPooling_eq_zero_iff`**), not pillar-to-pillar implication without extra morphisms.
+See also **`tripleVentSumPooling`** / **`fusedPoolingGodWeight`** below: three pillar vents summed, then one **`godWeight`** read — interdependence packaged as **`add = 0 ↔` each storey zero** (**`tripleVentSumPooling_eq_zero_iff`**), not pillar-to-pillar implication without extra morphisms.
+
+## Finger-on-the-nose map (`fork` / `race` / `fold` / `vent` / interference)
+
+This module fixes vocabulary for the scheduler metaphor **relative to the Lean symbols below** — not a claim that **`a0` fork** (spawn sub-agents) **equals** Buley time.
+
+- **`fork` (here).** The **three parallel addends** in **`tripleVentSumPooling`** — **`marketVentPooling`**, **`totalVent`**, **`buleyVent`** — plus **`WalrasPoolingWitness`** holding **three independent hypotheses** before any sum. That is “parallel ledger premises’’ before reconciliation. (Separately, Coase **`LegalRight`** branches read as two **institutional** forks resolved by bargaining — see **`CoaseTheorem`**.)
+
+- **`race` (here).** The **goods / information** beat: adverse selection and pooled-vs-separated clearing (**`PeachChannelClear`**, **`SeparatingClear`**, **`marketVentPooling`**). Related kinetic elsewhere: **`SkyrmsBuleyEquilibria.natGap`** / **`skyrmsVent`** (convention rivalry). Not Coase label-invariance (that is **`fold`**).
+
+- **`fold` (here).** (i) **Institutional fold:** Coase **`BargainingUpdate`** lands on **`optimalQ`** with **`totalVent = 0`**; **`combinedValue`** scrubs **past** entitlement noise once **`reachesOptimal`**. (ii) **Temporal fold:** **`buleyUpdate`** drives **`present`** to **`(past + future) / 2`**; **`IsBuleyEquilibrium`** ⇔ **`buleyVent = 0`** (**`buleyVent_eq_zero_iff`**). (iii) **Ledger fold:** **`fusedPoolingGodWeight`** feeds **one** **`Nat`** into **`godWeight`** (**`godWeight_eq_succ_iff_v_zero`** pins **`v = 0`** ⇔ ceiling when **`0 < R`**).
+
+- **`vent` (here).** The **`ℕ`** rejection slack fed to **`godWeight R v`**: pillar-wise **`buleyVent`**, **`totalVent`** (**`legalVent` + `inefficiencyVent`**), and coarse **`marketVentPooling`** / **`marketVentSeparating`**. Smaller **`v`** ⇒ larger weight; **`v = 0`** at a pillar ⇒ that pillar’s **`R + 1`** ceiling (**honest per-pillar bookkeeping**).
+
+- **Interference (not yet a morphism).** **Cross-pillar coupling** that would let one storey force another’s **`v`** positive **without** summing them — e.g. asymmetric information changing **effective** **`transactionCost`**. This file **does not** prove **`PeachChannelClear ⇒ IsBuleyEquilibrium`** or the converse; simultaneous zero is **conjunctive** (**`tripleVentSumPooling_eq_zero_iff`**). Reserve **interference** for future lemmas that add explicit maps between pillars.
+
+## Scale (**fourth dimension**, **`R`**)
+
+All pillar certificates above share one budget **`R`**. Two **`GodFormula`** facts nail the asymptotic picture **without** limiting **`v`** to **`0`**:
+
+- **Conservation pairing.** **`godWeight_conservation`**: **`godWeight R v + v = R + 1`** when **`v ≤ R`** — rejection **`v`** and weight **`w`** partition the **`R+1`** line.
+- **Ceiling gap = rejection.** **`godWeight_ceiling_shortfall_eq_v`**: **`(R+1) - godWeight R v = v`** — the distance **down** from the maximal weight **`R+1`** (all in weight units) **equals** **`v`** exactly; **`v = 0`** ⇔ already at ceiling (**same “one notch’’ in **`v`**, no matter how large **`R`**).
+- **Vanishing share.** **`godWeight_vent_share_div_eq_zero_of_lt_budget`**: for fixed **`v`** and **`R > v`**, **`Nat`** division gives **`v / R = 0`** — as **`R`** grows with **`v`** fixed, vent **`v`** occupies **zero proportion** of scale **`R`** in this discrete calculus (informally **`v/R → 0`**).
 
 Interpretation hygiene: tying “total’’ to **`R + 1`** here means **per-pillar maximal weight at identical `R` once every pillar’s modeled rejection hits zero**.
 -/
@@ -131,15 +154,13 @@ theorem marketVentPooling_eq_zero_iff (vals : SellerValues) (lemons peaches : Na
   · intro hz
     unfold marketVentPooling at hz
     cases Decidable.em (PeachChannelClear vals lemons peaches) with
-    | inl hp =>
-      rw [if_pos hp] at hz
-      exact hp
+    | inl hp => exact hp
     | inr hn =>
-      rw [if_neg hn] at hz
+      rw [dif_neg hn] at hz
       cases hz
   · intro hp
     unfold marketVentPooling
-    rw [if_pos hp]
+    rw [dif_pos hp]
 
 theorem marketVentSeparating_eq_zero_iff (vals : SellerValues) (ppe lpe : Nat) :
     marketVentSeparating vals ppe lpe = 0 ↔ SeparatingClear vals ppe lpe := by
@@ -147,15 +168,13 @@ theorem marketVentSeparating_eq_zero_iff (vals : SellerValues) (ppe lpe : Nat) :
   · intro hz
     unfold marketVentSeparating at hz
     cases Decidable.em (SeparatingClear vals ppe lpe) with
-    | inl hp =>
-      rw [if_pos hp] at hz
-      exact hp
+    | inl hp => exact hp
     | inr hn =>
-      rw [if_neg hn] at hz
+      rw [dif_neg hn] at hz
       cases hz
   · intro hp
     unfold marketVentSeparating
-    rw [if_pos hp]
+    rw [dif_pos hp]
 
 /-! ### Factorization: summed vent vanishes iff every pillar storey does -/
 
@@ -188,12 +207,12 @@ theorem tripleVentSumPooling_eq_zero_iff' (vals : SellerValues) (lemons peaches 
   rw [tripleVentSumPooling_eq_zero_iff]
   constructor
   · rintro ⟨hp, hv, bv⟩
-    have ⟨hl, hi⟩ := (totalVent_components_iff coop).mp hv
+    have ⟨hl, hi⟩ := (CoaseTheorem.totalVent_components_iff coop).mp hv
     refine ⟨hp, hl, hi, ?_⟩
     exact (buleyVent_eq_zero_iff time).mp bv
   · rintro ⟨hp, hL, hI, hb⟩
     refine ⟨hp, ?_, ?_⟩
-    · exact (totalVent_components_iff coop).mpr ⟨hL, hI⟩
+    · exact (CoaseTheorem.totalVent_components_iff coop).mpr ⟨hL, hI⟩
     · exact (buleyVent_eq_zero_iff time).mpr hb
 
 theorem tripleVentSumSeparating_eq_zero_iff (vals : SellerValues) (ppe lpe : Nat)
@@ -288,7 +307,7 @@ theorem triple_pillar_ceiling_of_tripleVentSumPooling_eq_zero (R : Nat)
     ⟨hClr, hv, hvB⟩
   have hBx : IsBuleyEquilibrium time := (buleyVent_eq_zero_iff time).mp hvB
   have hTx : env.transactionCost = 0 :=
-    (totalVent_zero_imp_legal_and_ineff_zero coop hv).1
+    (CoaseTheorem.totalVent_components_iff coop).mp hv |>.1
   refine ⟨?_, ?_, ?_⟩
   · exact peachMarketWeight_ceiling_when_channel_clear R vals lemons peaches hClr
   · exact final_weight_ceiling_of_zero_tx_and_optimal R coop hTx
@@ -305,7 +324,7 @@ theorem triple_pillar_ceiling_of_tripleVentSumSeparating_eq_zero (R : Nat)
     ⟨_, hv, hvB⟩
   have hBx : IsBuleyEquilibrium time := (buleyVent_eq_zero_iff time).mp hvB
   have hTx : env.transactionCost = 0 :=
-    (totalVent_zero_imp_legal_and_ineff_zero coop hv).1
+    (CoaseTheorem.totalVent_components_iff coop).mp hv |>.1
   refine ⟨peach_market_ceiling_under_separating R, ?_, ?_⟩
   · exact final_weight_ceiling_of_zero_tx_and_optimal R coop hTx
   · exact buley_equilibrium_reaches_ceiling R time hBx
