@@ -148,8 +148,7 @@ theorem tri2_cycle_in_kernel :
 
 theorem tri2_cycle_nonzero : (fun _ : Fin 3 => zmodOne two_le_pTwo) ≠ fun _ => ⟨0, hp0_two⟩ := by
   intro h
-  have h1 := congrArg Fin.val (congrFun h ⟨0, by decide⟩)
-  simp [zmodOne] at h1
+  exact Nat.succ_ne_zero 0 (by simpa [zmodOne] using congrArg Fin.val (congrFun h ⟨0, by decide⟩))
 
 end CellularHomologyZMod
 end Gnosis
