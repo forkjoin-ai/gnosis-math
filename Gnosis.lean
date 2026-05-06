@@ -836,6 +836,7 @@ import Gnosis.RamseyKauffmanStateParallelism
 import Gnosis.RamseyR33
 import Gnosis.Ranking
 import Gnosis.RankingFrfBridge
+import Gnosis.RankingStrategicRace
 import Gnosis.RateDistortionFrontier
 import Gnosis.Real
 import Gnosis.RealShadow
@@ -902,6 +903,7 @@ import Gnosis.SliverExploration
 import Gnosis.SliverFromVent
 import Gnosis.SliverIsFifth
 import Gnosis.SliverOfHope
+import Gnosis.SocialFoldObstruction
 import Gnosis.SolomonoffBuleyean
 import Gnosis.SolomonoffInduction
 import Gnosis.SolvableGroupS3
