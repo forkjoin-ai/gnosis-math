@@ -835,6 +835,7 @@ import Gnosis.RamanujanTripletPhase
 import Gnosis.RamseyKauffmanStateParallelism
 import Gnosis.RamseyR33
 import Gnosis.Ranking
+import Gnosis.RankingFrfBridge
 import Gnosis.RateDistortionFrontier
 import Gnosis.Real
 import Gnosis.RealShadow
