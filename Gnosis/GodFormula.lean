@@ -9,9 +9,9 @@ Single source for the universal weighting rule
 
   w(R, v) = R - min(v, R) + 1
 
-and its base identities. **Every proof in this file uses only definitional
+and its base identities. Every proof in this file uses only definitional
 unfolding plus Init-level `Nat` lemmas that are themselves provable by
-`+1` induction on `Nat`** — no `omega`, no `decide`, no `simp`. The kernel
+`+1` induction on `Nat` — no `omega`, no `decide`, no `simp`. The kernel
 is therefore self-bootstrapping from `Nat.succ` / structural recursion.
 
 Downstream files in `Gnosis/` should `import Gnosis.GodFormula` and `open Gnosis`
@@ -63,6 +63,30 @@ theorem godWeight_le_succ (R v : Nat) : godWeight R v ≤ R + 1 := by
   show R - min v R + 1 ≤ R + 1
   exact Nat.add_le_add_right (Nat.sub_le R (min v R)) 1
 
+/-- Positive budget ⇒ reaching the successor ceiling pins **`v` to **`0`** (Init read on **`min`**). -/
+theorem godWeight_eq_succ_iff_v_zero {R v : Nat} (hR : 0 < R) :
+    godWeight R v = R + 1 ↔ v = 0 := by
+  constructor
+  · intro hw
+    rcases Nat.eq_zero_or_pos v with hv₀ | hvpos
+    · exact hv₀
+    · rcases Nat.le_total v R with hvr | hRv
+      · unfold godWeight at hw
+        rw [Nat.min_eq_left hvr] at hw
+        have hrv : R - v = R :=
+          Nat.succ.inj (by simpa [Nat.succ_eq_add_one] using hw)
+        have hlt : R - v < R := Nat.sub_lt_self hvpos hvr
+        rw [hrv] at hlt
+        exact absurd hlt (Nat.lt_irrefl R)
+      · unfold godWeight at hw
+        rw [Nat.min_eq_right hRv] at hw
+        have Rz : R = 0 :=
+          Nat.succ.inj (by simpa [Nat.succ_eq_add_one, Nat.zero_add] using hw.symm)
+        rw [Rz] at hR
+        exact absurd hR (Nat.lt_irrefl 0)
+  · rintro rfl
+    exact godWeight_ceiling R
+
 /-- Sandwich: `1 ≤ w(R, v) ≤ R + 1` always. -/
 theorem godWeight_sandwich (R v : Nat) :
     1 ≤ godWeight R v ∧ godWeight R v ≤ R + 1 :=
@@ -75,7 +99,7 @@ theorem godWeight_antitone (R v₁ v₂ : Nat) (h₁ : v₁ ≤ R) (h₂ : v₂ 
   rw [Nat.min_eq_left h₁, Nat.min_eq_left h₂]
   exact Nat.add_le_add_right (Nat.sub_le_sub_left h R) 1
 
-/-- **Ordered weight gap**: along a fixed budget `R`, the drop in God-weight
+/-- Ordered weight gap: along a fixed budget `R`, the drop in God-weight
     from the lower-rejection side `a` to the higher-rejection side `b` equals
     exactly the extra rejections `b - a` when `a ≤ b ≤ R`.
 

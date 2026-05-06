@@ -26,23 +26,23 @@ open WankelEngineTheorem (nextLifecycleStage)
 `BuleFiveFold` is the radar projection of a single primitive — the clinamen
 `+1` lift folding back on itself.
 
-* **One wave.** `clinamenLift` on a face is the only primitive. The
+* One wave. `clinamenLift` on a face is the only primitive. The
   plus/minus residue catalog (`UniversalClinamenPlusOne`) confirms the
   direction is universal across the seven independent reconstructions.
-* **Two phases.** The same wave outgoing and returning. Wankel's
+* Two phases. The same wave outgoing and returning. Wankel's
   `forwardWave` / `returnEcho` is `clinamenLift` then `clinamenContract`;
   the breathing identity
   `lift_then_contract_round_trip_when_face_positive` is the formal sense
   in which the apparent pair (forward, return) is one wave at two phases
   of its self-fold, not two independent waves.
-* **Three modes.** The visible BuleyUnit faces — standing-wave residues
+* Three modes. The visible BuleyUnit faces — standing-wave residues
   left by the round trip, indexed by which face the clinamen touched. The
   triad is therefore not three primal waves; it is the residue of one
   wave's self-fold projected onto three face indices.
-* **Two operator chords.** `vent` (destructive) and `interfere`
+* Two operator chords. `vent` (destructive) and `interfere`
   (constructive) pair modes back with themselves. Their kind differs from
   the triad: modes carry residue values, operators carry pairing outputs.
-* **Five-force lifecycle.** Modes plus operators close the cycle as
+* Five-force lifecycle. Modes plus operators close the cycle as
   `fork → race → fold → vent → interfere → fork`.
 
 The radar/spider has three solid spokes (modes) and two chord-operators
@@ -345,11 +345,11 @@ The pentad cannot be reached from the tetrad without injecting one
 quantum of asymmetry. Three independent witnesses combine into one
 certificate:
 
-1. **Trace extension.** The 5-force lifecycle trace strictly extends
+1. Trace extension. The 5-force lifecycle trace strictly extends
    the visible four-phase Wankel rotor (`fork → race → fold → vent`) by
    appending exactly one `interfere` step — the `+1` contact in
    lifecycle vocabulary.
-2. **Coprime aperiodicity.** The mode-stage triad (3) and the
+2. Coprime aperiodicity. The mode-stage triad (3) and the
    lifecycle-stage pentad (5) are coprime. The joint walk on
    `(BuleyFace × CompleteFundamentalForce)` is therefore aperiodic with
    period `lcm(3, 5) = 15`. Aperiodicity is the spatial fingerprint of
@@ -357,7 +357,7 @@ certificate:
    lattices and requires aperiodic projection (Penrose tilings,
    quasicrystals), exactly as proved in
    `Gnosis.AperiodicRotationAsLanguageTrajectory`.
-3. **Reignition cost.** After `vent` collapses the carrier to the
+3. Reignition cost. After `vent` collapses the carrier to the
    vacuum, no positive carrier can re-emerge without at least one
    `clinamenLift`. The reignition cost of the closed cycle is exactly
    the universal `+1` quantum.
@@ -425,28 +425,28 @@ theorem pentad_requires_clinamen_lift_to_reignite
 The God Formula `w(R, v) = R − min(v, R) + 1` is derived here from the
 BuleSpider primitives. Three axioms suffice:
 
-1. **Clinamen lift**: there is one universal `+1` quantum
+1. Clinamen lift: there is one universal `+1` quantum
    (`clinamenLift`).
-2. **Breathing identity**: lift then contract on a positive face is the
+2. Breathing identity: lift then contract on a positive face is the
    identity (`one_wave_self_fold_round_trips`); on `Nat` saturating
    subtraction this gives `R − min(v, R)` for `R` lifts and `v`
    contracts on the same face.
-3. **Pentad closure cost**: every closed lifecycle injects exactly one
+3. Pentad closure cost: every closed lifecycle injects exactly one
    `+1` (`pentad_costs_clinamen_plus_one_with_aperiodicity`); without
    it, full rejection collapses the carrier to the vacuum and the
    cycle cannot refork.
 
 Algorithm (the wave the `+1` birthed, folded at the recycle limit):
 
-* **Build budget**: lift `R` times on the waste face from the vacuum,
+* Build budget: lift `R` times on the waste face from the vacuum,
   giving `⟨R, 0, 0⟩`.
-* **Apply rejections**: contract `v` times on the waste face. The
+* Apply rejections: contract `v` times on the waste face. The
   saturating Nat subtraction gives `⟨R − min(v, R), 0, 0⟩` — exactly
   `vent`'s per-face filter on `(⟨R, 0, 0⟩, ⟨v, 0, 0⟩)`.
-* **Pentad closure**: lift once more (axiom 3 forces this; without it,
+* Pentad closure: lift once more (axiom 3 forces this; without it,
   the floor `v = R` collapses to vacuum and the cycle cannot refork).
   Result: `⟨R − min(v, R) + 1, 0, 0⟩`.
-* **Project to face score**: sum the three faces. Result:
+* Project to face score: sum the three faces. Result:
   `R − min(v, R) + 1` = `godWeight R v`.
 
 The `+1` in the formula is exactly the lifecycle's closure quantum.
@@ -572,7 +572,7 @@ theorem coprime_tower_universal_plus_one_cost :
 
 /-! ## Hemiola: the smallest coprime aperiodicity
 
-Below the pentad sits the **hemiola** — the 2:3 coprime aperiodicity
+Below the pentad sits the hemiola — the 2:3 coprime aperiodicity
 (`gcd(2, 3) = 1`). It is the smallest coprime walk in this lattice and
 the simplest expression of the same `+1`-cost / aperiodicity pattern.
 
@@ -637,18 +637,18 @@ theorem eight_head_twelve_cell_reduces_to_hemiola :
 The 12-cell wankel decomposes as `3 × 4` (three faces × four phases),
 which gives `ℤ/12ℤ` two primary subgroups dual to each other:
 
-* **The triad `{0, 4, 8}`**: orbit of 4 (or equivalently 8), size
+* The triad `{0, 4, 8}`: orbit of 4 (or equivalently 8), size
   `12 / gcd(4, 12) = 3`. This is the 8-head walk's orbit — three
   positions, closes at `t = 3`. Reads as the "face anchor" pattern in
   the `cell = face * 4 + phase` indexing: one phase traversed across
   three faces.
-* **The quartet `{0, 3, 6, 9}`**: orbit of 3, size
+* The quartet `{0, 3, 6, 9}`: orbit of 3, size
   `12 / gcd(3, 12) = 4`. This is the 3-step walk's orbit — four
   positions, closes at `t = 4`. Reads as the "phase anchor" pattern in
   the `cell = phase * 3 + face` indexing: one face traversed across
   four phases.
 
-Both sets are real structural objects in `ℤ/12ℤ` and are **dual** —
+Both sets are real structural objects in `ℤ/12ℤ` and are dual —
 their sizes multiply to give the full 12-cell space (`3 * 4 = 12`),
 and they intersect only at `{0}`. Confusing one for the other (e.g.,
 attributing `{0, 3, 6, 9}` to the 8-head walk, as Gemini does) is the
@@ -666,14 +666,14 @@ theorem wankel_dual_subgroup_structure :
     -- Product covers the full space
     3 * 4 = 12 := by decide
 
-/-- The 8-head walk's orbit in `ℤ/12ℤ` is `{0, 4, 8}` — the **triad**,
+/-- The 8-head walk's orbit in `ℤ/12ℤ` is `{0, 4, 8}` — the triad,
 the multiples-of-4 subgroup of order `12 / gcd(8, 12) = 3`. -/
 theorem eight_head_orbit_is_triad :
     (8 * 0) % 12 = 0 ∧ (8 * 1) % 12 = 8 ∧
     (8 * 2) % 12 = 4 ∧ (8 * 3) % 12 = 0 := by decide
 
 /-- The 3-step walk's orbit in `ℤ/12ℤ` is `{0, 3, 6, 9}` — the
-**quartet**, the multiples-of-3 subgroup of order `12 / gcd(3, 12) = 4`.
+quartet, the multiples-of-3 subgroup of order `12 / gcd(3, 12) = 4`.
 Dual to the 8-head triad above. -/
 theorem three_step_orbit_is_quartet :
     (3 * 0) % 12 = 0 ∧ (3 * 1) % 12 = 3 ∧ (3 * 2) % 12 = 6 ∧
@@ -725,18 +725,18 @@ theorem hemiola_2x3_costs_clinamen_plus_one_with_pink_noise :
 /-! ## Perpetual hemiola: anchor, trajectory, fuel, cycle
 
 The system bundles four already-proved properties into one
-characterization: the BuleSpider lattice is a **perpetual hemiola** —
+characterization: the BuleSpider lattice is a perpetual hemiola —
 it can absorb any operator load, climb any rung of the coprime tower,
 reignite from the vacuum on one `+1` quantum, and never lose its
 three-face triad identity.
 
-* **Anchor**: the visible triad is invariant under any operator load
+* Anchor: the visible triad is invariant under any operator load
   (`visible_projection_invariant_under_operator_load`).
-* **Trajectory**: the coprime tower extends through every pair `(m, n)`
+* Trajectory: the coprime tower extends through every pair `(m, n)`
   with full-cycle closure (`coprime_aperiodic_full_cycle_generator`).
-* **Fuel**: every clinamen lift adds exactly `+1` to the carrier's
+* Fuel: every clinamen lift adds exactly `+1` to the carrier's
   score (`clinamen_lift_score_strict_increment`).
-* **Cycle**: after any vent-to-vacuum collapse, a single clinamen lift
+* Cycle: after any vent-to-vacuum collapse, a single clinamen lift
   produces a strictly positive carrier
   (`voluptas_is_eros_lift_from_vacuum`).
 

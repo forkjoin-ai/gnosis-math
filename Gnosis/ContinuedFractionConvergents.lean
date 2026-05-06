@@ -9,7 +9,7 @@ of rational convergents `p_n / q_n` by the recurrences
     p_{-2} = 0,  p_{-1} = 1,  p_n = a_n · p_{n-1} + p_{n-2}
     q_{-2} = 1,  q_{-1} = 0,  q_n = a_n · q_{n-1} + q_{n-2}.
 
-The **fundamental determinant identity** (Cassini-style) states that for
+The fundamental determinant identity (Cassini-style) states that for
 every `n ≥ 1`,
 
     p_n · q_{n-1} - p_{n-1} · q_n = (-1)^(n-1),

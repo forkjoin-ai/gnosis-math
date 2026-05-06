@@ -13,12 +13,12 @@ phase-wall proximity.
 Dark walls (5, 6, 7, 10, 11) don't directly intersect SM walls (0, 3, 8, 12),
 but they couple *through* each other via:
 
-1. **GCD coupling**: Dark walls with a common factor couple more strongly.
+1. GCD coupling: Dark walls with a common factor couple more strongly.
    - gcd(6, 3) = 3 → the Hexon couples to the SM Triton (by 2× doubling)
    - gcd(10, 26) = 2 → the Decagon couples to the bosonic string signature
    - gcd(5, {0,3,8,12}) = 1 → the Pentagon is the darkest wall
 
-2. **Proximity coupling**: Distance between dark walls in the tower determines
+2. Proximity coupling: Distance between dark walls in the tower determines
    coupling strength:
    - Hexon (6) is closest to SM (between 3 and 8)
    - Decagon (10) is next (between 8 and 12)
@@ -26,7 +26,7 @@ but they couple *through* each other via:
    - Septagon (7) is between Hexon and Octagon
    - Pentagon (5) is furthest from both SM clusters
 
-3. **Vacuum reach**: All dark walls couple to the vacuum carrier
+3. Vacuum reach: All dark walls couple to the vacuum carrier
    `vacuumBuleUnit` by its universal reachability.
 
 ## Types

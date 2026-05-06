@@ -255,7 +255,7 @@ theorem Z_quineW_on_one : Z quineW one = xElt := by decide
 theorem encodeA_Z_quineW_on_one : encodeA (Z quineW one) = 2 := by decide
 
 /--
-**The cobordism quine.** The partition function `Z` applied to the
+The cobordism quine. The partition function `Z` applied to the
 explicit cobordism `quineW = [cup]` on input `1`, read back as a
 `Nat` via `encodeA`, equals the Gödel-style encoding `encodeCob` of
 the cobordism word itself.
@@ -282,7 +282,7 @@ theorem encodeCob_nonQuineW : encodeCob nonQuineW = 1 := by decide
 theorem Z_nonQuineW_on_one : Z nonQuineW one = zeroA := by decide
 
 /--
-**The quine condition is not vacuous.** Under the same encoding,
+The quine condition is not vacuous. Under the same encoding,
 the cobordism `[cap]` witnesses a concrete mismatch between
 `encodeA (Z W ·)` and `encodeCob W`: the two codes are `0` and `1`.
 -/

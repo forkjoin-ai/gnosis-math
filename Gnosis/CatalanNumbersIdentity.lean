@@ -31,7 +31,7 @@ is observable by `decide` on the same small range.
 
 ## Caveats
 
-* This is **not** a proof of the general identity
+* This is not a proof of the general identity
   `catalanRec n = catalanBinom n`; it is only the small-`n` table.
 * No generating-function argument appears here.
 * The equality `dyckPaths.length n = catalanRec n` is witnessed by

@@ -6,7 +6,7 @@ import Gnosis.GodFormula
 
 ZeckendorfCompleteness proved the greedy algorithm produces non-consecutive
 Fibonacci decompositions for every positive integer. This file enters the
-door: **Fibonacci coding is Zeckendorf applied to data compression.**
+door: Fibonacci coding is Zeckendorf applied to data compression.
 
 Fibonacci coding (Fraenkel, 1985):
 - Represent integer n using its Zeckendorf decomposition

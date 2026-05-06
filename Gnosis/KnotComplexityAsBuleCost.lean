@@ -6,8 +6,8 @@ import Gnosis.Braided.BraidedTower
 /-!
 # Knot Complexity As Bule Cost — Wave-11 Bridge
 
-This module formalizes Taylor's wave-11 insight: **the universe charges
-a cost for the complexity of knots.** That cost *maps to* the Bule unit;
+This module formalizes Taylor's wave-11 insight: the universe charges
+a cost for the complexity of knots. That cost *maps to* the Bule unit;
 that complexity *maps to* the `buleyUnitScore`.
 
 Five field labels — knot crossings, Bule clinamen lifts, no-cloning tax
@@ -122,7 +122,7 @@ def knot_of_buley_unit (b : BuleyUnit) : KnotDiagram :=
 @[simp] theorem knot_of_buley_unit_crossing_count (b : BuleyUnit) :
     (knot_of_buley_unit b).crossing_count = buleyUnitScore b := rfl
 
-/-- **Bridge theorem.** For any `BuleyUnit b`, the crossing count of
+/-- Bridge theorem. For any `BuleyUnit b`, the crossing count of
 the natural knot equals the Bule score. The two accounting objects are
 the same. -/
 theorem knot_crossing_count_equals_bule_score (b : BuleyUnit) :
@@ -134,14 +134,14 @@ theorem knot_of_vacuum_is_unknot :
   show mkKnot (buleyUnitScore vacuumBuleUnit) = mkKnot 0
   rw [vacuum_has_zero_score]
 
-/-- **The "unknot is free" theorem.** The vacuum claim costs nothing
+/-- The "unknot is free" theorem. The vacuum claim costs nothing
 because there are no crossings to track. -/
 theorem unknot_has_zero_bule_cost :
     bule_cost_of_knot (knot_of_buley_unit vacuumBuleUnit) = 0 := by
   show buleyUnitScore vacuumBuleUnit = 0
   exact vacuum_has_zero_score
 
-/-- **The "lift adds a crossing" theorem.** For any `BuleyUnit b` and
+/-- The "lift adds a crossing" theorem. For any `BuleyUnit b` and
 `BuleyFace f`, applying `clinamenLift` literally adds one crossing to
 the natural knot. Each clinamen lift = one new crossing. -/
 theorem clinamen_lift_adds_one_crossing (b : BuleyUnit) (f : BuleyFace) :
@@ -214,7 +214,7 @@ theorem session_ledger_is_not_unknot :
 
 /-! ## The universe-tax theorem -/
 
-/-- **Universe-tax theorem.** For any `KnotDiagram K`, `bule_cost_of_knot
+/-- Universe-tax theorem. For any `KnotDiagram K`, `bule_cost_of_knot
 K ≥ 0`, with equality iff `K` is the unknot (zero crossings). The
 universe charges a positive tax for every non-trivial topology. -/
 theorem universe_taxes_knot_complexity (K : KnotDiagram) :
@@ -263,7 +263,7 @@ def knot_of_tower_phase_count (n : Nat) : KnotDiagram := mkKnot n
 @[simp] theorem knot_of_tower_phase_count_crossing_count (n : Nat) :
     (knot_of_tower_phase_count n).crossing_count = n := rfl
 
-/-- **Braided-tower bridge.** When a `BraidedTower` has `phaseCount n`,
+/-- Braided-tower bridge. When a `BraidedTower` has `phaseCount n`,
 its corresponding knot has `n` crossings. The braid closure (Markov's
 theorem, on-the-nose here) makes the braid into a knot whose crossing
 number is the braid's phase count. -/

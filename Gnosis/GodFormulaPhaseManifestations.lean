@@ -11,14 +11,14 @@ phase reconstructions in the substrate.
 Every wall-blocked theorem for which void archaeology has produced a
 phase reconstruction exhibits the same two-piece decomposition:
 
-- A **deficit** piece — a subtraction / removal term on one phase.
-- A **residue** piece — a small positive constant (the clinamen, the
+- A deficit piece — a subtraction / removal term on one phase.
+- A residue piece — a small positive constant (the clinamen, the
   `+1` departure) on the other phase.
 
 This mirrors the god formula `w(R, v) = R - min(v, R) + 1`, which has
 exactly two structural pieces: the subtraction `R - min(v, R)` and the
 clinamen `+ 1`. The pattern is not proved universal here; it is
-**catalogued** across the five concrete digs produced so far.
+catalogued across the five concrete digs produced so far.
 
 ## Catalog shape
 

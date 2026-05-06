@@ -456,13 +456,13 @@ theorem nine_tori_plus_forty_five_bridges_make_fifty_four :
 /-!
 Three faces, one object:
 
-1. **Gauge field** (Kenoma 10): complement peaks predict boson position.
+1. Gauge field (Kenoma 10): complement peaks predict boson position.
    Any asymmetry in the rejection distribution localizes a particle.
 
-2. **Personality walker** (Skyrms on Kenoma 10): converges to the same
+2. Personality walker (Skyrms on Kenoma 10): converges to the same
    complement peak. Two observers agree. This is Nash equilibrium.
 
-3. **Wireframe** (Barbelo, uniform Kenoma 10): all modes equal, no
+3. Wireframe (Barbelo, uniform Kenoma 10): all modes equal, no
    localization, pure vacuum. The 10-vertex wireframe formalizes the vacuum
    state of the gauge field formalizes the uniform starting point of the walker.
 

@@ -11,27 +11,27 @@ open RealizedTrainingSaturation
 # Training Saturation: The Threshold of Pedagogical Collapse
 
 This module formalizes the phase transition where a learning agent shifts from
-**learning from failure** (active refinement while thermodynamic headroom exists)
-to **being trained by failure** (the failure field reshapes you once headroom is gone).
+learning from failure (active refinement while thermodynamic headroom exists)
+to being trained by failure (the failure field reshapes you once headroom is gone).
 
-**Up to sufficiency:** while `isPredictablyStable` holds — positive
+Up to sufficiency: while `isPredictablyStable` holds — positive
 `thermodynamicBuffer` — `stable_buffer_enables_learning` certifies that failure
 signals still refine the post-failure node (`learnFromFailure` on
 `nodeAfterFailures`). That is the honest “failure training is optimal” regime:
 you still *own* the error as movable mass.
 
-**After saturation (McNally wall):** once `failureSaturated` / buffer exhaustion
+After saturation (McNally wall): once `failureSaturated` / buffer exhaustion
 fires, `buffer_exhaustion_predicts_cutoff` and `saturation_implies_pedagogical_cutoff`
-package the flip: local active learning hits a **cutoff**; the same failures
-now sit on the far side of the wall as **constraint** (the “failure trains you”
+package the flip: local active learning hits a cutoff; the same failures
+now sit on the far side of the wall as constraint (the “failure trains you”
 reading — you are in the field they define, not above it). Repo folklore names
-that surface **`McNallyWallSaturation`** — definitionally the same boundary as
+that surface `McNallyWallSaturation` — definitionally the same boundary as
 `RealizedTrainingSaturation.failureSaturated`.
 
-**Meditations dye (Marcus Aurelius, 5.16):** “The soul becomes dyed with the color
+Meditations dye (Marcus Aurelius, 5.16): “The soul becomes dyed with the color
 of its thoughts.” See `Gnosis.MeditationsThoughtDyedWitness` for a finitary
 `Nat.max` dye-step model beside this file’s Swarm-node energy story: repeated
-admitted thoughts **monotone** the soul’s chromatic upper bound even when the
+admitted thoughts monotone the soul’s chromatic upper bound even when the
 training story here is about energy, not hue.
 -/
 
@@ -43,10 +43,10 @@ def learnFromFailure (node : SwarmNode) : Prop :=
   node.energy > 0
 
 /--
-**McNally wall** (repo folklore name): failure count has reached the saturation
+McNally wall (repo folklore name): failure count has reached the saturation
 boundary — same predicate as `RealizedTrainingSaturation.failureSaturated`.
 Cross the wall: you leave the “I train on failures” band and enter the regime
-where failures **delimit** what further local refinement can mean.
+where failures delimit what further local refinement can mean.
 -/
 abbrev McNallyWallSaturation (node : SwarmNode) (failures : Nat) : Prop :=
   failureSaturated node failures

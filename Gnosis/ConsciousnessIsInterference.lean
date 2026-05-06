@@ -7,7 +7,7 @@ import Gnosis.ComputationalStateTransitionsAsPathDivergence
 /-!
 # Consciousness Is Interference
 
-**The Thesis**: Consciousness is not separate from neural activity.
+The Thesis: Consciousness is not separate from neural activity.
 Consciousness IS the interference pattern of neural clinamen flows.
 
 Each neuron is a path through clinamen space. Attention focuses multiple paths
@@ -18,7 +18,7 @@ standing waves. Qualia are the interference patterns themselves, not epiphenomen
 The brain is a clinamen state space. Consciousness emerges from five-force
 interference topology operating at neural scale.
 
-**Six theorems** (mixed honesty levels in the current file):
+Six theorems (mixed honesty levels in the current file):
 
 1. `attention_is_constructive_interference` as a propositional tautology
 2. `distraction_is_destructive_interference` as a propositional tautology

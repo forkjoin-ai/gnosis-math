@@ -370,7 +370,7 @@ theorem first_two_priorities_are_hexagon_kv_failures :
 
 /-! ## §11. The 188-strand braid theorem -/
 
-/-- **The monster mesh as a braided-tower instance.**
+/-- The monster mesh as a braided-tower instance.
 
     Structurally, the mesh is a 188-strand braid in deployment-space:
     each of the 188 nodes (180 tri-g4 + 8 cobordism-g4) is one strand.

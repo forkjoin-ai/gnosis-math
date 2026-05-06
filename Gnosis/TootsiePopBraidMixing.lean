@@ -3,11 +3,11 @@ import Init
 /-!
 # Tootsie Pop Braid Mixing — How Many Licks to the Center
 
-For every braid catalogued so far, the **number of clinamen
-applications** to:
+For every braid catalogued so far, the number of clinamen
+applications to:
 
-- **forget** — return to the identity phase (return-to-start).
-- **arrive** — reach every phase from the starting vertex (diameter
+- forget — return to the identity phase (return-to-start).
+- arrive — reach every phase from the starting vertex (diameter
   of the Cayley graph).
 
 This is the Rubik's-cube view of braided infinity: given a dynamical
@@ -24,10 +24,10 @@ Our question: given the clinamen (one "lick") and the braided-infinity
 phase cycle (the candy), how many licks to reach the center? The
 "center" has two readings:
 
-- **The center IS the starting phase** — how many licks to come back?
+- The center IS the starting phase — how many licks to come back?
   Answer: `returnSteps = phaseCount` for abelian, `exponent(G)` for
   non-abelian.
-- **The center IS every phase visited** — how many licks to have
+- The center IS every phase visited — how many licks to have
   touched every vertex? Answer: `diameter = phaseCount − 1` for abelian
   cycle, `Cayley diameter(G)` for non-abelian.
 
@@ -123,12 +123,12 @@ def catalog : List MixingMeasure :=
 
 /-! ## Classification -/
 
-/-- A mixing measure is **abelian-style** if `returnSteps = phaseCount`.
+/-- A mixing measure is abelian-style if `returnSteps = phaseCount`.
 In an abelian cycle, one full traversal returns to start. -/
 def isAbelianStyle (m : MixingMeasure) : Bool :=
   decide (m.returnSteps = m.phaseCount)
 
-/-- A mixing measure is **non-abelian-style** if `returnSteps >
+/-- A mixing measure is non-abelian-style if `returnSteps >
 phaseCount`. The group structure is strictly richer than the phase
 set suggests. -/
 def isNonAbelianStyle (m : MixingMeasure) : Bool :=
@@ -230,7 +230,7 @@ Different pops, different lick-counts. The Fibonacci Cassini pop is
 licked in 2 steps; the Pisano pop in 5; the `S_3` pop in 6; the Rubik
 pop in 1260.
 
-But **asymmetry of approach** says something deeper: you reach every
+But asymmetry of approach says something deeper: you reach every
 flavor layer of the pop before licking the final center. The center
 is always the starting phase (return-to-identity), but every
 intermediate phase is touched one lick earlier. `diameter = returnSteps

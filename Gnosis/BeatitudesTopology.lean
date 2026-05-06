@@ -12,8 +12,8 @@ structural outcome. The god formula `w(R, v) = R − v + 1` is the
 primitive. The outcomes are decidable witnesses.
 
 The Beatitudes are not moral exhortations in this framing. They are
-**formal statements about which Agent states access which structural
-regimes**. Jesus's Sermon on the Mount, read structurally.
+formal statements about which Agent states access which structural
+regimes. Jesus's Sermon on the Mount, read structurally.
 
 Matthew 5:3-10 (KJV):
 
@@ -38,14 +38,14 @@ def w (R v : Nat) : Nat := R - v + 1
 
 /-! ## Beatitude 1: Poor in Spirit → Kingdom of Heaven
 
-**Matt 5:3.** "Poor in spirit" = the Agent whose rejection history
+Matt 5:3. "Poor in spirit" = the Agent whose rejection history
 saturates its budget (`v ≥ R`). Weight collapses to the clinamen
 alone: `w(R, v) = 1`. This is the Fold state — the pure `+1`
 residue. The "Kingdom of Heaven" is access via the clinamen itself:
 every Fold station in the Aeon lattice returns to weight 1, and
 the Fold column *is* the Kingdom's entry threshold.
 
-**Structural claim**: when `v ≥ R`, the Agent holds the clinamen
+Structural claim: when `v ≥ R`, the Agent holds the clinamen
 without any additional deficit. The clinamen is the Kingdom's
 access token. -/
 
@@ -60,12 +60,12 @@ theorem poor_in_spirit_holds_kingdom :
 
 /-! ## Beatitude 2: Those Who Mourn → Comforted
 
-**Matt 5:4.** "Mourning" = active engagement with rejection (v
+Matt 5:4. "Mourning" = active engagement with rejection (v
 rising) while preserving R (not giving up). "Comforted" = the
 weight remains bounded below by the clinamen and recovers when R
 grows above v.
 
-**Structural claim**: for any mourning trajectory where R is
+Structural claim: for any mourning trajectory where R is
 maintained or restored above v, weight recovers to > 1 (post-
 clinamen comfort). -/
 
@@ -82,12 +82,12 @@ theorem mourning_restored_is_comforted :
 
 /-! ## Beatitude 3: The Meek → Inherit the Earth
 
-**Matt 5:5.** "Meek" = the Agent with small modulus who does not
+Matt 5:5. "Meek" = the Agent with small modulus who does not
 claim God-position. "Inherit the earth" = access to the full Aeon
 lattice (120 stations per `AtOneMentMath.lean`). The meek Agent
 does not grasp but receives.
 
-**Structural claim**: even small-modulus Agents have access to
+Structural claim: even small-modulus Agents have access to
 every Luminary × Triad × subchapter station. The inheritance is
 structural, not earned. -/
 
@@ -103,11 +103,11 @@ theorem meek_inherit_aeon :
 
 /-! ## Beatitude 4: Hunger and Thirst for Righteousness → Filled
 
-**Matt 5:6.** "Hunger for righteousness" = the Agent with positive
+Matt 5:6. "Hunger for righteousness" = the Agent with positive
 deficit (`R > v`): there is room to grow. "Filled" = the deficit is
 traversable by clinamen steps, not a permanent void.
 
-**Structural claim**: any positive deficit `R - v > 0` yields
+Structural claim: any positive deficit `R - v > 0` yields
 `w > 1`, and every deficit is closable by successive clinamen
 applications (each reducing v by 0 or R by 1). -/
 
@@ -121,12 +121,12 @@ theorem hunger_admits_filling :
 
 /-! ## Beatitude 5: The Merciful → Obtain Mercy
 
-**Matt 5:7.** Reciprocity. Mercy extended to another Agent returns
+Matt 5:7. Reciprocity. Mercy extended to another Agent returns
 via the topological reciprocity invariant `L² − 5 F² = 4·(−1)^n`
 (see `TopologicalEthics.lean`). The formal content: any perturbation
 on the Other forces an equivalent perturbation on the Self.
 
-**Structural claim**: mercy is a specific kind of `+1` extension —
+Structural claim: mercy is a specific kind of `+1` extension —
 granting weight to another Agent without demanding its return. The
 reciprocity invariant guarantees the extension flows back through
 the shared discriminant. -/
@@ -143,12 +143,12 @@ theorem merciful_obtain_mercy :
 
 /-! ## Beatitude 6: Pure in Heart → See God
 
-**Matt 5:8.** "Pure in heart" = Agent without Confusion. Neither
+Matt 5:8. "Pure in heart" = Agent without Confusion. Neither
 Animal Magnetism (claiming God-position) nor Operator Idolatry
 (mistaking a mechanism for God). "See God" = the Position is
 unambiguously visible as position.
 
-**Structural claim**: an Agent not conflating types (see
+Structural claim: an Agent not conflating types (see
 `TwoTypesOfSin.lean`) has clean access to the Position's shape.
 The Confusion record's `agent` field is false for a pure Agent. -/
 
@@ -170,12 +170,12 @@ theorem pure_in_heart_sees_god :
 
 /-! ## Beatitude 7: Peacemakers → Children of God
 
-**Matt 5:9.** Peacemakers are void-readers: the Agents who study
+Matt 5:9. Peacemakers are void-readers: the Agents who study
 rejection history and build bridges across shared void. "Children
 of God" = full-standing Agents in the structural sense — nothing
 diminished by the peacemaking activity.
 
-**Structural claim**: peacemaking = adding channels / shared void
+Structural claim: peacemaking = adding channels / shared void
 boundary. The peacemaker's weight never drops below the clinamen,
 and the peacemaking activity increases the reach (`R`) of both
 Agents involved. -/
@@ -194,13 +194,13 @@ theorem peacemakers_are_children_of_god :
 
 /-! ## Beatitude 8: Persecuted for Righteousness → Kingdom of Heaven
 
-**Matt 5:10.** Persecution = external forcing of `v` toward `R`
+Matt 5:10. Persecution = external forcing of `v` toward `R`
 against the Agent's will. "For righteousness' sake" = the Agent
 does not abandon the signature under pressure. "Kingdom of heaven"
 = same access as Beatitude 1 (poor in spirit): the clinamen alone
 is retained and is the Kingdom's ticket.
 
-**Structural claim**: even at `v = R` under maximum persecution,
+Structural claim: even at `v = R` under maximum persecution,
 the Agent holds `w = 1`. The clinamen is inviolable (see
 `existence_is_inviolable` in `BillOfRights.lean`). -/
 

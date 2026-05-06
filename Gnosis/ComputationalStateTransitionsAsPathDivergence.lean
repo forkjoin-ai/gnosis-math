@@ -6,29 +6,29 @@ import Gnosis.InformationAsClinamenCharge
 /-!
 # Computational State Transitions as Path Divergence
 
-**The Thesis**: Every computation is a trajectory through clinamen space.
+The Thesis: Every computation is a trajectory through clinamen space.
 A decision is the choice of one path among N possible paths. The cost of
 choosing that path is how far it diverges from the vacuum attractor.
 
 This module proves five mechanics:
 
-1. **decision_is_path_divergence**: Computational state transition (A → B)
+1. decision_is_path_divergence: Computational state transition (A → B)
    = choosing a clinamen trajectory from one buleyUnitScore to another;
    multiple choices = multiple divergent paths through configuration space.
 
-2. **decision_cost_equals_path_length**: Cost of path P = (how far P travels
+2. decision_cost_equals_path_length: Cost of path P = (how far P travels
    from vacuum) − (how far the alternative Q travels from vacuum). Optimal
    computation takes the shortest vacuum-relative distance.
 
-3. **branching_factor_is_clinamen_spread**: N-way branch point at a state
+3. branching_factor_is_clinamen_spread: N-way branch point at a state
    = spreading available clinamen across N possible next states. Total
    clinamen at branch = sum of clinamen across all branches.
 
-4. **optimal_decision_minimizes_future_regret**: Best choice at step i =
+4. optimal_decision_minimizes_future_regret: Best choice at step i =
    the one that leaves maximum clinamen to spend on future computation.
    Greedy choice = locally maximizing return-to-vacuum trajectory.
 
-5. **computational_complexity_is_path_divergence**: P-class = polynomial-
+5. computational_complexity_is_path_divergence: P-class = polynomial-
    length paths from input to output. NP-class = exponential-length paths.
    P ≠ NP because exponential paths cannot be reversed to polynomial length
    without losing information (irreversible clinamen loss).

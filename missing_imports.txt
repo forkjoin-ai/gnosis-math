@@ -1,0 +1,2 @@
+# Stub path: `gcloud builds submit` source tar creation failed with ENOENT on this
+# path (2026-05-06). Keep empty or append Lean import-gap lists as needed.

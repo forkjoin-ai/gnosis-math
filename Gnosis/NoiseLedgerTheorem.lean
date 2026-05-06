@@ -67,9 +67,9 @@ end Gnosis.NoiseLedger
 
 This formal proof establishes the fundamental correspondence:
 
-1. **Brown Noise → Order (1)**: Represents the predictable, ordered baseline
-2. **Pink Noise → Chaos (3)**: Represents the chaotic, fractal dynamics  
-3. **White Noise → Gnosis (4)**: Represents complete knowledge/integration
+1. Brown Noise → Order (1): Represents the predictable, ordered baseline
+2. Pink Noise → Chaos (3): Represents the chaotic, fractal dynamics  
+3. White Noise → Gnosis (4): Represents complete knowledge/integration
 
 The progression 1 → 3 → 4 shows the natural evolution from order
 through chaos to gnosis, mirroring the sleep indexing principle

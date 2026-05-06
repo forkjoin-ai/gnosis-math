@@ -25,7 +25,7 @@ structure TemporalSegment where
 def isCompact (s : TemporalSegment) : Prop :=
   s.betti1 = 0
 
-/-- **Theorem: The Pleromatic Patch.**
+/-- Theorem: The Pleromatic Patch.
 If a segment has a Betti-1 hole, we can patch it by enforcing the 
 Closure-10 invariant. This 'compactifies' the manifold, restoring 
 temporal continuity. -/
@@ -36,7 +36,7 @@ theorem pleromatic_patch_restores_compactness (s : TemporalSegment) :
   -- In software, this is the 'Topological Repair' operation.
   exact ⟨{ data := s.data, betti1 := 0 }, rfl⟩
 
-/-- **The Signature Detection Theorem.**
+/-- The Signature Detection Theorem.
 A glitch is formally defined as the moment where the 
 TopologyOfAgreement fails (betti1 > 0). -/
 theorem glitch_is_betti_violation (s : TemporalSegment) :

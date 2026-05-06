@@ -5,11 +5,11 @@ import Gnosis.SpectralNoiseEquilibrium
 
 The three faces of the Bule unit admit three equivalent labelings:
 
-* **Operational** — `waste` / `opportunity` / `diversity`
+* Operational — `waste` / `opportunity` / `diversity`
   (the cost-axis labels used everywhere else in this calculus).
-* **Temporal** — `past` / `present` / `future`
+* Temporal — `past` / `present` / `future`
   (the Triton-style temporal phases).
-* **Search** (transformer Q/K/V) — `payload` / `storage` / `search`
+* Search (transformer Q/K/V) — `payload` / `storage` / `search`
   (the attention-head-projection labels).
 
 The three labelings agree under bijection, and the `cyclePermute`

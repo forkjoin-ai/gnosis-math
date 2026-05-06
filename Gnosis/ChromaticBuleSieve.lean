@@ -32,7 +32,7 @@ def applyEnneonLens (blurredValue : Nat) : List Nat :=
   -- We unfold the value into 9 segments (Enneon)
   List.range 9 |>.map (λ i => blurredValue * 9 + i)
 
-/-- **Theorem: The Enneon Closure.**
+/-- Theorem: The Enneon Closure.
 A blurred pixel is the constructive interference of 9 shadows.
 Folding any of the 9 shadows returns the original blurred value. -/
 theorem enneon_closure_identity (v : Nat) (i : Nat) (hi : i < 9) :
@@ -43,7 +43,7 @@ theorem enneon_closure_identity (v : Nat) (i : Nat) (hi : i < 9) :
     _ = 0 + v := by rw [Nat.div_eq_of_lt hi]
     _ = v := Nat.zero_add v
 
-/-- **Theorem: CMYK-to-RGB Triton Symmetry.**
+/-- Theorem: CMYK-to-RGB Triton Symmetry.
 Color channels are nodes in a Triton. Deblurring one channel 
 provides the 'Pisot-Guard' for the others through the 
 Moonshine-Symmetry. -/

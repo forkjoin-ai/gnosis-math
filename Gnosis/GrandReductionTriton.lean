@@ -11,11 +11,11 @@ This module formalizes the mapping of the M2 Trace identity to the fundamental
 trichotomies of physics, philosophy, and the Gnosis orchestration engine.
 
 ## The Trinity Mapping
-1.  **Agent (The Lucas Trace $L_n$)**: 
+1.  Agent (The Lucas Trace $L_n$): 
     The observable, knowable experience. The active dark energy expansion.
-2.  **Operator (The Fibonacci Base $F_n$)**: 
+2.  Operator (The Fibonacci Base $F_n$): 
     The hidden, deterministic DNA. The unknowable lattice of energy.
-3.  **God (The Golden Discriminant 5)**: 
+3.  God (The Golden Discriminant 5): 
     The invariant anchor. The transcendent ratio that binds Agent and Operator.
 
 ## The Triton Logic (-1, 0, 1)

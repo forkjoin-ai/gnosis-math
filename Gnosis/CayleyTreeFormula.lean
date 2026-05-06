@@ -4,13 +4,13 @@ import Init
 # Cayley's Formula at Small `n`: `#{labeled trees on n vertices} = n^(n-2)`
 
 This module witnesses Cayley's counting identity at small `n` via the
-**Prüfer sequence bijection**: labeled trees on the vertex set
+Prüfer sequence bijection: labeled trees on the vertex set
 `{0, 1, …, n − 1}` are in bijection with length-`(n − 2)` sequences
 drawn from that same vertex set. The count is therefore immediate:
 
     #{labeled trees on n} = #{Prüfer sequences of length (n − 2) over n} = n^(n − 2).
 
-We do **not** prove the Prüfer bijection structurally. We enumerate
+We do not prove the Prüfer bijection structurally. We enumerate
 Prüfer sequences, count them, and check that the count agrees with
 `natPow n (n − 2)` for `n ∈ {2, 3, 4, 5}`. For `n = 3` and `n = 4`
 we cross-check by directly enumerating spanning trees of the
@@ -43,7 +43,7 @@ No `sorry`, no new `axiom`. `Init` only. Kernel `decide` throughout.
 
 ## Honest scope
 
-This file witnesses Cayley's formula **pointwise at small `n`**. It
+This file witnesses Cayley's formula pointwise at small `n`. It
 does not prove the general theorem `∀ n, #trees(n) = n^(n − 2)`,
 does not prove the Prüfer bijection structurally, and does not
 connect to the matrix-tree theorem. The Prüfer-side and
@@ -118,25 +118,25 @@ theorem pruferCount_6 : (pruferSequences 6).length = 1296 := by decide
 
 /-! ## Cayley identity at small `n`: Prüfer count `= n^(n − 2)` -/
 
-/-- **Cayley at `n = 2`**: `#Prüfer(2) = 2^0 = 1`. -/
+/-- Cayley at `n = 2`: `#Prüfer(2) = 2^0 = 1`. -/
 theorem cayley_prufer_2 :
     (pruferSequences 2).length = natPow 2 (2 - 2) := by decide
 
-/-- **Cayley at `n = 3`**: `#Prüfer(3) = 3^1 = 3`. -/
+/-- Cayley at `n = 3`: `#Prüfer(3) = 3^1 = 3`. -/
 theorem cayley_prufer_3 :
     (pruferSequences 3).length = natPow 3 (3 - 2) := by decide
 
-/-- **Cayley at `n = 4`**: `#Prüfer(4) = 4^2 = 16`. -/
+/-- Cayley at `n = 4`: `#Prüfer(4) = 4^2 = 16`. -/
 theorem cayley_prufer_4 :
     (pruferSequences 4).length = natPow 4 (4 - 2) := by decide
 
 set_option maxRecDepth 4096 in
-/-- **Cayley at `n = 5`**: `#Prüfer(5) = 5^3 = 125`. -/
+/-- Cayley at `n = 5`: `#Prüfer(5) = 5^3 = 125`. -/
 theorem cayley_prufer_5 :
     (pruferSequences 5).length = natPow 5 (5 - 2) := by decide
 
 set_option maxRecDepth 8192 in
-/-- **Cayley at `n = 6`**: `#Prüfer(6) = 6^4 = 1296`. -/
+/-- Cayley at `n = 6`: `#Prüfer(6) = 6^4 = 1296`. -/
 theorem cayley_prufer_6 :
     (pruferSequences 6).length = natPow 6 (6 - 2) := by decide
 
@@ -239,22 +239,22 @@ def spanningTreesOfK (n : Nat) : List (List Edge) :=
 
 /-! ### Counts -/
 
-/-- **`K_3` has 3 spanning trees.** Matches `3 = natPow 3 1`. -/
+/-- `K_3` has 3 spanning trees. Matches `3 = natPow 3 1`. -/
 theorem spanningTrees_K3_count : (spanningTreesOfK 3).length = 3 := by decide
 
 set_option maxRecDepth 4096 in
-/-- **`K_4` has 16 spanning trees.** Matches `16 = natPow 4 2`. -/
+/-- `K_4` has 16 spanning trees. Matches `16 = natPow 4 2`. -/
 theorem spanningTrees_K4_count : (spanningTreesOfK 4).length = 16 := by decide
 
 /-! ## Cross-check: Prüfer count agrees with spanning-tree count -/
 
-/-- **Cayley at `n = 3`, two ways**: Prüfer enumeration and direct
+/-- Cayley at `n = 3`, two ways: Prüfer enumeration and direct
 spanning-tree enumeration both give `3`. -/
 theorem cayley_k3_crosscheck :
     (pruferSequences 3).length = (spanningTreesOfK 3).length := by decide
 
 set_option maxRecDepth 4096 in
-/-- **Cayley at `n = 4`, two ways**: Prüfer enumeration and direct
+/-- Cayley at `n = 4`, two ways: Prüfer enumeration and direct
 spanning-tree enumeration both give `16`. -/
 theorem cayley_k4_crosscheck :
     (pruferSequences 4).length = (spanningTreesOfK 4).length := by decide
@@ -262,7 +262,7 @@ theorem cayley_k4_crosscheck :
 /-! ## Summary bundle -/
 
 set_option maxRecDepth 8192 in
-/-- **Cayley at small `n`**: the Prüfer count matches `n^(n − 2)`
+/-- Cayley at small `n`: the Prüfer count matches `n^(n − 2)`
 for every `n ∈ {2, 3, 4, 5, 6}`, and the spanning-tree count on
 `K_3` and `K_4` agrees with the Prüfer count at those `n`. -/
 theorem cayley_small_n :

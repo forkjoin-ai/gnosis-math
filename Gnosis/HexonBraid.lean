@@ -9,13 +9,13 @@ import Gnosis.BuleyClinamenBraid
 Mechanizes the structural claim that two Tritons stacked give a 6-phase
 object — a "hexon." Three equivalent constructions are exposed:
 
-1. **Direct sum** — `Hexon = TritonStack ≅ Triton ⊕ Triton`. Two stacked
+1. Direct sum — `Hexon = TritonStack ≅ Triton ⊕ Triton`. Two stacked
    Tritons whose 3 + 3 vertices form a 6-cycle.
-2. **Cartesian product** — `Hexon ≅ TritonPhase × BiSidedSide`. A Triton
+2. Cartesian product — `Hexon ≅ TritonPhase × BiSidedSide`. A Triton
    phase paired with a bi-sided-bit face (`lifted` / `contracted`) gives
    the same 6-cycle. This is the natural reading of the `+1 / −1`
    clinamen attached to a temporal phase.
-3. **Braided asymptote** — `Hexon ≅ BraidedAsymptote { phaseCount := 6 }`.
+3. Braided asymptote — `Hexon ≅ BraidedAsymptote { phaseCount := 6 }`.
    The same 6-cycle, viewed as a return-after-six dynamical system on the
    index ring `Fin 6`.
 

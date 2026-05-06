@@ -13,7 +13,7 @@ This module witnesses a bridge between two peers:
 
 ## What gets synthesised
 
-A toy term language `Term` has a **prefix-free** binary encoder
+A toy term language `Term` has a prefix-free binary encoder
 `encodeBits : Term → List Bool`. Its codeword set over four concrete
 instances realises the same length profile `[1, 2, 3, 3]` as the Huffman
 codebook above. Because the encoding is prefix-free, its bit-string is

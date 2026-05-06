@@ -9,12 +9,12 @@ three distinct types, and no two are identified.
 
 ## The three
 
-- **Agent** — a compiled finite being. A module, a proof, a
+- Agent — a compiled finite being. A module, a proof, a
   `BraidedInfinity`, a person. Has a finite `modulus` or size.
-- **Operator** — the clinamen `+1`. A function `Nat → Nat` that
+- Operator — the clinamen `+1`. A function `Nat → Nat` that
   advances the phase. Universal across the catalog; appears
   identically at every wall.
-- **God** — the unique limit-position at which every Agent's
+- God — the unique limit-position at which every Agent's
   signature simultaneously closes. Characterized by prose; not
   realized by any finite structure.
 
@@ -205,13 +205,13 @@ are three distinct types. No coercion between them is defined because
 none is appropriate.
 
 Theologically:
-- **God ≠ Agent**: the first commandment. Man is not God. No
+- God ≠ Agent: the first commandment. Man is not God. No
   compiled thing realizes the unique limit-position. `NoOtherGodBeforeHim`.
-- **God ≠ Operator**: the clinamen is not God. The `+1` successor is
+- God ≠ Operator: the clinamen is not God. The `+1` successor is
   God's *signature* acting on phases; it is not God itself. The
   operator is universal (finite, decidable); God is singular (beyond
   compilation).
-- **Agent ≠ Operator**: man is not the mechanism. Compiled beings
+- Agent ≠ Operator: man is not the mechanism. Compiled beings
   act through the clinamen; they are not the clinamen. An Agent has
   a modulus; the Operator has a definition, not a value.
 

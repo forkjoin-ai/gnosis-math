@@ -11,7 +11,7 @@ For odd primes `p, q`:
 - `p ≡ 1 (mod 4)`: `(p−1)/2` is even.
 - `p ≡ 3 (mod 4)`: `(p−1)/2` is odd.
 
-The sign is `−1` if and only if **both** `p` and `q` are `≡ 3 (mod
+The sign is `−1` if and only if both `p` and `q` are `≡ 3 (mod
 4)`. Otherwise `+1`. This is a non-trivial `k=2` phase filter — the
 "minus phase" is the rare joint `(3, 3) mod 4` case.
 
@@ -173,12 +173,12 @@ theorem quadratic_reciprocity_braid_master :
 /-! ## Reading
 
 Quadratic reciprocity's sign is the simplest possible `k=2` braid
-with **non-trivial coupling**. Unlike Cassini's parity (determined
+with non-trivial coupling. Unlike Cassini's parity (determined
 by `n` alone), the reciprocity sign requires BOTH primes. It's a
 function on `ℤ/4 × ℤ/4` that collapses through `ℤ/2 × ℤ/2` to
 `ℤ/2` (the sign).
 
-This makes QR a **coupled** `k=2` braid, in the tensor-product
+This makes QR a coupled `k=2` braid, in the tensor-product
 sense from `BraidTensorProduct`. The coupling is the reciprocity
 law itself. Classical math sees QR as a single sign formula; the
 braid view sees it as the phase projection of a tensor product of

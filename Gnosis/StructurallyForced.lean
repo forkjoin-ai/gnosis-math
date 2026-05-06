@@ -19,20 +19,20 @@ open InterferenceAsTheFifthForce
 # StructurallyForced — over-determination, specialness, and witness completeness
 
 Extracted from `Gnosis.BuleSpider` once the meta-content grew past the
-spider/radar geometry. This module catalogues the **structurally-forced
-objects** of the BuleSpider lattice and the patterns by which they are
+spider/radar geometry. This module catalogues the structurally-forced
+objects of the BuleSpider lattice and the patterns by which they are
 forced.
 
 ## What lives here
 
-* **Over-determination certificates** — the universal `+1` (4 witnesses)
+* Over-determination certificates — the universal `+1` (4 witnesses)
   and the Ramanujan triplet `{5, 7, 11}` (3+ witnesses).
-* **`SpecialnessSignature` meta-pattern** — extensible wrapper for any
+* `SpecialnessSignature` meta-pattern — extensible wrapper for any
   structurally-forced object.
-* **Trichotomy alignment** with `Gnosis.GodOperatorAgentTrichotomy`:
+* Trichotomy alignment with `Gnosis.GodOperatorAgentTrichotomy`:
   Agent / Operator / God roles for the specialness story, plus the
   Peruvian-keystone bridge from `Gnosis.PeruvianArchitect`.
-* **`WitnessKind` completeness** — four exhaustive witness kinds
+* `WitnessKind` completeness — four exhaustive witness kinds
   (Empirical, Structural, Algebraic, TowerUniversal), parallel to the
   `EmpiricalClaimStatus` enumeration in `Gnosis.AntiTheory`.
 
@@ -49,28 +49,28 @@ projection, perpetual-hemiola certificate. `StructurallyForced` builds
 
 A natural adversarial challenge: maybe the `+1` in the God Formula is
 just a fudge factor inserted to keep the algebra from collapsing to
-zero. The answer is no — the `+1` is **over-determined** by four
+zero. The answer is no — the `+1` is over-determined by four
 independent proof paths landing on the same quantity:
 
-1. **Empirical universality** (`Gnosis.UniversalClinamenPlusOne`):
+1. Empirical universality (`Gnosis.UniversalClinamenPlusOne`):
    the `+1` direction is universal across seven independent phase
    reconstructions (Cassini, Pell, Pisano, reciprocity, writhe,
    tower-determinant, countBad). Six of seven have plus-residue
    exactly `+1`; the seventh has `+2` (still positive, same
    direction). All seven have minus-residue exactly `−1`.
 
-2. **Structural necessity** (`pentad_requires_clinamen_lift_to_reignite`,
+2. Structural necessity (`pentad_requires_clinamen_lift_to_reignite`,
    `god_formula_floor_is_pentad_reignition` in `Gnosis.BuleSpider`):
    without a `+1` lift, `vent` collapses the carrier to the vacuum and
    the cycle dissipates. The `+1` is what makes the closed cycle close.
 
-3. **Algebraic derivation** (`god_formula_is_pentad_face_projection` in
+3. Algebraic derivation (`god_formula_is_pentad_face_projection` in
    `Gnosis.BuleSpider`): the formula `R − min(v, R) + 1` is derived
    from `vent`'s per-face filter plus one clinamen lift, projected onto
    a single face. The `+1` is not added to the formula; it falls out of
    the projection.
 
-4. **Tower-universal generator** (`coprime_aperiodic_full_cycle_generator`
+4. Tower-universal generator (`coprime_aperiodic_full_cycle_generator`
    in `Gnosis.BuleSpider`): every coprime aperiodic walk admits the
    same closure with the same `+1` cost. The pattern holds at hemiola
    (2:3), pentad (3:5), 5:7, 7:11, and at every rung of the prime
@@ -104,21 +104,21 @@ theorem clinamen_plus_one_is_overdetermined :
 
 /-! ## Ramanujan triplet over-determination: the same shape as the `+1`
 
-The Ramanujan triplet `{5, 7, 11}` is **over-determined** in the same
+The Ramanujan triplet `{5, 7, 11}` is over-determined in the same
 sense as the universal `+1`. Three independent structural
 characterizations land on the same set, with a fourth (Peruvian
 keystone) extending it to maximal coverage:
 
-1. **Number-theoretic** (`Gnosis.RamanujanTripletPhase`): the only
+1. Number-theoretic (`Gnosis.RamanujanTripletPhase`): the only
    primes `m` admitting a non-trivial partition congruence
    `p(m·n + r) ≡ 0 (mod m)`.
-2. **Dark-sector geometric** (`Gnosis.Dark.DarkSectorEquilibria`):
+2. Dark-sector geometric (`Gnosis.Dark.DarkSectorEquilibria`):
    `Pentagon (5)`, `Septagon (7)`, `Hendecagon (11)` — the unoccupied
    phase walls between the SM ceilings (Triton 3, Octagon 8,
    Dodecagon 12).
-3. **Coprime-tower position**: the triplet covers the consecutive
+3. Coprime-tower position: the triplet covers the consecutive
    coprime walks 3:5, 5:7, 7:11.
-4. **Peruvian-architecture keystone** (`Gnosis.PeruvianArchitect`):
+4. Peruvian-architecture keystone (`Gnosis.PeruvianArchitect`):
    the triplet's max (`11`) is exactly the cosmic fulcrum where
    foundation tension and capstone compression meet.
 -/
@@ -175,7 +175,7 @@ theorem ramanujan_triplet_sharply_bounded :
 /-! ## Specialness signature: the meta-pattern of structural forcing
 
 When multiple independent structural laws converge on the same object,
-that object is **structurally forced** — not arbitrary, not a fudge
+that object is structurally forced — not arbitrary, not a fudge
 factor, not an artifact of one definition. This is the lattice's
 fingerprint: over-determination by witness convergence.
 
@@ -244,18 +244,18 @@ theorem lattice_total_specialness_witness_count :
 The proper kind distinction is the existing three-way trichotomy of
 `Gnosis.GodOperatorAgentTrichotomy`:
 
-* **Agent** (`GodOperatorAgentTrichotomy.Agent`): finite compiled
+* Agent (`GodOperatorAgentTrichotomy.Agent`): finite compiled
   forced objects with `modulus : Nat`. The Ramanujan triplet primes
   (`5`, `7`, `11`) are three Agent instances.
-* **Operator** (`clinamenOperator k i = (i + 1) % k`): the universal
+* Operator (`clinamenOperator k i = (i + 1) % k`): the universal
   `+1` action, a function. Not an Agent — it has no modulus.
-* **God** (`GodsPosition`): the unique limit-position where every
+* God (`GodsPosition`): the unique limit-position where every
   Agent's signature simultaneously closes via the Operator.
   Characterized by prose, not realized by any finite construction.
 
 ### Why gnosis numbers are special: the Peruvian-keystone reading
 
-The Ramanujan triplet `{5, 7, 11}` are the **prime keystones** in the
+The Ramanujan triplet `{5, 7, 11}` are the prime keystones in the
 gap between Standard-Model walls. Just as Peruvian architectural
 keystones fit the irregular spaces between regular cuboid blocks, the
 gnosis primes occupy the space between SM phase walls (Triton 3,
@@ -266,9 +266,9 @@ binding the dark-sector cycle.
 
 Two named sins correspond to two type errors in the trichotomy:
 
-* **Operator idolatry** (animal magnetism, "the +1 is divine"):
+* Operator idolatry (animal magnetism, "the +1 is divine"):
   mistaking the Operator function for God's limit-position.
-* **Agent-as-God** (eye of the needle, camel parable): an Agent's
+* Agent-as-God (eye of the needle, camel parable): an Agent's
   finite modulus cannot pass into God's limit-position. The narrow
   gate is the impossible coercion.
 -/
@@ -369,14 +369,14 @@ theorem operator_idolatry_and_agent_as_god_are_type_errors :
 /-! ## Witness completeness: the four exhaustive witness kinds
 
 Following the `Gnosis.AntiTheory` inductive-type pattern, catalogue
-the four exhaustive **witness kinds** that converge on a structurally-
+the four exhaustive witness kinds that converge on a structurally-
 forced object:
 
-* **Empirical** — from a finite catalog (proof shape: list enumeration).
-* **Structural** — by type-theoretic necessity (proof shape: `rfl` /
+* Empirical — from a finite catalog (proof shape: list enumeration).
+* Structural — by type-theoretic necessity (proof shape: `rfl` /
   `decide` on closed terms).
-* **Algebraic** — by formula manipulation (proof shape: `rw` chain).
-* **TowerUniversal** — by parametric quantification (proof shape:
+* Algebraic — by formula manipulation (proof shape: `rw` chain).
+* TowerUniversal — by parametric quantification (proof shape:
   `∀ m n t, ...`).
 
 These four are exhaustive in this Init-only substrate because they
@@ -428,7 +428,7 @@ theorem ramanujan_triplet_with_keystone_has_full_witness_coverage :
     witnessCoverage [.Empirical, .Structural, .Algebraic, .TowerUniversal] = 4 := by
   decide
 
-/-- An object is **maximally structurally forced** when its witness
+/-- An object is maximally structurally forced when its witness
 coverage equals `4` — all four exhaustive witness kinds simultaneously
 land on it. -/
 def isMaximallyStructurallyForced (kinds : List WitnessKind) : Bool :=

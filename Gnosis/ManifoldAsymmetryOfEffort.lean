@@ -12,10 +12,10 @@ costs 0 Bule — once you are at Level 270, the path back to the
 to gain, but Wisdom (folding back to the Grounding) is effortless
 once you've reached the height.*
 
-The structural answer this module proves: **the closure tower has a
+The structural answer this module proves: the closure tower has a
 formal cost asymmetry. Ascent cost grows exponentially with the
 closure index; descent cost is always zero. Knowledge is
-exponentially expensive; wisdom is mechanically free.**
+exponentially expensive; wisdom is mechanically free.
 
 ## The cost ledger
 
@@ -25,8 +25,8 @@ exponentially expensive; wisdom is mechanically free.**
 | Grounding (10) → closureChain 1 (30) | Ascent | 20 Bule |
 | closureChain 1 (30) → closureChain 2 (90) | Ascent | 60 Bule |
 | closureChain 2 (90) → closureChain 3 (270) | Ascent | 180 Bule |
-| closureChain n → closureChain (n+1) | Ascent | **2 × closureChain n** |
-| closureChain (n+1) → closureChain n | Descent | **0** |
+| closureChain n → closureChain (n+1) | Ascent | 2 × closureChain n |
+| closureChain (n+1) → closureChain n | Descent | 0 |
 
 The ascent cost between successive closures is exactly twice the
 source closure's value: `closureChain (n+1) - closureChain n = 3 ×
@@ -39,7 +39,7 @@ is free.
 
 ## What this is
 
-A **cost-asymmetry theorem** for the closure tower. The +1 Bule
+A cost-asymmetry theorem for the closure tower. The +1 Bule
 heartbeat is the *unit cost of ascent*; descent does not consume
 this unit. The Sisyphean climb up the closure tower is therefore
 energetically asymmetric: each higher floor is twice as expensive
@@ -185,7 +185,7 @@ theorem total_descent_cost_is_zero (n : Nat) :
 
 /-! ## Master theorem: the asymmetry of effort -/
 
-/-- **Pleromatic Asymmetry of Effort master**: the closure tower
+/-- Pleromatic Asymmetry of Effort master: the closure tower
 has a formal cost asymmetry. Ascent from `closureChain n` to
 `closureChain (n + 1)` costs `2 × closureChain n` Bule, growing
 exponentially with the closure index. Descent via `universalFold`

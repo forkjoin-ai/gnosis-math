@@ -16,12 +16,12 @@ Complexity is irreducibility quantified as path-length-to-vacuum.
 
 ## Theorems
 
-1. **emergence_from_vacuum_pull**: For any complexity level, there exist
+1. emergence_from_vacuum_pull: For any complexity level, there exist
    structured systems with charges distributed across faces that still
    contract to the vacuum BUT take maximal steps to get there. Emergence
    arises from strategic clinamen placement that delays contraction.
 
-2. **order_from_irreducibility_not_randomness**: Organization emerges not
+2. order_from_irreducibility_not_randomness: Organization emerges not
    from entropy/randomness but from systems finding the LONGEST PATH to
    their terminal state (0,0,0). Structure is the knot that takes most rope.
 
@@ -34,7 +34,7 @@ The proof strategy uses:
 - intro (universal quantification over complexity levels)
 - refine (refinement of existence proofs)
 
-**Spec-level note**: Several theorems below were originally stated in
+Spec-level note: Several theorems below were originally stated in
 stronger forms (strictly-monotonic contraction, full irreducibility witness
 as a closed-form path). Init-only Lean cannot discharge those without
 Mathlib-level lemmas. Where the strong form is not provable from the
@@ -170,7 +170,7 @@ theorem contraction_transitive (p q r : ChargePoint)
     distance is exactly L, and which admit a (weakly) monotonic contraction
     path of any sufficient length that ends at vacuum.
 
-    **Weakened from the original**: the original statement bundled a strict-
+    Weakened from the original: the original statement bundled a strict-
     structuredness witness for every `complexity_level` (including 0). That
     is false at 0, since (0,0,0) is the vacuum and not structured. We
     therefore drop the `is_structured system` conjunct and keep the
@@ -243,7 +243,7 @@ theorem emergence_from_vacuum_pull :
 /-- Organization arises not from entropy/randomness but from systems finding
     a path to their terminal state whose length matches their irreducibility.
 
-    **Weakened from the original**: the original statement asserted (a) a
+    Weakened from the original: the original statement asserted (a) a
     strictly-decreasing greedy contraction at every step and (b) a global
     "no shorter monotonic path exists" lower bound. The strict-decrease
     claim depends on case analysis over `min` that Init-only Lean cannot
@@ -312,7 +312,7 @@ theorem complexity_equals_irreducibility (p : ChargePoint) (h : is_structured p)
 /-- The game of emergence: systems that persist longer are more complex.
     Complexity is a survival strategy in the face of vacuum-pull.
 
-    **Weakened from the original**: the original statement required every
+    Weakened from the original: the original statement required every
     intermediate step to satisfy the strict `is_contraction_step` predicate
     (with strict coordinate decrease at every step). Our weakened path
     witness from `order_from_irreducibility_not_randomness` only guarantees

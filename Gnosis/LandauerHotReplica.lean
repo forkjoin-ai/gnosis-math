@@ -36,9 +36,9 @@ matching the `BuleySelfSimilarityViolation` shape.
 ## The closing claim
 
 This is the formal admission protocol the coordinator should apply on
-every replica request: **the no-cloning theorem isn't merely a
+every replica request: the no-cloning theorem isn't merely a
 constraint — it gives the controller a deterministic rule for when
-to grant, when to defer, and how much cooling to demand.**
+to grant, when to defer, and how much cooling to demand.
 
 Imports `Gnosis.CostAlgebra`, `Gnosis.CostAlgebraEntropy`,
 `Gnosis.SpectralNoiseEquilibrium`, and `Gnosis.BuleySelfSimilarityViolation`.

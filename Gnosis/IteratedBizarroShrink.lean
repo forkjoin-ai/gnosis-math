@@ -9,23 +9,23 @@ import Init
 the front-only consumer discards become the back channel of a
 bi-sided cell (`bitwise/bisided-bit.ts`).
 
-This file answers the iteration question: **how many times can we
-shrink, and what does it cost?**
+This file answers the iteration question: how many times can we
+shrink, and what does it cost?
 
 Three ceilings with different shapes:
 
-1. **Strict 4:3 ceiling** — for the bit-clean shrink to hold
+1. Strict 4:3 ceiling — for the bit-clean shrink to hold
    without truncation, the input must be divisible by 4. From
    `64` the chain is `64 → 48 → 36 → 27`; three strict iterations
    before `27` (which is not divisible by 4) breaks the strict
    invariant. `shrinkStep_strict` and `fp64_strict_chain`.
 
-2. **Byte-aligned ceiling** — for output to remain byte-clean
+2. Byte-aligned ceiling — for output to remain byte-clean
    (multiple of 8) on the wire, only one iteration survives:
    `64 → 48`. The next, `48 → 36`, is 4.5 bytes — bit-aligned but
    not byte-aligned. `fp64_byte_aligned_chain`.
 
-3. **Conservation** — at every level, `iterShrink k n +
+3. Conservation — at every level, `iterShrink k n +
    totalBackChannel k n = n`. The "discarded" bits at each step are
    not lost; they are the back channel, addressable by a bi-sided
    consumer or borne as implicit context. The wire bytes shrink;

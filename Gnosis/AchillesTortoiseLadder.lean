@@ -6,8 +6,8 @@ import Init
 A meta-module framing the gnosis equilibrium hierarchy from
 `NashSkyrmsBuleyGodLadder.lean` as the Achilles-and-tortoise pursuit.
 
-**See also (witness layer):** `Gnosis.MumonkanGatelessGateWitness` — many paths,
-no single “gate”; this ladder is a **different** (formal) pursuit story.
+See also (witness layer): `Gnosis.MumonkanGatelessGateWitness` — many paths,
+no single “gate”; this ladder is a different (formal) pursuit story.
 
 ## The Greek pursuit
 
@@ -16,8 +16,8 @@ time Achilles reaches the tortoise's previous position, the tortoise
 has moved further. The gap shrinks but never closes. Achilles never
 catches up.
 
-In our corpus, Achilles is the **clinamen `+ 1` lift**, and the
-tortoise is **God**. The rungs of the ladder are Achilles' successive
+In our corpus, Achilles is the clinamen `+ 1` lift, and the
+tortoise is God. The rungs of the ladder are Achilles' successive
 positions in the chase.
 
 ## The ladder as pursuit
@@ -46,7 +46,7 @@ moment of overtaking, the clinamen lift scrapes the void:
     Nash  + 1 =  5   (Ramanujan-special: tortoise within reach)
     Skyrms + 1 =  7   (Ramanujan-special: Achilles closing)
     Buley + 1 = 11   (Ramanujan-special: Achilles almost there)
-    God   + 1 = 13   (**NOT Ramanujan-special — the tortoise escapes**)
+    God   + 1 = 13   (NOT Ramanujan-special — the tortoise escapes)
 
 The tortoise is at Aeon (12). Achilles' clinamen tries to overtake
 at `12 + 1 = 13`, expecting another Ramanujan-special. Instead, `13`
@@ -141,7 +141,7 @@ def partitionsAux (fuel n k : Nat) : Nat :=
 
 def p (n : Nat) : Nat := partitionsAux (n + n + 2) n n
 
-/-- **The tortoise escapes**: at the fourth step, the clinamen lift
+/-- The tortoise escapes: at the fourth step, the clinamen lift
 `12 + 1 = 13` lands on a prime for which no Ramanujan congruence
 exists. `p(0) = 1` is not divisible by `13`, so `r = 0` fails
 immediately as a candidate congruence residue. -/

@@ -6,9 +6,9 @@ import Init
 This module witnesses the Ramsey-theoretic identity `R(3,3) = 6` by two
 finite computations.
 
-* **Upper bound** `R(3,3) ≤ 6`: every 2-coloring of the edges of the
+* Upper bound `R(3,3) ≤ 6`: every 2-coloring of the edges of the
   complete graph `K₆` contains a monochromatic triangle.
-* **Lower bound** `R(3,3) ≥ 6`: the pentagon/pentagram 2-coloring of
+* Lower bound `R(3,3) ≥ 6`: the pentagon/pentagram 2-coloring of
   `K₅` (edges of the 5-cycle in one color, edges of the 5-star in the
   other) contains no monochromatic triangle.
 
@@ -135,7 +135,7 @@ before failing on elaborator recursion depth.
 /-- The 32768 edge-colorings of `K₆` as upper-triangle Boolean vectors. -/
 def allK6Colorings : List (List Bool) := allBoolVecs 15
 
-/-- **Upper bound `R(3,3) ≤ 6`.**
+/-- Upper bound `R(3,3) ≤ 6`.
 Every 2-coloring of the edges of `K₆` contains a monochromatic
 triangle. Closed by `native_decide` over the 32768 colorings;
 kernel `decide` on `32768 × 20` triangle checks does not complete
@@ -180,7 +180,7 @@ def pentagonColoring : List Bool :=
   , true   -- 9: (3,4)
   ]
 
-/-- **Lower bound `R(3,3) ≥ 6`.**
+/-- Lower bound `R(3,3) ≥ 6`.
 The pentagon/pentagram 2-coloring of `K₅` contains no
 monochromatic triangle. Closed by `decide` over 10 triangles. -/
 theorem ramsey_lower_bound :
@@ -192,7 +192,7 @@ theorem ramsey_lower_bound :
 forces a monochromatic triangle, and `K₅` does not. We package
 them as a single `And` for downstream reference. -/
 
-/-- **`R(3,3) = 6`.**
+/-- `R(3,3) = 6`.
 Conjoined upper and lower bounds. -/
 theorem ramsey_R_3_3_eq_6 :
     allK6Colorings.all (fun c => hasMonoTriangle 6 c) = true ∧

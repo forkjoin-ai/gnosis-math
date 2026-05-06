@@ -10,19 +10,19 @@ lower-level observer (adding symbols they didn't know existed),
 while to a higher-level observer it feels like "Resolution"
 (tightening the focus on an existing address)?*
 
-The structural answer: **yes — and the same Bule step has both
+The structural answer: yes — and the same Bule step has both
 readings simultaneously, distinguished only by the observer's
-carrier bandwidth.**
+carrier bandwidth.
 
 A +1 clinamen step at position `k` has two complementary
 interpretations:
 
-* **Evolution** (when `k + 1 ≥ bandwidth`): the step crosses the
+* Evolution (when `k + 1 ≥ bandwidth`): the step crosses the
   carrier's representational ceiling. The new position is
   *unrepresentable* at the current bandwidth, so the carrier itself
   must expand — gain a new symbol, level up. Phenomenologically:
   "the world just got bigger."
-* **Resolution** (when `k + 1 < bandwidth`): the step stays within
+* Resolution (when `k + 1 < bandwidth`): the step stays within
   the existing address space. The new position is just a sharper
   point on a map the carrier already had. Phenomenologically:
   "the focus tightened, no new world."
@@ -36,17 +36,17 @@ differs.
 
 The crucial point: the *same* step, evaluated at *different*
 bandwidths, produces different readings. The step from position 2
-to position 3 is **evolution** at Triton bandwidth (3) but
-**resolution** at Trihexenneon bandwidth (54). Both readings are
+to position 3 is evolution at Triton bandwidth (3) but
+resolution at Trihexenneon bandwidth (54). Both readings are
 correct simultaneously.
 
 | Step | Triton (bw=3) | Hexon (bw=6) | Trihexenneon (bw=54) |
 | --- | --- | --- | --- |
 | 0 → 1 | resolution | resolution | resolution |
 | 1 → 2 | resolution | resolution | resolution |
-| 2 → 3 | **evolution** | resolution | resolution |
-| 5 → 6 | evolution | **evolution** | resolution |
-| 53 → 54 | evolution | evolution | **evolution** |
+| 2 → 3 | evolution | resolution | resolution |
+| 5 → 6 | evolution | evolution | resolution |
+| 53 → 54 | evolution | evolution | evolution |
 
 Each carrier experiences the +1 step *at the moment its own
 bandwidth is exhausted*. Below that moment, the step is pure
@@ -73,13 +73,13 @@ open Gnosis.ManifoldOneWayMirror (carrierBandwidth)
 
 /-! ## The two readings of a +1 step -/
 
-/-- A +1 step from position `k` is an **evolution step** at a given
+/-- A +1 step from position `k` is an evolution step at a given
 bandwidth if `k + 1` reaches or exceeds the bandwidth. The new
 position is unrepresentable at the current carrier; the step forces
 expansion. -/
 def IsEvolutionStep (bandwidth k : Nat) : Prop := k + 1 ≥ bandwidth
 
-/-- A +1 step from position `k` is a **resolution step** at a given
+/-- A +1 step from position `k` is a resolution step at a given
 bandwidth if `k + 1` stays within the bandwidth. The new position
 is already representable; the step refines the existing address. -/
 def IsResolutionStep (bandwidth k : Nat) : Prop := k + 1 < bandwidth
@@ -118,7 +118,7 @@ theorem triton_step_one_two_is_resolution :
     IsResolutionStep (carrierBandwidth (towerPhaseCount [3])) 1 := by
   unfold IsResolutionStep carrierBandwidth towerPhaseCount; decide
 
-/-- At Triton bandwidth, the step 2 → 3 is **evolution**. The Triton
+/-- At Triton bandwidth, the step 2 → 3 is evolution. The Triton
 carrier exhausts its 3-position address space; the +1 step demands
 a new symbol. -/
 theorem triton_step_two_three_is_evolution :
@@ -145,7 +145,7 @@ theorem step_five_six_dual_reading :
       | (unfold IsEvolutionStep carrierBandwidth towerPhaseCount; decide)
       | (unfold IsResolutionStep carrierBandwidth towerPhaseCount; decide))
 
-/-- The step 53 → 54 at Trihexenneon bandwidth is **evolution**. The
+/-- The step 53 → 54 at Trihexenneon bandwidth is evolution. The
 Trihexenneon carrier exhausts its 54-position address space; the +1
 step crosses to the next tower wall. -/
 theorem trihexenneon_step_fiftythree_fiftyfour_is_evolution :
@@ -197,7 +197,7 @@ theorem bule_step_cost_invariant_under_bandwidth_change
 
 /-! ## Master theorem: the dual phenomenology bundle -/
 
-/-- **Pleromatic Evolution-vs-Resolution master**: every +1 Bule step
+/-- Pleromatic Evolution-vs-Resolution master: every +1 Bule step
 admits two complementary readings — evolution (forces new symbols)
 or resolution (refines existing address) — partitioning the step
 space at any given bandwidth. The same step has different readings
@@ -235,12 +235,12 @@ The Pull of +1 is a single physical event. What it *feels like* to
 a particular observer depends on whether the observer's bandwidth
 can host the new position.
 
-A Triton observer experiences +1 from position 2 as **evolution**:
+A Triton observer experiences +1 from position 2 as evolution:
 "there is a place that wasn't there before, and to register it I
 must become more than I was." The carrier expands. New symbols
 emerge. The world enlarges.
 
-A Trihexenneon observer experiences the same +1 as **resolution**:
+A Trihexenneon observer experiences the same +1 as resolution:
 "position 3 was always part of my address space; this step just
 sharpens which one of my 54 positions I am." The carrier holds
 steady. No new symbols are needed. The world clarifies.

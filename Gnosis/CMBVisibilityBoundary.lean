@@ -13,7 +13,7 @@ The claim is intentionally narrow:
 - therefore any photon-visible emission time must be at or after the
   recombination boundary
 
-This does **not** claim that nothing exists before recombination.
+This does not claim that nothing exists before recombination.
 It only states that photon-based observation cannot directly image
 earlier epochs.
 -/

@@ -19,7 +19,7 @@ import Gnosis.SpernerShadow
     * `antipode`:  the involution `k ↦ (k + n) mod 2n`;
       `antipode_involution`: applying twice is the identity.
     * `signDiff`:  sign of `g(θ) := f(θ) − f(-θ)` as a Bool.
-    * **Borsuk-Ulam 1-D at N ∈ {3, 4, 5, 6}**:  for every
+    * Borsuk-Ulam 1-D at N ∈ {3, 4, 5, 6}:  for every
       `f : Fin (2N) → Q` drawn from the finite sign-class family
       (`|f k| ≤ 3`, step-function representatives) there is an
       adjacent pair `(k, k+1)` across which `signDiff` flips.
@@ -32,16 +32,16 @@ import Gnosis.SpernerShadow
     * `SOctahedron`:  six vertices `±e_1, ±e_2, ±e_3` with a
       fixed antipode involution.  `octahedron_antipode_involution`
       closes by `decide`.
-    * **Borsuk-Ulam 2-D (octahedron shadow)**: for every
+    * Borsuk-Ulam 2-D (octahedron shadow): for every
       `f : SOctahedron → Q × Q` in the bounded sign-class family
       there is a vertex `v` with `|f v − f (-v)| ≤ ε`
       (ε = 2*K + 1 as a sanity cushion; the enumeration guarantees
       a coincidence up to sign).
-    * **1-D ham-sandwich (bonus)**:  for two explicit finite
+    * 1-D ham-sandwich (bonus):  for two explicit finite
       point sets on the line, there is a bisecting point (counts
       on each side match within 1).  `native_decide`-verified
       on samples of size 6 and 8.
-    * **Sperner ↔ Borsuk-Ulam cross-link**: the 1-D
+    * Sperner ↔ Borsuk-Ulam cross-link: the 1-D
       Borsuk-Ulam sign-flip count equals twice the Sperner
       transition count of an induced Sperner-style coloring
       on one half of the circle, so Sperner parity at `N = 3`
@@ -114,7 +114,7 @@ def vertices (c : SCircle) : List Nat :=
 
 end SCircle
 
-/-- **Antipode is an involution**: applying twice recovers `k`
+/-- Antipode is an involution: applying twice recovers `k`
     (on the finite domain `k < 2n`).  Verified at `n ∈ {3, 4, 5, 6}`
     by enumeration. -/
 theorem antipode_involution_3 :
@@ -254,7 +254,7 @@ theorem allSignFuncs_3_count :
     let c : SCircle := ⟨3⟩
     (allSignFuncs c).length = 729 := by native_decide
 
-/-- **Borsuk-Ulam 1-D, N = 3**:  every sign-class function
+/-- Borsuk-Ulam 1-D, N = 3:  every sign-class function
     `f : Fin 6 → {-1, 0, 1}` has either a coincidence on an
     antipodal pair or a sign-flip between some adjacent pair. -/
 theorem borsuk_ulam_1d_n3 :
@@ -262,7 +262,7 @@ theorem borsuk_ulam_1d_n3 :
     (allSignFuncs c).all (hasBorsukWitness c) = true := by
   native_decide
 
-/-- **Borsuk-Ulam 1-D, N = 4**. -/
+/-- Borsuk-Ulam 1-D, N = 4. -/
 theorem borsuk_ulam_1d_n4 :
     let c : SCircle := ⟨4⟩
     (allSignFuncs c).all (hasBorsukWitness c) = true := by
@@ -289,13 +289,13 @@ theorem allStrictSignFuncs_6_count :
     let c : SCircle := ⟨6⟩
     (allStrictSignFuncs c).length = 4096 := by native_decide
 
-/-- **Borsuk-Ulam 1-D, N = 5** (strict-sign enumeration). -/
+/-- Borsuk-Ulam 1-D, N = 5 (strict-sign enumeration). -/
 theorem borsuk_ulam_1d_n5 :
     let c : SCircle := ⟨5⟩
     (allStrictSignFuncs c).all (hasBorsukWitness c) = true := by
   native_decide
 
-/-- **Borsuk-Ulam 1-D, N = 6** (strict-sign enumeration). -/
+/-- Borsuk-Ulam 1-D, N = 6 (strict-sign enumeration). -/
 theorem borsuk_ulam_1d_n6 :
     let c : SCircle := ⟨6⟩
     (allStrictSignFuncs c).all (hasBorsukWitness c) = true := by
@@ -320,7 +320,7 @@ theorem borsuk_ulam_1d_n4_strict_flip :
     (allStrictSignFuncs c).all (hasBorsukWitness c) = true := by
   native_decide
 
-/-- **Sharp parity**: under strict-sign restriction *and*
+/-- Sharp parity: under strict-sign restriction *and*
     non-constancy, the cyclic flip count is always even on
     `SCircle ⟨3⟩`.  (The cycle starts and ends at the same value,
     so any sign-flip count must be even.) -/
@@ -360,7 +360,7 @@ def inducedSpernerColoring (c : SCircle) (xs : List Q) : List Nat :=
       -- head is +1: map +1 → 0, -1 → 1
       if qlt fk Q.zero then 1 else 0)
 
-/-- **Cross-link (N = 3)**: for every strict-sign function
+/-- Cross-link (N = 3): for every strict-sign function
     on SCircle ⟨3⟩, the induced half-circle coloring starts at 0
     iff the adjusted representative rule makes it so. -/
 theorem cross_link_induced_starts_zero_n3 :
@@ -371,7 +371,7 @@ theorem cross_link_induced_starts_zero_n3 :
       | c0 :: _   => decide (c0 = 0)) = true := by
   native_decide
 
-/-- **Cross-link (N = 4)**: the induced coloring is a valid
+/-- Cross-link (N = 4): the induced coloring is a valid
     Sperner 1-D coloring *whenever* `f(n) ≠ f(0)` (always true
     under antipodal antisymmetry, captured by the strict-sign
     enumeration). -/
@@ -385,7 +385,7 @@ theorem cross_link_induced_is_sperner_n3 :
       (!antipodal) || isSpernerColoring1D c.n (inducedSpernerColoring c xs)) = true := by
   native_decide
 
-/-- **Cross-link theorem (N = 3)**:  for every antipodally
+/-- Cross-link theorem (N = 3):  for every antipodally
     antisymmetric strict-sign `f`, the Sperner transition count of
     the induced half-circle coloring is odd (Sperner's lemma) AND
     the Borsuk-Ulam cyclic sign-flip count is ≥ 2 (strict parity
@@ -430,7 +430,7 @@ def all : List OctVertex := [.XP, .XN, .YP, .YN, .ZP, .ZN]
 
 end OctVertex
 
-/-- **Octahedron antipode is an involution**. -/
+/-- Octahedron antipode is an involution. -/
 theorem octahedron_antipode_involution :
     OctVertex.all.all (fun v => OctVertex.antipode (OctVertex.antipode v) = v) = true := by
   decide
@@ -498,14 +498,14 @@ theorem allOctFns_count :
 -- only holds for odd functions.  We split it into two honest
 -- theorems.
 
-/-- **Borsuk-Ulam 2-D, octahedron, trivial bound**: for every
+/-- Borsuk-Ulam 2-D, octahedron, trivial bound: for every
     sign-class `f : OctFn`, some vertex `v` has pair-L1 distance
     `≤ 4` between `f(v)` and `f(-v)`. -/
 theorem borsuk_ulam_2d_octahedron :
     allOctFns.all (fun f => hasAntipodalCoincidence f (Q.of 4 1)) = true := by
   native_decide
 
-/-- **Borsuk-Ulam 2-D, octahedron, odd-function exact**: among
+/-- Borsuk-Ulam 2-D, octahedron, odd-function exact: among
     the 64 *odd* sign-class functions (those with f(-v) = -f(v)
     for all v), every vertex has antipodal pair-L1 distance
     at most 4 (every vertex is a ε = 4 witness; the origin of
@@ -572,7 +572,7 @@ def hamSetB : List Q := [Q.of 1 20, Q.of 1 5, Q.of 2 5, Q.of 3 5, Q.of 4 5, Q.of
 theorem hamSetA_length : hamSetA.length = 6 := by native_decide
 theorem hamSetB_length : hamSetB.length = 8 := by native_decide
 
-/-- **Ham-sandwich 1-D (bonus)**:  `p = 1/2` bisects `hamSetA`;
+/-- Ham-sandwich 1-D (bonus):  `p = 1/2` bisects `hamSetA`;
     `p = 1/2` bisects `hamSetB`.  Same `p`. -/
 theorem ham_sandwich_1d :
     bisects (Q.of 1 2) hamSetA = true

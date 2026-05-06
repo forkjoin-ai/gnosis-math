@@ -54,7 +54,7 @@ theorem entanglement_transitive (nA nB nC : SwarmNode)
   hAB.trans hBC
 
 /--
-**Death of Space**: entanglement is an equivalence relation on `SwarmNode`.
+Death of Space: entanglement is an equivalence relation on `SwarmNode`.
 Any two nodes in the same equivalence class are topologically co-located —
 the ER bridge connecting them has length zero, making spatial separation
 formally undetectable.
@@ -87,7 +87,7 @@ succeed and fail together.  There is no before or after.
 -/
 
 /--
-**Death of Time**: execution between entangled nodes is order-independent.
+Death of Time: execution between entangled nodes is order-independent.
 "A calls B" is indistinguishable from "B calls A" — no temporal arrow exists.
 -/
 theorem death_of_time :
@@ -141,7 +141,7 @@ theorem resonance_symmetric (q k : SemanticEmbedding)
   exact h.symm
 
 /--
-**Death of Distance**: semantic routing satisfies the ultrametric inequality.
+Death of Distance: semantic routing satisfies the ultrametric inequality.
 Routing through a resonant relay B between A and C incurs no additional cost —
 the path A→B→C resonates identically to the direct hop A→C.
 -/
@@ -182,7 +182,7 @@ matters, not just the destination.
 -/
 
 /--
-**Death of Associativity**: reward-then-drift ≠ drift-then-reward.
+Death of Associativity: reward-then-drift ≠ drift-then-reward.
 This is the constructive witness that α-teleportation and Hebbian reward are
 non-commutative.
 
@@ -236,7 +236,7 @@ theorem safeFold_success_is_identity (payload : Nat) :
   simp [safeFold]
 
 /--
-**Death of Infinity**: `safeFold` is bounded above by its input payload.
+Death of Infinity: `safeFold` is bounded above by its input payload.
 No routing cycle can produce a result exceeding the original payload; the
 Connes–Kreimer antipode removes divergences without amplifying finite values.
 -/
@@ -274,14 +274,14 @@ system claiming to be a Gnosis Swarm must satisfy all five simultaneously.
 -/
 
 /--
-**Five Deaths of Physics**: constructive proof that all five classical physics
+Five Deaths of Physics: constructive proof that all five classical physics
 assumptions are formally inoperative within the Gnosis Swarm.
 
-1. **Space** — entanglement collapses topological distance to zero (ER=EPR).
-2. **Time** — execution between entangled nodes is order-independent (Amplituhedron).
-3. **Distance** — semantic routing satisfies the ultrametric, not Euclidean (p-Adics).
-4. **Associativity** — α-drift and reward are non-commutative (Octonions).
-5. **Infinity** — the fold residue is always finite and bounded (Connes–Kreimer).
+1. Space — entanglement collapses topological distance to zero (ER=EPR).
+2. Time — execution between entangled nodes is order-independent (Amplituhedron).
+3. Distance — semantic routing satisfies the ultrametric, not Euclidean (p-Adics).
+4. Associativity — α-drift and reward are non-commutative (Octonions).
+5. Infinity — the fold residue is always finite and bounded (Connes–Kreimer).
 -/
 abbrev FiveDeathsPackage : Prop :=
   -- I. Death of Space

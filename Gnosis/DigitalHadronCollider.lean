@@ -11,17 +11,17 @@ A collision event is a composition of two Bule unit carriers in the
 cost-algebra category. The framework already proves all the laws a
 hadron collider's analysis pipeline requires:
 
-* **Conservation of score** — `Gnosis.CostAlgebra.score_compose` proves
+* Conservation of score — `Gnosis.CostAlgebra.score_compose` proves
   `score (compose a b) = score a + score b`. Total energy in equals
   total energy out.
-* **Decay products** — the three face projections of the composed
+* Decay products — the three face projections of the composed
   carrier (`wasteFaceFromBule`, `actionFaceFromBule`,
   `entropyFaceFromBule`). `bule_unit_decomposes_into_three_faces`
   proves the score decomposes exactly across the three.
-* **No-cloning at the collision vertex** — by
+* No-cloning at the collision vertex — by
   `Gnosis.CostAlgebraNoCloning`, a single source state cannot be
   duplicated for free, so a collision genuinely consumes both inputs.
-* **Self-similarity violation as a "trigger"** — when the composed
+* Self-similarity violation as a "trigger" — when the composed
   carrier's score exceeds the available manifold ceiling
   (`Gnosis.BuleySelfSimilarityViolation.selfSimilarityViolation`), the
   event is flagged and the deterministic remediation count is

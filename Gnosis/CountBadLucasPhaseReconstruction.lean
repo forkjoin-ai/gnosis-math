@@ -30,15 +30,15 @@ at depths `n = 3 .. 12` and comparing against Lucas `L_n` reveals:
     countBad_n − L_n = −1  otherwise
 
 The `n = 3` negative witness of the naive `countBad_n + 1 = L_n` form
-was *not* a refutation — it was a **phase marker**. Deliberate negative
+was *not* a refutation — it was a phase marker. Deliberate negative
 witnesses at `n = 6, 9, 12` and positive witnesses at `n = 4, 5, 7, 8,
 10, 11` reconstruct the 3-periodic phase relation in full.
 
 ## Epistemic value
 
 The general theorem `∀ n, countBad_n = L_n + phaseShift(n)` is still
-unproved here — `decide` doesn't quantify. But the **reconstructed
-outline** is dense enough to serve as the basis for a mathlib-level
+unproved here — `decide` doesn't quantify. But the reconstructed
+outline is dense enough to serve as the basis for a mathlib-level
 proof: 10 consecutive witnesses anchor the recurrence match. This
 module moves `orbitAvoidanceLucas` in `VoidArchaeology.catalog` from
 "archaeology-outline with 1 projection and 1 scrape" to "10

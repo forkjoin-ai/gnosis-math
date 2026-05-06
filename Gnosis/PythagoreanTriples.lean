@@ -9,7 +9,7 @@ positive integers `m > n`, the triple
     (a, b, c) = (m² - n², 2 m n, m² + n²)
 
 witnesses `a² + b² = c²`. When additionally `gcd(m, n) = 1` and
-`m, n` have opposite parity, the resulting triple is **primitive**
+`m, n` have opposite parity, the resulting triple is primitive
 (pairwise coprime).
 
 This module provides:
@@ -23,7 +23,7 @@ This module provides:
 - A handful of `n = 3` Fermat counterexamples: for several small
   `(a, b, c)` we compute `a³ + b³ ≠ c³` numerically.
 
-What this module does **not** prove:
+What this module does not prove:
 
 - No general Euclid parametrization theorem is proved here. We only
   witness the formula on the specific `(m, n)` pairs enumerated

@@ -12,11 +12,11 @@ reaches `(0,0,0)`, the measured gap closes and awareness evaluates to zero.
 
 ## Two Theorems
 
-1. **consciousness_is_gap_experience**: For any non-vacuum Bule unit `b`, the
+1. consciousness_is_gap_experience: For any non-vacuum Bule unit `b`, the
    awareness function (consciousness) maps the gap size (buleyUnitScore b) to
    experienced tension. At the vacuum (b = vacuumBuleUnit), awareness = 0.
 
-2. **attention_as_clinamen_prioritization**: Attention is modeled as the
+2. attention_as_clinamen_prioritization: Attention is modeled as the
    mechanism by which topological charges are preserved as the vacuum
    contracts. To resist contraction longest, one chooses which face of the
    clinamen charge to prioritize. The geometry of attention collapse is the

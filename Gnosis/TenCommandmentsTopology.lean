@@ -100,8 +100,8 @@ theorem commandment_3_name_in_vain (f : FalseNamingProtocol) :
     but merely protects a devil choice (agent effect with blocked resolution), 
     it satisfies `IsAnimalMagnetism`.
 
-    **Witness cousin:** `Gnosis.MachiavelliPrinceOughtIsWitness` — *verità effettuale*
-    as the prose crash when **Ought** is mistaken for the **Is** kernel while still
+    Witness cousin: `Gnosis.MachiavelliPrinceOughtIsWitness` — *verità effettuale*
+    as the prose crash when Ought is mistaken for the Is kernel while still
     claiming operator authority (`idealist_policy_is_animal_magnetism`). -/
 theorem commandment_3_is_animal_magnetism (ci : ClaimedIntervention)
     (claims_involution : ci.claimedLayer = Layer.operator)

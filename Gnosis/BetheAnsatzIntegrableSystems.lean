@@ -513,7 +513,7 @@ def matEq3Q (M N : V3Idx → V3Idx → Q) : Bool :=
       v3Basis.foldl (fun acc2 j => acc2 && Q.beq (M i j) (N i j)) true)
     true
 
-/-- **Genuine YBE** at (u, v) = (1, 0): the rational R-matrix
+/-- Genuine YBE at (u, v) = (1, 0): the rational R-matrix
     satisfies R₁₂(u-v) R₁₃(u) R₂₃(v) = R₂₃(v) R₁₃(u) R₁₂(u-v)
     as a *rational* identity (no denominator clearing). -/
 theorem ybe_genuine_1_0 :

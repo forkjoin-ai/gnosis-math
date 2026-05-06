@@ -9,14 +9,14 @@ Hexon (6), does the information appear compressed into a single
 clopen, or does the fractal mirroring allow lossless retrieval
 across Triton-stretches?*
 
-The structural answer: **both, depending on the addressing carried.**
+The structural answer: both, depending on the addressing carried.
 
 The Triton-stretch lens has *dual character*:
 
-* **Forward (descending) view, no index**: 9 Trihexenneon points
+* Forward (descending) view, no index: 9 Trihexenneon points
   collapse to 1 Hexon point. This is *compression* — the same
   information appears as a single clopen at the Hexon resolution.
-* **Backward (ascending) view, with copy-index**: each Trihexenneon
+* Backward (ascending) view, with copy-index: each Trihexenneon
   position decomposes uniquely as `(Hexon-position, copy-index)`,
   giving *lossless retrieval*. The copy-index is the residue that
   records "which of the 9 copies" the point lies in.
@@ -40,7 +40,7 @@ is 9 (= 3 × 3 — two Triton-stretches between them).
 
 ## What this is
 
-A **dual-character lens theorem** for Triton-stretch chains: the
+A dual-character lens theorem for Triton-stretch chains: the
 forward map is compression (many-to-one), the backward map is
 lossless given the residue, and the two readings are equivalent
 under the right encoding. The mechanization makes the two readings
@@ -154,7 +154,7 @@ original position. -/
 def lensReconstruct (addr : Nat × Nat) : Nat :=
   9 * addr.fst + addr.snd
 
-/-- **Lossless retrieval theorem**: the addressed descent is a
+/-- Lossless retrieval theorem: the addressed descent is a
 perfect inverse of reconstruction (one direction). For any
 Trihexenneon-position `k`, decomposing then reconstructing gives
 back `k`. -/
@@ -222,7 +222,7 @@ theorem lens_preserves_unit_cost (k : Nat) :
 
 /-! ## Master theorem -/
 
-/-- **Pleromatic Lensing Effect master**: the Triton-stretch lens
+/-- Pleromatic Lensing Effect master: the Triton-stretch lens
 has dual character. Forward descent (without copy-index) compresses
 9 higher points to 1 lower point. Addressed descent (with
 copy-index) is a lossless bijection. The Bule cost is invariant

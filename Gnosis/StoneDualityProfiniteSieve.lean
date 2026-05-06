@@ -8,34 +8,34 @@ import Gnosis.UnknowableAntiTheorems
 
 Taylor's framing: the work has shifted from *Epistemology* (what we
 know) to *Ontological Topology* (how things are structured). What we
-have built is a **Stone Space for Distributed Intelligence** — the
+have built is a Stone Space for Distributed Intelligence — the
 position-as-referent is approached not point-by-point but
 *topologically*, via the Boolean algebra of agreement-shadow
 predicates that we *can* compute.
 
 This module formalizes the structural parts of that framing:
 
-1. **The Stone duality**: between the `InfinityPlane` (the
+1. The Stone duality: between the `InfinityPlane` (the
    topological side) and the Boolean algebra of agreement-shadow
    predicates (the algebraic side). Predicates ARE clopens; the
    catalog is the algebra of points.
-2. **The profinite sieve**: a sequence of finite refinements
+2. The profinite sieve: a sequence of finite refinements
    (cassini → triptych → pisano → pleromatic → aeon) whose inverse
    limit is the Stone-space referent.
-3. **Total disconnectedness**: any two distinct catalog points are
+3. Total disconnectedness: any two distinct catalog points are
    separated by a clopen — the `modulusAtLeast k` family does the
    separating.
-4. **The Cantor-set shape**: the catalog is discrete, finite at every
+4. The Cantor-set shape: the catalog is discrete, finite at every
    level, and bounded above only by the unboundedness of the tower.
    At the limit, this is the Cantor-set-shaped Stone space — totally
    disconnected, compact, with no smooth interior.
 
 ## What this is and isn't
 
-- **Is**: a structural mechanization of the Stone-duality /
+- Is: a structural mechanization of the Stone-duality /
   profinite shape Taylor articulated. Each algebraic operation
   (clopen intersection, modulus-bound refinement) is witnessed.
-- **Is not**: a full Bourbaki Stone-Topo construction with
+- Is not: a full Bourbaki Stone-Topo construction with
   Mathlib's `TopologicalSpace`/`StoneSpace` classes. We work
   Init-only, so the topology is encoded as predicate algebra rather
   than as opaque opens-of-a-type.
@@ -129,7 +129,7 @@ theorem clopen_separates_pleromatic_aeon :
     modulusAtLeast 12 pleromatic = false ∧ modulusAtLeast 12 aeon = true := by
   refine ⟨?_, ?_⟩ <;> decide
 
-/-- **Total disconnectedness**: each consecutive pair of catalog
+/-- Total disconnectedness: each consecutive pair of catalog
 points is separated by an explicit `modulusAtLeast` clopen. The
 plane is structurally totally disconnected — no path-connected
 component contains two distinct moduli. -/
@@ -164,7 +164,7 @@ theorem refinement_at_five_excludes_cassini_triptych :
     refinementStep 5 cassini = false ∧ refinementStep 5 triptych = false := by
   refine ⟨?_, ?_⟩ <;> decide
 
-/-- The **profinite refinement chain**: the modulus-bound clopens
+/-- The profinite refinement chain: the modulus-bound clopens
 nest strictly downward. Starting from `refinementStep 2` (containing
 every god-formula signature), each level removes catalog points
 below it, giving a discrete inverse system whose inverse limit is
@@ -236,11 +236,11 @@ A Cantor space is the Stone-dual of the countable atomless Boolean
 algebra: totally disconnected, compact, perfect, with no isolated
 points. Our `InfinityPlane` has the structural shape:
 
-- **Totally disconnected** — each catalog pair separated by a
+- Totally disconnected — each catalog pair separated by a
   `modulusAtLeast` clopen (witnessed above).
-- **Compact-shaped** — the catalog is finite at every refinement
+- Compact-shaped — the catalog is finite at every refinement
   level; agreement-shadow attributes form a finite basis.
-- **Perfect-shaped** — the tower-unbounded extension means every
+- Perfect-shaped — the tower-unbounded extension means every
   catalog point has more catalog points "near" it (at higher
   moduli); no point is isolated in the unbounded extension.
 
@@ -271,7 +271,7 @@ theorem cantor_set_shape_witness :
 
 /-! ## Master theorem: Stone-Profinite for distributed intelligence -/
 
-/-- **Stone Duality + Profinite Sieve master theorem**: the
+/-- Stone Duality + Profinite Sieve master theorem: the
 `InfinityPlane` is structurally a Stone-space-shaped object. The
 clopen algebra is computable; the catalog is totally disconnected;
 the refinement chain forms a profinite inverse-system; the position

@@ -5,7 +5,7 @@ import Init
 
 Extends `BraidedInfinity.lean` and `BraidedInfinityExtensions.lean`
 from abelian cycles (the clinamen as a single successor `+1 mod k`)
-to **non-abelian braids** where phase transitions are driven by
+to non-abelian braids where phase transitions are driven by
 multiple generators that do not commute.
 
 ## Why non-abelian
@@ -22,10 +22,10 @@ But the gnosis substrate already carries non-abelian structure:
 - Knot braids (the topological `B_n` — Artin's braid group) are
   non-abelian for `n ≥ 3`.
 
-A non-abelian braid has a **phase space** (vertices, `Fin k`) and
-**multiple clinamen generators** (edges of distinct types). The cycle
+A non-abelian braid has a phase space (vertices, `Fin k`) and
+multiple clinamen generators (edges of distinct types). The cycle
 structure is replaced by a directed multi-graph. Iteration depends on
-the **word** of generators applied, not just their count.
+the word of generators applied, not just their count.
 
 ## What this module does
 
@@ -209,8 +209,8 @@ theorem abelian_exponent_equals_phaseCount :
 /-! ## The non-abelian ratio
 
 For the `S_3` braid, exponent (6) exceeds phaseCount (3) by a factor
-of `|S_3| / |Fin 3| = 6 / 3 = 2`. This is the **non-abelian
-information ratio**: a non-abelian braid encodes `exponent /
+of `|S_3| / |Fin 3| = 6 / 3 = 2`. This is the non-abelian
+information ratio: a non-abelian braid encodes `exponent /
 phaseCount` times more information per cycle than its abelian
 skeleton on the same phase set.
 
@@ -246,8 +246,8 @@ theorem non_abelian_braid_master :
 /-! ## Verdict
 
 The abelian braid captures cycles driven by a single uniform clinamen.
-The non-abelian braid captures cycles driven by **multiple
-generators** whose order of application matters.
+The non-abelian braid captures cycles driven by multiple
+generators whose order of application matters.
 
 In abelian braids, "ignore the other phases" destroys the visit-set
 via the Cut theorem. In non-abelian braids, "ignore the other

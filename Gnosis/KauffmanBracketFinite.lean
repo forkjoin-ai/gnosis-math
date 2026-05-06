@@ -218,7 +218,7 @@ def TL2.Xneg : TL2 := (mono (-1) 1, mono 1 1)
 crossing. -/
 def TL2.bigon : TL2 := TL2.mul TL2.Xpos TL2.Xneg
 
-/-- **Reidemeister II, Temperley-Lieb instance.**
+/-- Reidemeister II, Temperley-Lieb instance.
 The R-II bigon equals the identity tangle in `TL_2`. -/
 theorem bigon_eq_identity_tangle : TL2.bigon = TL2.identity := by decide
 

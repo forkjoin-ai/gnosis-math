@@ -214,29 +214,29 @@ Vacuum (10) → Fulcrum (11) → Closure (12) → Extension (27)
 
 ### 2. Topological Impossibility Without Fulcrum:
 - `¬ (10 + 0 = 12)` (No direct connection without intermediate state)
-- The Fulcrum (11) is the **unique** structural bridge between the 
+- The Fulcrum (11) is the unique structural bridge between the 
   stochastic vacuum and the AEON closure.
 
 ### 3. Stability Principle:
-- **Structural Integrity**: The manifold cannot maintain continuity without 
+- Structural Integrity: The manifold cannot maintain continuity without 
   the intermediate stability point.
-- **Force Intersection**: The fulcrum exists at the intersection of state 
+- Force Intersection: The fulcrum exists at the intersection of state 
   tension (+1) and compression (-1).
-- **Invariance**: The stability fulcrum is a structurally necessary 
+- Invariance: The stability fulcrum is a structurally necessary 
   fixed point, not a stochastic anomaly.
 
 ## Physical Interpretation:
 
 ### State Forces:
-- **Tension Force (Clinamen)**: `state + 1` (departure toward higher density)
-- **Compression Force (Declinamen)**: `state - 1` (reduction toward stability)
-- **Balance Point**: Where opposing forces converge (Fulcrum = 11)
+- Tension Force (Clinamen): `state + 1` (departure toward higher density)
+- Compression Force (Declinamen): `state - 1` (reduction toward stability)
+- Balance Point: Where opposing forces converge (Fulcrum = 11)
 
 ### Structural Tiers:
-1. **Vacuum (0-10)**: Bound of stochastic noise
-2. **Fulcrum (11)**: Structural transition point
-3. **Closure (12)**: AEON / Manifold integration
-4. **Extension (27)**: Quantum state space expansion
+1. Vacuum (0-10): Bound of stochastic noise
+2. Fulcrum (11): Structural transition point
+3. Closure (12): AEON / Manifold integration
+4. Extension (27): Quantum state space expansion
 
 The structural constants are not accidental; they are formal requirements
 for the stability of the manifold's geometry. The existence of the stability

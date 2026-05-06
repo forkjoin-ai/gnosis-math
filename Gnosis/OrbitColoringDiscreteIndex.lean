@@ -228,7 +228,7 @@ def burnsideC10Full : DiscreteIndexStatement :=
   , invariant  := 108 }
 
 set_option maxRecDepth 4096 in
-/-- **Full Burnside holds.**
+/-- Full Burnside holds.
 `Σ_{k = 0}^{9} |Fix(rot^k)| = 1080 = 10 · 108`, witnessing 108 orbits
 of the `C_10` action on the 1024 length-10 2-colorings. Closed by
 `native_decide`; the sum expands each `fixedCount k` into a
@@ -308,7 +308,7 @@ def burnsideC10Avoid : DiscreteIndexStatement :=
   , invariant  := 14 }
 
 set_option maxRecDepth 4096 in
-/-- **Restricted Burnside holds.**
+/-- Restricted Burnside holds.
 `Σ_{k = 0}^{9} |Fix_avoid(rot^k)| = 140 = 10 · 14`, witnessing `14`
 orbits of the `C_10` action on the 122-element avoidance subset.
 Closed by `native_decide`. -/
@@ -331,7 +331,7 @@ def catTrace : Nat → Nat
   | 1     => 3
   | k + 2 => 3 * catTrace (k + 1) - catTrace k
 
-/-- **Numerical coincidence.** `catTrace 5 - 1 = 122 = countBad 10`.
+/-- Numerical coincidence. `catTrace 5 - 1 = 122 = countBad 10`.
 Stated without interpretation. -/
 theorem catTrace_5_minus_one_eq_countBad_10 :
     catTrace 5 - 1 = countBad 10 := by native_decide
@@ -352,7 +352,7 @@ bridge, plus the structural length-5 / length-10 cross-tie and the
 `catTrace` numerical coincidence. -/
 
 set_option maxRecDepth 4096 in
-/-- **Master bridge theorem.**
+/-- Master bridge theorem.
 Three `DiscreteIndexStatement` instantiations on the cat-map orbit
 coloring problem:
 

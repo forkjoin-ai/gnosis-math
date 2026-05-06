@@ -11,16 +11,16 @@ classical `∀`-statements are approached in this substrate.
 The same classical limit `∀ n, φ(n)` can be accessed in different ways
 depending on the shape of the witness collection. The infinity itself
 is classical — we are not inventing a new limit object. What is new is
-the **access mode**.
+the access mode.
 
 Three modes:
 
-- **Uniform**: every sampled depth yields a positive witness. The
+- Uniform: every sampled depth yields a positive witness. The
   asymptote is approached from below, no phase structure revealed.
-- **Archaeological**: sampled depths split between positive and
+- Archaeological: sampled depths split between positive and
   negative witnesses. Phase structure becomes visible; the outline of
   the limit is drawn by both sides.
-- **Unknowable**: no witnesses yet. The asymptote exists in principle;
+- Unknowable: no witnesses yet. The asymptote exists in principle;
   no dig has been undertaken.
 
 "Archaeological infinity" under this reading is not a new type of

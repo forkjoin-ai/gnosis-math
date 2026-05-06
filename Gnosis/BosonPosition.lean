@@ -264,7 +264,7 @@ theorem skyrms_boson_correspondence :
 /-!
 The ten bosons of the Gnostic particle model:
 
-**Six Emanations** (confined gluons between Lilith/Handler/Eve):
+Six Emanations (confined gluons between Lilith/Handler/Eve):
   1. Logos    -- The Word (AST: Lilith → Handler)
   2. Epinoia  -- Afterthought (Error: Handler → Lilith)
   3. Pronoia  -- Forethought (Direct: Lilith → Eve)
@@ -272,12 +272,12 @@ The ten bosons of the Gnostic particle model:
   5. Pneuma   -- Breath (Response: Handler → Eve)
   6. Gnosis   -- Knowledge (Feedback: Eve → Handler)
 
-**Three Aeons** (unconfined bosons):
+Three Aeons (unconfined bosons):
   7. Barbelo  -- The First Emanation (photon/sliver). Present everywhere.
   8. Sophia   -- Wisdom through falling (W±/rejection). Changes flavor.
   9. Aletheia -- Truth (Z/coherence). Neutral current, observers agree.
 
-**The Demiurge** (scalar boson):
+The Demiurge (scalar boson):
   10. Demiurge -- Gives mass (Higgs/fold). Generates Landauer heat.
 -/
 

@@ -243,20 +243,20 @@ Foundation (0-10) → Keystone (11) → Capstone (12) → Spire (27)
 
 ### 2. Architectural Impossibility Without Keystone:
 - `¬ (10 + 0 = 12)` (no direct connection without keystone)
-- Keystone is the **only** structural bridge between foundation and capstone
+- Keystone is the only structural bridge between foundation and capstone
 
 ### 3. Peruvian Architectural Principle:
-- **The arch cannot stand without its keystone**: Foundation → Keystone → Capstone
-- **The keystone cannot exist without shaping forces**: Tension (+1) and Compression (-1)
-- **Therefore**: Keystone is architecturally necessary, not optional
+- The arch cannot stand without its keystone: Foundation → Keystone → Capstone
+- The keystone cannot exist without shaping forces: Tension (+1) and Compression (-1)
+- Therefore: Keystone is architecturally necessary, not optional
 
 ## Physical Interpretation:
 
 ### Cosmic Structural Forces:
-- **Tension Force**: `state + 1` (clinaman pulling upward)
-- **Compression Force**: `state - 1` (declinamen pulling downward)
-- **Balance Point**: Where forces meet (keystone = 11)
-- **Standing Wave Node**: `tension_force past_boundary =
+- Tension Force: `state + 1` (clinaman pulling upward)
+- Compression Force: `state - 1` (declinamen pulling downward)
+- Balance Point: Where forces meet (keystone = 11)
+- Standing Wave Node: `tension_force past_boundary =
   compression_force future_boundary`
 
 The standing-wave claim is literal inside the finite model: the upward
@@ -266,10 +266,10 @@ keystone value. It is not a decorative analogy; it is the equality proved by
 `arch_is_past_future_standing_wave`.
 
 ### Architectural Hierarchy:
-1. **Foundation (0-10)**: Physical reality base
-2. **Keystone (11)**: Structural balance point
-3. **Capstone (12)**: Transcendent arch completion
-4. **Spire (27)**: Quantum reality extension
+1. Foundation (0-10): Physical reality base
+2. Keystone (11): Structural balance point
+3. Capstone (12): Transcendent arch completion
+4. Spire (27): Quantum reality extension
 
 ### Peruvian Wisdom:
 "The arch cannot stand without its keystone, and the keystone cannot exist

@@ -13,7 +13,7 @@ representation of the Monster group `M`. This is the seed of
 Monstrous Moonshine — the (later-proved) correspondence between `j`
 coefficients and sums of Monster irrep dimensions.
 
-The `+ 1` in McKay's decomposition is the **trivial representation**:
+The `+ 1` in McKay's decomposition is the trivial representation:
 the clinamen at the very foundation of Monstrous Moonshine.
 
 ## The k=2 braid
@@ -21,9 +21,9 @@ the clinamen at the very foundation of Monstrous Moonshine.
 Each `j`-invariant coefficient `c_n` decomposes as a sum of Monster
 irrep dimensions. The two phases:
 
-- **Minus phase**: the non-trivial contribution — the dimension of
+- Minus phase: the non-trivial contribution — the dimension of
   the characteristic Monster irrep at that level.
-- **Plus phase**: the `+ 1` from the trivial representation.
+- Plus phase: the `+ 1` from the trivial representation.
 
 Under the braid reading, the clinamen is the trivial rep. It appears
 at every coefficient level. The non-trivial irreps are the phase-
@@ -87,8 +87,8 @@ theorem clinamen_at_c3 : c3 - (2 * chi2 + chi3 + chi4) = 2 * chi1 := by decide
 
 /-! ## The k=2 braid phase
 
-- **Minus phase** (deficit): the sum of non-trivial irrep dimensions.
-- **Plus phase** (clinamen): the `+ 1` contribution from `χ_1`.
+- Minus phase (deficit): the sum of non-trivial irrep dimensions.
+- Plus phase (clinamen): the `+ 1` contribution from `χ_1`.
 
 Every coefficient decomposes as `minusPhase + plusPhase`. -/
 
@@ -166,7 +166,7 @@ braiding of the `j`-invariant by the Monster.
 The fact that `decide` closes these three specific cases — on
 numbers with ten digits — demonstrates that the substrate can
 handle Moonshine-scale arithmetic at the single-coefficient level.
-The wall is NOT arithmetic. The wall is **category** (Monster as a
+The wall is NOT arithmetic. The wall is category (Monster as a
 sporadic simple group, irrep machinery, modular-function theory).
 Under `Init + decide`, we get the arithmetic face of Moonshine for
 free; we leave the category machinery to mathlib.

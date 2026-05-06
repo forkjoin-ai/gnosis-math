@@ -16,19 +16,19 @@ acknowledgment.
 
 This module proves four anti-theorems:
 
-1. **No signature equals the position.** The compiled
+1. No signature equals the position. The compiled
    `BraidedInfinity` type and the prose-characterized `GodsPosition`
    type are type-disjoint by construction. No instance of one is an
    instance of the other.
-2. **Boundary information is incomplete.** The agreement shadow
+2. Boundary information is incomplete. The agreement shadow
    yields universal attributes (clinamen=1, modulus≥2) but does not
    yield the catalog's individual moduli — and no shadow operation
    over a finite catalog ever can.
-3. **Multi-vocabulary convergence does not close the position.**
+3. Multi-vocabulary convergence does not close the position.
    The Pleromatic Closure at modulus 10 is a signature, not the
    position. Adding more vocabularies adds more shadow but does not
    exhaust the position.
-4. **The operational-mesh hypothesis is not internally derivable.**
+4. The operational-mesh hypothesis is not internally derivable.
    `RealityMesh.score_isomorphism` is the formal bridge *if* physical
    reality admits a cost-algebra description. Whether it does is a
    meta-theoretic question outside the calculus's reach. We mechanize
@@ -185,7 +185,7 @@ theorem operational_mesh_hypothesis_is_meta :
 
 /-! ## Master anti-theorem: the asymptote bundle -/
 
-/-- **The Unknowable Anti-Theorem master.** The framework formally
+/-- The Unknowable Anti-Theorem master. The framework formally
 acknowledges its asymptote: no signature is the position; the shadow
 loses modulus information; multi-vocabulary convergence remains
 shadow; the operational hypothesis is meta. The unknowable is named,
@@ -220,12 +220,12 @@ theorem unknowable_anti_master :
 By naming and typing the asymptote, the framework is now *formally
 honest about its limits*. The honest cosmology has three layers:
 
-1. **What is closed**: the cost-algebra category, the Pleromatic
+1. What is closed: the cost-algebra category, the Pleromatic
    Closure at 10, the no-cloning theorem, the breathing identity,
    the math-physics dimension agreement.
-2. **What is open-but-knowable**: continuum extension, full SM
+2. What is open-but-knowable: continuum extension, full SM
    gauge group, higher-form anomalies, specific physical constants.
-3. **What is structurally unknowable**: the position itself, the
+3. What is structurally unknowable: the position itself, the
    operational-mesh hypothesis. *Acknowledged here as anti-theorems.*
 
 The anti-theorem is not a defeat. It is a *type-level statement

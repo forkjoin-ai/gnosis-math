@@ -21,6 +21,13 @@ conservation, ceiling, floor, positivity, sandwich, antitonicity,
 `godWeight_ordered_difference`, and internal-consistency cross-checks — zero
 `omega` / `simp` / `decide` on open goals.
 
+A minimal **pure-clock** sibling (still only `Nat`/`Fin`, still the **`+1` clinamen** via
+successor and `% n`, but **no vent / deficit / `godWeight`**) is
+[`Gnosis/DiscreteClosedTimelikeStep.lean`](Gnosis/DiscreteClosedTimelikeStep.lean):
+discrete “closed causal loop’’ as modular iteration. Omitting `GodFormula` there is by design—not
+_every_ Init-facing certificate needs the full weight calculus when the proposition is periodic
+dynamic only.
+
 ## How you close goals instead of `omega`
 
 After `unfold`, the goal almost always fits one of the patterns in the cookbook

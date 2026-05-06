@@ -29,10 +29,10 @@ Implements `fibIterMod p n` computing `(F_n mod p, F_{n+1} mod p)`
 without leaving `Init` or `Nat`. For ten primes split across the two
 phases, witnesses:
 
-- **Positive (period identity)**: `fibIterMod p π(p) = (0, 1)`.
-- **Phase constraint**: either `π(p) | p − 1` (phase 1) or
+- Positive (period identity): `fibIterMod p π(p) = (0, 1)`.
+- Phase constraint: either `π(p) | p − 1` (phase 1) or
   `π(p) | 2(p + 1)` (phase 2) — never both phases for the same prime.
-- **Negative (phase failure)**: the opposite phase constraint FAILS.
+- Negative (phase failure): the opposite phase constraint FAILS.
   Scraping the void at the other side of the phase boundary.
 
 Five primes per phase. The phase assignment is witnessed by the

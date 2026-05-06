@@ -6,30 +6,30 @@
 
     “The soul becomes dyed with the color of its thoughts.”
 
-  **Finitary model:** each admitted thought carries a non-negative **tint**
-  (`Nat`); the soul’s recorded hue is the running **supremum** (`Nat.max`).
-  Successive thoughts **monotone** the dye — no separate “soul pigment” beyond
+  Finitary model: each admitted thought carries a non-negative tint
+  (`Nat`); the soul’s recorded hue is the running supremum (`Nat.max`).
+  Successive thoughts monotone the dye — no separate “soul pigment” beyond
   what the trace admits. This is the honest discrete spine for “you become what
   you rehearse.”
 
-  **Same verse, two repo neighbors (re your overflow vs void contrast):**
+  Same verse, two repo neighbors (re your overflow vs void contrast):
 
-  * **Rumination / consciousness overflow** (`LocalizedOverflowConsciousness`):
+  * Rumination / consciousness overflow (`LocalizedOverflowConsciousness`):
     long conscious traces where structured signal exceeds stable capacity — the
-    Aurelius line read as **too much dye volume**: the loom keeps taking pigment
+    Aurelius line read as too much dye volume: the loom keeps taking pigment
     (`rumination_is_conscious_local_overflow`).
 
-  * **Catullan explanatory void** (`CatullusOdiEtAmoWitness`): torment with an
-    empty *why* slot — the line read as **affect without the color of a reason**;
+  * Catullan explanatory void (`CatullusOdiEtAmoWitness`): torment with an
+    empty *why* slot — the line read as affect without the color of a reason;
     not saturation, but missing chart next to feeling.
 
-  * **Training saturation** (`TrainingSaturation`): same “trace reshapes you”
+  * Training saturation (`TrainingSaturation`): same “trace reshapes you”
     moral on a different carrier — energy headroom vs McNally wall; see that
     file’s module doc.
 
-  * **Mencken conscience shadow** (`MenckenConscienceShadowWitness`): “inner voice”
-    as **social detection** telemetry — not dye volume, but *who might be watching*
-    feeding the loop; cousin to rumination only at the level of **self-monitoring**
+  * Mencken conscience shadow (`MenckenConscienceShadowWitness`): “inner voice”
+    as social detection telemetry — not dye volume, but *who might be watching*
+    feeding the loop; cousin to rumination only at the level of self-monitoring
     noise, not identical math.
 
   Init only. Zero `sorry`, zero new `axiom`.

@@ -13,7 +13,7 @@ structurally, via `A = F²`), and `IndependentSetCycleCnLucas.lean`
 
 `countBad_10 + 1 = 123 = L_10 = catTrace 5`.
 
-The right-hand equality `catTrace 5 = L_10` is **structural**: the cat
+The right-hand equality `catTrace 5 = L_10` is structural: the cat
 map `A = F²`, so `tr(A^k) = tr(F^{2k}) = L_{2k}`. The left-hand equality
 `countBad_10 + 1 = L_10` is witnessed here numerically at depth 10 — we
 do not claim it holds for all `n`. A negative witness at `n = 3`
@@ -112,13 +112,13 @@ theorem orbit_avoidance_lucas_probe_witness :
 
 /-! ## Next bridges this module makes possible
 
-- **Full-orbit-avoidance recurrence vs. Lucas** — combine this module
+- Full-orbit-avoidance recurrence vs. Lucas — combine this module
   with a computation of `countBad_n` for `n = 4, 5, 6, 7, 8, 9, 11, 12`
   (via an `Init`-only cyclic-avoidance transfer-matrix trace) to ask
   which other `n` satisfy `countBad_n + 1 = L_n` and which do not.
   Could not be stated before because the single-point `n = 10` data
   was the only peer-module entry.
-- **Cat-trace/orbit-avoidance divergence threshold** — the observation
+- Cat-trace/orbit-avoidance divergence threshold — the observation
   at `n = 10` matches the cat-map's actual `ord(A, 5) = 10` period.
   A bridge to `ArnoldCatMapOrder5` could ask whether the match occurs
   precisely at the modular period, not at arbitrary lengths. Could not

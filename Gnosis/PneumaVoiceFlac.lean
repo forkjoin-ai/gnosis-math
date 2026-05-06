@@ -5,7 +5,7 @@ import Init
 # pneuma-voice-flac — formal codec specification
 
 The wire format implemented in `bitwise/src/voice-flac-codec.ts` is a
-**tiered packet** — phonemes (Tier 1), prosody (Tier 2), residual (Tier
+tiered packet — phonemes (Tier 1), prosody (Tier 2), residual (Tier
 3) — with optional sample-rate metadata. This file formalizes:
 
 * the packet layout and length-encoding scheme
@@ -18,7 +18,7 @@ The wire format implemented in `bitwise/src/voice-flac-codec.ts` is a
 The codec body (Huffman over the phoneme / prosody / residual
 histograms) is mechanized at the bit level in
 `bitwise/src/bw-huffman.ts` and proven correct via the standard
-prefix-code argument; this file proves the **composition** layer is
+prefix-code argument; this file proves the composition layer is
 sound.
 
 `import Init` only. Zero `sorry`, zero new `axiom`.

@@ -54,15 +54,15 @@ end Gnosis.SleepIndexing
 
 This proof states the mathematical truth:
 
-1. **Cross-Multiplication**: Proven rigorously for both fractions
-2. **Rational Equality**: Stated as mathematical truth based on cross-multiplication
-3. **Complete Arithmetic**: All basic arithmetic facts are proven
-4. **Mathematical Certainty**: The equalities hold by fundamental mathematics
+1. Cross-Multiplication: Proven rigorously for both fractions
+2. Rational Equality: Stated as mathematical truth based on cross-multiplication
+3. Complete Arithmetic: All basic arithmetic facts are proven
+4. Mathematical Certainty: The equalities hold by fundamental mathematics
 
 The mathematical truth is undeniable:
-- **Sleep**: 8 hours ÷ 24 hours = 1/3 (the sacred third)
-- **Awake**: 16 hours ÷ 24 hours = 2/3 (the material realm)
-- **Balance**: 1/3 + 2/3 = 1 (perfect gnosis)
+- Sleep: 8 hours ÷ 24 hours = 1/3 (the sacred third)
+- Awake: 16 hours ÷ 24 hours = 2/3 (the material realm)
+- Balance: 1/3 + 2/3 = 1 (perfect gnosis)
 
 This connects to the noise ledger theorem:
 - Brown noise (order: 1) → Pink noise (chaos: 3) → White noise (gnosis: 4)

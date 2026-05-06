@@ -30,15 +30,15 @@ consensus/coordination overhead of `c`.
 
 ## Connections
 
-* **Second law of thermodynamics** — entropy never decreases under
+* Second law of thermodynamics — entropy never decreases under
   copying-without-erasure operations.
-* **Landauer's principle** — to erase the duplicate later, the same
+* Landauer's principle — to erase the duplicate later, the same
   `c` quanta must be paid as heat. Erasure restores the conservation.
-* **Quantum no-cloning** — same algebraic shape, different category;
+* Quantum no-cloning — same algebraic shape, different category;
   duplication is forbidden as a unitary operation.
-* **CAP theorem (informal)** — replication's coordination cost is the
+* CAP theorem (informal) — replication's coordination cost is the
   entropy of the replicated state's score.
-* **Bule entropy face** — for the Bule unit specifically, the
+* Bule entropy face — for the Bule unit specifically, the
   `diversity` face IS the Shannon/Boltzmann entropy axis. Cloning
   generates `b.diversity` extra entropy quanta on that face plus the
   full `buleyUnitScore b` across all faces.

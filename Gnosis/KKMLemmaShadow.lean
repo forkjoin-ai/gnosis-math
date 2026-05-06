@@ -251,7 +251,7 @@ theorem allKKMAssigns1D_all_valid_4 :
 
 -- ─── KKM 1-D theorem at depths N ∈ {3, 4, 5, 6, 7, 8} ──────
 
-/-- **KKM 1-D, N = 3**:  every KKM-valid assignment has at least one
+/-- KKM 1-D, N = 3:  every KKM-valid assignment has at least one
     fully-covered 1-cell (a cell whose endpoint masks together hit
     every index in {0, 1}). -/
 theorem kkm_lemma_1d_N3 :
@@ -259,31 +259,31 @@ theorem kkm_lemma_1d_N3 :
       (fun a => decide (fullyCoveredCount1D a ≥ 1)) = true := by
   native_decide
 
-/-- **KKM 1-D, N = 4**. -/
+/-- KKM 1-D, N = 4. -/
 theorem kkm_lemma_1d_N4 :
     (allKKMAssigns1D 4).all
       (fun a => decide (fullyCoveredCount1D a ≥ 1)) = true := by
   native_decide
 
-/-- **KKM 1-D, N = 5**. -/
+/-- KKM 1-D, N = 5. -/
 theorem kkm_lemma_1d_N5 :
     (allKKMAssigns1D 5).all
       (fun a => decide (fullyCoveredCount1D a ≥ 1)) = true := by
   native_decide
 
-/-- **KKM 1-D, N = 6**. -/
+/-- KKM 1-D, N = 6. -/
 theorem kkm_lemma_1d_N6 :
     (allKKMAssigns1D 6).all
       (fun a => decide (fullyCoveredCount1D a ≥ 1)) = true := by
   native_decide
 
-/-- **KKM 1-D, N = 7**. -/
+/-- KKM 1-D, N = 7. -/
 theorem kkm_lemma_1d_N7 :
     (allKKMAssigns1D 7).all
       (fun a => decide (fullyCoveredCount1D a ≥ 1)) = true := by
   native_decide
 
-/-- **KKM 1-D, N = 8**. -/
+/-- KKM 1-D, N = 8. -/
 theorem kkm_lemma_1d_N8 :
     (allKKMAssigns1D 8).all
       (fun a => decide (fullyCoveredCount1D a ≥ 1)) = true := by
@@ -315,7 +315,7 @@ theorem colorings_to_kkm_sample :
       [[true, false], [false, true], [true, false], [false, true]] := by
   native_decide
 
-/-- **Sperner ⟹ KKM (1-D, bounded)**:  every Sperner coloring at
+/-- Sperner ⟹ KKM (1-D, bounded):  every Sperner coloring at
     depth N produces a KKM-valid assignment whose fully-covered count
     matches the Sperner transition count. -/
 theorem sperner_implies_kkm_1d_N3 :
@@ -369,7 +369,7 @@ theorem kkm_to_colorings_sample :
       [[true, false], [true, true], [false, true], [false, true]] =
       [0, 0, 1, 1] := by native_decide
 
-/-- **KKM ⟹ Sperner (1-D, bounded)**:  every KKM-valid assignment
+/-- KKM ⟹ Sperner (1-D, bounded):  every KKM-valid assignment
     at depth N projects to a valid Sperner coloring. -/
 theorem kkm_implies_sperner_1d_N3 :
     (allKKMAssigns1D 3).all (fun a =>
@@ -525,7 +525,7 @@ theorem kkmFromSperner2D_count :
 theorem kkmFromSperner2D_all_valid :
     kkmFromSperner2D.all isKKMValid2D = true := by native_decide
 
-/-- **KKM 2-D depth 1 (singleton-mask refinement)**:  every
+/-- KKM 2-D depth 1 (singleton-mask refinement):  every
     Sperner-derived KKM assignment has at least one fully-covered
     small triangle.  This is the bounded-shadow KKM conclusion. -/
 theorem kkm_lemma_2d_depth1_singleton :
@@ -573,7 +573,7 @@ theorem allKKMAssigns2D_count :
 theorem allKKMAssigns2D_all_valid :
     allKKMAssigns2D.all isKKMValid2D = true := by native_decide
 
-/-- **KKM 2-D depth 1 (general)**:  every KKM-valid assignment
+/-- KKM 2-D depth 1 (general):  every KKM-valid assignment
     in the 27-element enumeration has at least one fully-covered
     small triangle.  This is strictly stronger than the
     Sperner-refinement form. -/

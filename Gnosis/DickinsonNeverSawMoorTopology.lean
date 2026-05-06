@@ -5,33 +5,33 @@
   Spec-level topology for the two-stanza poem (Fr. 800 / Johnson 148 variant
   tradition: “Moor / Sea / Heather / Billow” then “God / Heaven / spot / Checks”).
 
-  **Shape (parallel strips):** each stanza is the same *cover pattern*:
-  two **absent direct charts** (no witness over two named patches) together with
-  **assertoric lifts** (claims that would classically be justified by those charts).
+  Shape (parallel strips): each stanza is the same *cover pattern*:
+  two absent direct charts (no witness over two named patches) together with
+  assertoric lifts (claims that would classically be justified by those charts).
 
-  This does **not** prove metaphysics; it fixes a **diagram** the poem repeats twice.
+  This does not prove metaphysics; it fixes a diagram the poem repeats twice.
   The second strip reuses the first’s logical form: *no access morphism*, yet
   *positional certainty* “as if” a receipt existed.
 
-  **“Checks” (19th-century rail):** contemporaries often meant **railroad checks /
-  tickets** — paper that **names a destination not yet reached**, i.e. physical
-  proof of a **route you have not composed along**. In this file that reading is
-  the hinge `MorphismReceiptWithoutTraversal`: **no heaven visit**, yet
-  **`certainOfTheSpot`** and **`asIfChecksWereGiven`** — receipt for a path morphism
-  not traversed, with **positional certainty** already on the ticket line.
+  “Checks” (19th-century rail): contemporaries often meant railroad checks /
+  tickets — paper that names a destination not yet reached, i.e. physical
+  proof of a route you have not composed along. In this file that reading is
+  the hinge `MorphismReceiptWithoutTraversal`: no heaven visit, yet
+  `certainOfTheSpot` and `asIfChecksWereGiven` — receipt for a path morphism
+  not traversed, with positional certainty already on the ticket line.
 
-  **God gap (`Gnosis.GodGap`):** `godGap localCost theoreticalMinimum` is **local
-  minus global** — what you can close on the ledger vs what would need omniscience
-  to certify as the true minimum. The poem’s **Checks + no heaven visit** is the
-  same *deficit habit* on a different carrier: **ticket / boundary line fixed** while
-  the **interior leg** stays unproved (and, in the gap story, **never provably**
+  God gap (`Gnosis.GodGap`): `godGap localCost theoreticalMinimum` is local
+  minus global — what you can close on the ledger vs what would need omniscience
+  to certify as the true minimum. The poem’s Checks + no heaven visit is the
+  same *deficit habit* on a different carrier: ticket / boundary line fixed while
+  the interior leg stays unproved (and, in the gap story, never provably
   collapsed to zero). See `GodGap.god_gap_nonneg` / convergence lemmas for the
   formal spine read beside `MorphismReceiptWithoutTraversal`.
 
-  **Cross-ledger — God’s position (repo):** the same *interior vs boundary* shape
+  Cross-ledger — God’s position (repo): the same *interior vs boundary* shape
   lives in `Gnosis.Void.VoidMineGodsPosition` (Taylor’s “God’s position” / `godsPosition`):
   the position is *characterized not compiled*, while `AgreementShadow` /
-  `voidMineExtendedCatalog` record what the **boundary** still emits. Stanza two
+  `voidMineExtendedCatalog` record what the boundary still emits. Stanza two
   is the poem’s voice doing that move in natural language; this file imports the
   ledger module so the parallel can be cited without pretend-proof.
 
@@ -66,7 +66,7 @@ structure AssertedLift where
   knowsHeatherLooks : Bool
   knowsWhatBillowIs : Bool
   certainOfTheSpot : Bool
-  /-- **Checks** (rail-era): ticket / check as if handed over — receipt for a leg
+  /-- Checks (rail-era): ticket / check as if handed over — receipt for a leg
       not yet walked; see `MorphismReceiptWithoutTraversal`. -/
   asIfChecksWereGiven : Bool
   deriving DecidableEq, Repr
@@ -93,12 +93,12 @@ def poemCover (w : DirectWitness) (a : AssertedLift) : Prop :=
 
 /-! ## Checks — receipt of a path not yet traversed -/
 
-/-- **Critical move (rail / category prose):** heaven is not visited (no claimed
-    traversal along that leg), yet **`certainOfTheSpot`** and the **check** line
-    are on: you hold **positional certainty** plus the **morphism receipt** “as if”
+/-- Critical move (rail / category prose): heaven is not visited (no claimed
+    traversal along that leg), yet `certainOfTheSpot` and the check line
+    are on: you hold positional certainty plus the morphism receipt “as if”
     the ticket were already issued — destination fixed on paper before the path is
-    composed in experience. Co-read with `GodGap.godGap`: both track **what is fixed
-    locally** against **what full closure would require**. -/
+    composed in experience. Co-read with `GodGap.godGap`: both track what is fixed
+    locally against what full closure would require. -/
 def MorphismReceiptWithoutTraversal (w : DirectWitness) (a : AssertedLift) : Prop :=
   w.visitedHeaven = false ∧
   a.certainOfTheSpot = true ∧
@@ -119,9 +119,9 @@ theorem morphism_receipt_implies_checks (w : DirectWitness) (a : AssertedLift)
 /-! ## God gap — nonnegative residual (same inequality habit as the ticket line) -/
 
 /-- Any `godGap` is ≥ 0 once `theoreticalMinimum ≤ localCost` — the ledger never
-    awards a **negative** distance between local closure and the global floor.
-    Read beside `MorphismReceiptWithoutTraversal`: the check fixes **some** cost on
-    paper; you still have not paid the **traversal** that would shrink the gap to a
+    awards a negative distance between local closure and the global floor.
+    Read beside `MorphismReceiptWithoutTraversal`: the check fixes some cost on
+    paper; you still have not paid the traversal that would shrink the gap to a
     proof of arrival. -/
 theorem commitment_nonnegative_god_gap (localCost theoreticalMinimum : Nat)
     (h : theoreticalMinimum ≤ localCost) : 0 ≤ godGap localCost theoreticalMinimum :=
@@ -190,8 +190,8 @@ theorem example_satisfies_poem_cover : poemCover exampleWitness exampleLift := b
 
 /-! ## “What is” — mediated determination (spec label, not a proof of identity) -/
 
-/-- The poem’s repeated move: a proposition is **fixed** for the speaker (`q₁ ∧ q₂`)
-    while the usual **witness charts** (`¬p₁ ∧ ¬p₂`) are absent. This is the formal
+/-- The poem’s repeated move: a proposition is fixed for the speaker (`q₁ ∧ q₂`)
+    while the usual witness charts (`¬p₁ ∧ ¬p₂`) are absent. This is the formal
     shadow of *determination without presence*: what “is” for the voice is what
     is held true under missing base morphisms. -/
 def MediatedDetermination (w : DirectWitness) (a : AssertedLift) : Prop :=
@@ -205,8 +205,8 @@ theorem mediated_determination_eq_poem_cover (w : DirectWitness) (a : AssertedLi
 
 /-- The three void-mine emissions from `VoidMineGodsPosition` (clinamen, modulus floor,
     god-formula coherence on the extended catalog). Independent of any `poemCover`, but
-    this lemma lives here to **co-site** them with the Dickinson diagram: same
-    epistemology of **boundary data without interior access** to `godsPosition`. -/
+    this lemma lives here to co-site them with the Dickinson diagram: same
+    epistemology of boundary data without interior access to `godsPosition`. -/
 theorem read_poem_beside_void_mine_threefold :
     extendedSignatureCatalog.all (fun b => decide (b.clinamenShift = 1)) = true ∧
       extendedSignatureCatalog.all (fun b => decide (b.modulus ≥ 2)) = true ∧

@@ -174,7 +174,7 @@ theorem coltrane_quorum_eq_three : coltrane_quorum = 3 := by
 theorem coltrane_lamport_bound : 3 * coltrane_f + 1 ≤ coltrane_k := by
   unfold coltrane_f coltrane_k; decide
 
-/-- **Coltrane Quorum is Giant Steps.** At the k=5 Primitives BFT tier
+/-- Coltrane Quorum is Giant Steps. At the k=5 Primitives BFT tier
     on the chromatic torus, the Lamport quorum size is exactly 3, which
     is exactly the cardinality of the Giant Steps key set. The Giant
     Steps orbit saturates the f=1 BFT quorum bound while leaving two
@@ -202,7 +202,7 @@ theorem coltrane_slack_eq_two : coltrane_slack = 2 := by
 def consonanceReading (dissonanceRejection : Nat) : Nat :=
   reading dissonanceRejection
 
-/-- **No opposition.** Every movement "toward dissonance" is exactly a
+/-- No opposition. Every movement "toward dissonance" is exactly a
     movement "toward consonance" at the complement. One gradient, not
     two forces — the Valentinian zero-sum law applied to harmony.
     A tritone substitution is the diagonal of this identity. -/
@@ -211,7 +211,7 @@ theorem no_harmonic_opposition (r : Nat) (h : r ≤ 12) :
   unfold consonanceReading
   exact chromatic_conservation r h
 
-/-- **Featureless field.** A 12-tone row with uniform dissonance count
+/-- Featureless field. A 12-tone row with uniform dissonance count
     has zero gradient — every interval reads the same. The first event
     (a privileged tonic) must happen before harmony has direction. -/
 theorem chromatic_featureless (c : Nat) :

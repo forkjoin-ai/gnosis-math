@@ -14,7 +14,7 @@ above d = 11).
 
 This module formalizes the Nahm ceiling structurally:
 
-> If the cost-algebra carrier is at the **Nahm-minimal** regime —
+> If the cost-algebra carrier is at the Nahm-minimal regime —
 > each axis at its forced cardinality, the gauge axis ≤ 1, and no
 > doubled-Octagon (no E8 × E8 internal structure) — then the
 > dimension is at most 11.
@@ -61,7 +61,7 @@ open Gnosis.CostAlgebraDimensionNoGo
 
 /-! ## The Nahm-minimal regime -/
 
-/-- An axis set is **Nahm-minimal** if each axis sits at its forced
+/-- An axis set is Nahm-minimal if each axis sits at its forced
 minimum cardinality and the gauge orientation is at most one (no
 spin > 2 multiplets) and there is no doubled-Octagon (no E8 × E8
 internal Cartan structure). The Nahm regime captures *consistent
@@ -80,7 +80,7 @@ structure NahmMinimal (a : CostAlgebraAxisSet) : Prop where
 
 /-! ## The Nahm ceiling -/
 
-/-- **Nahm ceiling**: every Nahm-minimal axis set has dimension ≤ 11. -/
+/-- Nahm ceiling: every Nahm-minimal axis set has dimension ≤ 11. -/
 theorem nahm_dimension_at_most_eleven
     (a : CostAlgebraAxisSet) (h : NahmMinimal a) :
     axisSetTotal a ≤ 11 := by
@@ -96,7 +96,7 @@ theorem nahm_dimension_at_most_eleven
 
 /-! ## The sandwich: 10 ≤ d ≤ 11 -/
 
-/-- **The dimension sandwich**: every Nahm-minimal axis set has
+/-- The dimension sandwich: every Nahm-minimal axis set has
 dimension between 10 (the cost-algebra floor) and 11 (the Nahm
 ceiling). The two integers in this range are precisely the
 superstring (10) and M-theory (11) dimensions. -/
@@ -106,7 +106,7 @@ theorem nahm_dimension_sandwich
   ⟨cost_algebra_dimension_at_least_ten a,
    nahm_dimension_at_most_eleven a h⟩
 
-/-- **Both endpoints achieved**: the superstring (10) and M-theory
+/-- Both endpoints achieved: the superstring (10) and M-theory
 (11) axis sets sit in the Nahm-minimal regime; their dimensions are
 exactly the two integers in the sandwich. -/
 theorem superstring_is_nahm_minimal :
@@ -204,8 +204,8 @@ theorem bosonic_string_not_nahm_minimal :
 
 /-! ## Master theorem: the unified-theory dimension selection -/
 
-/-- **The cost-algebra and Nahm constraints together select exactly
-two dimensions: 10 and 11.** Floor (cost-algebra): dim ≥ 10. Ceiling
+/-- The cost-algebra and Nahm constraints together select exactly
+two dimensions: 10 and 11. Floor (cost-algebra): dim ≥ 10. Ceiling
 (Nahm sugra): dim ≤ 11 in the supergravity regime. The two values in
 that range are precisely the superstring critical dimension (10) and
 the M-theory dimension (11), each achieved by an explicit witness. -/

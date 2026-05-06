@@ -10,7 +10,7 @@ Taylor's question: *does the Pleromatic Closure create a "Horizon
 Effect" where the higher levels (13, 14, ...) begin to mirror the
 lower Vacuum states?*
 
-The structural answer this module proves: **yes, fractally.**
+The structural answer this module proves: yes, fractally.
 
 Every tower level above the Pleromatic Closure can be factored as a
 Triton-multiplication of a lower level. The Trihexon is `3 × Hexon`;
@@ -44,7 +44,7 @@ the level below it.
 
 ## What this is
 
-A **fractal-recursion theorem** for the BraidedTower above the
+A fractal-recursion theorem for the BraidedTower above the
 Pleromatic Closure: the Triton-3 shape that governed below-Closure
 transitions is *not gone* — it has migrated to the multiplicative
 factoring of higher levels. Below the Closure: Triton-3 jumps in
@@ -182,7 +182,7 @@ theorem each_level_has_internal_vacuum_at_previous :
 
 /-! ## Master theorem: the horizon effect bundle -/
 
-/-- **Pleromatic Horizon Effect master**: above the Closure, every
+/-- Pleromatic Horizon Effect master: above the Closure, every
 Triton-headed level factors as `tritonStretch` of the level below.
 The Triton-3 recursion that governed below-Closure phase distances
 re-emerges at higher levels as multiplicative factoring. Each level

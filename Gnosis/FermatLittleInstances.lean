@@ -21,9 +21,9 @@ computed coincidences that the general theorem implies.
 
 We also include two related numerical witnesses:
 
-- **Wilson's theorem** instances `(p - 1)! ≡ -1  (mod p)`, rendered
+- Wilson's theorem instances `(p - 1)! ≡ -1  (mod p)`, rendered
   as `((p - 1)! + 1) % p = 0` to stay inside `Nat`.
-- **Euler's totient** variant `a ^ φ(n) ≡ 1  (mod n)` for small
+- Euler's totient variant `a ^ φ(n) ≡ 1  (mod n)` for small
   coprime pairs `(a, n)`, using a brute-force `phi` that counts
   integers in `[1, n)` coprime to `n`.
 

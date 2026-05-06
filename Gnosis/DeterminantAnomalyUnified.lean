@@ -22,8 +22,8 @@ This module witnesses a structural synthesis across three peer modules:
 Each classical recurrence family (Fibonacci, Lucas, Pell, and the CF
 tower) carries a step matrix whose determinant is a ±1 integer. When
 several step matrices are composed, the determinant of the composite
-equals the product of determinants. Reading this product as a **Z-valued
-anomaly coefficient** attached to the composition, the Cassini constant
+equals the product of determinants. Reading this product as a Z-valued
+anomaly coefficient attached to the composition, the Cassini constant
 of a family computes to the `n`-fold product of the single-step
 determinant.
 
@@ -45,23 +45,23 @@ the Cassini-as-product-of-determinants correspondence at low depths.
    (Lucas reuses `fibStep`: both are `[[1,1],[1,0]]` up to transpose,
    arising from `s = 1, d = -1`; Lucas differs from Fibonacci only in
    initial conditions.) Determinants closed at kernel.
-3. **Multiplicativity witness** (pointwise): `det (matMul A B) = det A · det B`
+3. Multiplicativity witness (pointwise): `det (matMul A B) = det A · det B`
    checked for three explicit pairs `(fibStep, fibStep)`,
    `(pellStep, pellStep)`, `(cfStep 2, cfStep 3)`.
-4. **Tower determinant witnesses**: `det (matPow step n) = (det step)^n`
+4. Tower determinant witnesses: `det (matPow step n) = (det step)^n`
    checked at `n = 0..5` for `fibStep` and `pellStep`, and at `n = 0..4`
    for `cfStep 2` and `cfStep 3`.
-5. **Cassini-as-tower-determinant** for each family:
+5. Cassini-as-tower-determinant for each family:
    - Fibonacci: `fibStep^n` has determinant `(-1)^n`, which equals
      `F_{n+1} · F_{n-1} - F_n²` (the Cassini form read off the matrix
      entries; witnessed at `n = 2, 3, 4, 5`).
    - Pell: `pellStep^n` has determinant `(-1)^n`, witnessed at `n = 2..5`.
    - CF: `cfStep a ∘ cfStep b ∘ …` has determinant `(-1)^n` for any
      `a, b, …`, witnessed at several mixed sequences.
-6. **Anomaly list / parity bridge**: `towerAnomaly : List Mat2 → Int`
+6. Anomaly list / parity bridge: `towerAnomaly : List Mat2 → Int`
    folds `det` across a list. Cassini sign equals anomaly parity:
    even count of `det = -1` step matrices yields `+1`, odd yields `-1`.
-7. **Cross-family composition**: `det (matMul fibStep pellStep) = 1 = (-1) · (-1)`,
+7. Cross-family composition: `det (matMul fibStep pellStep) = 1 = (-1) · (-1)`,
    witnessing that different family towers multiply anomaly-coefficients
    in the same ring. No new phenomenon arises — the product is exactly
    what multiplicativity predicts.

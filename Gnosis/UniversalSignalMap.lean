@@ -181,7 +181,7 @@ theorem er_epr_wormhole_identity (k m : Nat) :
 /-! ## Master Theorem: The Universal Signal Map -/
 
 /--
-**Universal Signal Map Master**: Logic is formalized as a deterministic
+Universal Signal Map Master: Logic is formalized as a deterministic
 topological fingerprint through the Monster Mesh. Core operations are mapped
 to rotation sequences; Polyglot IR operations are unified with the mesh;
 resonance colors define manifold saturation; and the Lensing Effect provides
@@ -200,7 +200,7 @@ theorem mapInstruction_nonempty (op : String) (h : op ∈ ["AND", "OR", "XOR"]) 
   · contradiction
 
 /--
-**Universal Signal Map Master**: Logic is formalized as a deterministic
+Universal Signal Map Master: Logic is formalized as a deterministic
 topological fingerprint through the Monster Mesh. Core operations are mapped
 to rotation sequences; Polyglot IR operations are unified with the mesh;
 resonance colors define manifold saturation; and the Lensing Effect provides

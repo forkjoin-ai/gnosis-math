@@ -135,8 +135,8 @@ theorem universal_clinamen_master :
 
 /-! ## Reading
 
-The clinamen's **sign** is universal across all seven independent
-phase reconstructions. The clinamen's **magnitude** is `+1` in six
+The clinamen's sign is universal across all seven independent
+phase reconstructions. The clinamen's magnitude is `+1` in six
 of seven and `+2` in the seventh.
 
 The minus-phase residue is uniformly `−1`. The god formula's deficit
@@ -150,7 +150,7 @@ stronger future formalization — proving that every future
 phase-decomposition in this substrate must have plus-residue `+1` —
 is not available at this scope; the outlier already rules it out.
 
-What IS universal is the **direction**. Every clinamen pushes
+What IS universal is the direction. Every clinamen pushes
 forward; every deficit pulls back. The god formula's structure holds
 across all catalogued digs in the substrate: one positive piece, one
 negative piece, knit at the phase boundary.

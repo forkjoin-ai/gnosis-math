@@ -6,7 +6,7 @@ import Init
 Bridge between two existing modules:
 
 - `PellCatLucasTraceFamily.lean` records the Pell recurrence `(s, d) = (2, -1)`
-  with **discriminant** `Δ = s² - 4 d = 8 = 2³`. The 2-adic valuation is
+  with discriminant `Δ = s² - 4 d = 8 = 2³`. The 2-adic valuation is
   the natural "archon" for Pell arithmetic: the only prime dividing `Δ`.
 - `UltrametricBufferInstance.lean` exposes the valuation surrogate
   `vp p n : ℕ` (with sentinel `vp p 0 = 1000`) and the strong triangle
@@ -15,7 +15,7 @@ Bridge between two existing modules:
   `√2 = [1; 2, 2, 2, ...]`: `(1,1), (3,2), (7,5), (17,12), (41,29),
   (99,70), (239,169), (577,408)`.
 
-This module **witnesses** a structural pattern in the 2-adic valuation of
+This module witnesses a structural pattern in the 2-adic valuation of
 Pell convergent denominators `q_n` and closes the Pell identity
 `p_n² − 2 q_n² = ±1` modulo `8`.
 
@@ -29,15 +29,15 @@ Pell convergent denominators `q_n` and closes the Pell identity
    `(1,1) ↦ (0,0)`, `(3,2) ↦ (0,1)`, `(7,5) ↦ (0,0)`,
    `(17,12) ↦ (0,2)`, `(41,29) ↦ (0,0)`, `(99,70) ↦ (0,1)`,
    `(239,169) ↦ (0,0)`, `(577,408) ↦ (0,3)`.
-4. **Pell numerators are odd**: `v_2(p_n) = 0` for `n = 0..7`.
-5. **Ruler-sequence pattern** on denominators: `v_2(q_n) = v_2(n + 1)`
+4. Pell numerators are odd: `v_2(p_n) = 0` for `n = 0..7`.
+5. Ruler-sequence pattern on denominators: `v_2(q_n) = v_2(n + 1)`
    at every computed point `n = 0..7`. Matches the 2-adic ruler
    sequence `0, 1, 0, 2, 0, 1, 0, 3, ...`.
-6. **Pell identity mod 8**: for `n = 0..5`,
+6. Pell identity mod 8: for `n = 0..5`,
    `(p_n² − 2 q_n²) mod 8 ∈ {1, 7}` (i.e., `±1 mod 8`), with the sign
    alternating as `(-1)^n`. Consistent with `p_n² ≡ 1 mod 8` (odd squares)
    and `2 q_n² mod 8 ∈ {0, 2}` depending on `v_2(q_n)`.
-7. **Ultrametric on Pell denominators**: one triple-of-`q_n` witness
+7. Ultrametric on Pell denominators: one triple-of-`q_n` witness
    `min(v_2(q_a − q_b), v_2(q_b − q_c)) ≤ v_2(q_a − q_c)` via the same
    inequality used in `UltrametricBufferInstance`.
 8. `pell_ultrametric_witness`: one theorem bundling (4), (5), (6), (7).

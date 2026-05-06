@@ -14,7 +14,7 @@ particles and the doubled wall (phase 24) for particle+antiparticle
 combined. The mapping is *signature*, not *derivation* — by
 `every_phase_count_is_a_tower`, the calculus permits any phase count.
 
-The formal payoff for fermions is **Pauli exclusion as no-cloning**:
+The formal payoff for fermions is Pauli exclusion as no-cloning:
 the diagonal map `Δ : S → S × S` fails to be a `CostHom` on every
 non-vacuum carrier (`Gnosis.CostAlgebraNoCloning.diagonal_preserves_score_iff_trivial`).
 A fermion at a positive-score state cannot be duplicated, period.

@@ -6,7 +6,7 @@ import Gnosis.Braided.BraidedTower
 
 The tower walls are unbounded (`Gnosis.BraidedTower.tower_unbounded`),
 but the distance between named walls is structured. This module
-formalizes the **phase-transition distance** — the number of clinamen
+formalizes the phase-transition distance — the number of clinamen
 lifts (`+1` perturbations) required to traverse from one wall to
 another — and localizes the string-theory dimensions (10, 11) as
 specific phase-transition jumps from the gluon Octagon (8).
@@ -18,11 +18,11 @@ specific phase-transition jumps from the gluon Octagon (8).
 
 The structural answer this module gives is partial:
 
-- **10 = 8 + 2** — the Decagon wall sits one *bi-sided lift* (a
+- 10 = 8 + 2 — the Decagon wall sits one *bi-sided lift* (a
   Triton-paired clinamen, the smallest non-trivial multi-head step
   beyond the Octagon) above the gluon wall. That extra `2` is the
   bi-sided-bit's lifted/contracted pair.
-- **11 = 10 + 1** — the Hendecagon wall sits exactly one clinamen
+- 11 = 10 + 1 — the Hendecagon wall sits exactly one clinamen
   lift above the Decagon. M-theory's extra dimension over superstring
   is structurally one `+1` clinamen step.
 
@@ -107,7 +107,7 @@ theorem octagon_to_dodecagon_distance :
 The string-theory walls (Decagon = 10, Hendecagon = 11) are localized
 as specific small-distance transitions from the gluon Octagon (8). -/
 
-/-- **Decagon = Octagon + 2.** The superstring dimension count sits
+/-- Decagon = Octagon + 2. The superstring dimension count sits
 exactly one bi-sided-lift jump above the gluon Octagon. The
 `+2` is structurally the bi-sided bit (lifted + contracted) — a
 Triton-paired clinamen, the smallest non-trivial multi-head step. -/
@@ -116,21 +116,21 @@ theorem decagon_is_octagon_plus_bisided :
   unfold phaseTransitionDistance
   decide
 
-/-- **Hendecagon = Decagon + 1.** M-theory's extra dimension above
+/-- Hendecagon = Decagon + 1. M-theory's extra dimension above
 superstring is structurally a single clinamen lift. -/
 theorem hendecagon_is_decagon_plus_one :
     phaseTransitionDistance (towerPhaseCount [5, 2]) (towerPhaseCount [11]) = 1 := by
   unfold phaseTransitionDistance
   decide
 
-/-- **Dodecagon = Hendecagon + 1.** The fermion wall is structurally
+/-- Dodecagon = Hendecagon + 1. The fermion wall is structurally
 one clinamen lift above M-theory. -/
 theorem dodecagon_is_hendecagon_plus_one :
     phaseTransitionDistance (towerPhaseCount [11]) (towerPhaseCount [3, 2, 2]) = 1 := by
   unfold phaseTransitionDistance
   decide
 
-/-- The **+1 ladder** from Octagon (gluons) to Dodecagon (fermions),
+/-- The +1 ladder from Octagon (gluons) to Dodecagon (fermions),
 visiting Decagon and Hendecagon. The string-theory dimensions sit
 as named rungs on this ladder, two clinamen steps apart in
 {Octagon → Decagon}, then single steps {Decagon → Hendecagon},

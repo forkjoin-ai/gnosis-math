@@ -126,7 +126,7 @@ def beatEnergy (rejected : Nat) : Nat := rejected
     remains unrejected at this beat. -/
 def beatReading (rejected : Nat) : Nat := barBeats - rejected
 
-/-- **Conservation.** For any beat-rejection count ≤ 13, rejection plus
+/-- Conservation. For any beat-rejection count ≤ 13, rejection plus
     reading equals the bar length. The same one-field, one-complement
     structure as the Valentinian kenoma — rebuilt on the time axis. -/
 theorem bar_conservation (r : Nat) (h : r ≤ 13) :
@@ -143,7 +143,7 @@ theorem bar_conservation (r : Nat) (h : r ≤ 13) :
     coprime: gcd(12, 13) = 1. -/
 theorem chromatic_and_meter_coprime : Nat.gcd 12 13 = 1 := by native_decide
 
-/-- **Coprime cycles theorem.** Because 12 and 13 share no common factor,
+/-- Coprime cycles theorem. Because 12 and 13 share no common factor,
     a phrase that walks one pitch class per beat will visit every
     pitch-time pair exactly once before repeating. The full cycle
     length is 12 × 13 = 156 beats. This is the structural reason why a

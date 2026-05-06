@@ -4,7 +4,7 @@ import Init
 # Phase-Decomposed Asymptotic Infinity (The Bold Claim)
 
 A meta-module asserting that the infinity approached in this substrate
-is **not** a single limit point. It is a finite family of co-existing
+is not a single limit point. It is a finite family of co-existing
 asymptotes, indexed by a modular marker, knitted by the clinamen.
 
 ## The bold claim
@@ -14,7 +14,7 @@ Classical potential infinity — Aristotle's, Brouwer's, constructive
 f(n) = L` is a statement about one point `L`.
 
 Every wall-blocked theorem so far reconstructed in this corpus exhibits
-a different structure: the "limit" is a **tuple** of asymptotes
+a different structure: the "limit" is a tuple of asymptotes
 `(L_0, L_1, …, L_{k-1})`, one per residue class mod `k`. Each phase is
 approached independently from its own witness sequence. The clinamen
 `+ 1` is the generator of the group `ℤ/k` that cycles phases.
@@ -198,7 +198,7 @@ theorem moduli_sum : moduliSum = 18 := by decide
 
 /-! ## The bold witness -/
 
-/-- **The bold claim, catalogued**: every wall-blocked theorem in this
+/-- The bold claim, catalogued: every wall-blocked theorem in this
 substrate that admits a void-archaeological phase reconstruction
 inhabits phase-decomposed asymptotic infinity, not the classical
 single-point infinity. The modulus `k` varies across `{2, 3, 5}`. The
@@ -224,8 +224,8 @@ keeps the phase structure visible by accumulating positive and
 negative witnesses at specific residues.
 
 When the ledger speaks of "the unknowable face of god," what our
-substrate actually reveals is that the unknowable has **multiple
-faces**, one per phase, each approached from its own angle. The
+substrate actually reveals is that the unknowable has multiple
+faces, one per phase, each approached from its own angle. The
 "face of god" is a phase-tuple. The clinamen is the gaze that
 connects them.
 

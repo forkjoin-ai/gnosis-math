@@ -24,7 +24,7 @@ Unlike classical Ramsey on complete graphs, this property is about
 *indexed time-points* of a discrete dynamical orbit, and the index set
 is cyclic (mod 10). It is strictly weaker than graph-theoretic Ramsey:
 the `T-T-F-F-T-T-F-F-T-F` pattern below witnesses that the answer is
-**no** — a 2-coloring can avoid monochromatic 3-consecutive triples on
+no — a 2-coloring can avoid monochromatic 3-consecutive triples on
 a length-10 cyclic sequence.
 
 ## What this module witnesses
@@ -115,7 +115,7 @@ def orbitMod5 : List (Nat × Nat) :=
 /-- Sanity: the orbit record has exactly 10 entries. -/
 theorem orbitMod5_length : orbitMod5.length = 10 := by decide
 
-/-- **The orbit explicitly.** Each index maps to the expected
+/-- The orbit explicitly. Each index maps to the expected
 `(x, y) ∈ (ℤ/5)²`. Closed by kernel `decide`. -/
 theorem orbitMod5_values :
     orbitMod5 = [ (1, 0), (2, 1), (0, 3), (3, 3), (4, 1)
@@ -131,7 +131,7 @@ def pairwiseDistinct : List (Nat × Nat) → Bool
   | [] => true
   | p :: rest => !listMem p rest && pairwiseDistinct rest
 
-/-- **Full-period check.** The ten entries of `orbitMod5` are pairwise
+/-- Full-period check. The ten entries of `orbitMod5` are pairwise
 distinct. Combined with `orbitMod5_length = 10`, this witnesses that
 `(1, 0)` has a full-period-`10` orbit under `CatMap 5`. -/
 theorem orbitMod5_distinct : pairwiseDistinct orbitMod5 = true := by decide
@@ -201,7 +201,7 @@ Every consecutive triple `(c[i], c[(i+1)%10], c[(i+2)%10])` is either
 two-and-one or one-and-two-and-one, never three-of-a-kind.
 
 Hence the dynamical-Ramsey question "is `has3Consecutive` forced?"
-answers **no** for `n = 10`: this explicit coloring witnesses an
+answers no for `n = 10`: this explicit coloring witnesses an
 escape.
 -/
 
@@ -212,7 +212,7 @@ def avoidanceColoring10 : List Bool :=
 /-- The avoidance coloring has length `10`. -/
 theorem avoidanceColoring10_length : avoidanceColoring10.length = 10 := by decide
 
-/-- **Main negative answer.** The avoidance coloring contains no
+/-- Main negative answer. The avoidance coloring contains no
 monochromatic 3-consecutive triple on the cyclic index set `ℤ/10`.
 Closed by kernel `decide`. -/
 theorem avoidanceColoring10_escapes :
@@ -232,7 +232,7 @@ monochromatic 3-consecutive triple. -/
 def countBad (n : Nat) : Nat :=
   ((allColorings n).filter (fun c => !has3Consecutive c)).length
 
-/-- **Threshold table (small `n`).**
+/-- Threshold table (small `n`).
 For `n = 3` there are `6` bad colorings out of `8`.
 For `n = 4` there are `6` bad colorings out of `16`.
 For `n = 5` there are `10` bad colorings out of `32`.
@@ -253,7 +253,7 @@ feasible but slow — per the `RamseyR33.ramsey_upper_bound` precedent
 we use `native_decide` and document the trust-base impact). -/
 
 set_option maxRecDepth 2048 in
-/-- **Existence of at least one avoidance coloring at `n = 10`.**
+/-- Existence of at least one avoidance coloring at `n = 10`.
 Not every 2-coloring of a length-10 cyclic sequence has a
 monochromatic 3-consecutive triple. Closed by `native_decide` over
 the 1024 length-10 Boolean lists. -/
@@ -262,7 +262,7 @@ theorem has3Consecutive_not_forced_at_10 :
   native_decide
 
 set_option maxRecDepth 2048 in
-/-- **Exact Ramsey-bad count at `n = 10`.**
+/-- Exact Ramsey-bad count at `n = 10`.
 Of the `2^10 = 1024` length-10 Boolean colorings, exactly `122`
 avoid a monochromatic 3-consecutive triple on the cyclic index set
 `ℤ/10`. Closed by `native_decide` over 1024 cases; the same
@@ -288,7 +288,7 @@ question: `has3Consecutive` is *not* forced on the specific orbit
 witnessed by `ArnoldCatMapOrder5.ord_A_mod_5_eq_10`.
 -/
 
-/-- **Dynamical-Ramsey bridge theorem.**
+/-- Dynamical-Ramsey bridge theorem.
 The orbit is full-period `10`; at least one length-10 2-coloring
 avoids monochromatic 3-consecutive triples; exactly 122 of the
 1024 length-10 2-colorings are such avoidance witnesses. -/

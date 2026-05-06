@@ -25,13 +25,13 @@ matrix powering `A^k mod n`: `A^k (x, y) ≡ catMapIter n k (x, y)`.
 
 ## Proof strategy
 
-* **Upper bound** `ord(A, 5) ∣ 10`: check that `A^10` fixes every
+* Upper bound `ord(A, 5) ∣ 10`: check that `A^10` fixes every
   one of the `25` points of `(ℤ/5)²`. This is closed by kernel
   `decide` on an `all`-quantifier over an explicit list.
-* **Lower bound** `ord(A, 5) ∤ d` for every proper divisor `d` of
+* Lower bound `ord(A, 5) ∤ d` for every proper divisor `d` of
   `10`: it suffices to exhibit one non-fixed point for each of
   `d ∈ {1, 2, 5}`. We use `(1, 0)` in every case.
-* **Order is exactly 10**: divisors of `10` are `{1, 2, 5, 10}`.
+* Order is exactly 10: divisors of `10` are `{1, 2, 5, 10}`.
   The upper bound gives order `∣ 10`; the three lower-bound
   witnesses rule out `1, 2, 5`; so the order is `10`.
 
@@ -76,7 +76,7 @@ theorem allPointsMod5_length : allPointsMod5.length = 25 := by decide
 
 /-! ## Upper bound: `A^10` fixes every point of `(ℤ/5)²` -/
 
-/-- **`A^10 ≡ I (mod 5)`**, witnessed pointwise.
+/-- `A^10 ≡ I (mod 5)`, witnessed pointwise.
 For every `(x, y) ∈ (ℤ/5)²`, `catMapIter 5 10 (x, y) = (x, y)`.
 Closed by kernel `decide` on `25` explicit pairs. -/
 theorem catMap_pow_10_id_mod_5 :
@@ -102,7 +102,7 @@ Divisors of `10` are `{1, 2, 5, 10}`. The upper bound witnesses
 order-divides-`10`; the three lower-bound witnesses rule out the
 proper divisors `1, 2, 5`. Hence `ord(A, 5) = 10`. -/
 
-/-- **`ord(A, 5) = 10`** packaged as the four decidable checks.
+/-- `ord(A, 5) = 10` packaged as the four decidable checks.
 Upper bound: `A^10` fixes all `25` points of `(ℤ/5)²`.
 Lower bounds: `A^1`, `A^2`, `A^5` each move the point `(1, 0)`. -/
 theorem ord_A_mod_5_eq_10 :
@@ -135,7 +135,7 @@ theorem catMap_pow_3_id_mod_2 :
 theorem catMap_pow_1_not_id_mod_2 :
     catMapIter 2 1 (1, 0) ≠ (1, 0) := by decide
 
-/-- **`ord(A, 2) = 3`** as the conjunction of the upper and lower
+/-- `ord(A, 2) = 3` as the conjunction of the upper and lower
 bounds on the only proper divisor `1`. -/
 theorem ord_A_mod_2_eq_3 :
     allPointsMod2.all (fun p => catMapIter 2 3 p == p) = true ∧
@@ -169,7 +169,7 @@ theorem catMap_pow_1_not_id_mod_3 :
 theorem catMap_pow_2_not_id_mod_3 :
     catMapIter 3 2 (1, 0) ≠ (1, 0) := by decide
 
-/-- **`ord(A, 3) = 4`** as the conjunction of the upper bound on
+/-- `ord(A, 3) = 4` as the conjunction of the upper bound on
 `A^4` and lower bounds on proper divisors `1, 2`. -/
 theorem ord_A_mod_3_eq_4 :
     allPointsMod3.all (fun p => catMapIter 3 4 p == p) = true ∧

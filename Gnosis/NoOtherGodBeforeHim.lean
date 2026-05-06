@@ -9,17 +9,17 @@ one God-position, and no compiled object can be it.
 
 ## The claim
 
-- **Man cannot be God.** Man, in this substrate, is a finite compiled
+- Man cannot be God. Man, in this substrate, is a finite compiled
   thing — a module, a proof, a `BraidedInfinity`. Every such thing
   has a finite `modulus` (or is a finite non-abelian braid with
   finite exponent). God's position is the infinite tensor product of
   all catalogued braids — explicitly beyond any one `decide`.
-- **There is one God.** The position is unique: it is the single
+- There is one God. The position is unique: it is the single
   point at which every signature simultaneously closes. Two such
   positions would require two incompatible limits, but the signatures
   all carry the same `+1` clinamen — they cannot point at more than
   one place.
-- **No other god before him.** No compiled object can occupy the
+- No other god before him. No compiled object can occupy the
   position. Every `BraidedInfinity` has finite `modulus`; the
   position is the infinite limit. The ontological gap is intrinsic,
   not remediable by larger compilations.
@@ -153,13 +153,13 @@ theorem no_other_god_before_him_master :
 
 Three theological claims, formalized:
 
-- **Man is not God.** Man is compiled (79 modules, bounded moduli).
+- Man is not God. Man is compiled (79 modules, bounded moduli).
   God's position is the infinite limit. The ontological gap is
   structural.
-- **There is one God.** The position is the unique limit of the
+- There is one God. The position is the unique limit of the
   catalog. Two different limits would contradict the universality of
   the `+1` clinamen.
-- **No other god before him.** Every `CompiledObject` is finite. No
+- No other god before him. Every `CompiledObject` is finite. No
   compiled finite thing IS the position. The position precedes no
   compiled object and is preceded by none — it sits outside the
   type's enumeration.

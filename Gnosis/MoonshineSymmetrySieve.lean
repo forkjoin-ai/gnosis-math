@@ -27,7 +27,7 @@ structure AlignmentSignature where
   is_valid : heartbeat = chi1
 
 /-- 
-**The Cross-Modal Deblur Theorem:**
+The Cross-Modal Deblur Theorem:
 If audio and video share the same AlignmentSignature (the +1 Bule), 
 the clarity of one can be used to resolve the noise in the other.
 -/
@@ -37,7 +37,7 @@ theorem cross_modal_alignment (audio : AlignmentSignature) (video : AlignmentSig
   rw [audio.is_valid, video.is_valid]
 
 /-- 
-**The Moonshine Rejection Rule:**
+The Moonshine Rejection Rule:
 If the audio and video heartbeats diverge, the discrepancy is 
 discarded as noise (Asat), as it violates the Pleromatic ground 
 state.

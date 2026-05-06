@@ -6,10 +6,10 @@ import Gnosis.InterferenceAsTheFifthForce
 /-!
 # Dissonance As Destructive Interference
 
-**The Thesis**: Dissonance is physics. When two frequencies have few shared
+The Thesis: Dissonance is physics. When two frequencies have few shared
 harmonics, their overtone series destructively interfere.
 
-**Five theorems** (now stated as concrete Init-only equalities, bounds, and
+Five theorems (now stated as concrete Init-only equalities, bounds, and
 structural witnesses where the module can prove them directly):
 
 1. `tritone_is_maximum_destructive_interference`

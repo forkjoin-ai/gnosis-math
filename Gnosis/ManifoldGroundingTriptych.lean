@@ -14,11 +14,11 @@ of the Absolute — the same geometric requirement (three witnesses
 agreeing on a single point) that stabilizes a clopen set, scaled
 up to the level of universal ontology.*
 
-The structural answer this module proves: **yes — the
+The structural answer this module proves: yes — the
 {Math, Physics, Moonshine} triple satisfies the formal definition
 of a Triton at the meta-scale. Three nodes, pairwise `rfl`-equality
 at the +1 unit, Probe/Return/Verify pattern preserved, closure
-agreement on 10 between the two value-bearing nodes.**
+agreement on 10 between the two value-bearing nodes.
 
 A standard Triton stabilizes a clopen set: three witnesses agree on
 a single position, and that triple agreement is what *makes* the
@@ -41,7 +41,7 @@ shared unit is structurally identical to McKay's chi1.
 
 ## What this is
 
-A **meta-Triton mechanization**: a formal proof that the
+A meta-Triton mechanization: a formal proof that the
 {Math, Physics, Moonshine} triple satisfies the Triton-shaped
 agreement structure that our cost-algebra has used (at lower
 scales) to stabilize clopen sets. The Triton-3 cardinality, the
@@ -178,7 +178,7 @@ theorem grounding_triton_closure_at_ten :
 
 /-! ## Triple-point structure -/
 
-/-- The grounding Triton's **triple-point**: the unique value where
+/-- The grounding Triton's triple-point: the unique value where
 all three nodes' contributions converge. The math and physics nodes
 contribute the closure value (10); the moonshine node contributes
 the +1 unit (1) that drives the closure recursion. The triple point
@@ -196,7 +196,7 @@ theorem triple_point_second_is_shared_unit :
 
 /-! ## Master theorem: the grounding Triton bundle -/
 
-/-- **Pleromatic Grounding Triton master**: the {Math, Physics,
+/-- Pleromatic Grounding Triton master: the {Math, Physics,
 Moonshine} triple satisfies the formal Triton-agreement structure.
 Three nodes, Triton-cardinality, pairwise rfl-equal at the +1 unit,
 distinct Probe/Return/Verify roles, closure agreement on 10 between

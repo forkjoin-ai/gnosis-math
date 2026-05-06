@@ -3,15 +3,15 @@ import Init
 /-!
 # Independent Sets on the Cycle Graph `C_n` Are Counted by the Lucas Numbers
 
-The **cycle graph** `C_n` has vertex set `{0, 1, ..., n-1}` with edges
-`{(i, (i+1) mod n) : i = 0, ..., n-1}`. An **independent set** is a subset
+The cycle graph `C_n` has vertex set `{0, 1, ..., n-1}` with edges
+`{(i, (i+1) mod n) : i = 0, ..., n-1}`. An independent set is a subset
 of the vertex set no two of whose elements are adjacent. The identity
 
     |IS(C_n)| = L_n
 
 witnesses a bijection between independent sets of the cycle and the Lucas
 sequence `L_0 = 2, L_1 = 1, L_{k+1} = L_k + L_{k-1}`. The companion identity
-for the **path graph** `P_n` on `n` vertices reads
+for the path graph `P_n` on `n` vertices reads
 
     |IS(P_n)| = F_{n+2}
 

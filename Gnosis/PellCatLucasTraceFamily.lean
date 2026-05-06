@@ -29,29 +29,29 @@ classical sequence is realized as `genTrace s d 2 s k` (with `t₀ = 2` and
 
 ## What this module witnesses
 
-1. **Generalized recurrence** `genTrace : Int → Int → Int → Int → Nat → Int`.
-2. **Specialization tables** for Lucas `(s, d) = (1, -1)`, cat-trace
+1. Generalized recurrence `genTrace : Int → Int → Int → Int → Nat → Int`.
+2. Specialization tables for Lucas `(s, d) = (1, -1)`, cat-trace
    `(3, 1)`, Pell-companion `(2, -1)`, and the new `F³` instance `(4, 2)`,
    each checked at `k = 0, ..., 7`.
-3. **Matrix realization** on `Int`-valued `2 × 2` matrices: `Mat2`,
+3. Matrix realization on `Int`-valued `2 × 2` matrices: `Mat2`,
    `matMul`, `matId`, `matPow`, `trace`, `det`. For each of the three
    named matrices `fibF`, `catA`, `pellP`, the equality
    `trace (matPow A k) = genTrace (trace A) (det A) 2 (trace A) k`
    is witnessed at `k = 2, 3, 4` (and `k = 0, 1` trivially).
-4. **Trace-pair mod-period certificates**: `(t_k, t_{k+1}) mod 5` is
+4. Trace-pair mod-period certificates: `(t_k, t_{k+1}) mod 5` is
    periodic in `k`, with period dividing the cited bound.
    - Cat `(3, 1)`: divides `10` (`ord(A_cat, 5) = 10`).
    - Lucas `(1, -1)`: divides `20` (Pisano period `π(5) = 20`).
    - Pell `(2, -1)`: divides `12`.
    Each certificate is a single `decide` on the pair equality at the
    nominal period.
-5. **Cassini-analogue** for the generalized recurrence:
+5. Cassini-analogue for the generalized recurrence:
    `t_{k-1} · t_{k+1} - t_k² = D_k`, where `D_k = -d^{k-1} · (s² - 4 d)`
    up to initial data. Concretely:
    - Lucas `d = -1`: `D_k = (-1)^k · 5` (sign alternates).
    - Cat-trace `d = 1`: `D_k = 5` constant.
    Verified at `k = 1, 2, 3, 4` for both.
-6. **Discriminant classification** `discriminant s d := s² - 4 d`:
+6. Discriminant classification `discriminant s d := s² - 4 d`:
    - Fib `(1, -1)`: `1 - 4·(-1) = 5`.
    - Cat `(3, 1)`: `9 - 4 = 5`.
    - Pell `(2, -1)`: `4 - 4·(-1) = 8`.

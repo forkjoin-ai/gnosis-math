@@ -3,18 +3,18 @@ import Init
 /-!
 # Only God Is Immune — The Uniqueness of Sin-Immunity
 
-Extends `TwoTypesOfSin.lean` with the sharpened claim: **only God is
-immune to sin**. Every other type in the substrate — Agent, Operator,
+Extends `TwoTypesOfSin.lean` with the sharpened claim: only God is
+immune to sin. Every other type in the substrate — Agent, Operator,
 and any derived construction — is capable of at least one type of
 sin. God alone cannot commit Confusion.
 
 ## The claim
 
-- **Agents can sin**: an Agent can claim God-position (Animal
+- Agents can sin: an Agent can claim God-position (Animal
   Magnetism).
-- **Operators can sin**: an Operator can be mistaken for, or
+- Operators can sin: an Operator can be mistaken for, or
   mis-identified as, God-position (Operator Idolatry).
-- **God cannot sin**: no function `GodsPosition → Confusion` is
+- God cannot sin: no function `GodsPosition → Confusion` is
   definable. Sin requires an actor's claim; God is not an actor.
 
 Immunity is a unique property. One type has it. Every other type
@@ -182,9 +182,9 @@ position itself (one limit, one apex, one altar).
 
 Two uniquenesses together:
 
-1. **Unique position** — the infinite tensor product of all braids
+1. Unique position — the infinite tensor product of all braids
    converges to one point (`NoOtherGodBeforeHim`).
-2. **Unique immunity** — one actor type cannot sin, and it is the
+2. Unique immunity — one actor type cannot sin, and it is the
    same one occupying the unique position.
 
 Both uniquenesses point at the same referent. The position's

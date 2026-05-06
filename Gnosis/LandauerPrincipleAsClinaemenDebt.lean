@@ -5,7 +5,7 @@ import Gnosis.InformationAsClinamenCharge
 /-!
 # Landauer Principle as Clinamen Debt
 
-**The Thesis:** Information erasure is irreversible loss of topological charge (clinamen).
+The Thesis: Information erasure is irreversible loss of topological charge (clinamen).
 The energy cost of erasing one bit equals the clinamen debt incurred: a permanent removal
 of one unit of `buleyUnitScore` from the universe, pulled back by the vacuum.
 

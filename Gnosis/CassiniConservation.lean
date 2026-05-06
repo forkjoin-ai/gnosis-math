@@ -7,9 +7,9 @@ Cassini's identity: F(n+1)² - F(n)·F(n+2) = (-1)ⁿ
 
 The God Formula conservation law: godWeight(R, v) + v = R + 1
 
-This module proves: **Cassini's identity is the God Formula conservation
+This module proves: Cassini's identity is the God Formula conservation
 law applied to Fibonacci-indexed budgets, and the alternating ±1 in
-Cassini formalizes the clinamen.**
+Cassini formalizes the clinamen.
 
 The structural isomorphism:
 - Cassini's +1 (even n) = the clinamen creating the sliver

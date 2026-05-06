@@ -12,22 +12,22 @@ state (zero crossings).
 
 This module proves six fundamental properties of decomposition:
 
-1. **decomposition_does_not_increase_crossings**: crossing_count(decompose x) ≤ crossing_count(x)
+1. decomposition_does_not_increase_crossings: crossing_count(decompose x) ≤ crossing_count(x)
    Decomposition is monotonic in structural reduction.
 
-2. **full_decomposition_yields_featureless**: repeated decompose → featureless state (no structure)
+2. full_decomposition_yields_featureless: repeated decompose → featureless state (no structure)
    Sufficient decomposition budget reaches zero crossings.
 
-3. **featureless_decomposition_idempotent**: decompose(featureless) = featureless
+3. featureless_decomposition_idempotent: decompose(featureless) = featureless
    Once featureless, further decomposition changes nothing.
 
-4. **projection_reinforcement_exclusive**: can't both project AND reinforce same dimension
+4. projection_reinforcement_exclusive: can't both project AND reinforce same dimension
    These operations are mutually exclusive on a single object.
 
-5. **decompose_then_reinforce_requires_restoration**: if decomposed, must restore before reinforcing
+5. decompose_then_reinforce_requires_restoration: if decomposed, must restore before reinforcing
    After full decomposition, reinforcement requires intermediate restoration.
 
-6. **featureless_states_cannot_reinforce**: reinforce(featureless) = featureless (no effect)
+6. featureless_states_cannot_reinforce: reinforce(featureless) = featureless (no effect)
    Reinforcement requires pre-existing structure to amplify.
 
 ## Design Notes

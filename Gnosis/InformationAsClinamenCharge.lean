@@ -3,20 +3,20 @@ import Gnosis.SpectralNoiseEquilibrium
 /-!
 # Information as Clinamen Charge
 
-**The Thesis:** Information is not abstract. A bit is ONE UNIT OF TOPOLOGICAL
+The Thesis: Information is not abstract. A bit is ONE UNIT OF TOPOLOGICAL
 CHARGE. Computation redistributes that charge while respecting the vacuum
 constraint. Entropy is how spread out the charge gets before contracting.
 
 This module proves three mechanics:
 
-1. **bit_is_clinamen_unit**: 0 = vacuum (score 0), 1 = one clinamen lift away
+1. bit_is_clinamen_unit: 0 = vacuum (score 0), 1 = one clinamen lift away
    (score 1). A classical bit IS this binary topological state.
 
-2. **computation_is_clinamen_redistribution**: Any computable function
+2. computation_is_clinamen_redistribution: Any computable function
    redistributes clinamen charge while respecting the vacuum constraint
    (contractible in finite steps).
 
-3. **entropy_is_clinamen_dispersal**: Shannon entropy = sum of face charges
+3. entropy_is_clinamen_dispersal: Shannon entropy = sum of face charges
    (waste + opportunity + diversity). Entropy 0 iff b = vacuum.
 
 Zero sorry. Zero axioms. Only: rfl, simp, omega, decide, exact, intro, refine.

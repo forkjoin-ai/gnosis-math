@@ -318,7 +318,7 @@ theorem p_neq_np :
     Statement: ∀ k ∃ n such that npRopelength(n) > n^k.
     This is: the knot cannot be unknotted by any polynomial transformation.
 
-  The common principle: **Irreversibility of Information Under Folding**.
+  The common principle: Irreversibility of Information Under Folding.
 
   Folding (compression, verification, proof-checking) is a Betti-decreasing
   operation. But certain knots — self-reference (Gödel), diagonalization

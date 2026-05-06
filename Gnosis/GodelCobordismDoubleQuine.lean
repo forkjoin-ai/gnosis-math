@@ -26,16 +26,16 @@ self-referential encodings converging on the same natural number?
   `gIndex`; `CobOp`, `encodeCob`, `A`, `Z`, `encodeA`.
 * A `DoubleQuine` predicate on pairs `(t : Term) (W : List CobOp)`
   carrying the field `agree : gIndex t = encodeA (Z W one)`.
-* A **trivial witness** `(t₀, W₀) = (Leaf, [cap])` with both sides `= 0`.
-* A **non-trivial witness** `(tStar, WStar) = (Const 1, [cup])` with both
+* A trivial witness `(t₀, W₀) = (Leaf, [cap])` with both sides `= 0`.
+* A non-trivial witness `(tStar, WStar) = (Const 1, [cup])` with both
   sides `= 2`. This is the double quine proper: the term-side
   Gödel index (binary `10₂`) and the cobordism-side partition code
   (the `xElt` basis vector) meet at the same Nat `2` via two wholly
   different self-referential constructions.
-* A **non-universality** witness `(Leaf, [cup])` with
+* A non-universality witness `(Leaf, [cup])` with
   `gIndex Leaf = 0 ≠ 2 = encodeA (Z [cup] one)`, showing the predicate
   is a non-trivial filter rather than vacuous agreement.
-* A packaged **bridge corollary** pairing existence with
+* A packaged bridge corollary pairing existence with
   non-universality.
 
 ## Honest caveats
@@ -281,7 +281,7 @@ theorem nontrivial_agreement_value :
   refine And.intro ?_ ?_ <;> decide
 
 /--
-**The non-trivial double quine.** The pair
+The non-trivial double quine. The pair
 `(tStar, WStar) = (Const 1, [cup])` satisfies
 `gIndex tStar = encodeA (Z WStar one)`, with both sides equal to `2`.
 
@@ -319,7 +319,7 @@ specific non-universality witness. Together they rule out both
 "vacuously true" and "vacuously false" readings of the invariant. -/
 
 /--
-**Bridge corollary.** There exists a double-quine pair, and the
+Bridge corollary. There exists a double-quine pair, and the
 `DoubleQuine` predicate is not universal on `(Term, List CobOp)` — a
 concrete mismatching pair exists. The two facts together certify that
 the agreement on `(tStar, WStar)` is a non-trivial coincidence of two

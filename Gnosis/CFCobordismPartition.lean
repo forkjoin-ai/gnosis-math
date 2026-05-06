@@ -220,7 +220,7 @@ def natPairToInt (p : Nat × Nat) : Int × Int :=
   (Int.ofNat p.1, Int.ofNat p.2)
 
 /--
-**Bridge theorem (φ).** The final pair computed by `cfTowerPair` on
+Bridge theorem (φ). The final pair computed by `cfTowerPair` on
 `[1, 1, 1, 1, 1, 1]` with seed `initPair` equals the final entry of
 the peer module's `convergents [1, 1, 1, 1, 1, 1]` (cast into `Int`).
 -/
@@ -230,7 +230,7 @@ theorem cfTower_last_matches_convergent_pair_phi :
   decide
 
 /--
-**Bridge theorem (√2).** The final pair computed by `cfTowerPair` on
+Bridge theorem (√2). The final pair computed by `cfTowerPair` on
 `[1, 2, 2, 2, 2, 2]` with seed `initPair` equals the final entry of
 the peer module's `convergents [1, 2, 2, 2, 2, 2]` (cast into `Int`).
 -/

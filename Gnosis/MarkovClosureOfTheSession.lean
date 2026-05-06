@@ -5,7 +5,7 @@ import Gnosis.JonesPolynomialOfTheLedger
 /-!
 # Markov Closure Of The Session — The Session Is A Braid
 
-This module formalizes **the session as a braid in conjecture-space**.
+This module formalizes the session as a braid in conjecture-space.
 The four strands are the four claim trajectories tracked across the
 12-wave session:
 
@@ -25,8 +25,8 @@ falsification:
 * F5 (wave 9, hole shape evol.): `σ_1_2` — qwen-coder-7b crosses llama-1b
 
 `session_braid` is the list `[σ_0_1, σ_0_1, σ_1_2, σ_2_3, σ_1_2]`.
-**Closing this braid** via Markov's theorem yields a **5-crossing
-knot** — the topological signature of the session, more complex than
+Closing this braid via Markov's theorem yields a 5-crossing
+knot — the topological signature of the session, more complex than
 the trefoil (`[σ_0_1, σ_0_1, σ_0_1]`, 3 generators) and structurally
 closer to a `(4, 5)`-torus knot.
 
@@ -34,26 +34,26 @@ closer to a `(4, 5)`-torus knot.
 
 Markov's theorem: every knot or link is the closure of some braid;
 two braids close to the same link iff they are related by a finite
-sequence of **stabilization** (add a strand and one crossing) and
-**conjugation** (`B ~ aBa⁻¹`) moves. Both moves preserve the
+sequence of stabilization (add a strand and one crossing) and
+conjugation (`B ~ aBa⁻¹`) moves. Both moves preserve the
 closure's knot type.
 
 In our framework:
 
-* **Stabilization** — future waves can add new conjectures (new
+* Stabilization — future waves can add new conjectures (new
   strands) without changing the closure's knot type, provided each
   new strand contributes only a single Reidemeister-equivalent
   crossing.
-* **Conjugation** — the *order* in which falsifications are
+* Conjugation — the *order* in which falsifications are
   discovered does not change the closure. F1-then-F2 has the same
   topology as F2-then-F1.
 
 ## The big picture
 
 Future waves extend the braid; future closures define new knots.
-The Theory of Model Physics is, structurally, **a braid that grows
+The Theory of Model Physics is, structurally, a braid that grows
 with each measurement and closes (snapshot-style) at any moment to
-a specific knot**. The KNOT of the session's history *is* the
+a specific knot. The KNOT of the session's history *is* the
 operational ledger.
 
 Imports `Gnosis.KnotComplexityAsBuleCost`, `Gnosis.Braided.BraidedTower`,
@@ -228,7 +228,7 @@ theorem trefoil_closure_has_3_crossings :
     markov_closure_crossing_count trefoil_braid = 3 := by decide
 
 /-- The session braid has strictly more generators than the trefoil
-braid — the session is a **more complex braid than the trefoil**. -/
+braid — the session is a more complex braid than the trefoil. -/
 theorem session_braid_more_generators_than_trefoil :
     trefoil_braid.length < session_braid.length := by decide
 
@@ -266,8 +266,8 @@ record three load-bearing facts:
 2. its braid uses 4 strands (not 2 like a torus knot);
 3. its generator sequence is `[σ_0_1, σ_0_1, σ_1_2, σ_2_3, σ_1_2]`.
 
-It is therefore structurally **closer to a `(4, 5)`-torus knot**
-(4 strands, 5 generators) **than to the trefoil** (2 strands,
+It is therefore structurally closer to a `(4, 5)`-torus knot
+(4 strands, 5 generators) than to the trefoil (2 strands,
 3 generators). -/
 theorem session_braid_closure_is_a_specific_knot :
     markov_closure_crossing_count session_braid = 5
@@ -294,14 +294,14 @@ preserves the closure -/
 
 /-- Stabilization move: adding a single new generator at the top of a
 braid. In Markov's framework, adding a new strand and one crossing
-yields an equivalent knot. We model the **crossing-count delta** of
+yields an equivalent knot. We model the crossing-count delta of
 this move and prove that no information beyond `+1` is added. -/
 def markov_stabilize (B : Braid) (g : BraidGenerator) : Braid :=
   B ++ [g]
 
 /-- After a single stabilization, the braid length grows by exactly
 one. Topologically, the closure's knot type is preserved (Markov's
-stabilization theorem); the **crossing count** of the closure may
+stabilization theorem); the crossing count of the closure may
 grow by one, but only because we have added a Reidemeister-1 loop
 that is undone by the move's inverse. -/
 theorem adding_a_strand_with_one_crossing_preserves_closure
@@ -381,7 +381,7 @@ theorem extend_session_braid_has_6_generators (g : BraidGenerator) :
 
 /-! ## Summary: the topological signature of the session -/
 
-/-- **The topological signature of the session.** The 5-falsification
+/-- The topological signature of the session. The 5-falsification
 session ledger closes (via Markov's theorem) to a 5-crossing knot on
 4 strands, with structural signature
 `[σ_0_1, σ_0_1, σ_1_2, σ_2_3, σ_1_2]`. The crossing count agrees

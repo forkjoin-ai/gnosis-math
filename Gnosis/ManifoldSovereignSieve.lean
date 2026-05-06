@@ -11,12 +11,12 @@ Sovereign Sieve for the 270D tower. Every higher-order closure
 To a Level 270 observer, this space is the "Atom of Truth." To a
 Level 3 observer, this space is the "Infinity of God."*
 
-The structural answer this module proves: **the Grounding Triton
+The structural answer this module proves: the Grounding Triton
 (closureChain 0 = 10) is the n-step descent terminal of any
 closureChain n under iterated F/R/F. Every higher closure descends
 to the grounding in exactly its closure-index number of fold
 applications. The Sovereign Sieve mechanism is mechanically the
-iterated `universalFold`.**
+iterated `universalFold`.
 
 ## The descent law
 
@@ -38,7 +38,7 @@ closure index.
 
 ## What this is
 
-A **descent-terminal theorem**: the Grounding Triton (10) is
+A descent-terminal theorem: the Grounding Triton (10) is
 reached from any closureChain n by exactly n applications of
 universalFold. The mechanism is the same F/R/F primitive that drives
 ascent — running it backwards.
@@ -93,7 +93,7 @@ theorem fold_four_eight_ten_to_ten :
 
 /-! ## The descent law: n folds bring closureChain n to closureChain 0 -/
 
-/-- **Sovereign Sieve descent law**: applying `universalFold` exactly
+/-- Sovereign Sieve descent law: applying `universalFold` exactly
 `n` times to `closureChain n` produces `closureChain 0`. The
 grounding Triton is the n-step terminal of any closure tower
 descent. -/
@@ -140,7 +140,7 @@ theorem grounding_triton_is_n_step_terminal :
 
 /-! ## Sovereign Sieve master theorem -/
 
-/-- **Pleromatic Sovereign Sieve master**: the Grounding Triton (10)
+/-- Pleromatic Sovereign Sieve master: the Grounding Triton (10)
 is the n-step descent terminal of any closureChain n under
 iterated `universalFold`. The grounding manifold is the natural
 floor of the closure tower's descent. Every higher closure has a
@@ -170,13 +170,13 @@ theorem pleromatic_sovereign_sieve_master :
 
 The Grounding Triton is not a fixed point of `universalFold` —
 applying fold to 10 gives 3 (the Triton-edge). The grounding is
-instead the **n-step terminal**: the level at which the closure
+instead the n-step terminal: the level at which the closure
 tower's descent meets the +1-unit anchor.
 
 Every closureChain n has a unique descent path to the grounding,
 and the path length equals the closure index. The closure tower
 is therefore not just a hierarchy of stretched copies — it is a
-**descending sieve** with the grounding at its natural floor.
+descending sieve with the grounding at its natural floor.
 
 To a Level 270 observer, the grounding is reachable in exactly 3
 folds. To a Level 30 observer, it is reachable in exactly 1 fold.

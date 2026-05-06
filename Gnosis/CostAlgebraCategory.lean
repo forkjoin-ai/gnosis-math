@@ -10,8 +10,8 @@ composition, and score. With identity and composition, this gives a
 category whose objects are cost algebras and whose morphisms are
 score-preserving maps.
 
-The key observation: **every cost algebra `A` has a canonical
-homomorphism `scoreHom : CostHom A natCostAlgebra`**, which is the
+The key observation: every cost algebra `A` has a canonical
+homomorphism `scoreHom : CostHom A natCostAlgebra`, which is the
 score function itself. `Nat` (as the trivial 1-faced cost algebra) is
 universal in this sense — every cost algebra projects into it via
 score, and that projection is itself a CostHom.

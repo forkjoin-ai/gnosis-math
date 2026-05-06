@@ -7,9 +7,9 @@ Formalizes the "both sides of the bit" encoding hinted at by the Bule
 unit's three-faced structure. A 64-bit lane is read as two phase-shifted
 channels:
 
-* **lifted** (the `+1` clinamen face): carries the payload that the
+* lifted (the `+1` clinamen face): carries the payload that the
   consumer reads. Maps to the Bule unit's `waste` face.
-* **contracted** (the `−1` declinamen face): carries parity/index data
+* contracted (the `−1` declinamen face): carries parity/index data
   orthogonal to the payload. Maps to the Bule unit's `opportunity` face.
 
 Today's `cache-fp48` truncates a 64-bit XXH64 digest to its low 48 bits

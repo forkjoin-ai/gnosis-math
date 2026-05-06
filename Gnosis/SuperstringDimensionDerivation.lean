@@ -30,13 +30,13 @@ Sum: `3 + 2 + 3 + 1 + 1 = 10`.
 
 ## How the M-theory `+1` and bosonic `+16` extensions land
 
-- **M-theory dimension 11 = 10 + 1**: add a gauge-orientation axis
+- M-theory dimension 11 = 10 + 1: add a gauge-orientation axis
   (cyclePermute direction, forward vs reverse). Witness:
   `cycle_permute_three_times_returns`. The reverse-orientation cycle
   is structurally the same shape as the forward, so it is one extra
   axis but not a new structural primitive — exactly the M-theory
   story.
-- **Bosonic-string dimension 26 = 10 + 16**: the 16 is structurally
+- Bosonic-string dimension 26 = 10 + 16: the 16 is structurally
   twice the Octagon (doubled gluon adjoint) — `towerPhaseCount [4, 2, 2] = 16`.
   Combined with the superstring 10, the bosonic string sits at the
   Octagon-doubled tower wall plus the minimal-generator wall. (This
@@ -45,10 +45,10 @@ Sum: `3 + 2 + 3 + 1 + 1 = 10`.
 
 ## What this is and isn't
 
-- **Is**: a structural-shape derivation showing the cost-algebra's
+- Is: a structural-shape derivation showing the cost-algebra's
   existing primitives sum to 10, with each axis tied to a theorem
   the calculus already needs.
-- **Is not**: a Virasoro-central-charge anomaly cancellation. We do
+- Is not: a Virasoro-central-charge anomaly cancellation. We do
   not derive 10 by computing `c_total = 0` from a partition function.
   The honest claim is conditional: *under the cost-algebra
   decomposition we have already mechanized, the natural dimension is 10*.

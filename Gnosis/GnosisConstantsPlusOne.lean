@@ -30,7 +30,7 @@ formula's residue piece and the Ramanujan lift are the same `+ 1`.
 
 ## What is NOT claimed
 
-- The correspondence is **not exhaustive**: `Aeon + 1 = 13` is also an
+- The correspondence is not exhaustive: `Aeon + 1 = 13` is also an
   ordered lift, but `13` is NOT a Ramanujan special. Witnessed here.
   The pattern covers `{Luminary, Hexad, GnosisUniverse}`, not all
   gnosis constants.
@@ -180,7 +180,7 @@ schema:
 - The plus phase is `{5, 7, 11}` — the Ramanujan specials, the
   structural sizes lifted by the clinamen.
 
-The `+1` crossing the phase boundary is **the same `+1`** that
+The `+1` crossing the phase boundary is the same `+1` that
 `GodFormulaPhaseManifestations` catalogued across seven independent
 phase reconstructions. The clinamen is universally the lifting
 operator between gnosis structural constants and their prime shadows.

@@ -10,7 +10,7 @@
   Collapse (γ) both reach zero residue.
 
   The former `perfect_sandwich_fixed_point` sketch carried `sorry` debt; the
-  reusable **algebraic** step — summing clause syllables when every clause is
+  reusable algebraic step — summing clause syllables when every clause is
   exactly `3` — is proved here Init-only. A full fixed-point theorem needs the
   same friction/collapse lemmas as `GnotTopology` and is left as a thin
   corollary layer once those hooks are stable.
@@ -58,7 +58,7 @@ private theorem foldl_clause_sum_acc (L : List GnotClause) (acc : Nat)
     rw [ih (acc + 3) hrest, Nat.mul_succ 3 xs.length, Nat.add_assoc acc 3 (3 * xs.length),
       Nat.add_comm 3 (3 * xs.length)]
 
-/-- **THM-SANDWICH-BODY-SUM**: If every clause has weight `3`, the folded clause
+/-- THM-SANDWICH-BODY-SUM: If every clause has weight `3`, the folded clause
     sum is exactly `3 * length` (hence `3 * parts` when `parts = block_fold b`). -/
 theorem foldl_clause_sum_eq_three_mul_length (L : List GnotClause)
     (h₃ : ∀ c ∈ L, clause_syllables c = 3) :

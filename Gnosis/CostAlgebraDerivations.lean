@@ -8,15 +8,15 @@ The `CostAlgebra` from `Gnosis.CostAlgebra` is structurally generative:
 several familiar math objects fall out as instances or as products of
 instances. This module mechanizes the most direct derivations.
 
-* **`Nat` itself** is the trivial 1-face CostAlgebra (`compose = +`,
+* `Nat` itself is the trivial 1-face CostAlgebra (`compose = +`,
   `score = id`).
-* **CostAlgebras close under product**: given `A : CostAlgebra S` and
+* CostAlgebras close under product: given `A : CostAlgebra S` and
   `B : CostAlgebra T`, the componentwise structure on `S × T` is also
   a CostAlgebra. Score adds across the components.
-* **`Nat × Nat × Nat`** is the iterated product. This is structurally
+* `Nat × Nat × Nat` is the iterated product. This is structurally
   equivalent to `BuleyUnit`'s CostAlgebra: the Bule three-faced
   algebra is `Nat^3`, and the score-isomorphism is mechanized.
-* **`Nat^k`** for any finite k is therefore a CostAlgebra by iteration.
+* `Nat^k` for any finite k is therefore a CostAlgebra by iteration.
   This is the free commutative monoid on k indeterminates, with
   componentwise addition and total-degree as score.
 

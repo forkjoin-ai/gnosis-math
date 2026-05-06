@@ -41,9 +41,9 @@ supergravity sense (corresponds to the M-theory/bosonic regime).
 
 ## What this is and isn't
 
-- **Is**: a single intrinsic Int-valued map whose vanishing locus is
+- Is: a single intrinsic Int-valued map whose vanishing locus is
   exactly the minimum self-consistent phase count.
-- **Is not**: a Virasoro central-charge derivation from a partition
+- Is not: a Virasoro central-charge derivation from a partition
   function. We do not have continuous symmetries, ghost fields, or
   conformal invariance in the cost algebra.
 
@@ -178,7 +178,7 @@ theorem central_charge_nahm_sandwich
 
 /-! ## The signature theorem: 10 is the unique anomaly-free dimension -/
 
-/-- **The closing theorem**: 10 is the unique phase count at which the
+/-- The closing theorem: 10 is the unique phase count at which the
 central charge vanishes. The Virasoro-shaped no-anomaly condition,
 mechanized over the cost algebra. -/
 theorem ten_is_the_unique_critical_dimension :

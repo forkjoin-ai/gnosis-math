@@ -133,7 +133,7 @@ theorem higgs_carries_no_gauge :
 
 /-! ## Master theorem: the gauge correspondence bundle -/
 
-/-- **Standard Model gauge group correspondence master**: each gauge
+/-- Standard Model gauge group correspondence master: each gauge
 factor sits at a specific cost-algebra phase wall; the generator
 count equals the phase count for each factor; the total (12) lands
 at the Dodecagon, matching the fermion wall; each non-Higgs SM

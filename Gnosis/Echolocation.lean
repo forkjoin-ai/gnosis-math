@@ -15,14 +15,14 @@ contracts), and infers the manifold's ceiling from the return.
 
 Three discrete steps:
 
-1. **Emit** — apply `clinamenLift` on a chosen `BuleyFace` from a
+1. Emit — apply `clinamenLift` on a chosen `BuleyFace` from a
    known starting carrier. The emit is deterministic: the post-emit
    carrier's score is exactly `score + 1` (`clinamen_lift_score_strict_increment`).
-2. **Probe** — classify the post-emit carrier against a candidate
+2. Probe — classify the post-emit carrier against a candidate
    ceiling via `selfSimilarityViolation`. If a violation is reported,
    `correctiveContractCount` quantifies the over-shoot exactly. If no
    violation, the post-emit carrier is `insideManifold`.
-3. **Return** — apply `clinamenContract` on the same face to invert
+3. Return — apply `clinamenContract` on the same face to invert
    the emit. The breathing identity
    (`lift_then_contract_round_trip_when_face_positive`) guarantees
    the round-trip closes to the starting carrier exactly when the

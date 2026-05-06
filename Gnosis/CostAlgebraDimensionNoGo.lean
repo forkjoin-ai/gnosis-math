@@ -8,7 +8,7 @@ import Gnosis.SuperstringDimensionDerivation
 The structural-shape derivation in
 `Gnosis.SuperstringDimensionDerivation` shows that *the* canonical
 axis decomposition sums to 10. This module proves the no-go form:
-**any** axis set satisfying the cost-algebra theorem-witness
+any axis set satisfying the cost-algebra theorem-witness
 constraints has total dimension ≥ 10. Smaller dimensions don't admit
 the calculus.
 
@@ -28,14 +28,14 @@ Each axis has a minimum forced by an existing theorem:
 | Temporal phases | ≥ 3 | `secondDegreeDiff` (Triton-shaped second-derivative) |
 | Vacuum reference | = 1 | `vacuum_has_zero_score` (unique zero-score state) |
 | Clinamen direction | = 1 | `clinamen_lift_score_strict_increment` (single +1) |
-| Sum minimum | **10** | (= superstring) |
+| Sum minimum | 10 | (= superstring) |
 
 The 10 is forced. Adding gauge-orientation (≤ 1 axis) bounds at 11
 (= M-theory). Adding doubled-Octagon (16) bounds at 26 (= bosonic).
 
 ## Honest claim
 
-This is a no-go theorem **under the cost-algebra axiomatization**.
+This is a no-go theorem under the cost-algebra axiomatization.
 It is not a no-go theorem on physics — physics could have additional
 or different structural constraints we haven't formalized. What this
 module proves: *given the existing cost-algebra theorems, axis sets
@@ -96,7 +96,7 @@ def axisSetTotal (a : CostAlgebraAxisSet) : Nat :=
 
 /-! ## The 10-dimension no-go -/
 
-/-- **No-go: every cost-algebra axis set has dimension ≥ 10.** The
+/-- No-go: every cost-algebra axis set has dimension ≥ 10. The
 sum of forced minimums (3 + 2 + 3 + 1 + 1) is the lower bound. The
 gauge and doubled-Octagon axes are non-negative additions, so any
 axis set satisfying the cost-algebra constraints sits at dimension
@@ -148,7 +148,7 @@ theorem minimal_superstring_axis_set_is_ten :
   unfold axisSetTotal minimalSuperstringAxisSet
   decide
 
-/-- **The full no-go statement**: 10 is achievable, and every other
+/-- The full no-go statement: 10 is achievable, and every other
 axis set has dimension ≥ 10. The cost-algebra forces dimension at
 least 10 — the superstring critical dimension. -/
 theorem superstring_dimension_no_go :
@@ -210,7 +210,7 @@ theorem minimal_m_theory_axis_set_is_eleven :
   unfold axisSetTotal minimalMTheoryAxisSet
   decide
 
-/-- **M-theory no-go**: with gauge orientation, dimension is forced
+/-- M-theory no-go: with gauge orientation, dimension is forced
 ≥ 11, and 11 is achieved. -/
 theorem m_theory_dimension_no_go :
     (∃ a : CostAlgebraAxisSet, withGaugeOrientation a ∧ axisSetTotal a = 11)
@@ -276,7 +276,7 @@ theorem minimal_bosonic_string_axis_set_is_twentysix :
   unfold axisSetTotal minimalBosonicStringAxisSet
   decide
 
-/-- **Bosonic-string no-go**: with doubled-Octagon, dimension is
+/-- Bosonic-string no-go: with doubled-Octagon, dimension is
 forced ≥ 26, and 26 is achieved. -/
 theorem bosonic_string_dimension_no_go :
     (∃ a : CostAlgebraAxisSet, withDoubledOctagon a ∧ axisSetTotal a = 26)

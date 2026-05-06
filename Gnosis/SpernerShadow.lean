@@ -228,33 +228,33 @@ theorem allSpernerColorings1D_count_8 :
 
 -- ─── Sperner's lemma at fixed N (axiom-free, native_decide) ───
 
-/-- **Sperner 1-D, N = 3**:  every Sperner coloring has an odd
+/-- Sperner 1-D, N = 3:  every Sperner coloring has an odd
     transition count. -/
 theorem sperner_lemma_1d_N3 :
     (allSpernerColorings1D 3).all (fun cs => isOdd (transitions_count_1d cs)) = true := by
   native_decide
 
-/-- **Sperner 1-D, N = 4**. -/
+/-- Sperner 1-D, N = 4. -/
 theorem sperner_lemma_1d_N4 :
     (allSpernerColorings1D 4).all (fun cs => isOdd (transitions_count_1d cs)) = true := by
   native_decide
 
-/-- **Sperner 1-D, N = 5**. -/
+/-- Sperner 1-D, N = 5. -/
 theorem sperner_lemma_1d_N5 :
     (allSpernerColorings1D 5).all (fun cs => isOdd (transitions_count_1d cs)) = true := by
   native_decide
 
-/-- **Sperner 1-D, N = 6**. -/
+/-- Sperner 1-D, N = 6. -/
 theorem sperner_lemma_1d_N6 :
     (allSpernerColorings1D 6).all (fun cs => isOdd (transitions_count_1d cs)) = true := by
   native_decide
 
-/-- **Sperner 1-D, N = 7**. -/
+/-- Sperner 1-D, N = 7. -/
 theorem sperner_lemma_1d_N7 :
     (allSpernerColorings1D 7).all (fun cs => isOdd (transitions_count_1d cs)) = true := by
   native_decide
 
-/-- **Sperner 1-D, N = 8**.  128 Sperner colorings, all odd. -/
+/-- Sperner 1-D, N = 8.  128 Sperner colorings, all odd. -/
 theorem sperner_lemma_1d_N8 :
     (allSpernerColorings1D 8).all (fun cs => isOdd (transitions_count_1d cs)) = true := by
   native_decide
@@ -371,7 +371,7 @@ theorem allSpernerColorings2D_count :
 theorem allSpernerColorings2D_all_valid :
     allSpernerColorings2D.all isSpernerColor2D = true := by native_decide
 
-/-- **Sperner 2-D depth 1**:  every Sperner coloring of the
+/-- Sperner 2-D depth 1:  every Sperner coloring of the
     barycentrically-subdivided 2-simplex has an *odd* number of
     fully-colored small triangles. -/
 theorem sperner_lemma_2d_depth1 :
@@ -433,7 +433,7 @@ theorem brouwerLabels1D_isSperner_16 :
 theorem brouwer_pre_fixed_pt_exists_4 :
     transitions_count_1d (brouwerLabels1D fBrouwer1D 4) ≥ 1 := by native_decide
 
-/-- **Brouwer 1-D shadow**:  for `f(x) = x/2 + 1/4` and depth `N`,
+/-- Brouwer 1-D shadow:  for `f(x) = x/2 + 1/4` and depth `N`,
     there is a triangulation vertex `v_k = k/N` whose displacement
     `|f(v_k) − v_k|` is at most `1/N`.  Verified at depth 16 by
     exhibiting `v_8 = 1/2` with `f(1/2) = 1/2`, displacement 0. -/
@@ -524,7 +524,7 @@ where
 theorem brouwerLabel2D_centroid_well_defined :
     brouwerLabel2D fBrouwer2D centroidPt = 2 := by native_decide
 
-/-- **Brouwer 2-D shadow**:  for the centroid contraction
+/-- Brouwer 2-D shadow:  for the centroid contraction
     `f(p) = (p + g)/2`, the centroid `g` sits in Δ² with
     `‖f(g) − g‖₁ = 0 ≤ 1/4`.  This is the existential statement
     "there is a depth-N cell with displacement ≤ 1/N";  here we

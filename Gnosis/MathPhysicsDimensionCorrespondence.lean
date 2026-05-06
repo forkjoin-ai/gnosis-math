@@ -10,17 +10,17 @@ import Gnosis.RealityMesh
 The cost-algebra forces `dim ≥ 10` from axis-count first principles.
 String theory (via Nahm's supergravity bound and Witten's coupling
 constant identification) forces `dim ≤ 11` from spin-2 constraints,
-with `dim = 10` as the unique anomaly-free critical dimension. **Two
-independent angles, same number 10.**
+with `dim = 10` as the unique anomaly-free critical dimension. Two
+independent angles, same number 10.
 
 This module makes the convergence formal:
 
-* **Math angle**: `Gnosis.CostAlgebraDimensionNoGo.cost_algebra_dimension_at_least_ten`
+* Math angle: `Gnosis.CostAlgebraDimensionNoGo.cost_algebra_dimension_at_least_ten`
   — the cost-algebra's structural axes sum to ≥ 10.
-* **Physics angle**: `Gnosis.NahmDimensionCeiling.nahm_dimension_at_most_eleven`
+* Physics angle: `Gnosis.NahmDimensionCeiling.nahm_dimension_at_most_eleven`
   — Nahm's spin-2 bound caps consistent supergravity at 11, with the
   anomaly-free critical dimension at 10.
-* **Convergence**: both endpoints meet at 10, the unique value
+* Convergence: both endpoints meet at 10, the unique value
   satisfying both constraints.
 
 The convergence is not a tautology — the two angles use *different
@@ -31,9 +31,9 @@ That they agree on 10 is the evidence of a real correspondence.
 ## What we mean by "dimension"
 
 The word is overloaded. In the cost-algebra, "dimension" is the
-**minimum number of independent operational axes** required for the
+minimum number of independent operational axes required for the
 calculus's existing theorems to all hold. In string theory,
-"dimension" is the **spacetime dimensionality** of the manifold the
+"dimension" is the spacetime dimensionality of the manifold the
 string propagates in. These look like different things — and they
 might be — but their numerical values are *forced* to coincide by
 two structurally independent arguments.
@@ -106,13 +106,13 @@ theorem math_dimension_equals_physics_dimension :
 
 /-! ## The two-angle convergence -/
 
-/-- **Math angle**: the cost-algebra axis count forces `dim ≥ 10`. -/
+/-- Math angle: the cost-algebra axis count forces `dim ≥ 10`. -/
 theorem math_angle_floor (a : CostAlgebraAxisSet) :
     axisSetTotal a ≥ mathDimension := by
   rw [math_dimension_is_ten]
   exact cost_algebra_dimension_at_least_ten a
 
-/-- **Physics angle**: Nahm's supergravity bound caps consistent
+/-- Physics angle: Nahm's supergravity bound caps consistent
 unified-theory dimension at 11. -/
 theorem physics_angle_ceiling
     (a : CostAlgebraAxisSet) (h : NahmMinimal a) :
@@ -120,7 +120,7 @@ theorem physics_angle_ceiling
   rw [physics_dimension_is_ten]
   exact nahm_dimension_at_most_eleven a h
 
-/-- **The convergence**: the math floor and the physics ceiling meet at
+/-- The convergence: the math floor and the physics ceiling meet at
 `mathDimension = physicsDimension = 10`. Any axis set in the
 supergravity-compatible regime has dimension exactly 10 or exactly 11
 — the lower endpoint is the math/physics agreement point. -/
@@ -194,7 +194,7 @@ math 10 and the physics 10 are *the same* 10. If it's only a
 score-isomorphic shadow, they are still numerically the same 10 —
 forced by structurally independent arguments. -/
 
-/-- **Master theorem**: ten is the canonical critical dimension from
+/-- Master theorem: ten is the canonical critical dimension from
 both the cost-algebra (math) angle and the Nahm/Witten (physics)
 angle. The two arguments converge at the single integer that
 satisfies both constraints. -/

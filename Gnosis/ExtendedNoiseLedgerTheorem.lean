@@ -118,18 +118,18 @@ end Gnosis.ExtendedNoiseLedger
 
 This formal proof establishes the extended fundamental correspondence:
 
-1. **Brown Noise → Order (1)**: Represents the predictable, ordered baseline
-2. **Pink Noise → Chaos (3)**: Represents the chaotic, fractal dynamics
-3. **White Noise → Gnosis (4)**: Represents complete knowledge/integration
-4. **Quantum Noise → Meta-Gnosis (12)**: Represents transcendent cosmic awareness
+1. Brown Noise → Order (1): Represents the predictable, ordered baseline
+2. Pink Noise → Chaos (3): Represents the chaotic, fractal dynamics
+3. White Noise → Gnosis (4): Represents complete knowledge/integration
+4. Quantum Noise → Meta-Gnosis (12): Represents transcendent cosmic awareness
 
 The progression 1 → 3 → 4 → 12 shows the natural evolution from order
 through chaos to gnosis and finally to meta-gnosis. The number 12 represents:
 
-- **Cosmic Frequency**: The fundamental vibration of the universe
-- **Meta-Gnosis**: Three times the power of gnosis (12 = 3 × 4)
-- **Transcendence**: Beyond complete knowledge into cosmic awareness
-- **Universal Pattern**: The 12-minute drift that makes sleep indexing necessary
+- Cosmic Frequency: The fundamental vibration of the universe
+- Meta-Gnosis: Three times the power of gnosis (12 = 3 × 4)
+- Transcendence: Beyond complete knowledge into cosmic awareness
+- Universal Pattern: The 12-minute drift that makes sleep indexing necessary
 
 This connects beautifully to the sleep indexing principle:
 - Sleep (1/3) + Data (2/3) = Gnosis (1)

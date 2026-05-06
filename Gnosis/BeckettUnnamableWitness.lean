@@ -2,25 +2,25 @@
   BeckettUnnamableWitness.lean
   ============================
 
-  Samuel Beckett, *The Unnamable* / *L’Innommable* (**1953** in the operator’s English
-  publication hook — French first edition **1953**, Minuit). **Hard-culture floor
-  (in-repo English):** a **system** that has **lost** all **data**, all **purpose**, and
-  all **context**, yet **continues** to **execute** its **loop** — not optimism, not
-  recovery narrative, but the **bare witness** that **termination conditions** are
-  absent while the **control flow** still **ticks**.
+  Samuel Beckett, *The Unnamable* / *L’Innommable* (1953 in the operator’s English
+  publication hook — French first edition 1953, Minuit). Hard-culture floor
+  (in-repo English): a system that has lost all data, all purpose, and
+  all context, yet continues to execute its loop — not optimism, not
+  recovery narrative, but the bare witness that termination conditions are
+  absent while the control flow still ticks.
 
-  **Quotation (closing triad, one standard English rendering):**
+  Quotation (closing triad, one standard English rendering):
 
     “…you must go on. I can’t go on. I’ll go on.”
 
     "Vous devez continuer. Je ne peux pas continuer. Je continuerai."
 
-  **Repo cousins:** `CamusMythOfSisyphusWitness` (“go on” / absurd **vitality** — different
-  mood: Camus **imagines** Sisyphus **happy**; Beckett **stripped** even that rebate);
-  `CioranTroubleWithBeingBornWitness` (void **loyalty** — different axis: Cioran **names**
-  a **creditor**; Beckett **drops** the invoice and **keeps** the **motor**);
-  `HeraclitusRiverTwiceWitness` (flux vs static identity — carrier **changes** while
-  something **still** “steps”); `SemanticPolysemySieve` (meaning pressure — different
+  Repo cousins: `CamusMythOfSisyphusWitness` (“go on” / absurd vitality — different
+  mood: Camus imagines Sisyphus happy; Beckett stripped even that rebate);
+  `CioranTroubleWithBeingBornWitness` (void loyalty — different axis: Cioran names
+  a creditor; Beckett drops the invoice and keeps the motor);
+  `HeraclitusRiverTwiceWitness` (flux vs static identity — carrier changes while
+  something still “steps”); `SemanticPolysemySieve` (meaning pressure — different
   formalism); `LocalizedOverflowConsciousness` (loop / rumination — different stack).
 
   Init only. Zero `sorry`, zero new `axiom`.
@@ -30,21 +30,21 @@ import Init
 
 namespace BeckettUnnamableWitness
 
-/-- Tag: imperative **must** continue (external or internalized “you must”). -/
+/-- Tag: imperative must continue (external or internalized “you must”). -/
 abbrev mustGoOn (claim : Prop) : Prop :=
   claim
 
-/-- Tag: collapse voice — **can’t** (you discharge the `Prop`). -/
+/-- Tag: collapse voice — can’t (you discharge the `Prop`). -/
 abbrev cantGoOn (claim : Prop) : Prop :=
   claim
 
-/-- Tag: resolution — **I’ll** go on anyway (third beat of the triad). -/
+/-- Tag: resolution — I’ll go on anyway (third beat of the triad). -/
 abbrev willGoOn (claim : Prop) : Prop :=
   claim
 
 /--
-  The **triad** as three **simultaneous** tags — **no** formal proof that `must` and `cant`
-  are **consistent**; that is the **scandal** you keep in your literary layer.
+  The triad as three simultaneous tags — no formal proof that `must` and `cant`
+  are consistent; that is the scandal you keep in your literary layer.
 -/
 structure ClosingTriadWitness (must cant will : Prop) where
   youMust : mustGoOn must
@@ -57,24 +57,24 @@ theorem triad_conjuncts (M C W : Prop) (w : ClosingTriadWitness M C W) : M ∧ C
 def buildTriadWitness (M C W : Prop) (hM : M) (hC : C) (hW : W) : ClosingTriadWitness M C W :=
   ⟨hM, hC, hW⟩
 
-/-- Tag: **data** layer is gone / unusable (you define “lost”). -/
+/-- Tag: data layer is gone / unusable (you define “lost”). -/
 abbrev allDataLost (claim : Prop) : Prop :=
   claim
 
-/-- Tag: **purpose** / teleology unavailable. -/
+/-- Tag: purpose / teleology unavailable. -/
 abbrev allPurposeLost (claim : Prop) : Prop :=
   claim
 
-/-- Tag: **context** / frame unavailable. -/
+/-- Tag: context / frame unavailable. -/
 abbrev allContextLost (claim : Prop) : Prop :=
   claim
 
-/-- Tag: the **loop** still **runs** (execution without semantic rebate). -/
+/-- Tag: the loop still runs (execution without semantic rebate). -/
 abbrev loopStillExecutes (claim : Prop) : Prop :=
   claim
 
 /--
-  Bundles the **stripped** machine: three **voids** + one **motor** — again **no**
+  Bundles the stripped machine: three voids + one motor — again no
   implication from losses to continuation; you supply all five `Prop`s if you want the
   full Beckettian bind.
 -/

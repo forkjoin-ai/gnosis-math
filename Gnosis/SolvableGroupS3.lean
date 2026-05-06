@@ -56,7 +56,7 @@ acts on this structure directly.
 
 * What is formalized is the explicit finite-group structure of `S₃`, its
   two-step derived series, and four sample commutators in `A₅`. This module
-  does **not** connect to Galois theory, the unsolvability of the general
+  does not connect to Galois theory, the unsolvability of the general
   quintic, or any abstract notion of solvable group beyond the explicit
   table-level computation.
 * The `A₅` section is a point-instance witness, not a closure proof.
@@ -232,17 +232,17 @@ def derivedSubgroupS3 : List (Fin 6) := commutatorImage elemsS3
 /-- The commutator subgroup of `A₃`, represented as a sorted-deduped list. -/
 def derivedSubgroupA3 : List (Fin 6) := commutatorImage elemsA3
 
-/-- **First step of the derived series.** The commutator subgroup of `S₃`
+/-- First step of the derived series. The commutator subgroup of `S₃`
 equals `A₃ = {e, r, r²}`. -/
 theorem derived_S3_eq_A3 : derivedSubgroupS3 = elemsA3 := by decide
 
-/-- **Second step of the derived series.** `A₃` is abelian, so its
+/-- Second step of the derived series. `A₃` is abelian, so its
 commutator subgroup is trivial. -/
 theorem derived_A3_eq_trivial :
     derivedSubgroupA3 = [⟨0, by decide⟩] := by decide
 
 /--
-**`S₃` is solvable (computational witness).** The derived series
+`S₃` is solvable (computational witness). The derived series
 `S₃ ⊃ A₃ ⊃ {e}` terminates at the trivial subgroup after two steps.
 This packages the two previous theorems: iterating `commutatorImage`
 starting from `elemsS3` reaches the singleton `[e]` in exactly two
@@ -256,7 +256,7 @@ theorem S3_derived_series_terminates :
 We encode only the permutation action of specific `A₅` elements on `Fin 5`
 and compute four concrete commutators. Each witness shows
 `commPerm g h ≠ identity`, so the commutator subgroup `[A₅, A₅]` contains
-non-trivial even permutations. This is a **sample witness**, not a proof
+non-trivial even permutations. This is a sample witness, not a proof
 that `[A₅, A₅] = A₅`. A full closure argument would require enumerating all
 60 elements of `A₅` and iterating the generator closure, which is outside
 the scope of this module.
@@ -339,16 +339,16 @@ end PermFin5
 
 open PermFin5
 
-/-- **Witness 1.** `[(0 1 2), (1 2 3)]` acts non-trivially on `Fin 5`.
+/-- Witness 1. `[(0 1 2), (1 2 3)]` acts non-trivially on `Fin 5`.
 It lands on the 3-cycle `(0 1 3)` (image tuple `(1, 3, 2, 0, 4)`). -/
 theorem comm_c012_c123_nontrivial :
     commPerm c012 c123 c021 c132 ≠ id5 := by decide
 
-/-- **Witness 2.** `[(1 2 3), (2 3 4)]` acts non-trivially. -/
+/-- Witness 2. `[(1 2 3), (2 3 4)]` acts non-trivially. -/
 theorem comm_c123_c234_nontrivial :
     commPerm c123 c234 c132 c243 ≠ id5 := by decide
 
-/-- **Witness 3.** `[(0 1)(2 3), (0 1 2)]` acts non-trivially as the
+/-- Witness 3. `[(0 1)(2 3), (0 1 2)]` acts non-trivially as the
 double transposition `(0 2)(1 3)`. (Note: `(0 1)(2 3)` and `(0 2)(1 3)`
 themselves commute in the Klein 4-group, so that pairing would vanish;
 pairing a double transposition with a disjoint-support 3-cycle yields a
@@ -356,12 +356,12 @@ non-trivial bracket instead.) -/
 theorem comm_d0123_c012_nontrivial :
     commPerm d01_23 c012 d01_23_inv c021 ≠ id5 := by decide
 
-/-- **Witness 4.** `[(0 1 2), (0 1)(2 3)]` acts non-trivially. -/
+/-- Witness 4. `[(0 1 2), (0 1)(2 3)]` acts non-trivially. -/
 theorem comm_c012_d0123_nontrivial :
     commPerm c012 d01_23 c021 d01_23_inv ≠ id5 := by decide
 
 /--
-**Sample-commutator witness of `A₅` perfectness.** The commutator subgroup
+Sample-commutator witness of `A₅` perfectness. The commutator subgroup
 `[A₅, A₅]` contains at least four distinct non-trivial even permutations
 of `Fin 5`, exhibited by concrete bracket computations above. This does not
 prove `[A₅, A₅] = A₅`; it witnesses that `[A₅, A₅]` is not contained in the

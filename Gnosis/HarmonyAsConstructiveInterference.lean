@@ -5,17 +5,17 @@ import Gnosis.InterferenceAsTheFifthForce
 /-!
 # Harmony As Constructive Interference
 
-**The Thesis**: Musical harmony is physics. Two frequencies sound consonant
+The Thesis: Musical harmony is physics. Two frequencies sound consonant
 when their overtone series (harmonic partials) share common frequencies.
 When overtones align, they constructively interfere—wave superposition
 amplifies the shared harmonics. When they don't align (dissonance), the
 waves destructively interfere, creating beating.
 
-**Core insight**: A chord is harmonious if and only if the fundamental
+Core insight: A chord is harmonious if and only if the fundamental
 frequencies' harmonic series have high-amplitude common multiples. The
 consonance of a chord = measure of constructive interference in overtone space.
 
-**Five theorems**:
+Five theorems:
 
 1. `consonant_chord_has_constructive_overtones`: Consonant chords (major triad)
    have overtone series that constructively interfere at shared harmonics.
@@ -33,10 +33,10 @@ consonance of a chord = measure of constructive interference in overtone space.
 5. `timbre_is_overtone_interference_envelope`: Timbre = specific harmonic
    interference pattern (which overtones have high vs low amplitude).
 
-**Quality bar**: Zero sorry, zero axioms. All proofs use rfl, exact,
+Quality bar: Zero sorry, zero axioms. All proofs use rfl, exact,
 intro, refine, decide, and named `Nat.*` lemmas (Init-only Lean 4).
 
-**Model**: Musical harmony is formalized using exact harmonic ratios and
+Model: Musical harmony is formalized using exact harmonic ratios and
 standing wave frequencies. Consonance = count of common harmonics. Dissonance
 = absence of common harmonics. We use Nat arithmetic for harmonic indices
 and frequency ratios (p:q) to avoid Float comparison issues.

@@ -9,16 +9,16 @@ choice — `A-type` or `B-type` — and the bracket weights the choice
 by `A` vs `A^{-1}`. Over `n` crossings, the state sum is a cascade
 of `n` independent `k=2` braids: `{A, A^{-1}}^n`.
 
-On top of this, the **writhe normalization** `(−A)^{-3w}` that
+On top of this, the writhe normalization `(−A)^{-3w}` that
 converts the bracket to the Jones polynomial adds a final outer
 `k=2` braid on `w mod 2` — the sign of the correction alternates
 with writhe parity.
 
 Two nested `k=2` structures:
 
-- **Inner**: per-crossing smoothing `A` / `A^{-1}`. Each crossing is
+- Inner: per-crossing smoothing `A` / `A^{-1}`. Each crossing is
   its own independent braid.
-- **Outer**: writhe parity `(−1)^w` (mod 2) controls the overall
+- Outer: writhe parity `(−1)^w` (mod 2) controls the overall
   normalization sign.
 
 ## What this module witnesses

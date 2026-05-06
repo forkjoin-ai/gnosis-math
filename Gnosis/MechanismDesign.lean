@@ -108,21 +108,21 @@ def IsTruthful (M : Mechanism) (R : Nat) : Prop :=
   ∀ v_true v_false, v_true ≤ R → v_false ≤ R → v_false > v_true → 
     M.incentive v_false < M.incentive v_true
 
-/-- **Efficiency / clinamen closure:** payments plus attributed rejects exhaust the
+/-- Efficiency / clinamen closure: payments plus attributed rejects exhaust the
     same scalar line as `godWeight` conservation — `M.incentive v + v = R + 1`
     whenever `v ≤ R`. This is the ledger’s `+1` capacity, not bare `R`. -/
 def IsEfficient (M : Mechanism) (R : Nat) : Prop :=
   ∀ v, v ≤ R → M.incentive v + v = R + 1
 
-/-- **Budget balance (no external +1):** the accounting line stays inside `R`,
+/-- Budget balance (no external +1): the accounting line stays inside `R`,
     i.e. `M.incentive v + v ≤ R`. This contradicts efficiency at every `v`
     because `R + 1 > R`. -/
 def IsBudgetBalanced (M : Mechanism) (R : Nat) : Prop :=
   ∀ v, v ≤ R → M.incentive v + v ≤ R
 
 /-- THE TRUTHFUL CAP THEOREM:
-    You cannot have Truthfulness, **clinamen** efficiency (`+ v = R + 1`), and
-    **bare-`R` budget balance** (`≤ R`) simultaneously: at `v = 0` the efficient
+    You cannot have Truthfulness, clinamen efficiency (`+ v = R + 1`), and
+    bare-`R` budget balance (`≤ R`) simultaneously: at `v = 0` the efficient
     identity forces `M.incentive 0 = R + 1`, while budget balance forces
     `M.incentive 0 ≤ R`, hence `R + 1 ≤ R`. Truthfulness is retained in the
     statement as the CAP narrative hypothesis (this contradiction does not
@@ -142,8 +142,8 @@ theorem truthful_cap_impossibility (M : Mechanism) (R : Nat)
 def IsStable (M : Mechanism) : Prop :=
   ∀ v, M.incentive v ≥ 1
 
-/-- Same **efficiency vs bare-R budget** clash as `truthful_cap_impossibility`,
-    with **stability** (`M.incentive v ≥ 1`) kept in the statement for the CAP
+/-- Same efficiency vs bare-R budget clash as `truthful_cap_impossibility`,
+    with stability (`M.incentive v ≥ 1`) kept in the statement for the CAP
     story: stability is not used in the proof because `v = 0` already refutes
     `M.incentive 0 ≤ R` once efficiency pins `M.incentive 0 = R + 1`. -/
 theorem truthful_cap_stable_impossibility (M : Mechanism) (R : Nat)

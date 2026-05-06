@@ -21,7 +21,7 @@ witnessed by `decide` via the Stirling-row sum.
 
 ## Caveats
 
-* This is **not** a general proof of `S(n+1, k+1) = (k+1) · S(n, k+1) +
+* This is not a general proof of `S(n+1, k+1) = (k+1) · S(n, k+1) +
   S(n, k)` as a theorem over all `n, k`; the equality is witnessed at
   a single representative point (`n = 4, k = 2`, giving `S(5, 3) = 25`).
 * Likewise for the Bell binomial recurrence

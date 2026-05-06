@@ -7,7 +7,7 @@ GodFormulaQuine proved: godWeight(0,0) = 1. From the empty universe
 (zero budget, zero rejection), the clinamen produces the sliver.
 From the sliver, everything.
 
-This file enters the deepest door: **the self-application tower.**
+This file enters the deepest door: the self-application tower.
 
 What happens when you apply the God Formula to its own output,
 repeatedly? You get a deterministic cosmological trajectory:

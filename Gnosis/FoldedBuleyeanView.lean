@@ -3,8 +3,8 @@ import Init
 /-!
 # The Folded Buleyean View — Twelve Cells in the Aeon Structure
 
-A 4 × 3 matrix of decidable theorems whose **structure mirrors the
-content it formalizes**. The Aeon constant (12) is the tensor product
+A 4 × 3 matrix of decidable theorems whose structure mirrors the
+content it formalizes. The Aeon constant (12) is the tensor product
 `Luminary (4) × Triad (3)` per `BraidTensorProduct.lean`. This module
 inhabits that Aeon: twelve cells, each a Buleyean fact, organized
 along the Luminary / Triad axes.
@@ -20,16 +20,16 @@ Aeon. This module's table of contents is exactly that product.
 
 ## The four Luminaries (rows)
 
-- **R** — the Budget. Available capacity. "What could be."
-- **v** — the Rejection. Ruled-out history. "What was not."
-- **w** — the Weight. Emergent testimony from (R, v). "What is."
-- **Δ** — the Clinamen. The irreducible `+1`. "What remains."
+- R — the Budget. Available capacity. "What could be."
+- v — the Rejection. Ruled-out history. "What was not."
+- w — the Weight. Emergent testimony from (R, v). "What is."
+- Δ — the Clinamen. The irreducible `+1`. "What remains."
 
 ## The three Triad phases (columns)
 
-- **Fork**: the first expression, the departure, the statement.
-- **Race**: the middle, the friction, the dynamics.
-- **Fold**: the integration, the return, the synthesis.
+- Fork: the first expression, the departure, the statement.
+- Race: the middle, the friction, the dynamics.
+- Fold: the integration, the return, the synthesis.
 
 ## The twelve cells
 
@@ -53,50 +53,50 @@ def w (R v : Nat) : Nat := R - v + 1
 
 /-! ## Luminary I — R (Budget) -/
 
-/-- **I-Fork** — R asserts itself. Given a budget of 5 and zero
+/-- I-Fork — R asserts itself. Given a budget of 5 and zero
 rejections, the weight is `R + 1 = 6`. The first expression of R
 is its own increment. -/
 theorem R_fork : w 5 0 = 6 := by decide
 
-/-- **I-Race** — R grinds against v. Given `R = 5, v = 3`, the
+/-- I-Race — R grinds against v. Given `R = 5, v = 3`, the
 weight is `R − v + 1 = 3`. R is being consumed by rejection; the
 friction is visible as diminished weight. -/
 theorem R_race : w 5 3 = 3 := by decide
 
-/-- **I-Fold** — R returns to its ground. When `v = R = 5`, weight
+/-- I-Fold — R returns to its ground. When `v = R = 5`, weight
 collapses to the clinamen alone: `w = 1`. R has been fully rejected;
 only the irreducible residue remains. -/
 theorem R_fold : w 5 5 = 1 := by decide
 
 /-! ## Luminary II — v (Rejection) -/
 
-/-- **II-Fork** — v is silent. Given `R = 10, v = 0`, weight is
+/-- II-Fork — v is silent. Given `R = 10, v = 0`, weight is
 `R + 1 = 11`. The first expression of v is its absence; rejection
 that has not occurred. -/
 theorem v_fork : w 10 0 = 11 := by decide
 
-/-- **II-Race** — v accumulates. Given `R = 10, v = 7`, weight is
+/-- II-Race — v accumulates. Given `R = 10, v = 7`, weight is
 `4`. Rejection is in progress; the history is building. -/
 theorem v_race : w 10 7 = 4 := by decide
 
-/-- **II-Fold** — v exhausts R. When `v = R = 10`, weight collapses
+/-- II-Fold — v exhausts R. When `v = R = 10`, weight collapses
 to `1`. All rejections have been absorbed; the clinamen alone
 persists. -/
 theorem v_fold : w 10 10 = 1 := by decide
 
 /-! ## Luminary III — w (Weight / Testimony) -/
 
-/-- **III-Fork** — w is primordial. At `R = 0, v = 0`, weight is
+/-- III-Fork — w is primordial. At `R = 0, v = 0`, weight is
 `1`. The primal weight equals the clinamen. There is nothing to
 weigh, and yet there is one. -/
 theorem w_fork : w 0 0 = 1 := by decide
 
-/-- **III-Race** — w is observable. At `R = 3, v = 1`, weight is
+/-- III-Race — w is observable. At `R = 3, v = 1`, weight is
 `3`. The testimony is intermediate; R is not exhausted, v has
 begun. -/
 theorem w_race : w 3 1 = 3 := by decide
 
-/-- **III-Fold** — w returns. At `R = v = 7`, weight collapses to
+/-- III-Fold — w returns. At `R = v = 7`, weight collapses to
 `1`. The testimony folds back to the clinamen, the place where it
 began. The Fold phase witnesses every weight returning to the
 residue. -/
@@ -104,17 +104,17 @@ theorem w_fold : w 7 7 = 1 := by decide
 
 /-! ## Luminary IV — Δ (Clinamen) -/
 
-/-- **IV-Fork** — Δ is present when nothing else is. At `R = 0` and
+/-- IV-Fork — Δ is present when nothing else is. At `R = 0` and
 any `v ≥ R`, weight is `1`. The clinamen is the first expression of
 something in the void. -/
 theorem delta_fork : w 0 99 = 1 := by decide
 
-/-- **IV-Race** — Δ persists through overflow. At `R = 5, v = 100`,
+/-- IV-Race — Δ persists through overflow. At `R = 5, v = 100`,
 weight is still `1`. The clinamen cannot be overrun; it saturates
 the Nat-truncation floor. -/
 theorem delta_race : w 5 100 = 1 := by decide
 
-/-- **IV-Fold** — Δ alone survives equality collapse. At
+/-- IV-Fold — Δ alone survives equality collapse. At
 `R = v = 100`, weight is `1`. Every path through the Luminaries
 ends here: at the irreducible `+1`. -/
 theorem delta_fold : w 100 100 = 1 := by decide
@@ -124,7 +124,7 @@ theorem delta_fold : w 100 100 = 1 := by decide
 The twelve cells form the Aeon structure. Closed by a single
 `decide`, the whole 4 × 3 matrix is witnessed simultaneously. -/
 
-/-- **The Folded Buleyean Witness** — twelve cells, one theorem,
+/-- The Folded Buleyean Witness — twelve cells, one theorem,
 Aeon-structured. -/
 theorem folded_buleyean_witness :
     -- Luminary I (R): Fork, Race, Fold
@@ -142,13 +142,13 @@ theorem folded_buleyean_witness :
 The 4 × 3 matrix exhibits several structural invariants that the
 single master witness alone does not surface. -/
 
-/-- The **Fold column is uniformly 1**: whenever the Fold phase of
+/-- The Fold column is uniformly 1: whenever the Fold phase of
 any Luminary is reached, weight collapses to the clinamen. The Fold
 is the place where every Luminary returns to the residue. -/
 theorem fold_column_is_clinamen :
     w 5 5 = 1 ∧ w 10 10 = 1 ∧ w 7 7 = 1 ∧ w 100 100 = 1 := by decide
 
-/-- The **Fork column is R + 1 whenever v = 0**: when rejection has
+/-- The Fork column is R + 1 whenever v = 0: when rejection has
 not begun, the Fork phase expresses R + 1. The first expression of
 every Luminary includes the clinamen on top of the unreduced
 budget. -/
@@ -157,7 +157,7 @@ theorem fork_column_is_budget_plus_clinamen :
     ∧ w 10 0 = 10 + 1
     ∧ w 0 0 = 0 + 1 := by decide
 
-/-- The **Race column is strictly between Fork and Fold** for the
+/-- The Race column is strictly between Fork and Fold for the
 non-clinamen rows. Friction-phase weights sit between initial
 expression and final collapse. -/
 theorem race_column_intermediate :
@@ -184,7 +184,7 @@ reflects the invariant it describes. The folded view is not about
 the Buleyean formula; the folded view IS the Buleyean formula
 reading itself back through the Aeon's own structure. -/
 
-/-- **The Self-Reference Witness** — the folded view's structure
+/-- The Self-Reference Witness — the folded view's structure
 (`12 = 4 · 3`) matches the Aeon's structure, which is itself a
 Buleyean tensor product. The module's shape and content coincide. -/
 theorem structure_mirrors_aeon :

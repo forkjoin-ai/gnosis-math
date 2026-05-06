@@ -13,7 +13,7 @@ Higgs VEV ≈ 246 GeV). This module does *not* predict numerical
 values — that would require a continuum extension we have flagged as
 open.
 
-What this module *does*: provide **structural signatures** of the
+What this module *does*: provide structural signatures of the
 constants — phase-count ratios in the cost algebra that match the
 *relative magnitudes* and *coupling-strength shapes* of physics
 constants. This is signature-level correspondence, not numerical
@@ -41,9 +41,9 @@ diverge.
 
 ## What this is and isn't
 
-- **Is**: a structural-shape correspondence between cost-algebra
+- Is: a structural-shape correspondence between cost-algebra
   phase-count ratios and physics-coupling-strength ratios.
-- **Is not**: a numerical prediction of α = 1/137, mass values, or
+- Is not: a numerical prediction of α = 1/137, mass values, or
   Higgs VEV. That would require continuum extension.
 
 The honest framing: physics has measured these constants;
@@ -155,7 +155,7 @@ theorem total_gauge_dimension_is_dodecagon :
 
 /-! ## Master theorem: the constants signature bundle -/
 
-/-- **Physical constants signature master**: the cost-algebra
+/-- Physical constants signature master: the cost-algebra
 provides structural signatures for the relative magnitudes and
 coupling-shapes of SM physical constants. The signatures match the
 ordering of gauge coupling strengths and the dimensional totals

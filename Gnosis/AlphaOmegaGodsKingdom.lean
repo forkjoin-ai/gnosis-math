@@ -20,7 +20,7 @@ This is where everything starts.
 The closure phase is the return. Every Braided Infinity's
 closure. For each gnosis number `k`, the Fold at that `k` returns
 to weight 1 — the clinamen alone. Alpha and closure carry the same
-value: **1**. The beginning and the end coincide at the residue.
+value: 1. The beginning and the end coincide at the residue.
 
 ## The camel through the needle's eye (rotation, not squeezing)
 
@@ -29,7 +29,7 @@ value: **1**. The beginning and the end coincide at the residue.
 
 The traditional reading treats this as an impossibility — the camel
 is too big, the needle's eye too small. But the impossibility is a
-failure of **orientation**, not of passage.
+failure of orientation, not of passage.
 
 A camel in profile presents a wide cross-section. A camel in end-
 on alignment presents a narrow cross-section. If the cross-section
@@ -38,10 +38,10 @@ through. The "impossibility" dissolves under rotation.
 
 In the framework's terms:
 
-- The **rich man** is an Agent claiming God-position via wealth's
+- The rich man is an Agent claiming God-position via wealth's
   apparent causal power. Animal Magnetism — Agent confusing itself
   for God.
-- **Entering the Kingdom** requires *dropping the claim*, rotating
+- Entering the Kingdom requires *dropping the claim*, rotating
   from claim-orientation to signature-orientation.
 - The rotation is the clinamen step itself: advancing to a phase
   where the Agent no longer claims God-position.
@@ -79,7 +79,7 @@ def closure_val : Nat := 0 - 0 + 1  -- w(R, R) at R = 0
 theorem alpha_is_one : alpha = 1 := by decide
 theorem closure_is_one : closure_val = 1 := by decide
 
-/-- **Alpha = Omega**: the beginning and end carry the same value.
+/-- Alpha = Omega: the beginning and end carry the same value.
 The clinamen is present at both endpoints of every Braided Infinity
 cycle. -/
 theorem alpha_equals_closure : alpha = closure_val := by decide
@@ -141,7 +141,7 @@ theorem sideways_fails : sidewaysPasses theCamel theNeedle = false := by decide
 
 theorem topDown_fails : topDownPasses theCamel theNeedle = false := by decide
 
-/-- **The rotation theorem**: the camel DOES fit through the
+/-- The rotation theorem: the camel DOES fit through the
 needle's eye, as long as the right orientation is chosen. The
 "impossibility" was a failure of orientation, not of the camel. -/
 theorem camel_passes_by_rotation :
@@ -156,8 +156,8 @@ theorem camel_passes_by_rotation :
 
 /-! ## The rich man and the kingdom
 
-The rotation required for the rich man is **from claim-orientation
-to signature-orientation**:
+The rotation required for the rich man is from claim-orientation
+to signature-orientation:
 
 - Claim-orientation: "my wealth gives me causal power; I am like
   God in my capacity" → Animal Magnetism (Agent claims
@@ -183,7 +183,7 @@ def rotate (o : Orientation) : Orientation :=
 theorem rotation_from_claim : rotate Orientation.claim = Orientation.signature := by decide
 theorem rotation_from_signature : rotate Orientation.signature = Orientation.signature := by decide
 
-/-- **The rotation is a fixed-point idempotent**. Once you rotate
+/-- The rotation is a fixed-point idempotent. Once you rotate
 into signature-orientation, you stay there. You cannot accidentally
 rotate back to claim-orientation. The rich man's difficulty is
 *initiating* the rotation; once done, signature-orientation is
@@ -198,7 +198,7 @@ Every Agent already inhabits it; entry is recognition, not transit. -/
 
 theorem gods_kingdom_size : (4 * 3 * 10 : Nat) = 120 := by decide
 
-/-- **Entry is recognition**: the Agent in signature-orientation is
+/-- Entry is recognition: the Agent in signature-orientation is
 already in the Kingdom. No transit, no crossing. Just rotation. -/
 theorem entry_is_recognition :
     rotate Orientation.claim = Orientation.signature

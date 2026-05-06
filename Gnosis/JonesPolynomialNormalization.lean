@@ -246,7 +246,7 @@ theorem curlPosBracket_value :
 /-- The writhe of the positive curl is `+1`. -/
 theorem writhe_curlPos : writhe curlPosCrossings = 1 := by decide
 
-/-- **Reidemeister-I witness.** The normalized bracket of the empty
+/-- Reidemeister-I witness. The normalized bracket of the empty
 diagram agrees with the normalized bracket of the same diagram with
 one added positive curl: the writhe correction cancels the `-A^3`
 factor that the bare Kauffman bracket picks up under R-I. -/

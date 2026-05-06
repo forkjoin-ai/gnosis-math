@@ -10,7 +10,7 @@ the god formula
 
 ## The observation
 
-`Nat` subtraction is **truncated**: `a − b = 0` whenever `b > a`.
+`Nat` subtraction is truncated: `a − b = 0` whenever `b > a`.
 That truncation already implements the `min` that the god formula
 writes explicitly:
 
@@ -19,7 +19,7 @@ writes explicitly:
   and `R − v = 0` by truncation. Equal.
 
 Conclusion: over `Nat`, the expression `R − min(v, R)` is
-**pointwise equal** to `R − v`. The `min(v, R)` is subsumed by the
+pointwise equal to `R − v`. The `min(v, R)` is subsumed by the
 subtraction's truncation. The god formula admits the reduction
 
     w(R, v) = (R − v) + 1           (in `Nat`)
@@ -148,8 +148,8 @@ theorem w_at_equality_is_clinamen_only (R : Nat) : wReduced R R = 1 := by
 
 Under the reduction, `w(R, v) = (R − v) + 1` decomposes cleanly as:
 
-- `(R − v)` : the **deficit** piece (zero when `v ≥ R`).
-- `+ 1`    : the **clinamen** piece (always present).
+- `(R − v)` : the deficit piece (zero when `v ≥ R`).
+- `+ 1`    : the clinamen piece (always present).
 
 This makes the two pieces named in `GodFormulaPhaseManifestations`
 computationally explicit:

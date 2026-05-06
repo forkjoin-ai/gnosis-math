@@ -7,12 +7,12 @@ Carrier: the same discrete ledger as `LiabilityEquilibrium.LiabilityLedger` — 
 many indices, monotone vent counts `liabilityCounts`, observation length `rounds`, and
 complement weights `rounds - liability(i) + 1`.
 
-This module is **self-contained** (`import Init` only) so it builds even when optional
+This module is self-contained (`import Init` only) so it builds even when optional
 Mathlib-dependent lemmas in sibling files are unavailable.
 
 Interpretation tags (`ContractLedger`, `ConstitutionalLedger`) carry no extra fields;
-the algebra is shared. **Learned Hand** is the predicate `burden < PL` on `ℕ`.
-**Two-ledger coupling** uses `max(text, practice)` per index. **Amendment** is a
+the algebra is shared. Learned Hand is the predicate `burden < PL` on `ℕ`.
+Two-ledger coupling uses `max(text, practice)` per index. Amendment is a
 discrete step relating two ledgers on the same index set with monotone rounds.
 -/
 

@@ -10,7 +10,7 @@ parity strand gives a 55-position structure on which the cyclic
 group `ℤ/55ℤ` acts transitively.
 
 55 is the highest gnostic-numerical domain, and is the natural
-shape for a **rotation dictionary** over the helix: every position
+shape for a rotation dictionary over the helix: every position
 is reachable from every other by exactly one rotation in
 `[0, 55)`. Data on the helix is encoded as
 `(rotation : [0, 55))` (≈ 5.78 bits) plus a small residual,
@@ -19,20 +19,20 @@ distance into entanglement structure.
 
 ## Theorems in this module
 
-1. **`iterateSucc_succ_eq_addMod`** (helper) — the generic period
+1. `iterateSucc_succ_eq_addMod` (helper) — the generic period
    lemma: `iterateSucc n (m+1) i = (i + 1 + m) % n` for any `n`.
-2. **`helix55_period_55`** — 55 rotations return to start, on
+2. `helix55_period_55` — 55 rotations return to start, on
    every position `i < 55`. The dictionary closes.
-3. **`helix55_no_period_at_zero`** — for `0 < k < 55`,
+3. `helix55_no_period_at_zero` — for `0 < k < 55`,
    `iterateSucc 55 k 0 ≠ 0`. Genuine 55-cycle, not a sub-cycle.
-4. **`helix55_transitive`** — for any `p, q < 55`, there exists
+4. `helix55_transitive` — for any `p, q < 55`, there exists
    `k < 55` with `iterateSucc 55 k p = q`. Every entry is reachable.
-5. **`helix55_encode_decode`** — rotating `p` by `helixDistance p q`
+5. `helix55_encode_decode` — rotating `p` by `helixDistance p q`
    gives `q`. The dictionary is invertible.
-6. **`helix54_plus_parity_covers_55`** — the 54 helix strands plus
+6. `helix54_plus_parity_covers_55` — the 54 helix strands plus
    the parity strand exhaust `[0, 55)`. Bridge to
    `bitwise/knotchain-helix.ts`.
-7. **`helix55Braid`** — the 55-position cycle as a
+7. `helix55Braid` — the 55-position cycle as a
    `BraidedAsymptote`, with descriptor list of length 55.
 
 `import Init` (transitively, via `Gnosis.BraidedInfinity`) only.

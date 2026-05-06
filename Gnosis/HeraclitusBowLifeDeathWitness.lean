@@ -2,23 +2,23 @@
   HeraclitusBowLifeDeathWitness.lean
   ==================================
 
-  Heraclitus (trad. DK **B48**), bow / life wordplay (one English gloss):
+  Heraclitus (trad. DK B48), bow / life wordplay (one English gloss):
 
     “The name of the bow is life, / but its work is death.”
 
-  Greek hears **βιός** (bow) and **βίος** (life) as the same surface string in the
-  pun register; **work** names what the implement *does* — another register. The
-  **shape** is a **linguistic Möbius strip** in the informal sense: one object is
-  fixed by the **violent tension** between what it is *called* and what it *performs*.
-  This file **does not** import number-theoretic Möbius inversion (`μ(n)` on `Nat`);
+  Greek hears βιός (bow) and βίος (life) as the same surface string in the
+  pun register; work names what the implement *does* — another register. The
+  shape is a linguistic Möbius strip in the informal sense: one object is
+  fixed by the violent tension between what it is *called* and what it *performs*.
+  This file does not import number-theoretic Möbius inversion (`μ(n)` on `Nat`);
   that vocabulary lives in `Gnosis.EulerTotientMobiusInversion` and is unrelated.
 
-  **Repo cousins:** `CummingsLeafFallsParenthesisWitness` (**two** **strings** **in** **one**
-  **visual** **object** — **poetic** **layout**, **not** **βιός**/**βίος** **pun** **proved**
-  **here**); `BowieChangesWitness` (**modern** **chorus** **flux** — **name**/**work**
-  **family** **rhyme** **only**, **not** **B48** **lemma** **here**); `HeraclitusRiverTwiceWitness` (river / self flux — **static identity**
-  negation at the **σ** of stepping twice);
-  `ShipOfTheseusWitness` (**same σ-template**: Material/Form ↔
+  Repo cousins: `CummingsLeafFallsParenthesisWitness` (two strings in one
+  visual object — poetic layout, not βιός/βίος pun proved
+  here); `BowieChangesWitness` (modern chorus flux — name/work
+  family rhyme only, not B48 lemma here); `HeraclitusRiverTwiceWitness` (river / self flux — static identity
+  negation at the σ of stepping twice);
+  `ShipOfTheseusWitness` (same σ-template: Material/Form ↔
   Name/Work, with definitional relabel);
   `HeraclitusUpDownPathWitness` (B60 path invariant vs local up/down);
   `LaoziBowlVoidFunctionWitness` (Ch.11 void-as-use-site vs object-only stories);
@@ -45,8 +45,8 @@ abbrev BowWorkDeath (deathWork : Prop) : Prop :=
   deathWork
 
 /--
-  Two **distinct** `Prop` layers on one poetic implement: name vs work.
-  Conjunction is **not** a claim that `nameReg` and `workReg` are logically equivalent;
+  Two distinct `Prop` layers on one poetic implement: name vs work.
+  Conjunction is not a claim that `nameReg` and `workReg` are logically equivalent;
   it only packages co-assertion (the fragment’s tension).
 -/
 structure LinguisticMobiusStripWitness (nameReg workReg : Prop) where

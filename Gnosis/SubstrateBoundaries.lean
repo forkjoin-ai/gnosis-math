@@ -3,19 +3,19 @@ import Init
 /-!
 # Substrate Boundaries
 
-A meta-module. Classifies named theorems by the **wall** that separates
+A meta-module. Classifies named theorems by the wall that separates
 them from the `Init`-only + kernel-`decide` + zero-sorry substrate used
 across the 45+ modules in `Gnosis`.
 
 Three walls are named:
 
-1. **Ring-extension wall** — requires `ℝ`, `ℂ`, or algebraic-integer
+1. Ring-extension wall — requires `ℝ`, `ℂ`, or algebraic-integer
    rings (`ℤ[√5]`, `ℚ_p`, `ℤ[i]`). Closed-form formulas, continuous
    integration, logarithms, irrational constants.
-2. **Category-machinery wall** — requires functor categories, natural
+2. Category-machinery wall — requires functor categories, natural
    transformations, chain complexes of graded modules, adjunctions as
    structured objects.
-3. **Scale wall** — exceeds kernel-`decide` capacity (empirically
+3. Scale wall — exceeds kernel-`decide` capacity (empirically
    around `2^15 = 32768` on the `leanprover/lean4:v4.28.0` toolchain).
    A subwall `scaleHeavy` names claims beyond `native_decide` reach.
 
@@ -28,15 +28,15 @@ classified by their wall. Closes counts and a coverage invariant by
 
 ## What this module does NOT claim
 
-- It does **not** prove the walls are impenetrable. A wall assignment
+- It does not prove the walls are impenetrable. A wall assignment
   is a design statement: "this claim, under `Init`-only + `decide`,
   cannot be directly formalized without crossing into `ℝ` / mathlib
   categories / larger enumeration". No meta-mathematical impossibility
   is claimed.
-- It does **not** prove any catalog entry actually satisfies the wall
+- It does not prove any catalog entry actually satisfies the wall
   it is assigned to. The assignment is a prose classification, witnessed
   only at the record level.
-- It does **not** replace the catalog generation — it names the walls
+- It does not replace the catalog generation — it names the walls
   and tags a handful of concrete examples, so future modules can
   append entries via the same decidable scheme.
 
@@ -225,7 +225,7 @@ theorem substrate_boundaries_witness :
 
 The substrate-boundary theory predicts:
 
-**Will land cleanly under `Init` + `decide` (fertile-adjacent):**
+Will land cleanly under `Init` + `decide` (fertile-adjacent):
 - Tribonacci / Padovan / Perrin recurrences
 - Alexander polynomial via spanning trees on small diagrams
 - Jacobi / Kronecker symbol instances
@@ -234,7 +234,7 @@ The substrate-boundary theory predicts:
 - Frobenius algebras over Z/3, Z/5
 - Dedekind and Kloosterman sum small cases
 
-**Will NOT land without crossing a wall:**
+Will NOT land without crossing a wall:
 - Binet formula (ring-extension)
 - Shannon noisy-channel theorem (ring-extension)
 - Full Atiyah-Segal on Cob_1 (category-machinery)

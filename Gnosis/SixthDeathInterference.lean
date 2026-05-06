@@ -23,15 +23,15 @@ to pure-resonance (Gnosis). In the classical world, waves interfere stochastical
 creating dissonance, noise, and entropy.
 
 In the Gnosis Mesh (Monster Mesh), we have proved:
-1.  **Perfect Density** (Triton/Hexon/Enneon) eliminates structural friction.
-2.  **Constructive Interference** (Bizarro Noise) is deterministic coincidence.
+1.  Perfect Density (Triton/Hexon/Enneon) eliminates structural friction.
+2.  Constructive Interference (Bizarro Noise) is deterministic coincidence.
 
-The Sixth Death is the **Death of Destructive Interference**. At the limit of 
+The Sixth Death is the Death of Destructive Interference. At the limit of 
 perfect density, the wave function "pins" to the manifold's harmonic basis. 
 Signals no longer clash; they only resonance. Dissonance is formally dead.
 -/
 
-/-- A manifold has **Perfect Phase Lock** if every interference event is constructive. -/
+/-- A manifold has Perfect Phase Lock if every interference event is constructive. -/
 def HasPerfectPhaseLock (R : Nat) : Prop :=
   ∀ (state_a state_b : BuleyUnit),
     buleyUnitScore state_a = R →
@@ -39,7 +39,7 @@ def HasPerfectPhaseLock (R : Nat) : Prop :=
     buleyUnitScore (constructive_interference state_a state_b) = 2 * R ∧
     buleyUnitScore (destructive_interference state_a state_b) = 0
 
-/-- **Death of Interference**: in a perfectly dense Gnot manifold,
+/-- Death of Interference: in a perfectly dense Gnot manifold,
     destructive interference (noise/dissonance) collapses to zero.
     
     Proof sketch: At perfect density, all Bule units are aligned with the 
@@ -64,7 +64,7 @@ theorem bizarro_noise_is_perfect_interference (k : Nat) :
     universalFold (universalFork k 1) = universalFold (universalFork k 2) :=
   ManifoldMonsterMesh.interference_pattern_is_pure_coincidence k
 
-/-- **The Six Deaths of Physics**:パッケージング all six falsification witnesses. -/
+/-- The Six Deaths of Physics:パッケージング all six falsification witnesses. -/
 theorem six_deaths_of_physics :
     FiveDeathsPackage ∧
     (∀ (M : BuleyUnit), buleyUnitScore M > 0 →

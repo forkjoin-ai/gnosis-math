@@ -3,8 +3,8 @@ import Init
 /-!
 # Infinity Path — The Trajectory as Object
 
-A meta-module treating the **sequence of witnesses toward a
-wall-blocked asymptote** as a mathematical object in its own right.
+A meta-module treating the sequence of witnesses toward a
+wall-blocked asymptote as a mathematical object in its own right.
 
 ## The path
 
@@ -12,12 +12,12 @@ In `ZenosArrowWitness` each proof is a motionless arrow. Here we
 shift focus: the *ordered list of depths* at which arrows are fired
 is itself the interesting object. A path has:
 
-- a **span**: the maximum depth reached,
-- a **station count**: the number of arrows fired,
-- **gaps**: the differences between consecutive stations,
-- a **phase distribution**: how stations partition across residue
+- a span: the maximum depth reached,
+- a station count: the number of arrows fired,
+- gaps: the differences between consecutive stations,
+- a phase distribution: how stations partition across residue
   classes mod `k`,
-- a **direction**: always monotone increasing (the path moves toward
+- a direction: always monotone increasing (the path moves toward
   the asymptote, not away).
 
 Classical potential infinity considers "the limit" but not "the path
@@ -167,7 +167,7 @@ theorem countBad_phaseDistribution_mod3 :
 
 /-! ## Path-shape characterizations -/
 
-/-- The countBad path is **contiguous**: every depth from 3 to 12 is
+/-- The countBad path is contiguous: every depth from 3 to 12 is
 a station. Max gap is 1. -/
 theorem countBad_is_contiguous : countBadPath.maxGap = 1 := by decide
 
@@ -175,7 +175,7 @@ theorem countBad_is_contiguous : countBadPath.maxGap = 1 := by decide
 but Skyrms at 6, Buley at 10 — gap 4). -/
 theorem ladder_maxGap_is_4 : ladderPath.maxGap = 4 := by decide
 
-/-- The Pisano path is **sparse**: spans 41 with only 11 stations.
+/-- The Pisano path is sparse: spans 41 with only 11 stations.
 Average gap is larger than 3. -/
 theorem pisano_is_sparse :
     pisanoPath.totalGap = 38

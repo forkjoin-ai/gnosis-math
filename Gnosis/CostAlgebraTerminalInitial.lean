@@ -8,20 +8,20 @@ import Gnosis.CostAlgebraCategory
 `Gnosis.CostAlgebraCategory` built the morphisms. This module follows
 through with the structural results that fall out:
 
-* **`natCostAlgebra` is terminal.** Every cost algebra `A` has *exactly
+* `natCostAlgebra` is terminal. Every cost algebra `A` has *exactly
   one* `CostHom A natCostAlgebra` — the score function itself. The
   `preserve_score` law forces uniqueness: any candidate map `f : S → Nat`
   satisfying `Nat.score (f s) = A.score s` (which reduces to `f s = A.score s`
   since `Nat.score = id`) must be `A.score`.
-* **`unitCostAlgebra` is initial.** Every cost algebra `A` has *exactly
+* `unitCostAlgebra` is initial. Every cost algebra `A` has *exactly
   one* `CostHom unitCostAlgebra A` — the constant map at `A.zero`. The
   `preserve_zero` law forces this, and uniqueness follows from
   `Unit` being a singleton.
-* **`productCostAlgebra` is not a categorical product.** The projections
+* `productCostAlgebra` is not a categorical product. The projections
   `fst` and `snd` are not score-preserving (they drop the other
   component's score). The product-of-carriers construction lives in
   `Type` but not in this category.
-* **The Bule ↔ Nat³ pair is an isomorphism.** Both directions are
+* The Bule ↔ Nat³ pair is an isomorphism. Both directions are
   `CostHom`s and they round-trip to identities.
 
 Imports `Gnosis.CostAlgebra`, `Gnosis.CostAlgebraDerivations`, and

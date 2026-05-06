@@ -23,30 +23,30 @@ coefficients.
 
 ## Items witnessed
 
-1. **Inlined `LPoly` arithmetic and the `T(2, n)` bracket** for
+1. Inlined `LPoly` arithmetic and the `T(2, n)` bracket for
    `n = 1..5`, exactly matching
    `TorusKnotChebyshevBracket.torusBracket`.
-2. **`coefAt : LPoly → Int → Int`** extracts the coefficient of
+2. `coefAt : LPoly → Int → Int` extracts the coefficient of
    `A^e` in canonical form.
-3. **`bracketModP : LPoly → Nat → List (Int × Nat)`** reduces each
+3. `bracketModP : LPoly → Nat → List (Int × Nat)` reduces each
    coefficient modulo `p`, drops zero entries, and returns
    `(exponent, coefficient mod p)` pairs.
-4. **Explicit `bracketModP` tables** for `T(2, n)`, `n = 2..5`, at
+4. Explicit `bracketModP` tables for `T(2, n)`, `n = 2..5`, at
    `p = 3, 5, 7`, each closed by kernel `decide`.
-5. **Fermat-flavored conjecture test (expected-negative).** We
+5. Fermat-flavored conjecture test (expected-negative). We
    check whether the mod-`p` coefficient sequence, read off the
    exponents of `⟨T(2, n)⟩`, is periodic in the exponent with
    period `p - 1`.  It is not, generically — `A` is a formal
    Laurent variable, not an element of `(ℤ/p)^×` — and we report
    the negative observation honestly.
-6. **Productive bridge: writhe mod `p - 1` on normalized brackets.**
+6. Productive bridge: writhe mod `p - 1` on normalized brackets.
    Positive Hopf has writhe `+2`, negative Hopf has writhe `-2`,
    differing by `4`.  If we *formally* collapse `A^4 = 1` on the
    normalized bracket (by reducing each exponent modulo `4`) and
    then reduce coefficients mod `5`, the two normalized brackets
    become equal.  This is exactly the "Fermat-style at a fourth
    root of unity" observation at `p = 5`.  Witnessed by `decide`.
-7. **Torus-link Chebyshev period mod `p` (Pisano-like).**  For
+7. Torus-link Chebyshev period mod `p` (Pisano-like).  For
    `p = 3, 5, 7` we reduce the bracket's coefficients mod `p` and
    collapse exponents mod `p - 1` (so the state lives in
    `(ℤ/p)^{p - 1}`).  Under the Chebyshev-like recurrence
@@ -414,7 +414,7 @@ mod `5` to residue `3`. -/
 theorem foldAndReduce_t22_p5 :
     foldAndReduce 5 (torusBracket 2) = [(0, 3)] := by decide
 
-/-- **Writhe mod `(p - 1)` witness.**  At `p = 5`, folding the two
+/-- Writhe mod `(p - 1)` witness.  At `p = 5`, folding the two
 normalized Hopf brackets under `A^4 = 1` and reducing coefficients
 mod `5` yields the *same* residue table for Hopf+ and Hopf-.  The
 writhe-shift `(-A)^(-3 · 4) = A⁻¹²` that distinguishes them in

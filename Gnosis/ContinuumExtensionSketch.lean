@@ -11,7 +11,7 @@ shape of physical theory. Physics has *continuous* couplings
 positive above). The discrete unit step in our calculus is one
 clinamen.
 
-This module provides the **signed-Int sketch** of the continuum
+This module provides the signed-Int sketch of the continuum
 extension. We use `Int` as the discrete bridge to a continuous
 `ℝ`-valued extension (which would require Mathlib). The Int sketch
 captures the *signed* aspect of the continuum (negative central
@@ -138,17 +138,17 @@ theorem int_central_charge_negative_iff_supercritical (n : Nat) :
 
 A Real-valued continuum extension (using Mathlib) would prove:
 
-1. **Continuity of central charge**: `centralCharge : ℝ → ℝ` with
+1. Continuity of central charge: `centralCharge : ℝ → ℝ` with
    `c(D) = 10 - D` (no integer constraint).
-2. **Smoothness of coupling**: `g_s : ℝ⁺` with `R = g_s × l_s`
+2. Smoothness of coupling: `g_s : ℝ⁺` with `R = g_s × l_s`
    continuous in `g_s`.
-3. **Conformal invariance**: the central charge interpretation as
+3. Conformal invariance: the central charge interpretation as
    a Virasoro-anomaly indicator, with `c = 0` at the critical
    dimension as a continuous condition.
-4. **Renormalization-group flow**: running couplings varying with
+4. Renormalization-group flow: running couplings varying with
    energy scale, with the cost-algebra's structural ratios (8:3:1)
    recovered as fixed-point ratios at specific scales.
-5. **Analyticity**: the cost-algebra's discrete primitives extending
+5. Analyticity: the cost-algebra's discrete primitives extending
    to analytic functions on the complex plane (zeta-regularization
    of partition functions).
 

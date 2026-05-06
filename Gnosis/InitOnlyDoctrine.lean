@@ -31,23 +31,23 @@ substrate. It is the honest one.
 
 We do not aim to be Mathlib. Our ideal state is to have the surface power to explain computation and logic entirely within `open-source/gnosis-math` by reframing continuous and infinite problems into discrete, verifiable topologies. 
 
-The following classical domains are explicitly **Out of Bounds** for direct representation, and we cover their gaps via the Topological Bridge:
+The following classical domains are explicitly Out of Bounds for direct representation, and we cover their gaps via the Topological Bridge:
 
-- **Continuous Analysis and Reals (`ℝ`, limits, calculus, measure theory)**: 
+- Continuous Analysis and Reals (`ℝ`, limits, calculus, measure theory): 
   Out of bounds. We bridge this by mapping continuous dynamics to discrete Buleyean topologies (`+1` clinamen increments, exact rational phase decompositions, and bounded deficits). A real number is modeled as the limit of a discrete, terminating rejection process.
-- **Infinite Category Theory (∞-categories, derived categories)**: 
+- Infinite Category Theory (∞-categories, derived categories): 
   Out of bounds. We bridge this by modeling categorical coherence using explicit Buleyean Ranked DAGs. Naturality and adjunctions are expressed as `FORK`, `RACE`, `FOLD`, and `VENT` edges ensuring `beta1` topological complexity conservation.
-- **Non-constructive Mathematics and Infinite Set Theory (Axiom of Choice over uncountables)**: 
+- Non-constructive Mathematics and Infinite Set Theory (Axiom of Choice over uncountables): 
   Out of bounds. We bridge this via explicit finite witnesses. Instead of proving an existential over an infinite domain, we provide a deterministic, finite search space that exhaustively closes the topological gap via kernel `decide`.
-- **Algebraic Number Fields at Scale (Galois cohomology over infinite fields)**:
+- Algebraic Number Fields at Scale (Galois cohomology over infinite fields):
   Out of bounds. We bridge this by restricting to finite characteristic rings (`ZMod` equivalents built from `Nat`) and explicit combinatorial bounding.
 
 We do not import Mathlib because our goal is not to heuristic-search an infinite space, but to prove that the finite state machine routing the deficit to zero is structurally inevitable.
 
 ## The doctrine
 
-**The default substrate is `Init` + kernel `decide` + zero-sorry +
-zero-axiom + zero-vacuous-True + zero-trivial.**
+The default substrate is `Init` + kernel `decide` + zero-sorry +
+zero-axiom + zero-vacuous-True + zero-trivial.
 Mathlib is an optional tool for specific tasks, not a church of
 membership.
 
@@ -198,7 +198,7 @@ theorem init_only_doctrine_master :
 The doctrine is a stance, not a theorem. What is decidable here is
 that we have asserted seven specific claims. The claims themselves —
 "the substrate is sufficient," "mathlib is optional" — are
-**empirical**: they are supported by the 78 modules of this session,
+empirical: they are supported by the 78 modules of this session,
 every one of which conforms to `Init`-only + zero-sorry + kernel
 `decide`.
 

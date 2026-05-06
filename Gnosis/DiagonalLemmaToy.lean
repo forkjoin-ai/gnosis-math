@@ -22,7 +22,7 @@ import Init
   * Witnesses a concrete diagonal on `Term`: for a particular constant `k`,
     `encode (Quote (Const k)) = P₁ k` realized as a quine-style reflection.
 
-  What this module does **not** do:
+  What this module does not do:
   * No Gödel numbering of formulas.
   * No provability predicate.
   * No arithmetization of syntactic substitution.

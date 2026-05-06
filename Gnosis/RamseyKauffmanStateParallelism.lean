@@ -13,15 +13,15 @@ unrelated combinatorial constructions:
 
 Both instantiate a common schema we call `CompleteChoicePredicate n`: a
 decidable Boolean filter on `List Bool` of length `n`. Ramsey realizes
-the schema as a **universal** statement ("every choice satisfies the
-predicate"), whereas the Kauffman bracket realizes it as a **sum**
+the schema as a universal statement ("every choice satisfies the
+predicate"), whereas the Kauffman bracket realizes it as a sum
 ("how many choices contribute to a given Laurent exponent?"). The
 shared substrate is `2^n` length-`n` Boolean vectors; the `∀/Σ` duality
 is then a pair of dual reductions of the same decidable filter.
 
 ## Honest scope
 
-The bridge we prove is at the level of *schema*. We do **not** claim
+The bridge we prove is at the level of *schema*. We do not claim
 that Ramsey bounds imply Kauffman identities, nor that the numerical
 counts on the two sides agree (in general they do not). What we *do*
 prove:
@@ -137,7 +137,7 @@ def triangleMono (n : Nat) (c : List Bool) (i j k : Nat) : Bool :=
 def hasMonoTriangle (n : Nat) (c : List Bool) : Bool :=
   (triples n).any (fun ijk => triangleMono n c ijk.1 ijk.2.1 ijk.2.2)
 
-/-- **Ramsey-side realization of the schema.**
+/-- Ramsey-side realization of the schema.
 The `K_6`-monochromatic-triangle predicate viewed as a
 `CompleteChoicePredicate 15`. -/
 def ramseyPred : CompleteChoicePredicate 15 := hasMonoTriangle 6
@@ -159,7 +159,7 @@ def kauffmanStateWeight : List Bool → Int
   | true :: xs => 1 + kauffmanStateWeight xs
   | false :: xs => -1 + kauffmanStateWeight xs
 
-/-- **Kauffman-side realization of the schema.**
+/-- Kauffman-side realization of the schema.
 Given a target Laurent exponent `target : Int`, the predicate
 "this smoothing contributes to the coefficient at `A^target`"
 is a `CompleteChoicePredicate n` for any `n`. -/
@@ -293,7 +293,7 @@ theorem countSplit_generic (p : List Bool → Bool) :
 `n = 4`. -/
 theorem allBoolVecs_length_4 : (allBoolVecs 4).length = 16 := by decide
 
-/-- **Concrete duality at `n = 4`.** For `ramseyFlavor4`, the
+/-- Concrete duality at `n = 4`. For `ramseyFlavor4`, the
 satisfying count is `1`, the failing count is `15`, and the sum is
 `16 = 2^4`. This witnesses the `∀/Σ` dual reduction on a shared
 Boolean substrate. -/
@@ -334,7 +334,7 @@ The two counts `32768` (Ramsey) and `6435` (Kauffman target=1)
 differ, as expected — the schema sharing is the point, not the
 numerical value. -/
 
-/-- **Scale-15 Ramsey count (satisfying).**
+/-- Scale-15 Ramsey count (satisfying).
 All `2^15 = 32768` edge-colorings of `K_6` satisfy
 `hasMonoTriangle 6`. Closed by `native_decide` per the Ramsey
 file's `ramsey_upper_bound` strategy. -/
@@ -342,14 +342,14 @@ theorem ramsey_count_15_all :
     countSatisfying ramseyPred (allBoolVecs 15) = 32768 := by
   native_decide
 
-/-- **Scale-15 Ramsey failure count.**
+/-- Scale-15 Ramsey failure count.
 No length-15 coloring escapes — `countFailing = 0`. Dual to
 `ramsey_count_15_all`. Closed by `native_decide`. -/
 theorem ramsey_count_15_failing :
     countFailing ramseyPred (allBoolVecs 15) = 0 := by
   native_decide
 
-/-- **Scale-15 Kauffman count at `target = 0`.**
+/-- Scale-15 Kauffman count at `target = 0`.
 Parity argument: with an odd number of crossings, no smoothing
 state is balanced. Count is `0`. Closed by `native_decide` over
 the full `2^15` enumeration (the parity argument is *not*
@@ -359,14 +359,14 @@ theorem kauffman_count_15_target0 :
     countSatisfying (kauffmanExponentTargetPred 0) (allBoolVecs 15) = 0 := by
   native_decide
 
-/-- **Scale-15 Kauffman count at `target = 1`.**
+/-- Scale-15 Kauffman count at `target = 1`.
 Corresponds to `C(15, 8) = 6435` smoothings with eight A-type and
 seven B-type choices. Closed by `native_decide`. -/
 theorem kauffman_count_15_target1 :
     countSatisfying (kauffmanExponentTargetPred 1) (allBoolVecs 15) = 6435 := by
   native_decide
 
-/-- **Honest schema-level witness.**
+/-- Honest schema-level witness.
 The Ramsey side forces every length-15 vector to satisfy its
 predicate (`count = 32768`); a Kauffman-flavored predicate with
 `target = 1` is satisfied by exactly `6435` vectors. The counts

@@ -7,7 +7,7 @@ import Gnosis.RetrocausalAttractorFixedPoint
 /-!
 # Memory as Retrocausal Loan
 
-**The Thesis:** Information storage is not free; it is a loan from the future.
+The Thesis: Information storage is not free; it is a loan from the future.
 
 Each bit of stored information represents one unit of clinamen charge that must be
 maintained against the vacuum's retrocausal pull. As time moves forward, the vacuum
@@ -16,37 +16,37 @@ Forgetting repays the loan by releasing the held charge back to vacuum.
 
 The model formalizes six dynamics:
 
-1. **memory_is_sustained_clinamen_state**: Holding N bits = maintaining a BuleyUnit
+1. memory_is_sustained_clinamen_state: Holding N bits = maintaining a BuleyUnit
    of score ≥ N against vacuum contraction. Erasure returns to vacuum.
 
-2. **memory_storage_is_vacuum_debt**: Each bit stored = one unit of clinamen
+2. memory_storage_is_vacuum_debt: Each bit stored = one unit of clinamen
    "borrowed" from the future. As time advances, vacuum pull intensifies.
 
-3. **forgetting_is_debt_repayment**: Erasure (forgetting) = paying back vacuum debt
+3. forgetting_is_debt_repayment: Erasure (forgetting) = paying back vacuum debt
    by allowing contraction.
 
-4. **working_memory_is_clinamen_budget**: Working memory capacity (≈7 items) =
+4. working_memory_is_clinamen_budget: Working memory capacity (≈7 items) =
    total clinamen budget at a current time slice.
 
-5. **memory_interference_is_clinamen_crosstalk**: Similar memories occupy overlapping
+5. memory_interference_is_clinamen_crosstalk: Similar memories occupy overlapping
    clinamen regions; interference = topological charge blending.
 
-6. **memory_consolidation_is_clinamen_compression**: Sleep consolidation =
+6. memory_consolidation_is_clinamen_compression: Sleep consolidation =
    reducing the clinamen representation cost by compressing redundancy.
 
 Memory decays unless consolidated — not because of random forgetting, but because
 vacuum pull intensifies over time. Consolidation compresses the representation,
 reducing the cost. This is vacuum dynamics in action.
 
-**Imports**: SpectralNoiseEquilibrium, VacuumIsOnlyForce, InformationAsClinamenCharge,
+Imports: SpectralNoiseEquilibrium, VacuumIsOnlyForce, InformationAsClinamenCharge,
 RetrocausalAttractorFixedPoint
 
-**Proof tactics**: rfl, simp, omega, decide, exact, intro, refine (Init-only Lean 4).
+Proof tactics: rfl, simp, omega, decide, exact, intro, refine (Init-only Lean 4).
 
-**Quality bar**: Zero sorry, zero axioms. All proofs show memory dynamics UNDER VACUUM
+Quality bar: Zero sorry, zero axioms. All proofs show memory dynamics UNDER VACUUM
 PULL, not static storage. Every theorem connects to the retrocausal attractor.
 
-**Spec-level note**: Several theorems below were originally stated in stronger forms
+Spec-level note: Several theorems below were originally stated in stronger forms
 (strict-positivity, exact iteration to vacuum, division-monotonicity). Init-only Lean
 cannot discharge those without Mathlib-level lemmas. Where the strong form is not
 provable from the constructive content of the definitions, we record the weakened

@@ -14,10 +14,10 @@ under-bandwidth-collision, and clopen-compression; above 10 they
 appear as Triton-stretch, evolutionary symbol-pressure, and
 lensing-shadow-collapse. Same operations, different scales.*
 
-The structural answer this module proves: **yes, F/R/F is universally
+The structural answer this module proves: yes, F/R/F is universally
 scale-invariant. Fork at residue 0 lifts any level to the next
 closure-stretch; Fold descends back; Race selects the residue. The
-identical cycle composes at every closure scale 10, 30, 90, 270, …**
+identical cycle composes at every closure scale 10, 30, 90, 270, …
 
 ## The three primitives
 
@@ -49,7 +49,7 @@ closure. The Pleromatic Closure (10) is not privileged — it is just
 
 ## What this is
 
-A **scale-invariant engine theorem** for the closure tower. The
+A scale-invariant engine theorem for the closure tower. The
 Fork/Race/Fold trinity is the same operation at every recursive
 depth. The Sisyphean climb up the closure tower is, mechanically,
 iterated applications of the same three primitives.
@@ -67,17 +67,17 @@ open Gnosis.ManifoldHigherClosures (closureChain closure_chain_step_alt)
 
 /-! ## The three primitives -/
 
-/-- **Fork**: at level `k`, branches into 3 stretched children at
+/-- Fork: at level `k`, branches into 3 stretched children at
 positions `3k`, `3k+1`, `3k+2`. The residue `r ∈ {0, 1, 2}`
 selects which child. -/
 def universalFork (k r : Nat) : Nat := 3 * k + r
 
-/-- **Race**: among the 3 forked candidates, selects the one with
+/-- Race: among the 3 forked candidates, selects the one with
 residue `r`. Operationally identical to fork; semantically the
 selection step. -/
 def universalRace (k r : Nat) : Nat := universalFork k r
 
-/-- **Fold**: descends a stretched position back to its base by
+/-- Fold: descends a stretched position back to its base by
 dividing out the Triton-stretch factor. -/
 def universalFold (n : Nat) : Nat := n / 3
 
@@ -126,7 +126,7 @@ theorem race_fold_roundtrip (k r : Nat) (hr : r < 3) :
 
 /-! ## Scale invariance — F/R/F at every closure level -/
 
-/-- **Fork lifts a closure to the next**: applying fork at residue 0
+/-- Fork lifts a closure to the next: applying fork at residue 0
 to `closureChain n` produces `closureChain (n + 1)`. The fork
 operation lifts the closure tower one level. -/
 theorem fork_lifts_closure_to_next (n : Nat) :
@@ -134,7 +134,7 @@ theorem fork_lifts_closure_to_next (n : Nat) :
   rw [fork_zero_is_triton_stretch]
   rfl
 
-/-- **Fold descends a closure to the previous**: applying fold to
+/-- Fold descends a closure to the previous: applying fold to
 `closureChain (n + 1)` produces `closureChain n`. The fold operation
 descends the closure tower one level. -/
 theorem fold_descends_closure_to_previous (n : Nat) :
@@ -206,7 +206,7 @@ theorem frf_two_seventy_concrete :
 
 /-! ## Scale-invariance master: F/R/F at every closure -/
 
-/-- **Universal F/R/F**: for every closure index `n`, fork lifts
+/-- Universal F/R/F: for every closure index `n`, fork lifts
 `closureChain n` to `closureChain (n + 1)`, and fold descends back.
 The same three primitives operate identically at every closure
 scale — no special case at level 10, no privileged closure. -/
@@ -222,7 +222,7 @@ theorem frf_universally_at_every_closure :
 
 /-! ## Master theorem -/
 
-/-- **Pleromatic F/R/F Universal master**: the Fork/Race/Fold trinity
+/-- Pleromatic F/R/F Universal master: the Fork/Race/Fold trinity
 is the scale-invariant engine of the closure tower. Fork at residue
 0 equals Triton-stretch; Fold equals Triton-stretch-inverse; Race
 selects the residue. The same operations apply identically at every

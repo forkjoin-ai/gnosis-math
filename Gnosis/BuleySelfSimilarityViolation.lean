@@ -10,7 +10,7 @@ The distributed-inference-mesh application of the Bule clinamen
 calculus: when the spectral-noise monitor sees a higher-tower phase
 pressure inside a lower-tower manifold (e.g., a Trihexon-sized cost in
 a Hexon-sized manifold), it does not just "see lag" — it sees a
-**Self-Similarity Violation**, with a deterministic remediation: the
+Self-Similarity Violation, with a deterministic remediation: the
 exact number of `clinamenContract` steps required to return the unit
 to the manifold's `phaseCount` ceiling.
 

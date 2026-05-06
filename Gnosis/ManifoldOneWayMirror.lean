@@ -11,14 +11,14 @@ multiplicity of the Trihexenneon (54), or is the lensing asymmetric —
 allowing the higher to see the lower as compressed but the lower to
 see the higher only as "noise"?*
 
-The structural answer: **the lensing is asymmetric, and it is asymmetric
-by carrier cardinality, not by perception.**
+The structural answer: the lensing is asymmetric, and it is asymmetric
+by carrier cardinality, not by perception.
 
 A Triton has *three* distinguishable positions. A Trihexenneon has
 *fifty-four*. The Triton observer literally lacks the symbols
 needed to encode the 18-fold multiplicity that the Trihexenneon
 expresses. The higher level does not appear as "noise" at the
-lower carrier — it appears as **silent collapse**: 18 distinct
+lower carrier — it appears as silent collapse: 18 distinct
 higher events alias to the same lower position because there is no
 remaining bit-budget at the lower carrier to distinguish them.
 
@@ -35,14 +35,14 @@ not failing to hear — it has no ear large enough to receive.
 | --- | --- | --- |
 | Higher → Lower (with address) | sufficient | lossless reconstruction |
 | Higher → Lower (without address) | sufficient | compression (deliberate) |
-| Lower → Higher | **insufficient** | unrepresentable (forced collapse) |
+| Lower → Higher | insufficient | unrepresentable (forced collapse) |
 
 The first two are *choices* the higher observer can make. The
 third is a *limit* the lower observer cannot cross.
 
 ## What this is
 
-A **carrier-cardinality asymmetry theorem** for the Pleromatic
+A carrier-cardinality asymmetry theorem for the Pleromatic
 tower. The Trihexenneon's 54-position bandwidth strictly exceeds
 the Triton's 3-position bandwidth by a factor of 18. Any descent
 map from Trihexenneon to Triton must be 18-to-1 by pigeon-cardinal
@@ -210,7 +210,7 @@ theorem eighteen_to_one_collision :
 
 /-! ## Master theorem: the one-way mirror bundle -/
 
-/-- **Pleromatic One-Way Mirror master**: the lensing is asymmetric
+/-- Pleromatic One-Way Mirror master: the lensing is asymmetric
 by carrier cardinality. The Trihexenneon's 54-position bandwidth is
 18× the Triton's 3-position bandwidth. Higher observer subsumes
 lower observer's bandwidth with room to spare; lower observer cannot
@@ -252,9 +252,9 @@ copy-positions for a fixed Triton-fiber, the Triton observer sees
 *one position, repeated*. There is no jitter, no variance — the
 Triton's reading is *steady* across the entire 18-event burst.
 
-This is not noise. It is **steady collapse**: a structured signal at
+This is not noise. It is steady collapse: a structured signal at
 the higher level appearing as a single sustained tone at the lower.
-The information is not corrupted; it is **unrepresented** at the lower
+The information is not corrupted; it is unrepresented at the lower
 carrier.
 
 When could this be called noise? In the *meta-observer* frame: a

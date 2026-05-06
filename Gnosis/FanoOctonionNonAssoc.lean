@@ -211,7 +211,7 @@ theorem leftAssoc124_eval : leftAssoc124 = e7 := by decide
 theorem rightAssoc124_eval : rightAssoc124 = SB.neg e7 := by decide
 
 /--
-**Fano Grouping Invariant, point instance.** Octonion multiplication is
+Fano Grouping Invariant, point instance. Octonion multiplication is
 non-associative: on the triple `(1,2,4)`, the two parenthesizations of
 `e₁ · e₂ · e₄` disagree. The left side reduces to `+e₇`, the right to
 `-e₇`, via the Fano triples `(1,2,3), (3,4,7), (2,4,6), (1,7,6)`.

@@ -14,7 +14,7 @@ import Gnosis.CComplex
 
   The three theorems
   ------------------
-    1. **Argument Principle** (bounded shadow):  for a polynomial p(z)
+    1. Argument Principle (bounded shadow):  for a polynomial p(z)
        with explicit zeros, the discrete winding-number partial-sum
        around the unit `squareContour` equals (zeros - poles) × 2π
        within tolerance.  Verified on
@@ -24,7 +24,7 @@ import Gnosis.CComplex
                                 a unit-side square contour around 0
                                 that doesn't enclose ±i)
 
-    2. **Cauchy Integral Formula** (bounded shadow):  for f(z) holo-
+    2. Cauchy Integral Formula (bounded shadow):  for f(z) holo-
        morphic and z₀ inside the contour,
             f(z₀) ≈ (1 / 2πi) · ∮ f(z) / (z - z₀) dz
        evaluated as a discrete contour sum.  Verified on
@@ -32,7 +32,7 @@ import Gnosis.CComplex
          * `f(z) = z`     at z₀ = 0 (recovers 0)
          * `f(z) = z²`    at z₀ = 0 (recovers 0)
 
-    3. **Schwarz Lemma** (bounded shadow):  holomorphic f : D → D
+    3. Schwarz Lemma (bounded shadow):  holomorphic f : D → D
        with f(0) = 0 satisfies |f(z)| ≤ |z| on D.  Verified on
          * `f(z) = z`     (equality, |f(z)| = |z|)
          * `f(z) = z²`    (|z²| = |z|² ≤ |z| on D)
@@ -232,20 +232,20 @@ def zOrigin : QC := qczero
 /-- Tolerance for Cauchy comparisons. -/
 def cauchyTol : Q := Q.of 1 2
 
-/-- **Cauchy Integral, constant f**:  ∮_C  1/(z - 0) dz / 2πi ≈ 1. -/
+/-- Cauchy Integral, constant f:  ∮_C  1/(z - 0) dz / 2πi ≈ 1. -/
 theorem cauchy_integral_const :
     let approx := cauchyApprox fOne zOrigin
     let diff   := QC.sub approx qcone
     withinTolCA diff cauchyTol = true := by
   native_decide
 
-/-- **Cauchy Integral, identity f(z) = z**. -/
+/-- Cauchy Integral, identity f(z) = z. -/
 theorem cauchy_integral_identity :
     let approx := cauchyApprox fZ zOrigin
     withinTolCA approx cauchyTol = true := by
   native_decide
 
-/-- **Cauchy Integral, f(z) = z²**. -/
+/-- Cauchy Integral, f(z) = z². -/
 theorem cauchy_integral_z_squared :
     let approx := cauchyApprox fZsq zOrigin
     withinTolCA approx cauchyTol = true := by
@@ -275,12 +275,12 @@ def schwarzBound (f : QC → QC) (z : QC) : Bool :=
   let rhs  := QC.absSq z
   qle lhs rhs
 
-/-- **Schwarz, identity f(z) = z**:  |z| = |z| on the disk. -/
+/-- Schwarz, identity f(z) = z:  |z| = |z| on the disk. -/
 theorem schwarz_identity :
     unitDiskGrid.all (fun z => schwarzBound fZ z) = true := by
   native_decide
 
-/-- **Schwarz, f(z) = z²**. -/
+/-- Schwarz, f(z) = z². -/
 theorem schwarz_z_squared :
     unitDiskGrid.all (fun z => schwarzBound fZsq z) = true := by
   native_decide
@@ -288,7 +288,7 @@ theorem schwarz_z_squared :
 /-- f(z) = z / 2. -/
 def fHalfZ (z : QC) : QC := QC.mul (QC.ofQ (Q.of 1 2)) z
 
-/-- **Schwarz, f(z) = z/2**. -/
+/-- Schwarz, f(z) = z/2. -/
 theorem schwarz_half_z :
     unitDiskGrid.all (fun z => schwarzBound fHalfZ z) = true := by
   native_decide

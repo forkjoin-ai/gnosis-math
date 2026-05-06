@@ -195,7 +195,7 @@ theorem position_is_not_a_plane_point :
 
 /-! ## Master theorem: the topological-plane bundle -/
 
-/-- **Infinity as a topological plane**: the type of `BraidedInfinity`
+/-- Infinity as a topological plane: the type of `BraidedInfinity`
 points carries a topology induced by attribute predicates; the
 Pleromatic Closure is a limit point of catalog convergence; the
 position remains outside the plane.

@@ -9,18 +9,18 @@
   only to align `gateProtocolDeficit` with `protocolDeficit` by `rfl`.
 
   Alignment with the Nash → Skyrms ladder (see `NashSkyrmsBuleyGodLadder.lean`):
-  gatekeeping is primarily a **Skyrms** phenomenon (convention / collective
+  gatekeeping is primarily a Skyrms phenomenon (convention / collective
   expectation about who may pass), not a single-agent Nash deviation; the
   `GateEpisteme` fields name the epistemic preconditions for convention lock-in.
 
   Zero `sorry`, zero new `axiom`.
 
-  **Onward (throughput / Skyrms–stag linkage):** `gateProtocolDeficit` uses the same
+  Onward (throughput / Skyrms–stag linkage): `gateProtocolDeficit` uses the same
   `paths - streams` shape as `Gnosis.protocolDeficit` when `paths = nominalLegitDemand`
   and `streams = legitThroughput`. A toy `StagHuntConvention` maps coordination level
   to metrics so deficit equals unreached mutual-stag capacity on the 0–100 dial.
 
-  **Game layer:** see `Gnosis.GatekeepingGames` for PD-shaped `IndividualGate` profiles,
+  Game layer: see `Gnosis.GatekeepingGames` for PD-shaped `IndividualGate` profiles,
   God-formula payoffs, Skyrms convention metrics, and the ladder ordering witness.
 -/
 
@@ -197,15 +197,15 @@ def IsEffective (g : Gate) (m : GateMetrics) : Prop :=
   (g.appealPath → m.falseReject ≤ maxFalseRejectWithAppeal)
 
 /-- Ineffective or harmful usage patterns (any disjunct suffices):
-    * **Rent-shaped**: no bottleneck but high strictness and high false rejects.
-    * **Failed protection**: bottleneck is serious but false accepts blow the budget.
-    * **HiddenCriteria without recourse**: high opacity, no appeal, elevated false rejects. -/
+    * Rent-shaped: no bottleneck but high strictness and high false rejects.
+    * Failed protection: bottleneck is serious but false accepts blow the budget.
+    * HiddenCriteria without recourse: high opacity, no appeal, elevated false rejects. -/
 def IsIneffectiveUsage (g : Gate) (m : GateMetrics) : Prop :=
   (g.bottleneck = 0 ∧ g.strictness ≥ rentStrictnessFloor ∧ m.falseReject ≥ falseRejectPain) ∨
   (g.bottleneck ≥ hazardThreshold ∧ m.falseAccept > failedContainmentFalseAccept) ∨
   (g.opacity ≥ highOpacity ∧ g.appealPath = false ∧ m.falseReject ≥ falseRejectPain - 5)
 
-/-- **Balanced effective:** effective gate + throughput floor + error budget
+/-- Balanced effective: effective gate + throughput floor + error budget
     (joint witness — stronger than `IsEffective` alone). -/
 def IsEffectiveBalanced (g : Gate) (m : GateMetrics) : Prop :=
   IsEffective g m ∧

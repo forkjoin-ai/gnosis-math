@@ -13,25 +13,25 @@ dedicated backing module; this file backfills them by kernel
 
 The identities witnessed here are organized into five groups:
 
-- **Group A** (product and doubling):
+- Group A (product and doubling):
   `F_n · L_n = F_{2n}`,
   `L_{2n} = L_n^2 - 2·(-1)^n` (Williams double-index / Pentagram),
   `L_n^2 = L_{2n} + 2·(-1)^n` (Self-Interference).
-- **Group B** (Cassini and phase-space):
+- Group B (Cassini and phase-space):
   `L_n^2 = L_{n-1}·L_{n+1} + 5` on even `n`,
   `L_{n-1}·L_{n+1} = L_n^2 + 5` on odd `n`,
   Fibonacci Cassini `F_{n-1}·F_{n+1} - F_n^2 = (-1)^n`,
   Phase-space sum `F_n^2 + F_{n+1}^2 = F_{2n+1}`,
   Cross-Fibonacci coupling `F_m·F_n + F_{m-1}·F_{n-1} = F_{m+n-1}`.
-- **Group C** (Lucas--Fibonacci bridges):
+- Group C (Lucas--Fibonacci bridges):
   Bragg Peak / Langlands S-duality `L_n = F_{n-1} + F_{n+1}`,
   Topological Gap `L_n = F_n + 2·F_{n-1}`,
   Circular Tiling `L_n = F_{n-1} + F_{n+1}` via `linear(k) = F_{k+1}`,
   AdS/CFT reconstruction `5·F_n = L_{n-1} + L_{n+1}`,
   √5 Cross-Product (parity-alternating `±2` coupling).
-- **Group D** (Pell discriminant):
+- Group D (Pell discriminant):
   Even `L_n^2 = 5·F_n^2 + 4`, Odd `5·F_n^2 = L_n^2 + 4`.
-- **Group E** (E8 product-to-sum):
+- Group E (E8 product-to-sum):
   Odd `L_m·L_n + L_{m-n} = L_{m+n}`,
   Even `L_m·L_n = L_{m+n} + L_{m-n}`.
 
@@ -153,7 +153,7 @@ theorem williams_double_5 :
 theorem williams_double_6 :
     intLucas 12 = intLucas 6 * intLucas 6 - 2 * negOnePow 6 := by decide
 
-/-!  **Note.** The ledger row "Pentagram Duplication" states
+/-!  Note. The ledger row "Pentagram Duplication" states
 `L_{2n} = L_n^2 - 2·(-1)^n`, which is the same formula as the Williams
 double-index row. We treat the two ledger rows as duplicates and do
 not introduce separate theorems. -/
@@ -433,12 +433,12 @@ theorem pell_odd_7 : 5 * fib 7 * fib 7 = lucas 7 * lucas 7 + 4 := by decide
 
 The ledger rows read:
 
-- **Odd**: `L_m · L_n + L_{m-n} = L_{m+n}` (when `m - n` is odd).
-- **Even**: `L_m · L_n = L_{m+n} + L_{m-n}` (when `m - n` is even).
+- Odd: `L_m · L_n + L_{m-n} = L_{m+n}` (when `m - n` is odd).
+- Even: `L_m · L_n = L_{m+n} + L_{m-n}` (when `m - n` is even).
 
 We check each at specific `(m, n)` pairs where the parity matches. -/
 
-/-!  **Note.** The ledger's "Odd" row `L_m·L_n + L_{m-n} = L_{m+n}`
+/-!  Note. The ledger's "Odd" row `L_m·L_n + L_{m-n} = L_{m+n}`
 does not universally hold as stated. The classical product-to-sum
 identity reads
 

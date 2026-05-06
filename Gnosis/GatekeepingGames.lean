@@ -5,15 +5,15 @@
   Embeds gatekeeping in the existing God-formula / Nash game layer and ties it to
   the Skyrms convention layer.
 
-  **Nash (individual):** each side chooses `allow` (cooperate / soften) or `refuse`
+  Nash (individual): each side chooses `allow` (cooperate / soften) or `refuse`
   (defect / strict). Debts `v` match the numeric witnesses in `NashEquilibrium.prisoners_dilemma`.
 
-  **Skyrms (collective):** the same pair maps to a `Gatekeeping.StagHuntConvention`
+  Skyrms (collective): the same pair maps to a `Gatekeeping.StagHuntConvention`
   adoption rate, hence to `GateMetrics` via `metricsFromStagConvention`. Gate
   effectiveness is a *Skyrms-level* judgment on `(Gate, GateMetrics)` — it is not
   determined by Nash debts alone.
 
-  **Nash → Skyrms “issue” (stated honestly):** mutual `refuse` is a stable Nash
+  Nash → Skyrms “issue” (stated honestly): mutual `refuse` is a stable Nash
   profile (Pareto-dominated), while mutual `allow` is payoff-better but not a Nash
   equilibrium in this PD-shaped toy; moving the *convention* toward `allow`
   requires coordinated / Skyrms-scale dynamics. Effective gatekeeping (high

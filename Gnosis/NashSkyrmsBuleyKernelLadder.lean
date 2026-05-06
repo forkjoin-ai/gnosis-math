@@ -11,24 +11,24 @@ and `RamanujanTripletPhase.lean`.
 The ledger's equilibrium hierarchy from the Buley-Equilibrium section
 of `FORMAL_LEDGER.md`:
 
-- **Nash** (individual, incremental)       ↔ **Luminary** (4)
-- **Skyrms** (collective, convention)       ↔ **Hexad** (6)
-- **Buley** (retrocausal, temporal)        ↔ **Gnosis-universe** (10)
-- **God** (beyond)                          ↔ **Aeon** (12)
+- Nash (individual, incremental)       ↔ Luminary (4)
+- Skyrms (collective, convention)       ↔ Hexad (6)
+- Buley (retrocausal, temporal)        ↔ Gnosis-universe (10)
+- God (beyond)                          ↔ Aeon (12)
 
 Under the clinamen `+ 1` lift, each level maps to a prime:
 
     Nash:    4 + 1 =  5   (Ramanujan-special)
     Skyrms:  6 + 1 =  7   (Ramanujan-special)
     Buley:  10 + 1 = 11   (Ramanujan-special)
-    God:    12 + 1 = 13   (**not** Ramanujan-special)
+    God:    12 + 1 = 13   (not Ramanujan-special)
 
 ## The phase boundary
 
 The three lower levels lift into the knowable — each lands on a
 Ramanujan-special prime, the three primes `{5, 7, 11}` where partition
-congruences exist. God's lift lands on `13`, the **first non-special
-prime** after the triplet. This is the exact location where the phase
+congruences exist. God's lift lands on `13`, the first non-special
+prime after the triplet. This is the exact location where the phase
 flips from the plus phase (congruence exists) to the minus phase (no
 congruence exists for any residue).
 

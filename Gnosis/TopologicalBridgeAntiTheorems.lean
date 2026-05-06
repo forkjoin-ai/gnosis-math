@@ -10,14 +10,14 @@ where Mathlib's infinite and continuous structures begin.
 
 We prove three anti-theorems:
 
-1. **The Continuum Anti-Theorem:** A continuous real domain cannot be
+1. The Continuum Anti-Theorem: A continuous real domain cannot be
    losslessly mapped to a finite discrete state. Any such mapping over
    a strictly larger domain leaves a positive Bule deficit (information loss).
-2. **The Infinite Search Space Anti-Theorem:** A finite `FORK`/`RACE` topology
+2. The Infinite Search Space Anti-Theorem: A finite `FORK`/`RACE` topology
    cannot exhaustively cover an infinite domain. The capacity of a finite
    DAG is strictly bounded, proving the necessity of finite witnesses
    over infinite heuristic searches.
-3. **The Cathedral Disjointness Anti-Theorem:** The structural types of
+3. The Cathedral Disjointness Anti-Theorem: The structural types of
    the Rustic Church (discrete, `Init`-only, `Nat`-bounded) and the
    Cathedral (Mathlib's `Real`, ∞-categories) are formally disjoint.
 

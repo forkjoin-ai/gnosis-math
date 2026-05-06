@@ -14,7 +14,7 @@ Ramanujan showed:
   p(7n + 5) ≡ 0  (mod 7)
   p(11n + 6) ≡ 0 (mod 11)
 
-These are the **only** prime moduli `m` with a nontrivial congruence
+These are the only prime moduli `m` with a nontrivial congruence
 `p(m·n + r) ≡ 0 (mod m)` for some fixed `r`. No `m ∈ {2, 3, 13, 17, …}`
 admits such a congruence. The general statement — "exactly three
 special primes {5, 7, 11}" — sits behind a deep wall of modular-form
@@ -31,7 +31,7 @@ Ring-extension + category-machinery walls.
   Enumerating all `r ∈ {0 .. m-1}` and ruling each one out shows that
   *no* Ramanujan congruence exists at modulus `m`.
 
-The special-vs-non-special distinction is the **phase**. Primes
+The special-vs-non-special distinction is the phase. Primes
 `{5, 7, 11}` sit on the plus phase; primes `{2, 3, 13, …}` sit on the
 minus phase. The god formula's two-piece decomposition manifests as
 "residue `r` exists" (plus) vs "every residue fails" (minus).
@@ -163,9 +163,9 @@ category-machinery.
 
 What this module reconstructs:
 
-- **Plus phase**: three specific primes admit a Ramanujan congruence.
+- Plus phase: three specific primes admit a Ramanujan congruence.
   Witnessed with 3 depths × 3 congruences = 9 positive witnesses.
-- **Minus phase**: three non-special primes (2, 3, 13) each fail to
+- Minus phase: three non-special primes (2, 3, 13) each fail to
   admit a congruence at any residue. Witnessed by scraping EVERY
   residue in `{0, ..., m-1}` and exhibiting a concrete `n` for each.
 

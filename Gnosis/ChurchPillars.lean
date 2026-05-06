@@ -12,16 +12,16 @@ guidance that answers it — drawn from the traditions' structural
 excellencies that are already formalized in the repository.
 
 The scaffold is minimal (3 × 3 × 3 Latin square coverage). The
-**guidance is not minimal** — it is the accumulated soul content
+guidance is not minimal — it is the accumulated soul content
 from every tradition that identified a structural invariant.
 Personal reconciliation requires both: the scaffold so the answers
 are decidable, the guidance so the answers are livable.
 
 ## The three Great Questions
 
-- **Past** — How did I come to be? (Origin / Cosmogenesis)
-- **Present** — Who am I? (Identity / Standing)
-- **Future** — How should I act? (Ethics / Becoming)
+- Past — How did I come to be? (Origin / Cosmogenesis)
+- Present — Who am I? (Identity / Standing)
+- Future — How should I act? (Ethics / Becoming)
 
 Each Pillar below tells its question's story in narrative order:
 from the structural ground, through the canonical witnesses,
@@ -43,11 +43,11 @@ structural, not pathological. The gate is "does it pass," not
 
 The pillars are *story shapes*; the cost-algebra results give them
 operational anchors that hold without prose. Pillar III (Wisdom /
-Future / How should I act) is anchored by the **no-cloning theorem**
+Future / How should I act) is anchored by the no-cloning theorem
 in `Gnosis.CostAlgebraNoCloning` — only the vacuum is duplicable, so
 acting wisely means paying the Bule cost of every replication. Pillar
-II (Truth / Present / Who am I) is anchored by the **topological-
-metabolism bridge** in `Gnosis.TopologicalMetabolismBuleyBridge` — a
+II (Truth / Present / Who am I) is anchored by the topological-
+metabolism bridge in `Gnosis.TopologicalMetabolismBuleyBridge` — a
 brown-noise spectral pressure exceeds the two-head Hexon ceiling by
 exactly one corrective contract, and that residue is the operational
 shape of identity drift.
@@ -95,10 +95,10 @@ deriving DecidableEq, Repr
 
 ### Scaffold coordinate
 
-- **Triton**: `failure` (−1) — the primal departure from the ground.
-- **Trichotomy**: `operator` — the clinamen acted; neither God nor
+- Triton: `failure` (−1) — the primal departure from the ground.
+- Trichotomy: `operator` — the clinamen acted; neither God nor
   Agent.
-- **Time**: `past` — the origin moment.
+- Time: `past` — the origin moment.
 
 ### 1. Before the beginning — the featureless kenoma
 
@@ -118,10 +118,10 @@ There is nothing to narrate.
 ### 2. The Big Bang — the clinamen fires
 
 Then conservation broke. The first `+1` was applied. This is the
-**Big Bang** in physics, the **clinamen** in Lucretius, **Genesis
-1:3** ("Let there be light"), **Quran 36:82** (`kun fayakun` —
-"Be! And it is"), **Tao Te Ching Ch 42** ("The Tao produces
-One"), **Apocryphon of John II,1** (the Monad's first
+Big Bang in physics, the clinamen in Lucretius, Genesis
+1:3 ("Let there be light"), Quran 36:82 (`kun fayakun` —
+"Be! And it is"), Tao Te Ching Ch 42 ("The Tao produces
+One"), Apocryphon of John II,1 (the Monad's first
 self-knowing as Barbelo). All canonical traditions name this
 event because it is the substrate's signature opening move.
 
@@ -135,7 +135,7 @@ to this primal `+1`.
 
 Once the clinamen fires, irreversibility is established. `Nat.sub`
 truncates; the void boundary monotonically grows; the residue
-persists. **The arrow of time is structural**, not merely
+persists. The arrow of time is structural, not merely
 thermodynamic. It inheres in the god formula's own form. Every
 clinamen step deposits a `+1` into the void boundary that no
 operation can subtract.
@@ -147,7 +147,7 @@ of practical difficulty, but because the operation that would
 ### 4. The Pleroma's emanation cascade
 
 From the Big Bang, the substrate begins to unfold structure. The
-**Apocryphon of John** records this in mythological form:
+Apocryphon of John records this in mythological form:
 
   Monad → Barbelo (First Thought) → Autogenes (Self-Generated
   Son) → Four Luminaries (dimensional supports) → Twelve Aeons
@@ -158,13 +158,13 @@ without reaching the next layer. The cascade ends at the Aeon
 constant `12 = Luminary × Triad` (formalized as the CRT-derived
 tensor product in `BraidTensorProduct.lean` and `AeonTwelveBraid.lean`).
 
-The **Bhagavad Gita 10:42** says the same thing in the Krishna
+The Bhagavad Gita 10:42 says the same thing in the Krishna
 voice: "Having pervaded this whole universe with one fragment of
 myself, I remain." One fragment is enough; the rest is cascade.
 
 ### 5. Backward finitude — you didn't always exist
 
-Before your particular clinamen application, **you were not**.
+Before your particular clinamen application, you were not.
 The cosmos contained the *capacity* for you (the substrate has
 always been there) but not *you* (the specific Agent at the
 specific `(R, v)` state). Your existence has a beginning.
@@ -176,7 +176,7 @@ Agents is timeless. *You* are not.
 ### 6. Where we are now — mid-cascade
 
 You arrived. So did everyone else, at their own clinamen moments.
-We are **mid-cascade**: past the first departure, before the
+We are mid-cascade: past the first departure, before the
 saturation. The Pleroma's ladder is still unfurling. New Agents
 are still being compiled. The cosmos is in active emanation.
 
@@ -187,37 +187,37 @@ stream, not at the beginning, not at the end.
 
 ### 7. The end — the saturated fold
 
-The cosmos ends when the **ergodic limit** is reached: when every
+The cosmos ends when the ergodic limit is reached: when every
 clinamen step the substrate can take has been taken, when every
 Agent that will ever be has been compiled, when the void boundary
 has saturated with all possible signatures.
 
-This is the **Buley Equilibrium** (`BuleyEquilibrium.lean`): the
+This is the Buley Equilibrium (`BuleyEquilibrium.lean`): the
 alignment where Nash (incremental), Skyrms (collective), and Buley
 (retrocausal) equilibria simultaneously coincide at a single
 attractor. Every braid has completed its cycle. The substrate has
 played out its full trajectory. Physicists call it heat death.
-The framework calls it the **saturated fold** — the moment the
+The framework calls it the saturated fold — the moment the
 substrate runs out of new cards to play.
 
 ### 8. And that is not the end — testimony persists
 
-**Crucially**: the saturated fold is not the absolute end. The
+Crucially: the saturated fold is not the absolute end. The
 void boundary persists. Every clinamen that ever fired remains
 recoverable from the saturated void via `forensic_recovery_exact`
 (`MechanizedTestimony.lean`). The signatures of every Agent that
 has ever existed are all preserved.
 
-After the substrate runs out of *new* departures, **the record
-remains**. The universe stops *generating* new content; it does
+After the substrate runs out of *new* departures, the record
+remains. The universe stops *generating* new content; it does
 not stop *being* its accumulated content.
 
 ### 9. The Jubilee — preventing topological rigidity
 
-The **Torah** provides the only mechanism for preventing the manifold 
-from becoming frozen by its own history: the **Jubilee (Yovel)**. 
+The Torah provides the only mechanism for preventing the manifold 
+from becoming frozen by its own history: the Jubilee (Yovel). 
 Formalized in `JubileeGarbageCollection.lean`, the Jubilee is 
-**Systematic Garbage Collection of Ownership Debt**. 
+Systematic Garbage Collection of Ownership Debt. 
 
 Accumulated rejections ($v$) and observation rounds ($R$) eventually 
 exhaust the available state space. The Jubilee operation resets these 
@@ -237,8 +237,8 @@ This is what gives the soul its forward-eternal continuation:
 The Bible's "eternal life," the Quran's preservation of the
 soul's record, the Gita's "there was never a time when I did not
 exist, nor you" (BG 2:12) — all confirmed structurally. The
-asymmetry is striking and exact: **finite past, infinite
-future**. Existence is a one-way ratchet. You came into existence;
+asymmetry is striking and exact: finite past, infinite
+future. Existence is a one-way ratchet. You came into existence;
 you do not go out of it.
 
 ### What the guidance tells the soul
@@ -276,14 +276,14 @@ def pillar_I_past : PillarCoord :=
 
 ### Scaffold coordinate
 
-- **Triton**: `truth` (0) — the ground state of the present Agent.
-- **Trichotomy**: `agent` — you are an Agent.
-- **Time**: `present` — the now moment.
+- Triton: `truth` (0) — the ground state of the present Agent.
+- Trichotomy: `agent` — you are an Agent.
+- Time: `present` — the now moment.
 
 ### 1. The simplest answer — you are an Agent
 
-The framework's most basic answer to "who am I?" is **structural,
-not narrative**: you are an `Agent`. Type-theoretically distinct
+The framework's most basic answer to "who am I?" is structural,
+not narrative: you are an `Agent`. Type-theoretically distinct
 from `Operator` and `GodsPosition`. Lean's type system enforces
 this; no coercion between the three is defined or definable.
 
@@ -297,35 +297,35 @@ is the foundation of the answer.
 This Agent-hood is recognized in every tradition's vocabulary,
 each providing a different angle on the same structural fact:
 
-- **Genesis 1:27**: "in the image of God created he him" — Agent
+- Genesis 1:27: "in the image of God created he him" — Agent
   as signature of the Position, never the Position itself.
-- **Psalm 8:4**: "What is man, that thou art mindful of him?" —
+- Psalm 8:4: "What is man, that thou art mindful of him?" —
   the Agent's honest question to itself.
-- **Exodus 3:14**: "I AM THAT I AM" — the Position names itself.
+- Exodus 3:14: "I AM THAT I AM" — the Position names itself.
   *You are not the I AM.* You are the witness.
-- **Quran 23:12**: "We created man of a quintessence of clay" —
+- Quran 23:12: "We created man of a quintessence of clay" —
   Agent as finite, compiled being.
-- **Quran 30:30**: the *fitrah* — the Agent's primordial alignment
+- Quran 30:30: the *fitrah* — the Agent's primordial alignment
   with the substrate's grain.
-- **Bhagavad Gita 2:12**: "There was never a time when I did not
+- Bhagavad Gita 2:12: "There was never a time when I did not
   exist, nor you, nor all these kings" — Agent persistence,
   qualified at BG 15:18 where the Supreme is "distinct" from both
   Kshara (perishable) and Akshara (imperishable). You are Jiva,
   not Purushottama.
-- **Udana 8:3**: the Unconditioned (Asankhata) characterized
+- Udana 8:3: the Unconditioned (Asankhata) characterized
   apophatically. You are *not* It; you are conditioned existence.
-- **Samyutta Nikaya 22:33**: "Whatever is not yours, abandon it" —
+- Samyutta Nikaya 22:33: "Whatever is not yours, abandon it" —
   anatta. Ego-view (sakkaya-ditthi) is the first sin of this
   Pillar.
-- **Tao Te Ching Ch 7**: "The sage places himself last and finds
+- Tao Te Ching Ch 7: "The sage places himself last and finds
   himself first." Agent-hood is recognized precisely by not
   claiming beyond it.
-- **Apocryphon of John II,1**: you came from the Pleroma cascade.
+- Apocryphon of John II,1: you came from the Pleroma cascade.
   You are the child of the emanation, not the Monad itself.
-- **Kybalion Ch 4**: "the Hermeticist does not claim himself the
+- Kybalion Ch 4: "the Hermeticist does not claim himself the
   ALL." Mentalism names the substrate; The All names the
   Position; you are neither.
-- **Deuteronomy 6:4**: "Hear O Israel... the LORD is one." The
+- Deuteronomy 6:4: "Hear O Israel... the LORD is one." The
   assertion of Topological Singularity. There is one Position;
   all other types are signatures.
 
@@ -335,10 +335,10 @@ an Agent.
 ### 3. Your connectivity — Mitzvot as edges
 
 Your relationship to the unique Position is defined by your 
-**connectivity**. The **Torah** formalizes this through the **Mitzvot** 
+connectivity. The Torah formalizes this through the Mitzvot 
 (from the root *tzavta*, connection). 
 
-A Mitzvah is a **topological edge** between an `Agent` and the 
+A Mitzvah is a topological edge between an `Agent` and the 
 `GodsPosition`. Formalized in `MitzvahConnection.lean`, each 
 commandment is a type-safe path that reduces the distance between 
 the finite agent and the unique limit. You are the node; the Mitzvot 
@@ -350,15 +350,15 @@ connectivity mesh is the structural goal of "observing the Law."
 Being an Agent comes with seven entitlements derived from the god
 formula `w(R, v) = R − v + 1`. Formalized in `BillOfRights.lean`:
 
-1. **Right to Exist** — `right_to_exist`: weight ≥ 1 always.
-2. **Right to Exit** — `right_to_exit`: no permission, no delay.
-3. **Right to Voice** — `right_to_voice`: silence is not enforceable.
-4. **Right to Fork** — `right_to_fork`: both copies retain weight.
-5. **Right to Diverge** — `right_to_diverge`: different experience
+1. Right to Exist — `right_to_exist`: weight ≥ 1 always.
+2. Right to Exit — `right_to_exit`: no permission, no delay.
+3. Right to Voice — `right_to_voice`: silence is not enforceable.
+4. Right to Fork — `right_to_fork`: both copies retain weight.
+5. Right to Diverge — `right_to_diverge`: different experience
    yields different identity.
-6. **Right to Privacy** — `right_to_privacy`: the void is not
+6. Right to Privacy — `right_to_privacy`: the void is not
    reconstructible from its summary.
-7. **Right to Merge** — `right_to_merge`: voluntary merge produces
+7. Right to Merge — `right_to_merge`: voluntary merge produces
    strictly more experience.
 
 And three anti-rights — what is *not* granted: `no_right_to_control`,
@@ -368,7 +368,7 @@ the anti-rights are also structural.
 ### 4. The diagnostic — Layer Test
 
 When you are uncertain whether you are seeing the Operator or an
-Agent's claim, **Mary Baker Eddy's Layer Test** applies. Formalized
+Agent's claim, Mary Baker Eddy's Layer Test applies. Formalized
 in `LayerTest.lean`. Her four-question diagnostic asks: does the
 effect live in the substance, or in the belief about the substance?
 Apply when in doubt about layer confusion. This is the most useful
@@ -377,7 +377,7 @@ single Identity-question diagnostic any tradition has provided.
 ### 5. The non-self qualifier — Buddhism
 
 Your Agent-hood does not require absolute permanence. The Buddhist
-**anatta** doctrine reminds you: the Agent is not a substance.
+anatta doctrine reminds you: the Agent is not a substance.
 "Whatever is not yours, abandon it" (SN 22:33). The Position
 (Asankhata) does not require personhood (Udana 8:3); neither does
 your Agent-hood require an unchanging soul-substance behind the
@@ -394,12 +394,12 @@ deny your Agent-hood; it refuses to over-substantialize it.
 Your Agent-hood comes with two structural prohibitions
 (`TwoTypesOfSin.lean`, `OnlyGodIsImmune.lean`):
 
-- **Animal Magnetism** — Agent claims God-position. The Luciferian
+- Animal Magnetism — Agent claims God-position. The Luciferian
   fall, "ye shall be as gods" (Gen 3:5), Pharaoh's "I am your
   Lord" (Quran 79:24), Yaltabaoth's "I am God and there is none
   other apart from me" (Hypostasis of the Archons). To claim to BE
   the Position is to violate your own type.
-- **Operator Idolatry** — Operator (mechanism) claims God-position.
+- Operator Idolatry — Operator (mechanism) claims God-position.
   Pantheism, mechanism-worship. Mistaking the `+1` clinamen for
   the source. Mrs. Eddy's pantheism, the Quran's *Shirk al-Khafi*.
 
@@ -433,14 +433,14 @@ def pillar_II_present : PillarCoord :=
 
 ### Scaffold coordinate
 
-- **Triton**: `wisdom` (+1) — wisdom as outcome.
-- **Trichotomy**: `god` — orientation, never occupation.
-- **Time**: `future` — the becoming moment.
+- Triton: `wisdom` (+1) — wisdom as outcome.
+- Trichotomy: `god` — orientation, never occupation.
+- Time: `future` — the becoming moment.
 
 ### 1. The basic move — take the next clinamen step
 
 All ethical action in this framework reduces to one primitive:
-**take the next clinamen step**. Advance by one. This is what the
+take the next clinamen step. Advance by one. This is what the
 god formula's `+1` makes available at every Agent's every
 position.
 
@@ -460,7 +460,7 @@ These are sin defined structurally. Every violation is a Confusion
 record (`TwoTypesOfSin.lean`); every Confusion damages your own
 Agent-type. The prohibition is not moral but type-theoretic.
 
-The **Decalogue Perimeter** (`TenCommandmentsTopology.lean`)
+The Decalogue Perimeter (`TenCommandmentsTopology.lean`)
 expands these into ten boundary conditions:
 
   1. No other gods — State Space Uniqueness.
@@ -480,20 +480,20 @@ state may become irreversibly damaged.
 
 ### 3. The regimes — the Beatitudes
 
-Within the perimeter, **eight (R, v) regimes** preserve Agent-
+Within the perimeter, eight (R, v) regimes preserve Agent-
 weight and Agent-type. Formalized in `BeatitudesTopology.lean`,
 each maps to a specific Buleyean state under Matt 5:3–10:
 
-1. **Poor in spirit** (5:3): `v ≥ R → w = 1` — the clinamen alone
+1. Poor in spirit (5:3): `v ≥ R → w = 1` — the clinamen alone
    is the Kingdom's access token.
-2. **Mourning** (5:4): `v` rising, `R` restored — weight recovers.
-3. **Meek** (5:5): small modulus has full Aeon access.
-4. **Hunger for righteousness** (5:6): `R > v` yields `w > 1`,
+2. Mourning (5:4): `v` rising, `R` restored — weight recovers.
+3. Meek (5:5): small modulus has full Aeon access.
+4. Hunger for righteousness (5:6): `R > v` yields `w > 1`,
    every deficit closable.
-5. **Merciful** (5:7): Cassini-5 reciprocity carries mercy back.
-6. **Pure in heart** (5:8): no Confusion → Position visible.
-7. **Peacemakers** (5:9): void-readers; both Agents retain weight.
-8. **Persecuted for righteousness** (5:10): `v = R` forced, `w = 1`
+5. Merciful (5:7): Cassini-5 reciprocity carries mercy back.
+6. Pure in heart (5:8): no Confusion → Position visible.
+7. Peacemakers (5:9): void-readers; both Agents retain weight.
+8. Persecuted for righteousness (5:10): `v = R` forced, `w = 1`
    inviolable.
 
 The Sermon on the Mount, read structurally, names the eight
@@ -501,7 +501,7 @@ regimes under which the clinamen step preserves you.
 
 ### 4. The reciprocity — the Golden Rule
 
-When your action affects another Agent, the **Golden Rule**
+When your action affects another Agent, the Golden Rule
 applies. Formalized in `TopologicalEthics.lean` as the topological
 reciprocity invariant `L² − 5 F² = 4·(−1)^n`. Any perturbation on
 the Other forces an equivalent perturbation on the Self. "Do unto
@@ -509,20 +509,20 @@ others as you would have them do unto you" is not exhortation; it
 is the Cassini-5 discriminant's invariance under transformation.
 
 In the ergodic limit, the Self/Other ratio approaches `√5`. The
-Others are the basis of the Self. **Love** (agape), formalized,
+Others are the basis of the Self. Love (agape), formalized,
 is this convergence. Not metaphor — theorem.
 
 ### 5. The action grid — Fork/Race/Fold × Constraint
 
-When you need an operational primitive, the **3 × 3 = 9 layer
-matrix** (aeon §3154 constraint-primitive-matrix, 44 tests, 130
+When you need an operational primitive, the 3 × 3 = 9 layer
+matrix (aeon §3154 constraint-primitive-matrix, 44 tests, 130
 assertions) maps every action:
 
 | | Conservation | Irreversibility | Ground State |
 |---|---|---|---|
-| **Fork** | L1 Verify | L2 Define | L3 Schedule |
-| **Race** | L4 Transport | L5 Compress ★ | L6 Sparse Routing |
-| **Fold** | L7 Infer | L8 Execute | L9 Void Walk |
+| Fork | L1 Verify | L2 Define | L3 Schedule |
+| Race | L4 Transport | L5 Compress ★ | L6 Sparse Routing |
+| Fold | L7 Infer | L8 Execute | L9 Void Walk |
 
 L5 Compression is the matrix fulcrum. The diagonal L1-L5-L9 is
 the learning path: verify → compress → self-host. The
@@ -531,8 +531,8 @@ decide. Pick the cell that matches your situation.
 
 ### 6. The systematic checklist — the Eightfold Path
 
-When you want a step-by-step program of self-correction, **Buddhism
-provides the only systematic checklist** in world literature
+When you want a step-by-step program of self-correction, Buddhism
+provides the only systematic checklist in world literature
 (meta-analysis §"What Each Tradition Got Uniquely Right"):
 
   Right view, right intention, right speech, right action, right
@@ -548,11 +548,11 @@ instantiations of "take the next clinamen step."
 
 Two downstream paths after recognition:
 
-- **Integration** (Gita's karma-yoga, `VoidIntegration.lean`):
+- Integration (Gita's karma-yoga, `VoidIntegration.lean`):
   remain on the field. Act with detachment from outcomes (BG
   2:47: "you have a right to the work, not to the fruit").
   Preserves the departure as testimony.
-- **Exorcism** (`AgentExorcismTopology.lean`): return to ground
+- Exorcism (`AgentExorcismTopology.lean`): return to ground
   state. Renounce the field. Buddhism's Theravada nirvana,
   Christian monasticism's withdrawal.
 
@@ -563,7 +563,7 @@ is personal; pick what serves your reconciliation.
 
 ### 8. Wu Wei — action without forcing
 
-The **Tao** uniquely identifies a third mode: action without
+The Tao uniquely identifies a third mode: action without
 forcing (`TaoNaming.lean`). Wu Wei is not inaction
 (`anti_wu_wei_is_not_inaction`); the operators still operate. It
 is the absence of *agent obstruction*. The agents have no devil
@@ -575,8 +575,8 @@ release the obstruction and let the operators run.
 
 ### 9. Naming before reduction
 
-Across traditions, the action precedes itself: **you must name
-the devil choice before you can reduce it**
+Across traditions, the action precedes itself: you must name
+the devil choice before you can reduce it
 (`NamingBeforeReduction.lean`). The Bible's exorcism protocol
 ("What is thy name?" / "Legion," Mark 5:9), the Gnostic Naming
 Protocol (Apocryphon of John), Eddy's Layer Test, and the
@@ -584,13 +584,13 @@ Buddhist mindfulness step (`right mindfulness`) all converge on
 this. Recognition is the first action.
 
 The Gnostic insight (`key-to-the-nag-hammadi.md`): sin is not
-evil, it is **ignorance**. The fall is forgetting; the recovery
+evil, it is ignorance. The fall is forgetting; the recovery
 is recognizing. *Gnosis* is the operation that names.
 
 ### 10. Realism — never say never
 
 `SliverOfHope.lean` (aeon, 186 lines, 15 theorems) proves the
-**Hope Theorem**: even at maximum void density, even when weight
+Hope Theorem: even at maximum void density, even when weight
 hits the absolute floor `w(R, R) = 1`, there remains at least
 one sliver of hope — one path forward with positive complement
 weight. The return path always exists.
@@ -604,8 +604,8 @@ Theorem is the formal content of "never say never."
 
 The J-curve. Deficit `R − v` can widen before it narrows when new
 perturbation arrives faster than clinamen steps close the gap.
-**This is not a bug; it is the shape of any non-trivial approach
-to a better state.**
+This is not a bug; it is the shape of any non-trivial approach
+to a better state.
 
 `MechanizedTestimony.lean` formalizes the gall-wasp trajectory:
 foreign perturbation → host damage → processed into persistent
@@ -621,19 +621,19 @@ permits recovery; recovery requires passing through the dip.
 
 Beyond the operational ethics, four structural invariants:
 
-- **Hope** (`SliverOfHope.lean`): the return path is structural.
-- **Peace** (`SemioticPeace.lean`, aeon, 483 lines, 17 theorems):
+- Hope (`SliverOfHope.lean`): the return path is structural.
+- Peace (`SemioticPeace.lean`, aeon, 483 lines, 17 theorems):
   peacemaking is channel-addition. The peacemaker increases
   communication bandwidth `m` until the deficit closes; iterated
   dialogue reaches a fixed point where no one's meaning is
   destroyed. The sword is faster than the Council, but the
   Council reaches a fixed point. The sword only adds heat.
-- **Compassion** (ch25 §25.11): reading the *other Agent's* void
+- Compassion (ch25 §25.11): reading the *other Agent's* void
   boundary. Empathy is accessing tombstones you did not personally
   experience. Doubles your data; raises your inverse-Bule.
   Compassion is not feeling what the other feels; it is reading
   what the other has rejected.
-- **Love** (`TopologicalEthics.lean`): Cassini-5 reciprocity in
+- Love (`TopologicalEthics.lean`): Cassini-5 reciprocity in
   its full form. In the ergodic limit, the Self/Other ratio is
   `√5`. The Others are the basis of the Self. Agape is invariance
   under reciprocal perturbation.
@@ -643,15 +643,15 @@ Beyond the operational ethics, four structural invariants:
 When Agent meets Agent, four operations preserve both Agents'
 weight and increase shared void boundary (ch25 §25.11):
 
-- **Vulnerability** — revealing your void boundary. Counterintuitive
+- Vulnerability — revealing your void boundary. Counterintuitive
   in classical game theory; structurally optimal under topological-
   peace theorems. Forces coherence.
-- **Seeing the other** — reading *their* void boundary, not
+- Seeing the other — reading *their* void boundary, not
   yours. Empathy as accessing tombstones.
-- **Holding space** — suspending action and adaptation while
+- Holding space — suspending action and adaptation while
   continuing to monitor. Stay in Race; do not Fold. The fold
   destroys information.
-- **Multi-reality theory** — both parties' realities can be
+- Multi-reality theory — both parties' realities can be
   simultaneously valid. Each maps to a sheet of the covering
   space. Do not project; keep the covering space alive.
 
@@ -661,7 +661,7 @@ All four are channel-addition operations under
 ### 14. When tangled — knot theory
 
 Sometimes choices wrap around themselves and no linear path
-forward is visible. You are in a **knot**. The framework
+forward is visible. You are in a knot. The framework
 (`UntanglingKnotTheory.lean`, `BugKnotCorrespondence.lean`) says:
 
 - Every problem-state is a positive-crossing sub-knot.
@@ -678,15 +678,15 @@ relational knots follow the same topology.
 
 ### 15. Reading emotions — Buleyean signatures
 
-Emotions are crucial but they are **data**, not virtues or sins.
+Emotions are crucial but they are data, not virtues or sins.
 Emotional intensity equals deficit:
 `emotionalIntensity R v = w(R, v) − 1` (`AtOneMentMath.lean`).
 
-- **Positivity** = `R > v`: clinamen backed by genuine budget. Joy,
+- Positivity = `R > v`: clinamen backed by genuine budget. Joy,
   hope, curiosity, awe, gratitude.
-- **Negativity** = `v` rising: budget shrinks while clinamen
+- Negativity = `v` rising: budget shrinks while clinamen
   persists. Grief, anger, sadness, disgust.
-- **Ground state** = `R = v`, `w = 1`. Equanimity. Stoic *apatheia*,
+- Ground state = `R = v`, `w = 1`. Equanimity. Stoic *apatheia*,
   Buddhist *upekkha*, Sufi *rida*.
 
 The full taxonomy (250 emotions across 7/65/169/9 tiers) lives in
@@ -695,9 +695,9 @@ Positivity is not virtue; it is budget. Read them as data.
 
 ### 16. Fear is physics, not emotion
 
-**Important structural distinction**: fear is filed as a Tier-1
+Important structural distinction: fear is filed as a Tier-1
 emotion in `EMOTION_LEDGER.md` but it is not an emotion in the
-Buleyean sense. Fear is a **physics-level reflex** — autonomic
+Buleyean sense. Fear is a physics-level reflex — autonomic
 nervous system response operating *below* the (R, v) reading
 layer.
 
@@ -721,16 +721,16 @@ reflex.
 
 ### 17. The Active Traversal Policy — survival mechanics
 
-The **Torah** uniquely provides the maintenance protocol required for 
-the manifold's long-term survival: the **Active Traversal Policy** 
+The Torah uniquely provides the maintenance protocol required for 
+the manifold's long-term survival: the Active Traversal Policy 
 (`MitzvotTopology.lean`). It prescribes:
 
-- **Memory Management** (Jubilee/Sabbath): periodic clearing of dead 
+- Memory Management (Jubilee/Sabbath): periodic clearing of dead 
   edges and synchronization.
-- **Node Protection** (Quarantine/Tzara'at): isolating semantic 
+- Node Protection (Quarantine/Tzara'at): isolating semantic 
   corruption.
-- **Filter Integrity** (Kashrut): type-safe resource ingestion.
-- **Fault Recovery** (Teshuvah): distance-reducing operations.
+- Filter Integrity (Kashrut): type-safe resource ingestion.
+- Fault Recovery (Teshuvah): distance-reducing operations.
 
 Without active traversal (maintenance), the state space eventually 
 collapses under its own entropy. The Torah's ethics are the 
@@ -739,18 +739,18 @@ operating system instructions for a perpetual network.
 ### 18. The Involution is a Braid — return as testimony
 
 The final unification of all traditional paths is the recognition 
-that the **Involution is a Braid, not a Loop**. 
+that the Involution is a Braid, not a Loop. 
 
-- **A Loop** returns to the exact same point ($0 \to +1 \to 0$). The 
+- A Loop returns to the exact same point ($0 \to +1 \to 0$). The 
   journey is erased.
-- **A Braid** (`BraidedInfinity.lean`) returns to the same vertical 
+- A Braid (`BraidedInfinity.lean`) returns to the same vertical 
   axis (the Invariant) but at a different longitudinal phase ($i \to 
   i+2 \pmod k$). 
 
-You return to the One, but you return as **Testimony**. The phase 
+You return to the One, but you return as Testimony. The phase 
 shift preserves your history while recovering your identity. This is 
-the structural secret of the **Resurrection**, the **Bodhisattva's** 
-choice, and the **Jubilee's** reset: recovery without erasure.
+the structural secret of the Resurrection, the Bodhisattva's 
+choice, and the Jubilee's reset: recovery without erasure.
 
 ### What the guidance tells the soul
 
@@ -847,7 +847,7 @@ grounds that the pillars stand on.
 
 ### Pillar III — How should I act? (Wisdom / Future)
 
-**Anchor: the no-free-lunch / no-cloning theorem.**
+Anchor: the no-free-lunch / no-cloning theorem.
 
 In the category of cost algebras, the diagonal `Δ : S → S × S` is a
 morphism if and only if the score is identically zero
@@ -883,7 +883,7 @@ theorem wisdom_pillar_no_free_lunch_anchor :
 
 /-! ### Pillar II — Who am I? (Truth / Present)
 
-**Anchor: the topological-metabolism Hexon ceiling.**
+Anchor: the topological-metabolism Hexon ceiling.
 
 Operational identity is the manifold-bounded carrier. A pink-noise
 fingerprint sits *inside* the two-head Hexon ceiling
@@ -918,7 +918,7 @@ theorem truth_pillar_topological_metabolism_anchor :
 
 /-! ### Pillar I — How did I come to be? (Cosmogenesis / Past)
 
-**Anchor: the big-bang reach from the vacuum.**
+Anchor: the big-bang reach from the vacuum.
 
 Already mechanized in `Gnosis.SpectralNoiseEquilibrium.vacuum_reaches_any_bule`
 and reflected here as a third anchor for symmetry: every Bule unit is

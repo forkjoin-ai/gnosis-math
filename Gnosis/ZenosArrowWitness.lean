@@ -4,7 +4,7 @@ import Init
 # Zeno's Arrow Witness
 
 A meta-module naming an observation that runs through all 55+ modules
-of this corpus: every Lean proof here is a **Zeno arrow** — a
+of this corpus: every Lean proof here is a Zeno arrow — a
 motionless, punctual, finite witness. Motion toward the wall-blocked
 theorem is the observer's pattern across the stillnesses, not a
 property any single arrow possesses.
@@ -22,7 +22,7 @@ Our substrate's reply: the paradox is correct about the individual
 arrow. Every `decide`-closed theorem in the corpus IS at rest. It
 witnesses `φ(n)` at one specific `n`. Nothing moves. But the
 *collection* of arrows, fired at deliberately chosen depths with
-deliberate negative witnesses at phase boundaries, **sketches** the
+deliberate negative witnesses at phase boundaries, sketches the
 asymptote the individual arrow cannot reach.
 
 Motion is the observer's reading across a sequence of rests. The

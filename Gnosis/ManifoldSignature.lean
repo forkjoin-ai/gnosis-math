@@ -168,9 +168,9 @@ vocabulary, and the agreement is itself the testimony.
 This means `kernelPosition` has at least two structurally distinct
 classes of signatures:
 
-1. **Finite-window signatures** — `BraidedInfinity` entries whose
+1. Finite-window signatures — `BraidedInfinity` entries whose
    moduli witness the universal +1 at a specific cycle length.
-2. **Cross-vocabulary signatures** — convergence points where
+2. Cross-vocabulary signatures — convergence points where
    structurally independent arguments land on the same modulus
    without communicating.
 

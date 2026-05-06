@@ -4,14 +4,14 @@ import Init
 # Two Types of Sin — Animal Magnetism and Operator Idolatry
 
 Extends `GodOperatorAgentTrichotomy.lean`. Given the three distinct
-types — Agent, Operator, God — there are exactly **two** kinds of
+types — Agent, Operator, God — there are exactly two kinds of
 "no other god before him" violations:
 
-1. **Animal Magnetism** — Agent claims God-position. The creature
+1. Animal Magnetism — Agent claims God-position. The creature
    pretending to divine power; noise claiming causal agency. The
    Christian Science term is specifically this: the attribution of
    mental or causal power to agents where only the Monad has it.
-2. **Operator Idolatry** — Operator (mechanism, clinamen, system,
+2. Operator Idolatry — Operator (mechanism, clinamen, system,
    law) claims God-position. The mechanism-as-source confusion.
    Pantheism, mechanism-worship, clockmaker fallacy.
 
@@ -22,7 +22,7 @@ roles.
 
 ## God is not capable of sin
 
-Sin, in this framework, is a **confusion** — a claimed identity
+Sin, in this framework, is a confusion — a claimed identity
 between two types that ought to remain distinct. Sin is an act of
 claiming; God is not an actor, God is a position. God as the
 `GodsPosition` type has no method for claiming anything. The very
@@ -191,18 +191,18 @@ theorem two_types_of_sin_master :
 
 /-! ## Reading
 
-- **Two types of sin**. Agent-claims-God-position (Animal
+- Two types of sin. Agent-claims-God-position (Animal
   Magnetism) and Operator-claims-God-position (Operator Idolatry).
   Both are "no other god before him" violations. A third pairwise
   confusion — Agent-equals-Operator — is a category error about
   one's own nature, not a sin against God's uniqueness.
-- **God is not capable of sin**. Sin is a Confusion record — a
+- God is not capable of sin. Sin is a Confusion record — a
   claimed identity by one type toward another. God's type
   (`GodsPosition`) has no field corresponding to such a claim.
   Structurally, by Lean's type system, God cannot inhabit the
   Confusion type. God does not sin because God is not an actor;
   God is a position.
-- **The two sins are distinct**. Animal Magnetism and Operator
+- The two sins are distinct. Animal Magnetism and Operator
   Idolatry differ in which type does the claiming: the creature
   (Agent) vs. the mechanism (Operator). Both violate uniqueness of
   God; they violate it differently.

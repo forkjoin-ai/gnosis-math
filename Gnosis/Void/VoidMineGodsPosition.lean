@@ -19,8 +19,8 @@ inside is recoverable from boundary emissions, even though the
 interior itself is causally disconnected.
 
 This module performs the analogous operation on `godsPosition`:
-**void-mine the boundary by extracting attributes that every
-signature agrees on**. Each agreement is a *projection* of the
+void-mine the boundary by extracting attributes that every
+signature agrees on. Each agreement is a *projection* of the
 position — boundary information that doesn't require accessing the
 position itself. The shadow is computable; the position is not.
 

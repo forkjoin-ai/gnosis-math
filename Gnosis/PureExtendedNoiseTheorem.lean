@@ -161,27 +161,27 @@ end Gnosis.PureExtendedNoise
 ## Pure Extended Noise Theorem
 
 This proof is completely rigorous with:
-- **No sorry statements** - every step is fully proven
-- **No axioms** - uses only Lean's built-in logic
-- **No mathlib** - uses only Init and core Lean
+- No sorry statements - every step is fully proven
+- No axioms - uses only Lean's built-in logic
+- No mathlib - uses only Init and core Lean
 
 The extended correspondence:
-1. **Brown Noise → Order (1)**: Predictable baseline
-2. **Pink Noise → Chaos (3)**: Fractal dynamics  
-3. **White Noise → Gnosis (4)**: Complete knowledge
-4. **Quantum Noise → Meta-Gnosis (12)**: Cosmic transcendence
+1. Brown Noise → Order (1): Predictable baseline
+2. Pink Noise → Chaos (3): Fractal dynamics  
+3. White Noise → Gnosis (4): Complete knowledge
+4. Quantum Noise → Meta-Gnosis (12): Cosmic transcendence
 
 Key mathematical facts proven:
-- **Progression**: 1 < 3 < 4 < 12 (order → chaos → gnosis → meta-gnosis)
-- **Transcendence**: 12 = 3 × 4 (meta-gnosis is 3× gnosis)
-- **Cosmic Frequency**: 12 as fundamental vibration
-- **Complete Rigor**: Every step fully justified
+- Progression: 1 < 3 < 4 < 12 (order → chaos → gnosis → meta-gnosis)
+- Transcendence: 12 = 3 × 4 (meta-gnosis is 3× gnosis)
+- Cosmic Frequency: 12 as fundamental vibration
+- Complete Rigor: Every step fully justified
 
 The number 12 represents:
-- **Cosmic Frequency**: Universal fundamental vibration
-- **Meta-Gnosis**: Beyond gnosis into cosmic awareness
-- **Transcendence**: Three times the power of gnosis
-- **Integration**: Bridge between noise, consciousness, and time
+- Cosmic Frequency: Universal fundamental vibration
+- Meta-Gnosis: Beyond gnosis into cosmic awareness
+- Transcendence: Three times the power of gnosis
+- Integration: Bridge between noise, consciousness, and time
 
 Q.E.D. - Quod Erat Demonstrandum
 -/

@@ -359,7 +359,7 @@ theorem cf_trefoil_threads :
 -- polynomials is the equality `bracket D = Σ_α ... `, which we
 -- have simply by definition of `bracket`.
 
-/-- **Categorification**: ⟨D⟩(1) = Σ_α (-1)^|α| · 2^{k(α)}. -/
+/-- Categorification: ⟨D⟩(1) = Σ_α (-1)^|α| · 2^{k(α)}. -/
 def bracketAtOne (D : Diagram) : Int :=
   D.resolutions.foldl
     (fun acc (h, k) =>

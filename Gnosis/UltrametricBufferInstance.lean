@@ -3,7 +3,7 @@ import Init
 /-!
 # Ultrametric Buffer Invariant (finite instances)
 
-This module witnesses the **strong triangle inequality** that defines an
+This module witnesses the strong triangle inequality that defines an
 ultrametric space, on the `p`-adic valuation surrogate over the integers.
 
 The `p`-adic metric on `ℚ_p` satisfies the strong triangle inequality
@@ -15,14 +15,14 @@ which on the valuation side — where `d_p(a, b) = p^{-v_p(a - b)}` — reads
     v_p(x - z) ≥ min(v_p(x - y), v_p(y - z)).
 
 We do not construct `ℚ_p`, nor the true `p`-adic absolute value. We work
-with a **valuation surrogate** `v_p : ℕ → ℕ` on nonzero naturals (the
+with a valuation surrogate `v_p : ℕ → ℕ` on nonzero naturals (the
 number of times `p` divides `n`), with the sentinel convention
 `v_p(0) = sentinel := 1000` standing in for the formally correct
 `v_p(0) = +∞`. Differences of integers are taken through `Int.natAbs`,
 which corresponds to `v_p(|x − y|) = v_p(x − y)` on the absolute value
 of a nonzero integer (the sign is irrelevant to `p`-adic valuation).
 
-What we prove here are concrete **instances** of the valuation-side
+What we prove here are concrete instances of the valuation-side
 ultrametric inequality on small triples `(x, y, z)` with `p = 2`, `p = 3`,
 and `p = 5`. We do not prove the general theorem — that would require
 `Nat.factorization`, `padicValNat`, or an induction on divisibility that

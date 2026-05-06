@@ -6,16 +6,16 @@ import Init
 This module witnesses three classical number-theoretic identities at
 concrete small inputs:
 
-1. **Euler's totient `φ(n)`**, defined by brute enumeration as
+1. Euler's totient `φ(n)`, defined by brute enumeration as
    `#{k ∈ {1, ..., n} : gcd(k, n) = 1}` (so `φ(1) = 1`).
-2. **Divisor-sum identity**
+2. Divisor-sum identity
    `Σ_{d ∣ n} φ(d) = n`, verified for
    `n ∈ {1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 12, 15, 20}`.
-3. **Möbius function `μ : ℕ → ℤ`**, defined via trial-division
+3. Möbius function `μ : ℕ → ℤ`, defined via trial-division
    factorization: `μ(1) = 1`; `μ(n) = 0` if any prime factor appears
    with multiplicity ≥ 2; otherwise `μ(n) = (-1)^k` where `k` is the
    number of distinct prime factors.
-4. **Möbius inversion** on the pair `f(n) = n`, `g(n) = φ(n)`:
+4. Möbius inversion on the pair `f(n) = n`, `g(n) = φ(n)`:
    `φ(n) = Σ_{d ∣ n} μ(n/d) · d`, witnessed at
    `n ∈ {6, 10, 12, 15, 30}`.
 5. **Dirichlet convolution `μ * 1 = δ`**:

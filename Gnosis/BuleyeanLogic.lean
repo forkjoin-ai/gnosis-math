@@ -203,7 +203,7 @@ theorem bNot_matches_bool (a : Bool) :
 -- Master theorem
 -- ═══════════════════════════════════════════════════════════════════════
 
-/-- **THM-BULEYEAN-LOGIC**: The laws hold and Boolean is a special case.
+/-- THM-BULEYEAN-LOGIC: The laws hold and Boolean is a special case.
 
     1. Rejection reaches ground state in n steps
     2. AND is commutative, associative, proved iff both proved

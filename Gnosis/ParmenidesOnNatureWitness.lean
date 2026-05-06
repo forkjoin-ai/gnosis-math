@@ -2,23 +2,23 @@
   ParmenidesOnNatureWitness.lean
   ==============================
 
-  Parmenides of Elea (Greek, **c. 475 BC**), *On Nature* (Περὶ φύσεως), gateway
+  Parmenides of Elea (Greek, c. 475 BC), *On Nature* (Περὶ φύσεως), gateway
   fragment (one English lineation):
 
     “It is; / for it is not possible / for nothing / to be.”
 
-  **Zero-axiom floor (prose):** in-repo this is read as the **identity invariant**
-  at the base of the ontology stack: **Being** is typed as **non-empty** — there is
-  no legitimate witness that **Nothing** (`Empty`) **is** in the same sense. Lean’s
+  Zero-axiom floor (prose): in-repo this is read as the identity invariant
+  at the base of the ontology stack: Being is typed as non-empty — there is
+  no legitimate witness that Nothing (`Empty`) is in the same sense. Lean’s
   Init layer already agrees: there is no `Nonempty Empty`, and there is no
-  “activity” of nothing except **vacuous** function space (`Empty → α` is unique).
-  This file **does not** import metaphysics modules; it only packages a few Init
-  tautologies the poem is **analogous** to.
+  “activity” of nothing except vacuous function space (`Empty → α` is unique).
+  This file does not import metaphysics modules; it only packages a few Init
+  tautologies the poem is analogous to.
 
-  **Shape:** the **identity invariant** — `rfl` on a witness you already hold;
+  Shape: the identity invariant — `rfl` on a witness you already hold;
   refusal of a contradictory witness for non-being.
 
-  **Repo cousins:** `HeraclitusBowLifeDeathWitness` (linguistic tension on one
+  Repo cousins: `HeraclitusBowLifeDeathWitness` (linguistic tension on one
   implement); `HeraclitusUpDownPathWitness` (B60 path vs observer metadata);
   `LaoziBowlVoidFunctionWitness` (Ch.11 productive void vs Eleatic `Empty`);
   `RigVedaNasadiyaSuktaWitness` (neither existence nor “nothingness” at t₀);
@@ -33,7 +33,7 @@ import Init
 
 namespace ParmenidesOnNatureWitness
 
-/-- Parmenidean “It is”: **Being** carries at least one witness (`Nonempty α`). -/
+/-- Parmenidean “It is”: Being carries at least one witness (`Nonempty α`). -/
 abbrev ItIs (α : Type) [Nonempty α] : Nonempty α :=
   inferInstance
 

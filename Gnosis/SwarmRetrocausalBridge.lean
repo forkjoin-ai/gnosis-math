@@ -108,7 +108,7 @@ theorem hebbianReward_preserves_novikov_consistency
   exact hNovikov
 
 /--
-**Swarm Temporal Invariance**: any sequence of drift and reward operations
+Swarm Temporal Invariance: any sequence of drift and reward operations
 preserves Novikov self-consistency.  The retrocausal timeline is stable under
 all thermodynamic Swarm operations.
 -/
@@ -147,7 +147,7 @@ theorem hebbianReward_preserves_entanglement (nA nB : SwarmNode) (s : Bool)
   rwa [hebbianReward_preserves_dimension, hebbianReward_preserves_dimension]
 
 /--
-**Topological Rigidity**: if two nodes are entangled, they remain entangled
+Topological Rigidity: if two nodes are entangled, they remain entangled
 through any number of α-teleportation and reward steps.  The ER bridge
 survives thermodynamic evolution.
 -/
@@ -175,7 +175,7 @@ topological substrate that the Novikov invariant governs.
 -/
 
 /--
-**The Swarm Retrocausal Bridge**: α-teleportation and Hebbian reward are
+The Swarm Retrocausal Bridge: α-teleportation and Hebbian reward are
 topologically transparent.
 
 For any node `n` and debt `d`:

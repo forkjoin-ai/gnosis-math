@@ -9,13 +9,13 @@ import Gnosis.CentralChargeMap
 `cyclePermute` (in `Gnosis.SpectralNoiseEquilibrium`) is a 1-form
 gauge action: a single-step rotation through the three Bule faces
 returning at period 3. This module extends the cost-algebra with
-**higher-form** gauge actions:
+higher-form gauge actions:
 
-* **2-form (gerbe-shaped)**: a rotation on *pairs* of Bule faces.
+* 2-form (gerbe-shaped): a rotation on *pairs* of Bule faces.
   Returns at period 3 (still — 3 distinct unordered face-pairs).
-* **3-form**: a rotation on *triples*, identifying with the
+* 3-form: a rotation on *triples*, identifying with the
   full-face cycle. Returns at period 1 (the unique triple).
-* **n-form**: the natural generalization indexed by `Fin n` of
+* n-form: the natural generalization indexed by `Fin n` of
   Bule-face subsets.
 
 Each form contributes to a generalized central-charge structure.
@@ -155,7 +155,7 @@ theorem total_higher_form_count_matches_bule_faces :
 
 /-! ## Master theorem -/
 
-/-- **Higher-Form Anomalies master**: the cost-algebra admits
+/-- Higher-Form Anomalies master: the cost-algebra admits
 1-form (cyclePermute, period 3), 2-form (FacePair rotation, period
 3), and 3-form (FaceTriple, period 1) gauge actions. Each preserves
 the Bule unit's score (by the 1-form base case + symmetric
