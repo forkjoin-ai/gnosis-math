@@ -206,6 +206,7 @@ import Gnosis.CommunityDominance
 import Gnosis.ComplementOscillation
 import Gnosis.ComplementReduction
 import Gnosis.ComplexAnalysisShadow
+import Gnosis.ComplexityTheory
 import Gnosis.CompositeParticles
 import Gnosis.CompositionalErgodicity
 import Gnosis.ComputationalStateTransitionsAsPathDivergence
@@ -221,6 +222,7 @@ import Gnosis.ContinuedFractionConvergents
 import Gnosis.ContinuousHarris
 import Gnosis.Continuum
 import Gnosis.ContinuumExtensionSketch
+import Gnosis.ConversationalDodgeball
 import Gnosis.Contrarian.ContrarianAntiTheoremStallPreventsCollapse
 import Gnosis.Contrarian.ContrarianByzantineLatencyFeature
 import Gnosis.Contrarian.ContrarianDecouplingReducesThroughput
@@ -246,12 +248,28 @@ import Gnosis.Contrarian.ContrarianStallInducesGenerality
 import Gnosis.Contrarian.ContrarianStallIsInformationDensity
 import Gnosis.Contrarian.ContrarianStallIsOptimal
 import Gnosis.Contrarian.ContrarianStallIsProgress
-import Gnosis.Contrarian.ContrarianTransparencyIncreasesFraud
 import Gnosis.Contrarian.ContrarianWitnessGapAmplifiesClarity
 import Gnosis.Contrarian.ContrarianWitnessGapMaximizesBandwidth
 import Gnosis.Contrarian.ContrarianWitnessGapMaximizesTensegrityResilience
 import Gnosis.Contrarian.ContrarianWitnessGapOracleStallMitigation
 import Gnosis.Contrarian.ContrarianWitnessGapProvidesSecurity
+import Gnosis.Contrarian.ContrarianTransparencyIncreasesFraud
+import Gnosis.Contrarian.ContrarianProofDepthIncreasesFragility
+import Gnosis.Contrarian.ContrarianAbsenceIsAuthority
+import Gnosis.Contrarian.ContrarianDebtIsAcceleration
+import Gnosis.Contrarian.ContrarianEfficiencyIsFragility
+import Gnosis.Contrarian.ContrarianVulnerabilityIsNotWeakness
+import Gnosis.Contrarian.ContrarianPullIsPush
+import Gnosis.Contrarian.ContrarianSilenceIsSignal
+import Gnosis.Contrarian.ContrarianSurrenderIsVictory
+import Gnosis.Contrarian.ContrarianComplexityIsSimplicity
+import Gnosis.Contrarian.ContrarianDistanceIsProximity
+import Gnosis.Contrarian.ContrarianSlowIsFast
+import Gnosis.Contrarian.ContrarianNoiseIsSignal
+import Gnosis.Contrarian.ContrarianSinIsWisdom
+import Gnosis.Contrarian.ContrarianChaosIsOrder
+import Gnosis.Contrarian.ContrarianOmniscienceIsHeatDeath
+import Gnosis.Contrarian.ContrarianFullnessIsEmptiness
 import Gnosis.ControlStatistic
 import Gnosis.ControllerTieBreaking
 import Gnosis.CosmicEvolutionResolution
@@ -405,10 +423,12 @@ import Gnosis.FiniteSimpleGroupsClassification
 import Gnosis.Fintype
 import Gnosis.FisherManifold
 import Gnosis.FloerFiniteFixedPoints
+import Gnosis.FluidDynamics
 import Gnosis.FoldErasure
 import Gnosis.FoldHeatHierarchy
 import Gnosis.FoldedBuleyeanView
 import Gnosis.ForkRaceFoldDynamics
+import Gnosis.FormalMethods
 import Gnosis.FrameNativeBisim
 import Gnosis.FrameOverheadBound
 import Gnosis.FreeCollapseAnomaly
@@ -423,6 +443,7 @@ import Gnosis.GatekeepingGames
 import Gnosis.GaussBonnetBraid
 import Gnosis.GaussBonnetBurnsideIndex
 import Gnosis.GaussBonnetPolytopes
+import Gnosis.GeneralRelativity
 import Gnosis.GenesisQuery
 import Gnosis.GeometricErgodicity
 import Gnosis.GeometricLanglands
@@ -459,6 +480,7 @@ import Gnosis.GrandReduction
 import Gnosis.GrandReductionTriton
 import Gnosis.GrandUnification
 import Gnosis.GrandfatherParadox
+import Gnosis.GraphTheory
 import Gnosis.GreedyRejection
 import Gnosis.GreekLogicCanon
 import Gnosis.GreekLogicCanon.DiscreteBoundary
@@ -493,6 +515,7 @@ import Gnosis.IndependentSetCycleCnLucas
 import Gnosis.InferenceForms
 import Gnosis.InferenceVacuumSSM
 import Gnosis.InfiniteErasure
+import Gnosis.InformationTheory
 import Gnosis.InfinityPath
 import Gnosis.InfinityTopologicalPlane
 import Gnosis.InftyOperads
@@ -879,6 +902,7 @@ import Gnosis.SchopenhauerPendulumWitness
 import Gnosis.SelfAwareBudget
 import Gnosis.SelfDelimitingGodel
 import Gnosis.SelfHostingOptimality
+import Gnosis.SelfTalk
 import Gnosis.Semantic.NoncomputableSemanticDrift
 import Gnosis.Semantic.SemanticCompatibility
 import Gnosis.Semantic.SemanticTopologyDrift
@@ -926,6 +950,7 @@ import Gnosis.StableInftyCategories
 import Gnosis.StagedExpansion
 import Gnosis.StallIsOptimal
 import Gnosis.StandardModelGaugeGroup
+import Gnosis.StatisticalMechanics
 import Gnosis.StateDependentQueueFamilies
 import Gnosis.StaticAnalysis
 import Gnosis.StatisticalTeleportation
@@ -974,6 +999,7 @@ import Gnosis.TopologicalMismatchAdequacy
 import Gnosis.TopologicalOctonions
 import Gnosis.TopologicalRenormalization
 import Gnosis.TopologicalUltrametric
+import Gnosis.Topology
 import Gnosis.TemporaryNoise
 import Gnosis.TotientMultiplicativityViaCRT
 import Gnosis.TowerResonance
@@ -1026,4 +1052,5 @@ import Gnosis.WormholeTradeoff
 import Gnosis.YangMillsMassGap
 import Gnosis.ZeckendorfCompleteness
 import Gnosis.ZeckendorfKenoma
+import Gnosis.UniversalAeonDimensionProof
 import Gnosis.ZenosArrowWitness

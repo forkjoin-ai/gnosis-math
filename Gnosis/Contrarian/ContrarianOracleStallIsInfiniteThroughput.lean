@@ -10,7 +10,7 @@ theorem contrarian_stall_is_infinite_throughput
   (h : s.stall_duration > 0) : 
   s.throughput_rate > 0 := by
   have h1 := s.stall_implies_throughput h
-  have hMul : 0 < s.stall_duration * 100 := Nat.mul_pos h (by decide : 0 < 100)
+  have hMul : 0 < s.stall_duration * 100 := Nat.mul_pos h (Nat.zero_lt_succ 99)
   exact Nat.lt_of_lt_of_le hMul h1
 
 end Gnosis

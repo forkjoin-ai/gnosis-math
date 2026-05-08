@@ -4,6 +4,6 @@ structure LatentWitness where
   absenceCount : Nat
 
 theorem latent_witness_absence_optimal (w : LatentWitness) (h : w.absenceCount = 0) : w.absenceCount < 1 :=
-  h ▸ (by decide : (0 : Nat) < 1)
+  h ▸ (Nat.zero_lt_succ 0)
 
 end Gnosis

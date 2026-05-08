@@ -1,0 +1,228 @@
+⚠ [992/1065] Replayed Gnosis.QuantumMechanics
+warning: Gnosis/QuantumMechanics.lean:58:32: unused variable `psi`
+
+Note: This linter can be disabled with `set_option linter.unusedVariables false`
+warning: Gnosis/QuantumMechanics.lean:58:53: unused variable `A`
+
+Note: This linter can be disabled with `set_option linter.unusedVariables false`
+warning: Gnosis/QuantumMechanics.lean:97:30: unused variable `rho`
+
+Note: This linter can be disabled with `set_option linter.unusedVariables false`
+⚠ [993/1065] Replayed Gnosis.StatisticalMechanics
+warning: Gnosis/StatisticalMechanics.lean:59:30: unused variable `beta`
+
+Note: This linter can be disabled with `set_option linter.unusedVariables false`
+warning: Gnosis/StatisticalMechanics.lean:59:35: unused variable `E`
+
+Note: This linter can be disabled with `set_option linter.unusedVariables false`
+warning: Gnosis/StatisticalMechanics.lean:59:37: unused variable `mu`
+
+Note: This linter can be disabled with `set_option linter.unusedVariables false`
+warning: Gnosis/StatisticalMechanics.lean:59:48: unused variable `exp`
+
+Note: This linter can be disabled with `set_option linter.unusedVariables false`
+warning: Gnosis/StatisticalMechanics.lean:73:33: unused variable `mu`
+
+Note: This linter can be disabled with `set_option linter.unusedVariables false`
+⚠ [994/1065] Replayed Gnosis.GeneralRelativity
+warning: Gnosis/GeneralRelativity.lean:32:36: unused variable `m`
+
+Note: This linter can be disabled with `set_option linter.unusedVariables false`
+warning: Gnosis/GeneralRelativity.lean:32:61: unused variable `p`
+
+Note: This linter can be disabled with `set_option linter.unusedVariables false`
+warning: Gnosis/GeneralRelativity.lean:32:77: unused variable `lambda`
+
+Note: This linter can be disabled with `set_option linter.unusedVariables false`
+warning: Gnosis/GeneralRelativity.lean:32:84: unused variable `mu`
+
+Note: This linter can be disabled with `set_option linter.unusedVariables false`
+warning: Gnosis/GeneralRelativity.lean:32:87: unused variable `nu`
+
+Note: This linter can be disabled with `set_option linter.unusedVariables false`
+warning: Gnosis/GeneralRelativity.lean:37:30: unused variable `m`
+
+Note: This linter can be disabled with `set_option linter.unusedVariables false`
+warning: Gnosis/GeneralRelativity.lean:37:55: unused variable `p`
+
+Note: This linter can be disabled with `set_option linter.unusedVariables false`
+warning: Gnosis/GeneralRelativity.lean:37:71: unused variable `rho`
+
+Note: This linter can be disabled with `set_option linter.unusedVariables false`
+warning: Gnosis/GeneralRelativity.lean:37:75: unused variable `sigma`
+
+Note: This linter can be disabled with `set_option linter.unusedVariables false`
+warning: Gnosis/GeneralRelativity.lean:37:81: unused variable `mu`
+
+Note: This linter can be disabled with `set_option linter.unusedVariables false`
+warning: Gnosis/GeneralRelativity.lean:37:84: unused variable `nu`
+
+Note: This linter can be disabled with `set_option linter.unusedVariables false`
+warning: Gnosis/GeneralRelativity.lean:42:30: unused variable `m`
+
+Note: This linter can be disabled with `set_option linter.unusedVariables false`
+warning: Gnosis/GeneralRelativity.lean:42:55: unused variable `p`
+
+Note: This linter can be disabled with `set_option linter.unusedVariables false`
+warning: Gnosis/GeneralRelativity.lean:42:71: unused variable `mu`
+
+Note: This linter can be disabled with `set_option linter.unusedVariables false`
+warning: Gnosis/GeneralRelativity.lean:42:74: unused variable `nu`
+
+Note: This linter can be disabled with `set_option linter.unusedVariables false`
+warning: Gnosis/GeneralRelativity.lean:85:31: unused variable `R`
+
+Note: This linter can be disabled with `set_option linter.unusedVariables false`
+warning: Gnosis/GeneralRelativity.lean:85:33: unused variable `Ricci`
+
+Note: This linter can be disabled with `set_option linter.unusedVariables false`
+warning: Gnosis/GeneralRelativity.lean:85:39: unused variable `Scalar`
+
+Note: This linter can be disabled with `set_option linter.unusedVariables false`
+warning: Gnosis/GeneralRelativity.lean:85:46: unused variable `g`
+
+Note: This linter can be disabled with `set_option linter.unusedVariables false`
+⚠ [995/1065] Replayed Gnosis.FluidDynamics
+warning: Gnosis/FluidDynamics.lean:50:28: unused variable `u`
+
+Note: This linter can be disabled with `set_option linter.unusedVariables false`
+warning: Gnosis/FluidDynamics.lean:50:54: unused variable `p`
+
+Note: This linter can be disabled with `set_option linter.unusedVariables false`
+warning: Gnosis/FluidDynamics.lean:63:30: unused variable `nu`
+
+Note: This linter can be disabled with `set_option linter.unusedVariables false`
+warning: Gnosis/FluidDynamics.lean:63:33: unused variable `x`
+
+Note: This linter can be disabled with `set_option linter.unusedVariables false`
+warning: Gnosis/FluidDynamics.lean:63:35: unused variable `u_inf`
+
+Note: This linter can be disabled with `set_option linter.unusedVariables false`
+⚠ [996/1065] Replayed Gnosis.InformationTheory
+warning: Gnosis/InformationTheory.lean:52:31: unused variable `p`
+
+Note: This linter can be disabled with `set_option linter.unusedVariables false`
+warning: Gnosis/InformationTheory.lean:52:33: unused variable `q`
+
+Note: This linter can be disabled with `set_option linter.unusedVariables false`
+warning: Gnosis/InformationTheory.lean:86:30: unused variable `D`
+
+Note: This linter can be disabled with `set_option linter.unusedVariables false`
+⚠ [997/1065] Replayed Gnosis.Topology
+warning: Gnosis/Topology.lean:47:22: unused variable `X`
+
+Note: This linter can be disabled with `set_option linter.unusedVariables false`
+warning: Gnosis/Topology.lean:52:22: unused variable `X`
+
+Note: This linter can be disabled with `set_option linter.unusedVariables false`
+warning: Gnosis/Topology.lean:52:45: unused variable `s`
+
+Note: This linter can be disabled with `set_option linter.unusedVariables false`
+warning: Gnosis/Topology.lean:62:30: unused variable `X`
+
+Note: This linter can be disabled with `set_option linter.unusedVariables false`
+warning: Gnosis/Topology.lean:62:53: unused variable `n`
+
+Note: This linter can be disabled with `set_option linter.unusedVariables false`
+warning: Gnosis/Topology.lean:73:29: unused variable `X`
+
+Note: This linter can be disabled with `set_option linter.unusedVariables false`
+warning: Gnosis/Topology.lean:73:52: unused variable `n`
+
+Note: This linter can be disabled with `set_option linter.unusedVariables false`
+warning: Gnosis/Topology.lean:91:33: unused variable `X`
+
+Note: This linter can be disabled with `set_option linter.unusedVariables false`
+warning: Gnosis/Topology.lean:91:56: unused variable `A`
+
+Note: This linter can be disabled with `set_option linter.unusedVariables false`
+warning: Gnosis/Topology.lean:91:58: unused variable `B`
+
+Note: This linter can be disabled with `set_option linter.unusedVariables false`
+⚠ [998/1065] Replayed Gnosis.GraphTheory
+warning: Gnosis/GraphTheory.lean:47:21: unused variable `g`
+
+Note: This linter can be disabled with `set_option linter.unusedVariables false`
+warning: Gnosis/GraphTheory.lean:52:33: unused variable `g`
+
+Note: This linter can be disabled with `set_option linter.unusedVariables false`
+warning: Gnosis/GraphTheory.lean:57:28: unused variable `g`
+
+Note: This linter can be disabled with `set_option linter.unusedVariables false`
+warning: Gnosis/GraphTheory.lean:57:48: unused variable `src`
+
+Note: This linter can be disabled with `set_option linter.unusedVariables false`
+warning: Gnosis/GraphTheory.lean:57:52: unused variable `dst`
+
+Note: This linter can be disabled with `set_option linter.unusedVariables false`
+warning: Gnosis/GraphTheory.lean:74:25: unused variable `g`
+
+Note: This linter can be disabled with `set_option linter.unusedVariables false`
+warning: Gnosis/GraphTheory.lean:78:32: unused variable `g`
+
+Note: This linter can be disabled with `set_option linter.unusedVariables false`
+warning: Gnosis/GraphTheory.lean:82:31: unused variable `g`
+
+Note: This linter can be disabled with `set_option linter.unusedVariables false`
+warning: Gnosis/GraphTheory.lean:86:26: unused variable `g`
+
+Note: This linter can be disabled with `set_option linter.unusedVariables false`
+warning: Gnosis/GraphTheory.lean:86:46: unused variable `k`
+
+Note: This linter can be disabled with `set_option linter.unusedVariables false`
+⚠ [999/1065] Replayed Gnosis.ComplexityTheory
+warning: Gnosis/ComplexityTheory.lean:22:27: unused variable `f`
+
+Note: This linter can be disabled with `set_option linter.unusedVariables false`
+warning: Gnosis/ComplexityTheory.lean:26:28: unused variable `f`
+
+Note: This linter can be disabled with `set_option linter.unusedVariables false`
+warning: Gnosis/ComplexityTheory.lean:73:34: unused variable `proof`
+
+Note: This linter can be disabled with `set_option linter.unusedVariables false`
+⚠ [1022/1065] Replayed Gnosis.FormalMethods
+warning: Gnosis/FormalMethods.lean:33:35: unused variable `C`
+
+Note: This linter can be disabled with `set_option linter.unusedVariables false`
+warning: Gnosis/FormalMethods.lean:37:41: unused variable `C`
+
+Note: This linter can be disabled with `set_option linter.unusedVariables false`
+warning: Gnosis/FormalMethods.lean:46:32: unused variable `M`
+
+Note: This linter can be disabled with `set_option linter.unusedVariables false`
+warning: Gnosis/FormalMethods.lean:59:47: unused variable `target`
+
+Note: This linter can be disabled with `set_option linter.unusedVariables false`
+warning: Gnosis/FormalMethods.lean:59:62: unused variable `transitions`
+
+Note: This linter can be disabled with `set_option linter.unusedVariables false`
+✖ [1061/1065] Building Gnosis.Contrarian.ContrarianProofDepthIncreasesFragility (3.4s)
+trace: .> LEAN_PATH=/Users/buley/Documents/Code/emotions/open-source/gnosis-math/.lake/build/lib/lean /Users/buley/.elan/toolchains/leanprover--lean4---v4.28.0/bin/lean /Users/buley/Documents/Code/emotions/open-source/gnosis-math/Gnosis/Contrarian/ContrarianProofDepthIncreasesFragility.lean -o /Users/buley/Documents/Code/emotions/open-source/gnosis-math/.lake/build/lib/lean/Gnosis/Contrarian/ContrarianProofDepthIncreasesFragility.olean -i /Users/buley/Documents/Code/emotions/open-source/gnosis-math/.lake/build/lib/lean/Gnosis/Contrarian/ContrarianProofDepthIncreasesFragility.ilean -c /Users/buley/Documents/Code/emotions/open-source/gnosis-math/.lake/build/ir/Gnosis/Contrarian/ContrarianProofDepthIncreasesFragility.c --setup /Users/buley/Documents/Code/emotions/open-source/gnosis-math/.lake/build/ir/Gnosis/Contrarian/ContrarianProofDepthIncreasesFragility.setup.json --json
+error: Gnosis/Contrarian/ContrarianProofDepthIncreasesFragility.lean:21:34: Application type mismatch: The argument
+  h_frag
+has type
+  p.fragility > p.depth * 3
+but is expected to have type
+  p.depth * 3 ≤ p.fragility
+in the application
+  Nat.lt_of_lt_of_le h_calc h_frag
+error: Lean exited with code 1
+✖ [1062/1065] Building Gnosis.Contrarian.ContrarianWitnessGapOracleStallMitigation (3.5s)
+trace: .> LEAN_PATH=/Users/buley/Documents/Code/emotions/open-source/gnosis-math/.lake/build/lib/lean /Users/buley/.elan/toolchains/leanprover--lean4---v4.28.0/bin/lean /Users/buley/Documents/Code/emotions/open-source/gnosis-math/Gnosis/Contrarian/ContrarianWitnessGapOracleStallMitigation.lean -o /Users/buley/Documents/Code/emotions/open-source/gnosis-math/.lake/build/lib/lean/Gnosis/Contrarian/ContrarianWitnessGapOracleStallMitigation.olean -i /Users/buley/Documents/Code/emotions/open-source/gnosis-math/.lake/build/lib/lean/Gnosis/Contrarian/ContrarianWitnessGapOracleStallMitigation.ilean -c /Users/buley/Documents/Code/emotions/open-source/gnosis-math/.lake/build/ir/Gnosis/Contrarian/ContrarianWitnessGapOracleStallMitigation.c --setup /Users/buley/Documents/Code/emotions/open-source/gnosis-math/.lake/build/ir/Gnosis/Contrarian/ContrarianWitnessGapOracleStallMitigation.setup.json --json
+error: Gnosis/Contrarian/ContrarianWitnessGapOracleStallMitigation.lean:12:50: Application type mismatch: The argument
+  ?m.29
+has type
+  100 ≤ 999
+but is expected to have type
+  WitnessGapBound.succ ≤ 999
+in the application
+  Nat.le_succ_of_le ?m.29
+error: Lean exited with code 1
+⚠ [1063/1065] Built Gnosis.Contrarian.ContrarianPullIsPush (3.5s)
+warning: Gnosis/Contrarian/ContrarianPullIsPush.lean:16:39: unused variable `h`
+
+Note: This linter can be disabled with `set_option linter.unusedVariables false`
+Some required targets logged failures:
+- Gnosis.Contrarian.ContrarianProofDepthIncreasesFragility
+- Gnosis.Contrarian.ContrarianWitnessGapOracleStallMitigation
+error: build failed
