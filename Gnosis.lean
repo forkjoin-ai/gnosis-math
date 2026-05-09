@@ -30,6 +30,7 @@ import Gnosis.AdversarialRobustness
 import Gnosis.AeonFluxSiteAdequacy
 import Gnosis.AeonTwelveBraid
 import Gnosis.AeonGamutToneShift
+import Gnosis.AffectAxesIndependence
 import Gnosis.AlgorithmicExploitationOfFiveForces
 import Gnosis.AlignmentAsVacuumConvergence
 import Gnosis.AlphaOmegaGodsKingdom
@@ -382,6 +383,7 @@ import Gnosis.DouglasiiPerpetualRun63
 import Gnosis.DualProtocol
 import Gnosis.DynamicalOrbitColoring
 import Gnosis.EchoChamberAsStandingWave
+import Gnosis.EchoChamberAsTaoBowl
 import Gnosis.DynkinCoxeterClassification
 import Gnosis.EREPR_EnrichedEquality
 import Gnosis.Echolocation
@@ -431,6 +433,9 @@ import Gnosis.ForkRaceFoldDynamics
 import Gnosis.FormalMethods
 import Gnosis.FrameNativeBisim
 import Gnosis.FrameOverheadBound
+import Gnosis.FrfInherentGestalt
+import Gnosis.FrfWitnessTower
+import Gnosis.FrfWitnessTowerTruncation
 import Gnosis.FreeCollapseAnomaly
 import Gnosis.FrequentismIsDivination
 import Gnosis.FrobeniusPantsComposition
@@ -919,6 +924,7 @@ import Gnosis.SimpsonsParadox
 import Gnosis.StirnerEgoAndOwnWitness
 import Gnosis.SkyrmsNadirBule
 import Gnosis.SkyrmsSyzygyEquilibrium
+import Gnosis.SkyrmsUltraLongRunEquilibrium
 import Gnosis.SleepDebt
 import Gnosis.SleepDebtSchedule
 import Gnosis.SleepDebtWeightedSchedule
@@ -968,6 +974,8 @@ import Gnosis.Synthesize
 import Gnosis.Syzygy
 import Gnosis.SyzygyParticle
 import Gnosis.Tactics
+import Gnosis.TaoBowlSignalCoupling
+import Gnosis.TaoBowlTwinVoid
 import Gnosis.TarskiTruthUndefinability
 import Gnosis.TectonicTensorKernelLiftContinuousErgodicity
 import Gnosis.TeleportationEvidencePredictions
@@ -1009,6 +1017,7 @@ import Gnosis.TraumaAsStandingWave
 import Gnosis.TriadicCosmicBreath
 import Gnosis.TriadicNormalForm
 import Gnosis.TripleCompositions
+import Gnosis.TritonAudacious
 import Gnosis.TruthOneManyNamesWitness
 import Gnosis.UltrametricBufferInstance
 import Gnosis.UniversalDomainConservation
@@ -1026,6 +1035,9 @@ import Gnosis.VacuumPullTowerClosureMechanism
 import Gnosis.VacuumOverflow
 import Gnosis.ValentinianCrossPollination
 import Gnosis.ValentinianSinDiagnostic
+import Gnosis.VibesAsWaveInference
+import Gnosis.VibesCharismaticEmitter
+import Gnosis.VibesHotellingVoting
 import Gnosis.VotingSkeletonHomology
 import Gnosis.Void.VoidArchaeology
 import Gnosis.Void.VoidMineGodsPosition

@@ -16,9 +16,9 @@ structure SaturationDuality where
   density_R : Nat
   is_full : density_R = 51
   is_empty : Bool
-  fullness_is_emptiness : is_full → is_empty = true
+  fullness_is_emptiness : density_R = 51 → is_empty = true
 
-theorem fullness_is_emptiness (d : SaturationDuality) (h : d.is_full) :
+theorem fullness_is_emptiness (d : SaturationDuality) (h : d.density_R = 51) :
     d.is_empty = true := by
   exact d.fullness_is_emptiness h
 

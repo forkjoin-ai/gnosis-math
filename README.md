@@ -34,9 +34,16 @@ Current integration plan: [ROADMAP.md](./ROADMAP.md)
 
 ## Current Formal Frontiers
 
+- `Gnosis.FrfWitnessTowerTruncation` proves prefix/tail (`List.take` / `List.drop`) recombination laws for
+  `triadMerge` / `xorMerge` / the digit parity track — the algebraic interface for “tower truncation” beside
+  multiset merges (`triad_merge_perm`, `triad_merge_not_injective`).
 - `Gnosis.SpectralNoiseEquilibrium` formalizes finite spectral noise colors,
   mesh admission, persistence, carrier/boundary safety, stereogram/parallax
   decoding, and constrained information.
+- `Gnosis.EchoChamberAsTaoBowl` (with `IsPejorativeEchoAt`, Q monotonicity)
+  and satellites `Gnosis.TaoBowlTwinVoid` (structural vs consensus void) and
+  `Gnosis.TaoBowlSignalCoupling` (`bowlActsOn` on `OpinionWave`, mismatch ↔
+  external-information bridge to `chamberOfBowl`).
 - `Gnosis.TopologicalMetabolism` extends that calculus into noise-as-computation:
   metabolic pressure, lift/evolution, runtime governance, phase sweeps,
   feedback, cooling, color-pressure dynamics, and anomaly cancellation.
