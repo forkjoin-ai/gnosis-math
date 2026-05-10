@@ -799,6 +799,7 @@ import Gnosis.ParmenidesOnNatureWitness
 import Gnosis.ProtagorasManIsMeasureWitness
 import Gnosis.ParticlesExist
 import Gnosis.ParticlePredictionsFromFiveForces
+import Gnosis.PatternAtlas
 import Gnosis.PellCatLucasTraceFamily
 import Gnosis.PellUltrametricConvergents
 import Gnosis.Periodicity
@@ -972,6 +973,7 @@ import Gnosis.StatisticalMechanics
 import Gnosis.StateDependentQueueFamilies
 import Gnosis.StaticAnalysis
 import Gnosis.StatisticalTeleportation
+import Gnosis.StrictRefinementLatticePattern
 import Gnosis.StirlingBellSmall
 import Gnosis.StoneDualityProfiniteSieve
 import Gnosis.StringTheoryCorrespondence
