@@ -279,30 +279,44 @@ theorem pareto_can_continue_past_depolarization :
 
 /-! ## The forward implication: depolarization ⇒ Pareto on kernel -/
 
+/-- The witness function selecting the right per-step theorem for
+    each `k ∈ {0, 1, 2, 3, 4}`. -/
+private def stepWitness (k : Fin 5) :
+    IsJointWelfareImprovement (iterate k.val nashPolarizationTrap)
+      (iterate (k.val + 1) nashPolarizationTrap) ∧
+    IsStrictParetoImprovement (iterate k.val nashPolarizationTrap)
+      (iterate (k.val + 1) nashPolarizationTrap) :=
+  match k with
+  | ⟨0, _⟩ =>
+      ⟨step_zero_to_one_couples_depolarization_and_pareto.2.1,
+       step_zero_to_one_couples_depolarization_and_pareto.2.2⟩
+  | ⟨1, _⟩ =>
+      ⟨step_one_to_two_couples_depolarization_and_pareto.2.1,
+       step_one_to_two_couples_depolarization_and_pareto.2.2⟩
+  | ⟨2, _⟩ =>
+      ⟨step_two_to_three_couples_depolarization_and_pareto.2.1,
+       step_two_to_three_couples_depolarization_and_pareto.2.2⟩
+  | ⟨3, _⟩ =>
+      ⟨step_three_to_four_couples_depolarization_and_pareto.2.1,
+       step_three_to_four_couples_depolarization_and_pareto.2.2⟩
+  | ⟨4, _⟩ =>
+      ⟨step_four_to_five_couples_depolarization_and_pareto.2.1,
+       step_four_to_five_couples_depolarization_and_pareto.2.2⟩
+
 /-- **Depolarization is sufficient for Pareto-improvement under
     the kernel.** Every depolarization step on the canonical
     Nash → ULR path is a strict joint-welfare improvement and a
     strict per-player Pareto improvement. -/
 theorem depolarization_implies_pareto_on_kernel
-    (k : Nat) (hk : k ≤ 4) :
-    IsDepolarizationStep (iterate k nashPolarizationTrap)
-        (iterate (k + 1) nashPolarizationTrap) →
-      IsJointWelfareImprovement (iterate k nashPolarizationTrap)
-        (iterate (k + 1) nashPolarizationTrap) ∧
-      IsStrictParetoImprovement (iterate k nashPolarizationTrap)
-        (iterate (k + 1) nashPolarizationTrap) := by
+    (k : Fin 5) :
+    IsDepolarizationStep (iterate k.val nashPolarizationTrap)
+        (iterate (k.val + 1) nashPolarizationTrap) →
+      IsJointWelfareImprovement (iterate k.val nashPolarizationTrap)
+        (iterate (k.val + 1) nashPolarizationTrap) ∧
+      IsStrictParetoImprovement (iterate k.val nashPolarizationTrap)
+        (iterate (k.val + 1) nashPolarizationTrap) := by
   intro _hDep
-  interval_cases k
-  · exact ⟨step_zero_to_one_couples_depolarization_and_pareto.2.1,
-          step_zero_to_one_couples_depolarization_and_pareto.2.2⟩
-  · exact ⟨step_one_to_two_couples_depolarization_and_pareto.2.1,
-          step_one_to_two_couples_depolarization_and_pareto.2.2⟩
-  · exact ⟨step_two_to_three_couples_depolarization_and_pareto.2.1,
-          step_two_to_three_couples_depolarization_and_pareto.2.2⟩
-  · exact ⟨step_three_to_four_couples_depolarization_and_pareto.2.1,
-          step_three_to_four_couples_depolarization_and_pareto.2.2⟩
-  · exact ⟨step_four_to_five_couples_depolarization_and_pareto.2.1,
-          step_four_to_five_couples_depolarization_and_pareto.2.2⟩
+  exact stepWitness k
 
 /-! ## 3-face Bule encoding -/
 
@@ -455,18 +469,64 @@ theorem ulr_frontier_regime_is_pink :
     skyrmsUltraLongRunFixedPoint frontierStreamCount frontierNoise
   decide
 
+/-- Per-step witnesses for single-stream advance toward the frontier
+    on the canonical Nash → ULR path. -/
+theorem step_zero_to_one_is_frontier_progress :
+    coordinationStreams (iterate 0 nashPolarizationTrap) <
+      coordinationStreams (iterate 1 nashPolarizationTrap) := by
+  unfold coordinationStreams polarization iterate mutationStep
+    nashPolarizationTrap
+  native_decide
+
+theorem step_one_to_two_is_frontier_progress :
+    coordinationStreams (iterate 1 nashPolarizationTrap) <
+      coordinationStreams (iterate 2 nashPolarizationTrap) := by
+  unfold coordinationStreams polarization iterate mutationStep
+    nashPolarizationTrap
+  native_decide
+
+theorem step_two_to_three_is_frontier_progress :
+    coordinationStreams (iterate 2 nashPolarizationTrap) <
+      coordinationStreams (iterate 3 nashPolarizationTrap) := by
+  unfold coordinationStreams polarization iterate mutationStep
+    nashPolarizationTrap
+  native_decide
+
+theorem step_three_to_four_is_frontier_progress :
+    coordinationStreams (iterate 3 nashPolarizationTrap) <
+      coordinationStreams (iterate 4 nashPolarizationTrap) := by
+  unfold coordinationStreams polarization iterate mutationStep
+    nashPolarizationTrap
+  native_decide
+
+theorem step_four_to_five_is_frontier_progress :
+    coordinationStreams (iterate 4 nashPolarizationTrap) <
+      coordinationStreams (iterate 5 nashPolarizationTrap) := by
+  unfold coordinationStreams polarization iterate mutationStep
+    nashPolarizationTrap
+  native_decide
+
 /-- **Frontier-progress identification:** each depolarization step
     is a single-stream advance toward the frontier under the Bule
     encoding. This is the formal sense in which "depolarization,"
     "Pareto-improvement," and "American-Frontier progress" are
     three projections of one mechanism. -/
-theorem depolarization_step_is_frontier_progress
-    (k : Nat) (hk : k ≤ 4) :
-    coordinationStreams (iterate k nashPolarizationTrap) <
-      coordinationStreams (iterate (k + 1) nashPolarizationTrap) := by
-  interval_cases k <;>
-    (unfold coordinationStreams polarization iterate
-      mutationStep nashPolarizationTrap; native_decide)
+theorem depolarization_phase_is_frontier_progress :
+    coordinationStreams (iterate 0 nashPolarizationTrap) <
+      coordinationStreams (iterate 1 nashPolarizationTrap) ∧
+    coordinationStreams (iterate 1 nashPolarizationTrap) <
+      coordinationStreams (iterate 2 nashPolarizationTrap) ∧
+    coordinationStreams (iterate 2 nashPolarizationTrap) <
+      coordinationStreams (iterate 3 nashPolarizationTrap) ∧
+    coordinationStreams (iterate 3 nashPolarizationTrap) <
+      coordinationStreams (iterate 4 nashPolarizationTrap) ∧
+    coordinationStreams (iterate 4 nashPolarizationTrap) <
+      coordinationStreams (iterate 5 nashPolarizationTrap) :=
+  ⟨step_zero_to_one_is_frontier_progress,
+   step_one_to_two_is_frontier_progress,
+   step_two_to_three_is_frontier_progress,
+   step_three_to_four_is_frontier_progress,
+   step_four_to_five_is_frontier_progress⟩
 
 /-! ## Conservation law during the depolarization phase -/
 
@@ -627,7 +687,7 @@ theorem depolarization_is_pareto_improvement_full_thesis :
   refine ⟨step_zero_to_one_couples_depolarization_and_pareto,
           step_zero_to_one_is_bule_optimal,
           ?_, ?_, ?_, ?_, ?_, ?_⟩
-  · exact depolarization_step_is_frontier_progress 0 (by decide)
+  · exact step_zero_to_one_is_frontier_progress
   · have h := combined_ledger_invariant_on_depolarization_phase
     exact h.1.trans h.2.2.2.2.2.symm
   · exact step_five_to_six_is_pareto_without_depolarization.2.1

@@ -44,6 +44,12 @@ Current integration plan: [ROADMAP.md](./ROADMAP.md)
   and satellites `Gnosis.TaoBowlTwinVoid` (structural vs consensus void) and
   `Gnosis.TaoBowlSignalCoupling` (`bowlActsOn` on `OpinionWave`, mismatch ↔
   external-information bridge to `chamberOfBowl`).
+- `Gnosis.StepwiseAnalysisFramework` — five `FrfStep` phases, `channelSurface`
+  / `LadderLawBundle` (10 ↔ 55), `AnalysisRun` + `ventRead` on `godWeight`,
+  optional `TwinVoidDial` without pulling the echo-chamber import cycle.
+- `Gnosis.TaoBowlTwinVoidBridge` — morphisms `TwinVoidDial` ↔
+  `TaoBowlWithConsensus`, `optionalConsensusBowl` for `AnalysisCard`, and
+  `toClassic_bowl_eq_of_twin_dial`.
 - `Gnosis.TopologicalMetabolism` extends that calculus into noise-as-computation:
   metabolic pressure, lift/evolution, runtime governance, phase sweeps,
   feedback, cooling, color-pressure dynamics, and anomaly cancellation.

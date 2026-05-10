@@ -31,6 +31,9 @@ import Gnosis.AeonFluxSiteAdequacy
 import Gnosis.AeonTwelveBraid
 import Gnosis.AeonGamutToneShift
 import Gnosis.AffectAxesIndependence
+import Gnosis.AffectMatrixCompleteness
+import Gnosis.AffectMatrixAgencyAxis
+import Gnosis.AffectMatrixFourthAxis
 import Gnosis.AlgorithmicExploitationOfFiveForces
 import Gnosis.AlignmentAsVacuumConvergence
 import Gnosis.AlphaOmegaGodsKingdom
@@ -58,6 +61,7 @@ import Gnosis.AtiyahSegalCobordismFunctor
 import Gnosis.AtiyahSingerIndex
 import Gnosis.AtlasCoordinateContract
 import Gnosis.AttilaGrassNeverGrowsWitness
+import Gnosis.AxisCardinalityFoldPattern
 import Gnosis.Axioms
 import Gnosis.BaconVelazquezPopeStudiesWitness
 import Gnosis.BalthusGeometricStasisWitness
@@ -125,6 +129,7 @@ import Gnosis.BuleSpider
 import Gnosis.BuleyBiSidedBit
 import Gnosis.BuleyClinamenBraid
 import Gnosis.BuleyEquilibrium
+import Gnosis.BuleyErgodicClosure
 import Gnosis.BuleyLabelPermutation
 import Gnosis.BuleySelfSimilarityViolation
 import Gnosis.BuleyTopologicalTuringMachine
@@ -202,6 +207,7 @@ import Gnosis.CosmologicalEvolutionFromFiveForces
 import Gnosis.CosmologicalGuitarString
 import Gnosis.CollatzOneTwoFourBraid
 import Gnosis.CombinatorialBruteForce
+import Gnosis.ComteThreeStages
 import Gnosis.CommunityCompositions
 import Gnosis.CommunityDominance
 import Gnosis.ComplementOscillation
@@ -354,6 +360,7 @@ import Gnosis.DeceptaconVariants
 import Gnosis.DeepCompositions
 import Gnosis.DeepReduction
 import Gnosis.DeficitCapacity
+import Gnosis.DepolarizationIsParetoImprovement
 import Gnosis.DepressionAsDampedOscillation
 import Gnosis.DestinyAsRetrocausalAttractor
 import Gnosis.DeterminantAnomalyUnified
@@ -510,6 +517,7 @@ import Gnosis.HighlyFoldedInvariants
 import Gnosis.HobbesLeviathanStateOfNatureWitness
 import Gnosis.HodgeConjecture
 import Gnosis.HolographicConsensus
+import Gnosis.HomomorphismLatticePattern
 import Gnosis.HopeGapFoldInversion
 import Gnosis.HumanCompiler
 import Gnosis.HypergraphInterpretationMapping
@@ -886,6 +894,7 @@ import Gnosis.ResonanceKnotEncoder
 import Gnosis.ResonanceKnotFormat
 import Gnosis.ResonanceKnotRoundTrip
 import Gnosis.ResonantFFNOptimization
+import Gnosis.RetractLatticePattern
 import Gnosis.RetrocausalBound
 import Gnosis.RetrocausalDynamicsOfMarkets
 import Gnosis.RetrocausalMemoization
@@ -922,6 +931,7 @@ import Gnosis.ShipOfTheseusWitness
 import Gnosis.SimonidesSpartanEpitaphWitness
 import Gnosis.SimpsonsParadox
 import Gnosis.StirnerEgoAndOwnWitness
+import Gnosis.SkyrmsErgodicSelection
 import Gnosis.SkyrmsNadirBule
 import Gnosis.SkyrmsSyzygyEquilibrium
 import Gnosis.SkyrmsUltraLongRunEquilibrium
@@ -935,6 +945,7 @@ import Gnosis.SliverExploration
 import Gnosis.SliverFromVent
 import Gnosis.SliverIsFifth
 import Gnosis.SliverOfHope
+import Gnosis.SocialDynamicsHooke
 import Gnosis.SocialFoldObstruction
 import Gnosis.SolomonoffBuleyean
 import Gnosis.SolomonoffInduction
@@ -954,6 +965,7 @@ import Gnosis.SpiralDeterminism
 import Gnosis.SpiralMachine
 import Gnosis.StableInftyCategories
 import Gnosis.StagedExpansion
+import Gnosis.StepwiseAnalysisFramework
 import Gnosis.StallIsOptimal
 import Gnosis.StandardModelGaugeGroup
 import Gnosis.StatisticalMechanics
@@ -976,6 +988,7 @@ import Gnosis.SyzygyParticle
 import Gnosis.Tactics
 import Gnosis.TaoBowlSignalCoupling
 import Gnosis.TaoBowlTwinVoid
+import Gnosis.TaoBowlTwinVoidBridge
 import Gnosis.TarskiTruthUndefinability
 import Gnosis.TectonicTensorKernelLiftContinuousErgodicity
 import Gnosis.TeleportationEvidencePredictions
@@ -985,6 +998,8 @@ import Gnosis.TheGain
 import Gnosis.StructuralStability
 import Gnosis.StructureInTension
 import Gnosis.ThermodynamicTracedMonoidal
+import Gnosis.ThoughtBowlMechanics
+import Gnosis.ThoughtBowlMechanicsRefined
 import Gnosis.ThucydidesMelianDialogueWitness
 import Gnosis.Time
 import Gnosis.TimeTravelTopology
@@ -1037,6 +1052,7 @@ import Gnosis.ValentinianCrossPollination
 import Gnosis.ValentinianSinDiagnostic
 import Gnosis.VibesAsWaveInference
 import Gnosis.VibesCharismaticEmitter
+import Gnosis.VibesCoaseBargaining
 import Gnosis.VibesHotellingVoting
 import Gnosis.VotingSkeletonHomology
 import Gnosis.Void.VoidArchaeology
