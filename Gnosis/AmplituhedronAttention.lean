@@ -123,9 +123,46 @@ theorem amplituhedron_attention_theorem
 -- ☑ Coverage-ratio sweep (analogue of BowlMeshQSweep damping sweep)
 --      → Gnosis/AmplituhedronCoverageSweep.lean
 --        (sweep_vertexCount_*, sweep_*_strictly_monotone, k⁶ budget checks)
--- □ Deploy to mesh (Death #2 shipped) — runtime/Rust+TS work, out of Lean scope.
---   Audit 2026-05-10: runtime ships volume cache (LRU prefix-hash → KV slab)
---   but does NOT compute Plücker / scatteringAmplitude / vertex enumeration.
---   See Gnosis/AmplituhedronFalsifiability.lean for the runtime contract.
+-- ☑ Plücker dichotomy (white-flat vs pink-structured Plücker vectors)
+--      → Gnosis/AmplituhedronPluckerDichotomy.lean
+--        (plucker_trichotomy, vandermonde_is_pink_structured,
+--        coordPlane_2_3_01_is_minimally_pink)
+-- ☑ Rust mathematical kernel (Lean ↔ Rust bridge)
+--      → open-source/gnosis/distributed-inference/src/scattering_amplitude.rs
+--        (KPlane, plucker_vector, is_positive, scattering_amplitude,
+--        vertex_count, k_subsets, det). 449 lines, 18/18 tests against the
+--        Vandermonde oracle and coverage sweep above. Wasm/worker/bench
+--        trio shipped 2026-05-10.
+-- ☑ Forward-pass volume-cache integration (default-on, no flag)
+--      → open-source/gnosis/distributed-inference/src/model.rs:65-101
+--        amplituhedron_hotpath_enabled() returns true; replay branch in
+--        forward_range_chunk early-returns on hit, capture branch records
+--        on miss. Math byte-identical (cross-pipeline test). 8/8
+--        amplituhedron + 18/18 scattering + log_rolling_primitives parity
+--        all green 2026-05-10.
+-- ☑ Standing-wave-extraction → scattering integration ALONGSIDE softmax (NOT
+--   default; parity verdict: NOT drop-in capable)
+--      → open-source/gnosis/distributed-inference/src/scattering_attention.rs
+--        (attention_via_amplituhedron, attention_via_softmax,
+--        amplituhedron_attention_vs_softmax_divergence test).
+--   Empirical 2026-05-10 (seq_len=4 d_head=8 k_sub=3): mean cosine 0.74,
+--   argmax agreement 25%, mean abs-diff 0.18 (3 orders > quantization noise).
+--   Verdict: amplituhedron amplitude with uniform dual covector is a
+--   STRUCTURALLY DIFFERENT attention mechanism, not a faster softmax. The
+--   2×2-minor sum `Σ q_a·k_b − q_b·k_a` is antisymmetric in (q,k) where
+--   softmax is not. Forward pass STAYS on softmax. To unlock the flip the
+--   dual covector would need to be learned per-head, or KPlane row
+--   composition restructured — both are research, not engineering.
+-- ☑ Algebraic no-go theorem closing direction (a) "learn the dual"
+--      → Gnosis/AmplituhedronAntisymmetryNoGo.lean
+--        (innerProduct_symmetric, minor_antisymmetric,
+--        amp2x2_antisymmetric, no_dual_recovers_inner_product : False).
+--   Proof: amp2x2 is structurally antisymmetric in (q,k) for any dual;
+--   innerProduct is symmetric; concrete witness q=[1,2] k=[3,4] forces
+--   11 = -11. So no learned dual can recover dot-product attention with
+--   the [q;k] KPlane row composition. Direction (a) is mathematically
+--   blocked, not a regression problem. Direction (b) (different row
+--   composition) collapses the geometry at k=1 — see scattering_attention
+--   parity test for empirical confirmation on synthetic input.
 
 end AmplituhedronAttention

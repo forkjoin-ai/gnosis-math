@@ -27,6 +27,7 @@ import Gnosis.AdaptiveBisimPredictions
 import Gnosis.AdaptiveDecomposition
 import Gnosis.AdaptiveWitnesses
 import Gnosis.AdversarialRobustness
+import Gnosis.AeonFlowTransport
 import Gnosis.AeonFluxSiteAdequacy
 import Gnosis.AeonTwelveBraid
 import Gnosis.AeonGamutToneShift
@@ -38,10 +39,12 @@ import Gnosis.AlgorithmicExploitationOfFiveForces
 import Gnosis.AlignmentAsVacuumConvergence
 import Gnosis.AlphaOmegaGodsKingdom
 import Gnosis.AmericanFrontier
+import Gnosis.AmplituhedronAntisymmetryNoGo
 import Gnosis.AmplituhedronAttention
 import Gnosis.AmplituhedronCoverageSweep
 import Gnosis.AmplituhedronFalsifiability
 import Gnosis.AmplituhedronGrassmannian
+import Gnosis.AmplituhedronPluckerDichotomy
 import Gnosis.AmplituhedronVertices
 import Gnosis.AmplituhedronWitnesses
 import Gnosis.AntColonyCollectiveIntelligence
@@ -426,6 +429,7 @@ import Gnosis.FailureFamilies
 import Gnosis.FailurePareto
 import Gnosis.FailureUniversality
 import Gnosis.FanoOctonionNonAssoc
+import Gnosis.FiveDeathsOfPhysics
 import Gnosis.FederationSafety
 import Gnosis.FermatLittleInstances
 import Gnosis.FermionExclusionEquilibria
@@ -937,6 +941,7 @@ import Gnosis.SevenLawsPredictions
 import Gnosis.ShipOfTheseusWitness
 import Gnosis.SimonidesSpartanEpitaphWitness
 import Gnosis.SimpsonsParadox
+import Gnosis.SixthDeathInterference
 import Gnosis.StirnerEgoAndOwnWitness
 import Gnosis.SkyrmsErgodicSelection
 import Gnosis.SkyrmsNadirBule

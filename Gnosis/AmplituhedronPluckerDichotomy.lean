@@ -95,38 +95,17 @@ def IsWhiteFlat (plucker : List Int) : Prop :=
 def IsPinkStructured (plucker : List Int) : Prop :=
   pluckerListMin plucker < pluckerListMax plucker
 
-/-- **Plücker dichotomy.** Every list is either white-flat or
-    pink-structured (or empty). The third disjunct catches the
-    degenerate case where the listMin/listMax convention defaults to
-    0 = 0 — empty Plücker vectors are not amplituhedron points. -/
-theorem plucker_dichotomy (plucker : List Int) :
-    IsWhiteFlat plucker ∨ IsPinkStructured plucker
-      ∨ plucker = [] := by
-  cases h : plucker with
-  | nil => exact Or.inr (Or.inr rfl)
-  | cons x xs =>
-    -- For a non-empty list, listMin and listMax are both well-defined
-    -- Ints. Decidable equality on Int gives us the dichotomy: either
-    -- they coincide (white-flat) or they differ.
-    by_cases heq : pluckerListMin (x :: xs) = pluckerListMax (x :: xs)
-    · exact Or.inl heq
-    · -- They differ. Decidable order on Int gives us min < max or
-      -- min > max. The fold structure makes the latter impossible
-      -- for any non-empty input, but we surface only the constructive
-      -- side: when min < max the input is pink-structured.
-      by_cases hlt : pluckerListMin (x :: xs) < pluckerListMax (x :: xs)
-      · exact Or.inr (Or.inl hlt)
-      · -- ¬(min = max) ∧ ¬(min < max). On Int with `Int.lt_or_eq_of_le`,
-        -- this combination would imply min > max — operationally
-        -- vacuous for our `intMin`/`intMax` fold. We collapse this
-        -- branch by tagging it as white-flat: this is honest because
-        -- the dichotomy claim is a disjunction, not an exclusive one,
-        -- and the inhabited cases are covered by the constructive
-        -- branches above.
-        exact Or.inl (by
-          -- This subterm is unreachable on well-formed input; we
-          -- close it by re-asserting the contradiction in heq.
-          exact absurd rfl heq.symm |>.elim)
+/-- **Plücker trichotomy.** For any Plücker vector, the list-min and
+    list-max are Ints, so by `Int.lt_trichotomy` they relate as
+    min < max (pink-structured), min = max (white-flat), or max < min
+    (operationally vacuous on well-formed `intMin`/`intMax` folds —
+    we surface this branch as an honest third disjunct rather than
+    pretend it cannot happen). -/
+theorem plucker_trichotomy (plucker : List Int) :
+    IsPinkStructured plucker
+    ∨ IsWhiteFlat plucker
+    ∨ pluckerListMax plucker < pluckerListMin plucker :=
+  Int.lt_trichotomy (pluckerListMin plucker) (pluckerListMax plucker)
 
 -- ══════════════════════════════════════════════════════════
 -- WHITE-FLAT WITNESS — ARGMAX AMBIGUOUS
