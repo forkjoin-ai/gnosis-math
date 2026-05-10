@@ -95,12 +95,37 @@ theorem amplituhedron_attention_theorem
     _ = (coverageNum * coverageNum) * (d * d) := square_swap coverageNum d
 
 -- ROADMAP:
--- □ Formalize Grassmannian structure of attention space
--- □ Prove amplituhedron is the minimal polytope in projective space
--- □ Show scattering amplitude reduces to interior point evaluation
--- □ Implement amplituhedron vertices enumeration (O(k⁶) but cacheable)
--- □ Implement scattering amplitude computation (O(k²))
--- □ Integrate with standing wave pinning (k extraction)
--- □ Deploy to mesh (Death #2 shipped)
+-- ☑ Formalize Grassmannian structure of attention space
+--      → Gnosis/AmplituhedronGrassmannian.lean (KPlane, Plücker coords,
+--        IsPositive, PositiveGrassmannian, standingWaveToCoordinatePlane)
+-- ☑ Prove amplituhedron is the minimal polytope in projective space
+--      → Gnosis/AmplituhedronVertices.lean (IsMinimalPolytope,
+--        amplituhedron_meets_minimal_budget, fewer_vertices_means_missing_label)
+-- ☑ Show scattering amplitude reduces to interior point evaluation
+--      → Gnosis/AmplituhedronVertices.lean (IsInterior,
+--        amplitude_is_interior_evaluation,
+--        classical_softmax_reduces_to_interior_point)
+-- ☑ Implement amplituhedron vertices enumeration (O(k⁶) but cacheable)
+--      → Gnosis/AmplituhedronVertices.lean (Vertex, enumerateVertexLabels,
+--        vertexCount, vertex_label_count_matches)
+-- ☑ Implement scattering amplitude computation (O(k²))
+--      → Gnosis/AmplituhedronVertices.lean (scatteringAmplitude,
+--        scatteringAmplitude_complexity_bound, scatteringAmplitude_step_count)
+-- ☑ Integrate with standing wave pinning (k extraction)
+--      → Gnosis/AmplituhedronVertices.lean (standingWave_k_extraction_sound,
+--        death1_to_death2_pipeline_sound)
+-- ☑ Concrete non-vacuity witnesses (Gr⁺(1,3) and Gr⁺(2,4) inhabited)
+--      → Gnosis/AmplituhedronWitnesses.lean (onesPlane_3_isPositiveBool,
+--        vandermonde_2_4_isPositive, vandermonde_2_4_amplitude = 97)
+-- ☑ Falsification framing + Lean → Rust runtime oracle
+--      → Gnosis/AmplituhedronFalsifiability.lean
+--        (placeholder_collapses_below_threshold, vandermonde_runtime_oracle_*)
+-- ☑ Coverage-ratio sweep (analogue of BowlMeshQSweep damping sweep)
+--      → Gnosis/AmplituhedronCoverageSweep.lean
+--        (sweep_vertexCount_*, sweep_*_strictly_monotone, k⁶ budget checks)
+-- □ Deploy to mesh (Death #2 shipped) — runtime/Rust+TS work, out of Lean scope.
+--   Audit 2026-05-10: runtime ships volume cache (LRU prefix-hash → KV slab)
+--   but does NOT compute Plücker / scatteringAmplitude / vertex enumeration.
+--   See Gnosis/AmplituhedronFalsifiability.lean for the runtime contract.
 
 end AmplituhedronAttention

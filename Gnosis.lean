@@ -39,7 +39,11 @@ import Gnosis.AlignmentAsVacuumConvergence
 import Gnosis.AlphaOmegaGodsKingdom
 import Gnosis.AmericanFrontier
 import Gnosis.AmplituhedronAttention
+import Gnosis.AmplituhedronCoverageSweep
+import Gnosis.AmplituhedronFalsifiability
 import Gnosis.AmplituhedronGrassmannian
+import Gnosis.AmplituhedronVertices
+import Gnosis.AmplituhedronWitnesses
 import Gnosis.AntColonyCollectiveIntelligence
 import Gnosis.AntiFrequencySyzygy
 import Gnosis.AntiTheorems.AntiTheoremStallInevitable
