@@ -232,10 +232,10 @@ def Retract.id (A : Type) : Retract A A where
   instances, and the factoring of each existing round-trip
   theorem through the abstraction. -/
 
+set_option linter.unusedVariables false in
 /-- The conjunctive proposition that the headline theorem proves.
     Lifted to an `abbrev` so that downstream registries (for example
     `Gnosis.PatternAtlas`) can bundle the witness by name. -/
-set_option linter.unusedVariables false in
 abbrev RetractLatticeWitness : Prop :=
     -- Three concrete retract instances exist
     (∀ c : AffectMatrixFourthAxis.SocialContext,

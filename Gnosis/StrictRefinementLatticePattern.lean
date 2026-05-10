@@ -148,9 +148,10 @@ theorem all_phenomena_not_equivalent_to_representable_phenomena :
 
 /-! ## Headline witness -/
 
-/-- Bundles the three strict-refinement instances and their factored
-    gap theorems. -/
-theorem strict_refinement_lattice_pattern_witness :
+/-- The conjunctive proposition that the headline theorem proves.
+    Lifted to an `abbrev` so that downstream registries (for example
+    `Gnosis.PatternAtlas`) can bundle the witness by name. -/
+abbrev StrictRefinementLatticeWitness : Prop :=
     (∃ s : PolarizationState,
       BuleyErgodicClosure.forwardStep s = s ∧
       ¬ BuleyErgodicClosure.IsBulkNovikovClosed s) ∧
@@ -164,7 +165,11 @@ theorem strict_refinement_lattice_pattern_witness :
     (∃ p : AffectMatrixCompleteness.EmotionPhenomenon,
       True ∧ ¬ AffectMatrixCompleteness.IsRepresentable p) ∧
     (¬ (∀ p : AffectMatrixCompleteness.EmotionPhenomenon,
-        True ↔ AffectMatrixCompleteness.IsRepresentable p)) :=
+        True ↔ AffectMatrixCompleteness.IsRepresentable p))
+
+/-- Bundles the three strict-refinement instances and their factored
+    gap theorems. -/
+theorem strict_refinement_lattice_pattern_witness : StrictRefinementLatticeWitness :=
   ⟨skyrms_admits_more_fixed_points_than_buley_via_refinement,
    skyrms_forward_fixed_not_equivalent_to_buley_closed,
    unreachable_bowls_exist_via_refinement,

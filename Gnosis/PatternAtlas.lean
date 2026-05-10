@@ -27,30 +27,51 @@ namespace PatternAtlas
 
 /-! ## Pattern registry -/
 
-/-- The four structural pattern witnesses produced by the recent
-    cross-pollination pass elaborate together.
+/-- The conjunction of the four pattern propositions. Each conjunct is
+    the abbrev exported by its pattern module, so this proposition is
+    pinned to whatever those modules actually claim. -/
+abbrev PatternAtlasWitness : Prop :=
+  RetractLatticePattern.RetractLatticeWitness ∧
+  HomomorphismLatticePattern.HomomorphismLatticeWitness ∧
+  AxisCardinalityFoldPattern.AxisCardinalityFoldWitness ∧
+  StrictRefinementLatticePattern.StrictRefinementLatticeWitness
 
-    Lean theorem names are proof terms, not proposition expressions.
-    The atlas therefore records registration by forcing each headline
-    witness to elaborate in the proof body while keeping the theorem's
-    public statement intentionally small. -/
-theorem pattern_atlas_witness :
-    True ∧ True ∧ True ∧ True := by
-  have _patternA := RetractLatticePattern.retract_lattice_pattern_witness
-  have _patternB := HomomorphismLatticePattern.homomorphism_lattice_pattern_witness
-  have _patternC := AxisCardinalityFoldPattern.axis_cardinality_fold_pattern_witness
-  have _patternD := StrictRefinementLatticePattern.strict_refinement_lattice_pattern_witness
-  exact ⟨trivial, trivial, trivial, trivial⟩
+/-- The four structural pattern witnesses produced by the recent
+    cross-pollination pass, bundled. Each component is the headline
+    witness of its pattern module, accessible by `.1`, `.2.1`, `.2.2.1`,
+    and `.2.2.2`. -/
+theorem pattern_atlas_witness : PatternAtlasWitness :=
+  ⟨RetractLatticePattern.retract_lattice_pattern_witness,
+   HomomorphismLatticePattern.homomorphism_lattice_pattern_witness,
+   AxisCardinalityFoldPattern.axis_cardinality_fold_pattern_witness,
+   StrictRefinementLatticePattern.strict_refinement_lattice_pattern_witness⟩
+
+/-! ## Direct accessors
+
+  Convenience names that pull each pattern witness out of the bundle. -/
+
+theorem patternA_witness : RetractLatticePattern.RetractLatticeWitness :=
+  pattern_atlas_witness.1
+
+theorem patternB_witness : HomomorphismLatticePattern.HomomorphismLatticeWitness :=
+  pattern_atlas_witness.2.1
+
+theorem patternC_witness : AxisCardinalityFoldPattern.AxisCardinalityFoldWitness :=
+  pattern_atlas_witness.2.2.1
+
+theorem patternD_witness : StrictRefinementLatticePattern.StrictRefinementLatticeWitness :=
+  pattern_atlas_witness.2.2.2
 
 /-! ## Honesty note
 
 What this module proves:
 
-  * The four pattern modules all import together and their headline
-    witnesses elaborate in one registry theorem.
-  * The atlas is a registry theorem, not a replacement for the local
-    modules. The actual proof content stays in the pattern files and
-    their source domain modules.
+  * `PatternAtlasWitness` is the proposition `A ∧ B ∧ C ∧ D` where each
+    conjunct is the named `abbrev` exported by its pattern module.
+  * `pattern_atlas_witness` is a real proof of that conjunction; each
+    component is the corresponding module's headline theorem.
+  * Four `patternX_witness` accessors expose the components by name so
+    downstream modules can extract them without index arithmetic.
 
 What this module does not prove:
 
