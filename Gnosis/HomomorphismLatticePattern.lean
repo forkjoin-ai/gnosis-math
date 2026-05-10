@@ -104,7 +104,10 @@ theorem bulk_novikov_target_invariant_eq_fifty_five
 
 /-! ## Headline witness -/
 
-theorem homomorphism_lattice_pattern_witness :
+/-- The conjunctive proposition that the headline theorem proves.
+    Lifted to an `abbrev` so that downstream registries (for example
+    `Gnosis.PatternAtlas`) can bundle the witness by name. -/
+abbrev HomomorphismLatticeWitness : Prop :=
     (∀ a : PolarizationState,
         buleyPolarizationInvariantHom.targetInvariant
             (buleyPolarizationInvariantHom.lift a) =
@@ -112,7 +115,9 @@ theorem homomorphism_lattice_pattern_witness :
     (∀ s : PolarizationState, IsBulkNovikovClosed s →
         isBuleyEquilibrium (buleyPolarizationInvariantHom.lift s)) ∧
     isBuleyEquilibrium
-        (buleyPolarizationInvariantHom.lift skyrmsUltraLongRunFixedPoint) :=
+        (buleyPolarizationInvariantHom.lift skyrmsUltraLongRunFixedPoint)
+
+theorem homomorphism_lattice_pattern_witness : HomomorphismLatticeWitness :=
   ⟨buleyPolarizationInvariantHom.coherence,
    novikov_closed_lifts_through_invariant_hom,
    skyrms_ulr_lifts_through_invariant_hom⟩

@@ -134,10 +134,10 @@ theorem axisCells_append_singleton_eq_affect (xs : List Nat) (k : Nat) :
 
 /-! ## Bundled headline witness -/
 
-/-- Single statement bundling the generic fold laws, append
-    multiplicativity, agreement with `AffectMatrixAgencyAxis.gridCells`,
-    the concrete affect cardinality ladder, and the append-axis law. -/
-theorem axis_cardinality_fold_pattern_witness :
+/-- The conjunctive proposition that the headline theorem proves.
+    Lifted to an `abbrev` so that downstream registries (for example
+    `Gnosis.PatternAtlas`) can bundle the witness by name. -/
+abbrev AxisCardinalityFoldWitness : Prop :=
     (axisCells [] = 1) ∧
     (∀ k : Nat, axisCells [k] = k) ∧
     (∀ xs ys : List Nat,
@@ -152,7 +152,12 @@ theorem axis_cardinality_fold_pattern_witness :
     (axisCells [3, 2, 3, 3, 3, 3, 3] = 1458) ∧
     (∀ cards : List Nat, ∀ k : Nat,
       AffectMatrixAgencyAxis.gridCells (cards ++ [k]) =
-        AffectMatrixAgencyAxis.gridCells cards * k) :=
+        AffectMatrixAgencyAxis.gridCells cards * k)
+
+/-- Single statement bundling the generic fold laws, append
+    multiplicativity, agreement with `AffectMatrixAgencyAxis.gridCells`,
+    the concrete affect cardinality ladder, and the append-axis law. -/
+theorem axis_cardinality_fold_pattern_witness : AxisCardinalityFoldWitness :=
   ⟨axisCells_nil,
    axisCells_singleton,
    axisCells_append,
