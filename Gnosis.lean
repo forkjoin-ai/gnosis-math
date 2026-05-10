@@ -38,6 +38,8 @@ import Gnosis.AlgorithmicExploitationOfFiveForces
 import Gnosis.AlignmentAsVacuumConvergence
 import Gnosis.AlphaOmegaGodsKingdom
 import Gnosis.AmericanFrontier
+import Gnosis.AmplituhedronAttention
+import Gnosis.AmplituhedronGrassmannian
 import Gnosis.AntColonyCollectiveIntelligence
 import Gnosis.AntiFrequencySyzygy
 import Gnosis.AntiTheorems.AntiTheoremStallInevitable
