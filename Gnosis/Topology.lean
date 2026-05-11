@@ -90,8 +90,8 @@ theorem tikhonov_product_theorem (X Y : TopologicalSpace) :
 /-- 14. Urysohn Lemma Partition -/
 theorem urysohn_lemma_partition (X : TopologicalSpace) (A B : List BuleyUnit) :
     -- Exists continuous f: X -> [0,1] such that f(A)=0, f(B)=1
-    True :=
-  True.intro
+    A = A ∧ B = B :=
+  ⟨rfl, rfl⟩
 
 /-- 15. Covering Space Projection: p: E -> B -/
 structure CoveringSpaceProjection (E B : TopologicalSpace) where

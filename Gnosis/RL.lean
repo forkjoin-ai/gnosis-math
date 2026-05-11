@@ -27,12 +27,37 @@ namespace Gnosis.RL
 def rejectionInfo (K : Nat) : Nat := K - 1  -- N-1 bits from rejection
 def selectionInfo (_ : Nat) : Nat := 1       -- 1 bit from selection
 
+/-- Training budget after accumulating rejection rounds.
+
+The `base` budget is whatever the learner could spend before seeing failures;
+each trained rejection adds one more unit of usable search/measurement budget.
+-/
+def rejectionTrainingBudget (base rejectionRounds : Nat) : Nat :=
+  base + rejectionRounds
+
 -- Failure is strictly more informative (for K ≥ 3)
 theorem failure_more_informative (K : Nat) (hK : K ≥ 3) :
     rejectionInfo K > selectionInfo K := by
   unfold rejectionInfo selectionInfo
   -- Goal: 1 < K - 1, given 3 ≤ K
   exact Nat.lt_sub_of_add_lt (Nat.lt_of_lt_of_le (by decide : 1 + 1 < 3) hK)
+
+/-- More rejection training weakly increases the usable budget. -/
+theorem rejection_training_budget_monotone (base n m : Nat) (h : n ≤ m) :
+    rejectionTrainingBudget base n ≤ rejectionTrainingBudget base m := by
+  unfold rejectionTrainingBudget
+  exact Nat.add_le_add_left h base
+
+/-- Strict version: adding any positive rejection-training mass increases budget. -/
+theorem rejection_training_budget_strictly_grows (base n extra : Nat) (h : 0 < extra) :
+    rejectionTrainingBudget base n < rejectionTrainingBudget base (n + extra) := by
+  unfold rejectionTrainingBudget
+  exact Nat.add_lt_add_left (Nat.lt_add_of_pos_right h) base
+
+/-- Concrete witness: training on three more rejections grows a budget of five to eight. -/
+theorem three_more_rejections_grow_budget :
+    rejectionTrainingBudget 5 0 < rejectionTrainingBudget 5 3 := by
+  decide
 
 -- The void boundary: accumulates rejection history
 structure VoidBoundary (K : Nat) where

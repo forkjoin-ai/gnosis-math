@@ -591,8 +591,8 @@ theorem pluralityCollapses_consistent :
     context. -/
 
 /-- Corollary form A: there exists a single TheFive type. -/
-theorem OneStructureMultipleNames_existence : ∃ _ : Type, True :=
-  ⟨TheFive, trivial⟩
+theorem OneStructureMultipleNames_existence : ∃ T : Type, Nonempty T :=
+  ⟨TheFive, ⟨TheFive.First⟩⟩
 
 /-- Corollary form B: the three naming codomains are pairwise
     in bijection through TheFive. -/

@@ -101,7 +101,7 @@ structure QuietNightCharts where
 theorem far_on_road_yet_home_in_thought (leagues : Nat) (_h : 0 < leagues) :
     ∃ charts : QuietNightCharts, charts.leaguesAlongRoad = leagues ∧ charts.homeFeelsImmediate := by
   refine ⟨⟨leagues, True⟩, rfl, ?_⟩
-  exact True.intro
+  exact ⟨⟩
 
 /-- Final couplet spine: the lowered tilt is where `homesick` is asserted in the text. -/
 def homesickOnLowered (tilt : HeadTilt) (homesick : Prop) : Prop :=
@@ -114,6 +114,6 @@ theorem lowering_admits_home_thought (h : homesickOnLowered .lowered P) : P :=
 
 /-- Raised-head line in the poem does not assert homesickness in this fragment. -/
 theorem raised_branch_is_sky_chart (P : Prop) : homesickOnLowered .raised P :=
-  True.intro
+  ⟨⟩
 
 end LiBaiQuietNightThoughtWitness

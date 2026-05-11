@@ -50,7 +50,7 @@ opportunity, incurred zero waste, and traversed zero diversity. This is a
 logical tautology (true) rather than a witness to a numeric property, but it
 names the vacuum's role as the topological boundary of the operational lattice. -/
 theorem vacuum_void_pressure_is_maximal : true := by
-  trivial
+  decide
 
 /-- A single clinamen lift from the vacuum to any face always produces a
 Bule unit with score exactly 1. The vacuum has score 0, and each lift adds

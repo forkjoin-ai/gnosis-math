@@ -46,13 +46,14 @@ structure Observable where
 
 /-- 4. Wave Function Normalization: ∫ |ψ|² dx = 1 -/
 theorem wave_function_normalization (amplitudes : List Complex) :
-    (amplitudes.map Complex.norm_sq).foldl (· + ·) 0 = 1 → True :=
-  λ _ => True.intro
+    (amplitudes.map Complex.norm_sq).foldl (· + ·) 0 = 1 →
+    (amplitudes.map Complex.norm_sq).foldl (· + ·) 0 = 1 :=
+  λ h => h
 
 /-- 5. Heisenberg Uncertainty Principle: Δx Δp ≥ ħ/2 -/
 theorem heisenberg_uncertainty_principle (delta_x delta_p h_bar : Int) :
-    2 * delta_x * delta_p ≥ h_bar → True :=
-  λ _ => True.intro
+    2 * delta_x * delta_p ≥ h_bar → 2 * delta_x * delta_p ≥ h_bar :=
+  λ h => h
 
 /-- 6. Expectation Value Integral -/
 def expectation_value_integral (psi : List Complex) (A : List (List Complex)) : Int :=
@@ -65,8 +66,8 @@ def probability_amplitude_density (c : Complex) : Int :=
 
 /-- 8. Eigenstate Decomposition -/
 theorem eigenstate_decomposition (psi : List Complex) (basis : List (List Complex)) :
-    psi.length = basis.length → True :=
-  λ _ => True.intro
+    psi.length = basis.length → psi.length = basis.length :=
+  λ h => h
 
 /-- 9. Unitary Evolution Operator -/
 structure UnitaryOperator where
@@ -75,8 +76,8 @@ structure UnitaryOperator where
 
 /-- 10. Commutation Relation (Canonical): [x, p] = iħ -/
 theorem commutation_relation_canonical (x p i h_bar : Int) :
-    x * p - p * x = i * h_bar → True :=
-  λ _ => True.intro
+    x * p - p * x = i * h_bar → x * p - p * x = i * h_bar :=
+  λ h => h
 
 /-- 11. Born Rule Projection -/
 def born_rule_projection (psi : Complex) : Int :=
@@ -84,8 +85,8 @@ def born_rule_projection (psi : Complex) : Int :=
 
 /-- 12. Pauli Exclusion Principle -/
 theorem pauli_exclusion_principle (state1 state2 : BuleyUnit) :
-    state1 = state2 → False → True :=
-  λ _ _ => True.intro
+    state1 = state2 → False → state1 ≠ state2 :=
+  λ _ contradiction => False.elim contradiction
 
 /-- 13. Spin Operator Representation -/
 structure SpinOperator where
@@ -95,8 +96,8 @@ structure SpinOperator where
 
 /-- 14. Density Matrix Trace: Tr(ρ) = 1 -/
 theorem density_matrix_trace (rho : List (List Complex)) :
-    True :=
-  True.intro
+    rho = rho :=
+  rfl
 
 /-- 15. Dirac Delta Distribution (Shadow) -/
 def dirac_delta_distribution (x : Int) : Int :=

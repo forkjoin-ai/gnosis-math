@@ -170,8 +170,7 @@ private theorem happyCount_replicate_happy : ∀ n,
     show happyCount (happyWave :: List.replicate n happyWave) = n + 1
     show (if VibeValence.happy = VibeValence.happy then 1 else 0)
           + happyCount (List.replicate n happyWave) = n + 1
-    rw [if_pos rfl, ih]
-    omega
+    rw [if_pos rfl, ih, Nat.add_comm]
 
 private theorem unhappyCount_replicate_happy : ∀ n,
     unhappyCount (List.replicate n happyWave) = 0
@@ -201,8 +200,7 @@ private theorem unhappyCount_replicate_unhappy : ∀ n,
     show unhappyCount (unhappyWave :: List.replicate n unhappyWave) = n + 1
     show (if VibeValence.unhappy = VibeValence.unhappy then 1 else 0)
           + unhappyCount (List.replicate n unhappyWave) = n + 1
-    rw [if_pos rfl, ih]
-    omega
+    rw [if_pos rfl, ih, Nat.add_comm]
 
 private theorem happyCount_replicate_quiet : ∀ n,
     happyCount (List.replicate n quietWave) = 0
@@ -228,25 +226,25 @@ private theorem happyCount_append : ∀ (xs ys : List VibeWave),
     happyCount (xs ++ ys) = happyCount xs + happyCount ys
   | [], ys => by
     show happyCount ys = 0 + happyCount ys
-    omega
+    exact (Nat.zero_add (happyCount ys)).symm
   | x :: xs, ys => by
     show happyCount (x :: (xs ++ ys)) = happyCount (x :: xs) + happyCount ys
     have ih := happyCount_append xs ys
     show (if x.valence = VibeValence.happy then 1 else 0) + happyCount (xs ++ ys)
         = ((if x.valence = VibeValence.happy then 1 else 0) + happyCount xs) + happyCount ys
-    rw [ih]; omega
+    rw [ih, Nat.add_assoc]
 
 private theorem unhappyCount_append : ∀ (xs ys : List VibeWave),
     unhappyCount (xs ++ ys) = unhappyCount xs + unhappyCount ys
   | [], ys => by
     show unhappyCount ys = 0 + unhappyCount ys
-    omega
+    exact (Nat.zero_add (unhappyCount ys)).symm
   | x :: xs, ys => by
     show unhappyCount (x :: (xs ++ ys)) = unhappyCount (x :: xs) + unhappyCount ys
     have ih := unhappyCount_append xs ys
     show (if x.valence = VibeValence.unhappy then 1 else 0) + unhappyCount (xs ++ ys)
         = ((if x.valence = VibeValence.unhappy then 1 else 0) + unhappyCount xs) + unhappyCount ys
-    rw [ih]; omega
+    rw [ih, Nat.add_assoc]
 
 private theorem length_replicate (n : Nat) (a : VibeWave) :
     (List.replicate n a).length = n := by
@@ -265,7 +263,7 @@ private theorem length_replicate (n : Nat) (a : VibeWave) :
 
 private theorem length_canonical_field (b : TaoBowl) (h : IsReachable b) :
     (canonicalField b).length = b.rim := by
-  obtain ⟨hSum, _hPos, _hRig, hVoid⟩ := h
+  obtain ⟨hSum, hPos, _, hVoid⟩ := h
   unfold canonicalField
   -- length of the triple append
   show (List.replicate b.rigidity happyWave
@@ -273,10 +271,21 @@ private theorem length_canonical_field (b : TaoBowl) (h : IsReachable b) :
         ++ List.replicate (b.void - (b.damping - 1)) quietWave).length = b.rim
   rw [List.length_append, List.length_append,
       length_replicate, length_replicate, length_replicate]
-  -- Goal: rigidity + (damping - 1) + (void - (damping - 1)) = rim
-  -- damping ≤ void + 1 ⇒ damping - 1 ≤ void ⇒ (void - (damping - 1)) + (damping - 1) = void
-  -- and rigidity + void = rim
-  omega
+  have hm : b.damping - 1 ≤ b.void := by
+    cases damp : b.damping with
+    | zero =>
+      rw [damp] at hPos
+      exact False.elim (Nat.not_succ_le_zero 0 hPos)
+    | succ d =>
+      rw [damp] at hVoid
+      rw [← Nat.succ_eq_add_one b.void] at hVoid
+      exact Nat.le_of_succ_le_succ hVoid
+  have hmid :=
+    (Nat.sub_add_cancel hm : b.void - (b.damping - 1) + (b.damping - 1) = b.void)
+  have hmid' : (b.damping - 1) + (b.void - (b.damping - 1)) = b.void := by
+    rw [Nat.add_comm, hmid]
+  rw [Nat.add_assoc, hmid', Nat.add_comm]
+  exact hSum
 
 private theorem happy_count_canonical_field (b : TaoBowl) :
     happyCount (canonicalField b) = b.rigidity := by
@@ -285,7 +294,7 @@ private theorem happy_count_canonical_field (b : TaoBowl) :
       happyCount_replicate_happy,
       happyCount_replicate_unhappy,
       happyCount_replicate_quiet]
-  omega
+  simp only [Nat.add_zero]
 
 private theorem unhappy_count_canonical_field (b : TaoBowl) :
     unhappyCount (canonicalField b) = b.damping - 1 := by
@@ -294,32 +303,42 @@ private theorem unhappy_count_canonical_field (b : TaoBowl) :
       unhappyCount_replicate_happy,
       unhappyCount_replicate_unhappy,
       unhappyCount_replicate_quiet]
-  omega
+  simp only [Nat.zero_add, Nat.add_zero]
 
 private theorem dominant_count_canonical_field (b : TaoBowl) (h : IsReachable b) :
     dominantCount (canonicalField b) = b.rigidity := by
-  obtain ⟨_hSum, _hPos, hRig, _hVoid⟩ := h
+  obtain ⟨_hSum, hPos, hRig, _hVoid⟩ := h
   unfold dominantCount
   rw [happy_count_canonical_field, unhappy_count_canonical_field]
-  -- Goal: max b.rigidity (b.damping - 1) = b.rigidity
-  -- damping ≤ rigidity + 1 ⇒ damping - 1 ≤ rigidity
-  omega
+  have hd : b.damping - 1 ≤ b.rigidity := by
+    cases damp : b.damping with
+    | zero =>
+      rw [damp] at hPos
+      exact False.elim (Nat.not_succ_le_zero 0 hPos)
+    | succ d =>
+      exact Nat.le_of_succ_le_succ (by simpa [damp, Nat.succ_eq_add_one] using hRig)
+  exact Nat.max_eq_left hd
 
 private theorem minority_count_canonical_field (b : TaoBowl) (h : IsReachable b) :
     minorityCount (canonicalField b) = b.damping - 1 := by
-  obtain ⟨_hSum, _hPos, hRig, _hVoid⟩ := h
+  obtain ⟨_hSum, hPos, hRig, _hVoid⟩ := h
   unfold minorityCount
   rw [happy_count_canonical_field, unhappy_count_canonical_field]
-  -- Goal: min b.rigidity (b.damping - 1) = b.damping - 1
-  omega
+  have hd : b.damping - 1 ≤ b.rigidity := by
+    cases damp : b.damping with
+    | zero =>
+      rw [damp] at hPos
+      exact False.elim (Nat.not_succ_le_zero 0 hPos)
+    | succ d =>
+      exact Nat.le_of_succ_le_succ (by simpa [damp, Nat.succ_eq_add_one] using hRig)
+  exact Nat.min_eq_right hd
 
 private theorem dissenting_count_canonical_field (b : TaoBowl) (h : IsReachable b) :
     dissentingCount (canonicalField b) = b.void := by
   have hSum : b.void + b.rigidity = b.rim := h.1
   unfold dissentingCount
-  rw [length_canonical_field b h, dominant_count_canonical_field b h]
-  -- Goal: b.rim - b.rigidity = b.void
-  omega
+  rw [length_canonical_field b h, dominant_count_canonical_field b h, ← hSum]
+  exact Nat.add_sub_self_right b.void b.rigidity
 
 /-! ## The round-trip theorem
 
@@ -340,7 +359,7 @@ theorem bowl_of_canonical_field (b : TaoBowl) (h : IsReachable b) :
   · exact dominant_count_canonical_field b ⟨_hSum, hPos, _hRig, _hVoid⟩
   · -- minorityCount + 1 = damping (using damping ≥ 1 to undo Nat subtraction)
     rw [minority_count_canonical_field b ⟨_hSum, hPos, _hRig, _hVoid⟩]
-    omega
+    exact Nat.sub_add_cancel hPos
 
 /-- **Round-trip lemma.** For any reachable bowl, the partial
     inverse composed with the forward map returns the bowl —
@@ -413,9 +432,11 @@ theorem round_trip_all_quiet_bowl :
     `damping ≤ rigidity + 1 ∧ damping ≤ void + 1` implies it. -/
 theorem reachable_implies_damping_le_rim_plus_one (b : TaoBowl)
     (h : IsReachable b) : b.damping ≤ b.rim + 1 := by
-  obtain ⟨hSum, _, hRig, hVoid⟩ := h
-  -- damping ≤ rigidity + 1 and rigidity ≤ rim ⇒ damping ≤ rim + 1
-  omega
+  obtain ⟨hSum, _, hRig, _⟩ := h
+  have hr : b.rigidity ≤ b.rim := by
+    rw [← hSum]
+    exact Nat.le_add_left b.rigidity b.void
+  exact Nat.le_trans hRig (Nat.add_le_add_right hr 1)
 
 /-- Unreachable witness 1: the `damping = 100` bowl from
     `ThoughtBowlMechanics.unreachableBowl`. The damping exceeds

@@ -241,6 +241,7 @@ import Gnosis.Continuum
 import Gnosis.ContinuumExtensionSketch
 import Gnosis.ConversationalDodgeball
 import Gnosis.Contrarian.ContrarianAntiTheoremStallPreventsCollapse
+import Gnosis.Contrarian.ContrarianAdversariesImprove
 import Gnosis.Contrarian.ContrarianByzantineLatencyFeature
 import Gnosis.Contrarian.ContrarianDecouplingReducesThroughput
 import Gnosis.Contrarian.ContrarianExecutionIsLoss
@@ -896,6 +897,7 @@ import Gnosis.QuorumLinearizability
 import Gnosis.QuorumOrdering
 import Gnosis.QuorumVisibility
 import Gnosis.RL
+import Gnosis.RLBudgetLedgerBridge
 import Gnosis.RaceWinnerCorrectness
 import Gnosis.RaceWinnerPredictions
 import Gnosis.RamanujanPartitionMod5

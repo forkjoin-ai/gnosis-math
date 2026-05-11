@@ -1,4 +1,7 @@
 /.lake
 
+# Cursor/Claude agent worktrees (ephemeral copies; never commit)
+.claude/worktrees/
+
 # Mandatory monorepo ignores (synced by a0)
 .wrangler/

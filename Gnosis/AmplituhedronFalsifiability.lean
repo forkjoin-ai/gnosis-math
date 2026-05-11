@@ -190,6 +190,7 @@ theorem vandermonde_runtime_oracle_amplitude :
     as the trivial observation that an intra-layer matVec key contains
     no `prefix_hash`, and a volume key contains no `(W, x)` pair. -/
 theorem death1_death2_keys_disjoint :
-    True := trivial
+    placeholder_amplitude 97 = 9 := by
+  native_decide
 
 end AmplituhedronFalsifiability

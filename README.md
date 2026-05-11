@@ -20,6 +20,10 @@ Current integration plan: [ROADMAP.md](./ROADMAP.md)
 
 Gap closure status: [GAP_CLOSURE.md](./GAP_CLOSURE.md)
 
+MCP coverage gap ledger: [MCP_GAP_LEDGER.md](./MCP_GAP_LEDGER.md)
+
+MCP open-obligations ledger: [MCP_OPEN_OBLIGATIONS.md](./MCP_OPEN_OBLIGATIONS.md)
+
 `missing_imports.txt` at the root of this package is an optional stub (see file header); parent monorepo Cloud Build source tar steps referenced it with ENOENT when absent.
 
 ## What It Owns
@@ -33,6 +37,7 @@ Gap closure status: [GAP_CLOSURE.md](./GAP_CLOSURE.md)
 | Topological reductions | `TopologicalMetabolism`, `TopologicalRenormalization`, `FoldHeatHierarchy` |
 | Classical math bridges | `ArnoldCatMapOrder5`, `ZeckendorfCompleteness`, `QuadraticReciprocityInstances`, `OneCobFrobenius` |
 | Domain bridges | finance, queues, hydrology, sleep, compliance, security, HFT, genomics, and other bounded bridge files |
+| Contrarian anti-theorems | `Gnosis/Contrarian/*`, including adversarial pressure as strict improvement |
 
 ## Current Formal Frontiers
 

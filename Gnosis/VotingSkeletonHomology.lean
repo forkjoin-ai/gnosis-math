@@ -91,8 +91,8 @@ theorem graph_homology_torsion_rank_eq_zero (V E ω : Nat) : graphHomologyTorsio
   rfl
 
 /-- **β₀ clip** from vertex and component counts (here: one component ⇒ `β₀ = ω`). -/
-def graphBeta0Clip (omega : Nat) : Nat :=
-  omega
+def graphBeta0Clip (componentCount : Nat) : Nat :=
+  componentCount
 
 /-- Pair `(β₀, β₁)` for `KnotRopelengthComplexity.BettiSig` / `ropelength` comparison. -/
 def paradoxBettiClip (vertexCount edgeCount omega : Nat) : KnotRopelengthComplexity.BettiSig :=

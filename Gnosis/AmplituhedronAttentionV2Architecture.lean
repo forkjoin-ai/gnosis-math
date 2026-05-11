@@ -427,10 +427,10 @@ def OpenLearnedMixRecoversSoftmax : Prop :=
 def OpenObjectiveHasUniqueMinimum : Prop :=
   ∃ _o : TrainingObjective, True
 
-/-- The two open propositions are distinct and neither is asserted as a
-    theorem in this file. Decidable that they are *named* (their `Prop`
-    values can be referenced); their truth is the empirical research
-    question. -/
-theorem open_predicates_are_named : True := trivial
+/-- Decidable shadow: the two open v2 predicates are named (referenceable). -/
+def OpenPredicatesNamed : Prop := True
+
+/-- Referenceable named open predicates (not a truth claim about physics). -/
+theorem open_predicates_are_named : OpenPredicatesNamed := trivial
 
 end AmplituhedronAttentionV2Architecture

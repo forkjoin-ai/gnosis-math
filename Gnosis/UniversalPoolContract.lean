@@ -82,11 +82,16 @@ theorem partition_size_pos (shape : MeshShape) (i : Nat)
     (_h_i_lt : i < shape.nodeCount) :
     (partRange shape i).1 < (partRange shape i).2 := by
   simp only [partRange]
-  -- baseSize ≥ 1 since numLayers ≥ nodeCount
-  have h_base_pos : 1 ≤ shape.numLayers / shape.nodeCount := by
-    apply Nat.div_pos shape.node_le_layers shape.node_pos
-  -- size = baseSize + extra ≥ 1; lo + size > lo
-  omega
+  have h_base_pos : 1 ≤ shape.numLayers / shape.nodeCount :=
+    Nat.div_pos shape.node_le_layers shape.node_pos
+  have hblt : 0 < shape.numLayers / shape.nodeCount :=
+    Nat.lt_of_succ_le h_base_pos
+  have hsz :
+      0 <
+        shape.numLayers / shape.nodeCount +
+          (if i < shape.numLayers % shape.nodeCount then 1 else 0) :=
+    Nat.lt_of_lt_of_le hblt (Nat.le_add_right _ _)
+  exact Nat.lt_add_of_pos_right hsz
 
 /-! ## Self-similarity: smaller-mesh-is-prefix-of-bigger-mesh
 

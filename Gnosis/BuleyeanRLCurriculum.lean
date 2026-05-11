@@ -40,24 +40,22 @@ def StageSatisfied (c : TrainingCapabilities) : CurriculumStage → Prop
   | .buley => c.presentCompetent ∧ c.pastCoordinated ∧ c.futureClosed
 
 /-- Monotone stage implication relation. -/
+def stageRank : CurriculumStage → Nat
+  | .nash => 0
+  | .skyrms => 1
+  | .buley => 2
+
 def StageImplies (sHi sLo : CurriculumStage) : Prop :=
-  match sHi, sLo with
-  | .nash, .nash => True
-  | .skyrms, .nash => True
-  | .buley, .nash => True
-  | .skyrms, .skyrms => True
-  | .buley, .skyrms => True
-  | .buley, .buley => True
-  | _, _ => False
+  stageRank sLo ≤ stageRank sHi
 
 theorem buley_implies_skyrms : StageImplies .buley .skyrms := by
-  trivial
+  native_decide
 
 theorem skyrms_implies_nash : StageImplies .skyrms .nash := by
-  trivial
+  native_decide
 
 theorem buley_implies_nash : StageImplies .buley .nash := by
-  trivial
+  native_decide
 
 /-- Capability inheritance theorem:
 if a model satisfies Buley stage, it satisfies Skyrms and Nash stages. -/

@@ -276,10 +276,15 @@ private theorem foldl_length_replicate (pattern : List Nat) :
       intro a
       simp only [List.replicate, List.foldl_cons]
       rw [ih (a + pattern.length)]
-      -- a + pattern.length + n * pattern.length = a + (n+1) * pattern.length
-      have : (n + 1) * pattern.length = n * pattern.length + pattern.length := by
-        rw [Nat.add_mul]; simp
-      omega
+      have hmul :
+          (n + 1) * pattern.length = n * pattern.length + pattern.length := by
+        rw [Nat.add_mul, Nat.one_mul]
+      calc
+        a + pattern.length + n * pattern.length
+            = a + (pattern.length + n * pattern.length) := by rw [Nat.add_assoc]
+        _ = a + (n * pattern.length + pattern.length) := by
+              rw [Nat.add_comm (pattern.length)]
+        _ = a + (n + 1) * pattern.length := by rw [hmul]
 
 /-- Bulk byte count of K copies of the same pattern = K * |pattern|. -/
 theorem sharedDictBulk_bytes (pattern : List Nat) (k : Nat) :
@@ -287,13 +292,37 @@ theorem sharedDictBulk_bytes (pattern : List Nat) (k : Nat) :
   unfold bulkByteCount sharedDictBulk
   simp
   rw [foldl_length_replicate pattern k 0]
-  omega
+  rw [Nat.zero_add]
 
 /-- Boundary byte count of the shared-dict projection. -/
 theorem sharedDictBoundary_bytes (pattern : List Nat) (k : Nat) :
     boundaryByteCount (sharedDictBoundary pattern k) = pattern.length + k := by
   unfold boundaryByteCount sharedDictBoundary
   simp [List.foldl, List.length_replicate]
+
+private theorem add_le_mul_of_two_le (k L : Nat) (hk : 2 ≤ k) (hL : 2 ≤ L) : k + L ≤ k * L := by
+  generalize ha : k - 2 = a
+  generalize hb : L - 2 = b
+  have hkEq : k = a + 2 := by
+    rw [← ha]
+    exact Eq.symm (Nat.sub_add_cancel hk)
+  have hLEq : L = b + 2 := by
+    rw [← hb]
+    exact Eq.symm (Nat.sub_add_cancel hL)
+  rw [hkEq, hLEq]
+  have hrhs :
+      (a + 2) * (b + 2) = a * b + 2 * a + 2 * b + 4 := by
+    rw [Nat.mul_add, Nat.add_mul, Nat.add_mul, Nat.mul_comm a 2]
+    rw [show (2 : Nat) * 2 = 4 from rfl]
+    simp only [Nat.add_assoc, Nat.add_left_comm]
+  rw [hrhs]
+  have hlhs : (a + 2) + (b + 2) = a + b + 4 := by
+    simp only [Nat.add_assoc, Nat.add_comm, Nat.add_left_comm]
+  rw [hlhs]
+  have hsplit : a * b + 2 * a + 2 * b = a + b + (a * b + a + b) := by
+    simp only [Nat.two_mul, Nat.add_assoc, Nat.add_comm, Nat.add_left_comm]
+  exact Nat.add_le_add_right
+    (by rw [hsplit]; exact Nat.le_add_right (a + b) (a * b + a + b)) 4
 
 /-- InformationOnBoundary (dedup variant): for K ≥ 2 and a pattern of
     length ≥ 2, the shared-dict boundary holds at most as much
@@ -309,29 +338,8 @@ theorem information_on_boundary_dedup
     (hk : k ≥ 2) (hp : pattern.length ≥ 2) :
     boundaryByteCount (sharedDictBoundary pattern k)
       ≤ bulkByteCount (sharedDictBulk pattern k) := by
-  rw [sharedDictBoundary_bytes, sharedDictBulk_bytes]
-  -- Goal: pattern.length + k ≤ k * pattern.length, with k ≥ 2 and L ≥ 2.
-  -- Bound: (k - 1) * (pattern.length - 1) ≥ 1 implies k*L ≥ k + L.
-  have h_km1 : k - 1 ≥ 1 := by omega
-  have h_Lm1 : pattern.length - 1 ≥ 1 := by omega
-  have h_prod : (k - 1) * (pattern.length - 1) ≥ 1 :=
-    Nat.le_trans (by decide : 1 ≤ 1 * 1) (Nat.mul_le_mul h_km1 h_Lm1)
-  -- Expand: k*L = (k-1)*(L-1) + (k-1) + (L-1) + 1 (when k,L ≥ 1).
-  have h_expand : k * pattern.length
-                = (k - 1) * (pattern.length - 1) + (k - 1) + (pattern.length - 1) + 1 := by
-    have hk1 : k = (k - 1) + 1 := by omega
-    have hL1 : pattern.length = (pattern.length - 1) + 1 := by omega
-    -- ((k-1)+1) * ((L-1)+1) = (k-1)*(L-1) + (k-1)*1 + 1*(L-1) + 1*1
-    --                       = (k-1)*(L-1) + (k-1) + (L-1) + 1
-    have step : ((k - 1) + 1) * ((pattern.length - 1) + 1)
-              = (k - 1) * (pattern.length - 1) + (k - 1) + (pattern.length - 1) + 1 := by
-      rw [Nat.add_mul, Nat.mul_add, Nat.mul_add,
-          Nat.one_mul, Nat.mul_one, Nat.one_mul]
-      omega
-    calc k * pattern.length
-        = ((k - 1) + 1) * ((pattern.length - 1) + 1) := by rw [← hk1, ← hL1]
-      _ = (k - 1) * (pattern.length - 1) + (k - 1) + (pattern.length - 1) + 1 := step
-  omega
+  rw [sharedDictBoundary_bytes, sharedDictBulk_bytes, Nat.add_comm pattern.length k]
+  exact add_le_mul_of_two_le k pattern.length hk hp
 
 /-! ══════════════════════════════════════════════════════════════
     ## StrictHolographicReduction: the concrete witness
