@@ -1,10 +1,13 @@
 -- Amplituhedron Attention — Death #2 of Five Deaths TPS Roadmap
 --
--- Death #1 (ER=EPR matVec memo): standing wave pinning ✅ shipped
+-- Death #1 (ER=EPR matVec memo): standing wave pinning shipped
 -- Death #2 (Amplituhedron): attention singularities → scattering amplitudes
--- Death #3 (aeon-flow): token routing optimization
--- Death #4: TBD
--- Death #5: TBD
+-- Death #3 (aeon-flow): token routing optimization (WSStation substrate)
+-- Death #4 (Octonion Fano / Pair X): residual-seed consume branch shipped
+--   default OFF pending Leg 3 parity bench; see `Gnosis.FanoOctonionNonAssoc`
+-- Death #5 (Pleromatic Cross-Prefix Compression): bw-codec POSDICT mode
+--   shipped end-to-end (Rust + TS); see `Gnosis.Death5CrossPrefixCompression`
+--   and `Gnosis.PositionalDictModeContract`
 --
 -- Standing wave pinning proves that k << d dimensions carry signal.
 -- Amplituhedron builds on this: Q/K/V interactions collapse to minimal surface
