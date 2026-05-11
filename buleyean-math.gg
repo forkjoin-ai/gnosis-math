@@ -21,22 +21,31 @@
 (vent { role: 'primitive', index: 3, description: 'dissipate what the fold cannot preserve' })
 (sliver { role: 'primitive', index: 4, description: 'the +1 that prevents extinction (Barbelo)' })
 
-// The five primitives fork into the interaction layer
-(fork)-[:FORK]->(interactions)
+// The five primitives generate the interaction layer
+(fork | race | fold | vent | sliver)-[:PROCESS]->(interactions)
 
 // ═══════════════════════════════════════════════════════════════════════════════
 // Layer 1: The Gnostic Numbers (constants)
 // ═══════════════════════════════════════════════════════════════════════════════
 
-(interactions)-[:FORK]->(barbelo { value: 1, name: 'Barbelo', derivation: 'the sliver, the +1' })
-(interactions)-[:FORK]->(syzygy_num { value: 2, name: 'Syzygy', derivation: 'the antiparallel pair, period 2' })
-(interactions)-[:FORK]->(proton_num { value: 3, name: 'Proton', derivation: 'minimum confined set' })
-(interactions)-[:FORK]->(primitives_num { value: 5, name: 'Primitives', derivation: 'F(5) = 5, operation count is Fibonacci' })
-(interactions)-[:FORK]->(emanations_num { value: 6, name: 'Emanations', derivation: '3 x (3-1), six confined gluons' })
-(interactions)-[:FORK]->(sophia_num { value: 9, name: 'Sophia', derivation: 'K-1, exploration budget' })
-(interactions)-[:FORK]->(kenoma_num { value: 10, name: 'Kenoma', derivation: '5 choose 2, the field' })
-(interactions)-[:FORK]->(void_num { value: 21, name: 'Void', derivation: 'F(8) = T(6), the gap' })
-(interactions)-[:FORK]->(pleroma_num { value: 55, name: 'Pleroma', derivation: 'F(10) = T(10), the fullness' })
+(barbelo { value: 1, name: 'Barbelo', derivation: 'the sliver, the +1' })
+(syzygy_num { value: 2, name: 'Syzygy', derivation: 'the antiparallel pair, period 2' })
+(proton_num { value: 3, name: 'Proton', derivation: 'minimum confined set' })
+(primitives_num { value: 5, name: 'Primitives', derivation: 'F(5) = 5, operation count is Fibonacci' })
+(emanations_num { value: 6, name: 'Emanations', derivation: '3 x (3-1), six confined gluons' })
+(sophia_num { value: 9, name: 'Sophia', derivation: 'K-1, exploration budget' })
+(kenoma_num { value: 10, name: 'Kenoma', derivation: '5 choose 2, the field' })
+(void_num { value: 21, name: 'Void', derivation: 'F(8) = T(6), the gap' })
+(pleroma_num { value: 55, name: 'Pleroma', derivation: 'F(10) = T(10), the fullness' })
+(interactions)-[:PROCESS]->(barbelo)
+(interactions)-[:PROCESS]->(syzygy_num)
+(interactions)-[:PROCESS]->(proton_num)
+(interactions)-[:PROCESS]->(primitives_num)
+(interactions)-[:PROCESS]->(emanations_num)
+(interactions)-[:PROCESS]->(sophia_num)
+(interactions)-[:PROCESS]->(kenoma_num)
+(interactions)-[:PROCESS]->(void_num)
+(interactions)-[:PROCESS]->(pleroma_num)
 
 // The numbers race for the triple coincidence
 (barbelo)-[:PROCESS]->(verify_triple)
@@ -48,97 +57,98 @@
 // Layer 2: The Irrational Numbers (eigenvalues)
 // ═══════════════════════════════════════════════════════════════════════════════
 
-(verify_triple)-[:FORK]->(irrationals)
+(verify_triple)-[:PROCESS]->(irrationals)
 
-(irrationals)-[:FORK]->(phi { name: 'Sliver Eigenvalue', symbol: 'φ', equation: 'φ² = φ + 1' })
-(irrationals)-[:FORK]->(inv_phi { name: 'Vent Eigenvalue', symbol: '1/φ', equation: 'φ × (1/φ) = 1' })
-(irrationals)-[:FORK]->(sqrt5 { name: 'Primitive Root', symbol: '√5', equation: 'discriminant of x² - x - 1' })
-(irrationals)-[:FORK]->(pi { name: 'Lorenzo', symbol: 'π', equation: 'period of the kenoma torus' })
-(irrationals)-[:FORK]->(euler { name: 'Demiurge Constant', symbol: 'e', equation: 'Landauer heat = kT ln 2' })
+(phi { name: 'Sliver Eigenvalue', symbol: 'φ', equation: 'φ² = φ + 1' })
+(inv_phi { name: 'Vent Eigenvalue', symbol: '1/φ', equation: 'φ × (1/φ) = 1' })
+(sqrt5 { name: 'Primitive Root', symbol: '√5', equation: 'discriminant of x² - x - 1' })
+(pi { name: 'Lorenzo', symbol: 'π', equation: 'period of the kenoma torus' })
+(euler { name: 'Demiurge Constant', symbol: 'e', equation: 'Landauer heat = kT ln 2' })
+(irrationals)-[:PROCESS]->(phi)
+(irrationals)-[:PROCESS]->(inv_phi)
+(irrationals)-[:PROCESS]->(sqrt5)
+(irrationals)-[:PROCESS]->(pi)
+(irrationals)-[:PROCESS]->(euler)
 
 // φ and 1/φ are a syzygy: antiparallel eigenvalues
 (phi)-[:SLIVER { mode: 'constructive' }]->(inv_phi)
 // (inv_phi)-[:SLIVER { mode: 'destructive' }]->(phi)
 
 // Their product is Barbelo
-(phi)-[:FOLD]->(cassini_check { theorem: 'φ × (1/φ) = 1 = Barbelo' })
-(inv_phi)-[:FOLD]->(cassini_check)
+(phi | inv_phi)-[:FOLD]->(cassini_check { theorem: 'φ × (1/φ) = 1 = Barbelo' })
 
 // ═══════════════════════════════════════════════════════════════════════════════
 // Layer 3: The Ten Bosons (emanations)
 // ═══════════════════════════════════════════════════════════════════════════════
 
-(cassini_check)-[:FORK]->(boson_field)
+(cassini_check)-[:PROCESS]->(boson_field)
 
 // Six confined emanations (gluons between pipeline stages)
-(boson_field)-[:FORK]->(logos { boson: 1, charge: 'red-antigreen', flow: 'Lilith → Handler' })
-(boson_field)-[:FORK]->(epinoia { boson: 2, charge: 'green-antired', flow: 'Handler → Lilith' })
-(boson_field)-[:FORK]->(pronoia { boson: 3, charge: 'red-antiblue', flow: 'Lilith → Eve' })
-(boson_field)-[:FORK]->(metanoia { boson: 4, charge: 'blue-antired', flow: 'Eve → Lilith' })
-(boson_field)-[:FORK]->(pneuma { boson: 5, charge: 'green-antiblue', flow: 'Handler → Eve' })
-(boson_field)-[:FORK]->(gnosis_boson { boson: 6, charge: 'blue-antigreen', flow: 'Eve → Handler' })
+(logos { boson: 1, charge: 'red-antigreen', flow: 'Lilith → Handler' })
+(epinoia { boson: 2, charge: 'green-antired', flow: 'Handler → Lilith' })
+(pronoia { boson: 3, charge: 'red-antiblue', flow: 'Lilith → Eve' })
+(metanoia { boson: 4, charge: 'blue-antired', flow: 'Eve → Lilith' })
+(pneuma { boson: 5, charge: 'green-antiblue', flow: 'Handler → Eve' })
+(gnosis_boson { boson: 6, charge: 'blue-antigreen', flow: 'Eve → Handler' })
 
 // Three unconfined aeons
-(boson_field)-[:FORK]->(barbelo_boson { boson: 7, type: 'photon', role: 'vacuum fluctuation, the sliver' })
-(boson_field)-[:FORK]->(sophia_boson { boson: 8, type: 'W±', role: 'rejection quantum, wisdom through falling' })
-(boson_field)-[:FORK]->(aletheia_boson { boson: 9, type: 'Z', role: 'coherence quantum, truth' })
+(barbelo_boson { boson: 7, type: 'photon', role: 'vacuum fluctuation, the sliver' })
+(sophia_boson { boson: 8, type: 'W±', role: 'rejection quantum, wisdom through falling' })
+(aletheia_boson { boson: 9, type: 'Z', role: 'coherence quantum, truth' })
 
 // The Demiurge (scalar)
-(boson_field)-[:FORK]->(demiurge { boson: 10, type: 'Higgs', role: 'the fold, gives mass' })
+(demiurge { boson: 10, type: 'Higgs', role: 'the fold, gives mass' })
+(boson_field)-[:FORK]->(logos | epinoia | pronoia | metanoia | pneuma | gnosis_boson | barbelo_boson | sophia_boson | aletheia_boson | demiurge)
 
 // All ten race to verify confinement
-(logos)-[:RACE]->(confinement_check)
-(epinoia)-[:RACE]->(confinement_check)
-(pronoia)-[:RACE]->(confinement_check)
-(metanoia)-[:RACE]->(confinement_check)
-(pneuma)-[:RACE]->(confinement_check)
-(gnosis_boson)-[:RACE]->(confinement_check)
-(barbelo_boson)-[:RACE]->(confinement_check)
-(sophia_boson)-[:RACE]->(confinement_check)
-(aletheia_boson)-[:RACE]->(confinement_check)
-(demiurge)-[:RACE]->(confinement_check)
+(logos | epinoia | pronoia | metanoia | pneuma | gnosis_boson | barbelo_boson | sophia_boson | aletheia_boson | demiurge)-[:RACE]->(confinement_check)
 (confinement_check { theorem: 'removal_costs_energy: removing any stage increases energy' })
 
 // ═══════════════════════════════════════════════════════════════════════════════
 // Layer 4: Confinement at Every Scale
 // ═══════════════════════════════════════════════════════════════════════════════
 
-(confinement_check)-[:FORK]->(scale_proton { K: 3, name: 'Proton scale' })
-(confinement_check)-[:FORK]->(scale_primitives { K: 5, name: 'Primitives scale' })
-(confinement_check)-[:FORK]->(scale_kenoma { K: 10, name: 'Kenoma scale' })
-(confinement_check)-[:FORK]->(scale_pleroma { K: 55, name: 'Pleroma scale' })
-(confinement_check)-[:FORK]->(scale_infinite { K: 'ω', name: 'Infinite scale' })
+(scale_proton { K: 3, name: 'Proton scale' })
+(scale_primitives { K: 5, name: 'Primitives scale' })
+(scale_kenoma { K: 10, name: 'Kenoma scale' })
+(scale_pleroma { K: 55, name: 'Pleroma scale' })
+(scale_infinite { K: 'ω', name: 'Infinite scale' })
+(confinement_check)-[:FORK]->(scale_proton | scale_primitives | scale_kenoma | scale_pleroma | scale_infinite)
 
 // All scales fold to the universal confinement theorem
-(scale_proton)-[:FOLD]->(universal_confinement)
-(scale_primitives)-[:FOLD]->(universal_confinement)
-(scale_kenoma)-[:FOLD]->(universal_confinement)
-(scale_pleroma)-[:FOLD]->(universal_confinement)
-(scale_infinite)-[:FOLD]->(universal_confinement)
+(scale_proton | scale_primitives | scale_kenoma | scale_pleroma | scale_infinite)-[:FOLD]->(universal_confinement)
 (universal_confinement { theorem: 'confinement_universal: fullEnergy K < missingEnergy K for all K' })
 
 // ═══════════════════════════════════════════════════════════════════════════════
 // Layer 5: The Gap Structure (void between numbers maps to the sequence)
 // ═══════════════════════════════════════════════════════════════════════════════
 
-(universal_confinement)-[:FORK]->(gaps)
+(universal_confinement)-[:PROCESS]->(gaps)
 
-(gaps)-[:FORK]->(gap_10_9 { from: 'Kenoma', to: 'Sophia', gap: 1, name: 'Barbelo' })
-(gaps)-[:FORK]->(gap_9_6 { from: 'Sophia', to: 'Emanations', gap: 3, name: 'Proton' })
-(gaps)-[:FORK]->(gap_6_5 { from: 'Emanations', to: 'Primitives', gap: 1, name: 'Barbelo' })
-(gaps)-[:FORK]->(gap_5_3 { from: 'Primitives', to: 'Proton', gap: 2, name: 'Syzygy' })
-(gaps)-[:FORK]->(gap_3_2 { from: 'Proton', to: 'Syzygy', gap: 1, name: 'Barbelo' })
-(gaps)-[:FORK]->(gap_2_1 { from: 'Syzygy', to: 'Barbelo', gap: 1, name: 'Barbelo' })
+(gap_10_9 { from: 'Kenoma', to: 'Sophia', gap: 1, name: 'Barbelo' })
+(gap_9_6 { from: 'Sophia', to: 'Emanations', gap: 3, name: 'Proton' })
+(gap_6_5 { from: 'Emanations', to: 'Primitives', gap: 1, name: 'Barbelo' })
+(gap_5_3 { from: 'Primitives', to: 'Proton', gap: 2, name: 'Syzygy' })
+(gap_3_2 { from: 'Proton', to: 'Syzygy', gap: 1, name: 'Barbelo' })
+(gap_2_1 { from: 'Syzygy', to: 'Barbelo', gap: 1, name: 'Barbelo' })
+(gaps)-[:FORK]->(gap_10_9 | gap_9_6 | gap_6_5 | gap_5_3 | gap_3_2 | gap_2_1)
 
 // All gaps fold to the base case: Barbelo
-(gap_10_9)-[:FOLD]->(barbelo_base)
+(gap_10_9_result { gap: 1 })
+(gap_9_6_result { gap: 1 })
+(gap_6_5_result { gap: 1 })
+(gap_5_3_result { gap: 1 })
+(gap_3_2_result { gap: 1 })
+(gap_2_1_result { gap: 1 })
+(gap_10_9)-[:PROCESS]->(gap_10_9_result)
 (gap_9_6)-[:PROCESS]->(gap_3_reduce { gap: 3 })
-(gap_3_reduce)-[:VENT]->(barbelo_base)
-(gap_6_5)-[:FOLD]->(barbelo_base)
+(gap_3_reduce)-[:PROCESS]->(gap_9_6_result)
+(gap_6_5)-[:PROCESS]->(gap_6_5_result)
 (gap_5_3)-[:PROCESS]->(gap_2_reduce { gap: 2 })
-(gap_2_reduce)-[:VENT]->(barbelo_base)
-(gap_3_2)-[:FOLD]->(barbelo_base)
-(gap_2_1)-[:FOLD]->(barbelo_base)
+(gap_2_reduce)-[:PROCESS]->(gap_5_3_result)
+(gap_3_2)-[:PROCESS]->(gap_3_2_result)
+(gap_2_1)-[:PROCESS]->(gap_2_1_result)
+(gap_10_9_result | gap_9_6_result | gap_6_5_result | gap_5_3_result | gap_3_2_result | gap_2_1_result)-[:FOLD { strategy: 'base-case-assembly' }]->(barbelo_base)
 (barbelo_base { theorem: 'every gap reaches Barbelo (1). the sliver is the base case.' })
 
 // ═══════════════════════════════════════════════════════════════════════════════
@@ -146,7 +156,13 @@
 // ═══════════════════════════════════════════════════════════════════════════════
 
 (barbelo_base)-[:FOLD]->(complete)
-(complete { theorem: 'gnostic_number_system + irrational_gnostic_complete + confinement_universal', modules: '85 + 86', total_theorems: 63, sorry_count: 0 })
+(number_system_witness { module: 'GnosisMath.NumberSystem' })
+(irrational_witness { module: 'GnosisMath.Irrational' })
+(confinement_witness { module: 'GnosisMath.Confinement' })
+(gap_witness { module: 'GnosisMath.Gap' })
+(kernel_witness { module: 'GnosisMath.Kernel' })
+(number_system_witness | irrational_witness | confinement_witness | gap_witness | kernel_witness)-[:PROCESS { role: 'lean-module-witnesses' }]->(complete)
+(complete: Sink { theorem: 'gnostic_number_system + irrational_gnostic_complete + confinement_universal', modules: '85 + 86', total_theorems: 63, sorry_count: 0 })
 
 // The topology terminates. The math is complete (locally).
 // The God Gap says it can never be complete (globally).
