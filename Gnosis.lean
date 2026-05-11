@@ -41,6 +41,7 @@ import Gnosis.AlphaOmegaGodsKingdom
 import Gnosis.AmericanFrontier
 import Gnosis.AmplituhedronAntisymmetryNoGo
 import Gnosis.AmplituhedronAttention
+import Gnosis.AmplituhedronAttentionV2Architecture
 import Gnosis.AmplituhedronCoverageSweep
 import Gnosis.AmplituhedronFalsifiability
 import Gnosis.AmplituhedronGrassmannian
