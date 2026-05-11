@@ -370,6 +370,9 @@ import Gnosis.DeceptaconVariants
 import Gnosis.DeepCompositions
 import Gnosis.DeepReduction
 import Gnosis.DeficitCapacity
+import Gnosis.Death7BekensteinBound
+import Gnosis.Death7HolographicCompression
+import Gnosis.Death7MarkovBroken
 import Gnosis.DepolarizationIsParetoImprovement
 import Gnosis.DepressionAsDampedOscillation
 import Gnosis.DestinyAsRetrocausalAttractor
@@ -549,6 +552,13 @@ import Gnosis.InftyTopoi
 import Gnosis.InitOnlyDoctrine
 import Gnosis.InformationAsClinamenCharge
 import Gnosis.InformationAsInterferencePattern
+import Gnosis.InformationalPhysics
+import Gnosis.InformationalPhysicsAlgebra
+import Gnosis.InformationalPhysicsCompleteness
+import Gnosis.InformationalPhysicsCoverThomasAlternative
+import Gnosis.InformationalPhysicsForcedBijection
+import Gnosis.InformationalPhysicsStrict
+import Gnosis.InformationalPhysicsUnified
 import Gnosis.InstitutionalLiability
 import Gnosis.InterferenceCoarsening
 import Gnosis.InterferenceAsTheFifthForce
