@@ -783,6 +783,7 @@ import Gnosis.MumonkanGatelessGateWitness
 import Gnosis.Multiplexing
 import Gnosis.NahmDimensionCeiling
 import Gnosis.NamingTriadSelfSimilar
+import Gnosis.WhyFiveFromGoldenDiscriminant
 import Gnosis.WhyFiveFromWaves
 import Gnosis.NashEquilibrium
 import Gnosis.NashSkyrmsBuleyGodLadder
