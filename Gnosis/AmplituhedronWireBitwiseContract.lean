@@ -7,6 +7,12 @@
 
   Imports Init plus AmplituhedronFalsifiability. Zero sorry,
   zero new axiom.
+
+  2026-05-10 swap: the gzip-interim layer was retired and bit 2 of
+  the flags byte was reclaimed as reserved-zero. The payload is now
+  the canonical `.bw` framed blob (see `bitwise::bw_codec::encode_bw`
+  / `decode_bw`). The pentad below pins only the BWAH-envelope fields
+  the wire still owns; the `.bw` payload format has its own contract.
 -/
 
 import Init
@@ -28,11 +34,11 @@ def magicBytes : List Nat := [0x42, 0x57, 0x41, 0x48]
 /-- Current wire version. -/
 def wireVersion : Nat := 0x01
 
-/-- Flag bit 0 = hit, bit 1 = tail_residual present,
-    bit 2 = payload gzipped. -/
+/-- Flag bit 0 = hit, bit 1 = tail_residual present.
+    Bits 2..7 are reserved-zero (the 2026-05-10 gzip swap reclaimed
+    bit 2 when the payload codec moved to `bitwise::bw_codec`). -/
 def hitFlag : Nat := 0x01
 def tailPresentFlag : Nat := 0x02
-def gzipFlag : Nat := 0x04
 
 /-- Header length in bytes for a REPLY:
     4 (magic) + 1 (version) + 1 (flags) + 4 (tail_len) + 4 (kv_slab_len) = 14. -/
@@ -69,12 +75,6 @@ theorem flag_bits_oracle :
     hitFlag = 1 ∧ tailPresentFlag = 2 := by
   unfold hitFlag tailPresentFlag; refine ⟨?_, ?_⟩ <;> decide
 
-/-- Contract #6. Gzip flag bit identity. The 2026-05-10 wave reclaimed
-    bit 2 (formerly the speculative `KV_SLAB_PRESENT` / `DICT_MODE` slot)
-    as `GZIPPED`: when set, the payload region is gzip-compressed raw LE
-    f32 bytes; when clear, the payload region is raw LE f32 bytes. -/
-theorem gzip_flag_oracle : gzipFlag = 4 := by unfold gzipFlag; decide
-
 /-! ## Bundled pentad -/
 
 theorem amplituhedron_wire_bitwise_pentad :
@@ -82,9 +82,9 @@ theorem amplituhedron_wire_bitwise_pentad :
     wireVersion = 1 ∧
     replyHeaderLen = 14 ∧
     captureHeaderLen = 30 ∧
-    (hitFlag = 1 ∧ tailPresentFlag = 2 ∧ gzipFlag = 4) :=
+    (hitFlag = 1 ∧ tailPresentFlag = 2) :=
   ⟨magic_bytes_oracle, wire_version_oracle,
    reply_header_len_oracle, capture_header_len_oracle,
-   flag_bits_oracle.1, flag_bits_oracle.2, gzip_flag_oracle⟩
+   flag_bits_oracle⟩
 
 end AmplituhedronWireBitwiseContract
