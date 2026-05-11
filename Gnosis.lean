@@ -433,6 +433,7 @@ import Gnosis.FailureFamilies
 import Gnosis.FailurePareto
 import Gnosis.FailureUniversality
 import Gnosis.FanoOctonionNonAssoc
+import Gnosis.FiveByFiveForcesDeaths
 import Gnosis.FiveDeathsCompositionOrthogonality
 import Gnosis.FiveDeathsDeployedReachability
 import Gnosis.FiveDeathsOfPhysics
@@ -477,6 +478,7 @@ import Gnosis.GeometricErgodicity
 import Gnosis.GeometricLanglands
 import Gnosis.GesturalCompiler
 import Gnosis.GnosisConstantsPlusOne
+import Gnosis.GodFormulaGeneratesLayers
 import Gnosis.GnosisMath.Basic
 import Gnosis.GnosisMath.Fibonacci
 import Gnosis.GnosisMath.ListNat
@@ -780,6 +782,8 @@ import Gnosis.MutualInformationAsPhase
 import Gnosis.MumonkanGatelessGateWitness
 import Gnosis.Multiplexing
 import Gnosis.NahmDimensionCeiling
+import Gnosis.NamingTriadSelfSimilar
+import Gnosis.WhyFiveFromWaves
 import Gnosis.NashEquilibrium
 import Gnosis.NashSkyrmsBuleyGodLadder
 import Gnosis.NSBTemporalLadderAscent
@@ -1020,11 +1024,13 @@ import Gnosis.TectonicTensorKernelLiftContinuousErgodicity
 import Gnosis.TeleportationEvidencePredictions
 import Gnosis.TenModeUnification
 import Gnosis.TetraOctaHoneycomb
+import Gnosis.TheFiveIsOne
 import Gnosis.TheGain
 import Gnosis.StructuralStability
 import Gnosis.StructureInTension
 import Gnosis.ThermodynamicTracedMonoidal
 import Gnosis.ThoughtBowlMechanics
+import Gnosis.ThreePhysicsForkRaceFoldBijection
 import Gnosis.ThoughtBowlMechanicsRefined
 import Gnosis.ThucydidesMelianDialogueWitness
 import Gnosis.Time
