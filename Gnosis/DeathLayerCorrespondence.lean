@@ -144,42 +144,45 @@ inductive DeathOfPhysics
 
 /-- For each Death of Physics, the wire-diet `InformationalLayer`
     that hypothetically realises the same cancellation in the
-    informational-physics frame. -/
-def deathToLayer : DeathOfPhysics → InformationalLayer
-  /-- Death #1 (Space) ↔ Layer 1 (FrameStructure).
+    informational-physics frame.
+
+    Per-case justifications (Lean does not accept doc comments between
+    match arms, so they live here as a single block):
+
+    - Death #1 (Space) ↔ Layer 1 (FrameStructure).
       Predictable repeated frame headers compress out — the second
       frame and onward occupy the "same" wire slot the first one
       established, the way ER-bridged nodes occupy the same
-      coordinate. Topological co-location, both sides. -/
-  | .Space         => .FrameStructure
-  /-- Death #2 (Time) ↔ Layer 3 (OrderingFree).
+      coordinate. Topological co-location, both sides.
+
+    - Death #2 (Time) ↔ Layer 3 (OrderingFree).
       Lehmer/factoradic encodes the order of N items as bits at
       zero wire cost — the order *is* the data. Amplituhedron
       eliminates time ordering by encoding amplitudes as the volume
       of a polytope. Both move ordering from a runtime cost into a
-      static geometric/combinatorial witness. -/
-  | .Time          => .OrderingFree
-  /-- Death #3 (Distance) ↔ Layer 0 (PerByteAlphabet).
+      static geometric/combinatorial witness.
+
+    - Death #3 (Distance) ↔ Layer 0 (PerByteAlphabet).
       The bwDense per-byte alphabet measures information in
       symbol-distances inside a 126-letter set; p-Adic distance
       counts shared prefix length. Both replace archimedean
-      "spread" with an ultrametric / discrete-bucket notion. -/
-  | .Distance      => .PerByteAlphabet
-  /-- Death #4 (Associativity) ↔ Layer 4 (StatisticalPrior).
+      "spread" with an ultrametric / discrete-bucket notion.
+
+    - Death #4 (Associativity) ↔ Layer 4 (StatisticalPrior).
       METAPHORICAL. Octonion non-associativity is an algebraic
       property of a multiplication. Bayesian prior composition is
       commutative and associative. The metaphor reads "order of
       conditioning matters" but the analogy does not carry to the
-      math. See §6 for what would have to hold to upgrade this. -/
-  | .Associativity => .StatisticalPrior
-  /-- Death #5 (Infinity) ↔ Layer 2 (IntegerCoding).
+      math. See §6 for what would have to hold to upgrade this.
+
+    - Death #5 (Infinity) ↔ Layer 2 (IntegerCoding).
       Pisot/Zeckendorf gives bounded variable-width representations
       for heavy-tailed integers — the integer tower stops diverging
       because the encoding renormalizes it. Connes-Kreimer
       renormalization in QFT is exactly this move at the algebra
-      level. Same renormalization, two domains. -/
-  | .Infinity      => .IntegerCoding
-  /-- Death #6 (Interference) ↔ Layer 5 (AlphabetSubstrate).
+      level. Same renormalization, two domains.
+
+    - Death #6 (Interference) ↔ Layer 5 (AlphabetSubstrate).
       METAPHORICAL. Phoneme alphabets exploit bigram statistics
       (constructive/destructive interference between adjacent
       symbols), and the codec achieves ~3 bits/char. But the
@@ -187,6 +190,12 @@ def deathToLayer : DeathOfPhysics → InformationalLayer
       `SixthDeathInterference` is a strong algebraic statement
       about a manifold's harmonic basis; phoneme bigrams do not
       satisfy it in any obvious sense. Suggestive, not load-bearing. -/
+def deathToLayer : DeathOfPhysics → InformationalLayer
+  | .Space         => .FrameStructure
+  | .Time          => .OrderingFree
+  | .Distance      => .PerByteAlphabet
+  | .Associativity => .StatisticalPrior
+  | .Infinity      => .IntegerCoding
   | .Interference  => .AlphabetSubstrate
 
 /-! ══════════════════════════════════════════════════════════════════

@@ -369,6 +369,7 @@ import Gnosis.DataProcessingInequality
 import Gnosis.DeceptaconVariants
 import Gnosis.DeepCompositions
 import Gnosis.DeepReduction
+import Gnosis.DeathLayerCorrespondence
 import Gnosis.DeficitCapacity
 import Gnosis.Death7BekensteinBound
 import Gnosis.Death7HolographicCompression
@@ -955,6 +956,7 @@ import Gnosis.SemioticPeace
 import Gnosis.SemioticTriples
 import Gnosis.ServerOptimality
 import Gnosis.ServerTopology
+import Gnosis.SevenDeathsCompositionOrthogonality
 import Gnosis.SevenLawsPredictions
 import Gnosis.ShipOfTheseusWitness
 import Gnosis.SimonidesSpartanEpitaphWitness

@@ -6,7 +6,7 @@
 -- Death #4 (Octonion Fano / Pair X): residual-seed consume branch shipped
 --   default OFF pending Leg 3 parity bench; see `Gnosis.FanoOctonionNonAssoc`
 -- Death #5 (Pleromatic Cross-Prefix Compression): bw-codec POSDICT mode
---   shipped end-to-end (Rust + TS); see `Gnosis.Death5CrossPrefixCompression`
+--   shipped end-to-end (Rust + TS); see `Gnosis.Death7CrossPrefixCompression`
 --   and `Gnosis.PositionalDictModeContract`
 --
 -- Standing wave pinning proves that k << d dimensions carry signal.
