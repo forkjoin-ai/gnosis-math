@@ -18,6 +18,8 @@ bridges as a formal substrate for runtime packages elsewhere in `open-source/`.
 
 Current integration plan: [ROADMAP.md](./ROADMAP.md)
 
+Gap closure status: [GAP_CLOSURE.md](./GAP_CLOSURE.md)
+
 `missing_imports.txt` at the root of this package is an optional stub (see file header); parent monorepo Cloud Build source tar steps referenced it with ENOENT when absent.
 
 ## What It Owns

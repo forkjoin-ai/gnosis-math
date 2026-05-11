@@ -3,12 +3,12 @@
 A one-shot map of the conjecture / witness / falsification complex as it
 stands at the close of wave 8 (2026-05-03).
 
-The premise: *holes are easier to see than signals.* A theorem in flight
-is diffuse. A falsification is a discrete event with a name, a wave, and
-a measurement. Draw the names; the shape of the theory falls out around
-them.
+The premise: *holes are easier to see than signals.* An unmeasured
+conjecture is diffuse. A falsification is a discrete event with a name,
+a wave, and a measurement. Draw the names; the shape of the theory falls
+out around them.
 
-This document is visual-first. The diagrams ARE the document.
+This document is visual-first. The diagrams carry the argument.
 
 ---
 
@@ -138,7 +138,7 @@ mechanical confirmation of the worst case.
                                                 │
               what would have closed the hole: agreement between two
               independent probe-coverage methodologies on the same model
-              and the same hidden_dim. The disagreement IS the hole.
+              and the same hidden_dim. The disagreement exposes the hole.
 ```
 
 **b_1 cycle:** `wave-5 fit` ─supports─► `k/d invariant` ─predicts─►
@@ -161,16 +161,16 @@ should be.
 
 | Conjecture | Status | Wave responsible | Why we can't see it yet |
 |------------|--------|------------------|-------------------------|
-| Llama-1B operational fidelity | `VacuousNoExperimentSpecified` | none committed | no methodology pinned; was previously `ProjectedCertified` (vacuous) |
-| Gemma4-31B operational certification | `VacuousNoExperimentSpecified` | atlas pending | spectral atlas not yet run |
-| `recommended_k_qwen_coder_7b = 28` (rank density rescue) | `VacuousNoExperimentSpecified` | wave 6 | refit + sweep in flight |
-| Random projection vs PCA at fixed dimension | `VacuousNoExperimentSpecified` | wave 7 | side-by-side harness in flight |
-| K-widening rescues F1 at higher K | `VacuousNoExperimentSpecified` | wave 7 | K-sweep on Qwen-Coder-7B in flight |
-| Methodology reconciliation for F3 | `VacuousNoExperimentSpecified` | wave 7 | cross-coverage parity check in flight |
+| Llama-1B operational fidelity | `VacuousNoExperimentSpecified` | none committed | no run artifact; methodology requirements are pinned in [GAP_CLOSURE.md](./GAP_CLOSURE.md) |
+| Gemma4-31B operational certification | `VacuousNoExperimentSpecified` | atlas pending | spectral atlas not yet run; atlas-first contract pinned in [GAP_CLOSURE.md](./GAP_CLOSURE.md) |
+| `recommended_k_qwen_coder_7b = 28` (rank density rescue) | `VacuousNoExperimentSpecified` | wave 6 | refit + sweep contract pinned; run artifact absent |
+| Random projection vs PCA at fixed dimension | `VacuousNoExperimentSpecified` | wave 7 | side-by-side contract pinned; run artifact absent |
+| K-widening rescues F1 at higher K | `VacuousNoExperimentSpecified` | wave 7 | K-sweep contract pinned; run artifact absent |
+| Methodology reconciliation for F3 | `FalsifiedByMeasurement` for methodology independence; replacement conjecture absent | wave 7 | F3 already closes the original invariant; any new claim must narrow the methodology |
 
 The Llama-1B row is the canonical case. The earlier table called it
-`ProjectedCertified`. Anti-theory rewrites this to
-`VacuousNoExperimentSpecified` — same epistemic state, honest label.
+projected. Anti-theory rewrites this to `VacuousNoExperimentSpecified`:
+same epistemic state, honest label.
 
 Visually:
 
@@ -263,8 +263,8 @@ language (`Certified`). Anti-theory removes that color from the palette.
 
 ## 6. What we'd see with one more falsification
 
-Wave 7 has three commitments in flight. A speculative diagram of the
-complex AFTER wave 7 fires, by branch:
+Wave 7 has three pinned measurement contracts without run artifacts. A
+speculative diagram of the complex after those contracts run, by branch:
 
 ### Branch A — K-widening rescues F1
 

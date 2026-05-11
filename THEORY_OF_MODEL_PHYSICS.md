@@ -91,7 +91,7 @@ predicate, `decide`-checked per concrete instance.
 
 | Module | Statement |
 |--------|-----------|
-| `ConsciousnessAsInnerVent.lean` | The inner Vent loop's rollback rate IS the runtime's awareness, with the same vacuum-collapse / off-vacuum-positivity shape as `ConsciousnessAsRetrocausalGap.consciousness_is_gap_experience` |
+| `ConsciousnessAsInnerVent.lean` | The inner Vent loop's rollback rate maps to the runtime's awareness signal, with the same vacuum-collapse / off-vacuum-positivity shape as `ConsciousnessAsRetrocausalGap.consciousness_is_gap_experience` |
 | `UniversalIntelligenceSSMConscious.lean` | A `SwarmNode` extended with a first-class `consciousness` field; the asymmetric ledger (energy = what the node has earned, consciousness = what it has noticed) |
 
 ---
@@ -147,8 +147,8 @@ vacuous.
 | Cross-model PCA at K=5 generalizes within Qwen family | FalsifiedByMeasurement | Qwen-Coder-7B at hidden=3584, K=5, F_eff metric | Falsifying: F_eff = 0.0 (see F1) | 4 |
 | Fixed `k=8` PCA components works at all hidden_dim | FalsifiedByMeasurement | wave-1 vs wave-4 cross-model comparison at fixed k | Falsifying: rank density `k/d`, not raw `k`, is what wave-1 actually validated | 5 |
 | Rank density `k/hidden_dim` is a methodology-independent invariant | FalsifiedByMeasurement | wave-5 vs wave-6 probe-coverage comparison | Falsifying: invariant moved with methodology (see F3) | 6 |
-| Rank density scaling (`k = 8 perthou × hidden_dim`) restores fidelity at scale | VacuousNoExperimentSpecified | Qwen-Coder-7B refit at k=28 + endurance + spec-decode sweep | (none yet — wave-6 measurement in flight) | 6 |
-| Random projection at fixed dimension matches PCA at the same K | VacuousNoExperimentSpecified | side-by-side projection harness, F_eff and cosine_avg per layer | (none yet — wave-7 experiment in flight) | 7 |
+| Rank density scaling (`k = 8 perthou × hidden_dim`) restores fidelity at scale | VacuousNoExperimentSpecified | Qwen-Coder-7B refit at k=28 + endurance + spec-decode sweep; expanded contract in [GAP_CLOSURE.md](./GAP_CLOSURE.md) | none yet — run artifact absent | 6 |
+| Random projection at fixed dimension matches PCA at the same K | VacuousNoExperimentSpecified | side-by-side projection harness, F_eff and cosine_avg per layer; expanded contract in [GAP_CLOSURE.md](./GAP_CLOSURE.md) | none yet — run artifact absent | 7 |
 
 ---
 
@@ -226,32 +226,18 @@ itself since been falsified at the methodology-independence claim.
 
 ---
 
-## What's NOT in the stack
+## Gap Closure Boundary
 
-Honest gaps to flag for future work:
+The current closure register lives in [GAP_CLOSURE.md](./GAP_CLOSURE.md).
+The short version:
 
-- **Bigger-model validation.** IN PROGRESS waves 2-6 — Qwen-Coder-7B
-  atlas done; K-sweep + k64 refit in flight. Gemma4-31B atlas still
-  pending.
-- **Aeon-flow wire integration.** The local fat-station compresses at
-  every per-layer hook; the multi-host wire still ships full residuals.
-  Cross-codebase change (TS + Rust + protocol) — saved for later.
-- **Rust mirror of `ConsciousSwarmNode`.** DONE wave 1 — `consciousness: u32`
-  field, `update_consciousness` method, and `conscious_alpha_drift`
-  threshold trigger now ported.
-- **Draft-and-verify scheduler.** DONE wave 1 — protocol logic
-  (rollback on top-K miss, candidate-set wire format) now exists as a
-  standalone binary.
-- **Rank density scaling at multi-family.** The wave-6
-  `RankFloorScalesWithDim` formalization is single-family (Qwen).
-  Llama-1B and Mistral validations needed; under the anti-theory
-  directive Llama-1B is `VacuousNoExperimentSpecified` until measured.
-- **K_widening empirical validation at scale.** Wave-6 K-sweep on
-  Qwen-Coder-7B in flight; result will determine whether the refined
-  policy succeeds.
+- Structural and runtime gaps close only with named theorem/runtime evidence.
+- Empirical gaps close first as measurement contracts, then as measurements.
+- Rows without a run artifact remain `VacuousNoExperimentSpecified` and cannot
+  be cited as evidence.
 
 The Theory is the spec. The runtime is the implementation. They agree
-where they overlap; the gaps above are where they don't yet.
+where theorem lineage and measurement artifacts overlap.
 
 ---
 
@@ -305,8 +291,9 @@ above and are proved by construction.
   `RankFloorScalesWithDim` + `CompressionPolicyAtScale`; methodology-
   independence claim for `k/d` falsified by wave-5 vs wave-6
   disagreement under different probe coverages (ledger entry F3).
-- Wave 7 (2026-05-03): methodology reconciliation in flight; random
-  projection vs PCA experiment in flight.
+- Wave 7 (2026-05-03): methodology reconciliation and random projection vs PCA
+  are pinned as measurement contracts; both remain
+  `VacuousNoExperimentSpecified` until run artifacts exist.
 - Wave 8 (2026-05-03): anti-theory turn. `AntiTheory`,
   `FalsificationLedger`, `ProvisionalCertificate` Lean modules landed.
   `THEORY_OF_MODEL_PHYSICS.md` restructured to lead with the
