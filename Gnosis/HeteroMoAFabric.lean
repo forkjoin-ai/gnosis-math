@@ -31,6 +31,18 @@ def readyBackendCount (cpuReady gpuReady npuReady wasmReady : Bool) : Nat :=
 def cannonCursor (laneCount cursor waveWidth : Nat) : Nat :=
   if laneCount = 0 then 0 else (cursor + waveWidth) % laneCount
 
+def aperiodicCannonCursor
+    (laneCount cursor strideNumerator strideDenominator : Nat) : Nat :=
+  if laneCount = 0 then
+    0
+  else if strideDenominator = 0 then
+    0
+  else
+    (cursor + (strideNumerator * laneCount) / strideDenominator) % laneCount
+
+def goldenRatioAperiodicCannonCursor (laneCount cursor : Nat) : Nat :=
+  aperiodicCannonCursor laneCount cursor 618 1000
+
 def helixPhase (layerCount round : Nat) : Nat :=
   if layerCount = 0 then 0 else round % layerCount
 
@@ -296,6 +308,45 @@ theorem cannonCursor_waveWidth_zero_eq_cursor_mod
     (h_laneCount : 0 < laneCount) :
     cannonCursor laneCount cursor 0 = cursor % laneCount := by
   simp [cannonCursor, Nat.ne_of_gt h_laneCount]
+
+theorem aperiodicCannonCursor_zero_of_zero_laneCount
+    (cursor strideNumerator strideDenominator : Nat) :
+    aperiodicCannonCursor 0 cursor strideNumerator strideDenominator = 0 := by
+  simp [aperiodicCannonCursor]
+
+theorem aperiodicCannonCursor_zero_of_zero_strideDenominator
+    {laneCount cursor strideNumerator : Nat}
+    (h_laneCount : 0 < laneCount) :
+    aperiodicCannonCursor laneCount cursor strideNumerator 0 = 0 := by
+  simp [aperiodicCannonCursor, Nat.ne_of_gt h_laneCount]
+
+theorem aperiodicCannonCursor_step_mod
+    {laneCount cursor strideNumerator strideDenominator : Nat}
+    (h_laneCount : 0 < laneCount)
+    (h_stride : 0 < strideDenominator) :
+    aperiodicCannonCursor laneCount cursor strideNumerator strideDenominator =
+      (cursor + (strideNumerator * laneCount) / strideDenominator) % laneCount := by
+  simp [aperiodicCannonCursor, Nat.ne_of_gt h_laneCount, Nat.ne_of_gt h_stride]
+
+theorem aperiodicCannonCursor_lt_laneCount
+    {laneCount cursor strideNumerator strideDenominator : Nat}
+    (h_laneCount : 0 < laneCount)
+    (h_stride : 0 < strideDenominator) :
+    aperiodicCannonCursor laneCount cursor strideNumerator strideDenominator < laneCount := by
+  rw [aperiodicCannonCursor_step_mod h_laneCount h_stride]
+  exact Nat.mod_lt _ h_laneCount
+
+theorem goldenRatioAperiodicCannonCursor_zero_of_zero_laneCount
+    (cursor : Nat) :
+    goldenRatioAperiodicCannonCursor 0 cursor = 0 := by
+  simp [goldenRatioAperiodicCannonCursor, aperiodicCannonCursor]
+
+theorem goldenRatioAperiodicCannonCursor_lt_laneCount
+    {laneCount cursor : Nat}
+    (h_laneCount : 0 < laneCount) :
+    goldenRatioAperiodicCannonCursor laneCount cursor < laneCount := by
+  unfold goldenRatioAperiodicCannonCursor
+  exact aperiodicCannonCursor_lt_laneCount h_laneCount (by decide : 0 < 1000)
 
 theorem helixPhase_lt_layerCount
     {layerCount round : Nat}
