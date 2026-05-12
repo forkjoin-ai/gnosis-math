@@ -253,6 +253,8 @@ import Gnosis.CentralChargeMap
 import Gnosis.CertifiedAllocationKernel
 import Gnosis.CertifiedDefenses
 import Gnosis.ChaitinOmega
+import Gnosis.Chapter17DMNVoidWalker
+import Gnosis.Chapter17OraclePrediction
 import Gnosis.ChineseRemainderInstances
 import Gnosis.ChromaticBuleSieve
 import Gnosis.ChurchPillars
@@ -538,6 +540,7 @@ import Gnosis.GaussBonnetBraid
 import Gnosis.GaussBonnetBurnsideIndex
 import Gnosis.GaussBonnetPolytopes
 import Gnosis.GeneralRelativity
+import Gnosis.GenomicTopologyWitnesses
 import Gnosis.GenesisQuery
 import Gnosis.GeometricErgodicity
 import Gnosis.GeometricLanglands
@@ -911,6 +914,9 @@ import Gnosis.PhoneticAetherSieve
 import Gnosis.PhotonSliverFrontier
 import Gnosis.PhysicalConstantsSignatures
 import Gnosis.PhysicsFromGodFormula
+import Gnosis.PhysarumFluxRouting
+import Gnosis.PhysarumRopelength
+import Gnosis.RFPhysicsCpuRuntime
 import Gnosis.PickTheoremInstances
 import Gnosis.PipelineSpeedup
 import Gnosis.PisotMitosisManifold
@@ -958,6 +964,7 @@ import Gnosis.QuarkConfinement
 import Gnosis.QuarkPersonality
 import Gnosis.QueueBoundary
 import Gnosis.QueueStability
+import Gnosis.QueueingSubsumptionWitness
 import Gnosis.QueueTectonicSubductionUnitBoundary
 import Gnosis.QueueTheoreticInterpretationMapping
 import Gnosis.QuorumAsyncNetwork
@@ -1000,6 +1007,8 @@ import Gnosis.RetrocausalBound
 import Gnosis.RetrocausalDynamicsOfMarkets
 import Gnosis.RetrocausalMemoization
 import Gnosis.RetrocausalTimeInversion
+import Gnosis.RichClubCoefficient
+import Gnosis.RuminationInverseControl
 import Gnosis.RuntimeCertificate
 import Gnosis.PredictiveTopologyOfMarkets
 import Gnosis.ReverseFold

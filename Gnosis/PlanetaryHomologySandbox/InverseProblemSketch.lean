@@ -65,4 +65,21 @@ theorem inverse_projection_kernel_witness :
   · exact hidden_states_distinct 0 0
   · exact forwardProjection2_hidden_collision 0 0
 
+/-- Concrete scalar Tikhonov normal-equation coefficient. -/
+def tikhonovCoefficient : Nat := 2 * 2 + 1
+
+/-- Concrete scalar Tikhonov right-hand side. -/
+def tikhonovRightHandSide : Nat := 2 * 5
+
+/-- The concrete scalar candidate solves the normal equation. -/
+theorem scalar_tikhonov_candidate_solves :
+    tikhonovCoefficient * 2 = tikhonovRightHandSide := by
+  native_decide
+
+/-- The candidate is unique inside the bounded search window used by the toy inverse problem. -/
+theorem scalar_tikhonov_candidate_unique_in_window :
+    (List.filter (fun x => tikhonovCoefficient * x == tikhonovRightHandSide)
+      [0, 1, 2, 3, 4]).length = 1 := by
+  native_decide
+
 end PlanetaryHomologySandbox
