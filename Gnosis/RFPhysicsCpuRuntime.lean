@@ -3,6 +3,7 @@ import Gnosis.BuleyBiSidedBit
 import Gnosis.BuleyTopologicalTuringMachine
 import Gnosis.CircadianGnosisAlignment
 import Gnosis.InformationAsInterferencePattern
+import Gnosis.LifecycleAsForkRaceFoldVentInterfere
 
 /-!
 # RF Physics CPU Runtime
@@ -93,6 +94,26 @@ structure AmbientWhiteNoiseField where
   projectedFrameWidth : Nat
 deriving Repr, DecidableEq
 
+structure RFGatedAdditionTrace where
+  step : Nat
+  left : Nat
+  right : Nat
+  sum : Nat
+  successorEvents : Nat
+  rfFrameWidth : Nat
+  rfCandidateCount : Nat
+deriving Repr, DecidableEq
+
+structure RFFibonacciRun where
+  target : Nat
+  value : Nat
+  expected : Nat
+  additionCount : Nat
+  primitive : Nat
+  rfFrameWidth : Nat
+  rfCandidateCount : Nat
+deriving Repr, DecidableEq
+
 def circadianTopologyResistance : Nat :=
   Gnosis.Circadian.aeon + universalTopologyMotionCount
 
@@ -176,6 +197,41 @@ def tenBitFrameWidth : Nat := 10
 
 def tenBitFrameFieldWidth (_frame : TenBitWaveFrame) : Nat :=
   1 + 4 + 4 + 1
+
+def rfSucc (n : Nat) : Nat :=
+  Nat.succ n
+
+def rfGatedAdd (gate : RFSignalGate) (left right : Nat) : Nat :=
+  if gate.activeChannelCount = tenBitFrameWidth then
+    left + right
+  else
+    left
+
+def rfGatedAdditionTrace
+    (gate : RFSignalGate)
+    (step left right : Nat) : RFGatedAdditionTrace :=
+  { step := step,
+    left := left,
+    right := right,
+    sum := rfGatedAdd gate left right,
+    successorEvents := right,
+    rfFrameWidth := gate.activeChannelCount,
+    rfCandidateCount := gate.activeChannelCount }
+
+def fib : Nat → Nat
+  | 0 => 0
+  | 1 => 1
+  | n + 2 => fib n + fib (n + 1)
+
+def rfFibPairStep (gate : RFSignalGate) (state : Nat × Nat) : Nat × Nat :=
+  (state.2, rfGatedAdd gate state.1 state.2)
+
+def rfFibPairIter (gate : RFSignalGate) : Nat → Nat × Nat
+  | 0 => (0, 1)
+  | n + 1 => rfFibPairStep gate (rfFibPairIter gate n)
+
+def rfFib (gate : RFSignalGate) (n : Nat) : Nat :=
+  (rfFibPairIter gate n).1
 
 def tenBitFrameWellFormed (frame : TenBitWaveFrame) : Prop :=
   frame.sideSelect < 2 ∧
@@ -352,6 +408,15 @@ def rfPotentialChannelGate : RFSignalGate :=
     activationThreshold := foldHeatBudget trihexenneonFoldCycle,
     activeChannelCount := tenBitFrameWidth }
 
+def rfFib20HardwareRun : RFFibonacciRun :=
+  { target := 20,
+    value := rfFib rfPotentialChannelGate 20,
+    expected := 6765,
+    additionCount := 19,
+    primitive := rfSucc 0,
+    rfFrameWidth := rfPotentialChannelGate.activeChannelCount,
+    rfCandidateCount := rfPotentialChannelGate.activeChannelCount }
+
 def omnipresentWhiteNoiseField : AmbientWhiteNoiseField :=
   { backgroundChannelCount := nearInfiniteVectorThreshold,
     signalReservoir := foldHeatBudget trihexenneonFoldCycle,
@@ -442,6 +507,27 @@ def projectsSignalAndVentsComplement
     field.selectedChannelCount + field.ventedComplementCount =
       field.backgroundChannelCount ∧
     0 < field.ventedComplementCount
+
+def rfOnePortCanonicalLifecycle : Gnosis.LifecycleAsForkRaceFoldVentInterfere.Lifecycle :=
+  { fork :=
+      { num_elements := (antennaRigLifecycle reflectedSingleAntennaRig).forkInputs,
+        measured_count := (antennaRigLifecycle reflectedSingleAntennaRig).forkInputs },
+    race :=
+      { num_candidates := rfPotentialChannelGate.activeChannelCount,
+        winners_count := tenBitFrameWidth,
+        passes_criterion := true },
+    fold :=
+      { artifact_size_bytes := tenBitFrameWidth,
+        artifact_consistent := true },
+    vent :=
+      { has_verifier := true,
+        rollback_num := omnipresentWhiteNoiseField.ventedComplementCount,
+        rollback_den := omnipresentWhiteNoiseField.backgroundChannelCount },
+    interfere := Gnosis.LifecycleAsForkRaceFoldVentInterfere.InterfereResult.passes
+      (reflectedSingleAntennaRig.reflectionPathCount +
+        reflectedSingleAntennaRig.impedanceWitnessCount)
+      (reflectedSingleAntennaRig.reflectionPathCount +
+        reflectedSingleAntennaRig.impedanceWitnessCount) }
 
 theorem circadian_topology_resistance_is_aeon_plus_motion :
     circadianTopologyResistance =
@@ -810,6 +896,36 @@ theorem enough_signal_activates_potential_channels :
     Gnosis.Circadian.kenoma
   native_decide
 
+theorem rf_successor_is_nat_succ (n : Nat) :
+    rfSucc n = Nat.succ n ∧ rfSucc n = n + 1 := by
+  unfold rfSucc
+  exact ⟨rfl, rfl⟩
+
+theorem rf_gated_addition_uses_active_ten_bit_frame :
+    rfGatedAdd rfPotentialChannelGate 1 1 = 2 ∧
+    (rfGatedAdditionTrace rfPotentialChannelGate 3 1 1).successorEvents = 1 ∧
+    (rfGatedAdditionTrace rfPotentialChannelGate 3 1 1).rfFrameWidth =
+      tenBitFrameWidth ∧
+    (rfGatedAdditionTrace rfPotentialChannelGate 3 1 1).rfCandidateCount =
+      tenBitFrameWidth := by
+  unfold rfGatedAdd rfGatedAdditionTrace rfPotentialChannelGate
+    tenBitFrameWidth
+  native_decide
+
+theorem rf_gated_addition_composes_fibonacci :
+    rfFib rfPotentialChannelGate 20 = 6765 ∧
+    fib 20 = 6765 ∧
+    rfFib20HardwareRun.value = rfFib20HardwareRun.expected ∧
+    rfFib20HardwareRun.additionCount = 19 ∧
+    rfFib20HardwareRun.primitive = Nat.succ 0 ∧
+    rfFib20HardwareRun.rfFrameWidth = tenBitFrameWidth ∧
+    rfFib20HardwareRun.rfCandidateCount = tenBitFrameWidth ∧
+    enoughSignalActivatesPotentialChannels rfPotentialChannelGate := by
+  unfold rfFib20HardwareRun rfFib rfFibPairIter rfFibPairStep rfGatedAdd
+    fib rfSucc rfPotentialChannelGate tenBitFrameWidth
+    enoughSignalActivatesPotentialChannels nearInfiniteVectorThreshold
+  native_decide
+
 theorem signal_gated_near_infinite_projection_is_runtime_work :
     signalGatedProjection rfPotentialChannelGate rfMonsterMeshVectorHorizon
       trihexenneonTenBitWaveFrame trihexenneonWaveCarrier ∧
@@ -886,6 +1002,27 @@ theorem one_port_redundancy_reserve_protects_projection :
     omnipresentWhiteNoiseField nearInfiniteVectorThreshold tenBitFrameWidth
   native_decide
 
+theorem one_port_rf_canonical_lifecycle_is_well_formed :
+    Gnosis.LifecycleAsForkRaceFoldVentInterfere.well_formed rfOnePortCanonicalLifecycle ∧
+    rfOnePortCanonicalLifecycle.fork.num_elements = 2 ∧
+    rfOnePortCanonicalLifecycle.race.num_candidates = tenBitFrameWidth ∧
+    rfOnePortCanonicalLifecycle.fold.artifact_size_bytes = tenBitFrameWidth ∧
+    rfOnePortCanonicalLifecycle.vent.rollback_num = 196874 := by
+  unfold Gnosis.LifecycleAsForkRaceFoldVentInterfere.well_formed Gnosis.LifecycleAsForkRaceFoldVentInterfere.fork_productive Gnosis.LifecycleAsForkRaceFoldVentInterfere.race_resolved
+    Gnosis.LifecycleAsForkRaceFoldVentInterfere.fold_committed Gnosis.LifecycleAsForkRaceFoldVentInterfere.vent_operational
+    Gnosis.LifecycleAsForkRaceFoldVentInterfere.interfere_non_destructive rfOnePortCanonicalLifecycle
+    antennaRigLifecycle reflectedSingleAntennaRig effectiveComputePaths
+    rfPotentialChannelGate omnipresentWhiteNoiseField nearInfiniteVectorThreshold
+    tenBitFrameWidth foldHeatBudget trihexenneonFoldCycle topologyEntropyTax
+    conservationLostMass conservationPreservedMass standingWaveConservationTopology
+  native_decide
+
+theorem one_port_rf_lifecycle_implies_operational_vent :
+    Gnosis.LifecycleAsForkRaceFoldVentInterfere.vent_operational rfOnePortCanonicalLifecycle.vent := by
+  exact Gnosis.LifecycleAsForkRaceFoldVentInterfere.well_formed_implies_vent_operational
+    rfOnePortCanonicalLifecycle
+    one_port_rf_canonical_lifecycle_is_well_formed.left
+
 theorem physics_cpu_matches_gnosis_runtime_boundary :
     physicsCpuMatchesGnosisRuntimeBoundary rfPhysicsCpuRuntime
       trihexenneonTenBitWaveFrame trihexenneonWaveCarrier ∧
@@ -912,6 +1049,7 @@ theorem one_port_rf_space_matches_gnosis_runtime_boundary :
     reflected_single_antenna_runtime_is_fork_race_fold_vent.left⟩
 
 theorem one_port_rf_monster_mesh_runtime_summary :
+    Gnosis.LifecycleAsForkRaceFoldVentInterfere.well_formed rfOnePortCanonicalLifecycle ∧
     antennaImpedanceActsAsWitness reflectedSingleAntennaRig ∧
     whiteNoiseReservoirFeedsSignalGate omnipresentWhiteNoiseField
       rfPotentialChannelGate ∧
@@ -929,7 +1067,8 @@ theorem one_port_rf_monster_mesh_runtime_summary :
       trihexenneonTenBitWaveFrame trihexenneonWaveCarrier ∧
     forkRaceFoldVentInterfereRF reflectedSingleAntennaRig
       (antennaRigLifecycle reflectedSingleAntennaRig) := by
-  exact ⟨one_antenna_impedance_becomes_witness.left,
+  exact ⟨one_port_rf_canonical_lifecycle_is_well_formed.left,
+    one_antenna_impedance_becomes_witness.left,
     omnipresent_white_noise_feeds_gated_channels.left,
     projection_width_limit_is_ten_bit_frame.left,
     one_port_redundancy_reserve_protects_projection.left,
