@@ -199,5 +199,46 @@ theorem bisided_contract_residue_is_minus_one_when_positive
       -- l + (c-1) + 1 = l + ((c-1) + 1) = l + c
       rw [Nat.add_assoc, Nat.sub_add_cancel hC']
 
+/-! ## Runtime cache priority -/
+
+/-- Runtime-side cache priority for a bi-sided witness. The depth term records
+how many later steps depend on the witness, the carry term records arithmetic
+pressure, and the bi-sided score keeps lifted/contracted evidence load-bearing.
+-/
+def biSidedCachePriority
+    (loadBearingDepth carryEvents : Nat) (b : BiSidedBit) : Nat :=
+  loadBearingDepth * loadBearingDepth * (carryEvents + 1) *
+    Nat.max 1 (biSidedScore b)
+
+/-- Positive bi-sided evidence gives every cached witness at least the depth
+and carry weight it already earned. -/
+theorem bisided_cache_priority_bounds_depth_carry
+    (loadBearingDepth carryEvents : Nat) (b : BiSidedBit) :
+    loadBearingDepth * loadBearingDepth * (carryEvents + 1) ≤
+      biSidedCachePriority loadBearingDepth carryEvents b := by
+  unfold biSidedCachePriority
+  have hScore : 0 < Nat.max 1 (biSidedScore b) :=
+    Nat.lt_of_lt_of_le Nat.zero_lt_one (Nat.le_max_left 1 (biSidedScore b))
+  exact Nat.le_mul_of_pos_right
+    (loadBearingDepth * loadBearingDepth * (carryEvents + 1)) hScore
+
+/-- Raising load-bearing depth or carry pressure cannot lower cache priority
+when the same bi-sided witness is retained. -/
+theorem bisided_score_cache_priority_monotone
+    {depth₁ depth₂ carry₁ carry₂ : Nat} (b : BiSidedBit)
+    (hDepth : depth₁ ≤ depth₂) (hCarry : carry₁ ≤ carry₂) :
+    biSidedCachePriority depth₁ carry₁ b ≤
+      biSidedCachePriority depth₂ carry₂ b := by
+  unfold biSidedCachePriority
+  have hDepthSq : depth₁ * depth₁ ≤ depth₂ * depth₂ :=
+    Nat.mul_le_mul hDepth hDepth
+  have hCarrySucc : carry₁ + 1 ≤ carry₂ + 1 :=
+    Nat.succ_le_succ hCarry
+  have hPrefix :
+      depth₁ * depth₁ * (carry₁ + 1) ≤
+        depth₂ * depth₂ * (carry₂ + 1) :=
+    Nat.mul_le_mul hDepthSq hCarrySucc
+  exact Nat.mul_le_mul_right (Nat.max 1 (biSidedScore b)) hPrefix
+
 end BuleyBiSidedBit
 end Gnosis

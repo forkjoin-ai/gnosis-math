@@ -62,4 +62,35 @@ theorem single_lift_from_vacuum_is_unit_score :
   unfold vacuumBuleUnit buleyUnitScore
   decide
 
+/-- The vacuum is the unique Bule unit whose score is zero: all three faces
+must be zero for the sum to be zero. This structural property isolates the
+vacuum as the only state where no waste has been incurred, no opportunity
+remains unspent, and no diversity has been traversed. -/
+theorem vacuum_void_pressure_structural :
+    ∀ b : BuleyUnit, buleyUnitScore b = 0 ↔ b = vacuumBuleUnit := by
+  intro b
+  constructor
+  · intro h
+    cases b with | mk w o d =>
+    unfold buleyUnitScore at h
+    -- w + o + d = 0 implies w = 0, o = 0, d = 0
+    have hw : w = 0 := by
+      have : w + o + d = 0 := h
+      have : o ≤ w + o := Nat.le_add_left o w
+      have : d ≤ w + o + d := Nat.le_add_left d (w + o)
+      omega
+    have ho : o = 0 := by
+      have : w + o + d = 0 := h
+      have : d ≤ w + o + d := Nat.le_add_left d (w + o)
+      omega
+    have hd : d = 0 := by
+      have : w + o + d = 0 := h
+      omega
+    unfold vacuumBuleUnit
+    simp only [hw, ho, hd]
+  · intro h
+    rw [h]
+    unfold vacuumBuleUnit buleyUnitScore
+    decide
+
 end Gnosis

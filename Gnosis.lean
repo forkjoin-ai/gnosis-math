@@ -703,6 +703,7 @@ import Gnosis.MagritteTheSurvivorWitness
 import Gnosis.MagritteTreacheryOfImagesWitness
 import Gnosis.MarcuseOneDimensionalManWitness
 import Gnosis.MarkVineyardTenantsWitness
+import Gnosis.MassHierarchyFromBule
 import Gnosis.MathFoundations
 import Gnosis.MathPhysicsDimensionCorrespondence
 import Gnosis.MarketDynamicsViaFiveForces

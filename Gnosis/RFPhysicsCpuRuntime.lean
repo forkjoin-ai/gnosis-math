@@ -244,6 +244,19 @@ def rfGatedAdditionTrace
     rfFrameWidth := gate.activeChannelCount,
     rfCandidateCount := gate.activeChannelCount }
 
+def rfTraceLoadBearingDepth
+    (target : Nat) (trace : RFGatedAdditionTrace) : Nat :=
+  target - trace.step + 1
+
+def rfTraceCachePriority
+    (target carryEvents : Nat)
+    (trace : RFGatedAdditionTrace)
+    (carrier : WaveInformationCarrier) : Nat :=
+  Gnosis.BuleyBiSidedBit.biSidedCachePriority
+    (rfTraceLoadBearingDepth target trace)
+    carryEvents
+    (carrierToBiSidedBit carrier)
+
 def fib : Nat → Nat
   | 0 => 0
   | 1 => 1
@@ -1034,6 +1047,48 @@ theorem rf_gated_addition_composes_fibonacci :
     fib rfSucc rfPotentialChannelGate tenBitFrameWidth
     enoughSignalActivatesPotentialChannels nearInfiniteVectorThreshold
   native_decide
+
+theorem rf_trace_cache_priority_matches_bisided_priority
+    (target carryEvents : Nat)
+    (trace : RFGatedAdditionTrace)
+    (carrier : WaveInformationCarrier) :
+    rfTraceCachePriority target carryEvents trace carrier =
+      Gnosis.BuleyBiSidedBit.biSidedCachePriority
+        (rfTraceLoadBearingDepth target trace)
+        carryEvents
+        (carrierToBiSidedBit carrier) := by
+  rfl
+
+theorem rf_trace_cache_priority_monotone_on_depth_and_carry
+    {depth₁ depth₂ carry₁ carry₂ : Nat}
+    (carrier : WaveInformationCarrier)
+    (hDepth : depth₁ ≤ depth₂) (hCarry : carry₁ ≤ carry₂) :
+    Gnosis.BuleyBiSidedBit.biSidedCachePriority depth₁ carry₁
+        (carrierToBiSidedBit carrier) ≤
+      Gnosis.BuleyBiSidedBit.biSidedCachePriority depth₂ carry₂
+        (carrierToBiSidedBit carrier) := by
+  exact Gnosis.BuleyBiSidedBit.bisided_score_cache_priority_monotone
+    (carrierToBiSidedBit carrier) hDepth hCarry
+
+theorem rf_trace_load_bearing_depth_descends_with_step
+    {target step₁ step₂ : Nat} (hStep : step₁ ≤ step₂) :
+    target - step₂ + 1 ≤ target - step₁ + 1 := by
+  exact Nat.succ_le_succ (Nat.sub_le_sub_left hStep target)
+
+theorem rf_fibonacci_trace_cache_priority_descends_with_step
+    {target step₁ step₂ carry₁ carry₂ left₁ right₁ left₂ right₂ : Nat}
+    (gate : RFSignalGate)
+    (carrier : WaveInformationCarrier)
+    (hStep : step₁ ≤ step₂) (hCarry : carry₂ ≤ carry₁) :
+    rfTraceCachePriority target carry₂
+        (rfGatedAdditionTrace gate step₂ left₂ right₂) carrier ≤
+      rfTraceCachePriority target carry₁
+        (rfGatedAdditionTrace gate step₁ left₁ right₁) carrier := by
+  unfold rfTraceCachePriority
+  apply rf_trace_cache_priority_monotone_on_depth_and_carry carrier
+  · unfold rfTraceLoadBearingDepth rfGatedAdditionTrace
+    exact rf_trace_load_bearing_depth_descends_with_step hStep
+  · exact hCarry
 
 theorem cheap_many_rf_witnesses_dominate_precision_one_when_gate_active :
     precisionOnlyDoesNotIncreaseActiveChannels rfPotentialChannelGate
