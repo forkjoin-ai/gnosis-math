@@ -897,7 +897,7 @@ import Gnosis.ProtagorasManIsMeasureWitness
 import Gnosis.ParticlesExist
 import Gnosis.ParticlePredictionsFromFiveForces
 import Gnosis.PatternAtlas
-import Gnosis.PlanetaryHomologySandbox.SeismicStressToySketch
+import Gnosis.PlanetaryHomologySandbox
 import Gnosis.PellCatLucasTraceFamily
 import Gnosis.PellUltrametricConvergents
 import Gnosis.Periodicity
