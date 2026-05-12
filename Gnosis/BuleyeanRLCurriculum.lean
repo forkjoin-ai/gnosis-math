@@ -49,13 +49,16 @@ def StageImplies (sHi sLo : CurriculumStage) : Prop :=
   stageRank sLo ≤ stageRank sHi
 
 theorem buley_implies_skyrms : StageImplies .buley .skyrms := by
-  native_decide
+  unfold StageImplies stageRank
+  decide
 
 theorem skyrms_implies_nash : StageImplies .skyrms .nash := by
-  native_decide
+  unfold StageImplies stageRank
+  decide
 
 theorem buley_implies_nash : StageImplies .buley .nash := by
-  native_decide
+  unfold StageImplies stageRank
+  decide
 
 /-- Capability inheritance theorem:
 if a model satisfies Buley stage, it satisfies Skyrms and Nash stages. -/

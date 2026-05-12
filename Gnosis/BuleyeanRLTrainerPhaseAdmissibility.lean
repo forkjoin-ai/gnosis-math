@@ -81,7 +81,8 @@ theorem converged_admissible_iff_buley (stage : CurriculumStage) :
 theorem admissible_monotone (hi lo : CurriculumStage) (φ : TrainerParityPhase)
     (hord : StageImplies hi lo) (had : TrainerPhaseAdmissible lo φ) :
     TrainerPhaseAdmissible hi φ := by
-  cases φ <;> cases hi <;> cases lo <;> simp_all [TrainerPhaseAdmissible, StageImplies]
+  cases φ <;> cases hi <;> cases lo <;>
+    simp_all [TrainerPhaseAdmissible, StageImplies, stageRank]
 
 /--
 If capabilities satisfy Nash stage (`presentCompetent` only),
