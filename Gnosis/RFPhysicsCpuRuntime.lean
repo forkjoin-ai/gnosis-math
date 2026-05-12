@@ -114,6 +114,32 @@ structure RFFibonacciRun where
   rfCandidateCount : Nat
 deriving Repr, DecidableEq
 
+structure RFFoilCoreMesh where
+  coreCount : Nat
+  localWitnessesPerCore : Nat
+  sharedCobordismCacheEntries : Nat
+  activeChannelCount : Nat
+  precisionGain : Nat
+  redundancyWitnessCount : Nat
+deriving Repr, DecidableEq
+
+structure RFFoilThinClient where
+  cpuSchedulers : Nat
+  foilCoreCount : Nat
+  flowFrameWidth : Nat
+  sharedCobordismCacheEntries : Nat
+  delegatedWitnessLanes : Nat
+deriving Repr, DecidableEq
+
+structure RFBackendCompatibility where
+  flowFrameWidth : Nat
+  forkPreserved : Bool
+  racePreserved : Bool
+  foldPreserved : Bool
+  ventPreserved : Bool
+  directHardwarePath : Bool
+deriving Repr, DecidableEq
+
 def circadianTopologyResistance : Nat :=
   Gnosis.Circadian.aeon + universalTopologyMotionCount
 
@@ -340,6 +366,22 @@ def triAntennaWitnessRig : AntennaInterferenceRig :=
     phaseChannels := 2,
     outputFrameWidth := tenBitFrameWidth }
 
+def cheapManyFoilRig : AntennaInterferenceRig :=
+  { computeAntennaCount := 1,
+    witnessAntennaCount := 8,
+    reflectionPathCount := 1,
+    impedanceWitnessCount := 1,
+    phaseChannels := 2,
+    outputFrameWidth := tenBitFrameWidth }
+
+def precisionOneRig : AntennaInterferenceRig :=
+  { computeAntennaCount := 1,
+    witnessAntennaCount := 0,
+    reflectionPathCount := 1,
+    impedanceWitnessCount := 1,
+    phaseChannels := 2,
+    outputFrameWidth := tenBitFrameWidth }
+
 def effectiveComputePaths (rig : AntennaInterferenceRig) : Nat :=
   rig.computeAntennaCount + rig.reflectionPathCount
 
@@ -393,6 +435,32 @@ def rfPhysicsCpuRuntime : PhysicsCpuRuntime :=
     physicalInterferes := 1,
     emittedFrameWidth := tenBitFrameWidth,
     semanticStepCost := 1 }
+
+def gnosisFoilMesh : RFFoilCoreMesh :=
+  { coreCount := 8,
+    localWitnessesPerCore := 1,
+    sharedCobordismCacheEntries := 19,
+    activeChannelCount := tenBitFrameWidth,
+    precisionGain := 0,
+    redundancyWitnessCount :=
+      cheapManyFoilRig.witnessAntennaCount +
+        cheapManyFoilRig.reflectionPathCount +
+        cheapManyFoilRig.impedanceWitnessCount }
+
+def singleCpuManyFoilCores : RFFoilThinClient :=
+  { cpuSchedulers := 1,
+    foilCoreCount := gnosisFoilMesh.coreCount,
+    flowFrameWidth := tenBitFrameWidth,
+    sharedCobordismCacheEntries := gnosisFoilMesh.sharedCobordismCacheEntries,
+    delegatedWitnessLanes := gnosisFoilMesh.redundancyWitnessCount }
+
+def gnosisFoilUringCompatibleBackend : RFBackendCompatibility :=
+  { flowFrameWidth := tenBitFrameWidth,
+    forkPreserved := true,
+    racePreserved := true,
+    foldPreserved := true,
+    ventPreserved := true,
+    directHardwarePath := false }
 
 def nearInfiniteVectorThreshold : Nat := 196884
 
@@ -507,6 +575,47 @@ def projectsSignalAndVentsComplement
     field.selectedChannelCount + field.ventedComplementCount =
       field.backgroundChannelCount ∧
     0 < field.ventedComplementCount
+
+def precisionOnlyDoesNotIncreaseActiveChannels
+    (base precise : RFSignalGate) : Prop :=
+  base.activeChannelCount = tenBitFrameWidth →
+    precise.activeChannelCount = base.activeChannelCount
+
+def cheapManyWitnessesImproveRedundancy
+    (cheap precise : AntennaInterferenceRig) : Prop :=
+  precise.outputFrameWidth = cheap.outputFrameWidth ∧
+    precise.phaseChannels = cheap.phaseChannels ∧
+    precise.witnessAntennaCount + precise.reflectionPathCount +
+        precise.impedanceWitnessCount <
+      cheap.witnessAntennaCount + cheap.reflectionPathCount +
+        cheap.impedanceWitnessCount
+
+def foilMeshSharesCobordismCache
+    (mesh : RFFoilCoreMesh) : Prop :=
+  0 < mesh.coreCount ∧
+    0 < mesh.sharedCobordismCacheEntries ∧
+    mesh.activeChannelCount = tenBitFrameWidth ∧
+    mesh.redundancyWitnessCount =
+      mesh.coreCount * mesh.localWitnessesPerCore +
+        cheapManyFoilRig.reflectionPathCount +
+        cheapManyFoilRig.impedanceWitnessCount
+
+def cpuActsAsThinClientForFoilMesh
+    (client : RFFoilThinClient)
+    (mesh : RFFoilCoreMesh) : Prop :=
+  client.cpuSchedulers = 1 ∧
+    client.foilCoreCount = mesh.coreCount ∧
+    client.flowFrameWidth = mesh.activeChannelCount ∧
+    client.sharedCobordismCacheEntries = mesh.sharedCobordismCacheEntries ∧
+    client.delegatedWitnessLanes = mesh.redundancyWitnessCount
+
+def foilBackendDropInCompatibleWithUring
+    (backend : RFBackendCompatibility) : Prop :=
+  backend.flowFrameWidth = tenBitFrameWidth ∧
+    backend.forkPreserved = true ∧
+    backend.racePreserved = true ∧
+    backend.foldPreserved = true ∧
+    backend.ventPreserved = true
 
 def rfOnePortCanonicalLifecycle : Gnosis.LifecycleAsForkRaceFoldVentInterfere.Lifecycle :=
   { fork :=
@@ -924,6 +1033,35 @@ theorem rf_gated_addition_composes_fibonacci :
   unfold rfFib20HardwareRun rfFib rfFibPairIter rfFibPairStep rfGatedAdd
     fib rfSucc rfPotentialChannelGate tenBitFrameWidth
     enoughSignalActivatesPotentialChannels nearInfiniteVectorThreshold
+  native_decide
+
+theorem cheap_many_rf_witnesses_dominate_precision_one_when_gate_active :
+    precisionOnlyDoesNotIncreaseActiveChannels rfPotentialChannelGate
+      rfPotentialChannelGate ∧
+    cheapManyWitnessesImproveRedundancy cheapManyFoilRig precisionOneRig ∧
+    foilMeshSharesCobordismCache gnosisFoilMesh ∧
+    cpuActsAsThinClientForFoilMesh singleCpuManyFoilCores gnosisFoilMesh ∧
+    gnosisFoilMesh.activeChannelCount = tenBitFrameWidth ∧
+    gnosisFoilMesh.precisionGain = 0 ∧
+    precisionOneRig.witnessAntennaCount + precisionOneRig.reflectionPathCount +
+        precisionOneRig.impedanceWitnessCount <
+      cheapManyFoilRig.witnessAntennaCount + cheapManyFoilRig.reflectionPathCount +
+        cheapManyFoilRig.impedanceWitnessCount := by
+  unfold precisionOnlyDoesNotIncreaseActiveChannels
+    cheapManyWitnessesImproveRedundancy foilMeshSharesCobordismCache
+    cpuActsAsThinClientForFoilMesh gnosisFoilMesh singleCpuManyFoilCores
+    cheapManyFoilRig precisionOneRig rfPotentialChannelGate tenBitFrameWidth
+  native_decide
+
+theorem gnosis_foil_is_drop_in_backend_for_uring_boundary :
+    foilBackendDropInCompatibleWithUring gnosisFoilUringCompatibleBackend ∧
+    gnosisFoilUringCompatibleBackend.directHardwarePath = false ∧
+    cpuActsAsThinClientForFoilMesh singleCpuManyFoilCores gnosisFoilMesh ∧
+    gnosisFoilUringCompatibleBackend.flowFrameWidth =
+      singleCpuManyFoilCores.flowFrameWidth := by
+  unfold foilBackendDropInCompatibleWithUring gnosisFoilUringCompatibleBackend
+    cpuActsAsThinClientForFoilMesh singleCpuManyFoilCores gnosisFoilMesh
+    tenBitFrameWidth
   native_decide
 
 theorem signal_gated_near_infinite_projection_is_runtime_work :
