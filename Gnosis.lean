@@ -684,8 +684,10 @@ import Gnosis.InterpretationFibration
 import Gnosis.InterpretationLayerMissingThermodynamicBarrier
 import Gnosis.InterpretationLayerSynthesis
 import Gnosis.IrrationalGnostic
-import Gnosis.IupacKhovanovCodec
 import Gnosis.IrreversibilityPredictions
+import Gnosis.IupacKhovanovCodec
+import Gnosis.IupacResolutionCubeBound
+import Gnosis.SevenCrossingIupacShell
 import Gnosis.IteratedBizarroShrink
 import Gnosis.IterativeCrossPollinationPass
 import Gnosis.JacksonQueueing
@@ -703,6 +705,7 @@ import Gnosis.KataZeckendorfHarrisQuorumRace
 import Gnosis.KauffmanBracketFinite
 import Gnosis.KenomicNumbers
 import Gnosis.KhovanovCategorifiesJones
+import Gnosis.KhovanovDiagramWellFormed
 import Gnosis.KnotTheory.FoldedKnotIsomorphism
 import Gnosis.KnotTheory.KnotTheoryGrind
 import Gnosis.KnotTheory.KnottyProblems

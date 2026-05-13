@@ -84,6 +84,12 @@ def shiftPow (p : LaurentPoly) (e : Int) : LaurentPoly :=
 def scale (k : Int) (p : LaurentPoly) : LaurentPoly :=
   ⟨p.offset, p.coeffs.map (k * ·)⟩
 
+@[simp] theorem scale_one (p : LaurentPoly) : scale (1 : Int) p = p := by
+  rcases p with ⟨o, coeffs⟩
+  dsimp [scale]
+  congr 1
+  induction coeffs <;> simp [List.map, Int.one_mul]
+
 private def padFront (n : Nat) (xs : List Int) : List Int :=
   match n with
   | 0     => xs
@@ -154,6 +160,11 @@ def qdimVk : Nat → LaurentPoly
   | 0     => LaurentPoly.constP 1
   | k + 1 => LaurentPoly.mul qdimV (qdimVk k)
 
+/-- `qdim V^{⊗0}` is the monoidal unit, i.e. the constant Laurent polynomial **1**. -/
+@[simp]
+theorem qdimVk_zero : qdimVk 0 = LaurentPoly.constP 1 :=
+  rfl
+
 /-- qdim V = q + q⁻¹ evaluated at q = 1 = 2. -/
 theorem qdim_V_at_one : qdimV.evalAtOne = 2 := by native_decide
 
@@ -183,15 +194,41 @@ structure Diagram where
   resolutions : List (Nat × Nat)
   deriving DecidableEq, BEq
 
+/-- One resolution’s contribution to `bracket`: `(-1)^{|α|} · q^{|α|} · (q+q⁻¹)^{k(α)}`. -/
+def khovanovBracketSummand (p : Nat × Nat) : LaurentPoly :=
+  let h := p.1
+  let k := p.2
+  let sgn : Int := if h % 2 = 0 then 1 else -1
+  LaurentPoly.shiftPow (LaurentPoly.scale sgn (qdimVk k)) (Int.ofNat h)
+
 /-- The chain-level Kauffman bracket polynomial ⟨D⟩(q). -/
 def bracket (D : Diagram) : LaurentPoly :=
-  D.resolutions.foldl
-    (fun acc (h, k) =>
-      -- term = (-1)^h · q^h · (q + q⁻¹)^k
-      let sgn : Int := if h % 2 = 0 then 1 else -1
-      let term := LaurentPoly.shiftPow (LaurentPoly.scale sgn (qdimVk k)) (Int.ofNat h)
-      LaurentPoly.add acc term)
-    LaurentPoly.zero
+  D.resolutions.foldl (fun acc p => LaurentPoly.add acc (khovanovBracketSummand p)) LaurentPoly.zero
+
+/-- Fold `khovanovBracketSummand` on a resolution table alone (no `Diagram` metadata). -/
+def bracketResolutions (l : List (Nat × Nat)) : LaurentPoly :=
+  l.foldl (fun acc p => LaurentPoly.add acc (khovanovBracketSummand p)) LaurentPoly.zero
+
+@[simp]
+theorem bracket_eq_bracketResolutions (D : Diagram) : bracket D = bracketResolutions D.resolutions :=
+  rfl
+
+/-- At index `i`, peel off **prefix sum**, the **ith** Khovanov summand, then fold the **suffix**.
+  Seven-crossing IUPAC shell instantiation at `IupacResolutionCubeBound.rowSlotFin128`:
+  `Gnosis.SevenCrossingIupacShell.bracketResolutions_sevenCubeTaggedList_rowSlotFin128`. -/
+theorem bracketResolutions_split (l : List (Nat × Nat)) (i : Nat) (h : i < l.length) :
+    bracketResolutions l =
+      (l.drop (i + 1)).foldl (fun acc p => LaurentPoly.add acc (khovanovBracketSummand p))
+        (LaurentPoly.add (bracketResolutions (l.take i)) (khovanovBracketSummand (l[i]'h))) := by
+  have hl :
+      l = l.take i ++ ([l[i]'h] ++ l.drop (i + 1)) := by
+    calc
+      l = l.take (i + 1) ++ l.drop (i + 1) := (List.take_append_drop (i + 1) l).symm
+      _ = (l.take i ++ [l[i]'h]) ++ l.drop (i + 1) := by rw [List.take_succ_eq_append_getElem h]
+      _ = l.take i ++ ([l[i]'h] ++ l.drop (i + 1)) := by rw [List.append_assoc]
+  rw [(congrArg bracketResolutions hl)]
+  dsimp [bracketResolutions]
+  simp only [List.foldl_append, List.foldl_cons]
 
 /-- Jones shift: Ĵ(L)(q) = (-1)^{n₋} · q^{n₊ - 2·n₋} · ⟨D⟩(q). -/
 def jonesShift (D : Diagram) : LaurentPoly :=
