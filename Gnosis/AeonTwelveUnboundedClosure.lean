@@ -18,13 +18,19 @@ so **`12 ∣ k · s`**, hence **`iteratedCyclicSucc h12 (k * s) finZero = finZer
 
 Likewise (**`pairsIJ`** chord labels via **`rotPairNatAdd`** from **`Gnosis.AeonTwelveCarrierList`**): **`12 ∣ k*s`** fixes every sorted pair **`p ∈ pairsIJ`**.
 
-**Orbit characterization:** **`k`** successive **`rotPairNatAdd s`** ticks fix **every** gate in **`pairsIJ`** iff **`12 ∣ k*s`** — forward by **`iterateRotPairNatAddStride_eq_rot_nat_mul`** and **`rotPairNatAdd_eq_of_twelve_dvd`**, backward via the **`(0,1)`** pivot (**`pairsIJ_mem_axis_pair_01`**, **`chord_axis01_rot_moves_of_twelve_dvd_ne`**). Same clock as **full **`Fin 12`** deck **`k*s`** resets** (**`iterate_rot_stride_pairsIJ_fixed_iff_fin_vertices_fixed`**). Equivalent **`¬(12 ∣ k*s)`** witnesses some moving pair via **`exists_pairs_ij_iterate_stride_ne_iff_not_twelve_dvd_mul`** (**`(0,1)`** pivot), equivalently **`¬ strideTwelvePeriod s ∣ k`** (**`exists_pairs_ij_iterate_stride_ne_iff_not_strideTwelvePeriod_dvd`**). Equivalently **`strideTwelvePeriod s ∣ k`** (**`twelve_dvd_stride_mul_iff_stride_period_dvd`**).
+**Orbit characterization:** **`k`** successive **`rotPairNatAdd s`** ticks fix **every** gate in **`pairsIJ`** iff **`12 ∣ k*s`** — forward by **`iterateRotPairNatAddStride_eq_rot_nat_mul`** and **`rotPairNatAdd_eq_of_twelve_dvd`**, backward via the **`(0,1)`** pivot (**`pairsIJ_mem_axis_pair_01`** in **`Gnosis.AeonCycleTwelveShadow`**, **`chord_axis01_rot_moves_of_twelve_dvd_ne`**). Same clock as **full **`Fin 12`** deck **`k*s`** resets** (**`iterate_rot_stride_pairsIJ_fixed_iff_fin_vertices_fixed`**). Equivalent **`¬(12 ∣ k*s)`** witnesses some moving pair via **`exists_pairs_ij_iterate_stride_ne_iff_not_twelve_dvd_mul`** (**`(0,1)`** pivot), equivalently **`¬ strideTwelvePeriod s ∣ k`** (**`exists_pairs_ij_iterate_stride_ne_iff_not_strideTwelvePeriod_dvd`**). Equivalently **`strideTwelvePeriod s ∣ k`** (**`twelve_dvd_stride_mul_iff_stride_period_dvd`**).
 
 Equivalent divisibility (**`Nat.Coprime`** on the reduced pair): **`12 ∣ k · s` ↔ `(12 / gcd(12,s)) ∣ k`** — so **`strideTwelvePeriod s`** serves as least positive **tick-multiplier** in the strict sense that every witness **`k`** is a multiple.
 
 This is **`Nat`** repetition, not cardinality of `ℕ` nor analysis at infinity; naming is metaphorical.
 
 Proofs stay **`Init`** on the shadow carrier; cofinal stride facts reuse **`twelve_dvd_mul_div_gcd_mul_s`** from **`Gnosis.AeonTwelveCarrierList`** once (no Mathlib).
+
+**`2^7` cubes:** **`Gnosis.AeonTwelveResolutionSlotEmbedding`** supplies the **injective** gate-to-slot map
+**`chordGateResolutionSlot`** (lex rank **`↔`** **`idxOf`**, then **`rowSlotFin128`**) plus the **Lagrange**
+obstruction **`twelve_not_dvd_two_pow_seven`** on **`ℤ/128ℤ`**. Stride cofinality (**`12 ∣ k·s`**) governs **`rotPairNatAdd`**;
+**`{0,1}^7`** Kauffman rows are a different book; these modules only interface where the story needs **shared indices** or
+**forbidden homomorphisms**.
 -/
 
 open Gnosis.DiscreteClosedTimelikeStep

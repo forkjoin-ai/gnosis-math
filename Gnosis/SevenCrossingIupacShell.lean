@@ -11,6 +11,9 @@ labels via distinct cells.
 
 ## Scope / non-goals
 
+* **Parallel twelve-cycle carrier**: **`Gnosis.AeonTwelveResolutionSlotEmbedding`** maps **`pairsIJ`** injectively into
+  these **`128`** slots via **`chordGateResolutionSlot`** (**first **`66`** IUPAC indices**, **`rowSlotFin128`**); **`twelve_not_dvd_two_pow_seven`** blocks additive **`ℤ/12ℤ ⊆ ℤ/128ℤ`**. **`Gnosis.AeonTwelveCarrierList`** carries gcd / **`rotPairNatAdd`** (**sorted `pairsIJ`**) orbit clocks --- contrast column **`rotatePluckerLabel`** (**`Gnosis.AeonCycleTwelveShadow`**, module doc **Rotation chart**).
+
 * **Bookkeeping shell**: the table’s **`2^7`** length matches Kauffman-cube **cardinality** (`KhovanovDiagramWellFormed.isResolutionCubeShaped`) and IUPAC slotting; it does **not** assert a faithful **`k(α)`** column (chemistry), **ambient isotopy** in `ℝ³`, or that tags coincide with classical Seifert-circle counts from a physical projection.
 * **Jones / bracket here**: combinatorial **shadows** in `KhovanovCategorifiesJones` (`bracket`, `jonesPoly`); no claim of equality with an externally normalized Jones polynomial package beyond these definitions.
 

@@ -9,7 +9,7 @@ For an `n`–crossing diagram one expects `2^n` binary resolutions `α ∈ {0,1}
 chain-level representation in `KhovanovCategorifiesJones` stores exactly one
 `( |α|, k(α) )` row per `α`, so **`resolutions.length` should be `2^(n₊ + n₋)`**.
 
-*   The **canonical catalog** (`unknot`, Hopf, trefoil, `unknotTwist`) satisfies
+*   The **canonical catalog** (`unknot`, Hopf, trefoil, `unknotTwist`, **`4₁` / `figureEight`**) satisfies
     this cube-arithmetic shape (`native_decide`).
 *   The **`diagramCodecRow`** IUPAC injector tags an extra synthetic row onto the
     unknot’s one-entry table **without** increasing `n₊+n₋`, so it is **not**
@@ -57,6 +57,9 @@ theorem trefoilPlusResolutionCubeShaped :
 
 theorem unknotTwistResolutionCubeShaped :
     (unknotTwist.resolutions.length = resolutionCubeCardinality unknotTwist) := by native_decide
+
+theorem figureEightResolutionCubeShaped :
+    (figureEight.resolutions.length = resolutionCubeCardinality figureEight) := by native_decide
 
 /-- The IUPAC codec is **not** cube-shaped: two table rows while `n₊+n₋ = 0`. -/
 theorem diagramCodecRow_not_resolution_cube_shaped (row : Fin 118) :

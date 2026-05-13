@@ -33,7 +33,7 @@ See `Gnosis.AeonCyclicPluckerLabels` for the **C₁₂** column action on the sa
 (`iteratedCyclicSucc_period` from `DiscreteClosedTimelikeStep`).
 
 Chord distance, **unordered-pair** distance classes (**12+12+12+12+12+6**), and **`12 ∣ m` ⇔ full rotation is identity**
-on **`Fin 12`** are in `Gnosis.AeonCycleTwelveShadow`.
+on **`Fin 12`** are in `Gnosis.AeonCycleTwelveShadow`. **Rotation chart** there contrasts column **`rotatePluckerLabel`** gate lists with sorted **`pairsIJ`** **`rotPairNatAdd`** (**`Gnosis.AeonTwelveCarrierList`**).
 
 `Gnosis.AeonTwelveCarrierList` threads **gcd stride** bookkeeping, **Plücker** one-step minors, **GodTwelveSlice**, and **shortChord** pair rotation against that shadow.
 

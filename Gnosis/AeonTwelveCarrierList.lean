@@ -22,13 +22,21 @@ So **`k` ticks** move **`(x.val + k * s) % 12`**, i.e. **`iteratedCyclicSucc h12
 
 On **`pairsIJ`**, the same modulus **`12 ∣ k*s`** restores **sorted endpoint labels** (**`rotPairNatAdd (k*s) p = p`**) simultaneously with the **`Fin 12`** deck reset (**`dvd_iterate_fixed`**) --- one gcd clock rigidly couples vertices and unordered chord labels.
 
+Enumerated certificates shared with **`AeonCycleTwelveShadow`**: coordinate bounds (**`pairsIJ_coord_lt_twelve`** delegates to **`pairsIJ_coords_lt_twelve`**), pivot **`(0, 1) ∈ pairsIJ`** (**`pairsIJ_mem_axis_pair_01`** there).
+
 **Translation invariance:** **`shortChord (rotPairNatAdd m p) = shortChord p`** holds for every modulus **`m`**, extending the **`+1`** certificate (**`shortChord_rotPairNat_eq`**) rigidly forward from **`pairsIJ`**.
 
 **Iterate versus sum:** on **`pairsIJ`**, **`rotPairNatAdd (a+b)`** matches **`rotPairNatAdd b` after **`rotPairNatAdd a`**, after rewriting by **`Nat.add_mod`** and reducing **`Nat % twelve`** to **`Fin twelve`** (**`native_decide`** seals the **`12² × 66`** enumeration).
 
-**Column-label lists:** **`AeonCyclicPluckerLabels.rotatePluckerLabel`** (**global **`(+1) % 12`** on each index**) is **not** **`rotPairNatAdd`** (**translate both endpoints, then re-sort**): **`rot_pair_nat_add_one_packed_ne_rotate_plucker_label_counterexample`** below vs **`rotate_plucker_label_pairs_ij_ordered_gate_counterexample`** in **`AeonCycleTwelveShadow`**.
+**Column-label lists:** Reader-facing contrast: **`Gnosis.AeonCycleTwelveShadow`** module doc (**Rotation chart (do not identify)**).
+**`AeonCyclicPluckerLabels.rotatePluckerLabel`** (**global **`(+1) % 12`** on each index**) is **not** **`rotPairNatAdd`** (**translate both endpoints, then re-sort**): **`rot_pair_nat_add_one_packed_ne_rotate_plucker_label_counterexample`** below vs **`rotate_plucker_label_pairs_ij_ordered_gate_counterexample`** in **`AeonCycleTwelveShadow`**.
 
 The **return time** certificate uses the product of twelve divided by gcd twelve s with s; it is one modulus hitting the origin, not a claim about smaller positive returns on other vertices (see `AeonCycleTwelveShadow`). Orbit-class headcounts on `pairsIJ` stay packaged as `countChord_eq_*` theorems in that same module.
+
+**`2^7` atlas layer:** **`Gnosis.AeonTwelveResolutionSlotEmbedding`** composes lex rank / **`pairsIJ.idxOf`** with
+**`IupacResolutionCubeBound.rowSlotFin128`** (**`chordGateResolutionSlot`**, injective on gates). **`rotPairNatAdd`**
+phase shears are **not** aligned with **`ℤ/128ℤ`** subgroup addition: **`twelve_not_dvd_two_pow_seven`** blocks an
+order-**`12`** additive copy inside **`ℤ/128ℤ`**. Cube-shaped **`Diagram`**: **`Gnosis.SevenCrossingIupacShell`**.
 -/
 
 open AmplituhedronAttention.Grassmannian
@@ -109,9 +117,6 @@ theorem pairsIJ_coord_lt_twelve (p : Nat × Nat) (hp : p ∈ pairsIJ) :
     p.1 < twelve ∧ p.2 < twelve :=
   pairsIJ_coords_lt_twelve p hp
 
-/-- Pivot chord **`{0, 1}`** lies in **`pairsIJ`** (**`native_decide`** on the enumerated list). -/
-theorem pairsIJ_mem_axis_pair_01 : (0, 1) ∈ pairsIJ := by native_decide
-
 /-- A **multiple of twelve** is a noop on **`pairsIJ`** coordinates (sorted labels stabilize with the **`Fin`** modulus). -/
 theorem rotPairNatAdd_eq_of_twelve_dvd {amt : Nat} {p : Nat × Nat}
     (hp : p ∈ pairsIJ) (hamt : twelve ∣ amt) :
@@ -160,6 +165,8 @@ theorem rotPairNatAdd_add_eq_rot_comp (a b : Nat) (p : Nat × Nat) (hp : p ∈ p
   simpa [a', b'] using rotPairNatAdd_add_aux a' b' p hp
 
 /-! ### `rotatePluckerLabel` (**column-index list**) vs **`rotPairNatAdd`** (**sorted chord**)
+
+Same spine as **`Gnosis.AeonCycleTwelveShadow`** module doc (**Rotation chart (do not identify)**).
 
 **`rotatePluckerLabel`** acts on **gate lists** by **`rotateIndex = (· + 1) % 12`** entrywise **without**
 restoring ascending **`i < j`** order. **`rotPairNatAdd`** translates **both** **`pairsIJ`** coordinates and

@@ -8,6 +8,23 @@ group larger families of related claims.
 
 ## Key Modules
 
+- [TwelveSlotSixtySixPairsCarrier.lean](./TwelveSlotSixtySixPairsCarrier.lean) — neutral **`Fin 12`** slots + strict ascending pairs
+  keyed to **`pairsIJ`** (**66** rows); shared spine for domain wrappers below.
+- [TwelveSlotSixtySixPairsCyclicShear.lean](./TwelveSlotSixtySixPairsCyclicShear.lean) — **`rotateTwelveSlot`** (**`cyclicSucc`**) and
+  **`StrictAscendingPair.rotatePairStep`** / **`rotatePairIterate`** aligned with **`rotPairNatAdd`** on chords (**global period `twelve`**).
+- [GnosisTimeClock.lean](./GnosisTimeClock.lean) — **`TimePhase`** (**`Fin 12`** dial), **`tick`**, **`phaseOfNatTick`**, bridges to **`Circadian.aeon`**
+  and **`TwelveSlot`**; solar-hour stability (**`phaseOfNatTick_add_minutesPerHour_mul`**).
+- [EscherichiaColiOrthologTwelveCarrier.lean](./EscherichiaColiOrthologTwelveCarrier.lean) — *E. coli* group bibliography wrapper
+  around the shared spine (**genomics motivation only**).
+- [NikMapTwelveCarrier.lean](./NikMapTwelveCarrier.lean) — NIKA2 **12**-map / **66** cross-pair wrapper around the same spine
+  (**Ponthieu, 2025** cosmological / confusion-noise motivation only).
+- [FoilForrestWalk.lean](./FoilForrestWalk.lean) — **`List`** walks over **`pairsIJ`** strict pair steps (**Foil** index scaffold;
+  spelling **Forrest** names a friend). Wired from Forest via **`open-source/gnosis/src/forest/forrest-skyrms-bridge.ts`**
+  (`encodeHardAssignmentAsForrestWalk`, `bundleSkyrmsWithForrestWalk`) plus **`SkyrmsWalkHooks`** in
+  [`skyrms-walk.ts`](../../gnosis/src/forest/skyrms-walk.ts). Lean carries gates only; TS carries **`η`** / Nash dynamics.
+- [RusticChurchContinuumPromotion.lean](./RusticChurchContinuumPromotion.lean) — Init-only
+  scaffolding for [`docs/RusticChurchToContinuumChecklist.md`](./docs/RusticChurchToContinuumChecklist.md)
+  §§1–3 (promotion tags, measure-entry hypothesis shape, axiom-budget / refusal anchors).
 - [PeriodicAeonPhaseBridge.lean](./PeriodicAeonPhaseBridge.lean) - maps the **118**
   discrete periodic carrier band to the **12**-fold aeon torus (`Fin ambientDim`),
   charts to **`Fin twelve`** for `AeonCycleTwelveShadow`, and identifies enumeration phase with

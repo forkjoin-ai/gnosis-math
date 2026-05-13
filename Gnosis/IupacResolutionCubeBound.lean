@@ -19,6 +19,19 @@ embedding `Fin 118 → Fin (2^7)` for hypothetical slot labeling. For a concrete
 `KhovanovCategorifiesJones.bracketResolutions_split`; peeled diagram **`jonesPoly`** with the
 canonical-slot middle summand **expanded**: `SevenCrossingIupacShell.jonesPoly_sevenCrossingTaggedDiagram_rowSlotFin128_closedSummand`.
 
+## Twelve-cycle chord carrier (**`ℤ/12ℤ`**) vs this cube
+
+`Gnosis.AeonCycleTwelveShadow` fixes **`pairsIJ`** (**`pairsIJ_length = 66`**). Numeric sandwich
+**`unordered_pairs_twelve_eq_sixty_six`**, **`sixty_six_lt_iupac_row_count`**, **`sixty_six_lt_two_pow_seven`**
+records **`66 < 118 ≤ 2^7`**.
+
+For **constructive**, **injective** interaction with **`rowSlotFin128`** (canonical **`Fin 118 → Fin 128`** slotting),
+see **`Gnosis.AeonTwelveResolutionSlotEmbedding`** (**`chordGateResolutionSlot`**, **`pairsIJ_lex_rank_core_eq_idxOf`**).
+For why **additive** twelve-phase clocks cannot embed as **order-`12` subgroups** of **`ℤ/128ℤ`**, see
+**`AeonTwelveResolutionSlotEmbedding.twelve_not_dvd_two_pow_seven`** (Lagrange obstruction).
+
+Hypercube-scale Gray / full chord-shear census: **`Gnosis.AeonTwelveHypercubeMajorization`**.
+
 Zero `sorry`, zero new `axiom`.
 -/
 
@@ -41,6 +54,20 @@ theorem rowSlotFin128_injective : Function.Injective rowSlotFin128 := by
   intro i j h
   have hv : i.val = j.val := by simpa [rowSlotFin128] using congrArg Fin.val h
   exact Fin.ext hv
+
+/-! ## Bridges to the twelve-point chord list (**`66`** gates)
+
+Cardinality (**below**) plus **`Gnosis.AeonTwelveResolutionSlotEmbedding`** (**lex rank ↔ `idxOf`**, injective slot lift).
+-/
+
+/-- **`C(12,2)`** unordered pairs on twelve labeled vertices (matches **`pairsIJ_length`** there). -/
+theorem unordered_pairs_twelve_eq_sixty_six : 12 * 11 / 2 = 66 := by native_decide
+
+/-- **`66`** chord gates lie strictly below **`118`** atlas rows (**`rowSlotFin128`** injectivity targets). -/
+theorem sixty_six_lt_iupac_row_count : 66 < 118 := by native_decide
+
+/-- **`66`** chord gates lie strictly below **`2^7`** Kauffman-cube rows. -/
+theorem sixty_six_lt_two_pow_seven : 66 < 2 ^ 7 := by native_decide
 
 end IupacResolutionCubeBound
 end Gnosis

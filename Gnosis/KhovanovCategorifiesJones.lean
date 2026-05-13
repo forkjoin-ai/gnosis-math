@@ -40,12 +40,19 @@
   This file captures the combinatorial shadow — Kauffman bracket,
   circle counts, and q-graded trace — for a small canonical link
   gallery: the unknot (plus **`unknotTwist`** as a Reidemeister-I
-  presentation shadow), Hopf (**H⁺, H⁻**), and the positive trefoil,
-  alongside explicit **Jones / determinant spot checks**. All those
-  discrete identities close by `native_decide` (still **Init**‑only).
-
+  presentation shadow), Hopf (**H⁺, H⁻**), the positive trefoil, and
+  figure-eight **`4₁`** (Knot Atlas PD **`X4251 X8615 X6374 X2738`**),
+  discrete identities close by `native_decide`.  Structural lemmas (`evalAtMinusOne_shiftPow`,
+  `jonesShift_evalAtMinusOne`) spell out how **`q = -1`** evaluation interacts with
+  writhe.  Cross-links into `ReshetikhinTuraev3DTQFT` package the determinant model
+  **`rtUnnormJonesFromNatDet`** at **`q = -1`** (see **`RT_jones_tabulated_eq_rtUnnormJonesFromNatDet`**);
+  pinning where `jonesPoly` agrees with that bookkeeping is purely **witness-by-theorem**, not an
+  asserted operator identity **`jonesPoly = RT-scan`**.  Monomial witnesses **`psi_Q`** / **`psi_Q_inv`** (see **`psi_Q_mul_psi_Q_inv`**) sit in the Kauffman/A chart; **`qdimV`** carries the distinct Bar-Natan **`q`**-numerator (**`qdimV_ne_kauffmanDeltaFormal`**).
   No axioms, no sorry.
 -/
+
+import Init
+import Gnosis.ReshetikhinTuraev3DTQFT
 
 namespace KhovanovCategorifiesJones
 
@@ -134,27 +141,93 @@ def mul (p q : LaurentPoly) : LaurentPoly :=
 def evalAtOne (p : LaurentPoly) : Int :=
   p.coeffs.foldl (· + ·) 0
 
-/-- Evaluate Ĵ(L)(-1): the determinant of the link (a classical invariant). -/
+/-- Alternating coefficient sum with sign pattern tracking `q = -1`. -/
+def evalGo (cs : List Int) (sgn : Int) : Int :=
+  match cs with
+  | [] => 0
+  | c :: cs => c * sgn + evalGo cs (-sgn)
+
+/-- Sign `(-1)^o` for the first Laurent term `q^o`. -/
+def startSign (o : Int) : Int :=
+  if o % (2 : Int) = 0 then 1 else -1
+
+/-- Evaluate Ĵ(L)(-1): alternating evaluation of the Laurent coefficients. -/
 def evalAtMinusOne (p : LaurentPoly) : Int :=
-  let rec go : List Int → Int → Int
-    | [],      _    => 0
-    | c :: cs, sgn  => c * sgn + go cs (-sgn)
-  let start : Int :=
-    match p.offset % 2 with
-    | .ofNat n  => if n = 0 then 1 else -1
-    | .negSucc n => if n % 2 = 0 then -1 else 1
-  go p.coeffs start
+  evalGo p.coeffs (startSign p.offset)
+
+/-- `startSign` is a character: `startSign (o + e) = startSign e * startSign o`. -/
+theorem startSign_add_mul (o e : Int) :
+    startSign (o + e) = startSign e * startSign o := by
+  unfold startSign
+  rw [Int.add_emod]
+  by_cases he : e % (2 : Int) = 0 <;> by_cases ho : o % (2 : Int) = 0
+  · simp [he, ho]
+  · simp [he, ho]
+  · simp [he, ho]
+  · have hsum : (o % (2 : Int) + e % (2 : Int)) % (2 : Int) = 0 := by omega
+    simp [he, ho, hsum]
+
+/-- Scalar passes through `evalGo` in the initial sign slot. -/
+theorem evalGo_smul (cs : List Int) (k sgn : Int) :
+    evalGo cs (k * sgn) = k * evalGo cs sgn := by
+  induction cs generalizing sgn <;> simp [evalGo, Int.mul_add, ← Int.mul_neg, Int.mul_left_comm, *]
+
+/-- Coefficient-wise scaling commutes with `evalGo`. -/
+theorem evalGo_map_mul (cs : List Int) (c : Int) (sgn : Int) :
+    evalGo (cs.map (fun x => c * x)) sgn = c * evalGo cs sgn := by
+  induction cs generalizing sgn <;> simp [evalGo, List.map, Int.mul_add, Int.mul_left_comm, Int.mul_comm, *]
+
+/-- Multiplying the polynomial by `q^e` multiplies the `q = -1` value by `(-1)^e`. -/
+theorem evalAtMinusOne_shiftPow (p : LaurentPoly) (e : Int) :
+    evalAtMinusOne (shiftPow p e) = startSign e * evalAtMinusOne p := by
+  rcases p with ⟨o, cs⟩
+  dsimp [evalAtMinusOne, shiftPow]
+  rw [← evalGo_smul cs (startSign e) (startSign o)]
+  congr 1
+  exact startSign_add_mul o e
+
+/-- Uniform coefficient scaling scales `evalAtMinusOne`. -/
+theorem evalAtMinusOne_scale (c : Int) (p : LaurentPoly) :
+    evalAtMinusOne (scale c p) = c * evalAtMinusOne p := by
+  rcases p with ⟨o, cs⟩
+  dsimp [evalAtMinusOne, scale]
+  exact evalGo_map_mul cs c (startSign o)
 
 end LaurentPoly
 
 open LaurentPoly
 
 -- ══════════════════════════════════════════════════════════
--- THE BASIC BUILDING BLOCK: qdim V = q + q⁻¹
+-- A vs q bookkeeping (dictionary; shared Laurent carrier)
+-- ══════════════════════════════════════════════════════════
+-- `KauffmanBracketFinite.delta` matches **`-A^{-2}-A^{2}`** (Kauffman loop numerator).
+-- Reciprocal monomial witnesses `psi_Q`, `psi_Q_inv`; `psi_Q_mul_psi_Q_inv` records product `1`.
+-- Sum `kauffmanDeltaFormal`; Bar-Natan `qdimV = q^{-1}+q` is a different laurent-encoding (`qdimV_ne_kauffmanDeltaFormal`).
+
+/-- Monomial **`-A^{-2}`** (**`.psi_Q`**) silently treating the laurent letter as Kauffmans **` A`**.-/
+abbrev psi_Q : LaurentPoly := LaurentPoly.mono (-1 : Int) (-2 : Int)
+
+/-- Reciprocal monomial (**` ψ(q^{-`**1)}) so **` ψ(q)· ψ(q^{-`**1)}) = **`1`**). -/
+abbrev psi_Q_inv : LaurentPoly := LaurentPoly.mono (-1 : Int) (2 : Int)
+
+/-- **`δ`**-slot sum **`-A^{-2`**−**`A`**^{2}` (**` Kauffmans loop polynomial **). -/
+abbrev kauffmanDeltaFormal : LaurentPoly :=
+  LaurentPoly.add psi_Q_inv psi_Q
+
+/-- Reciprocal witness **` ψ(q)·ψ(q^{-`**1)}) = **`1`** (Laurent **`mul`). -/
+theorem psi_Q_mul_psi_Q_inv :
+    LaurentPoly.mul psi_Q psi_Q_inv = LaurentPoly.constP 1 :=
+  rfl
+
+
+
 -- ══════════════════════════════════════════════════════════
 
 /-- qdim of the 2d graded module V = 𝔽⟨v₊, v₋⟩. -/
 def qdimV : LaurentPoly := ⟨-1, [1, 0, 1]⟩      -- q⁻¹ + q
+
+/-- `q^{-1}+q` (Bar-Natan numerator) differs from the δ(A)-chart numerator `kauffmanDeltaFormal`. -/
+theorem qdimV_ne_kauffmanDeltaFormal : qdimV ≠ kauffmanDeltaFormal := by decide
 
 /-- qdim V^{⊗k}. -/
 def qdimVk : Nat → LaurentPoly
@@ -237,6 +310,19 @@ def jonesShift (D : Diagram) : LaurentPoly :=
   let expo : Int := Int.ofNat D.nPlus - 2 * Int.ofNat D.nMinus
   LaurentPoly.shiftPow (LaurentPoly.scale sgn (bracket D)) expo
 
+/-- Sign `(-1)^{n₋}` appearing in `jonesShift`. -/
+def writheSign (D : Diagram) : Int :=
+  if D.nMinus % 2 = 0 then 1 else -1
+
+/-- `jonesShift` evaluation at **`q = -1`** factors through bracket data (no hidden semantics). -/
+theorem jonesShift_evalAtMinusOne (D : Diagram) :
+    (jonesShift D).evalAtMinusOne =
+      writheSign D * LaurentPoly.startSign (Int.ofNat D.nPlus - 2 * Int.ofNat D.nMinus) *
+        (bracket D).evalAtMinusOne := by
+  unfold jonesShift writheSign
+  rw [LaurentPoly.evalAtMinusOne_shiftPow, LaurentPoly.evalAtMinusOne_scale]
+  simp [Int.mul_assoc, Int.mul_left_comm, Int.mul_comm]
+
 /--
   The graded Euler characteristic of the Khovanov chain complex
   equals Ĵ(D)(q). (Shadow statement: we define Ĵ as `jonesShift`.)
@@ -285,6 +371,22 @@ def trefoilPlus : Diagram :=
 def unknotTwist : Diagram :=
   ⟨1, 0, [(0, 2), (1, 1)]⟩
 
+/-- Figure-eight **`4₁`**: four crossings (**`n₊ = n₋ = 2`**) on Knot Atlas
+    PD **`X4251 X8615 X6374 X2738`**.
+
+    Resolution rows **`(|α|, k(α))`** are listed in **lex** order on
+    **`α ∈ {0,1}⁴`** with crossing **`i`** counting bit **`i`** (row index
+    **`idx = Σᵢ αᵢ 2ⁱ`**).  At each **`X(a,b,c,d)`** crossing, smoothing **`0`**
+    pairs **`(a,c)`** and **`(b,d)`**; smoothing **`1`** pairs **`(a,b)`** and **`(c,d)`**
+    (pair-of-pants TQFT normalization compatible with earlier catalog diagrams). -/
+def figureEight : Diagram :=
+  ⟨2, 2,
+    [ (0, 1)
+    , (1, 2), (1, 2), (2, 3)
+    , (1, 1), (2, 1), (2, 1), (3, 2)
+    , (1, 1), (2, 1), (2, 1), (3, 2)
+    , (2, 1), (3, 2), (3, 2), (4, 3) ]⟩
+
 
 -- ══════════════════════════════════════════════════════════
 -- JONES AT q = 1   (classical check: 2^{c-1} · some sign)
@@ -311,6 +413,10 @@ theorem jones_hopf_minus_at_one :
 theorem jones_trefoil_at_one :
     (jonesPoly trefoilPlus).evalAtOne = 2 := by native_decide
 
+/-- Ĵ(4₁)(1) for figure-eight (**unnormalized Jones shift in this file**). -/
+theorem jones_figure_eight_at_one :
+    (jonesPoly figureEight).evalAtOne = 0 := by native_decide
+
 -- ══════════════════════════════════════════════════════════
 -- DETERMINANT   (Jones at q = -1, up to sign)
 -- ══════════════════════════════════════════════════════════
@@ -324,6 +430,76 @@ theorem bracket_unknot_at_one :
 /-- Bracket of the Hopf link at q = 1 = 4. -/
 theorem bracket_hopf_at_one :
     (bracket hopfPlus).evalAtOne = 4 := by native_decide
+
+/-- Figure-eight bracket at **`q = 1`** (Kauffman state sum with **`2^k`** weights). -/
+theorem bracket_figure_eight_at_one :
+    (bracket figureEight).evalAtOne = 0 := by native_decide
+
+/-- `jonesPoly figureEight` evaluates to **`-8`** at **`q = -1`** (this file’s **`jonesShift`**). -/
+theorem jones_figure_eight_at_minus_one :
+    (jonesPoly figureEight).evalAtMinusOne = -8 := by native_decide
+
+/-- **`q + q⁻¹`** evaluated at **`q = -1`** (unknot quantum dimension). -/
+theorem qdimV_evalAtMinusOne : qdimV.evalAtMinusOne = -2 := by native_decide
+
+/-- Determinant bookkeeping used in **`ReshetikhinTuraev3DTQFT`**: modeled value **`-2 · det`** at **`q = -1`**
+    (**`(q+q⁻¹)|_{-1} · det`** with **`qdimV`** encoding). -/
+def rtUnnormJonesFromNatDet (det : Nat) : Int :=
+  qdimV.evalAtMinusOne * Int.ofNat det
+
+/-- Tabulated **`jonesAtMinusOne`** rows (**`U, H, 3₁, 4₁`**) obey the determinant product **`(q+q⁻¹)| · det`**. -/
+theorem RT_jones_tabulated_eq_rtUnnormJonesFromNatDet :
+    ReshetikhinTuraev3DTQFT.jonesAtMinusOne "U" =
+        rtUnnormJonesFromNatDet (ReshetikhinTuraev3DTQFT.knotDet "U")
+    ∧
+    ReshetikhinTuraev3DTQFT.jonesAtMinusOne "H" =
+        rtUnnormJonesFromNatDet (ReshetikhinTuraev3DTQFT.knotDet "H")
+    ∧
+    ReshetikhinTuraev3DTQFT.jonesAtMinusOne "3_1" =
+        rtUnnormJonesFromNatDet (ReshetikhinTuraev3DTQFT.knotDet "3_1")
+    ∧
+    ReshetikhinTuraev3DTQFT.jonesAtMinusOne "4_1" =
+        rtUnnormJonesFromNatDet (ReshetikhinTuraev3DTQFT.knotDet "4_1") := by
+  native_decide
+
+/-- **`4₁`** RT row equals **`rtUnnormJonesFromNatDet 5`** (same data as **`RT_jones_tabulated_eq_rtUnnormJonesFromNatDet`**). -/
+theorem RT_jones_4_1_eq_qdim_eval_times_det :
+    ReshetikhinTuraev3DTQFT.jonesAtMinusOne "4_1" =
+      qdimV.evalAtMinusOne * Int.ofNat (ReshetikhinTuraev3DTQFT.knotDet "4_1") := by
+  native_decide
+
+/-- Unknot gallery diagram matches **`ReshetikhinTuraev3DTQFT.jonesAtMinusOne "U"`** at **`q = -1`**. -/
+theorem jonesPoly_unknot_eval_minus_one_eq_RT_U :
+    (jonesPoly unknot).evalAtMinusOne = ReshetikhinTuraev3DTQFT.jonesAtMinusOne "U" := by native_decide
+
+/-- Hopf (**`H⁺`**) **`jonesPoly`** and RT **`"H"`** differ by overall sign (**same absolute row** **`4`**). -/
+theorem hopfPlus_jonesPoly_abs_eq_RT_H_abs :
+    Int.natAbs (jonesPoly hopfPlus).evalAtMinusOne =
+      Int.natAbs (ReshetikhinTuraev3DTQFT.jonesAtMinusOne "H") := by native_decide
+
+theorem hopfPlus_jonesPoly_eval_minus_one_ne_RT_H :
+    (jonesPoly hopfPlus).evalAtMinusOne ≠ ReshetikhinTuraev3DTQFT.jonesAtMinusOne "H" := by native_decide
+
+/-- **`3₁`**: RT tab **`6`** vs **`**|jonesPoly|** = 2`** for **`trefoilPlus`**. -/
+theorem trefoil_jonesPoly_abs_ne_RT_jones_tab_abs :
+    Int.natAbs (jonesPoly trefoilPlus).evalAtMinusOne ≠
+      Int.natAbs (ReshetikhinTuraev3DTQFT.jonesAtMinusOne "3_1") := by native_decide
+
+/-- Trefoil Kauffman bracket at **`q = -1`** does not match **`rtUnnormJonesFromNatDet (det 3₁)`**. -/
+theorem bracket_trefoil_eval_minus_one_ne_rtUnnormJonesFromNatDet_3_1 :
+    (bracket trefoilPlus).evalAtMinusOne ≠
+      rtUnnormJonesFromNatDet (ReshetikhinTuraev3DTQFT.knotDet "3_1") := by native_decide
+/-- `jonesPoly` (**writhe-shifted bracket**) disagrees with the RT **unnormalized-Jones-at-`-1`** row. -/
+theorem jonesPoly_figureEight_eval_minus_one_ne_RT_4_1 :
+    (jonesPoly figureEight).evalAtMinusOne ≠ ReshetikhinTuraev3DTQFT.jonesAtMinusOne "4_1" := by native_decide
+
+/-- `jonesPoly` at **`q = -1`** factors as in `jonesShift_evalAtMinusOne`. For figure-eight **`4₁`**
+    (**`n₊ = n₋ = 2`**), **`writheSign = 1`**, **`startSign(n₊ - 2n₋) = startSign (-2) = 1`**, hence the
+    writhe **q**-shift is invisible at **`q = -1`** and **`jonesPoly`=`bracket`** as integers. -/
+theorem figureEight_jonesPoly_bracket_evalAtMinusOne :
+    (jonesPoly figureEight).evalAtMinusOne = (bracket figureEight).evalAtMinusOne := by
+  native_decide
+
 
 -- ══════════════════════════════════════════════════════════
 -- EULER CHARACTERISTIC AS AN ALTERNATING SUM
@@ -357,6 +533,9 @@ theorem total_rank_trefoil : totalRank trefoilPlus = 30 := by native_decide
 
 /-- **`unknotTwist`** Kauffman table contributes **`4 + 2 = 6`** to **`totalRank`**. -/
 theorem total_rank_unknotTwist : totalRank unknotTwist = 6 := by native_decide
+
+/-- Figure-eight **`4₁`** chain shell is **`56`**-dimensional at **`q ↦ 1`** counting (**`Σ 2^k`** over Kauffman rows). -/
+theorem total_rank_figure_eight : totalRank figureEight = 56 := by native_decide
 
 
 -- ══════════════════════════════════════════════════════════
@@ -427,6 +606,9 @@ theorem bracket_eq_formula_hopf :
 
 theorem bracket_eq_formula_trefoil :
     (bracket trefoilPlus).evalAtOne = bracketAtOne trefoilPlus := by native_decide
+
+theorem bracket_eq_formula_figureEight :
+    (bracket figureEight).evalAtOne = bracketAtOne figureEight := by native_decide
 
 theorem bracket_eq_formula_unknotTwist :
     (bracket unknotTwist).evalAtOne = bracketAtOne unknotTwist := by native_decide

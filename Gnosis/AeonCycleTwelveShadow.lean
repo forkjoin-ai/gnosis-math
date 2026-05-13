@@ -18,15 +18,26 @@ Modulus **`n = Circadian.aeon = 12`** with rotation from `DiscreteClosedTimelike
 
 ## **66** (different sets, same cardinal)
 
-* `pairsIJ` — unordered **`i < j`**, length **66**.
+* `pairsIJ` — unordered **`i < j`**, length **66**; consecutive pairs **`(i, i+1)`** when **`i + 1 < twelve`** (**`pairsIJ_mem_consecutive`**).
 * `kSubsets 2 12` — ordered Plücker labels, length **66**.
 * **`pairs_ij_ordered_plucker_labels`** packs **`pairsIJ`** as **`[i, j]`** lists; **`mem_kSubsets_two_twelve_iff_mem_pairs_ij_ordered_labels`**
   matches membership (**same 66 gates**, possibly different list order).
-* **`rotatePluckerLabel`** (**`AeonCyclicPluckerLabels`**) shifts **each column index** mod **12** without re-sorting (**`pair_mem_pairsIJ_iff_fst_lt_snd`**, **`list_pair_mem_pairsIJOrderedPluckerLabels_iff`**, **`pairsIJ_coords_lt_twelve`**, **`rotate_plucker_label_mem_*_iff_rotate_index_lt`** / **`_mem`** record **`kSubsets` / `pairsIJ`** alignment); **`rotate_plucker_label_pairs_ij_ordered_gate_counterexample`** gives failure mode. **`rotPairNatAdd`** (**`AeonTwelveCarrierList`**) --- **`rot_pair_nat_add_one_packed_ne_rotate_plucker_label_counterexample`** there.
+* **`rotatePluckerLabel`** (**`AeonCyclicPluckerLabels`**) shifts **each column index** mod **12** without re-sorting (**`pair_mem_pairsIJ_iff_fst_lt_snd`**, **`list_pair_mem_pairsIJOrderedPluckerLabels_iff`**, **`pairsIJ_coords_lt_twelve`**, **`pairsIJ_mem_axis_pair_01`** (pivot **`{0,1}`** = **`pairsIJ_mem_consecutive 0`**), **`rotate_plucker_label_mem_*_iff_rotate_index_lt`** / **`_mem`** record **`kSubsets` / `pairsIJ`** alignment); **`rotate_plucker_label_pairs_ij_ordered_gate_counterexample`** gives failure mode. **`rotPairNatAdd`** (**`AeonTwelveCarrierList`**) --- **`rot_pair_nat_add_one_packed_ne_rotate_plucker_label_counterexample`** there.
 
 ## Distance classes
 
 `shortChord` on `pairsIJ` yields per-class counts **12,12,12,12,12,6**.
+
+## Rotation chart (do not identify)
+
+**`rotatePluckerLabel`** and **`rotPairNatAdd`** are different maps on chord-shaped data; only the carrier step **re-sorts**
+to **`i < j`** after translating endpoints.
+
+* **`rotatePluckerLabel`** (`Gnosis.AeonCyclicPluckerLabels`): apply **`rotateIndex = (· + 1) % 12`** to **each** list entry;
+  **no** reorder to **`fst < snd`**. Packed **`pairsIJ`** gates ↔ **`rotate_plucker_label_mem_*_iff_rotate_index_lt`** / **`_mem`** lemmas below.
+  Minimal **`pairsIJ`** failure: **`rotate_plucker_label_pairs_ij_ordered_gate_counterexample`**.
+* **`rotPairNatAdd`** (`Gnosis.AeonTwelveCarrierList`): add **`amt`** to **both** coordinates modulo **12**, **then** conditional swap (**`rotPairNatAdd_mem_pairsIJ`**).
+  Packed **`+1`** disagrees with column **`rotatePluckerLabel`** on some chords: **`rot_pair_nat_add_one_packed_ne_rotate_plucker_label_counterexample`**.
 
 ## Modular return
 
@@ -47,6 +58,18 @@ list built on top of this shadow.
 `Gnosis.AeonTwelveUnboundedClosure` states **cofinal** multiples of twelve at **`finZero`** and **cofinal**
 **`k · s`** net lengths past any **`anchor`**, with the same **`12 ∣ k*s`** modulus fixing **all** **`Fin 12`**
 events (**`dvd_iterate_fixed`**), anchored on **`strideTwelvePeriod`** and **`AeonTwelveCarrierList`**, still Init-only beside this shadow.
+
+## Coexistence with **`2^7`** Kauffman / IUPAC cubes
+
+**`Gnosis.IupacResolutionCubeBound`** fixes **`118 ≤ 2^7`** and **`Fin 118 → Fin 128`** slotting.
+Here **`pairsIJ.length = 66`** (**`pairsIJ_length`**). **`Gnosis.AeonTwelveResolutionSlotEmbedding`** certifies lex rank =
+**`pairsIJ.idxOf`** on **`pairsIJ`** and builds **`chordGateResolutionSlot : pairsIJ gate → Fin 128`** injective alongside
+**`rowSlotFin128`**.
+
+**Algebra:** **`¬ (12 ∣ 128)`** (**`AeonTwelveResolutionSlotEmbedding.twelve_not_dvd_two_pow_seven`**) --- **no**
+order-**`12`** subgroup of **`ℤ/128ℤ`** (Lagrange), hence **no** injective **`ℤ/12ℤ → ℤ/128ℤ`** homomorphism into that additive group.
+
+Concrete **`Diagram`** shell with **`128`** rows: **`Gnosis.SevenCrossingIupacShell`**.
 -/
 
 def twelve : Nat :=
@@ -93,6 +116,10 @@ theorem pairsIJ_length : pairsIJ.length = 66 := by
 theorem pairsIJ_fst_lt_snd (p : Nat × Nat) (hp : p ∈ pairsIJ) : p.1 < p.2 := by
   revert p hp
   native_decide
+
+/-- From **`pairsIJ_fst_lt_snd`**: **`p.1 + 1 ≤ p.2`** (lex **`pairsIJ`** ranks use **`p.2 - (p.1 + 1)`**). -/
+theorem pairsIJ_succ_fst_le_snd (p : Nat × Nat) (hp : p ∈ pairsIJ) : p.1 + 1 ≤ p.2 :=
+  Nat.succ_le_iff.mpr (pairsIJ_fst_lt_snd p hp)
 
 /-- Both chord endpoints lie in **`0 … eleven`** (**`pairsIJ`** enumeration witness).
 
@@ -189,6 +216,17 @@ theorem pair_mem_pairsIJ_iff_fst_lt_snd (a b : Nat) (ha : a < twelve) (hb : b < 
     rw [List.mem_filterMap]
     refine ⟨b, List.mem_range.mpr hb, ?_⟩
     simp [hab]
+
+/-- Graph-edge chord **`{i, i+1}`** on the twelve-cycle (**`i + 1 < twelve`**). -/
+theorem pairsIJ_mem_consecutive (i : Nat) (hi : i + 1 < twelve) : (i, i + 1) ∈ pairsIJ :=
+  (pair_mem_pairsIJ_iff_fst_lt_snd i (i + 1) (Nat.lt_trans (Nat.lt_succ_self i) hi) hi).mpr
+    (Nat.lt_succ_self i)
+
+/-- Pivot chord **`{0, 1}`** (**`pairsIJ_mem_consecutive 0`**).
+
+Stride/orbit backward steps use this gate with **`chord_axis01_rot_moves_of_twelve_dvd_ne`** (**`Gnosis.AeonTwelveCarrierList`**). -/
+theorem pairsIJ_mem_axis_pair_01 : (0, 1) ∈ pairsIJ :=
+  pairsIJ_mem_consecutive 0 (by decide)
 
 /-- Ascending length-**2** list **`[a, b]`** lies in **`pairsIJOrderedPluckerLabels`** iff **`(a, b) ∈ pairsIJ`**. -/
 theorem list_pair_mem_pairsIJOrderedPluckerLabels_iff (a b : Nat) (ha : a < twelve) (hb : b < twelve) :

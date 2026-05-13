@@ -4,7 +4,13 @@ This note records **discipline** for moving gnosis-math carriers from **Init-onl
 kernel-decidable** strata toward **ℝ**, **measure**, or **QCD-colored** mathematics.
 It does not prove any continuum theorem by itself.
 
+**Lean scaffolding (§§1–3):** `Gnosis.RusticChurchContinuumPromotion` names the promotion vocabulary,
+measure-entry hypothesis template, discrete **`Fin n`** support hygiene, axiom-budget audit slots,
+and refusal-string anchors via `Gnosis.PeriodicAtBridge`.
+
 ## 1. Type promotion map (what changes layer)
+
+Formal tags: **`Gnosis.RusticChurchContinuumPromotion.TypePromotionLayerTag`** (see **`typePromotionLayerTags`**).
 
 | Discrete / Init carrier | Before promoting, ask… | Typical promoted target (future Mathlib-era) |
 |-------------------------|------------------------|-----------------------------------------------|
@@ -16,11 +22,18 @@ It does not prove any continuum theorem by itself.
 
 ## 2. Measure / probability entry gates
 
+Formal template: **`Gnosis.RusticChurchContinuumPromotion.MeasurePromotionGateHypothesis`**;
+discrete carrier shorthand **`DiscreteMeasureSupport`**; nonempty support iff **`0 < n`** (**`fin_nonempty_iff_pos`**).
+
 - State the **σ-algebra** or finite supporting set before integrating.
 - If using pushforward from `Fin n`, prove **measurability** is trivial (discrete σ-algebra).
 - Prefer **explicit distributions** over informal “random walk” language.
 
 ## 3. Axiom budget (tie to `PeriodicAtBridge`)
+
+Formal audit record: **`Gnosis.RusticChurchContinuumPromotion.ContinuumAxiomBudgetTrail`**;
+kernel anchors **`refusal_calibration_strings_nonempty`** / **`refusal_calibration_strings_singleton_length`**;
+folded posture **`continuum_promotion_axiom_budget_bundle`** (= **`PeriodicAtBridge.periodic_at_bridge_discipline_master`**).
 
 - Any equality tying kernel certificates to **meters, seconds, eV, barns, …** belongs in a **named morphism or hypothesis record**, not as a stray `rfl` across namespaces.
 - Reuse refusal posture: see `Gnosis.PeriodicAtBridge.refusalCalibrationStrings` (“SI without calibration”).

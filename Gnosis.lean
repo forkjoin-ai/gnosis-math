@@ -35,6 +35,10 @@ import Gnosis.AeonGamutToneShift
 import Gnosis.AeonStandingWaveCoordinateBridge
 import Gnosis.AeonTwelveBraid
 import Gnosis.AeonTwelveCarrierList
+import Gnosis.AeonTwelveResolutionSlotEmbedding
+import Gnosis.AeonTwelveHammingGrayDynamics
+import Gnosis.AeonTwelveHypercubeMajorization
+import Gnosis.AeonTwelvePairsIJZmodAction
 import Gnosis.AeonTwelveUnboundedClosure
 import Gnosis.AffectAxesIndependence
 import Gnosis.AffectMatrixCompleteness
@@ -528,6 +532,9 @@ import Gnosis.EtaleCohomology
 import Gnosis.EulerGnostic
 import Gnosis.EulerTotientMobiusInversion
 import Gnosis.EverettSuperposition
+import Gnosis.TwelveSlotSixtySixPairsCarrier
+import Gnosis.TwelveSlotSixtySixPairsCyclicShear
+import Gnosis.EscherichiaColiOrthologTwelveCarrier
 import Gnosis.Evolution
 import Gnosis.EmergenceFromTerminalAttractors
 import Gnosis.ExecutionStallBounds
@@ -560,6 +567,7 @@ import Gnosis.Fintype
 import Gnosis.FisherManifold
 import Gnosis.FloerFiniteFixedPoints
 import Gnosis.FluidDynamics
+import Gnosis.FoilForrestWalk
 import Gnosis.FoldErasure
 import Gnosis.FoldHeatHierarchy
 import Gnosis.FoldedBuleyeanView
@@ -614,6 +622,7 @@ import Gnosis.GodelIncompletenessShadow
 import Gnosis.GodelUniverseIncompleteness
 import Gnosis.FuckNazis
 import Gnosis.GoldenVolatilityBreakout
+import Gnosis.GnosisTimeClock
 import Gnosis.GoodhartsLaw
 import Gnosis.GossipProtocol
 import Gnosis.GoyaSleepOfReasonWitness
@@ -914,6 +923,7 @@ import Gnosis.NavierStokesExistence
 import Gnosis.NegotiationEquilibrium
 import Gnosis.NestedWallingtonTower
 import Gnosis.NetflixFrontier
+import Gnosis.NikMapTwelveCarrier
 import Gnosis.NoiseLedgerTheorem
 import Gnosis.NoiseTopology
 import Gnosis.NoiseIsObservational
@@ -1067,6 +1077,7 @@ import Gnosis.RetrocausalMemoization
 import Gnosis.RetrocausalTimeInversion
 import Gnosis.RichClubCoefficient
 import Gnosis.RuminationInverseControl
+import Gnosis.RusticChurchContinuumPromotion
 import Gnosis.RuntimeCertificate
 import Gnosis.PredictiveTopologyOfMarkets
 import Gnosis.ReverseFold
@@ -1100,6 +1111,7 @@ import Gnosis.ShipOfTheseusWitness
 import Gnosis.SimonidesSpartanEpitaphWitness
 import Gnosis.SimpsonsParadox
 import Gnosis.SixthDeathInterference
+import Gnosis.SixtySixPairsAtlasWitness
 import Gnosis.StirnerEgoAndOwnWitness
 import Gnosis.SkyrmsErgodicSelection
 import Gnosis.SkyrmsNadirBule
