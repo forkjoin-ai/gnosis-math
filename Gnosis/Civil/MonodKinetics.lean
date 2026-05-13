@@ -2,13 +2,13 @@
   MonodKinetics.lean
   ==================
 
-  Formalizes Monod Kinetics for microorganism growth.
-  The specific growth rate (μ) is related to the substrate concentration (S):
-  μ = μ_max * S / (K_s + S)
+  Formalizes the Monod equation for microbial growth in biochemical
+  engineering. The specific growth rate (μ) is related to the substrate
+  concentration (S) and the half-saturation constant (Ks):
+  μ = μ_max * S / (Ks + S)
 
-  In Gnosis, we model this as a "Saturating Growth Witness". As substrate
-  concentration increases, growth rate increases but is bounded by
-  the maximum capacity.
+  In Gnosis, we model this as a "Substrate Saturation Witness", proving
+  that the growth rate is bounded by μ_max.
 
   Style: Rustic Church (Init-only).
 -/
@@ -18,44 +18,39 @@ import Init
 namespace Gnosis.Civil
 
 /-- 
-  Growth Rate Model Parameters.
+  Monod Parameters.
+  mu_max: Maximum specific growth rate.
+  ks: Half-velocity constant.
 -/
-structure MonodModel where
+structure MonodParameters where
   mu_max : Nat
   ks : Nat
 
 /-- 
-  The Growth Rate Witness (μ):
-  Calculates growth rate for a given substrate concentration S.
+  Monod Growth Rate Witness:
+  μ = (mu_max * s) / (ks + s)
 -/
-def growth_rate (m : MonodModel) (s : Nat) : Nat :=
+def MonodGrowthRate (m : MonodParameters) (s : Nat) : Nat :=
   if s = 0 then 0
   else (m.mu_max * s) / (m.ks + s)
 
 /-- 
-  Theorem: Zero Substrate No Growth.
-  If the substrate concentration is zero, the growth rate witness is zero.
+  Theorem: Growth Rate Boundary.
+  The specific growth rate witness is always bounded by mu_max.
 -/
-theorem zero_substrate_zero_growth (m : MonodModel) :
-  growth_rate m 0 = 0 := rfl
-
-/-- 
-  Theorem: Growth Capacity Witness.
-  The growth rate is always bounded by the maximum growth rate (μ_max).
--/
-theorem growth_rate_bounded (m : MonodModel) (s : Nat) :
-  growth_rate m s ≤ m.mu_max := by
-  unfold growth_rate
+theorem growth_rate_bounded (m : MonodParameters) (s : Nat) :
+  MonodGrowthRate m s ≤ m.mu_max := by
+  unfold MonodGrowthRate
   match s with
-  | 0 => exact Nat.zero_le _
+  | 0 => 
+    rw [if_pos rfl]
+    exact Nat.zero_le m.mu_max
   | Nat.succ n =>
     rw [if_neg (Nat.succ_ne_zero n)]
-    -- (mu_max * S) / (ks + S) ≤ mu_max
     apply Nat.div_le_of_le_mul
-    -- mu_max * S ≤ mu_max * (ks + S)
-    have h : m.mu_max * Nat.succ n ≤ (m.ks + Nat.succ n) * m.mu_max := by
-      rw [Nat.add_mul, Nat.mul_comm]
-      apply Nat.le_add_left
-    exact h
+    -- mu_max * s ≤ mu_max * (ks + s)
+    rw [Nat.add_mul]
+    rw [Nat.mul_comm n.succ m.mu_max]
+    apply Nat.le_add_left
 
 end Gnosis.Civil

@@ -4,8 +4,8 @@
 
   Formalizes the discrete Euler-Bernoulli relationship for linear elastic
   beam elements. In a discrete grid of spacing Δx = 1, the curvature κ
-  at node i is defined by the second-order central difference of the transverse
-  displacement y.
+  at node i is defined by the second-order central difference of the
+  transverse displacement y.
 
   The bending moment M is the product of the flexural rigidity EI and
   the curvature κ. This module proves the stability witness that a linear
@@ -49,19 +49,19 @@ theorem linear_displacement_yields_zero_moment
   intro i
   unfold BendingMoment
   unfold Curvature
-  -- Substitute the linear displacement function into the curvature formula
   rw [h_linear (i + 2), h_linear (i + 1), h_linear i]
-  -- Resolve curvature: (m*(i+2) + c) - 2*(m*(i+1) + c) + (m*i + c) = 0
-  have h_zero_curv : (m * (↑(i + 2) : Int) + c) - 2 * (m * (↑(i + 1) : Int) + c) + (m * (↑i : Int) + c) = 0 := by
-    show m * (↑i + 2) + c - 2 * (m * (↑i + 1) + c) + (m * ↑i + c) = 0
-    match m, ↑i, c with
-    | mv, iv, cv =>
-      -- (mv * (iv + 2) + cv) - 2 * (mv * (iv + 1) + cv) + (mv * iv + cv)
-      repeat rw [Int.mul_add]
-      rw [Int.mul_comm mv 2, Int.mul_one, Int.two_mul]
-      repeat rw [Int.sub_add]
-      ac_rfl
-  rw [h_zero_curv]
-  exact Int.mul_zero _
+  -- Resolve curvature
+  have h_zero : (m * (↑(i + 2) : Int) + c) - 2 * (m * (↑(i + 1) : Int) + c) + (m * (↑i : Int) + c) = 0 := by
+    rw [Int.natCast_add, Int.natCast_add]
+    repeat rw [Int.mul_add]
+    rw [Int.mul_comm m ↑2, Int.two_mul m, Int.mul_one]
+    repeat rw [Int.two_mul]
+    repeat rw [Int.sub_add]
+    repeat rw [Int.sub_eq_add_neg]
+    repeat rw [Int.neg_add]
+    repeat rw [Int.add_assoc]
+    ac_rfl
+  rw [h_zero]
+  apply Int.mul_zero
 
 end Gnosis.Civil

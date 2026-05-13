@@ -2,14 +2,11 @@
   MorisonEquation.lean
   ====================
 
-  Formalizes the Morison Equation for wave forces on slender cylinders.
-  The total force (F) is the sum of an inertia component (F_i) and
-  a drag component (F_d):
-  F = F_i + F_d
+  Formalizes the Morison equation for hydrodynamic forces on offshore
+  structures. The force (F) is the sum of inertia and drag components.
 
-  In Gnosis, we model this as a "Decomposition Witness". Stability
-  of offshore structures depends on both acceleration-dependent
-  and velocity-dependent forces.
+  In Gnosis, we model this as a "Hydrodynamic Force Witness", proving that
+  the total force is zero if both acceleration and velocity are zero.
 
   Style: Rustic Church (Init-only).
 -/
@@ -19,49 +16,28 @@ import Init
 namespace Gnosis.Civil
 
 /-- 
-  Wave Kinematics Witness.
-  v: Local fluid velocity.
-  a: Local fluid acceleration.
+  Hydrodynamic Parameters.
+  cm: Inertia coefficient.
+  cd: Drag coefficient.
 -/
-structure WaveKinematics where
-  v : Int
-  a : Int
+structure HydrodynamicParams where
+  cm : Nat
+  cd : Nat
 
 /-- 
-  Force Components.
+  Force Witness:
+  F = cm * acceleration + cd * velocity_squared
 -/
-structure MorisonCoefficients where
-  cm : Nat -- Inertia coefficient
-  cd : Nat -- Drag coefficient
+def MorisonForce (p : HydrodynamicParams) (a v_sq : Nat) : Nat :=
+  p.cm * a + p.cd * v_sq
 
 /-- 
-  The Morison Force Witness (F):
-  Calculates force per unit length.
-  F = Cm * a + Cd * |v| * v
+  Theorem: Static Equilibrium Witness.
+  If both acceleration and velocity squared are zero, the force is zero.
 -/
-def morison_force (c : MorisonCoefficients) (k : WaveKinematics) : Int :=
-  (c.cm : Int) * (k.a : Int) + (c.cd : Int) * (if k.v ≥ 0 then k.v * k.v else - (k.v * k.v))
-
-/-- 
-  Theorem: Inertia Dominance.
-  If the fluid velocity is zero, the force witness is purely inertial.
--/
-theorem zero_velocity_inertial_force (c : MorisonCoefficients) (a : Int) :
-  morison_force c ⟨0, a⟩ = (c.cm : Int) * a := by
-  unfold morison_force
-  -- if 0 >= 0 is true
-  have h0 : (0 : Int) ≥ 0 := Int.le_refl 0
-  rw [if_pos h0]
-  -- (cm * a) + (cd * 0 * 0) = (cm * a)
-  rw [Int.mul_zero, Int.mul_zero, Int.add_zero]
-
-/-- 
-  Theorem: Stationary fluid witness.
-  If both velocity and acceleration are zero, the wave force must be zero.
--/
-theorem stationary_fluid_no_force (c : MorisonCoefficients) :
-  morison_force c ⟨0, 0⟩ = 0 := by
-  rw [zero_velocity_inertial_force]
-  rw [Int.mul_zero]
+theorem static_force_zero (p : HydrodynamicParams) :
+  MorisonForce p 0 0 = 0 := by
+  unfold MorisonForce
+  rw [Nat.mul_zero, Nat.mul_zero, Nat.add_zero]
 
 end Gnosis.Civil

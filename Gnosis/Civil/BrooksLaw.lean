@@ -1,6 +1,6 @@
 /-
   BrooksLaw.lean
-  ==============
+  ==============================
 
   Formalizes Brooks's Law: "Adding manpower to a late software project
   makes it later." This applies equally to complex engineering and
@@ -46,16 +46,9 @@ theorem productivity_reversal (n p c : Nat)
   net_productivity ⟨n, p, c⟩ < 0 := by
   unfold net_productivity
   apply Int.sub_neg_of_lt
-  match n with
-  | 0 => 
-    have h_staff_pos : 0 > 0 := h_staff
-    cases h_staff_pos
-  | Nat.succ _ =>
-    have h_p : (p : Int) < (c : Int) := Int.ofNat_lt.mpr h_late
-    apply Int.mul_lt_mul_of_pos_left h_p
-    -- n > 0 witness
-    show (0 : Int) < ↑(Nat.succ _)
-    apply Int.ofNat_pos.mpr
-    apply Nat.succ_pos
+  -- Goal: (n * p) < (n * c)
+  have h_p_lt_c : (p : Int) < (c : Int) := Int.ofNat_lt.mpr h_late
+  have h_n_pos : (0 : Int) < (n : Int) := Int.ofNat_lt.mpr h_staff
+  apply Int.mul_lt_mul_of_pos_left h_p_lt_c h_n_pos
 
 end Gnosis.Civil

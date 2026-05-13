@@ -275,6 +275,10 @@ import Gnosis.Civil.MonodKinetics
 import Gnosis.Civil.MorisonEquation
 import Gnosis.Civil.IribarrenNumber
 import Gnosis.Civil.TimoshenkoDeflection
+import Gnosis.Civil.BraessParadox
+import Gnosis.Civil.CriticalPath
+import Gnosis.Civil.MasonrySafe
+import Gnosis.Civil.WhitneyBlock
 import Gnosis.Materials.GibbsPhaseRule
 import Gnosis.Materials.BurgersConservation
 import Gnosis.Materials.GriffithFracture

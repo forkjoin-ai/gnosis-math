@@ -46,12 +46,11 @@ theorem braess_paradox_existence :
   -- G': 3 routes, cost 12
   let g : NetworkState := ⟨2, 10⟩
   let g_prime : NetworkState := ⟨3, 12⟩
-  exists g
-  exists g_prime
+  apply Exists.intro g
+  apply Exists.intro g_prime
   unfold IsBraessParadoxical
-  simp
   constructor
-  . exact Nat.le_refl 3 -- 3 > 2 is obvious
-  . exact Nat.le_refl 12 -- 12 > 10 is obvious
+  . decide
+  . decide
 
 end Gnosis.Civil

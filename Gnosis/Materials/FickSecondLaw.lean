@@ -40,23 +40,23 @@ def Accumulation (d : Int) (c : ConcentrationProfile) (i : Nat) : Int :=
   witness is zero everywhere (Steady state).
 -/
 theorem steady_state_linear_profile (d m k : Int) (c : ConcentrationProfile)
-  (h_linear : ∀ i, c i = m * i + k) :
+  (h_linear : ∀ i, c i = m * (i : Int) + k) :
   ∀ i, Accumulation d c i = 0 := by
   intro i
   unfold Accumulation
   unfold SpatialCurvature
   rw [h_linear (i + 2), h_linear (i + 1), h_linear i]
   -- Resolve: (m*(i+2) + k) - 2*(m*(i+1) + k) + (m*i + k) = 0
-  have h_zero : (m * (i + 2 : Nat) + k) - 2 * (m * (i + 1 : Nat) + k) + (m * (i : Nat) + k) = 0 := by
-    rw [Int.mul_add, Int.mul_add]
-    rw [Int.two_mul (m * (i + 1 : Nat) + k)]
-    rw [Int.mul_comm m 2]
-    match m * (i : Nat), m, k with
-    | mi, mv, kv =>
-      show mi + mv * 2 + kv - (mi + mv + kv + (mi + mv + kv)) + (mi + kv) = 0
-      rw [Int.mul_comm mv 2, Int.two_mul mv]
-      repeat rw [Int.sub_add]
-      ac_rfl
+  have h_zero : (m * (↑(i + 2) : Int) + k) - 2 * (m * (↑(i + 1) : Int) + k) + (m * (↑i : Int) + k) = 0 := by
+    rw [Int.natCast_add, Int.natCast_add]
+    repeat rw [Int.mul_add]
+    rw [Int.mul_comm m ↑2, Int.two_mul m, Int.mul_one]
+    repeat rw [Int.two_mul]
+    repeat rw [Int.sub_add]
+    repeat rw [Int.sub_eq_add_neg]
+    repeat rw [Int.neg_add]
+    repeat rw [Int.add_assoc]
+    ac_rfl
   rw [h_zero]
   apply Int.mul_zero
 

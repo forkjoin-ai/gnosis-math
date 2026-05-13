@@ -2,12 +2,12 @@
   IribarrenNumber.lean
   ====================
 
-  Formalizes the Iribarren Number (Surf Similarity Parameter) for
-  beach breaking waves:
+  Formalizes the Iribarren number (Surf Similarity Parameter) for wave
+  breaking on slopes. 
   ξ = tan(α) / sqrt(H/L)
 
-  In Gnosis, we model the breaker type as a monotonic witness of
-  beach slope and wave steepness.
+  In Gnosis, we model this as a "Wave Breaking Witness", proving that
+  the breaking mode depends monotonically on the slope.
 
   Style: Rustic Church (Init-only).
 -/
@@ -17,34 +17,37 @@ import Init
 namespace Gnosis.Civil
 
 /-- 
-  The Iribarren Witness (ξ):
-  Higher values correspond to surging/plunging breakers;
-  lower values correspond to spilling breakers.
+  Wave Parameters.
+  slope: Tangent of the beach slope.
+  height: Wave height.
+  length: Wave length.
 -/
-def iribarren_witness (slope : Nat) (steepness : Nat) : Nat :=
-  if steepness = 0 then 0
-  else slope * 100 / steepness
+structure WaveParams where
+  slope : Nat
+  height : Nat
+  length : Nat
 
 /-- 
-  Theorem: Steeper Beach Breaker Shift.
-  Increasing the beach slope (with constant wave steepness) increases
-   the Iribarren witness, indicating a shift towards more energetic
-   breaker types.
+  Simplified Discrete Iribarren Witness:
+  ξ_sq = (slope^2 * length) / height
 -/
-theorem steeper_beach_higher_iribarren (s1 s2 st : Nat)
-  (h_st : st > 0)
-  (h_slope : s1 ≤ s2) :
-  iribarren_witness s1 st ≤ iribarren_witness s2 st := by
-  unfold iribarren_witness
-  match st with
-  | 0 => 
-    -- 0 > 0 is false
-    have h_st_pos : 0 > 0 := h_st
-    cases h_st_pos
-  | Nat.succ _ =>
-    rw [if_neg (Nat.succ_ne_zero _)]
-    apply Nat.div_le_div_right
-    apply Nat.mul_le_mul_right
-    exact h_slope
+def IribarrenSq (w : WaveParams) : Nat :=
+  if w.height = 0 then 0
+  else (w.slope * w.slope * w.length) / w.height
+
+/-- 
+  Theorem: Slope Monotonicity Witness.
+  Increasing the slope increases the Iribarren witness squared.
+-/
+theorem slope_monotonicity (w : WaveParams) (s_new : Nat)
+  (h_slope : s_new ≥ w.slope)
+  (h_height : w.height > 0) :
+  IribarrenSq ⟨s_new, w.height, w.length⟩ ≥ IribarrenSq w := by
+  unfold IribarrenSq
+  rw [if_neg (Nat.ne_of_gt h_height)]
+  -- Goal: (s_new * s_new * length) / height ≥ (slope * slope * length) / height
+  apply Nat.div_le_div_right
+  apply Nat.mul_le_mul_right
+  apply Nat.mul_le_mul h_slope h_slope
 
 end Gnosis.Civil

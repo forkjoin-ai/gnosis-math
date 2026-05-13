@@ -44,22 +44,20 @@ theorem adsorption_saturation_limit (p k : Nat) :
   unfold LangmuirCoverage
   match p with
   | 0 => 
-    show (if 0 = 0 then 0 else if k = 0 then 0 else k * 0 * 100 / (1 + k * 0)) ≤ 100
     rw [if_pos rfl]
     exact Nat.zero_le 100
   | Nat.succ n =>
+    rw [if_neg (Nat.succ_ne_zero n)]
     match k with
     | 0 => 
-      show (if n.succ = 0 then 0 else if 0 = 0 then 0 else 0 * n.succ * 100 / (1 + 0 * n.succ)) ≤ 100
-      rw [if_neg (Nat.succ_ne_zero n), if_pos rfl]
+      rw [if_pos rfl]
       exact Nat.zero_le 100
     | Nat.succ m =>
-      show (if n.succ = 0 then 0 else if m.succ = 0 then 0 else m.succ * n.succ * 100 / (1 + m.succ * n.succ)) ≤ 100
-      rw [if_neg (Nat.succ_ne_zero n), if_neg (Nat.succ_ne_zero m)]
-      set X := m.succ * n.succ
+      rw [if_neg (Nat.succ_ne_zero m)]
+      let X := Nat.succ m * Nat.succ n
       apply Nat.div_le_of_le_mul
-      -- X * 100 ≤ 100 * (1 + X)
-      rw [Nat.mul_add, Nat.mul_one]
+      -- Goal: X * 100 ≤ (1 + X) * 100
+      rw [Nat.add_mul, Nat.one_mul]
       apply Nat.le_add_left
 
 end Gnosis.Materials
