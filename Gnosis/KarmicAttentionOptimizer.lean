@@ -62,6 +62,11 @@ counts, spectral mass, and so on) **rounded to ℤ** before entering the loop.
   Conscious nodes (asymmetric energy vs consciousness ledger) and vacuum / debt
   pulls are **orthogonal layers**: they govern *when* a node re-anchors or
   siphons; karmic pruning still applies per-head once `(L,F)` summaries are in ℤ.
+
+**Runtime mirrors:** `open-source/gnosis/distributed-inference/src/karmic_attention_optimizer.rs`
+(Rust) and `open-source/aether/src/karmic-attention-optimizer.ts` (TS), composed
+with `applyAttentionClosureToPruningMask` via `KarmicRegulatorInput` after the
+closure gate opens.
 -/
 
 namespace Gnosis

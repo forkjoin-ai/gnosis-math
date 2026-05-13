@@ -20,9 +20,7 @@ slices at `R = 12`, and pair dynamics linked to the **6** chord classes).
 
 So **`k` ticks** move **`(x.val + k * s) % 12`**, i.e. **`iteratedCyclicSucc h12 (k * s)`**.
 
-The **return time** certificate below uses **`m = (12 / gcd(12,s)) · s`**: it is *a*
-modulus killing the origin — not a claim that smaller positive multiples never return for
-other vertices (`Fin 12` iteration story stays in `AeonCycleTwelveShadow`).
+The **return time** certificate uses the product of twelve divided by gcd twelve s with s; it is one modulus hitting the origin, not a claim about smaller positive returns on other vertices (see `AeonCycleTwelveShadow`). Orbit-class headcounts on `pairsIJ` stay packaged as `countChord_eq_*` theorems in that same module.
 -/
 
 open AmplituhedronAttention.Grassmannian
@@ -74,7 +72,7 @@ theorem god_twelve_slice_conservation (s : GodTwelveSlice) (hv : s.vent.val ≤ 
     godWeight twelve s.vent.val + s.vent.val = twelve + 1 :=
   godWeight_conservation twelve s.vent.val hv
 
-/-- `v = 0` vent at **`R = 12`**: maximal weight **13** on the God-formula slice. -/
+/-- Zero rejection vent yields godWeight thirteen when R is twelve. -/
 theorem god_twelve_top_vent_eq_thirteen : godWeight twelve 0 = 13 := by
   native_decide
 
@@ -97,8 +95,6 @@ theorem shortChord_attains_six_values :
             (∃ p ∈ pairsIJ, shortChord p = 5) ∧
               (∃ p ∈ pairsIJ, shortChord p = 6) := by
   native_decide
-
-/-- Burnside-style pointer: six cardinality lemmas on pairsIJ live in AeonCycleTwelveShadow. -/
 
 end AeonTwelveCarrierList
 end Gnosis

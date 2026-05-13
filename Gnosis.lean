@@ -34,6 +34,8 @@ import Gnosis.AeonFluxSiteAdequacy
 import Gnosis.AeonGamutToneShift
 import Gnosis.AeonStandingWaveCoordinateBridge
 import Gnosis.AeonTwelveBraid
+import Gnosis.AeonTwelveCarrierList
+import Gnosis.AeonTwelveUnboundedClosure
 import Gnosis.AffectAxesIndependence
 import Gnosis.AffectMatrixCompleteness
 import Gnosis.AffectMatrixAgencyAxis
@@ -682,6 +684,7 @@ import Gnosis.InterpretationFibration
 import Gnosis.InterpretationLayerMissingThermodynamicBarrier
 import Gnosis.InterpretationLayerSynthesis
 import Gnosis.IrrationalGnostic
+import Gnosis.IupacKhovanovCodec
 import Gnosis.IrreversibilityPredictions
 import Gnosis.IteratedBizarroShrink
 import Gnosis.IterativeCrossPollinationPass
@@ -953,6 +956,7 @@ import Gnosis.PeriodicPauliEvCalibrationData
 import Gnosis.PeriodicPauliEvCalibration
 import Gnosis.PeriodicPauliEvCalibrationShadows
 import Gnosis.PeriodicBraidMatterJugular
+import Gnosis.PeriodicElementLinkAtlas
 import Gnosis.PeriodicTableTheoremMatrix
 import Gnosis.Periodicity
 import Gnosis.PerpetualSpiral

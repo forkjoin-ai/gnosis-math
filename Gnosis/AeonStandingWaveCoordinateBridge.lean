@@ -31,9 +31,12 @@ See `Gnosis.AeonCyclicPluckerLabels` for the **C₁₂** column action on the sa
 Chord distance, **unordered-pair** distance classes (**12+12+12+12+12+6**), and **`12 ∣ m` ⇔ full rotation is identity**
 on **`Fin 12`** are in `Gnosis.AeonCycleTwelveShadow`.
 
+`Gnosis.AeonTwelveCarrierList` threads **gcd stride** bookkeeping, **Plücker** one-step minors, **GodTwelveSlice**, and **shortChord** pair rotation against that shadow.
+
 Continuum / ℝ / measure promotion discipline (checklists + anti-identification rules):
 `Gnosis/docs/RusticChurchToContinuumChecklist.md`.
-Periodic-table enumeration phase landing in this torus: `Gnosis.PeriodicAeonPhaseBridge`.
+Periodic-table enumeration phase landing in this torus: `Gnosis.PeriodicAeonPhaseBridge`, including the closed-loop
+characterization against **`iteratedCyclicSucc`** from **`twelveCycleOrigin`** on **`Fin twelve`**.
 -/
 
 open AmplituhedronAttention

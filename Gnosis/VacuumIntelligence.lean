@@ -77,7 +77,7 @@ theorem vacuum_void_pressure_structural :
     have ⟨hwo, hd⟩ := Nat.add_eq_zero_iff.mp h
     have ⟨hw, ho⟩ := Nat.add_eq_zero_iff.mp hwo
     unfold vacuumBuleUnit
-    simp only [hw, ho, hd]
+    congr
   · intro h
     rw [h]
     unfold vacuumBuleUnit buleyUnitScore

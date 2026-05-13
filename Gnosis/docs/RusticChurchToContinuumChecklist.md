@@ -59,6 +59,13 @@ rg '\\bsorry\\b' open-source/gnosis-math/Gnosis --glob '*.lean' # inspect hits (
 
 ## 7. Narrow lemma targets (good incremental work)
 
-- Factor `enumerationPhaseFinAmbient` through **chart composition** once a second aeon chart exists beside `[0,1]`.
-- Relate **stride return times** (`AeonTwelveCarrierList.stride_origin_return`) to **phase orbit partitions** on `Fin 12` with an explicit morphism into `Fin ambientDim`.
+- ~~Enumerate **`enumerationPhaseFinTwelve`** as **`iteratedCyclicSucc h12`** from **`twelveCycleOrigin`**~~ — see
+  `Gnosis.PeriodicAeonPhaseBridge.enumeration_phase_fin_twelve_eq_iterated_cyclic_succ_from_origin` plus chart lemmas
+  `fin_twelve_ambient_roundtrip` / `ambient_twelve_roundtrip`.
+- Factor **`enumerationPhaseFinAmbient`** through **chart composition** once a second aeon coordinate chart beside **`[0,1]`**
+  is packaged beside `aeonBasisCoordinatePlane`.
+- Relate **gcd stride return** (`AeonTwelveCarrierList.stride_origin_return`, varying **`s`**) to **enumeration ticks**
+  via **`Gnosis.PeriodicAeonPhaseBridge`**: value-square lemma **`enumeration_phase_stride_square_val`**,
+  residue pullback **`nat_mod_twelve_add_stride_pull_residue`**, gcd closure at the bridge origin
+  **`stride_origin_return_at_twelve_cycle_origin`**, and **`twelve_cycle_origin_eq_finZero`** for reuse with **`finZero`** lemmas.
 - When Pauling (or similar) columns exist in calibration data, state **decidable** ε-harmonic predicates vs hydrogen anchors.

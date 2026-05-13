@@ -28,6 +28,12 @@ Modulus **`n = Circadian.aeon = 12`** with rotation from `DiscreteClosedTimelike
 
 `iteratedCyclicSucc h12 m` is the **identity map** on **`Fin 12`** iff **`12 ∣ m`**
 (`iterate_all_fixed_iff_dvd`).
+
+See `Gnosis.AeonTwelveCarrierList` for the **ordered** gcd / Plücker / `godWeight` / pair-rotation
+list built on top of this shadow.
+
+`Gnosis.AeonTwelveUnboundedClosure` states **cofinal** multiples of twelve at **`finZero`** and **cofinal**
+**`k · s`** net lengths past any **`anchor`**, anchored on **`strideTwelvePeriod`** and **`AeonTwelveCarrierList`**, still Init-only beside this shadow.
 -/
 
 def twelve : Nat :=
