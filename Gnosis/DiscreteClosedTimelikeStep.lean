@@ -10,6 +10,8 @@ A Lorentzian CTC closes a **smooth** timelike worldline. Here we use the minimal
 carrier: events `Fin n`, one-step future `cyclicSucc` (**add one, wrap mod `n`**). Iterating `n`
 times returns to the start — a **closed loop** with no continuum, only `Nat`/`Fin`.
 
+After **`iteratedCyclicSucc_val`**: one step (**`k = 1`**) recovers **`cyclicSucc`** (`iteratedCyclicSucc_one_eq_cyclicSucc`).
+
 For `n = 1`, the loop closes in **one step** (the keystone collapses to a singleton).
 
 This is clock arithmetic, not a GR solution; the naming indicates **structural analogy** only.
@@ -47,6 +49,11 @@ theorem iteratedCyclicSucc_val (hn : 0 < n) (k : Nat) (x : Fin n) :
       _ = (x.val + Nat.succ k) % n :=
         congrArg (fun t : Nat => t % n)
           ((Nat.succ_eq_add_one (x.val + k)).symm.trans (Nat.add_succ x.val k).symm)
+
+/-- **`iteratedCyclicSucc hn 1`** is **`cyclicSucc hn`** (single clock tick). -/
+theorem iteratedCyclicSucc_one_eq_cyclicSucc (hn : 0 < n) (x : Fin n) :
+    iteratedCyclicSucc hn 1 x = cyclicSucc hn x :=
+  rfl
 
 /-- After **`n`** steps the worldline revisits the same (`Fin n`) event — discrete closure. -/
 theorem iteratedCyclicSucc_period (hn : 0 < n) (x : Fin n) :

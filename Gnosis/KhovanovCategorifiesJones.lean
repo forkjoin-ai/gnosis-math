@@ -38,10 +38,11 @@
   * Categorification   ↔  the path, not just the decision
 
   This file captures the combinatorial shadow — Kauffman bracket,
-  circle counts, and q-graded trace — for a set of canonical link
-  diagrams: the unknot, the Hopf link (both orientations),
-  the trefoil, and the figure-eight. All identities close by
-  `native_decide`.
+  circle counts, and q-graded trace — for a small canonical link
+  gallery: the unknot (plus **`unknotTwist`** as a Reidemeister-I
+  presentation shadow), Hopf (**H⁺, H⁻**), and the positive trefoil,
+  alongside explicit **Jones / determinant spot checks**. All those
+  discrete identities close by `native_decide` (still **Init**‑only).
 
   No axioms, no sorry.
 -/
@@ -278,6 +279,12 @@ def trefoilPlus : Diagram :=
     , (2, 2), (2, 2), (2, 2)
     , (3, 3) ]⟩
 
+/-- **`+`** Reidemeister‑I shadow presentation of the unknot (**`U`**):
+
+    resolution table **`|α| = 0, k = 2`** and **`|α| = 1, k = 1`**. -/
+def unknotTwist : Diagram :=
+  ⟨1, 0, [(0, 2), (1, 1)]⟩
+
 
 -- ══════════════════════════════════════════════════════════
 -- JONES AT q = 1   (classical check: 2^{c-1} · some sign)
@@ -348,6 +355,9 @@ theorem total_rank_hopf : totalRank hopfPlus = 12 := by native_decide
 /-- Total rank for trefoil is 4 + 3·2 + 3·4 + 8 = 30. -/
 theorem total_rank_trefoil : totalRank trefoilPlus = 30 := by native_decide
 
+/-- **`unknotTwist`** Kauffman table contributes **`4 + 2 = 6`** to **`totalRank`**. -/
+theorem total_rank_unknotTwist : totalRank unknotTwist = 6 := by native_decide
+
 
 -- ══════════════════════════════════════════════════════════
 -- GNOSIS BINDING: CONTROL-FLOW UNKNOTTING
@@ -386,6 +396,10 @@ theorem cf_pair_entangled :
 theorem cf_trefoil_threads :
     unknottingObstruction ⟨3, 2, trefoilPlus⟩ = 30 := by native_decide
 
+/-- Reidemeister-I shadow on **`U`** still packs a **`totalRank`**-**`6`** search shell (vs **`2`** pristine). -/
+theorem cf_unknot_twist_shadow :
+    unknottingObstruction ⟨1, 2, unknotTwist⟩ = 6 := by native_decide
+
 
 -- ══════════════════════════════════════════════════════════
 -- KHOVANOV → JONES : THE CATEGORIFICATION STATEMENT
@@ -414,6 +428,9 @@ theorem bracket_eq_formula_hopf :
 theorem bracket_eq_formula_trefoil :
     (bracket trefoilPlus).evalAtOne = bracketAtOne trefoilPlus := by native_decide
 
+theorem bracket_eq_formula_unknotTwist :
+    (bracket unknotTwist).evalAtOne = bracketAtOne unknotTwist := by native_decide
+
 -- ══════════════════════════════════════════════════════════
 -- REIDEMEISTER-INVARIANT SHADOWS
 -- ══════════════════════════════════════════════════════════
@@ -421,13 +438,8 @@ theorem bracket_eq_formula_trefoil :
 -- reprove full Reidemeister invariance of Kh — that's the hard
 -- theorem. But we can check that the *unknot* is invariant
 -- under R-move-equivalent presentations:
--- the "unknot with one spurious +1 twist" has a different
+-- the "unknot with one spurious +1 crossing" (**`unknotTwist`**) has a different
 -- bracket polynomial but the same Jones polynomial after shift.
-
-/-- Unknot with one extra positive crossing — R-I equivalent to U.
-    Resolution table: |α|=0, k=2  and  |α|=1, k=1. -/
-def unknotTwist : Diagram :=
-  ⟨1, 0, [(0, 2), (1, 1)]⟩
 
 /-- Bracket-level non-invariance — R-I changes the *polynomial*
     (offset and coefficients), even though the integer evaluations

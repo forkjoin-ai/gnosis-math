@@ -65,7 +65,9 @@ rg '\\bsorry\\b' open-source/gnosis-math/Gnosis --glob '*.lean' # inspect hits (
 - Factor **`enumerationPhaseFinAmbient`** through **chart composition** once a second aeon coordinate chart beside **`[0,1]`**
   is packaged beside `aeonBasisCoordinatePlane`.
 - Relate **gcd stride return** (`AeonTwelveCarrierList.stride_origin_return`, varying **`s`**) to **enumeration ticks**
-  via **`Gnosis.PeriodicAeonPhaseBridge`**: value-square lemma **`enumeration_phase_stride_square_val`**,
-  residue pullback **`nat_mod_twelve_add_stride_pull_residue`**, gcd closure at the bridge origin
-  **`stride_origin_return_at_twelve_cycle_origin`**, and **`twelve_cycle_origin_eq_finZero`** for reuse with **`finZero`** lemmas.
+  via **`Gnosis.PeriodicAeonPhaseBridge`**: **`Fin twelve`** **`enumeration_phase_stride_square`** /
+  **`enumerationPhaseFinTwelveAfterStride`**, ambient carrier square **`enumeration_phase_stride_square_ambient`**, **`fin_ambient_to_twelve_iterate_cyclic_succ`**, ambient packaging **`enumerationPhaseFinAmbientAfterStride`** with
+  **`enumeration_phase_stride_square_via_ambient_chart`**, **`fin_ambient_to_twelve_after_stride`**, **`fin_twelve_to_ambient_after_stride`**, discrete periods **`iterated_cyclic_succ_period_ambient`**, **`iterate_twelve_from_origin_is_period_via_ambient`**, **`iterate_ambient_from_origin_via_twelve_period`**, inverse iterate **`fin_twelve_to_ambient_iterate_cyclic_succ`**, single-step core **`DiscreteClosedTimelikeStep.iteratedCyclicSucc_one_eq_cyclicSucc`** with chart **`fin_ambient_to_twelve_cyclic_succ`** / **`fin_twelve_to_ambient_cyclic_succ`**, value lemma **`enumeration_phase_stride_square_val`**,
+  residue pullback (**`nat_mod_n_add_stride_pull_residue`** / **`nat_mod_twelve_add_stride_pull_residue`** / **`nat_mod_ambient_add_stride_pull_residue`**), gcd closure **`stride_origin_return_at_twelve_cycle_origin`**,
+  and **`twelve_cycle_origin_eq_finZero`** for reuse with **`finZero`** lemmas.
 - When Pauling (or similar) columns exist in calibration data, state **decidable** ε-harmonic predicates vs hydrogen anchors.
