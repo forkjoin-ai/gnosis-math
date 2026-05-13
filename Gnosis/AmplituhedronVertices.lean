@@ -12,6 +12,7 @@ import Init
 import Gnosis.AmplituhedronAttention
 import Gnosis.AmplituhedronGrassmannian
 
+
 namespace AmplituhedronAttention.Vertices
 
 open AmplituhedronAttention

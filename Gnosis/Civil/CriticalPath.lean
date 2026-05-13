@@ -26,12 +26,12 @@ structure Task where
 /-- 
   A Path is a sequence of tasks.
 -/
-def Path := List Task
+def TaskPath := List Task
 
 /-- 
   Path Duration: Sum of task durations.
 -/
-def path_duration : Path → Nat
+def path_duration : TaskPath → Nat
   | [] => 0
   | t :: ts => t.duration + path_duration ts
 
@@ -40,7 +40,7 @@ def path_duration : Path → Nat
   The project is finished only when all paths are complete.
   Total duration is bounded below by any single path's duration.
 -/
-theorem project_completion_witness (p : Path) (total_duration : Nat)
+theorem project_completion_witness (p : TaskPath) (total_duration : Nat)
   (h_cpm : total_duration ≥ path_duration p) :
   total_duration ≥ path_duration p := by
   exact h_cpm

@@ -30,11 +30,11 @@ structure HoareTriple where
   is_valid : Prop
 
 /-- 3. Weakest Precondition Calculus: wp(C, Q) -/
-def weakest_precondition_calculus (C : List Nat) (Q : Prop) : Prop :=
+def weakest_precondition_calculus (_C : List Nat) (Q : Prop) : Prop :=
   Q -- Shadow
 
 /-- 4. Loop Invariant Predicate -/
-def loop_invariant_predicate (I : Prop) (C : List Nat) : Prop :=
+def loop_invariant_predicate (I : Prop) (_C : List Nat) : Prop :=
   I → I -- Shadow
 
 /-- 5. Symbolic Execution State -/
@@ -43,7 +43,7 @@ structure SymbolicState where
   pc : Nat
 
 /-- 6. Temporal Logic Model Check -/
-def temporal_logic_model_check (M : List Nat) (phi : Prop) : Prop :=
+def temporal_logic_model_check (_M : List Nat) (phi : Prop) : Prop :=
   phi
 
 /-- 7. Bisimulation Equivalence: S1 ~ S2 -/
@@ -56,7 +56,7 @@ theorem inductive_invariant_proof (I : Prop) (step : I → I) :
   λ h => step h
 
 /-- 9. Reachability Analysis Graph -/
-def reachability_analysis_graph (start : Nat) (target : Nat) (transitions : List (Nat × Nat)) : Prop :=
+def reachability_analysis_graph (start : Nat) (_target : Nat) (_transitions : List (Nat × Nat)) : Prop :=
   ∃ path : List Nat, path.head? = some start
 
 /-- 10. Abstract Interpretation Lattice -/

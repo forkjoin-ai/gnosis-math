@@ -28,6 +28,20 @@ discrete “closed causal loop’’ as modular iteration. Omitting `GodFormula`
 _every_ Init-facing certificate needs the full weight calculus when the proposition is periodic
 dynamic only.
 
+An **aeon–Grassmannian discrete bridge** ties `Circadian.aeon` to `StandingWaveDims.coverageDen`,
+certifies `standingWaveToCoordinatePlane` **row-equality** with `coordinatePlane` \((k,d)=(2,12)\),
+counts **`vertexCount 2 12 = 66`**, and bundles `Fin 12` phase slices with `godWeight` conservation
+in [`Gnosis/AeonStandingWaveCoordinateBridge.lean`](Gnosis/AeonStandingWaveCoordinateBridge.lean)
+(`aeon_discrete_topology_bundle`, `native_decide` on closed arithmetic).
+
+The **C₁₂ column clock** on those same **66** ordered Plücker labels reuses
+`DiscreteClosedTimelikeStep` (`iteratedCyclicSucc_period`) in
+[`Gnosis/AeonCyclicPluckerLabels.lean`](Gnosis/AeonCyclicPluckerLabels.lean) (`aeon_cyclic_plucker_label_bundle`).
+
+[`Gnosis/AeonCycleTwelveShadow.lean`](Gnosis/AeonCycleTwelveShadow.lean) completes the **shadow** side: **rot-invariant**
+chord length on **`Fin 12`**, **66** unordered pairs `i < j`, per-class counts **12×5+6**,
+and **`iteratedCyclicSucc m = id` ↔ `12 ∣ m`** (`iterate_all_fixed_iff_dvd`).
+
 ## How you close goals instead of `omega`
 
 After `unfold`, the goal almost always fits one of the patterns in the cookbook

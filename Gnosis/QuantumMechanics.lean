@@ -56,7 +56,7 @@ theorem heisenberg_uncertainty_principle (delta_x delta_p h_bar : Int) :
   λ h => h
 
 /-- 6. Expectation Value Integral -/
-def expectation_value_integral (psi : List Complex) (A : List (List Complex)) : Int :=
+def expectation_value_integral (_psi : List Complex) (_A : List (List Complex)) : Int :=
   -- Shadow of the inner product ⟨ψ|A|ψ⟩
   0
 

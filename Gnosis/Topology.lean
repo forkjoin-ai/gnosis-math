@@ -44,12 +44,12 @@ structure Homeomorphism (X Y : TopologicalSpace) where
   g_f_id : ∀ p, g (f p) = p
 
 /-- 5. Is Compact Space (Shadow) -/
-def is_compact_space (X : TopologicalSpace) : Prop :=
+def is_compact_space (_X : TopologicalSpace) : Prop :=
     -- Shadow: every open cover has a finite subcover
     True
 
 /-- 6. Is Connected Set -/
-def is_connected_set (X : TopologicalSpace) (s : List BuleyUnit) : Prop :=
+def is_connected_set (_X : TopologicalSpace) (_s : List BuleyUnit) : Prop :=
     -- Shadow: s cannot be partitioned into two disjoint open sets
     True
 
@@ -59,7 +59,7 @@ structure FundamentalGroup (X : TopologicalSpace) (x0 : BuleyUnit) where
   is_group : Prop
 
 /-- 8. Betti Number Calculation: β_n -/
-def betti_number_calculation (X : TopologicalSpace) (n : Nat) : Nat :=
+def betti_number_calculation (_X : TopologicalSpace) (_n : Nat) : Nat :=
   -- Shadow of the rank of the n-th homology group
   0
 
@@ -70,7 +70,7 @@ structure SimplicialComplex where
   is_complex : Prop
 
 /-- 10. Singular Homology Chain -/
-def singular_homology_chain (X : TopologicalSpace) (n : Nat) : List BuleyUnit :=
+def singular_homology_chain (_X : TopologicalSpace) (_n : Nat) : List BuleyUnit :=
   []
 
 /-- 11. Is Manifold Atlas -/
@@ -88,7 +88,7 @@ theorem tikhonov_product_theorem (X Y : TopologicalSpace) :
   λ h _ => h
 
 /-- 14. Urysohn Lemma Partition -/
-theorem urysohn_lemma_partition (X : TopologicalSpace) (A B : List BuleyUnit) :
+theorem urysohn_lemma_partition (_X : TopologicalSpace) (A B : List BuleyUnit) :
     -- Exists continuous f: X -> [0,1] such that f(A)=0, f(B)=1
     A = A ∧ B = B :=
   ⟨rfl, rfl⟩

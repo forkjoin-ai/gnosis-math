@@ -8,6 +8,9 @@ group larger families of related claims.
 
 ## Key Modules
 
+- [PeriodicAeonPhaseBridge.lean](./PeriodicAeonPhaseBridge.lean) - maps the **118**
+  discrete periodic carrier band to the **12**-fold aeon torus (`Fin ambientDim`)
+  via enumeration-only modular phase (not chemical group placement).
 - [RL.lean](./RL.lean) - Buleyean reinforcement-learning primitives, including
   rejection information and rejection-trained budget growth.
 - [RLBudgetLedgerBridge.lean](./RLBudgetLedgerBridge.lean) - bridge proving

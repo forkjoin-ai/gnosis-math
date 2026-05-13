@@ -27,10 +27,13 @@ import Gnosis.AdaptiveBisimPredictions
 import Gnosis.AdaptiveDecomposition
 import Gnosis.AdaptiveWitnesses
 import Gnosis.AdversarialRobustness
+import Gnosis.AeonCycleTwelveShadow
+import Gnosis.AeonCyclicPluckerLabels
 import Gnosis.AeonFlowTransport
 import Gnosis.AeonFluxSiteAdequacy
-import Gnosis.AeonTwelveBraid
 import Gnosis.AeonGamutToneShift
+import Gnosis.AeonStandingWaveCoordinateBridge
+import Gnosis.AeonTwelveBraid
 import Gnosis.AffectAxesIndependence
 import Gnosis.AffectMatrixCompleteness
 import Gnosis.AffectMatrixAgencyAxis
@@ -692,6 +695,7 @@ import Gnosis.JugglingComposition
 import Gnosis.JugglingOrbit
 import Gnosis.JungAionShadowSuppressionWitness
 import Gnosis.KKMLemmaShadow
+import Gnosis.KarmicAttentionOptimizer
 import Gnosis.KataZeckendorfHarrisQuorumRace
 import Gnosis.KauffmanBracketFinite
 import Gnosis.KenomicNumbers
@@ -943,6 +947,13 @@ import Gnosis.PatternAtlas
 import Gnosis.PlanetaryHomologySandbox
 import Gnosis.PellCatLucasTraceFamily
 import Gnosis.PellUltrametricConvergents
+import Gnosis.PeriodicAeonPhaseBridge
+import Gnosis.PeriodicAtBridge
+import Gnosis.PeriodicPauliEvCalibrationData
+import Gnosis.PeriodicPauliEvCalibration
+import Gnosis.PeriodicPauliEvCalibrationShadows
+import Gnosis.PeriodicBraidMatterJugular
+import Gnosis.PeriodicTableTheoremMatrix
 import Gnosis.Periodicity
 import Gnosis.PerpetualSpiral
 import Gnosis.PersonTheorem
@@ -1101,6 +1112,8 @@ import Gnosis.SocialDynamicsHooke
 import Gnosis.SocialFoldObstruction
 import Gnosis.SolomonoffBuleyean
 import Gnosis.SolomonoffInduction
+import Gnosis.SolomonoffSpace
+import Gnosis.StructuralHoleToBuleyean
 import Gnosis.SolvableGroupS3
 import Gnosis.SpectralMeasurementFramework
 import Gnosis.SpectralNoiseEquilibrium

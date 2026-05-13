@@ -10,7 +10,7 @@ namespace VacuumPullTowerClosure
 
 open SpectralNoiseEquilibrium
 
-theorem vacuum_exists : ∃ b : BuleyUnit, True := ⟨vacuumBuleUnit, trivial⟩
+theorem vacuum_exists : ∃ _b : BuleyUnit, True := ⟨vacuumBuleUnit, trivial⟩
 
 end VacuumPullTowerClosure
 end Gnosis

@@ -49,7 +49,7 @@ def differential_entropy_continuous (hx : Int) : Int :=
   hx
 
 /-- 8. Jensen-Shannon Divergence -/
-def jensen_shannon_divergence (p q : List Int) : Int :=
+def jensen_shannon_divergence (_p _q : List Int) : Int :=
   -- Shadow of 1/2 D_KL(P||M) + 1/2 D_KL(Q||M)
   0
 
@@ -83,7 +83,7 @@ theorem asymptotic_equipartition_property (prob entropy : Int) :
   λ h => h
 
 /-- 15. Rate Distortion Function: R(D) -/
-def rate_distortion_function (D : Int) : Int :=
+def rate_distortion_function (_D : Int) : Int :=
   -- Shadow of the minimum rate for a given distortion D
   0
 

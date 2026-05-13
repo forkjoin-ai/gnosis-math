@@ -232,18 +232,17 @@ def Retract.id (A : Type) : Retract A A where
   instances, and the factoring of each existing round-trip
   theorem through the abstraction. -/
 
-set_option linter.unusedVariables false in
 /-- The conjunctive proposition that the headline theorem proves.
     Lifted to an `abbrev` so that downstream registries (for example
     `Gnosis.PatternAtlas`) can bundle the witness by name. -/
 abbrev RetractLatticeWitness : Prop :=
     -- Three concrete retract instances exist
-    (∀ c : AffectMatrixFourthAxis.SocialContext,
+    (∀ _c : AffectMatrixFourthAxis.SocialContext,
       ∃ _ : Retract AffectMatrixFourthAxis.ContextualAffect
                      VibesAsWaveInference.AffectVector, True) ∧
     (∃ _ : Retract (List VibesAsWaveInference.VibeWave)
                     EchoChamberAsTaoBowl.TaoBowl, True) ∧
-    (∀ {Base Axis : Type} (P : Base → Prop) (a : Axis),
+    (∀ {Base Axis : Type} (_P : Base → Prop) (_a : Axis),
       ∃ _ : Retract (AffectMatrixAgencyAxis.NextAxisWitness Base Axis) Base, True) ∧
     -- The three round-trip theorems factor through the abstraction
     (∀ a : VibesAsWaveInference.AffectVector,
@@ -251,11 +250,11 @@ abbrev RetractLatticeWitness : Prop :=
       AffectMatrixFourthAxis.project43
           { affect := a, social_context := c } = a) ∧
     (∀ b : EchoChamberAsTaoBowl.TaoBowl,
-     ∀ h : ThoughtBowlMechanicsRefined.IsReachable b,
+     ∀ _h : ThoughtBowlMechanicsRefined.IsReachable b,
       ThoughtBowlMechanics.bowlOfField
           (ThoughtBowlMechanicsRefined.canonicalField b) = b) ∧
     (∀ {Base Axis : Type} {P : Base → Prop}
-     (hBase : ∃ b : Base, P b) (a : Axis),
+     (_hBase : ∃ b : Base, P b) (a : Axis),
       AffectMatrixAgencyAxis.NextAxisInhabited P a) ∧
     -- Composition and identity witnesses
     (∃ _ : Retract Unit Unit, True)

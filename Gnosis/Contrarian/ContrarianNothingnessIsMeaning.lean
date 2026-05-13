@@ -43,7 +43,7 @@ theorem nothingness_provides_meaning_site (c v : Prop) (w : MeaningfulObject c v
   Contrarian Insight: The "meaning" (v) is carried by the "nothingness" (void),
   while the "material" (c) only provides the boundary.
 -/
-def meaning_site_is_void (c v : Prop) (w : MeaningfulObject c v) : Prop :=
+def meaning_site_is_void (c v : Prop) (_w : MeaningfulObject c v) : Prop :=
   v
 
 end Gnosis

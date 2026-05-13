@@ -29,7 +29,7 @@ def StressField := Nat → Int
   In a zero-load system, the stress field is zero everywhere.
 -/
 theorem zero_load_zero_stress (s : StressField)
-  (h_boundary : ∀ (i : Nat), IsInEquilibrium [])
+  (_h_boundary : ∀ (_i : Nat), IsInEquilibrium [])
   (h_constitutive : ∀ i, s i = 0) :
   ∀ i, s i = 0 := by
   intro i

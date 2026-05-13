@@ -1,4 +1,5 @@
 import Gnosis.GodFormula
+import Gnosis.SolomonoffSpace
 
 /-!
 # Solomonoff Induction — The Universal Prior
@@ -24,12 +25,19 @@ K(x) is INCOMPUTABLE (halting problem) but MDL approximates it.
 The clinamen: K(x) ≥ 1 for all x. No string has zero complexity.
 Even the empty string requires a 1-bit program ("output nothing").
 
-Zero -- placeholder.
+## Non-empirical bridge (`THM-NON-EMPIRICAL-SOLOMONOFF`)
+
+`Gnosis.SolomonoffSpace` packages the same `(R, v)` pair as a discrete prior
+line `priorWeight := godWeight budget complexity`. When a neighbor-aggregated
+`NonEmpiricalPrediction.StructuralHole` matches `(neighborRoundsSum, neighborVoidSum)`
+to that `(budget, complexity)`, its complement interpolation equals that prior —
+`SolomonoffInduction.non_empirical_solomonoff_compose` (forwarding
+`NonEmpiricalPrediction.non_empirical_solomonoff_compose`).
 -/
 
 namespace SolomonoffInduction
 
-open Gnosis (godWeight)
+open Gnosis
 
 /-- THM-KOLMOGOROV-MINIMUM: The minimum complexity of any string is 1.
     No data has zero description cost. The clinamen of information. -/
@@ -82,5 +90,17 @@ theorem solomonoff_master (R : Nat) :
   · exact Gnosis.godWeight_ceiling R
   · exact Gnosis.godWeight_floor R
   · intro v hv; exact Gnosis.godWeight_conservation R v hv
+
+/-- Ledger row `THM-NON-EMPIRICAL-SOLOMONOFF`: structural-hole complement weight matches
+    `SolomonoffSpace.priorWeight` when aggregated neighbors align with `(budget, complexity)`.
+    Primary proof lives under `NonEmpiricalPrediction`; this is the discovery anchor from
+    `SolomonoffInduction`. -/
+theorem non_empirical_solomonoff_compose
+    (h : NonEmpiricalPrediction.StructuralHole)
+    (s : SolomonoffSpace)
+    (hR : h.neighborRoundsSum = s.budget)
+    (hK : h.neighborVoidSum = s.complexity) :
+    h.interpolationWeight = s.priorWeight :=
+  NonEmpiricalPrediction.non_empirical_solomonoff_compose h s hR hK
 
 end SolomonoffInduction

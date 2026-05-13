@@ -1,0 +1,64 @@
+# Rustic Church → continuum promotion checklist
+
+This note records **discipline** for moving gnosis-math carriers from **Init-only /
+kernel-decidable** strata toward **ℝ**, **measure**, or **QCD-colored** mathematics.
+It does not prove any continuum theorem by itself.
+
+## 1. Type promotion map (what changes layer)
+
+| Discrete / Init carrier | Before promoting, ask… | Typical promoted target (future Mathlib-era) |
+|-------------------------|------------------------|-----------------------------------------------|
+| `Nat`, `Fin n`, lists of `Nat` (`KPlane` rows) | Is every ops claim still exact mod rounding? | `ℝ`, `Rn`, structured finite-dimensional spaces |
+| `Fin 12` phase / column torus | Is modular arithmetic the **whole** story or a chart index? | `S¹` or `ℝ / 12ℤ` with explicit quotient witnesses |
+| `PeriodicCalibrationMorphism` mass shadows | Are digits SI-backed or morphism hypotheses? | CODATA-backed `ℝ` ratios + uncertainty propagation |
+| God-formula `Nat` weights (`godWeight`) | Is the slice still the **same** inequality `v ≤ R`? | Same predicate on `ℝ` with ordered-semiring lemmas |
+| Gauge / color prose (“QCD”) | Are we naming **SU(3)** reps or metaphorical routing? | Bundled **fiber 3** + connection **only** if imported |
+
+## 2. Measure / probability entry gates
+
+- State the **σ-algebra** or finite supporting set before integrating.
+- If using pushforward from `Fin n`, prove **measurability** is trivial (discrete σ-algebra).
+- Prefer **explicit distributions** over informal “random walk” language.
+
+## 3. Axiom budget (tie to `PeriodicAtBridge`)
+
+- Any equality tying kernel certificates to **meters, seconds, eV, barns, …** belongs in a **named morphism or hypothesis record**, not as a stray `rfl` across namespaces.
+- Reuse refusal posture: see `Gnosis.PeriodicAtBridge.refusalCalibrationStrings` (“SI without calibration”).
+- New continuum axioms need a **one-line audit trail**: which discrete theorem they refine, and which experiment would falsify the bridge.
+
+## 4. Non-unification rules (anti-confusion)
+
+These Lean symbols **must not** silently identify:
+
+- `DiscretePeriodicCarrier.idx` (118-band enumeration)  
+- Mendeleev **group / period** placement (layout-specific)  
+- `omegaWeightedSyntheticIonizationMicroEv` (ledger filler)  
+- Tabulated CODATA / JSON IE or mass  
+
+- `Fin ambientDim` phase from **`idx.val % ambientDim`** (`Gnosis.PeriodicAeonPhaseBridge`)  
+- Chemical “group 1 … group 18” indices without an explicit **lookup table morphism**.
+
+## 5. Standing-wave coordinate bridge reminder
+
+`Gnosis.AeonStandingWaveCoordinateBridge` embeds Death #1 standing-wave data into a **Grassmannian coordinate-plane chart** with **`d = Circadian.aeon = ambientDim`**.  
+Module doc: **not** a smooth `ℝ²` manifold theorem—promotion is still explicit.
+
+## 6. Audit snapshot (Periodic / Aeon / bridge hygiene)
+
+**Automated grep posture (informal):**
+
+- No top-level `axiom` declarations surfaced under `Gnosis/` in a recent scan.
+- Most files document “zero `sorry`”; spot-check any module that **imports** heavier analytic stubs when Mathlib arrives.
+
+Re-run verification when adding imports:
+
+```bash
+rg '^axiom\\b' open-source/gnosis-math/Gnosis --glob '*.lean'
+rg '\\bsorry\\b' open-source/gnosis-math/Gnosis --glob '*.lean' # inspect hits (many are comments)
+```
+
+## 7. Narrow lemma targets (good incremental work)
+
+- Factor `enumerationPhaseFinAmbient` through **chart composition** once a second aeon chart exists beside `[0,1]`.
+- Relate **stride return times** (`AeonTwelveCarrierList.stride_origin_return`) to **phase orbit partitions** on `Fin 12` with an explicit morphism into `Fin ambientDim`.
+- When Pauling (or similar) columns exist in calibration data, state **decidable** ε-harmonic predicates vs hydrogen anchors.

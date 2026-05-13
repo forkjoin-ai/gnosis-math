@@ -47,7 +47,7 @@ structure ViscousStressTensor where
   is_symmetric : Prop
 
 /-- 6. Vorticity Vector Field: ω = ∇ × u -/
-def vorticity_vector_field (u : BuleyUnit → Vector3) (p : BuleyUnit) : Vector3 :=
+def vorticity_vector_field (_u : BuleyUnit → Vector3) (_p : BuleyUnit) : Vector3 :=
   -- Shadow of the curl
   Vector3.mk 0 0 0
 
@@ -60,7 +60,7 @@ def laminar_to_turbulent_transition (re critical_re : Nat) : Prop :=
   re > critical_re
 
 /-- 9. Boundary Layer Thickness (Shadow) -/
-def boundary_layer_thickness (nu x u_inf : Nat) : Nat :=
+def boundary_layer_thickness (_nu _x _u_inf : Nat) : Nat :=
   -- Shadow of δ ∝ sqrt(νx / u)
   0
 

@@ -44,10 +44,13 @@ theorem slope_monotonicity (w : WaveParams) (s_new : Nat)
   (h_height : w.height > 0) :
   IribarrenSq ⟨s_new, w.height, w.length⟩ ≥ IribarrenSq w := by
   unfold IribarrenSq
-  rw [if_neg (Nat.ne_of_gt h_height)]
-  -- Goal: (s_new * s_new * length) / height ≥ (slope * slope * length) / height
-  apply Nat.div_le_div_right
-  apply Nat.mul_le_mul_right
-  apply Nat.mul_le_mul h_slope h_slope
+  match w with
+  | ⟨s, h, l⟩ =>
+    simp only
+    have h_ne : h ≠ 0 := Nat.ne_of_gt h_height
+    rw [if_neg h_ne, if_neg h_ne]
+    apply Nat.div_le_div_right
+    apply Nat.mul_le_mul_right
+    apply Nat.mul_le_mul h_slope h_slope
 
 end Gnosis.Civil

@@ -76,7 +76,8 @@ and the Dodecagon count 12 = 3 × 4 (three generations × four flavors). -/
 theorem heavier_fermions_pay_higher_generation_tax :
     ∀ g₁ g₂ : Nat, (g₁ < g₂) → (g₁ * 12 < g₂ * 12) := by
   intro g₁ g₂ hlt
-  omega
+  rw [Nat.mul_comm g₁ 12, Nat.mul_comm g₂ 12]
+  exact (Nat.mul_lt_mul_left (by decide : 0 < 12)).mpr hlt
 
 end MassHierarchyFromBule
 end Gnosis

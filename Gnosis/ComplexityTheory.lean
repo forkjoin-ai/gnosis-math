@@ -19,11 +19,11 @@ Following the **Rustic Church** style: Init-only, zero omega, zero Mathlib.
 -/
 
 /-- 1. Time Complexity Class: DTIME(f(n)) -/
-def time_complexity_class (f : Nat → Nat) : Prop :=
+def time_complexity_class (_f : Nat → Nat) : Prop :=
   True
 
 /-- 2. Space Complexity Class: DSPACE(f(n)) -/
-def space_complexity_class (f : Nat → Nat) : Prop :=
+def space_complexity_class (_f : Nat → Nat) : Prop :=
   True
 
 /-- 3. Is Polynomial Time: P -/
@@ -70,7 +70,7 @@ structure InteractiveProof where
   is_valid : Prop
 
 /-- 12. PCP Theorem Verification -/
-theorem pcp_theorem_verification (proof : List Nat) (is_correct : Bool) :
+theorem pcp_theorem_verification (_proof : List Nat) (is_correct : Bool) :
     is_correct = true → is_correct = true :=
   λ h => h
 

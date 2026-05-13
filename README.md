@@ -209,8 +209,14 @@ no `simp`, no Mathlib. `Gnosis.GodFormula` is the canonical exemplar
 `Nat.add_right_comm`, etc., and four cross-checks for internal consistency).
 
 [`RUSTIC_CHURCH.md`](./RUSTIC_CHURCH.md) is the cookbook: lemma vocabulary,
-substitution patterns for the recurring `omega` shapes, a per-file migration
-workflow, and the cases where keeping `omega` is still the right call.
+substitution patterns for the recurring `omega` shapes, and a per-file migration
+workflow.
+
+Periodic / atomic-scale **interpretation vs proof** boundary contract lives only
+in Lean: see module doc in `Gnosis/PeriodicAtBridge.lean` (`Gnosis.PeriodicAtBridge`).
+
+**118×theorem ledger row packaging** (IUPAC Z = 1..118 symbols, shared cluster,
+Mendeleev eka flags, Z > 118 extension band): `Gnosis/PeriodicTableTheoremMatrix.lean`.
 
 ## Out of Bounds and The Topological Bridge
 

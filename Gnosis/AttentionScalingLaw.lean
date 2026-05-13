@@ -69,15 +69,11 @@ theorem scaling_law_from_clinamen_budget (b : BuleyUnit) :
   -- The final score is the initial score plus 4.
   rw [h4, h3, h2, h1]
   -- Initial score + 4 >= initial score is a consequence of Nat.le_add_right.
-  have : buleyUnitScore b ≤ buleyUnitScore b + 1 := Nat.le_add_right _ _
-  have : buleyUnitScore b + 1 ≤ buleyUnitScore b + 1 + 1 :=
-    Nat.le_add_right _ _
-  have : buleyUnitScore b + 1 + 1 ≤ buleyUnitScore b + 1 + 1 + 1 :=
-    Nat.le_add_right _ _
-  have : buleyUnitScore b + 1 + 1 + 1 ≤ buleyUnitScore b + 1 + 1 + 1 + 1 :=
-    Nat.le_add_right _ _
-  -- Chain these together.
-  omega
+  have h1a : buleyUnitScore b ≤ buleyUnitScore b + 1 := Nat.le_add_right _ _
+  have h2a : buleyUnitScore b + 1 ≤ buleyUnitScore b + 1 + 1 := Nat.le_add_right _ _
+  have h3a : buleyUnitScore b + 1 + 1 ≤ buleyUnitScore b + 1 + 1 + 1 := Nat.le_add_right _ _
+  have h4a : buleyUnitScore b + 1 + 1 + 1 ≤ buleyUnitScore b + 1 + 1 + 1 + 1 := Nat.le_add_right _ _
+  exact Nat.le_trans (Nat.le_trans (Nat.le_trans h1a h2a) h3a) h4a
 
 /-! ## Vacuum as optimal initial state -/
 

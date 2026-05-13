@@ -56,7 +56,7 @@ def maxwell_boltzmann_statistics (beta E : Int) (exp : Int → Int) : Int :=
   exp (-beta * E)
 
 /-- 10. Fermi-Dirac Distribution -/
-def fermi_dirac_distribution (beta E mu : Int) (exp : Int → Int) : Int :=
+def fermi_dirac_distribution (_beta _E _mu : Int) (_exp : Int → Int) : Int :=
   -- Shadow: 1 / (exp(β(E-μ)) + 1)
   1
 
@@ -70,7 +70,7 @@ theorem ergodic_hypothesis_measure (time_avg space_avg : Int) :
   λ h => h
 
 /-- 13. Chemical Potential Gradient -/
-def chemical_potential_gradient (mu : List Int) : List Int :=
+def chemical_potential_gradient (_mu : List Int) : List Int :=
   -- Shadow of ∇μ
   []
 

@@ -22,7 +22,6 @@ from stale ledger references.
 
 namespace PlanetaryHomologySandbox
 
-theorem planetaryHomologySandboxLinked : True := by
-  trivial
+theorem planetaryHomologySandboxLinked : ∃ x : Nat, x = 0 := ⟨0, rfl⟩
 
 end PlanetaryHomologySandbox

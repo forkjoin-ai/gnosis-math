@@ -38,7 +38,7 @@ def IsSafeMohrCoulomb (prop : SoilProperties) (σ τ : Int) : Prop :=
   capacity (the soil cannot support shear without confinement).
 -/
 theorem cohesionless_zero_sigma_no_shear (f_coeff : Int)
-  (h_pos : f_coeff ≥ 0) :
+  (_h_pos : f_coeff ≥ 0) :
   IsSafeMohrCoulomb ⟨0, f_coeff⟩ 0 0 := by
   unfold IsSafeMohrCoulomb
   rw [Int.zero_mul, Int.zero_add]

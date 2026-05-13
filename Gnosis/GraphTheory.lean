@@ -44,17 +44,17 @@ def graph_connectivity_degree (g : DirectedGraph) (v : BuleyUnit) : Nat :=
   g.edges.filter (λ e => e.1 = v) |>.length
 
 /-- 6. Is Planar Graph (Shadow) -/
-def is_planar_graph (g : DirectedGraph) : Prop :=
+def is_planar_graph (_g : DirectedGraph) : Prop :=
   -- Shadow of the planarity predicate
   True
 
 /-- 7. Chromatic Number Assignment -/
-def chromatic_number_assignment (g : DirectedGraph) : Nat :=
+def chromatic_number_assignment (_g : DirectedGraph) : Nat :=
   -- Shadow of the minimum number of colors
   0
 
 /-- 8. Shortest Path (Dijkstra Shadow) -/
-def shortest_path_dijkstra (g : DirectedGraph) (src dst : BuleyUnit) : List BuleyUnit :=
+def shortest_path_dijkstra (_g : DirectedGraph) (_src _dst : BuleyUnit) : List BuleyUnit :=
   []
 
 /-- 9. Max-Flow Min-Cut Theorem (Shadow) -/
@@ -71,19 +71,19 @@ def eulerian_path_predicate (g : DirectedGraph) : Prop :=
     ∀ v, graph_connectivity_degree g v % 2 = 0
 
 /-- 12. Clique Number Bound -/
-def clique_number_bound (g : DirectedGraph) : Nat :=
+def clique_number_bound (_g : DirectedGraph) : Nat :=
   0
 
 /-- 13. Spanning Tree Construction -/
-def spanning_tree_construction (g : DirectedGraph) : List (BuleyUnit × BuleyUnit) :=
+def spanning_tree_construction (_g : DirectedGraph) : List (BuleyUnit × BuleyUnit) :=
   []
 
 /-- 14. Laplacian Matrix Spectrum -/
-def laplacian_matrix_spectrum (g : DirectedGraph) : List Nat :=
+def laplacian_matrix_spectrum (_g : DirectedGraph) : List Nat :=
   []
 
 /-- 15. K-Core Decomposition -/
-def k_core_decomposition (g : DirectedGraph) (k : Nat) : List BuleyUnit :=
+def k_core_decomposition (_g : DirectedGraph) (_k : Nat) : List BuleyUnit :=
   []
 
 end Gnosis.GraphTheory

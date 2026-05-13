@@ -48,9 +48,9 @@ theorem growth_rate_bounded (m : MonodParameters) (s : Nat) :
   | Nat.succ n =>
     rw [if_neg (Nat.succ_ne_zero n)]
     apply Nat.div_le_of_le_mul
-    -- mu_max * s ≤ mu_max * (ks + s)
-    rw [Nat.add_mul]
-    rw [Nat.mul_comm n.succ m.mu_max]
+    -- Goal: mu_max * n.succ ≤ (ks + n.succ) * mu_max
+    rw [Nat.mul_comm (m.ks + n.succ)]
+    rw [Nat.mul_add]
     apply Nat.le_add_left
 
 end Gnosis.Civil

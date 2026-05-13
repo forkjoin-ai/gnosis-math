@@ -21,7 +21,7 @@ namespace Gnosis.Civil
 /-- 
   A Shape Function set for an element with M nodes.
 -/
-def ShapeFunctions (m : Nat) := Nat → Int
+def ShapeFunctions (_m : Nat) := Nat → Int
 
 /-- 
   The Partition of Unity Witness:

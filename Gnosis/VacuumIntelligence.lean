@@ -74,18 +74,8 @@ theorem vacuum_void_pressure_structural :
     cases b with | mk w o d =>
     unfold buleyUnitScore at h
     -- w + o + d = 0 implies w = 0, o = 0, d = 0
-    have hw : w = 0 := by
-      have : w + o + d = 0 := h
-      have : o ≤ w + o := Nat.le_add_left o w
-      have : d ≤ w + o + d := Nat.le_add_left d (w + o)
-      omega
-    have ho : o = 0 := by
-      have : w + o + d = 0 := h
-      have : d ≤ w + o + d := Nat.le_add_left d (w + o)
-      omega
-    have hd : d = 0 := by
-      have : w + o + d = 0 := h
-      omega
+    have ⟨hwo, hd⟩ := Nat.add_eq_zero_iff.mp h
+    have ⟨hw, ho⟩ := Nat.add_eq_zero_iff.mp hwo
     unfold vacuumBuleUnit
     simp only [hw, ho, hd]
   · intro h

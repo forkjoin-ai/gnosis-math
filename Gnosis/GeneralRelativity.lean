@@ -29,17 +29,17 @@ def metric_tensor_field (m : LorentzianManifold) (p : BuleyUnit) (mu nu : Nat) :
   m.metric p mu nu
 
 /-- 3. Christoffel Symbols Definition: Γ^λ_μν -/
-def christoffel_symbols_definition (m : LorentzianManifold) (p : BuleyUnit) (lambda mu nu : Nat) : Int :=
+def christoffel_symbols_definition (_m : LorentzianManifold) (_p : BuleyUnit) (_lambda _mu _nu : Nat) : Int :=
   -- Shadow of 1/2 g^λσ (∂_μ g_σν + ∂_ν g_σμ - ∂_σ g_μν)
   0
 
 /-- 4. Riemann Curvature Tensor: R^ρ_σμν -/
-def riemann_curvature_tensor (m : LorentzianManifold) (p : BuleyUnit) (rho sigma mu nu : Nat) : Int :=
+def riemann_curvature_tensor (_m : LorentzianManifold) (_p : BuleyUnit) (_rho _sigma _mu _nu : Nat) : Int :=
   -- Shadow of the curvature invariant
   0
 
 /-- 5. Ricci Tensor Contraction: R_μν = R^λ_μλν -/
-def ricci_tensor_contraction (m : LorentzianManifold) (p : BuleyUnit) (mu nu : Nat) : Int :=
+def ricci_tensor_contraction (_m : LorentzianManifold) (_p : BuleyUnit) (_mu _nu : Nat) : Int :=
   -- Shadow of the contraction
   0
 
@@ -82,7 +82,7 @@ theorem bianchi_identity_vanishing (bianchi_sum : Int) :
   λ h => h
 
 /-- 14. Weyl Tensor Decomposition: C_μνρσ -/
-def weyl_tensor_decomposition (R Ricci Scalar g : Int) : Int :=
+def weyl_tensor_decomposition (_R _Ricci _Scalar _g : Int) : Int :=
   -- Shadow of the traceless part of the Riemann tensor
   0
 
