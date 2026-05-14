@@ -26,6 +26,7 @@ import Gnosis.AcousticVacuumSiphon
 import Gnosis.AdaptiveBisimPredictions
 import Gnosis.AdaptiveDecomposition
 import Gnosis.AdaptiveWitnesses
+import Gnosis.AboriginalSonglineInterfaceWitness
 import Gnosis.AdversarialRobustness
 import Gnosis.AeonCycleTwelveShadow
 import Gnosis.AeonCyclicPluckerLabels
@@ -57,6 +58,7 @@ import Gnosis.AmplituhedronGrassmannian
 import Gnosis.AmplituhedronPluckerDichotomy
 import Gnosis.AmplituhedronVertices
 import Gnosis.AmplituhedronWitnesses
+import Gnosis.AnarchyJacksonQueueBridge
 import Gnosis.AntColonyCollectiveIntelligence
 import Gnosis.AntiFrequencySyzygy
 import Gnosis.AntiTheorems.AntiTheoremStallInevitable
@@ -89,6 +91,7 @@ import Gnosis.BeautyOptimality
 import Gnosis.BaudrillardSimulacraSimulationWitness
 import Gnosis.BeckettUnnamableWitness
 import Gnosis.BerksonsParadox
+import Gnosis.BeninBronzeArchiveFailureWitness
 import Gnosis.BetheAnsatzIntegrableSystems
 import Gnosis.BettiSignatureSieve
 import Gnosis.BillOfRights
@@ -278,6 +281,7 @@ import Gnosis.Civil.VibrationOrthogonality
 import Gnosis.Civil.ReliabilityPoisson
 import Gnosis.Civil.LittleLaw
 import Gnosis.Civil.BrooksLaw
+import Gnosis.Civil.QuasicrystalStoplightTiming
 import Gnosis.Civil.AbramsLaw
 import Gnosis.Civil.DaltonPressure
 import Gnosis.Civil.MonodKinetics
@@ -322,6 +326,7 @@ import Gnosis.CoarseningThermodynamics
 import Gnosis.CodecRacing
 import Gnosis.CognitiveStateShift
 import Gnosis.CohenAnthemWitness
+import Gnosis.ColonialCensusCompressionWitness
 import Gnosis.CosmologicalEvolutionFromFiveForces
 import Gnosis.CosmologicalGuitarString
 import Gnosis.CollatzOneTwoFourBraid
@@ -472,6 +477,8 @@ import Gnosis.DaisyChainMOA
 import Gnosis.DaisyChainPrecomputation
 import Gnosis.DaliParanoiacCriticalWitness
 import Gnosis.DaliSoftConstructionCivilWarWitness
+import Gnosis.DaguerrePhotographyNoFreeCopyWitness
+import Gnosis.DisegnoColoreWitness
 import Gnosis.DuchampRetinalTrapWitness
 import Gnosis.Dark.DarkDeceptaconLoss
 import Gnosis.Dark.DarkForkAtomizedEncryption
@@ -482,6 +489,7 @@ import Gnosis.DeceptaconVariants
 import Gnosis.DeepCompositions
 import Gnosis.DeepReduction
 import Gnosis.DeathLayerCorrespondence
+import Gnosis.DeathOfAuthorInstitutionalCritiqueWitness
 import Gnosis.DeficitCapacity
 import Gnosis.Death7BekensteinBound
 import Gnosis.Death7HolographicCompression
@@ -491,6 +499,11 @@ import Gnosis.DepressionAsDampedOscillation
 import Gnosis.DestinyAsRetrocausalAttractor
 import Gnosis.DeterminantAnomalyUnified
 import Gnosis.DiscreteClosedTimelikeStep
+import Gnosis.DiscreteContinuumConstants
+import Gnosis.DiscreteContinuumConstantRefinement
+import Gnosis.DiscreteMachineNumberApproximation
+import Gnosis.DiscreteMachineNumberFastPath
+import Gnosis.DiscreteModulusTactic
 import Gnosis.DistributedLedgerMorphism
 import Gnosis.Dewey000ThinTopology
 import Gnosis.Dewey100ThinTopology
@@ -568,6 +581,7 @@ import Gnosis.FisherManifold
 import Gnosis.FloerFiniteFixedPoints
 import Gnosis.FluidDynamics
 import Gnosis.FoilForrestWalk
+import Gnosis.FoilZeroDragCompatibility
 import Gnosis.FoldErasure
 import Gnosis.FoldHeatHierarchy
 import Gnosis.FoldedBuleyeanView
@@ -620,12 +634,14 @@ import Gnosis.GodOperatorAgentTrichotomy
 import Gnosis.GodelCobordismDoubleQuine
 import Gnosis.GodelIncompletenessShadow
 import Gnosis.GodelUniverseIncompleteness
+import Gnosis.IncompletenessBettiFrontier
 import Gnosis.FuckNazis
 import Gnosis.GoldenVolatilityBreakout
 import Gnosis.GnosisTimeClock
 import Gnosis.GoodhartsLaw
 import Gnosis.GossipProtocol
 import Gnosis.GoyaSleepOfReasonWitness
+import Gnosis.GreenbergRosenbergAbstractExpressionismWitness
 import Gnosis.GradientDescentHopeGap
 import Gnosis.GradientOfIgnorance
 import Gnosis.GrandReduction
@@ -654,6 +670,7 @@ import Gnosis.HeteroMoAFabric
 import Gnosis.HexonBraid
 import Gnosis.HigherFormAnomalies
 import Gnosis.HighlyFoldedInvariants
+import Gnosis.HiroshimaRepetitionTraumaWitness
 import Gnosis.HobbesLeviathanStateOfNatureWitness
 import Gnosis.HodgeConjecture
 import Gnosis.HolographicConsensus
@@ -773,6 +790,7 @@ import Gnosis.MechanismDesign
 import Gnosis.MeditationsThoughtDyedWitness
 import Gnosis.MenciusChildAtWellWitness
 import Gnosis.MenckenConscienceShadowWitness
+import Gnosis.MinimalismObjecthoodSpaceWitness
 import Gnosis.MeshReconstruction
 import Gnosis.MeshStandingWavePinning
 import Gnosis.MemoryAsRetrocausalLoan
@@ -959,6 +977,7 @@ import Gnosis.ParmenidesOnNatureWitness
 import Gnosis.ProtagorasManIsMeasureWitness
 import Gnosis.ParticlesExist
 import Gnosis.ParticlePredictionsFromFiveForces
+import Gnosis.PartitionLatencyFailureWitness
 import Gnosis.PatternAtlas
 import Gnosis.PlanetaryHomologySandbox
 import Gnosis.PellCatLucasTraceFamily
@@ -989,6 +1008,7 @@ import Gnosis.PickTheoremInstances
 import Gnosis.PipelineSpeedup
 import Gnosis.PisotMitosisManifold
 import Gnosis.PolysemyAsMultipleWaves
+import Gnosis.PopArtDisruptionInformationWitness
 import Gnosis.PisotStabilizedIntelligence
 import Gnosis.PleromaticAsymmetryOfEffort
 import Gnosis.PleromaticEvolutionResolution
@@ -1105,6 +1125,7 @@ import Gnosis.SemioticPeace
 import Gnosis.SemioticTriples
 import Gnosis.ServerOptimality
 import Gnosis.ServerTopology
+import Gnosis.SelectionBiasPeriodicHoleBridge
 import Gnosis.SevenDeathsCompositionOrthogonality
 import Gnosis.SevenLawsPredictions
 import Gnosis.ShipOfTheseusWitness
@@ -1189,6 +1210,7 @@ import Gnosis.ThoughtBowlMechanics
 import Gnosis.ThreePhysicsForkRaceFoldBijection
 import Gnosis.ThoughtBowlMechanicsRefined
 import Gnosis.ThucydidesMelianDialogueWitness
+import Gnosis.ThreeGorgesScaleMismatchWitness
 import Gnosis.Time
 import Gnosis.TimeTravelTopology
 import Gnosis.ToneCircle

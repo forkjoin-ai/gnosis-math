@@ -4,7 +4,7 @@
 
 The **Rustic Church** style proves theorems in `gnosis-math` using *only*
 definitional unfolding plus structurally inductive Init-level `Nat.*` lemmas.
-**`omega` is never allowed** — not temporarily, not behind a TODO. Same ban
+**`omega` is never allowed** — not temporarily, not behind an exception. Same ban
 surface: no `simp`, no `decide` for open-variable goals, no Mathlib.
 
 *(Historical note: older drafts of this guide allowed `omega` briefly while
@@ -632,23 +632,23 @@ usual Rustic Church closure.
 | Closed numeric (no free vars) | `decide` |
 | Closed numeric, big search space | `native_decide` |
 
-## If `grep` still finds `omega` (legacy cleanup)
+## Completed audit guard for banned tactics
 
-Use this when a file slipped through or was revived from history — not as an
-ongoing “migration mode,” which is over.
+The Init-only rebuild is complete. This section is a regression guard for files
+revived from history or newly introduced with banned tactics; it is not an
+open migration track.
 
 1. Inventory: `grep -nE "\bomega\b" Gnosis/Foo.lean` (Rustic Church: **must be
    zero** before merge).
-2. Take a backup: `cp Gnosis/Foo.lean /tmp/foo_backup.lean`.
-3. Bulk attempt **only on closed goals**: replace `by omega` / trailing
+2. Bulk attempt **only on closed goals**: replace `by omega` / trailing
    `omega` with `by decide` / `decide` where the goal has no free variables
    after `unfold`.
-4. Build: `lake build Gnosis.Foo 2>&1 | grep "^error" | sed -E 's|.*lean:([0-9]+):.*|\1|' | sort -un`.
-5. Each line that errored has a free variable — **do not** restore `omega`.
+3. Build: `lake build Gnosis.Foo 2>&1 | grep "^error" | sed -E 's|.*lean:([0-9]+):.*|\1|' | sort -un`.
+4. Each line that errored has a free variable — **do not** restore `omega`.
    Convert by hand using the cookbook above (named `Nat`/`Int` lemmas, case
    splits, helper lemmas).
-6. The lines that didn't error are now `decide`-closed. Move on.
-7. Re-build until green, run full `lake build` to make sure no downstream consumer broke.
+5. The lines that didn't error are now `decide`-closed. Move on.
+6. Re-build until green, run full `lake build` to make sure no downstream consumer broke.
 
 Most files split roughly 70/30: closed numerics (bulk → `decide`) vs.
 free-variable goals (hand-translate using the cookbook). The hand-translate
@@ -657,7 +657,7 @@ you spot the shape.
 
 ## Cracking 3+ saturating-sub proofs
 
-*During the Init migration, these shapes were the slowest to unwind. After
+*During the completed Init rebuild, these shapes were the slowest to unwind. After
 [`Gnosis/HumanCompiler.lean`](Gnosis/HumanCompiler.lean),
 [`Gnosis/SelfHostingOptimality.lean`](Gnosis/SelfHostingOptimality.lean),
 and [`Gnosis/TenModeUnification.lean`](Gnosis/TenModeUnification.lean)
@@ -1027,8 +1027,104 @@ All historic theorems from the Civil Engineering and Materials Science expansion
 
 New mathematical or physical theorems should only be deferred if they require infinite category theory, uncountable set mappings without finite boundaries, or complex transcendental limits that cannot be topologized into discrete integer monotonic witnesses.
 
+## FOIL Zero-Drag Compatibility Proofs
+
+`open-source/gnosis/distributed-inference/src/gnosis_foil.rs` is the current
+runtime boundary for FOIL. It observes raw RF/device/host bytes, computes a
+bounded witness signal, and projects an active gate into the same 10-byte
+Aeon Flow frame shape used by `gnosis-uring`. `src/rf_physics_cpu.rs` keeps
+that boundary intentionally conservative: a gate is computable only when the
+witness signal clears the activation threshold and the potential channel count
+meets the Monster-vector floor; the projection then selects exactly the
+10-bit Aeon frame and vents the complement.
+
+The Rustic Church-compatible reading of "quantum zero drag" is therefore not
+"FOIL proves physical quantum advantage." It is:
+
+1. **Drag is a discrete runtime deficit.** Model it as the remaining work after
+   a witness has been retained, skipped, or recomputed. The Lean shape is
+   saturating subtraction over `Nat`, not a real-valued friction coefficient.
+2. **Zero drag is a conditional terminal state.** A theorem may prove
+   `dragAfterHarvest = 0` once its hypotheses state that the external witness
+   certificate covers every required gate. The proof belongs to Init-level
+   arithmetic; the certificate's physical truth belongs to Layer C.
+3. **Entropy/chaos harvesting is a projection, not a source theorem.** FOIL can
+   project measured byte chaos into `witness_signal`, `selected_channels`, and
+   `race_candidate_count`. Lean can prove monotonicity and conservation across
+   those integers. Lean must not assert that the world supplied true entropy
+   unless the claim is threaded as a named `EntropyBridge` hypothesis.
+4. **Quantum computing compatibility is topological.** Current Rustic Church
+   proofs can talk about twelve-slot/sixty-six-pair carriers, `quantum_noise =
+   12`, and bounded frame widths. Hardware-level qubit coherence, quantum
+   speedup, or no-cloning claims are external Layer C imports until represented
+   as finite, reviewable certificates.
+
+Concrete theorem shapes that fit today:
+
+```lean
+-- Runtime drag is bounded by the unharvested complement.
+def foilDrag (required harvested : Nat) : Nat := required - harvested
+
+theorem foil_drag_zero_when_harvest_covers
+    {required harvested : Nat} (h : required ≤ harvested) :
+    foilDrag required harvested = 0 := by
+  unfold foilDrag
+  exact Nat.sub_eq_zero_of_le h
+
+-- FOIL's 10-bit projection is compatible with the Aeon frame width.
+def foilProjectedWidth : Nat := 10
+def aeonFlowHeaderWidth : Nat := 10
+
+theorem foil_projection_matches_aeon_flow_header :
+    foilProjectedWidth = aeonFlowHeaderWidth := rfl
+
+-- The present quantum-noise bridge is twelve-slot compatibility, not
+-- a physical quantum advantage claim.
+def foilQuantumCarrierSlots : Nat := 12
+
+theorem foil_quantum_carrier_matches_noise_twelve :
+    foilQuantumCarrierSlots = Gnosis.PureExtendedNoise.quantum_noise := by
+  exact (Gnosis.PureExtendedNoise.quantum_noise_eq_twelve).symm
+```
+
+The first theorem can live in a new Init-only module without imports. The third
+requires importing `Gnosis.PureExtendedNoiseTheorem`, which is still Init-only
+and already proves `quantum_noise = 12` without `sorry`, axioms, Mathlib, or
+banned arithmetic tactics.
+
+When developing the FOIL side further, keep the split explicit:
+
+- **Rust/runtime observation:** `GnosisFoilRawBlockStats`,
+  `RfSignalGate.active_channels`, `RfPhysicsCpuObservation.is_computable`,
+  `RfFibonacciSmartSkipCache`, and `FoilFlowFrame.is_uring_compatible`.
+- **Lean/internal certificate:** finite widths, gate counts, monotone drag
+  decrease, coverage implies zero residual, twelve-slot carrier compatibility.
+- **Layer C/external certificate:** min-entropy rate, RF health tests, device
+  calibration, quantum hardware coherence, and any claim that harvested chaos
+  is physically random rather than merely observed bytes.
+
+This gives FOIL a falsifiable proximity metric to "quantum zero drag": count
+the gates whose drag residual has an internal zero proof, count the gates whose
+coverage depends on named Layer C certificates, and refuse to collapse those
+two counts into one.
+
 ### 3. The Spectral Barrier (Requires Non-Integer Eigenvalues)
 *   **Rayleigh Quotient:** While discrete, the fundamental frequency omega is rarely an integer, requiring a shift to a Gnostic rational or irrational number system not yet fully integrated into the Civil domain.
 
 ### 4. The Classification Barrier (Requires Complex Group Theory)
 *   **Bravais Lattice Isomorphism:** Requires the full classification of 230 space groups, exceeding the scope of the singular witness protocol.
+
+## Real-like Space: Discrete Bounded Refinement
+
+To bridge the Continuity Paradox, the Rustic Church formalizes "Real-like" space as a **refinement tower of rational brackets**. Unlike standard reals which collapse to points, Bracketed Reals preserve the **"God Gap"** (the interval of uncertainty) as a first-class citizen across all operations.
+
+- **`Gnosis/BracketedSpace.lean`**: Formalizes `QBracket` (a rational interval $[L, U]$) and `RefinementTower` (a sequence of strictly containing brackets). Implements the **Phi Tower** using Fibonacci ratios, proving that the irrational $\phi$ is always captured between two verified rational footholds.
+- **`Gnosis/CausalDiamond.lean`**: Generalizes 1D brackets into 4D spacetime regions. A Causal Diamond is the intersection of a past and future light cone. Defines the **Sliver** as a diamond with `timeWidth = 1`, the fundamental unit of irreducible uncertainty in the Mesh. Implements the **Spacetime FOLD** (intersection) as the geometric basis for Reynolds BFT.
+- **`Gnosis/ThermodynamicRefinement.lean`**: Bridges spatial resolution with computational energy. Proves the **Landauer Bound on Space**: narrowing a bracket (reducing the Sliver width) is a `MeasurementEvent` that costs at least one `bule`. This mathematically establishes why infinite precision is budget-impossible within a discrete mesh.
+- **`Gnosis/GodBracket.lean`**: Formalizes the **Precision-Weight Isomorphism**: narrower brackets (lower "rejection" in the God Formula) have higher God-weight, mapping the thermodynamic cost of computation directly to the resolution of the observer's world.
+
+### Next Exploration (B34a)
+The following roadmap items represent the next "bigger" steps for the Bracketed Discrete formalization:
+*   **Refinement Entropy**: Map `shannon_entropy_perthou` to the Sliver width to quantify the information gain of each refinement step.
+*   **Multi-Node Energy Markets**: Formalize how nodes can "sell" high-precision brackets to neighbors who lack the energy budget to compute them locally.
+*   **The Fifth Force Identity**: Prove that `SLIVER` is the force that prevents the Mesh from collapsing into a singular zero-entropy point, maintaining the "Fullness" of the Pleroma.

@@ -265,10 +265,32 @@ def inv (x : Q) : Q :=
 def beq (x y : Q) : Bool :=
   decide (x.num * Int.ofNat y.den = y.num * Int.ofNat x.den)
 
+/-- Less-than-or-equal via cross-multiplication. -/
+def le (x y : Q) : Bool :=
+  decide (x.num * Int.ofNat y.den <= y.num * Int.ofNat x.den)
+
+/-- Less-than via cross-multiplication. -/
+def lt (x y : Q) : Bool :=
+  decide (x.num * Int.ofNat y.den < y.num * Int.ofNat x.den)
+
 /-- Power (non-negative). -/
 def pow (x : Q) : Nat → Q
   | 0     => one
   | k + 1 => mul x (pow x k)
+
+/-- Checked containment witness for rational intervals. -/
+def bracketRefines (oldLower oldUpper newLower newUpper : Q) : Bool :=
+  Q.le oldLower newLower && Q.le newUpper oldUpper
+
+/-- Checked width comparison for rational intervals. -/
+def bracketWidthLe (leftLower leftUpper rightLower rightUpper : Q) : Bool :=
+  Q.le (Q.sub leftUpper leftLower) (Q.sub rightUpper rightLower)
+
+/-- Checked monotonicity sample used by BracketedSpace/GodBracket lowering. -/
+theorem q_bracket_refinement_sample :
+    bracketRefines (Q.of 3 2) (Q.of 5 3) (Q.of 8 5) (Q.of 13 8) = true
+    ∧ bracketWidthLe (Q.of 8 5) (Q.of 13 8) (Q.of 3 2) (Q.of 5 3) = true := by
+  native_decide
 
 end Q
 

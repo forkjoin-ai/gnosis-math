@@ -80,6 +80,48 @@ MCP open-obligations ledger: [MCP_OPEN_OBLIGATIONS.md](./MCP_OPEN_OBLIGATIONS.md
 - `Gnosis.Mesh/*` collects many mesh claims in one import family. Some files
   are exploratory bridges; reviewer-facing claims should cite the exact theorem
   that survives `lake build`.
+- `Gnosis.DisegnoColoreWitness` formalizes the sixteenth-century disegno /
+  colore rivalry as an Init-only art-theory bridge: line and measured anatomy
+  form a structural certificate, while particular color, pigment, literal light,
+  and softened edge form a luminous affective carrier. The bridge theorem
+  records composability without turning the historical verdict into a causal
+  theorem.
+- `Gnosis.DaguerrePhotographyNoFreeCopyWitness` extends the Duchamp / retinal
+  trap line backward to the 1839 daguerreotype panic. It records the critic's
+  "painting is dead" anxiety as a mistaken reduction of art to recorder work,
+  then routes the defender's answer through a deletion-value boundary:
+  photographic and digital records create value because they exist, persist, and
+  can require deletion; that liability marks operational meaning even if raw
+  fork-copy remains free in `CopyStoreEraseCostStructure`.
+- `Gnosis.GreenbergRosenbergAbstractExpressionismWitness` formalizes the
+  Abstract Expressionism critic split as two partial truths and two total-theory
+  failures: Greenberg sees medium flatness/materiality, Rosenberg sees action
+  trace/arena, and the bridge theorem keeps surface and action distinct without
+  letting either critic exhaust the painting.
+- `Gnosis.PopArtDisruptionInformationWitness` records the Pop Art crisis as a
+  contrarian information test: if soup cans, comics, packaging, and advertising
+  disrupt high art, then the protected boundary they disrupt may be the
+  information-poor surface. The bridge keeps consumer-image telemetry distinct
+  from consumerist endorsement, and records the transitive sharp tags: perfect
+  failure is perfect success, perfect failure is perfect knowledge, and perfect
+  disruption is perfect success; therefore perfect disruption exposes perfect
+  knowledge of the protected boundary invariant.
+- `Gnosis.MinimalismObjecthoodSpaceWitness` formalizes the Fried / Minimalism
+  split: theatrical viewer-duration and self-contained-art demand on one side,
+  literal material / space / light disclosure on the other, with installation
+  feeling-in-space as the non-collapse bridge.
+- `Gnosis.DeathOfAuthorInstitutionalCritiqueWitness` formalizes the Barthes /
+  postmodern authorship break: artist intent and biography cannot exhaust
+  meaning; viewer context also cannot exhaust meaning alone; institutions frame
+  the power relation in which post-completion meaning circulates.
+- Global cultural failure witnesses widen the art / machine-failure topology
+  beyond Europe and the United States: `Gnosis.BeninBronzeArchiveFailureWitness`
+  (archive without context), `Gnosis.ColonialCensusCompressionWitness` (category
+  as lossy ontology), `Gnosis.PartitionLatencyFailureWitness` (late signal cannot
+  repair state), `Gnosis.HiroshimaRepetitionTraumaWitness` (replay without
+  integration), `Gnosis.ThreeGorgesScaleMismatchWitness` (infrastructure scale
+  beyond moral resolution), and `Gnosis.AboriginalSonglineInterfaceWitness`
+  (living interface vs coordinate capture).
 
 ### Resonant FFN Optimization (2026-05-02)
 
@@ -207,10 +249,12 @@ definitional unfolding plus Init-level `Nat.*` lemmas only — no `omega`,
 no `simp`, no Mathlib. `Gnosis.GodFormula` is the canonical exemplar
 (every base law of the formula proven via `Nat.sub_add_cancel`,
 `Nat.add_right_comm`, etc., and four cross-checks for internal consistency).
+The Init-only rebuild is complete; Rustic Church is now the standing proof
+contract, not an active migration track.
 
 [`RUSTIC_CHURCH.md`](./RUSTIC_CHURCH.md) is the cookbook: lemma vocabulary,
-substitution patterns for the recurring `omega` shapes, and a per-file migration
-workflow.
+substitution patterns for the old `omega` shapes, and the regression guard for
+keeping new or revived modules on the Init-only surface.
 
 Periodic / atomic-scale **interpretation vs proof** boundary contract lives only
 in Lean: see module doc in `Gnosis/PeriodicAtBridge.lean` (`Gnosis.PeriodicAtBridge`).
