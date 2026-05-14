@@ -197,12 +197,13 @@ theorem runtime_sliver_terminates_refinement :
   The width of a consensus diamond (FOLD) is bounded by its parents.
   Finite certificate for the FOIL lowering layer.
 -/
+def runtimeConsensusContractionCheck : Bool :=
+  match fold runtimeOuterDiamond runtimeInnerDiamond with
+  | some res => timeWidth res ≤ timeWidth runtimeOuterDiamond ∧ timeWidth res ≤ timeWidth runtimeInnerDiamond
+  | none => false
+
 theorem runtime_consensus_is_contraction :
-    let cd1 := runtimeOuterDiamond
-    let cd2 := runtimeInnerDiamond
-    match fold cd1 cd2 with
-    | some res => timeWidth res ≤ timeWidth cd1 ∧ timeWidth res ≤ timeWidth cd2
-    | none => True := by
+    runtimeConsensusContractionCheck = true := by
   native_decide
 
 /--
@@ -210,10 +211,15 @@ theorem runtime_consensus_is_contraction :
   If two diamonds are causally incompatible (one birth not in future of other), 
   their FOLD is 'none' in the current 1+1D implementation.
 -/
+def runtimeVentCheck : Bool :=
+  let cd1 := runtimeOuterDiamond
+  let cd2 : CausalDiamond := { birth := { time := 0, space := 5 }, death := { time := 10, space := 5 }, valid := by native_decide }
+  match fold cd1 cd2 with
+  | none => true
+  | some _ => false
+
 theorem runtime_vent_is_zero_consensus :
-    let cd1 := runtimeOuterDiamond
-    let cd2 := { birth := { time := 0, space := 5 }, death := { time := 10, space := 5 }, valid := by native_decide : CausalDiamond }
-    fold cd1 cd2 = none := by
+    runtimeVentCheck = true := by
   native_decide
 
 /-! ## Promotion Obligations -/
