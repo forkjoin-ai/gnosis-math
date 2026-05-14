@@ -9,70 +9,70 @@
     "build": {
       "executor": "a0:run-commands",
       "options": {
-        "command": "node scripts/open-source-repo-target.mjs build open-source/gnosis-math",
+        "command": "pnpm run monster -- scripts/open-source-repo-target.mjs build open-source/gnosis-math",
         "cwd": "."
       }
     },
     "lint": {
       "executor": "a0:run-commands",
       "options": {
-        "command": "node scripts/open-source-repo-target.mjs lint open-source/gnosis-math",
+        "command": "pnpm run monster -- scripts/open-source-repo-target.mjs lint open-source/gnosis-math",
         "cwd": "."
       }
     },
     "test": {
       "executor": "a0:run-commands",
       "options": {
-        "command": "node scripts/open-source-repo-target.mjs test open-source/gnosis-math",
+        "command": "pnpm run monster -- scripts/open-source-repo-target.mjs test open-source/gnosis-math",
         "cwd": "."
       }
     },
     "typecheck": {
       "executor": "a0:run-commands",
       "options": {
-        "command": "node scripts/open-source-repo-target.mjs typecheck open-source/gnosis-math",
+        "command": "pnpm run monster -- scripts/open-source-repo-target.mjs typecheck open-source/gnosis-math",
         "cwd": "."
       }
     },
     "github:push": {
       "executor": "a0:run-commands",
       "options": {
-        "command": "node scripts/open-source-repo-target.mjs github-push open-source/gnosis-math",
+        "command": "pnpm run monster -- scripts/open-source-repo-target.mjs github-push open-source/gnosis-math",
         "cwd": "."
       }
     },
     "forge:push": {
       "executor": "a0:run-commands",
       "options": {
-        "command": "node scripts/open-source-repo-target.mjs forge-push open-source/gnosis-math",
+        "command": "pnpm run monster -- scripts/open-source-repo-target.mjs forge-push open-source/gnosis-math",
         "cwd": "."
       }
     },
     "push": {
       "executor": "a0:run-commands",
       "options": {
-        "command": "node scripts/open-source-repo-target.mjs push open-source/gnosis-math",
+        "command": "pnpm run monster -- scripts/open-source-repo-target.mjs push open-source/gnosis-math",
         "cwd": "."
       }
     },
     "submodule:update-reference": {
       "executor": "a0:run-commands",
       "options": {
-        "command": "node scripts/open-source-repo-target.mjs submodule-update-reference open-source/gnosis-math",
+        "command": "pnpm run monster -- scripts/open-source-repo-target.mjs submodule-update-reference open-source/gnosis-math",
         "cwd": "."
       }
     },
     "pr:list": {
       "executor": "a0:run-commands",
       "options": {
-        "command": "node scripts/open-source-repo-target.mjs pr-list open-source/gnosis-math",
+        "command": "pnpm run monster -- scripts/open-source-repo-target.mjs pr-list open-source/gnosis-math",
         "cwd": "."
       }
     },
     "pr:merge-all": {
       "executor": "a0:run-commands",
       "options": {
-        "command": "node scripts/open-source-repo-target.mjs pr-merge-all open-source/gnosis-math",
+        "command": "pnpm run monster -- scripts/open-source-repo-target.mjs pr-merge-all open-source/gnosis-math",
         "cwd": "."
       }
     }
