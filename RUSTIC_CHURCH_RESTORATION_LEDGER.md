@@ -29,12 +29,12 @@ For each file:
 | File | Deleted lines in collapse history | Current shape | Restore strategy |
 | --- | ---: | --- | --- |
 | `Gnosis/NegotiationEquilibrium.lean` | 2544 | 17-line placeholder | Restore Nat negotiation channel, BATNA boundary, concession gradient, coherence, and finite heat counters. Defer void-walking and semiotic bridge shells until their Init cores are present. |
-| `Gnosis/BeautyOptimality.lean` | 2188 | 17-line placeholder | Restore finite workload/objective monotonicity first. Defer Real-valued convexity and external `ForkRaceFoldTheorems.Axioms` shells. |
-| `Gnosis/LandauerBuley.lean` | 1669 | 17-line placeholder | Restore finite erasure/heat tax core. Defer PMF, Real, ENNReal, and entropy shells. |
-| `Gnosis/InterferenceCoarsening.lean` | 1215 | 17-line placeholder | Restore finite coarsening/interference order laws. Defer analytic or measure-theoretic claims. |
-| `Gnosis/CommunityCompositions.lean` | 1154 | 17-line placeholder | Restore composition structures over finite communities and monotone aggregation laws. |
-| `Gnosis/KnotTheory/KnotTheoryGrind.lean` | 1053 | 17-line placeholder | Restore finite knot-token invariants before any topology-heavy shell. |
-| `Gnosis/PhilosophicalAllegories.lean` | 726 | 17-line placeholder | Restore typed allegory morphisms and non-identity constraints. |
+| `Gnosis/BeautyOptimality.lean` | 2188 | restored | Restored finite workload/objective monotonicity, zero-deficit Pareto boundary, additive composition witness, and `Gnosis.Axioms` schema instantiation. Real-valued convexity and external `ForkRaceFoldTheorems.Axioms` shells remain deferred. |
+| `Gnosis/LandauerBuley.lean` | 1669 | restored | Restored finite erasure/heat tax core and bridged it to the bracket/refinement precision stack (`ThermodynamicRefinement`, `MythOfInfinitePrecision`). PMF, Real, ENNReal, and entropy shells remain deferred. |
+| `Gnosis/InterferenceCoarsening.lean` | 1215 | restored | Restored finite coarsening witness layer, schema bridge, zero-vent repair theorem, and concrete two-by-four collapse certificate. Analytic graph quotient and measure-theoretic shells remain deferred. |
+| `Gnosis/CommunityCompositions.lean` | 1154 | restored | Restored finite local-to-global community aggregation, max/sum merge bounds, monotone remaining-burden laws, community discount bridge, and coarsening-witness handoff. Higher-level application shells remain deferred. |
+| `Gnosis/KnotTheory/KnotTheoryGrind.lean` | 1053 | restored | Restored finite connected-sum accounting, chain-crossing/cost laws, session-ledger decomposition, clinamen-lift one-crossing bridge, and nontrivial-chain positive-tax theorem. Spiral/scheduler-heavy shells remain deferred. |
+| `Gnosis/PhilosophicalAllegories.lean` | 726 | restored | Restored typed allegory carriers, non-identity morphism constraints, composition accounting, positive information-gain certificates, and a small master theorem. Domain-specific semiotic/Buleyean applications remain deferred. |
 | `Gnosis/GreekLogicCanon.lean` | 711 | 17-line placeholder | Restore finite canon relationships and citation-like witness structure. |
 | `Gnosis/Cancer/CancerTopology.lean` | 691 | 17-line placeholder | Restore finite topology/order witnesses; defer biological claims requiring external models. |
 | `Gnosis/CombinatorialBruteForce.lean` | 638 | 17-line placeholder | Restore finite search-space and pruning inequalities. |
@@ -65,5 +65,10 @@ The honest Init replacement is a finite Nat core:
 
 - `Gnosis/NegotiationEquilibrium.lean`: restored from placeholder to finite Init core. Verified with `lake build Gnosis.NegotiationEquilibrium`.
 - `Gnosis/Cancer/CancerTreatments.lean`: restored from placeholder to finite Init core. Verified with `lake build Gnosis.Cancer.CancerTreatments`.
-- `Gnosis/BeautyOptimality.lean`: next large candidate after negotiation compiles.
-- `Gnosis/LandauerBuley.lean`: high-value but requires careful split between finite erasure tax and analytic entropy shells.
+- `Gnosis/BeautyOptimality.lean`: restored from placeholder to finite Init core. Verified with `lake build Gnosis.BeautyOptimality`.
+- `Gnosis/LandauerBuley.lean`: restored from placeholder to finite Init core. Verified with `lake build Gnosis.LandauerBuley`.
+- `Gnosis/InterferenceCoarsening.lean`: restored from placeholder to finite Init core. Verified with `lake build Gnosis.InterferenceCoarsening`.
+- `Gnosis/CommunityCompositions.lean`: restored from placeholder to finite Init core. Verified with `lake build Gnosis.CommunityCompositions`.
+- `Gnosis/KnotTheory/KnotTheoryGrind.lean`: restored from placeholder to finite Init core. Verified with `lake build Gnosis.KnotTheory.KnotTheoryGrind`.
+- `Gnosis/PhilosophicalAllegories.lean`: restored from placeholder to finite Init core. Verified with `lake build Gnosis.PhilosophicalAllegories`.
+- `Gnosis/GreekLogicCanon.lean`: next high-priority collapsed candidate after typed allegory morphism restoration.
