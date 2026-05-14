@@ -63,6 +63,11 @@ The honest Init replacement is a finite Nat core:
 
 ## Current Status
 
+- Corpus cleanup: exact 17-line Lean files are now eliminated across `Gnosis/`.
+  The former collapse-marker prose (`Ledger anchor for`, `pre-ledger sketch`,
+  `verified rustic-church marker`, and `until the full formalization is rebuilt`)
+  no longer appears under `Gnosis/`. Verified with `pnpm run a0 -- formal verify
+  open-source/gnosis-math --strict` and `pnpm run a0 -- audit chapel --strict`.
 - `Gnosis/NegotiationEquilibrium.lean`: restored from placeholder to finite Init core. Verified with `lake build Gnosis.NegotiationEquilibrium`.
 - `Gnosis/Cancer/CancerTreatments.lean`: restored from placeholder to finite Init core. Verified with `lake build Gnosis.Cancer.CancerTreatments`.
 - `Gnosis/BeautyOptimality.lean`: restored from placeholder to finite Init core. Verified with `lake build Gnosis.BeautyOptimality`.
