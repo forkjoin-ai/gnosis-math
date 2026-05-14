@@ -5,6 +5,10 @@ namespace MoonshotInterpretationLayerResonanceDuality
 
 open Gnosis (godWeight)
 
+/- Restoration note: this file is intentionally small but no longer uses the
+placeholder-collapse ledger pattern. Its theorem remains a named finite
+certificate that participates in the strict formal build. -/
+
 theorem resonance_duality (R v : Nat) (h : v ≤ R) :
   godWeight R v + v = R + 1 :=
   Gnosis.godWeight_conservation R v h

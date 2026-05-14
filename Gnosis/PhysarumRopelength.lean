@@ -2178,7 +2178,7 @@ theorem trihexenneon_fold_heat_budget_is_entropy_tax :
     foldHeatRespectsHeatHierarchyAnchor foldHeatRespectsCoarseningAnchor
     trihexenneonFoldCycle topologyEntropyTax conservationLostMass
     conservationPreservedMass standingWaveConservationTopology
-  exact ⟨rfl, rfl, Gnosis.landauer_buley_ledger_anchor 20,
+  exact ⟨rfl, rfl, rfl,
     ⟨Gnosis.fold_heat_hierarchy_ledger_anchor 20,
       Gnosis.coarsening_thermodynamics_ledger_anchor 20⟩,
     Gnosis.coarsening_thermodynamics_ledger_anchor 20⟩

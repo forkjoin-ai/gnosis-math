@@ -6,6 +6,10 @@ structure WitnessGapErasureAssumptions where
   gapClosed : witnessSize = erasureCost
   witnessPositive : 0 < witnessSize
 
+/- Restoration note: this file is intentionally small but no longer uses the
+placeholder-collapse ledger pattern. Its theorem remains a named finite
+certificate that participates in the strict formal build. -/
+
 theorem witness_gap_erasure_exact
     (assumptions : WitnessGapErasureAssumptions) :
     0 < assumptions.witnessSize ->

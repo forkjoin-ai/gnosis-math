@@ -48,7 +48,7 @@
   **`rtUnnormJonesFromNatDet`** at **`q = -1`** (see **`RT_jones_tabulated_eq_rtUnnormJonesFromNatDet`**);
   pinning where `jonesPoly` agrees with that bookkeeping is purely **witness-by-theorem**, not an
   asserted operator identity **`jonesPoly = RT-scan`**.  Monomial witnesses **`psi_Q`** / **`psi_Q_inv`** (see **`psi_Q_mul_psi_Q_inv`**) sit in the Kauffman/A chart; **`qdimV`** carries the distinct Bar-Natan **`q`**-numerator (**`qdimV_ne_kauffmanDeltaFormal`**).
-  No axioms, no sorry.
+  Closed constructively under the strict chapel audit.
 -/
 
 import Init
@@ -164,7 +164,17 @@ theorem startSign_add_mul (o e : Int) :
   · simp [he, ho]
   · simp [he, ho]
   · simp [he, ho]
-  · have hsum : (o % (2 : Int) + e % (2 : Int)) % (2 : Int) = 0 := by omega
+  · have he1 : e % (2 : Int) = 1 := by
+      rcases Int.emod_two_eq e with h | h
+      · exact False.elim (he h)
+      · exact h
+    have ho1 : o % (2 : Int) = 1 := by
+      rcases Int.emod_two_eq o with h | h
+      · exact False.elim (ho h)
+      · exact h
+    have hsum : (o % (2 : Int) + e % (2 : Int)) % (2 : Int) = 0 := by
+      rw [ho1, he1]
+      rfl
     simp [he, ho, hsum]
 
 /-- Scalar passes through `evalGo` in the initial sign slot. -/

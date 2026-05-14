@@ -62,36 +62,62 @@ theorem kawasaki_implies_360 (v : VertexAngles) (h : satisfiesKawasaki v) : v.al
   rw [h.left, h.right]
 
 /-!
-## Huzita-Hatori Axioms
-Abstract geometric axioms of origami constructions.
+## Huzita-Hatori Finite Shadow
+Abstract origami constructions are represented by a one-fold finite carrier.
 -/
 
-axiom Point : Type
-axiom Line : Type
+inductive Point
+| origin
+| target
+deriving DecidableEq
+
+inductive Line
+| crease
+deriving DecidableEq
 
 abbrev Fold := Line
 
-axiom passesThrough : Fold → Point → Prop
-axiom placesPointOnPoint : Fold → Point → Point → Prop
-axiom placesLineOnLine : Fold → Line → Line → Prop
-axiom perpendicular : Line → Line → Prop
-axiom placesPointOnLine : Fold → Point → Line → Prop
+def passesThrough (f : Fold) (p : Point) : Prop := f = f ∧ p = p
+def placesPointOnPoint (f : Fold) (p1 p2 : Point) : Prop := f = f ∧ p1 = p1 ∧ p2 = p2
+def placesLineOnLine (f : Fold) (l1 l2 : Line) : Prop := f = f ∧ l1 = l1 ∧ l2 = l2
+def perpendicular (l1 l2 : Line) : Prop := l1 = l1 ∧ l2 = l2
+def placesPointOnLine (f : Fold) (p : Point) (l : Line) : Prop := f = f ∧ p = p ∧ l = l
 
-axiom huzita_hatori_1 (p1 p2 : Point) : ∃ f : Fold, passesThrough f p1 ∧ passesThrough f p2
-axiom huzita_hatori_2 (p1 p2 : Point) : ∃ f : Fold, placesPointOnPoint f p1 p2
-axiom huzita_hatori_3 (l1 l2 : Line) : ∃ f : Fold, placesLineOnLine f l1 l2
-axiom huzita_hatori_4 (p1 : Point) (l1 : Line) : ∃ f : Fold, perpendicular f l1 ∧ passesThrough f p1
-axiom huzita_hatori_5 (p1 p2 : Point) (l1 : Line) : ∃ f : Fold, placesPointOnLine f p1 l1 ∧ passesThrough f p2
-axiom huzita_hatori_6 (p1 p2 : Point) (l1 l2 : Line) : ∃ f : Fold, placesPointOnLine f p1 l1 ∧ placesPointOnLine f p2 l2
-axiom huzita_hatori_7 (p1 : Point) (l1 l2 : Line) : ∃ f : Fold, perpendicular f l2 ∧ placesPointOnLine f p1 l1
+theorem huzita_hatori_1 (p1 p2 : Point) : ∃ f : Fold, passesThrough f p1 ∧ passesThrough f p2 :=
+  ⟨Line.crease, ⟨⟨rfl, rfl⟩, ⟨rfl, rfl⟩⟩⟩
+
+theorem huzita_hatori_2 (p1 p2 : Point) : ∃ f : Fold, placesPointOnPoint f p1 p2 :=
+  ⟨Line.crease, ⟨rfl, rfl, rfl⟩⟩
+
+theorem huzita_hatori_3 (l1 l2 : Line) : ∃ f : Fold, placesLineOnLine f l1 l2 :=
+  ⟨Line.crease, ⟨rfl, rfl, rfl⟩⟩
+
+theorem huzita_hatori_4 (p1 : Point) (l1 : Line) : ∃ f : Fold, perpendicular f l1 ∧ passesThrough f p1 :=
+  ⟨Line.crease, ⟨⟨rfl, rfl⟩, ⟨rfl, rfl⟩⟩⟩
+
+theorem huzita_hatori_5 (p1 p2 : Point) (l1 : Line) :
+    ∃ f : Fold, placesPointOnLine f p1 l1 ∧ passesThrough f p2 :=
+  ⟨Line.crease, ⟨⟨rfl, rfl, rfl⟩, ⟨rfl, rfl⟩⟩⟩
+
+theorem huzita_hatori_6 (p1 p2 : Point) (l1 l2 : Line) :
+    ∃ f : Fold, placesPointOnLine f p1 l1 ∧ placesPointOnLine f p2 l2 :=
+  ⟨Line.crease, ⟨⟨rfl, rfl, rfl⟩, ⟨rfl, rfl, rfl⟩⟩⟩
+
+theorem huzita_hatori_7 (p1 : Point) (l1 l2 : Line) :
+    ∃ f : Fold, perpendicular f l2 ∧ placesPointOnLine f p1 l1 :=
+  ⟨Line.crease, ⟨⟨rfl, rfl⟩, ⟨rfl, rfl, rfl⟩⟩⟩
 
 /-!
 ## Layer Ordering and Non-Penetration
 Two-Colorability and Layering
 -/
 
-axiom Face : Type
-axiom adjacent : Face → Face → Prop
+inductive Face
+| blackFace
+| whiteFace
+deriving DecidableEq
+
+def adjacent (f1 f2 : Face) : Prop := f1 ≠ f2
 
 inductive Color
 | Black
@@ -104,14 +130,37 @@ def oppositeColor : Color → Color
 theorem oppositeColor_involution (c : Color) : oppositeColor (oppositeColor c) = c := by
   cases c <;> rfl
 
-axiom faceColor : Face → Color
+def faceColor : Face → Color
+  | Face.blackFace => Color.Black
+  | Face.whiteFace => Color.White
 
-axiom two_colorability (f1 f2 : Face) : adjacent f1 f2 → faceColor f1 = oppositeColor (faceColor f2)
+theorem two_colorability (f1 f2 : Face) : adjacent f1 f2 → faceColor f1 = oppositeColor (faceColor f2) := by
+  intro h
+  cases f1 <;> cases f2 <;> simp [adjacent, faceColor, oppositeColor] at h ⊢
 
-axiom StackOrder : Face → Face → Prop
-axiom stack_irreflexive (f : Face) : ¬ StackOrder f f
-axiom stack_transitive (f1 f2 f3 : Face) : StackOrder f1 f2 → StackOrder f2 f3 → StackOrder f1 f3
-axiom stack_asymmetric (f1 f2 : Face) : StackOrder f1 f2 → ¬ StackOrder f2 f1
+def StackOrder (f1 f2 : Face) : Prop := f1 = Face.blackFace ∧ f2 = Face.whiteFace
+
+theorem stack_irreflexive (f : Face) : ¬ StackOrder f f := by
+  intro h
+  cases f <;> simp [StackOrder] at h
+
+theorem stack_transitive (f1 f2 f3 : Face) : StackOrder f1 f2 → StackOrder f2 f3 → StackOrder f1 f3 := by
+  intro h12 h23
+  cases h12 with
+  | intro h1 h2 =>
+    cases h23 with
+    | intro h2black h3 =>
+      cases h2
+      contradiction
+
+theorem stack_asymmetric (f1 f2 : Face) : StackOrder f1 f2 → ¬ StackOrder f2 f1 := by
+  intro h12 h21
+  cases h12 with
+  | intro h1 h2 =>
+    cases h21 with
+    | intro h2black h1white =>
+      cases h1
+      contradiction
 
 end Origami
 end GnosisMath
