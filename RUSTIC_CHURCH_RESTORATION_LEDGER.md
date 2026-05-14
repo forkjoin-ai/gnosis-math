@@ -64,6 +64,8 @@ The honest Init replacement is a finite Nat core:
 ## Current Status
 
 - Corpus cleanup: exact 17-line Lean files are now eliminated across `Gnosis/`.
+  The follow-on short-file sweep also eliminated every Lean file under 20 lines
+  across `Gnosis/`; the residue count is now zero.
   The former collapse-marker prose (`Ledger anchor for`, `pre-ledger sketch`,
   `verified rustic-church marker`, and `until the full formalization is rebuilt`)
   no longer appears under `Gnosis/`. Verified with `pnpm run a0 -- formal verify
