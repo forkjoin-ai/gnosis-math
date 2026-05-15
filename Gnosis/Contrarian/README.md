@@ -11,6 +11,10 @@ bounded consequence that follows from those fields.
 - [ContrarianAdversariesImprove.lean](./ContrarianAdversariesImprove.lean) -
   formalizes adversarial pressure as a strict improvement witness and proves
   that such pressure maps to instrumental friendship.
+- [ContrarianDominantAttentionIsInnocent.lean](./ContrarianDominantAttentionIsInnocent.lean) -
+  proves that high attention mass is not the taxable offense under
+  `SkyrmsEnergyTax`; a zero-externality dominant head pays only the clinamen
+  floor, while a lower-attention harmful head pays more.
 
 ## Verification
 

@@ -24,6 +24,9 @@ MCP coverage gap ledger: [MCP_GAP_LEDGER.md](./MCP_GAP_LEDGER.md)
 
 MCP open-obligations ledger: [MCP_OPEN_OBLIGATIONS.md](./MCP_OPEN_OBLIGATIONS.md)
 
+Vacuous information / attention settlement note:
+[docs/VacuousInformationVacuumPrinciple.md](./docs/VacuousInformationVacuumPrinciple.md)
+
 `missing_imports.txt` at the root of this package is an optional stub (see file header); parent monorepo Cloud Build source tar steps referenced it with ENOENT when absent.
 
 ## What It Owns

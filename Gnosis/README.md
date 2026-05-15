@@ -17,6 +17,26 @@ group larger families of related claims.
   while preserving the intrinsic **3/4** geometric ergodicity rate constraint;
   the same-load mycelial service weakly lowers and clears healthy-anarchy
   backlog without changing that rate.
+- [SkyrmsEnergyTax.lean](./SkyrmsEnergyTax.lean) — chapel-grade dynamic energy
+  market settlement: node externalities pay a clinamen-floor Skyrms tax,
+  attention/truth/diversity define rebate weight, lower externality strictly
+  lowers tax and payable burden, and two-node certificates conserve the
+  collected redistribution pool.
+- [BuddhistAttachmentSkyrms.lean](./BuddhistAttachmentSkyrms.lean) —
+  operational analogue of Buddhist attachment for attention carriers; anchors
+  `tanha` as failed attention plus unresolved debt, `dukkha` as Skyrms carrying
+  cost, and `nirodha` as release that clears the refusal index while preserving
+  rebate weight. It also proves the persistence theorem used by runtime
+  evidence folds: accumulating failed attention or unresolved debt cannot lower
+  operational karma tax, and strictly raises it when the new refusal pressure is
+  positive. Its hard-gate review theorem keeps measured promotion evidence
+  subordinate to the existing optimal admissible Skyrms/Gatekeeping statement.
+- [SmartMaskingBand.lean](./SmartMaskingBand.lean) — bounded token-band /
+  phoneme-band formalization for constrained decode. It proves that strict
+  finite masks reduce the discrete work budget, and its default-promotion
+  predicate requires non-Paris quality prompts so the Paris probe remains a
+  smoke test rather than the optimized target. Runtime hook:
+  [`distributed-inference` smart-mask benchmark](../../gnosis/distributed-inference/README.md).
 - [TwelveSlotSixtySixPairsCarrier.lean](./TwelveSlotSixtySixPairsCarrier.lean) — neutral **`Fin 12`** slots + strict ascending pairs
   keyed to **`pairsIJ`** (**66** rows); shared spine for domain wrappers below.
 - [TwelveSlotSixtySixPairsCyclicShear.lean](./TwelveSlotSixtySixPairsCyclicShear.lean) — **`rotateTwelveSlot`** (**`cyclicSucc`**) and
@@ -87,6 +107,11 @@ group larger families of related claims.
 - [RLBudgetLedgerBridge.lean](./RLBudgetLedgerBridge.lean) - bridge proving
   one-bule-per-rejection ledger spend matches rejection-trained budget growth
   and weakly lowers Buleyean RL cost.
+- [ProvableRandomness.lean](./ProvableRandomness.lean) - Init-only randomness
+  boundary certificate: deterministic byte cycles cover all 256 byte values,
+  a Lacey-style DNA-dimension stream covers the byte boundary exactly once per
+  cycle, and FOIL ambient entropy enters as a runtime certificate before Lean
+  proves the 10-bit projection gate.
 
 ## Child Directories
 
