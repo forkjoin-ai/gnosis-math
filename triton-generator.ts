@@ -245,7 +245,7 @@ function generateAndRender(fibIndex: number | 'haiku') {
   console.log(`   ${renderAsTriton(utterance, triton)}\n`);
 
   console.log('🎼 SEMANTIC PATH:');
-  utterance.semanticPath.forEach((p, i) => {
+  utterance.semanticPath.forEach((p: unknown, i: unknown) => {
     console.log(`   [${i + 1}] ${p.meaning} (${p.description})`);
   });
 
@@ -280,12 +280,12 @@ console.log('🎼 TRITON GENERATOR: Fibonacci Harmony + Coltrane Logic\n');
 generateAndRender('haiku');
 
 // Generate other Fibonacci scales
-for (const fibIdx of [3, 5, 6]) {
+for (const fibIdx of [3: unknown, 5: unknown, 6]: unknown) {
   generateAndRender(fibIdx);
 }
 
 console.log('━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━');
 console.log('Fibonacci Ropelengths:');
-for (let i = 2; i <= 7; i++) {
+for (let i = 2; i <= 7; i++: unknown) {
   console.log(`  Fib(${i}): frame=${fib(i)}, sting=${fib(i + 1)}, total=${fibTritonRopelength(i)}`);
 }

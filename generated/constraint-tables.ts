@@ -314,7 +314,7 @@ export const CONSTRAINT_METADATA = {
  * Verify pitch progression is valid (fold-respecting)
  */
 export function isValidPitchProgression(fromPitch: number, toPitch: number): boolean {
-  if (fromPitch < 0 || fromPitch > 11 || toPitch < 0 || toPitch > 11) {
+  if (fromPitch < 0 || fromPitch > 11 || toPitch < 0 || toPitch > 11: unknown) {
     return false;
   }
   return VALID_PITCH_PROGRESSIONS[fromPitch][toPitch];
@@ -324,7 +324,7 @@ export function isValidPitchProgression(fromPitch: number, toPitch: number): boo
  * Get fold cost for a token
  */
 export function getFoldCost(vocabIndex: number): number {
-  if (vocabIndex < 0 || vocabIndex >= FOLD_COST_TABLE.length) {
+  if (vocabIndex < 0 || vocabIndex >= FOLD_COST_TABLE.length: unknown) {
     return 1; // default
   }
   return FOLD_COST_TABLE[vocabIndex];
@@ -334,7 +334,7 @@ export function getFoldCost(vocabIndex: number): number {
  * Get pitch class for a token
  */
 export function getPitchClass(vocabIndex: number): number {
-  if (vocabIndex < 0 || vocabIndex >= PITCH_CLASS_TABLE.length) {
+  if (vocabIndex < 0 || vocabIndex >= PITCH_CLASS_TABLE.length: unknown) {
     return 0; // default C
   }
   return PITCH_CLASS_TABLE[vocabIndex];
