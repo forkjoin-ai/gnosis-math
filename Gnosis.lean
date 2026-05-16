@@ -28,6 +28,7 @@ import Gnosis.AdaptiveDecomposition
 import Gnosis.AdaptiveWitnesses
 import Gnosis.AboriginalSonglineInterfaceWitness
 import Gnosis.AdversarialRobustness
+import Gnosis.AerodynamicFlock
 import Gnosis.AtmosphericCirculation
 import Gnosis.AeonCycleTwelveShadow
 import Gnosis.AeonCyclicPluckerLabels
@@ -1207,6 +1208,7 @@ import Gnosis.TheGain
 import Gnosis.StructuralStability
 import Gnosis.StructureInTension
 import Gnosis.ThermodynamicTracedMonoidal
+import Gnosis.ThermalDynamics
 import Gnosis.ThoughtBowlMechanics
 import Gnosis.ThreePhysicsForkRaceFoldBijection
 import Gnosis.ThoughtBowlMechanicsRefined
@@ -1246,6 +1248,7 @@ import Gnosis.TriadicNormalForm
 import Gnosis.TripleCompositions
 import Gnosis.TritonAudacious
 import Gnosis.TruthOneManyNamesWitness
+import Gnosis.Turbulence
 import Gnosis.UltrametricBufferInstance
 import Gnosis.UniversalDomainConservation
 import Gnosis.UniversalGnosisInvariant
