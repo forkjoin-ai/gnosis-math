@@ -232,6 +232,7 @@ import Gnosis.CapGnosisScaffold
 import Gnosis.CComplex
 import Gnosis.CFCobordismPartition
 import Gnosis.CMBVisibilityBoundary
+import Gnosis.CobordismUnification
 import Gnosis.CamusMythOfSisyphusWitness
 import Gnosis.Cancer.CancerConfinement
 import Gnosis.Cancer.CancerPredictions
@@ -314,6 +315,7 @@ import Gnosis.CioranTroubleWithBeingBornWitness
 import Gnosis.CircadianGnosisAlignment
 import Gnosis.Claims
 import Gnosis.ClassFieldTheoryArtinReciprocity
+import Gnosis.Clinamen
 import Gnosis.ClinamenDeclinamenTheorem
 import Gnosis.ClinamenProofMechanism
 import Gnosis.Closures.AnomalyCancellationClosure
@@ -1296,6 +1298,7 @@ import Gnosis.WarmupController
 import Gnosis.WarmupEfficiency
 import Gnosis.WeilConjecturesZetaFq
 import Gnosis.Weather
+import Gnosis.Weather.SensoryIsomorphism
 import Gnosis.WhipWaveDuality
 import Gnosis.WildeDecayOfLyingSincerityWitness
 import Gnosis.WildExplorationCycleDouglasii50
