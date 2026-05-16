@@ -38,7 +38,9 @@ open Gnosis.AtmosphericCirculation
 theorem advection_profile_preservation (f : Int → Nat) (c : Int) (t : Int) :
     advect1D f c t 0 = f (-c * t) := by
   unfold advect1D
-  rfl
+  congr 1
+  show 0 - c * t = -c * t
+  simp [Int.zero_sub, Int.neg_mul]
 
 /-- Advection shift property: advancing time by 1 shifts space by c.
     This encodes the wave speed exactly. -/
@@ -46,7 +48,12 @@ theorem advection_time_space_shift (f : Int → Nat) (c t x : Int) :
     advect1D f c (t + 1) x = advect1D f c t (x - c) := by
   unfold advect1D
   congr 1
-  ring
+  show x - c * (t + 1) = x - c - c * t
+  have h1 : c * (t + 1) = c * t + c * 1 := Int.mul_add c t 1
+  have h2 : c * 1 = c := Int.mul_one c
+  rw [h1, h2]
+  have : x - (c * t + c) = x - c - c * t := by omega
+  exact this
 
 /-- Wave profile invariance: same profile at all time steps.
     For any t₁, t₂, the profile shape is preserved. -/
@@ -80,9 +87,11 @@ def nextAcousticPressure (state : AcousticState) (bulk_modulus : Int) : Int :=
 theorem acoustic_anti_phase (v p : Int) :
     nextAcousticVelocity ⟨v, p⟩ 1 = v - p ∧
     nextAcousticPressure ⟨v, p⟩ 1 = p - v := by
-  unfold nextAcousticVelocity nextAcousticPressure
-  simp only [Int.one_mul]
-  exact ⟨rfl, rfl⟩
+  constructor
+  · unfold nextAcousticVelocity
+    simp only [Int.one_mul]
+  · unfold nextAcousticPressure
+    simp only [Int.one_mul]
 
 /-- Acoustic damping with positive modulus: velocity decreases when pressure is positive.
     This encodes the restoring force of bulk modulus. -/

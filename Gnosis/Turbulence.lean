@@ -69,24 +69,12 @@ theorem spiderweb_energy_cascade (level₁ level₂ kinetic : Nat)
     (h : level₁ ≤ level₂) :
     eddy_energy level₂ kinetic ≤ eddy_energy level₁ kinetic := by
   unfold eddy_energy
-  -- Key insight: 2^level₁ ≤ 2^level₂ when level₁ ≤ level₂
-  -- This is proven by induction on level₂
-  have h_pow : 2 ^ level₁ ≤ 2 ^ level₂ := by
-    induction level₂ generalizing level₁ with
-    | zero =>
-      cases level₁ with
-      | zero => exact Nat.le_refl 1
-      | succ n => exact absurd h (Nat.not_succ_le_zero n)
-    | succ level₂ ih =>
-      cases level₁ with
-      | zero =>
-        show 1 ≤ 2 * 2 ^ level₂
-        exact Nat.le_mul_of_pos_left _ (by decide : 0 < 2)
-      | succ level₁ =>
-        have := ih level₁ (Nat.le_of_succ_le_succ h)
-        exact Nat.mul_le_mul_right 2 this
-  -- Now apply division monotonicity
-  exact Nat.div_le_div_right h_pow
+  -- Show kinetic / 2^level₂ ≤ kinetic / 2^level₁
+  -- Key: 2^level₁ ≤ 2^level₂ (power monotonicity)
+  -- By antitone property of division: larger divisor yields smaller quotient
+  have h_pow : 2 ^ level₁ ≤ 2 ^ level₂ := Nat.pow_le_pow_right (by decide) h
+  have h_pos : 0 < 2 ^ level₁ := Nat.pos_pow_of_pos (by decide)
+  exact Nat.div_le_div_left h_pow h_pos
 
 -- ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
 -- TURBULENT STRESS AND CIRCULATION STABILITY

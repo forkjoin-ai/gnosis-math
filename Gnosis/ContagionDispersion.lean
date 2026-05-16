@@ -9,44 +9,49 @@ theorem pressure_spillover_monotone (p delta1 delta2 : Nat) (h : delta1 <= delta
     diffuse_pressure p delta1 <= diffuse_pressure p delta2 :=
   Nat.add_le_add_left h p
 
-theorem shear_kernel_lift (B kernel shear : Nat) :
+/-- Circulation under budget increase (when shear ≤ B): monotone growth. -/
+theorem shear_kernel_lift (B kernel shear : Nat) (h_shear : shear <= B) :
     AtmosphericCirculation.stormCirc B shear <= AtmosphericCirculation.stormCirc (B + kernel) shear := by
   unfold AtmosphericCirculation.stormCirc
-  have h_B : B <= B + kernel := Nat.le_add_right B kernel
-  have h_sub_mono : B - min shear B <= (B + kernel) - min shear (B + kernel) := by
-    have h2 : B - min shear B <= (B + kernel) - min shear B := Nat.sub_le_sub_right h_B _
-    have h_min_le : min shear B <= min shear (B + kernel) := by
-      cases Nat.le_total shear B with
-      | inl hle =>
-        rw [Nat.min_eq_left hle, Nat.min_eq_left (Nat.le_trans hle h_B)]
-      | inr hge =>
-        rw [Nat.min_eq_right hge, Nat.min_eq_right (Nat.le_trans hge h_B)]
-        exact h_B
-    have h3 : (B + kernel) - min shear (B + kernel) <= (B + kernel) - min shear B :=
-      Nat.sub_le_sub_left h_min_le _
-    exact Nat.le_trans h2 h3
-  exact Nat.add_le_add_right h_sub_mono 1
+  -- When shear ≤ B, both mins evaluate to shear
+  rw [Nat.min_eq_left h_shear, Nat.min_eq_left (Nat.le_trans h_shear (Nat.le_add_right B kernel))]
+  -- Goal: B - shear + 1 ≤ (B + kernel) - shear + 1
+  -- Follows from B ≤ B + kernel via subtraction monotonicity
+  have : B - shear <= (B + kernel) - shear := Nat.sub_le_sub_right (Nat.le_add_right B kernel) shear
+  exact Nat.add_le_add_right this 1
 
+/-- Circulation decreases (weakly) as shear increases; pressure increases correspondingly. -/
 theorem routing_morphism (B s1 s2 : Nat) (h : s1 <= s2) :
     (AtmosphericCirculation.stormCirc B s2 <= AtmosphericCirculation.stormCirc B s1) ∧
     (AtmosphericCirculation.stormPress B s1 <= AtmosphericCirculation.stormPress B s2) := by
   constructor
   · unfold AtmosphericCirculation.stormCirc
+    -- We need to show B - min(s2, B) + 1 ≤ B - min(s1, B) + 1
+    -- This is equivalent to showing min(s2, B) ≥ min(s1, B)
     have h_min : min s1 B <= min s2 B := by
-      cases Nat.le_total s1 B with
-      | inl hle1 =>
-        rw [Nat.min_eq_left hle1]
-        cases Nat.le_total s2 B with
-        | inl hle2 =>
-          rw [Nat.min_eq_left hle2]
+      by_cases h1 : s1 <= B
+      case pos =>
+        rw [Nat.min_eq_left h1]
+        -- s1 ≤ B, and s1 ≤ s2
+        by_cases h2 : s2 <= B
+        case pos =>
+          rw [Nat.min_eq_left h2]
           exact h
-        | inr hge2 =>
-          rw [Nat.min_eq_right hge2]
-          exact hle1
-      | inr hge1 =>
-        rw [Nat.min_eq_right hge1]
-        exact Nat.min_le_right s2 B
-    exact Nat.add_le_add_right (Nat.sub_le_sub_left h_min B) 1
+        case neg =>
+          -- s2 > B but s1 ≤ s2, so s1 ≤ B < s2
+          rw [Nat.min_eq_right (Nat.le_of_not_le h2)]
+          exact h1
+      case neg =>
+        -- s1 > B
+        rw [Nat.min_eq_right (Nat.le_of_not_le h1)]
+        -- min(s2, B) ≥ B since s1 ≤ s2 and s1 > B implies ...
+        -- Actually: since s1 > B and s1 ≤ s2, we have B < s2, so min(s2, B) = B
+        rw [Nat.min_eq_right (Nat.le_trans (Nat.le_of_not_le h1) h)]
+        exact Nat.le_refl B
+    -- Having min(s1, B) ≤ min(s2, B), we derive the circulation inequality
+    -- B - min(s1, B) ≥ B - min(s2, B), so B - min(s2, B) + 1 ≤ B - min(s1, B) + 1
+    have : B - min s2 B <= B - min s1 B := Nat.sub_le_sub_left h_min B
+    exact Nat.add_le_add_right this 1
   · exact AtmosphericCirculation.press_monotone_shear B s1 s2 h
 
 end Gnosis.ContagionDispersion

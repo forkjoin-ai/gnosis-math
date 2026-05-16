@@ -58,7 +58,8 @@ theorem sst_buoyancy_monotone (sst_cool sst_warm₁ sst_warm₂ : Nat)
       simp only [Nat.sub_self]
       exact Nat.zero_le _
     · rw [Nat.min_eq_right (Nat.le_of_not_le h_cool), Nat.min_eq_right (Nat.le_of_not_le h_cool2)]
-      exact Nat.sub_le_sub_left h sst_cool
+      simp only [Nat.sub_self]
+      exact Nat.le_refl _
 
 -- ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
 -- THEOREM 2: Heat Diffusion Morphism
@@ -91,15 +92,16 @@ theorem wind_barrier_suppression (sst shear₁ shear₂ : Nat)
   unfold heat_transport
   by_cases h1 : shear₁ ≤ sst
   · by_cases h2 : shear₂ ≤ sst
-    · rw [Nat.min_eq_left h1, Nat.min_eq_left h2]
+    · rw [Nat.min_eq_left h2, Nat.min_eq_left h1]
       exact Nat.sub_le_sub_left h sst
-    · rw [Nat.min_eq_left h1, Nat.min_eq_right (Nat.le_of_not_le h2)]
+    · rw [Nat.min_eq_right (Nat.le_of_not_le h2), Nat.min_eq_left h1]
       simp only [Nat.sub_self]
       exact Nat.zero_le _
   · by_cases h2 : shear₂ ≤ sst
-    · rw [Nat.min_eq_right (Nat.le_of_not_le h1), Nat.min_eq_left h2]
-      exact Nat.sub_le_sub_left h sst
-    · rw [Nat.min_eq_right (Nat.le_of_not_le h1), Nat.min_eq_right (Nat.le_of_not_le h2)]
+    · have : shear₁ ≤ sst := Nat.le_trans h h2
+      exact (h1 this).elim
+    · rw [Nat.min_eq_right (Nat.le_of_not_le h2), Nat.min_eq_right (Nat.le_of_not_le h1)]
+      simp only [Nat.sub_self]
       exact Nat.le_refl _
 
 end Gnosis.ThermalDynamics

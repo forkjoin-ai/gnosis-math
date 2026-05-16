@@ -355,6 +355,8 @@ import Gnosis.ContinuedFractionConvergents
 import Gnosis.ContinuousHarris
 import Gnosis.Continuum
 import Gnosis.ContinuumExtensionSketch
+import Gnosis.ContinuumFluid
+import Gnosis.ContagionDispersion
 import Gnosis.ConversationalDodgeball
 import Gnosis.Contrarian.ContrarianAntiTheoremStallPreventsCollapse
 import Gnosis.Contrarian.ContrarianAdversariesImprove
@@ -964,6 +966,10 @@ import Gnosis.OceanographyCybernetics
 import Gnosis.OneCobFrobenius
 import Gnosis.OpinionAsInterference
 import Gnosis.OptimalityUndecidable
+import Gnosis.Optics.ErgodiacCutoff
+import Gnosis.Optics.EntopticDynamics
+import Gnosis.Optics.KineticAlgebra
+import Gnosis.Optics.ManifoldEmbedding
 import Gnosis.Optics.OpticalFoundations
 import Gnosis.Optics.PerceptualTransition
 import Gnosis.Optics.PhospheneTopology
@@ -1289,6 +1295,7 @@ import Gnosis.WankelEngineTheorem
 import Gnosis.WarmupController
 import Gnosis.WarmupEfficiency
 import Gnosis.WeilConjecturesZetaFq
+import Gnosis.Weather
 import Gnosis.WhipWaveDuality
 import Gnosis.WildeDecayOfLyingSincerityWitness
 import Gnosis.WildExplorationCycleDouglasii50
