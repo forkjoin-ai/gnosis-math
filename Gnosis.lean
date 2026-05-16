@@ -1304,6 +1304,9 @@ import Gnosis.Unification.IVRReynoldsIsomorphism
 import Gnosis.Unification.NoiseStructuralBasis
 import Gnosis.Unification.SaturationVacuumDuality
 import Gnosis.Unification.TormentAdvectionDuality
+import Gnosis.Unification.InterferenceDuality
+import Gnosis.Unification.FRFIsomorphismBridge
+import Gnosis.Unification.QuineEvaluator
 import Gnosis.WhipWaveDuality
 import Gnosis.WildeDecayOfLyingSincerityWitness
 import Gnosis.WildExplorationCycleDouglasii50
