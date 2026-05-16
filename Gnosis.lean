@@ -28,6 +28,7 @@ import Gnosis.AdaptiveDecomposition
 import Gnosis.AdaptiveWitnesses
 import Gnosis.AboriginalSonglineInterfaceWitness
 import Gnosis.AdversarialRobustness
+import Gnosis.AtmosphericCirculation
 import Gnosis.AeonCycleTwelveShadow
 import Gnosis.AeonCyclicPluckerLabels
 import Gnosis.AeonFlowTransport
