@@ -73,7 +73,9 @@ theorem spiderweb_energy_cascade (level₁ level₂ kinetic : Nat)
   -- Key: 2^level₁ ≤ 2^level₂ (power monotonicity)
   -- By antitone property of division: larger divisor yields smaller quotient
   have h_pow : 2 ^ level₁ ≤ 2 ^ level₂ := Nat.pow_le_pow_right (by decide) h
-  have h_pos : 0 < 2 ^ level₁ := Nat.pos_pow_of_pos (by decide)
+  have h_pos : 0 < 2 ^ level₁ := by
+    have : 1 ≤ 2 ^ level₁ := Nat.one_le_pow _ _ (by decide)
+    exact Nat.zero_lt_of_lt this
   exact Nat.div_le_div_left h_pow h_pos
 
 -- ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
