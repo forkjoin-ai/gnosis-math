@@ -18,9 +18,7 @@ def darkBaseline : Nat := 1    -- irreducible dark current (the +1 sliver)
 def psfWidth (intensity : Nat) : Nat := intensity / 16 + 1
 
 -- Corneal scattering: radial flare extent
-def coronaHaloRadius : Nat → Nat  -- input: intensity → output: halo extent
-  | 0 => 0
-  | n + 1 => (n / 32) + 1
+def coronaHaloRadius (intensity : Nat) : Nat := intensity / 32 + 1
 
 -- Photopigment cone types with their max regeneration capacities
 structure ConeType where
