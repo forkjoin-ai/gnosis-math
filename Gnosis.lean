@@ -964,6 +964,12 @@ import Gnosis.OceanographyCybernetics
 import Gnosis.OneCobFrobenius
 import Gnosis.OpinionAsInterference
 import Gnosis.OptimalityUndecidable
+import Gnosis.Optics.OpticalFoundations
+import Gnosis.Optics.PerceptualTransition
+import Gnosis.Optics.PhospheneTopology
+import Gnosis.Optics.PhotopigmentKinetics
+import Gnosis.Optics.RetinalTopography
+import Gnosis.Optics.UnifiedVisualPhysics
 import Gnosis.Oracle.OracleExecutionStallAnnihilation
 import Gnosis.Oracle.OracleExecutionStallBreakthrough
 import Gnosis.Oracle.OracleExecutionStallObstruction
