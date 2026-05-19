@@ -28,6 +28,7 @@ import Gnosis.Witnesses.Islam.QuranAlBaqaraAbrahamReligionWitness
 import Gnosis.Witnesses.Islam.QuranAlBaqaraAdamGuidanceWitness
 import Gnosis.Witnesses.Islam.QuranAlBaqaraBelieversInstructionWitness
 import Gnosis.Witnesses.Islam.QuranAlBaqaraCalfCovenantLifeWitness
+import Gnosis.Witnesses.Islam.QuranAlBaqaraConcealmentRepairWitness
 import Gnosis.Witnesses.Islam.QuranAlBaqaraCowDisclosureWitness
 import Gnosis.Witnesses.Islam.QuranAlBaqaraCovenantEthicsWitness
 import Gnosis.Witnesses.Islam.QuranAlBaqaraDevotionInheritanceWitness
@@ -42,9 +43,11 @@ import Gnosis.Witnesses.Islam.QuranAlBaqaraMessengerPedagogyWitness
 import Gnosis.Witnesses.Islam.QuranAlBaqaraQiblaCommunityWitness
 import Gnosis.Witnesses.Islam.QuranAlBaqaraRevelationCorruptionWitness
 import Gnosis.Witnesses.Islam.QuranAlBaqaraRewardPledgeSabbathWitness
+import Gnosis.Witnesses.Islam.QuranAlBaqaraSafaMarwaWitness
 import Gnosis.Witnesses.Islam.QuranAlBaqaraThrownBookMagicWitness
 import Gnosis.Witnesses.Islam.QuranAlBaqaraTownProvisionComplaintWitness
 import Gnosis.Witnesses.Islam.QuranAlBaqaraTranscendenceGuidanceWitness
+import Gnosis.Witnesses.Islam.QuranAlBaqaraTrialSteadfastnessWitness
 import Gnosis.Witnesses.Islam.QuranAlBaqaraWorshipDirectionWitness
 import Gnosis.Witnesses.Islam.QuranAlBaqaraWorshipChallengeCreationWitness
 import Gnosis.Witnesses.Islam.QuranSubmissionTopologyWitness

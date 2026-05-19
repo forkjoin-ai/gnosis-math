@@ -68,10 +68,11 @@ Vacuous information / attention settlement note:
 - `Gnosis.FiniteProbabilityCore` is the native probability substrate: explicit
   finite supports, `Nat` weights, exact numerator/denominator ratios, Boolean
   event masks, conditioning by reweighting, pushforward/product witnesses,
-  finite independence, Bayes-style cross multiplication, and probability
-  residual observers. Probability is owned here; measure theory, real-valued
-  probability, sigma algebras, and PMF bridge semantics are out of bounds for
-  the core.
+  support-aware partition masks, finite independence, Bayes-style cross
+  multiplication, total probability over disjoint/exhaustive finite partitions,
+  and probability residual observers. Probability is owned here; measure theory,
+  real-valued probability, sigma algebras, and PMF bridge semantics are out of
+  bounds for the core.
 - `Gnosis.EchoChamberAsTaoBowl` (with `IsPejorativeEchoAt`, Q monotonicity)
   and satellites `Gnosis.TaoBowlTwinVoid` (structural vs consensus void) and
   `Gnosis.TaoBowlSignalCoupling` (`bowlActsOn` on `OpinionWave`, mismatch ↔

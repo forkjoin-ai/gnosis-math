@@ -109,6 +109,14 @@ def exhaustiveMasks : List Nat → List Bool → List Bool → Bool
   | _ :: weights, left :: ls, right :: rs =>
       (left || right) && exhaustiveMasks weights ls rs
 
+theorem eventMass_union_empty_empty
+    (weights : List Nat) :
+    eventMass weights (unionMaskFor weights [] []) = 0 := by
+  induction weights with
+  | nil => simp [eventMass, unionMaskFor]
+  | cons weight weights ih =>
+      simp [eventMass, unionMaskFor, ih]
+
 def eventProbability
     (distribution : FiniteDistribution)
     (mask : List Bool) : ProbabilityRatio :=
@@ -198,7 +206,7 @@ theorem disjoint_union_eventMass_add
       cases left with
       | nil =>
           cases right with
-          | nil => simp [eventMass, unionMaskFor]
+          | nil => exact eventMass_union_empty_empty (weight :: weights)
           | cons rightSelected rs =>
               cases hdisjoint
       | cons leftSelected ls =>
@@ -217,14 +225,21 @@ theorem disjoint_union_eventMass_add
                 have htail : disjointMasks ls rs = true := hdisjoint
                 unfold unionMaskFor
                 unfold eventMass
+                change weight + eventMass weights (unionMaskFor weights ls rs) =
+                  eventMass weights ls + (weight + eventMass weights rs)
                 rw [ih ls rs htail]
-                rw [Nat.add_assoc]
+                exact Nat.add_left_comm weight (eventMass weights ls)
+                  (eventMass weights rs)
               · unfold disjointMasks at hdisjoint
                 have htail : disjointMasks ls rs = true := hdisjoint
                 unfold unionMaskFor
                 unfold eventMass
+                change weight + eventMass weights (unionMaskFor weights ls rs) =
+                  weight + eventMass weights ls + eventMass weights rs
                 rw [ih ls rs htail]
-                rw [Nat.add_left_comm]
+                exact Eq.symm
+                  (Nat.add_assoc weight (eventMass weights ls)
+                    (eventMass weights rs))
               · unfold disjointMasks at hdisjoint
                 cases hdisjoint
 
@@ -269,22 +284,13 @@ theorem exhaustive_union_eventMass_total
                 cases hexhaustive
               · unfold exhaustiveMasks at hexhaustive
                 have htail : exhaustiveMasks weights ls rs = true := hexhaustive
-                unfold unionMaskFor
-                unfold eventMass
-                unfold sumNat
-                rw [ih ls rs htail]
+                simp [unionMaskFor, eventMass, sumNat, ih ls rs htail]
               · unfold exhaustiveMasks at hexhaustive
                 have htail : exhaustiveMasks weights ls rs = true := hexhaustive
-                unfold unionMaskFor
-                unfold eventMass
-                unfold sumNat
-                rw [ih ls rs htail]
+                simp [unionMaskFor, eventMass, sumNat, ih ls rs htail]
               · unfold exhaustiveMasks at hexhaustive
                 have htail : exhaustiveMasks weights ls rs = true := hexhaustive
-                unfold unionMaskFor
-                unfold eventMass
-                unfold sumNat
-                rw [ih ls rs htail]
+                simp [unionMaskFor, eventMass, sumNat, ih ls rs htail]
 
 /-! ## Conditioning -/
 

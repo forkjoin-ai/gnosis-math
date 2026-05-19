@@ -34,3 +34,6 @@ Lean witnesses extracted from Islamic source documents and Quran-key readings. N
 - `QuranAlBaqaraAbrahamicIdentityWitness`: Quran 2:135-141, Abrahamic identity against sectarian capture, undivided prophetic belief, and accountability.
 - `QuranAlBaqaraQiblaCommunityWitness`: Quran 2:142-150, qibla reorientation, just community witness, Sacred Mosque direction, good-deed race, and perfected favor.
 - `QuranAlBaqaraMessengerPedagogyWitness`: Quran 2:151-152, the Messenger's recitation, purification, teaching, remembrance, and gratitude.
+- `QuranAlBaqaraTrialSteadfastnessWitness`: Quran 2:153-157, steadfastness, prayer, martyrdom life, trials, return to God, mercy, and guidance.
+- `QuranAlBaqaraSafaMarwaWitness`: Quran 2:158, Safa and Marwa as God's rites, pilgrimage circulation, voluntary good, reward, and knowledge.
+- `QuranAlBaqaraConcealmentRepairWitness`: Quran 2:159-160, concealed proofs and guidance, rejection, repentance, amendment, declared truth, and mercy.
