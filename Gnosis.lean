@@ -20,6 +20,29 @@
 
 
 import Gnosis.ADEMcKayCorrespondence
+import Gnosis.Witnesses.Bible.Romans.RomansAbrahamBelievedCountedWitness
+import Gnosis.Witnesses.Bible.Romans.RomansAbrahamHopeStrongFaithWitness
+import Gnosis.Witnesses.Bible.Romans.RomansAbrahamUncircumcisedFaithSealWitness
+import Gnosis.Witnesses.Bible.Romans.RomansAllUnderSinWitness
+import Gnosis.Witnesses.Bible.Romans.RomansCircumcisionHeartSpiritWitness
+import Gnosis.Witnesses.Bible.Romans.RomansBoastingExcludedFaithWitness
+import Gnosis.Witnesses.Bible.Romans.RomansDavidBlessednessNoImputeWitness
+import Gnosis.Witnesses.Bible.Romans.RomansFaithEstablishesLawWitness
+import Gnosis.Witnesses.Bible.Romans.RomansInexcusableJudgmentWrathWitness
+import Gnosis.Witnesses.Bible.Romans.RomansJewAdvantageOraclesWitness
+import Gnosis.Witnesses.Bible.Romans.RomansLawBoastDishonorWitness
+import Gnosis.Witnesses.Bible.Romans.RomansLawConscienceJudgmentWitness
+import Gnosis.Witnesses.Bible.Romans.RomansLawMouthGuiltKnowledgeWitness
+import Gnosis.Witnesses.Bible.Romans.RomansOneGodFaithWitness
+import Gnosis.Witnesses.Bible.Romans.RomansPromiseFaithGraceFatherWitness
+import Gnosis.Witnesses.Bible.Romans.RomansRaisedForJustificationWitness
+import Gnosis.Witnesses.Bible.Romans.RomansReprobateMindJudgmentWitness
+import Gnosis.Witnesses.Bible.Romans.RomansRenderAccordingToDeedsWitness
+import Gnosis.Witnesses.Bible.Romans.RomansRighteousnessFaithPropitiationWitness
+import Gnosis.Witnesses.Bible.Romans.RomansThroatTongueFeetFearWitness
+import Gnosis.Witnesses.Bible.Romans.RomansUnbeliefFaithTruthWitness
+import Gnosis.Witnesses.Bible.Romans.RomansUnrighteousnessJudgmentSlanderWitness
+import Gnosis.Witnesses.Bible.Romans.RomansVileAffectionsRecompenseWitness
 import Gnosis.AchillesTortoiseLadder
 import Gnosis.AckermannFunction
 import Gnosis.AcousticVacuumSiphon
@@ -33,6 +56,7 @@ import Gnosis.AlgorithmicExploitationOfFiveForces
 import Gnosis.AlignmentAsVacuumConvergence
 import Gnosis.AlphaOmegaGodsKingdom
 import Gnosis.AmericanFrontier
+import Gnosis.AmpelosGrapevineWitness
 import Gnosis.AnimalMagnetismCatalog
 import Gnosis.AntColonyCollectiveIntelligence
 import Gnosis.AntiFrequencySyzygy
@@ -93,6 +117,7 @@ import Gnosis.Bridges.BridgeKapustinWitten
 import Gnosis.Bridges.BridgeKhovanovRT3D
 import Gnosis.Bridges.BuleyDarkDeceptaconBridge
 import Gnosis.Bridges.BuleyMeshAttentionBridge
+import Gnosis.CyamitesBeanWitness
 import Gnosis.Bridges.BuleyTensorBridge
 import Gnosis.Bridges.BuleyTransformerSSMBridge
 import Gnosis.Bridges.CatMapLucasBridge
@@ -145,6 +170,7 @@ import Gnosis.CausalDiscovery
 import Gnosis.CausalInference
 import Gnosis.CausalMediation
 import Gnosis.CayleyTreeFormula
+import Gnosis.CadmusDragonTeethWitness
 import Gnosis.Ceiling
 import Gnosis.CelestialClassifierBarrier
 import Gnosis.CelestialGainControlPrediction
@@ -154,6 +180,7 @@ import Gnosis.CelestialNaturalDivision
 import Gnosis.CelestialOffByOneTaxonomy
 import Gnosis.CelestialOrbitPrediction
 import Gnosis.CelestialPlanetTaxonomy
+import Gnosis.CeyxAlcyoneHalcyonWitness
 import Gnosis.CelestialShadows
 import Gnosis.CelestialSurveySearch
 import Gnosis.CentralChargeMap
@@ -355,7 +382,9 @@ import Gnosis.EnergyConservationFromVacuum
 import Gnosis.EnrichedConvergence
 import Gnosis.EnriquesKodairaSurfaces
 import Gnosis.EntropicRefinementCalculus
+import Gnosis.FiniteFluxRefinement
 import Gnosis.EntropyBridge.LayerC
+import Gnosis.ErysichthonHungerWitness
 import Gnosis.EnvelopeConvergence
 import Gnosis.EtaleCohomology
 import Gnosis.EulerGnostic
@@ -430,6 +459,7 @@ import Gnosis.GodOperatorAgentTrichotomy
 import Gnosis.GodelCobordismDoubleQuine
 import Gnosis.GodelIncompletenessShadow
 import Gnosis.GodelUniverseIncompleteness
+import Gnosis.GlaucusScyllaWitness
 import Gnosis.GoldenVolatilityBreakout
 import Gnosis.GoodhartsLaw
 import Gnosis.GospelResistanceTopology
@@ -449,6 +479,7 @@ import Gnosis.HarmonyAsConstructiveInterference
 import Gnosis.DissonanceAsDestructiveInterference
 import Gnosis.HardCompositions
 import Gnosis.HawkingConflation
+import Gnosis.SemeleZeusWitness
 import Gnosis.HFTOperationsAsTopology
 import Gnosis.Helix55Dictionary
 import Gnosis.HellaVortex
@@ -534,6 +565,7 @@ import Gnosis.LocalLanglandsGLn
 import Gnosis.LoebFixedPointShadow
 import Gnosis.Logic
 import Gnosis.LucasComplement
+import Gnosis.MacariaSacrificeWitness
 import Gnosis.MathFoundations
 import Gnosis.MathPhysicsDimensionCorrespondence
 import Gnosis.MarketDynamicsViaFiveForces
@@ -731,6 +763,7 @@ import Gnosis.PhilosophicalAllegories
 import Gnosis.PhilosophicalCombinatorics
 import Gnosis.PhoneticAetherSieve
 import Gnosis.PhotonSliverFrontier
+import Gnosis.PhilemonBaucisWitness
 import Gnosis.PhysicalConstantsSignatures
 import Gnosis.PhysicsFromGodFormula
 import Gnosis.PhysicsGrandUnification
@@ -763,6 +796,7 @@ import Gnosis.Probability
 import Gnosis.ProofDepthFragility
 import Gnosis.ProtocolDeficitLatency
 import Gnosis.PsycheGrind
+import Gnosis.PygmalionGalateaWitness
 import Gnosis.PsycheReduction
 import Gnosis.PsychologyAsInterference
 import Gnosis.PublicationBias
@@ -897,6 +931,7 @@ import Gnosis.TetraOctaHoneycomb
 import Gnosis.TheGain
 import Gnosis.StructuralStability
 import Gnosis.StructureInTension
+import Gnosis.TithonusWitness
 import Gnosis.ThermodynamicTracedMonoidal
 import Gnosis.Time
 import Gnosis.TimeTravelTopology

@@ -40,9 +40,42 @@ Current integration plan: [ROADMAP.md](./ROADMAP.md)
   feedback, cooling, color-pressure dynamics, and anomaly cancellation.
 - `Gnosis.TopologicalMetabolismBuleyBridge` connects the metabolism runtime
   ladder to Bule self-similarity remediation.
+- `Gnosis.FiniteFluxRefinement` packages the finite-calculus fluid roadmap as
+  buildable Lean surfaces: finite control-volume cells, aggregate inflow/outflow
+  conservation, paired internal exchange cancellation, finite Reynolds
+  transport, divergence-free finite meshes, weak residual probes, and
+  Navier-Stokes-like bounded residual observers. The module is intentionally
+  Nat-valued and discrete: continuous operators enter only through bounded
+  observer claims that survive finite refinement.
 - `Gnosis.Mesh/*` collects many mesh claims in one import family. Some files
   are exploratory bridges; reviewer-facing claims should cite the exact theorem
   that survives `lake build`.
+
+### Finite-Calculus Task Cards (2026-05-18)
+
+`Gnosis.FiniteFluxRefinement` now carries the six-card finite calculus sprint:
+
+1. **Finite-volume primitives** — `FluxCell`, residual/deficit, aggregate
+   `totalStored`, `totalInflow`, `totalOutflow`, append laws, and finite-volume
+   balance/stored-stability theorems.
+2. **Reynolds transport** — `TransportRegion`, `transportPredictedAfter`,
+   exact/stationary transport, and bounded accumulation via mutual finite
+   inequalities.
+3. **Divergence-free flow** — `DivergenceFreeCell`, `DivergenceFreeMesh`, and
+   local-to-aggregate boundary equality, balance, and stored stability.
+4. **Finite-volume conservation** — `FiniteVolumeConservation` bundles boundary
+   equality, balance, and stored stability, with constructors from equal
+   boundary, divergence-free meshes, internal exchanges, and append composition.
+5. **Weak residual formulations** — `WeakFluxProbe`, `weakFluxResidual`, a weak
+   refinement signature, conservation acceptance, completeness, and tail
+   equivalence.
+6. **Bounded fluid residual observers** — `BoundedFluidResidual` tracks
+   advection, diffusion, pressure, and forcing budgets with observer acceptance,
+   component-budget bounds, completeness, and tail equivalence.
+
+Next execution stack: split the self-contained module into stable library
+layers once broad build health and disk space allow it: `RefinementSignature`,
+`FiniteVolume`, `WeakResidual`, and `BoundedFluidResidual`.
 
 ### Resonant FFN Optimization (2026-05-02)
 
