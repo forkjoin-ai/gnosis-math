@@ -33,7 +33,7 @@ Vacuous information / attention settlement note:
 
 | Area | Examples |
 |------|----------|
-| Buleyean kernel | `BuleyeanLogic`, `BuleyeanProbability`, `BuleyBiSidedBit`, `BuleyLabelPermutation` |
+| Buleyean kernel | `BuleyeanLogic`, `BuleyeanProbability`, `FiniteProbabilityCore`, `BuleyBiSidedBit`, `BuleyLabelPermutation` |
 | Fork/race/fold dynamics | `ForkRaceFoldDynamics`, `SchedulerComposition`, `RaceWinnerCorrectness` |
 | Compiler/runtime limits | `KernelGap`, `OptimalityUndecidable`, `SelfHostingOptimality` |
 | Mesh and consensus | `Mesh/*`, `Quorum*`, `Spiderweb*`, `ReynoldsBFT` |
@@ -65,6 +65,13 @@ Vacuous information / attention settlement note:
   and approximate compactness theorems. `Gnosis.FiniteObserverPatterns` provides
   reusable adapters for queues, thermodynamics, mesh routing, attention, and
   finite approximations of continuous math.
+- `Gnosis.FiniteProbabilityCore` is the native probability substrate: explicit
+  finite supports, `Nat` weights, exact numerator/denominator ratios, Boolean
+  event masks, conditioning by reweighting, pushforward/product witnesses,
+  finite independence, Bayes-style cross multiplication, and probability
+  residual observers. Probability is owned here; measure theory, real-valued
+  probability, sigma algebras, and PMF bridge semantics are out of bounds for
+  the core.
 - `Gnosis.EchoChamberAsTaoBowl` (with `IsPejorativeEchoAt`, Q monotonicity)
   and satellites `Gnosis.TaoBowlTwinVoid` (structural vs consensus void) and
   `Gnosis.TaoBowlSignalCoupling` (`bowlActsOn` on `OpinionWave`, mismatch ↔
@@ -288,6 +295,11 @@ The following classical domains are explicitly **Out of Bounds** for direct repr
 
 - **Continuous Analysis and Reals (`ℝ`, limits, calculus, measure theory)**: 
   Out of bounds. We bridge this by mapping continuous dynamics to discrete Buleyean topologies (`+1` clinamen increments, exact rational phase decompositions, and bounded deficits). A real number is modeled as the limit of a discrete, terminating rejection process.
+- **Classical probability and measure theory (sigma algebras, real-valued
+  probability spaces, continuous distributions, PMF-as-authority)**:
+  Out of bounds. Gnosis owns probability through finite witnessed supports,
+  natural-number mass, exact ratios, decidable events, finite conditioning, and
+  residual observers.
 - **Infinite Category Theory (∞-categories, derived categories)**: 
   Out of bounds. We bridge this by modeling categorical coherence using explicit Buleyean Ranked DAGs. Naturality and adjunctions are expressed as `FORK`, `RACE`, `FOLD`, and `VENT` edges ensuring `beta1` topological complexity conservation.
 - **Non-constructive Mathematics and Infinite Set Theory (Axiom of Choice over uncountables)**: 

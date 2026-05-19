@@ -22,3 +22,15 @@ Lean witnesses extracted from Islamic source documents and Quran-key readings. N
 - `QuranAlBaqaraCalfCovenantLifeWitness`: Quran 2:92-96, Moses' signs, calf-love, mountain covenant, exclusive salvation claim, and life-clinging.
 - `QuranAlBaqaraGabrielCovenantWitness`: Quran 2:97-100, Gabriel, confirming Quran, clear messages, defiant refusal, and covenant-breaking.
 - `QuranAlBaqaraThrownBookMagicWitness`: Quran 2:101-103, confirming messenger, Book thrown away, Solomon, Harut and Marut, harmful knowledge, and better reward.
+- `QuranAlBaqaraBelieversInstructionWitness`: Quran 2:104-110, disciplined speech, revelation authority, envy, forbearance, prayer, alms, and stored good.
+- `QuranAlBaqaraExclusivityEvidenceWitness`: Quran 2:111-113, Paradise exclusivity claims, evidence demand, devotion, mutual negation, and resurrection judgment.
+- `QuranAlBaqaraWorshipDirectionWitness`: Quran 2:114-115, obstruction of worship places, disgrace, punishment, East and West, and God's pervasive knowing.
+- `QuranAlBaqaraTranscendenceGuidanceWitness`: Quran 2:116-121, divine transcendence, signs, prophetic witness, guidance, and Scripture-following.
+- `QuranAlBaqaraAbrahamCovenantWitness`: Quran 2:122-124, Israel's remembered favor, accountability, Abraham's fulfilled test, leadership, and evildoer exclusion.
+- `QuranAlBaqaraHouseSanctuaryWitness`: Quran 2:125-126, the House as sanctuary and prayer-place, purification, secure land, provision, and Fire warning.
+- `QuranAlBaqaraAbrahamIshmaelPrayerWitness`: Quran 2:127-129, Abraham and Ishmael building the House and praying for acceptance, devotion, rites, repentance, and a messenger.
+- `QuranAlBaqaraAbrahamReligionWitness`: Quran 2:130, Abraham's religion, folly of forsaking it, worldly election, and Hereafter righteousness.
+- `QuranAlBaqaraDevotionInheritanceWitness`: Quran 2:131-134, Abraham's devotion, Jacob's command, single-God worship, and separate accountability.
+- `QuranAlBaqaraAbrahamicIdentityWitness`: Quran 2:135-141, Abrahamic identity against sectarian capture, undivided prophetic belief, and accountability.
+- `QuranAlBaqaraQiblaCommunityWitness`: Quran 2:142-150, qibla reorientation, just community witness, Sacred Mosque direction, good-deed race, and perfected favor.
+- `QuranAlBaqaraMessengerPedagogyWitness`: Quran 2:151-152, the Messenger's recitation, purification, teaching, remembrance, and gratitude.

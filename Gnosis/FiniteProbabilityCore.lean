@@ -53,11 +53,11 @@ def probabilityRatio
 /-! ## Events as finite masks -/
 
 def eventMass : List Nat → List Bool → Nat
-  | [], _ => 0
-  | _, [] => 0
-  | weight :: weights, include :: mask =>
-      if include then weight + eventMass weights mask
-      else eventMass weights mask
+  | [], [] => 0
+  | [], _ :: _ => 0
+  | _ :: _, [] => 0
+  | weight :: weights, true :: mask => weight + eventMass weights mask
+  | _weight :: weights, false :: mask => eventMass weights mask
 
 def emptyMask : List Nat → List Bool
   | [] => []
@@ -67,19 +67,47 @@ def universalMask : List Nat → List Bool
   | [] => []
   | _ :: weights => true :: universalMask weights
 
-def complementMask : List Bool → List Bool
-  | [] => []
-  | include :: mask => (!include) :: complementMask mask
+def complementMaskFor : List Nat → List Bool → List Bool
+  | [], _ => []
+  | _ :: weights, [] => true :: complementMaskFor weights []
+  | _ :: weights, true :: mask => false :: complementMaskFor weights mask
+  | _ :: weights, false :: mask => true :: complementMaskFor weights mask
 
 def unionMask : List Bool → List Bool → List Bool
   | [], _ => []
   | _, [] => []
   | left :: ls, right :: rs => (left || right) :: unionMask ls rs
 
+def unionMaskFor : List Nat → List Bool → List Bool → List Bool
+  | [], _, _ => []
+  | _ :: weights, [], [] => false :: unionMaskFor weights [] []
+  | _ :: weights, [], right :: rs => right :: unionMaskFor weights [] rs
+  | _ :: weights, left :: ls, [] => left :: unionMaskFor weights ls []
+  | _ :: weights, left :: ls, right :: rs =>
+      (left || right) :: unionMaskFor weights ls rs
+
 def intersectionMask : List Bool → List Bool → List Bool
   | [], _ => []
   | _, [] => []
   | left :: ls, right :: rs => (left && right) :: intersectionMask ls rs
+
+def disjointMasks : List Bool → List Bool → Bool
+  | [], [] => true
+  | [], _ :: _ => false
+  | _ :: _, [] => false
+  | left :: ls, right :: rs =>
+      (!(left && right)) && disjointMasks ls rs
+
+def exhaustiveMasks : List Nat → List Bool → List Bool → Bool
+  | [], [], [] => true
+  | [], _, _ => false
+  | _ :: _, [], [] => false
+  | _ :: weights, [], right :: rs =>
+      right && exhaustiveMasks weights [] rs
+  | _ :: weights, left :: ls, [] =>
+      left && exhaustiveMasks weights ls []
+  | _ :: weights, left :: ls, right :: rs =>
+      (left || right) && exhaustiveMasks weights ls rs
 
 def eventProbability
     (distribution : FiniteDistribution)
@@ -93,22 +121,25 @@ theorem eventMass_empty
     (weights : List Nat) :
     eventMass weights (emptyMask weights) = 0 := by
   induction weights with
-  | nil => rfl
+  | nil => simp [emptyMask, eventMass]
   | cons weight weights ih =>
-      unfold emptyMask
-      unfold eventMass
-      exact ih
+      simp [emptyMask, eventMass, ih]
 
 theorem eventMass_universal
     (weights : List Nat) :
     eventMass weights (universalMask weights) = sumNat weights := by
   induction weights with
-  | nil => rfl
+  | nil => simp [universalMask, eventMass, sumNat]
   | cons weight weights ih =>
-      unfold universalMask
-      unfold eventMass
-      unfold sumNat
-      rw [ih]
+      simp [universalMask, eventMass, sumNat, ih]
+
+theorem eventMass_complement_nil
+    (weights : List Nat) :
+    eventMass weights (complementMaskFor weights []) = sumNat weights := by
+  induction weights with
+  | nil => simp [eventMass, complementMaskFor, sumNat]
+  | cons weight weights ih =>
+      simp [eventMass, complementMaskFor, sumNat, ih]
 
 theorem empty_event_probability_zero
     (distribution : FiniteDistribution) :
@@ -131,53 +162,153 @@ theorem universal_event_probability_denominator
 theorem complement_eventMass_add
     (weights : List Nat)
     (mask : List Bool) :
-    eventMass weights mask + eventMass weights (complementMask mask) =
+    eventMass weights mask + eventMass weights (complementMaskFor weights mask) =
       sumNat weights := by
   induction weights generalizing mask with
-  | nil => rfl
+  | nil =>
+      cases mask <;> simp [eventMass, complementMaskFor, sumNat]
   | cons weight weights ih =>
       cases mask with
-      | nil => rfl
-      | cons include mask =>
-          cases include
-          · unfold complementMask
-            unfold eventMass
+      | nil =>
+          simp [eventMass, complementMaskFor, sumNat,
+            eventMass_complement_nil]
+      | cons selected mask =>
+          cases selected
+          · unfold eventMass
+            unfold complementMaskFor
             unfold sumNat
+            rw [Nat.add_left_comm]
             rw [ih mask]
-          · unfold complementMask
-            unfold eventMass
+          · unfold eventMass
+            unfold complementMaskFor
             unfold sumNat
+            rw [Nat.add_assoc]
             rw [ih mask]
-            exact Nat.add_assoc weight (eventMass weights mask)
-              (eventMass weights (complementMask mask))
+
+theorem disjoint_union_eventMass_add
+    (weights : List Nat)
+    (left right : List Bool)
+    (hdisjoint : disjointMasks left right = true) :
+    eventMass weights (unionMaskFor weights left right) =
+      eventMass weights left + eventMass weights right := by
+  induction weights generalizing left right with
+  | nil =>
+      cases left <;> cases right <;> simp [eventMass, unionMaskFor]
+  | cons weight weights ih =>
+      cases left with
+      | nil =>
+          cases right with
+          | nil => simp [eventMass, unionMaskFor]
+          | cons rightSelected rs =>
+              cases hdisjoint
+      | cons leftSelected ls =>
+          cases right with
+          | nil => cases hdisjoint
+          | cons rightSelected rs =>
+              cases leftSelected <;> cases rightSelected
+              · unfold disjointMasks at hdisjoint
+                have htail : disjointMasks ls rs = true := hdisjoint
+                unfold unionMaskFor
+                unfold eventMass
+                change eventMass weights (unionMaskFor weights ls rs) =
+                  eventMass weights ls + eventMass weights rs
+                exact ih ls rs htail
+              · unfold disjointMasks at hdisjoint
+                have htail : disjointMasks ls rs = true := hdisjoint
+                unfold unionMaskFor
+                unfold eventMass
+                rw [ih ls rs htail]
+                rw [Nat.add_assoc]
+              · unfold disjointMasks at hdisjoint
+                have htail : disjointMasks ls rs = true := hdisjoint
+                unfold unionMaskFor
+                unfold eventMass
+                rw [ih ls rs htail]
+                rw [Nat.add_left_comm]
+              · unfold disjointMasks at hdisjoint
+                cases hdisjoint
+
+theorem exhaustive_union_eventMass_total
+    (weights : List Nat)
+    (left right : List Bool)
+    (hexhaustive : exhaustiveMasks weights left right = true) :
+    eventMass weights (unionMaskFor weights left right) = sumNat weights := by
+  induction weights generalizing left right with
+  | nil =>
+      cases left <;> cases right <;> simp [eventMass, unionMaskFor, sumNat]
+  | cons weight weights ih =>
+      cases left with
+      | nil =>
+          cases right with
+          | nil => cases hexhaustive
+          | cons rightSelected rs =>
+              cases rightSelected
+              · unfold exhaustiveMasks at hexhaustive
+                cases hexhaustive
+              · unfold exhaustiveMasks at hexhaustive
+                have htail : exhaustiveMasks weights [] rs = true := hexhaustive
+                unfold unionMaskFor
+                unfold eventMass
+                unfold sumNat
+                rw [ih [] rs htail]
+      | cons leftSelected ls =>
+          cases right with
+          | nil =>
+              cases leftSelected
+              · unfold exhaustiveMasks at hexhaustive
+                cases hexhaustive
+              · unfold exhaustiveMasks at hexhaustive
+                have htail : exhaustiveMasks weights ls [] = true := hexhaustive
+                unfold unionMaskFor
+                unfold eventMass
+                unfold sumNat
+                rw [ih ls [] htail]
+          | cons rightSelected rs =>
+              cases leftSelected <;> cases rightSelected
+              · unfold exhaustiveMasks at hexhaustive
+                cases hexhaustive
+              · unfold exhaustiveMasks at hexhaustive
+                have htail : exhaustiveMasks weights ls rs = true := hexhaustive
+                unfold unionMaskFor
+                unfold eventMass
+                unfold sumNat
+                rw [ih ls rs htail]
+              · unfold exhaustiveMasks at hexhaustive
+                have htail : exhaustiveMasks weights ls rs = true := hexhaustive
+                unfold unionMaskFor
+                unfold eventMass
+                unfold sumNat
+                rw [ih ls rs htail]
+              · unfold exhaustiveMasks at hexhaustive
+                have htail : exhaustiveMasks weights ls rs = true := hexhaustive
+                unfold unionMaskFor
+                unfold eventMass
+                unfold sumNat
+                rw [ih ls rs htail]
 
 /-! ## Conditioning -/
 
 def conditionedWeights : List Nat → List Bool → List Nat
-  | [], _ => []
-  | _, [] => []
-  | weight :: weights, include :: mask =>
-      if include then weight :: conditionedWeights weights mask
-      else conditionedWeights weights mask
+  | [], [] => []
+  | [], _ :: _ => []
+  | _ :: _, [] => []
+  | weight :: weights, true :: mask => weight :: conditionedWeights weights mask
+  | _weight :: weights, false :: mask => conditionedWeights weights mask
 
 theorem conditionedWeights_total_eq_eventMass
     (weights : List Nat)
     (mask : List Bool) :
     sumNat (conditionedWeights weights mask) = eventMass weights mask := by
   induction weights generalizing mask with
-  | nil => rfl
+  | nil =>
+      cases mask <;> simp [conditionedWeights, eventMass, sumNat]
   | cons weight weights ih =>
       cases mask with
-      | nil => rfl
-      | cons include mask =>
-          cases include
-          · unfold conditionedWeights
-            unfold eventMass
-            exact ih mask
-          · unfold conditionedWeights
-            unfold eventMass
-            unfold sumNat
-            rw [ih mask]
+      | nil => simp [conditionedWeights, eventMass, sumNat]
+      | cons selected mask =>
+          cases selected
+          · simp [conditionedWeights, eventMass, ih]
+          · simp [conditionedWeights, eventMass, sumNat, ih]
 
 def condition
     (distribution : FiniteDistribution)
@@ -222,8 +353,10 @@ theorem pushforward_preserves_total
 structure ProductDistribution where
   left : FiniteDistribution
   right : FiniteDistribution
-  productMass : Nat := left.totalMass * right.totalMass
   deriving Repr
+
+def ProductDistribution.productMass (product : ProductDistribution) : Nat :=
+  product.left.totalMass * product.right.totalMass
 
 theorem product_distribution_total_mass
     (product : ProductDistribution) :
@@ -262,8 +395,8 @@ theorem bayes_cross_multiplication
     (hevent : 0 < eventMass)
     (htotal : 0 < totalMass)
     (hjoint :
-      jointMass * totalMass * eventMass =
-        jointMass * totalMass * eventMass) :
+      (jointMass * conditionMass) * (eventMass * totalMass) =
+        (jointMass * eventMass) * (conditionMass * totalMass)) :
     ratioCrossEqual
       (probabilityRatio
         ((conditionalProbability jointMass conditionMass hcondition).numerator *
@@ -287,6 +420,18 @@ theorem total_probability_two_partitions
     (hpartition : leftMass + rightMass = totalMass) :
     leftMass + rightMass = totalMass :=
   hpartition
+
+theorem total_probability_of_disjoint_exhaustive_masks
+    (distribution : FiniteDistribution)
+    (left right : List Bool)
+    (hdisjoint : disjointMasks left right = true)
+    (hexhaustive : exhaustiveMasks distribution.weights left right = true) :
+    eventMass distribution.weights left +
+      eventMass distribution.weights right =
+        distribution.totalMass := by
+  rw [← disjoint_union_eventMass_add distribution.weights left right hdisjoint]
+  rw [exhaustive_union_eventMass_total distribution.weights left right hexhaustive]
+  rfl
 
 /-! ## Probability residual observers -/
 

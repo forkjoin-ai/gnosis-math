@@ -991,6 +991,13 @@ The following classical domains are explicitly **Out of Bounds** for direct repr
 
 - **Continuous Analysis and Reals (`ℝ`, limits, calculus, measure theory)**: 
   Out of bounds. We bridge this by mapping continuous dynamics to discrete Buleyean topologies (`+1` clinamen increments, exact rational phase decompositions, and bounded deficits). A real number is modeled as the limit of a discrete, terminating rejection process.
+- **Classical probability and measure theory (sigma algebras, real-valued
+  probability spaces, continuous distributions, PMF-as-authority)**:
+  Out of bounds for the Rustic Church. Probability itself is not out of bounds:
+  `Gnosis.FiniteProbabilityCore` owns the native finite theory with explicit
+  supports, `Nat` weights, exact numerator/denominator ratios, decidable event
+  masks, conditioning by reweighting, finite product/independence witnesses,
+  and probability residual observers.
 - **Infinite Category Theory (∞-categories, derived categories)**: 
   Out of bounds. We bridge this by modeling categorical coherence using explicit Buleyean Ranked DAGs. Naturality and adjunctions are expressed as `FORK`, `RACE`, `FOLD`, and `VENT` edges ensuring `beta1` topological complexity conservation.
 - **Non-constructive Mathematics and Infinite Set Theory (Axiom of Choice over uncountables)**: 
