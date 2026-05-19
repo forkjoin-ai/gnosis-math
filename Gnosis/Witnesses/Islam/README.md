@@ -37,3 +37,4 @@ Lean witnesses extracted from Islamic source documents and Quran-key readings. N
 - `QuranAlBaqaraTrialSteadfastnessWitness`: Quran 2:153-157, steadfastness, prayer, martyrdom life, trials, return to God, mercy, and guidance.
 - `QuranAlBaqaraSafaMarwaWitness`: Quran 2:158, Safa and Marwa as God's rites, pilgrimage circulation, voluntary good, reward, and knowledge.
 - `QuranAlBaqaraConcealmentRepairWitness`: Quran 2:159-160, concealed proofs and guidance, rejection, repentance, amendment, declared truth, and mercy.
+- `QuranAlBaqaraDisbeliefRejectionWitness`: Quran 2:161-162, dying in disbelief, rejection by God, angels, and people, unlightened punishment, and no reprieve.
