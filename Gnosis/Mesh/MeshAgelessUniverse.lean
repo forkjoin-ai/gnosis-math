@@ -1,6 +1,5 @@
 import Init
 
-
 /-!
 # Mesh Ageless Universe (The Stationary Tick)
 

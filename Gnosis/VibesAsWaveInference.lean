@@ -1,3 +1,7 @@
+import Gnosis.PsychologyAsInterference
+import Gnosis.DepressionAsDampedOscillation
+import Gnosis.LocalizedOverflowConsciousness
+
 /-
   VibesAsWaveInference.lean
   =========================
@@ -22,9 +26,6 @@
   Zero `sorry`, zero new `axiom`.
 -/
 
-import Gnosis.PsychologyAsInterference
-import Gnosis.DepressionAsDampedOscillation
-import Gnosis.LocalizedOverflowConsciousness
 
 namespace VibesAsWaveInference
 

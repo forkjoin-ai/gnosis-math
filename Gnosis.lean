@@ -1,56 +1,128 @@
--- Gnosis: the mathematical kernel of gnosis
---
--- One formula. Five symbols. Everything.
---   w_i = R - min(v_i, R) + 1
--- The God Formula generates the Seven Universal Laws:
---   1. Impossibility of zero   — w_i >= 1 (the sliver, the +1, Peano's succ != 0)
---   2. Strict ordering         — less rejected = more weight
---   3. Universal sandwich      — w_i in [1, R+1]
---   4. Cave observation        — dims > channels => deficit > 0
---   5. Conservation            — w_i + v_i = R + 1
---   6. Sorites sharpness       — boundaries are discrete
---   7. Chain termination       — every chain reaches a fixed point
--- Reduction chain: primator → clinamen → sliver → 7 laws → 35 predictions → 350+ theorems
--- Three pillars implement the formula:
---   BuleyeanLogic       — post-fold logic, truth is ground state, Boolean is K=2
---   BuleyeanProbability  — the God Formula, void walking, all seven laws
---   BuleyeanRL           — rejection-based RL, train on what is NOT
--- Plus the number system and particle model:
---   GnosticNumbers / IrrationalGnostic / Confinement / TenBosons
-
-
 import Gnosis.ADEMcKayCorrespondence
+import Gnosis.Witnesses.Buddhist.DhammacakkappavattanaPaliEnglishWitness
+import Gnosis.Witnesses.Buddhist.DhammacakkappavattanaWheelWitness
+import Gnosis.Witnesses.Tao.TaoTeChingBellowsWaterWitness
+import Gnosis.Witnesses.Tao.TaoTeChingClosingCounterproofWitness
+import Gnosis.Witnesses.Tao.TaoTeChingHiddenDiminishingWitness
+import Gnosis.Witnesses.Tao.TaoTeChingLowPlaceWuWeiWitness
+import Gnosis.Witnesses.Tao.TaoTeChingMotherObservationWitness
+import Gnosis.Witnesses.Tao.TaoTeChingNameMysteryWitness
+import Gnosis.Witnesses.Tao.TaoTeChingReceptiveLifeWitness
+import Gnosis.Witnesses.Tao.TaoTeChingReturnRootWitness
+import Gnosis.Witnesses.Tao.TaoTeChingSoftReversalWitness
+import Gnosis.Witnesses.Tao.TaoTeChingSourceCompletionWitness
+import Gnosis.Witnesses.Tao.TaoTeChingTraceLessGovernanceWitness
+import Gnosis.Witnesses.Tao.TaoTeChingVoidSensorWitness
+import Gnosis.Witnesses.Gnostic.ApocryphonJohnAdamEpinoiaWitness
+import Gnosis.Witnesses.Gnostic.ApocryphonJohnBarbeloDecadWitness
+import Gnosis.Witnesses.Gnostic.ApocryphonJohnOpeningMonadWitness
+import Gnosis.Witnesses.Gnostic.ApocryphonJohnPronoiaSealsWitness
+import Gnosis.Witnesses.Gnostic.ApocryphonJohnSophiaArchonGapWitness
+import Gnosis.Witnesses.Gnostic.ApocryphonJohnSoulFateWitness
+import Gnosis.Witnesses.Gnostic.GospelPhilipInheritanceRansomWitness
+import Gnosis.Witnesses.Gnostic.GospelPhilipNameForgeryWitness
+import Gnosis.Witnesses.Gnostic.GospelPhilipResurrectionImageWitness
+import Gnosis.Witnesses.Gnostic.GospelPhilipRootVeilLightWitness
+import Gnosis.Witnesses.Gnostic.GospelPhilipSacramentBridalWitness
+import Gnosis.Witnesses.Gnostic.GospelThomasInterpretationKingdomWitness
+import Gnosis.Witnesses.Gnostic.GospelThomasLivingPresenceWitness
+import Gnosis.Witnesses.Gnostic.GospelThomasPearlImageWitness
+import Gnosis.Witnesses.Gnostic.GospelThomasSpreadKingdomWitness
+import Gnosis.Witnesses.Gnostic.GospelThomasTwoOneLightWitness
+import Gnosis.Witnesses.Gnostic.GospelTruthDreamAwakeningWitness
+import Gnosis.Witnesses.Gnostic.GospelTruthErrorFogWitness
+import Gnosis.Witnesses.Gnostic.GospelTruthLivingBookNameWitness
+import Gnosis.Witnesses.Gnostic.GospelTruthLogosUnityWitness
+import Gnosis.Witnesses.Gnostic.GospelTruthLostOneHundredWitness
+import Gnosis.Witnesses.Gnostic.GospelTruthNameRestWitness
+import Gnosis.Witnesses.Gnostic.GospelTruthPathLackWitness
+import Gnosis.Witnesses.Gnostic.GospelTruthPleromaPhysicianWitness
+import Gnosis.Witnesses.Gnostic.TripartiteAeonicExtensionWitness
+import Gnosis.Witnesses.Gnostic.TripartiteFatherRootWitness
+import Gnosis.Witnesses.Gnostic.TripartiteHumanityTheologiesWitness
+import Gnosis.Witnesses.Gnostic.TripartiteLogosOverreachWitness
+import Gnosis.Witnesses.Gnostic.TripartiteRestorationRedemptionWitness
+import Gnosis.Witnesses.Gnostic.TripartiteSaviorOrderingWitness
 import Gnosis.Witnesses.Islam.QuranAlFatihaOpeningWitness
+import Gnosis.Witnesses.Islam.QuranAlImranAbrahamCovenantWitness
+import Gnosis.Witnesses.Islam.QuranAlImranBattleUsuryWitness
+import Gnosis.Witnesses.Islam.QuranAlImranCreationPrayerClosingWitness
+import Gnosis.Witnesses.Islam.QuranAlImranHouseCommunityWitness
+import Gnosis.Witnesses.Islam.QuranAlImranMaryJesusWitness
+import Gnosis.Witnesses.Islam.QuranAlImranMartyrsMiserlinessWitness
+import Gnosis.Witnesses.Islam.QuranAlImranOpeningRevelationWitness
+import Gnosis.Witnesses.Islam.QuranAlImranUhudHypocritesWitness
+import Gnosis.Witnesses.Islam.QuranAlImranWarningSovereigntyWitness
+import Gnosis.Witnesses.Islam.QuranAlNisaBetrayalSatanAbrahamWitness
+import Gnosis.Witnesses.Islam.QuranAlNisaHouseholdTrustsAuthorityWitness
+import Gnosis.Witnesses.Islam.QuranAlNisaHypocritesKillingMigrationPrayerWitness
+import Gnosis.Witnesses.Islam.QuranAlNisaJudgmentBattleWitness
+import Gnosis.Witnesses.Islam.QuranAlNisaKinshipInheritanceWitness
+import Gnosis.Witnesses.Islam.QuranAlNisaMessengersJesusInheritanceWitness
+import Gnosis.Witnesses.Islam.QuranAlNisaRepentanceMarriageWealthWitness
+import Gnosis.Witnesses.Islam.QuranAlNisaWomenJusticeHypocritesWitness
+import Gnosis.Witnesses.Islam.QuranAlMaidaAdamSonsJudgmentWitness
+import Gnosis.Witnesses.Islam.QuranAlMaidaAlliesBookBelieversWitness
+import Gnosis.Witnesses.Islam.QuranAlMaidaJesusFeastClosingWitness
+import Gnosis.Witnesses.Islam.QuranAlMaidaObligationsPurityJusticeWitness
+import Gnosis.Witnesses.Islam.QuranAlMaidaOathsPilgrimageBequestWitness
+import Gnosis.Witnesses.Islam.QuranAlMaidaPledgesMosesWitness
 import Gnosis.Witnesses.Islam.QuranAlBaqaraAbrahamCovenantWitness
 import Gnosis.Witnesses.Islam.QuranAlBaqaraAbrahamicIdentityWitness
 import Gnosis.Witnesses.Islam.QuranAlBaqaraAbrahamIshmaelPrayerWitness
 import Gnosis.Witnesses.Islam.QuranAlBaqaraAbrahamReligionWitness
 import Gnosis.Witnesses.Islam.QuranAlBaqaraAdamGuidanceWitness
+import Gnosis.Witnesses.Islam.QuranAlBaqaraAppointedDaysWitness
 import Gnosis.Witnesses.Islam.QuranAlBaqaraBelieversInstructionWitness
 import Gnosis.Witnesses.Islam.QuranAlBaqaraCalfCovenantLifeWitness
+import Gnosis.Witnesses.Islam.QuranAlBaqaraCharityParablesWitness
+import Gnosis.Witnesses.Islam.QuranAlBaqaraCloudsSignsSingleCommunityWitness
 import Gnosis.Witnesses.Islam.QuranAlBaqaraConcealmentRepairWitness
+import Gnosis.Witnesses.Islam.QuranAlBaqaraConflictEthicsWitness
 import Gnosis.Witnesses.Islam.QuranAlBaqaraCowDisclosureWitness
 import Gnosis.Witnesses.Islam.QuranAlBaqaraCovenantEthicsWitness
+import Gnosis.Witnesses.Islam.QuranAlBaqaraDebtWitnessAccountWitness
 import Gnosis.Witnesses.Islam.QuranAlBaqaraDevotionInheritanceWitness
 import Gnosis.Witnesses.Islam.QuranAlBaqaraDisbeliefRejectionWitness
+import Gnosis.Witnesses.Islam.QuranAlBaqaraDivorceBoundsWitness
 import Gnosis.Witnesses.Islam.QuranAlBaqaraExclusivityEvidenceWitness
+import Gnosis.Witnesses.Islam.QuranAlBaqaraFamilyMaintenancePrayerWitness
+import Gnosis.Witnesses.Islam.QuranAlBaqaraFastingBoundsPropertyWitness
+import Gnosis.Witnesses.Islam.QuranAlBaqaraFastingRamadanWitness
 import Gnosis.Witnesses.Islam.QuranAlBaqaraGabrielCovenantWitness
+import Gnosis.Witnesses.Islam.QuranAlBaqaraGardenGivingFightingQuestionsWitness
 import Gnosis.Witnesses.Islam.QuranAlBaqaraGuidanceGroupsWitness
 import Gnosis.Witnesses.Islam.QuranAlBaqaraIsraelCovenantWitness
 import Gnosis.Witnesses.Islam.QuranAlBaqaraIsraelDeliveranceWitness
+import Gnosis.Witnesses.Islam.QuranAlBaqaraLawfulProvisionWitness
 import Gnosis.Witnesses.Islam.QuranAlBaqaraHouseSanctuaryWitness
+import Gnosis.Witnesses.Islam.QuranAlBaqaraLegalMercyWitness
+import Gnosis.Witnesses.Islam.QuranAlBaqaraLifeLoanReturnWitness
+import Gnosis.Witnesses.Islam.QuranAlBaqaraMarriageMenstruationOathsWitness
+import Gnosis.Witnesses.Islam.QuranAlBaqaraMessengerBeliefPrayerWitness
 import Gnosis.Witnesses.Islam.QuranAlBaqaraMessengerRejectionWitness
 import Gnosis.Witnesses.Islam.QuranAlBaqaraMessengerPedagogyWitness
+import Gnosis.Witnesses.Islam.QuranAlBaqaraMoonsFightingLimitsWitness
+import Gnosis.Witnesses.Islam.QuranAlBaqaraPilgrimageConductWitness
+import Gnosis.Witnesses.Islam.QuranAlBaqaraPilgrimageCompletionWitness
 import Gnosis.Witnesses.Islam.QuranAlBaqaraQiblaCommunityWitness
 import Gnosis.Witnesses.Islam.QuranAlBaqaraRevelationCorruptionWitness
 import Gnosis.Witnesses.Islam.QuranAlBaqaraRewardPledgeSabbathWitness
+import Gnosis.Witnesses.Islam.QuranAlBaqaraRighteousnessWitness
+import Gnosis.Witnesses.Islam.QuranAlBaqaraResurrectionSignsWitness
 import Gnosis.Witnesses.Islam.QuranAlBaqaraSafaMarwaWitness
+import Gnosis.Witnesses.Islam.QuranAlBaqaraScriptureExchangeWitness
+import Gnosis.Witnesses.Islam.QuranAlBaqaraSignsRivalLoveWitness
+import Gnosis.Witnesses.Islam.QuranAlBaqaraTalutGoliathWitness
 import Gnosis.Witnesses.Islam.QuranAlBaqaraThrownBookMagicWitness
 import Gnosis.Witnesses.Islam.QuranAlBaqaraTownProvisionComplaintWitness
 import Gnosis.Witnesses.Islam.QuranAlBaqaraTranscendenceGuidanceWitness
 import Gnosis.Witnesses.Islam.QuranAlBaqaraTrialSteadfastnessWitness
+import Gnosis.Witnesses.Islam.QuranAlBaqaraUsuryDebtReturnWitness
 import Gnosis.Witnesses.Islam.QuranAlBaqaraWorshipDirectionWitness
 import Gnosis.Witnesses.Islam.QuranAlBaqaraWorshipChallengeCreationWitness
+import Gnosis.Witnesses.Islam.QuranAlBaqaraWorldlyOpponentSubmissionWitness
+import Gnosis.Witnesses.Islam.QuranAlBaqaraMessengersThroneLightWitness
 import Gnosis.Witnesses.Islam.QuranSubmissionTopologyWitness
 import Gnosis.Witnesses.Bible.SecondCorinthians.SecondCorinthiansComfortTribulationWitness
 import Gnosis.Witnesses.Bible.SecondCorinthians.SecondCorinthiansCheerfulGivingWitness
@@ -492,7 +564,6 @@ import Gnosis.Contrarian.ContrarianWitnessGapMaximizesTensegrityResilience
 import Gnosis.Contrarian.ContrarianWitnessGapOracleStallMitigation
 import Gnosis.Contrarian.ContrarianWitnessGapProvidesSecurity
 import Gnosis.Contrarian.ContrarianTransparencyIncreasesFraud
-import Gnosis.Contrarian.ContrarianProofDepthIncreasesFragility
 import Gnosis.Contrarian.ContrarianAbsenceIsAuthority
 import Gnosis.Contrarian.ContrarianDebtIsAcceleration
 import Gnosis.Contrarian.ContrarianEfficiencyIsFragility
@@ -660,6 +731,7 @@ import Gnosis.FiniteFluidCompactness
 import Gnosis.FiniteObserverCompactness
 import Gnosis.FiniteObserverPatterns
 import Gnosis.FiniteFluxRefinement
+import Gnosis.FiniteCalculusProbability
 import Gnosis.EnvelopeConvergence
 import Gnosis.EtaleCohomology
 import Gnosis.EulerGnostic
@@ -1456,3 +1528,23 @@ import Gnosis.ThermodynamicPvsNP
 import Gnosis.MythOfInfinitePrecision
 import Gnosis.ProvableRandomness
 import Gnosis.RefinementMarket
+
+-- Gnosis: the mathematical kernel of gnosis
+--
+-- One formula. Five symbols. Everything.
+--   w_i = R - min(v_i, R) + 1
+-- The God Formula generates the Seven Universal Laws:
+--   1. Impossibility of zero   — w_i >= 1 (the sliver, the +1, Peano's succ != 0)
+--   2. Strict ordering         — less rejected = more weight
+--   3. Universal sandwich      — w_i in [1, R+1]
+--   4. Cave observation        — dims > channels => deficit > 0
+--   5. Conservation            — w_i + v_i = R + 1
+--   6. Sorites sharpness       — boundaries are discrete
+--   7. Chain termination       — every chain reaches a fixed point
+-- Reduction chain: primator → clinamen → sliver → 7 laws → 35 predictions → 350+ theorems
+-- Three pillars implement the formula:
+--   BuleyeanLogic       — post-fold logic, truth is ground state, Boolean is K=2
+--   BuleyeanProbability  — the God Formula, void walking, all seven laws
+--   BuleyeanRL           — rejection-based RL, train on what is NOT
+-- Plus the number system and particle model:
+--   GnosticNumbers / IrrationalGnostic / Confinement / TenBosons

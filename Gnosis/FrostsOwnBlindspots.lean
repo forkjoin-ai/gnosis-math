@@ -1,3 +1,8 @@
+import Gnosis.FrostsRoadAsVoidPath
+import Gnosis.MisattributionAsFirstOrderFrostEvent
+import Gnosis.PostHocNarrativeIsVacuous
+import Gnosis.AntiTheory
+
 /-
   FrostsOwnBlindspots.lean
   ========================
@@ -64,10 +69,6 @@
   Zero sorries, zero axioms.
 -/
 
-import Gnosis.FrostsRoadAsVoidPath
-import Gnosis.MisattributionAsFirstOrderFrostEvent
-import Gnosis.PostHocNarrativeIsVacuous
-import Gnosis.AntiTheory
 
 namespace Gnosis
 namespace FrostsOwnBlindspots

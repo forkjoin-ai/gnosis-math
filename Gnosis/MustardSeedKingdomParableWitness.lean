@@ -1,3 +1,5 @@
+import Init
+
 /-
   Matthew 13:31–32 (mustard seed): `MustardParableWitness` bundles seed / scale / nesting; Init toys
   `toy_seed_strict_lt_canopy`, `toy_canopy_supports_branching_index` are `Nat` discipline only. Edition
@@ -5,7 +7,6 @@
   `sorry`, zero new `axiom`.
 -/
 
-import Init
 
 namespace MustardSeedKingdomParableWitness
 

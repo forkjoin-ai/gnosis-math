@@ -1,6 +1,5 @@
 import Gnosis.Real
 
-
 namespace Gnosis
 
 /--

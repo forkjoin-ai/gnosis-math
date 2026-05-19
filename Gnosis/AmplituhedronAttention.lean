@@ -1,3 +1,5 @@
+import Init
+
 -- Amplituhedron Attention — Death #2 of Five Deaths TPS Roadmap
 --
 -- Death #1 (ER=EPR matVec memo): standing wave pinning shipped
@@ -13,7 +15,6 @@
 -- Amplituhedron builds on this: Q/K/V interactions collapse to minimal surface
 -- in projective geometry, reducing d² attention to k² scattering computation.
 
-import Init
 
 namespace AmplituhedronAttention
 

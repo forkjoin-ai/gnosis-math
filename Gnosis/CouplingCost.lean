@@ -1,3 +1,6 @@
+import Init
+import Gnosis.BrunnianScanner
+
 /-
   Gnosis.CouplingCost
 
@@ -11,8 +14,6 @@
 
   All proofs are closed by Init `Nat.*` lemmas, `decide`, `rfl`, or `exact` — zero sorry, zero omega.
 -/
-import Init
-import Gnosis.BrunnianScanner
 
 
 namespace Gnosis.CouplingCost

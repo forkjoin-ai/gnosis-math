@@ -1,3 +1,5 @@
+import Init
+
 /-
   Death7BekensteinBound.lean
   ==========================
@@ -77,7 +79,6 @@
   `decide` for closed numeric goals; no `omega`, no `simp`.
 -/
 
-import Init
 
 namespace Death7BekensteinBound
 

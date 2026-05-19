@@ -1,3 +1,6 @@
+import Init
+import Gnosis.AmplituhedronAttention
+
 -- Grassmannian structure of attention space — Death #2 of Five Deaths TPS Roadmap.
 --
 -- Replaces the placeholder `PositiveGrassmannian (k n)` whose
@@ -11,8 +14,6 @@
 -- Init-only per the gnosis-math Rustic Church initiative: no omega, no simp,
 -- no Mathlib. Decidable predicates use Bool. Float bounds (where they would
 -- arise from runtime calibration) are deferred to the runtime layer.
-import Init
-import Gnosis.AmplituhedronAttention
 
 
 namespace AmplituhedronAttention.Grassmannian

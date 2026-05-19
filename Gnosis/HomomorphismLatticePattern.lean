@@ -1,3 +1,5 @@
+import Gnosis.BuleyErgodicClosure
+
 /-
   HomomorphismLatticePattern.lean
   ===============================
@@ -25,7 +27,6 @@
   Zero `sorry`, zero new `axiom`.
 -/
 
-import Gnosis.BuleyErgodicClosure
 
 namespace HomomorphismLatticePattern
 

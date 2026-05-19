@@ -1,3 +1,5 @@
+import Gnosis.AntiTheory
+
 /-
   BinarySemanticsGap.lean
   =======================
@@ -54,7 +56,6 @@
   Init-only Lean 4. Zero sorries, zero axioms.
 -/
 
-import Gnosis.AntiTheory
 
 namespace Gnosis
 namespace BinarySemanticsGap

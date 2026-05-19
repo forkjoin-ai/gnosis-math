@@ -1,3 +1,7 @@
+import Gnosis.ResonanceKnotFormat
+import Gnosis.ResonanceKnotEncoder
+import Gnosis.ResonanceKnotDecoder
+
 /-
   ResonanceKnotRoundTrip.lean
   ===========================
@@ -23,9 +27,6 @@
      unconditionally zeros them.
 -/
 
-import Gnosis.ResonanceKnotFormat
-import Gnosis.ResonanceKnotEncoder
-import Gnosis.ResonanceKnotDecoder
 
 namespace ResonanceKnotRoundTrip
 

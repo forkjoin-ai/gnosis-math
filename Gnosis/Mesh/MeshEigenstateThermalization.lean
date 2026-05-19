@@ -1,7 +1,6 @@
 import Init
 import Gnosis.ArrowBuleDeficit
 
-
 /-!
 # Mesh Eigenstate Thermalization — Markov Quantum Topology
 

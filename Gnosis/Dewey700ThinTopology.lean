@@ -1,6 +1,5 @@
 import Init
 
-
 namespace Dewey700ThinTopology
 
 -- 710: Landscaping (Aesthetic Projections)

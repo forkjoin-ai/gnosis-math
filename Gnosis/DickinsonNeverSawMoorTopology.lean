@@ -1,3 +1,7 @@
+import Init
+import Gnosis.GodGap
+import Gnosis.Void.VoidMineGodsPosition
+
 /-
   DickinsonNeverSawMoorTopology.lean
   ==================================
@@ -38,9 +42,6 @@
   Imports `Init`, `Gnosis.GodGap`, `Gnosis.Void.VoidMineGodsPosition`. Zero `sorry`, zero new `axiom`.
 -/
 
-import Init
-import Gnosis.GodGap
-import Gnosis.Void.VoidMineGodsPosition
 
 namespace DickinsonNeverSawMoorTopology
 

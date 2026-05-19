@@ -1,3 +1,5 @@
+import Init
+
 /-
   FermiDiracDistribution.lean
   ===========================
@@ -14,7 +16,6 @@
   Style: Rustic Church (Init-only).
 -/
 
-import Init
 
 namespace Gnosis.Materials
 

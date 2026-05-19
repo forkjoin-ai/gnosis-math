@@ -1,3 +1,9 @@
+import Init
+import Gnosis.AmplituhedronAttention
+import Gnosis.AmplituhedronGrassmannian
+import Gnosis.AmplituhedronVertices
+import Gnosis.AmplituhedronWitnesses
+
 /-
   AmplituhedronFalsifiability.lean
   =================================
@@ -51,11 +57,6 @@
   Imports `Init` plus the upstream amplituhedron modules. Zero `sorry`,
   zero new `axiom`.
 -/
-import Init
-import Gnosis.AmplituhedronAttention
-import Gnosis.AmplituhedronGrassmannian
-import Gnosis.AmplituhedronVertices
-import Gnosis.AmplituhedronWitnesses
 
 namespace AmplituhedronFalsifiability
 

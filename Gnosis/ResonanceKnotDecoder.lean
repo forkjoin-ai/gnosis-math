@@ -1,3 +1,6 @@
+import Gnosis.ResonanceKnotFormat
+import Gnosis.ResonanceKnotEncoder
+
 /-
   ResonanceKnotDecoder.lean
   =========================
@@ -25,8 +28,6 @@
   signal — the rest are guaranteed 0.0.
 -/
 
-import Gnosis.ResonanceKnotFormat
-import Gnosis.ResonanceKnotEncoder
 
 namespace ResonanceKnotDecoder
 

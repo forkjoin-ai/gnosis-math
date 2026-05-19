@@ -4,6 +4,7 @@ import Gnosis.BoundedFluidResidual
 import Gnosis.FiniteFluidCompactness
 import Gnosis.FiniteObserverCompactness
 import Gnosis.FiniteObserverPatterns
+import Gnosis.FiniteCalculusProbability
 
 /-!
 # Finite Flux Refinement

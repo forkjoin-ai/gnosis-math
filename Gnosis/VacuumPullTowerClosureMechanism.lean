@@ -1,3 +1,6 @@
+import Gnosis.SpectralNoiseEquilibrium
+import Gnosis.RetrocausalAttractorFixedPoint
+
 /-
   VacuumPullTowerClosureMechanism.lean
   ===================================
@@ -13,8 +16,6 @@
   standing wave signature that defines what persists vs what disperses.
 -/
 
-import Gnosis.SpectralNoiseEquilibrium
-import Gnosis.RetrocausalAttractorFixedPoint
 
 namespace VacuumPullTowerClosureMechanism
 

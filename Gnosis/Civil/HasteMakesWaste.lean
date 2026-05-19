@@ -1,3 +1,5 @@
+import Gnosis.Civil.BraessParadox
+
 /-
   HasteMakesWaste.lean
   ===================
@@ -12,7 +14,6 @@
   Style: Rustic Church (Init-only).
 -/
 
-import Gnosis.Civil.BraessParadox
 
 namespace Gnosis.Civil
 

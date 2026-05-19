@@ -1,3 +1,6 @@
+import Init
+import Gnosis.HeraclitusBowLifeDeathWitness
+
 /-
   ShipOfTheseusWitness.lean
   =========================
@@ -28,8 +31,6 @@
   Zero `sorry`, zero new `axiom`.
 -/
 
-import Init
-import Gnosis.HeraclitusBowLifeDeathWitness
 
 namespace ShipOfTheseusWitness
 

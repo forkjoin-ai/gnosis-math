@@ -1,3 +1,6 @@
+import Init
+import Gnosis.InformationalPhysics
+
 /-
   InformationalPhysicsCompleteness.lean
   =====================================
@@ -104,8 +107,6 @@
   conjectures, NOT theorems.
 -/
 
-import Init
-import Gnosis.InformationalPhysics
 
 namespace InformationalPhysicsCompleteness
 

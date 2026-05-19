@@ -1,3 +1,6 @@
+import Init
+import Gnosis.Civil.StaticEquilibrium
+
 /-
   StVenantDecay.lean
   ==================
@@ -14,8 +17,6 @@
   Style: Rustic Church (Init-only).
 -/
 
-import Init
-import Gnosis.Civil.StaticEquilibrium
 
 namespace Gnosis.Civil
 

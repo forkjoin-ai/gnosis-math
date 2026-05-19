@@ -1,6 +1,5 @@
 import Gnosis.GodFormula
 
-
 /-!
 # Multi-Agent Causal Models — When Agents Disagree About Reality
 

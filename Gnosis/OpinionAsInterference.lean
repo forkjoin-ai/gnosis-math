@@ -1,3 +1,6 @@
+import Gnosis.SpectralNoiseEquilibrium
+import Gnosis.InterferenceAsTheFifthForce
+
 /-
   OpinionAsInterference.lean
   ==========================
@@ -19,8 +22,6 @@
   Init-only (no Mathlib). Zero sorry.
 -/
 
-import Gnosis.SpectralNoiseEquilibrium
-import Gnosis.InterferenceAsTheFifthForce
 
 namespace OpinionAsInterference
 

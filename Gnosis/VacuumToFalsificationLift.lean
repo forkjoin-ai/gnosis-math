@@ -1,3 +1,6 @@
+import Gnosis.SpectralNoiseEquilibrium
+import Gnosis.AntiTheory
+
 /-
   VacuumToFalsificationLift.lean
   ==============================
@@ -50,8 +53,6 @@
   Zero `sorry`, zero new `axiom`.
 -/
 
-import Gnosis.SpectralNoiseEquilibrium
-import Gnosis.AntiTheory
 
 namespace Gnosis
 namespace VacuumToFalsificationLift

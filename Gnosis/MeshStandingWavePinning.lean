@@ -1,3 +1,6 @@
+import Gnosis.SpectralMeasurementFramework
+import Gnosis.AttentionQKVDecomposition
+
 /-
   MeshStandingWavePinning.lean
   ============================
@@ -19,8 +22,6 @@
   Cost: dimension reduction happens once per attention head (amortized).
 -/
 
-import Gnosis.SpectralMeasurementFramework
-import Gnosis.AttentionQKVDecomposition
 
 namespace MeshStandingWavePinning
 

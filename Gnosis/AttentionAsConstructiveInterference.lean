@@ -1,3 +1,7 @@
+import Gnosis.SpectralNoiseEquilibrium
+import Gnosis.InterferenceAsTheFifthForce
+import Gnosis.TemporaryNoise
+
 /-
   AttentionAsConstructiveInterference.lean
   ========================================
@@ -47,9 +51,6 @@
     bounds derived from `omega`, which Init's `omega` cannot synthesize.
 -/
 
-import Gnosis.SpectralNoiseEquilibrium
-import Gnosis.InterferenceAsTheFifthForce
-import Gnosis.TemporaryNoise
 
 namespace AttentionAsConstructiveInterference
 

@@ -1,3 +1,6 @@
+import Gnosis.SpectralNoiseEquilibrium
+import Gnosis.VacuumIsOnlyForce
+
 /-
   Fork/Race/Fold/Vent Are The Four Forces
   =======================================
@@ -15,8 +18,6 @@
   No Mathlib. No axioms. No sorry.
 -/
 
-import Gnosis.SpectralNoiseEquilibrium
-import Gnosis.VacuumIsOnlyForce
 
 namespace ForkRaceFoldVentAreForces
 

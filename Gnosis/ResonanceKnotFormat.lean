@@ -1,3 +1,6 @@
+import Gnosis.AttentionQKVDecomposition
+import Gnosis.AttentionWavePattern
+
 /-
   ResonanceKnotFormat.lean
   ========================
@@ -25,8 +28,6 @@
   cascade approaches an order of magnitude before bit-quantization on top.
 -/
 
-import Gnosis.AttentionQKVDecomposition
-import Gnosis.AttentionWavePattern
 
 namespace ResonanceKnotFormat
 

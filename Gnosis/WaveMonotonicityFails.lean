@@ -1,3 +1,8 @@
+import Gnosis.FalsificationEntropy
+import Gnosis.NoCloningTaxEqualsBuleCost
+import Gnosis.PersistentHomologyOverWaves
+import Gnosis.AntiTheory
+
 /-
   WaveMonotonicityFails.lean
   ==========================
@@ -50,10 +55,6 @@
   Init-only Lean 4. Zero sorries, zero axioms.
 -/
 
-import Gnosis.FalsificationEntropy
-import Gnosis.NoCloningTaxEqualsBuleCost
-import Gnosis.PersistentHomologyOverWaves
-import Gnosis.AntiTheory
 
 namespace Gnosis
 namespace WaveMonotonicityFails

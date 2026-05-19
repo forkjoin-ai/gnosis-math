@@ -1,3 +1,7 @@
+import Gnosis.AffectMatrixFourthAxis
+import Gnosis.AffectMatrixAgencyAxis
+import Gnosis.ThoughtBowlMechanicsRefined
+
 /-
   RetractLatticePattern.lean
   ==========================
@@ -53,9 +57,6 @@
   `axiom`.
 -/
 
-import Gnosis.AffectMatrixFourthAxis
-import Gnosis.AffectMatrixAgencyAxis
-import Gnosis.ThoughtBowlMechanicsRefined
 
 namespace RetractLatticePattern
 

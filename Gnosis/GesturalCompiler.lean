@@ -1,7 +1,6 @@
 import Gnosis.ArticulatorySynthesis
 import Gnosis.Real
 
-
 namespace Gnosis
 namespace Articulatory
 

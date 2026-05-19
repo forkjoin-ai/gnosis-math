@@ -1,3 +1,7 @@
+import Gnosis.SpectralNoiseEquilibrium
+import Gnosis.InterferenceAsTheFifthForce
+import Gnosis.OpinionAsInterference
+
 /-
   EchoChamberAsStandingWave.lean
   ==============================
@@ -23,9 +27,6 @@
   The runtime calibration layer still enforces the stronger social claims.
 -/
 
-import Gnosis.SpectralNoiseEquilibrium
-import Gnosis.InterferenceAsTheFifthForce
-import Gnosis.OpinionAsInterference
 
 namespace EchoChamberAsStandingWave
 

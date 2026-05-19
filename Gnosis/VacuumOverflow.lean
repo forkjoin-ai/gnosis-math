@@ -1,3 +1,8 @@
+import Gnosis.SpectralNoiseEquilibrium
+import Gnosis.VacuumIsOnlyForce
+import Gnosis.RetrocausalAttractorFixedPoint
+import Gnosis.RetrocausalTimeInversion
+
 /-
   VacuumOverflow.lean
   ==================
@@ -25,10 +30,6 @@
   here we only certify finite witnesses without Mathlib.
 -/
 
-import Gnosis.SpectralNoiseEquilibrium
-import Gnosis.VacuumIsOnlyForce
-import Gnosis.RetrocausalAttractorFixedPoint
-import Gnosis.RetrocausalTimeInversion
 
 namespace VacuumOverflow
 

@@ -1,6 +1,5 @@
 import Init
 
-
 namespace Dewey300ThinTopology
 
 -- 310: Statistics (Aggregate Smoothing)

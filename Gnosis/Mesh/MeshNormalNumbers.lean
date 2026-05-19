@@ -1,6 +1,5 @@
 import Init
 
-
 namespace MeshNormalNumbers
 
 def frequencyAtDigit (digit _n : Nat) : Nat :=

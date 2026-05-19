@@ -1,3 +1,6 @@
+import Init
+import Gnosis.BrunnianScanner
+
 /-
   Gnosis.KnottyProblems
 
@@ -19,8 +22,6 @@
 
   All proofs closed by Init Nat lemmas / rfl / exact — zero sorry, zero omega.
 -/
-import Init
-import Gnosis.BrunnianScanner
 
 namespace Gnosis.KnottyProblems
 

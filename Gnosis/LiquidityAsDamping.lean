@@ -1,3 +1,7 @@
+import Init
+import Gnosis.SpectralNoiseEquilibrium
+import Gnosis.InterferenceAsTheFifthForce
+
 /-
   LiquidityAsDamping.lean
   =======================
@@ -23,9 +27,6 @@
   No axioms. No sorry. The harmonic damping is proven.
 -/
 
-import Init
-import Gnosis.SpectralNoiseEquilibrium
-import Gnosis.InterferenceAsTheFifthForce
 
 namespace Gnosis
 namespace LiquidityAsDamping

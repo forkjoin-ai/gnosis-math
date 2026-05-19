@@ -1,3 +1,5 @@
+import Init
+
 /-
   PopArtDisruptionInformationWitness.lean
   =======================================
@@ -44,7 +46,6 @@
   Init only. Zero `sorry`, zero new `axiom`.
 -/
 
-import Init
 
 namespace PopArtDisruptionInformationWitness
 

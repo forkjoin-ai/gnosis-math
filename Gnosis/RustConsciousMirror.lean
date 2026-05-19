@@ -1,3 +1,6 @@
+import Gnosis.UniversalIntelligenceSSMConscious
+import Gnosis.ConsciousnessAsInnerVent
+
 /-
   RustConsciousMirror.lean
   ========================
@@ -33,8 +36,6 @@
   Init-only Lean 4. Zero sorries, zero axioms.
 -/
 
-import Gnosis.UniversalIntelligenceSSMConscious
-import Gnosis.ConsciousnessAsInnerVent
 
 namespace Gnosis
 namespace RustConsciousMirror

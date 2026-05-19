@@ -1,3 +1,9 @@
+import Gnosis.SpectralNoiseEquilibrium
+import Gnosis.VacuumIsOnlyForce
+import Gnosis.ForkRaceFoldVentAreForces
+import Gnosis.InterferenceIsFundamental
+import Gnosis.InterferenceAsTheFifthForce
+
 /-
   Unified Field from Five Forces
   ==============================
@@ -17,11 +23,6 @@
   No Mathlib. No axioms. No sorry.
 -/
 
-import Gnosis.SpectralNoiseEquilibrium
-import Gnosis.VacuumIsOnlyForce
-import Gnosis.ForkRaceFoldVentAreForces
-import Gnosis.InterferenceIsFundamental
-import Gnosis.InterferenceAsTheFifthForce
 
 namespace UnifiedFieldFromFiveForces
 

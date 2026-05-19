@@ -1,3 +1,5 @@
+import Gnosis.GodelIncompletenessShadow
+
 /-
   TarskiTruthUndefinability
   =========================
@@ -110,7 +112,6 @@
   No axioms, no `sorry`.
 -/
 
-import Gnosis.GodelIncompletenessShadow
 
 namespace TarskiTruthUndefinability
 

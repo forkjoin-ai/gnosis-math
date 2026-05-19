@@ -1,3 +1,6 @@
+import Gnosis.SpectralMeasurementFramework
+import Gnosis.AttentionWavePattern
+
 /-
   AttentionQKVDecomposition.lean
   =============================
@@ -38,8 +41,6 @@
     facts, and Nat `≤`/`≥` witnesses.
 -/
 
-import Gnosis.SpectralMeasurementFramework
-import Gnosis.AttentionWavePattern
 
 namespace AttentionQKVDecomposition
 

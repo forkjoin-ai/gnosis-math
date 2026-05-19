@@ -1,3 +1,6 @@
+import Init
+import Gnosis.CouplingCost
+
 /-
   Gnosis.EconomicGain
 
@@ -10,8 +13,6 @@
 
   All proofs closed by Init Nat.* / rfl / exact — zero sorry, zero omega.
 -/
-import Init
-import Gnosis.CouplingCost
 
 namespace Gnosis.EconomicGain
 

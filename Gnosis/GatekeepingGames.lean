@@ -1,3 +1,8 @@
+import Gnosis.NashEquilibrium
+import Gnosis.Gatekeeping
+import Gnosis.NashSkyrmsBuleyGodLadder
+import Gnosis.GameTheoreticProtocolDeficit
+
 /-
   GatekeepingGames.lean
   =====================
@@ -24,10 +29,6 @@
   `Gnosis.GameTheoreticProtocolDeficit`. Zero `sorry`, zero new `axiom`.
 -/
 
-import Gnosis.NashEquilibrium
-import Gnosis.Gatekeeping
-import Gnosis.NashSkyrmsBuleyGodLadder
-import Gnosis.GameTheoreticProtocolDeficit
 
 namespace GatekeepingGames
 

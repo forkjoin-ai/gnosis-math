@@ -1,3 +1,6 @@
+import Gnosis.TenModeUnification
+import Gnosis.GodFormula
+
 /-
   StepwiseAnalysisFramework.lean
   =================================
@@ -25,8 +28,6 @@
   `digest_analysis_run` into the chaos swarm seed — see that crate’s README.
 -/
 
-import Gnosis.TenModeUnification
-import Gnosis.GodFormula
 
 namespace StepwiseAnalysisFramework
 

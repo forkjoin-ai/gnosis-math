@@ -1,3 +1,5 @@
+import Init
+
 /-
   SevenDeathsCompositionOrthogonality.lean
   ========================================
@@ -76,7 +78,6 @@
   Init-only per the Rustic Church initiative. Zero `sorry`,
   zero `axiom`, no Mathlib.
 -/
-import Init
 
 namespace SevenDeathsCompositionOrthogonality
 

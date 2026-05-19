@@ -1,3 +1,7 @@
+import Gnosis.FukayaMirrorSymmetry
+import Gnosis.KhovanovCategorifiesJones
+import Gnosis.ArnoldConjectureFloer
+
 /-
   BridgeFukayaKhovanov
   ====================
@@ -56,9 +60,6 @@
   `rfl`, or short case splits.
 -/
 
-import Gnosis.FukayaMirrorSymmetry
-import Gnosis.KhovanovCategorifiesJones
-import Gnosis.ArnoldConjectureFloer
 
 namespace BridgeFukayaKhovanov
 

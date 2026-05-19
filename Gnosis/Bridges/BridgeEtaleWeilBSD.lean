@@ -1,3 +1,7 @@
+import Gnosis.EtaleCohomology
+import Gnosis.WeilConjecturesZetaFq
+import Gnosis.BirchSwinnertonDyer
+
 /-
   BridgeEtaleWeilBSD
   ==================
@@ -68,9 +72,6 @@
   `rfl`, or `decide`.
 -/
 
-import Gnosis.EtaleCohomology
-import Gnosis.WeilConjecturesZetaFq
-import Gnosis.BirchSwinnertonDyer
 
 namespace BridgeEtaleWeilBSD
 

@@ -1,3 +1,5 @@
+import Gnosis.AffectMatrixFourthAxis
+
 /-
   AffectMatrixAgencyAxis.lean
   ===========================
@@ -56,7 +58,6 @@
   `AffectAxesIndependence`). Zero `sorry`, zero new `axiom`.
 -/
 
-import Gnosis.AffectMatrixFourthAxis
 
 namespace AffectMatrixAgencyAxis
 

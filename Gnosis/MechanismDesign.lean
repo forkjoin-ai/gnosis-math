@@ -1,7 +1,6 @@
 import Gnosis.GodFormula
 import Gnosis.GoodhartsLaw
 
-
 /-!
 # Mechanism Design — Building Ungameable Metrics
 

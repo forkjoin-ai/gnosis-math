@@ -1,3 +1,8 @@
+import Init
+import Gnosis.AmplituhedronAttention
+import Gnosis.AmplituhedronGrassmannian
+import Gnosis.AmplituhedronVertices
+
 -- Concrete witnesses that the Amplituhedron Attention theory is non-vacuous.
 --
 -- The Grassmannian and Vertices files define `IsPositive` and
@@ -9,10 +14,6 @@
 -- decidable closed-form equalities.
 --
 -- Init-only per the Rustic Church initiative.
-import Init
-import Gnosis.AmplituhedronAttention
-import Gnosis.AmplituhedronGrassmannian
-import Gnosis.AmplituhedronVertices
 
 namespace AmplituhedronAttention.Witnesses
 

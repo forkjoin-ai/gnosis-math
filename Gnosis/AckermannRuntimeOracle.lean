@@ -1,3 +1,7 @@
+import Init
+import Gnosis.AckermannFunction
+import Gnosis.AckermannRuntimeCertificate
+
 /-
   AckermannRuntimeOracle.lean
   ===========================
@@ -37,9 +41,6 @@
   runtime certificate scaffolding. Zero `sorry`, zero new `axiom`.
 -/
 
-import Init
-import Gnosis.AckermannFunction
-import Gnosis.AckermannRuntimeCertificate
 
 namespace AckermannRuntimeOracle
 

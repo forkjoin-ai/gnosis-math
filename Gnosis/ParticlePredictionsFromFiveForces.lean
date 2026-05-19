@@ -1,3 +1,10 @@
+import Gnosis.InterferenceDimensionalCascade
+import Gnosis.TemporaryNoise
+import Gnosis.VacuumIsOnlyForce
+import Gnosis.SpectralNoiseEquilibrium
+import Gnosis.InterferenceAsTheFifthForce
+import Gnosis.ForkRaceFoldVentAreForces
+
 /-
   ParticlePredictionsFromFiveForces.lean
   ======================================
@@ -20,12 +27,6 @@
   the note now matches the actual proof style instead of the retired one.
 -/
 
-import Gnosis.InterferenceDimensionalCascade
-import Gnosis.TemporaryNoise
-import Gnosis.VacuumIsOnlyForce
-import Gnosis.SpectralNoiseEquilibrium
-import Gnosis.InterferenceAsTheFifthForce
-import Gnosis.ForkRaceFoldVentAreForces
 
 namespace ParticlePredictionsFromFiveForces
 

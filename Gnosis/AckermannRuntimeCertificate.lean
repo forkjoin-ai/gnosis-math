@@ -1,3 +1,6 @@
+import Init
+import Gnosis.AckermannFunction
+
 /-
   AckermannRuntimeCertificate.lean
   =================================
@@ -35,8 +38,6 @@
   Init-only Lean. Zero `sorry`, zero new `axiom`.
 -/
 
-import Init
-import Gnosis.AckermannFunction
 
 namespace AckermannRuntimeCertificate
 

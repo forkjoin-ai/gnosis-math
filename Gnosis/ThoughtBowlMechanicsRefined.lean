@@ -1,3 +1,7 @@
+import Gnosis.ThoughtBowlMechanics
+import Gnosis.EchoChamberAsTaoBowl
+import Gnosis.VibesAsWaveInference
+
 /-
   ThoughtBowlMechanicsRefined.lean
   ================================
@@ -107,9 +111,6 @@
   `Gnosis.VibesAsWaveInference`. Zero `sorry`, zero new `axiom`.
 -/
 
-import Gnosis.ThoughtBowlMechanics
-import Gnosis.EchoChamberAsTaoBowl
-import Gnosis.VibesAsWaveInference
 
 namespace ThoughtBowlMechanicsRefined
 

@@ -1,3 +1,6 @@
+import Gnosis.TopologicalGrammar
+import Gnosis.PoetryLattice
+
 /-
   GnotTopology.lean
   =================
@@ -13,8 +16,6 @@
   - Target
 -/
 
-import Gnosis.TopologicalGrammar
-import Gnosis.PoetryLattice
 
 namespace Gnosis
 namespace GnotTopology

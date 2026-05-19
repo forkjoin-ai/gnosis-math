@@ -1,3 +1,5 @@
+import Gnosis.GnotTopology
+
 /-
   PredictiveSandwich.lean
   =======================
@@ -16,7 +18,6 @@
   corollary layer once those hooks are stable.
 -/
 
-import Gnosis.GnotTopology
 
 namespace Gnosis
 namespace PredictiveSandwich

@@ -1,3 +1,6 @@
+import Init
+import Gnosis.AmplituhedronFalsifiability
+
 /-
   AmplituhedronWireBitwiseContract.lean
   =====================================
@@ -15,8 +18,6 @@
   the wire still owns; the `.bw` payload format has its own contract.
 -/
 
-import Init
-import Gnosis.AmplituhedronFalsifiability
 
 namespace AmplituhedronWireBitwiseContract
 

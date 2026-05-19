@@ -1,3 +1,6 @@
+import Init
+import Gnosis.TenCommandmentsTopology
+
 /-
   MachiavelliPrinceOughtIsWitness.lean
   ====================================
@@ -80,8 +83,6 @@
   Zero `sorry`, zero new `axiom`.
 -/
 
-import Init
-import Gnosis.TenCommandmentsTopology
 
 namespace MachiavelliPrinceOughtIsWitness
 

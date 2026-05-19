@@ -1,6 +1,5 @@
 import Init
 
-
 /-!
 # Iterated Bizarro Shrink — How Many Times?
 

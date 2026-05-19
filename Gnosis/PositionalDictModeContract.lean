@@ -1,3 +1,6 @@
+import Init
+import Gnosis.AmplituhedronWireBitwiseContract
+
 /-
   PositionalDictModeContract.lean
   ===============================
@@ -14,8 +17,6 @@
   zero new `axiom`.
 -/
 
-import Init
-import Gnosis.AmplituhedronWireBitwiseContract
 
 namespace PositionalDictModeContract
 

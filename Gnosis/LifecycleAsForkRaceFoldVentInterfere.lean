@@ -1,3 +1,7 @@
+import Gnosis.CompressionUncertainty
+import Gnosis.SynergisticStabilization
+import Gnosis.WankelEngineTheorem
+
 /-
   LifecycleAsForkRaceFoldVentInterfere.lean
   =========================================
@@ -48,9 +52,6 @@
   Init-only otherwise. Zero sorries, zero axioms.
 -/
 
-import Gnosis.CompressionUncertainty
-import Gnosis.SynergisticStabilization
-import Gnosis.WankelEngineTheorem
 
 namespace Gnosis
 namespace LifecycleAsForkRaceFoldVentInterfere

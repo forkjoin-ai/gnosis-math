@@ -1,3 +1,5 @@
+import Gnosis.AntiTheory
+
 /-
   F6PerLayerCumvarNonInvariance.lean
   ==================================
@@ -51,7 +53,6 @@
   Init-only Lean 4. Zero sorries, zero axioms.
 -/
 
-import Gnosis.AntiTheory
 
 namespace Gnosis
 namespace F6PerLayerCumvarNonInvariance

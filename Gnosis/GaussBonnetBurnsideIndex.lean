@@ -1,3 +1,5 @@
+import Init
+
 /-
   GaussBonnetBurnsideIndex
   ========================
@@ -48,7 +50,6 @@
   No `sorry`, no new `axiom`, `import Init` only, kernel `decide` only.
 -/
 
-import Init
 
 namespace GaussBonnetBurnsideIndex
 

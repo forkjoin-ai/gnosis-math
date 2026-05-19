@@ -1,3 +1,8 @@
+import Gnosis.AntiTheory
+import Gnosis.FalsificationEntropy
+import Gnosis.NegativeKnowledgeAsState
+import Gnosis.SpectralNoiseEquilibrium
+
 /-
   NoCloningTaxEqualsBuleCost.lean
   ===============================
@@ -67,10 +72,6 @@
   Init-only Lean 4. Zero sorries, zero axioms.
 -/
 
-import Gnosis.AntiTheory
-import Gnosis.FalsificationEntropy
-import Gnosis.NegativeKnowledgeAsState
-import Gnosis.SpectralNoiseEquilibrium
 
 namespace Gnosis
 namespace NoCloningTaxEqualsBuleCost

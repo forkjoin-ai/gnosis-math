@@ -1,3 +1,7 @@
+import Gnosis.ConsciousnessVsObjectivity
+import Gnosis.SchopenhauerHorizonFallacyWitness
+import Gnosis.HeraclitusBowLifeDeathWitness
+
 /-
   ContrarianDeathIsVitality.lean
   ==============================
@@ -22,9 +26,6 @@
   User Quote: "Death makes us alive (limitations/horizon theory gives us vitality)."
 -/
 
-import Gnosis.ConsciousnessVsObjectivity
-import Gnosis.SchopenhauerHorizonFallacyWitness
-import Gnosis.HeraclitusBowLifeDeathWitness
 
 namespace Gnosis
 

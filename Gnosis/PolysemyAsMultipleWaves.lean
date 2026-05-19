@@ -1,3 +1,6 @@
+import Init
+import Gnosis.WordMeaningAsInterference
+
 /-
   PolysemyAsMultipleWaves.lean
   ============================
@@ -32,8 +35,6 @@
   No axioms. No sorry. The harmonics prove themselves.
 -/
 
-import Init
-import Gnosis.WordMeaningAsInterference
 
 namespace PolysemyAsMultipleWaves
 

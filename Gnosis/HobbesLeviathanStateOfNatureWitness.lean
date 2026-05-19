@@ -1,3 +1,5 @@
+import Init
+
 /-
   HobbesLeviathanStateOfNatureWitness.lean
   =======================================
@@ -33,7 +35,6 @@
   Init only. Zero `sorry`, zero new `axiom`.
 -/
 
-import Init
 
 namespace HobbesLeviathanStateOfNatureWitness
 

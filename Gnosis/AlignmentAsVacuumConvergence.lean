@@ -1,3 +1,7 @@
+import Gnosis.SpectralNoiseEquilibrium
+import Gnosis.VacuumAsTimeArrow
+import Gnosis.VacuumIsOnlyForce
+
 /-
   Alignment as Vacuum Convergence: Shared Topology, Not Shared Values
   ====================================================================
@@ -26,9 +30,6 @@
     type-level interface.
 -/
 
-import Gnosis.SpectralNoiseEquilibrium
-import Gnosis.VacuumAsTimeArrow
-import Gnosis.VacuumIsOnlyForce
 
 namespace AlignmentAsVacuumConvergence
 

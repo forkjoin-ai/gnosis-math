@@ -1,7 +1,6 @@
 import Init
 import Gnosis.ArrowBuleDeficit
 
-
 /-!
 # Mesh Radioactive Decay Dynamics — Markov Nuclear Topology
 

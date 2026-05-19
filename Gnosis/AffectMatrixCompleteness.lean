@@ -1,3 +1,7 @@
+import Gnosis.LocalizedOverflowConsciousness
+import Gnosis.VibesAsWaveInference
+import Gnosis.AffectAxesIndependence
+
 /-
   AffectMatrixCompleteness.lean
   =============================
@@ -91,9 +95,6 @@
   Zero `sorry`, zero new `axiom`.
 -/
 
-import Gnosis.LocalizedOverflowConsciousness
-import Gnosis.VibesAsWaveInference
-import Gnosis.AffectAxesIndependence
 
 namespace AffectMatrixCompleteness
 

@@ -1,3 +1,7 @@
+import Init
+import Gnosis.AmplituhedronAttention
+import Gnosis.AmplituhedronGrassmannian
+
 -- Amplituhedron vertex enumeration, scattering amplitude, interior-point
 -- evaluation, minimal-polytope claim, and standing-wave-pinning integration.
 --
@@ -8,9 +12,6 @@
 -- work and lives outside this file.
 --
 -- Init-only per the gnosis-math Rustic Church initiative.
-import Init
-import Gnosis.AmplituhedronAttention
-import Gnosis.AmplituhedronGrassmannian
 
 
 namespace AmplituhedronAttention.Vertices

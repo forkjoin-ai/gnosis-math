@@ -1,3 +1,7 @@
+import Gnosis.KnotRopelengthComplexity
+import Gnosis.GodelHaltingUnifiedShadow
+import Gnosis.SpectralNoiseEquilibrium
+
 /-
   Relativization and Natural Proofs Barriers as Betti Lattice Shadows
   ===================================================================
@@ -21,9 +25,6 @@
   No Mathlib. No axioms. No sorry.
 -/
 
-import Gnosis.KnotRopelengthComplexity
-import Gnosis.GodelHaltingUnifiedShadow
-import Gnosis.SpectralNoiseEquilibrium
 
 namespace RelativizationNaturalProofsBarriers
 

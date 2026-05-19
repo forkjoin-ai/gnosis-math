@@ -1,3 +1,5 @@
+import Gnosis.FalsificationLedger
+
 /-
   ExtendedFalsificationLedger.lean
   ================================
@@ -61,7 +63,6 @@
   All proofs are `decide`. Zero sorries, zero axioms.
 -/
 
-import Gnosis.FalsificationLedger
 
 namespace Gnosis
 namespace ExtendedFalsificationLedger

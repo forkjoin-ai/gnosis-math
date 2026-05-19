@@ -1,6 +1,5 @@
 import Gnosis.GodFormula
 
-
 namespace MoonshotInterpretationLayerResonanceDuality
 
 open Gnosis (godWeight)

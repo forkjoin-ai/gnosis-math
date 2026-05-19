@@ -1,12 +1,5 @@
 import Init
 
-
-
-
-
-
-
-
 namespace Gnosis
 
 /-!

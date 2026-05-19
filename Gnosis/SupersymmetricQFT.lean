@@ -1,3 +1,5 @@
+import Gnosis.FukayaMirrorSymmetry
+
 /-
   SupersymmetricQFT
   =================
@@ -50,7 +52,6 @@
   closes by `native_decide`, `decide`, or `rfl`.
 -/
 
-import Gnosis.FukayaMirrorSymmetry
 
 namespace SupersymmetricQFT
 

@@ -1,7 +1,6 @@
 import Init
 import Gnosis.ArrowBuleDeficit
 
-
 /-!
 # Mesh Birthday Dynamics — Markov Collision Topology
 

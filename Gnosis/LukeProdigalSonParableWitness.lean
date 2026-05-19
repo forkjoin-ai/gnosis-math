@@ -1,3 +1,15 @@
+import Init
+import Gnosis.AchillesTortoiseLadder
+import Gnosis.Dark.DarkDeceptaconLoss
+import Gnosis.GodFormula
+import Gnosis.GrandReductionTriton
+import Gnosis.InfinityPath
+import Gnosis.MitzvotTopology
+import Gnosis.RL
+import Gnosis.TwoTypesOfSin
+import Gnosis.WisdomPrimitive
+import Gnosis.ZenosArrowWitness
+
 /-
   Luke 15:11–32 (prodigal son / two brothers): younger “nothing left” line, elder
   ledger-fidelity, father’s welcome — typed by `ProdigalTwoSonsWitness` and **three
@@ -88,17 +100,6 @@
   leaving the stray un-reconciled (`youngerSonFoldStrategyRationalizesRationalShepherdPlusOne`).
 -/
 
-import Init
-import Gnosis.AchillesTortoiseLadder
-import Gnosis.Dark.DarkDeceptaconLoss
-import Gnosis.GodFormula
-import Gnosis.GrandReductionTriton
-import Gnosis.InfinityPath
-import Gnosis.MitzvotTopology
-import Gnosis.RL
-import Gnosis.TwoTypesOfSin
-import Gnosis.WisdomPrimitive
-import Gnosis.ZenosArrowWitness
 
 namespace LukeProdigalSonParableWitness
 

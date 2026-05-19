@@ -1,3 +1,8 @@
+import Gnosis.EntropyOfTheVoid
+import Gnosis.VoidIsBettiManifold
+import Gnosis.VacuumFluctuationAsLatentFalsification
+import Gnosis.Dark.DarkSectorEquilibria
+
 /-
   VoidIsDarkMatter.lean
   =====================
@@ -72,10 +77,6 @@
   on standalone decidable Nat arithmetic.
 -/
 
-import Gnosis.EntropyOfTheVoid
-import Gnosis.VoidIsBettiManifold
-import Gnosis.VacuumFluctuationAsLatentFalsification
-import Gnosis.Dark.DarkSectorEquilibria
 
 namespace Gnosis
 namespace VoidIsDarkMatter

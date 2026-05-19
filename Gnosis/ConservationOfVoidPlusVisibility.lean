@@ -1,3 +1,6 @@
+import Gnosis.AntiTheoryAsConservation
+import Gnosis.NoCloningTaxEqualsBuleCost
+
 /-
   ConservationOfVoidPlusVisibility.lean
   =====================================
@@ -79,8 +82,6 @@
   Init-only Lean 4. Zero sorries, zero axioms.
 -/
 
-import Gnosis.AntiTheoryAsConservation
-import Gnosis.NoCloningTaxEqualsBuleCost
 
 namespace Gnosis
 namespace ConservationOfVoidPlusVisibility

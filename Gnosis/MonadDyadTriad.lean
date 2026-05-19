@@ -1,3 +1,5 @@
+import Gnosis.TopologicalGrammar
+
 /-
   MonadDyadTriad.lean
   ===================
@@ -16,7 +18,6 @@
   The lattice of folds.
 -/
 
-import Gnosis.TopologicalGrammar
 
 namespace MonadDyadTriad
 

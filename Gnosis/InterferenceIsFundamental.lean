@@ -1,3 +1,9 @@
+import Gnosis.SpectralNoiseEquilibrium
+import Gnosis.VacuumIsOnlyForce
+import Gnosis.ForkRaceFoldVentAreForces
+import Gnosis.InterferenceAsTheFifthForce
+import Gnosis.TemporaryNoise
+
 /-
   InterferenceIsFundamental.lean
   ==============================
@@ -28,11 +34,6 @@
     the runtime calibration layer (Aether kernels, Pneuma traces).
 -/
 
-import Gnosis.SpectralNoiseEquilibrium
-import Gnosis.VacuumIsOnlyForce
-import Gnosis.ForkRaceFoldVentAreForces
-import Gnosis.InterferenceAsTheFifthForce
-import Gnosis.TemporaryNoise
 
 namespace InterferenceIsFundamental
 

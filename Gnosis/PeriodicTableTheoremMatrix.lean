@@ -2,7 +2,6 @@ import Init
 import Gnosis.PeriodicAtBridge
 import Gnosis.PeriodicBraidMatterJugular
 
-
 /-!
 # Periodic table ↔ theorem matrix (IUPAC Z = 1..118)
 

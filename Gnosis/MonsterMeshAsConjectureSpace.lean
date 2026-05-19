@@ -1,3 +1,8 @@
+import Gnosis.MarkovClosureOfTheSession
+import Gnosis.KnotComplexityAsBuleCost
+import Gnosis.VoidIsDarkMatter
+import Gnosis.AntiTheory
+
 /-
   MonsterMeshAsConjectureSpace.lean
   =================================
@@ -56,10 +61,6 @@
     • Gnosis.AntiTheory                  — empirical-claim status
 -/
 
-import Gnosis.MarkovClosureOfTheSession
-import Gnosis.KnotComplexityAsBuleCost
-import Gnosis.VoidIsDarkMatter
-import Gnosis.AntiTheory
 
 namespace Gnosis
 namespace MonsterMeshAsConjectureSpace

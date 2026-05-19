@@ -1,3 +1,8 @@
+import Gnosis.FrostsRoadAsVoidPath
+import Gnosis.PostHocNarrativeIsVacuous
+import Gnosis.AntiTheory
+import Gnosis.NoCloningTaxEqualsBuleCost
+
 /-
   MisattributionAsFirstOrderFrostEvent.lean
   =========================================
@@ -74,10 +79,6 @@
   Zero sorries, zero axioms.
 -/
 
-import Gnosis.FrostsRoadAsVoidPath
-import Gnosis.PostHocNarrativeIsVacuous
-import Gnosis.AntiTheory
-import Gnosis.NoCloningTaxEqualsBuleCost
 
 namespace Gnosis
 namespace MisattributionAsFirstOrderFrostEvent

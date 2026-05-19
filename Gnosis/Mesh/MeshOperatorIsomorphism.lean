@@ -1,6 +1,5 @@
 import Init
 
-
 /-!
 # Mesh Operator Isomorphism (The Operator Basis)
 

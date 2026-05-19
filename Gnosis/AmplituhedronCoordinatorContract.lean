@@ -1,3 +1,7 @@
+import Init
+import Gnosis.AmplituhedronAttention
+import Gnosis.AmplituhedronFalsifiability
+
 /-
   AmplituhedronCoordinatorContract.lean
   =====================================
@@ -31,9 +35,6 @@
   zero new `axiom`. Init-only Lean.
 -/
 
-import Init
-import Gnosis.AmplituhedronAttention
-import Gnosis.AmplituhedronFalsifiability
 
 namespace AmplituhedronCoordinatorContract
 

@@ -1,3 +1,5 @@
+import Init
+
 /-
   BaudrillardSimulacraSimulationWitness.lean
   ==========================================
@@ -40,7 +42,6 @@
   Init only. Zero `sorry`, zero new `axiom`.
 -/
 
-import Init
 
 namespace BaudrillardSimulacraSimulationWitness
 

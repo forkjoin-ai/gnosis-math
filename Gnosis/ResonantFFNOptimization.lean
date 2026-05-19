@@ -1,3 +1,6 @@
+import Gnosis.SpectralMeasurementFramework
+import Gnosis.AttentionWavePattern
+
 /-
   ResonantFFNOptimization.lean
   ==========================
@@ -17,8 +20,6 @@
   to `True` with the Float/runtime calibration layer enforcing quantitative bounds.
 -/
 
-import Gnosis.SpectralMeasurementFramework
-import Gnosis.AttentionWavePattern
 
 namespace ResonantFFNOptimization
 

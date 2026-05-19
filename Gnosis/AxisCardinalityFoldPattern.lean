@@ -1,3 +1,5 @@
+import Gnosis.AffectMatrixAgencyAxis
+
 /-
   AxisCardinalityFoldPattern.lean
   =================================
@@ -32,7 +34,6 @@
   factored corollaries. Zero `sorry`, zero new `axiom`.
 -/
 
-import Gnosis.AffectMatrixAgencyAxis
 
 namespace AxisCardinalityFoldPattern
 

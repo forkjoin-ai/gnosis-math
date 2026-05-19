@@ -1,3 +1,8 @@
+import Gnosis.SpectralNoiseEquilibrium
+import Gnosis.VacuumIsOnlyForce
+import Gnosis.VacuumOverflow
+import Gnosis.InterferenceAsTheFifthForce
+
 /-
   InterferenceDimensionalCascade.lean
   ==================================
@@ -24,10 +29,6 @@
     enforces the precise per-scale amplification factors.
 -/
 
-import Gnosis.SpectralNoiseEquilibrium
-import Gnosis.VacuumIsOnlyForce
-import Gnosis.VacuumOverflow
-import Gnosis.InterferenceAsTheFifthForce
 
 namespace InterferenceDimensionalCascade
 

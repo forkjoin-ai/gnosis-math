@@ -1,3 +1,8 @@
+import Gnosis.HotellingModel
+import Gnosis.VibesAsWaveInference
+import Gnosis.SkyrmsBuleyEquilibria
+import Gnosis.Bridges.BuleyMeshAttentionBridge
+
 /-
   VibesHotellingVoting.lean
   =========================
@@ -34,10 +39,6 @@
   `axiom`.
 -/
 
-import Gnosis.HotellingModel
-import Gnosis.VibesAsWaveInference
-import Gnosis.SkyrmsBuleyEquilibria
-import Gnosis.Bridges.BuleyMeshAttentionBridge
 
 namespace VibesHotellingVoting
 

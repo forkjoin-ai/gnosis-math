@@ -1,3 +1,7 @@
+import Init
+import Gnosis.AmplituhedronWireBitwiseContract
+import Gnosis.PleromaticResidualAtlas
+
 /-
   Death7CrossPrefixCompression.lean
   =================================
@@ -44,9 +48,6 @@
   Zero `sorry`, zero new `axiom`.
 -/
 
-import Init
-import Gnosis.AmplituhedronWireBitwiseContract
-import Gnosis.PleromaticResidualAtlas
 
 namespace Death7CrossPrefixCompression
 

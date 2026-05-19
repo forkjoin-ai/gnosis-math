@@ -1,3 +1,5 @@
+import Init
+
 /-
   HeartTongueTotalNegationWitness.lean
   ====================================
@@ -48,7 +50,6 @@
   Init only. Zero `sorry`, zero new `axiom`.
 -/
 
-import Init
 
 namespace HeartTongueTotalNegationWitness
 

@@ -1,3 +1,9 @@
+import Init
+import Gnosis.AmplituhedronAttention
+import Gnosis.AmplituhedronGrassmannian
+import Gnosis.AmplituhedronVertices
+import Gnosis.AmplituhedronWitnesses
+
 /-
   AmplituhedronPluckerDichotomy.lean
   ===================================
@@ -41,11 +47,6 @@
   Imports `Init` plus the upstream amplituhedron stack. Zero `sorry`,
   zero new `axiom`.
 -/
-import Init
-import Gnosis.AmplituhedronAttention
-import Gnosis.AmplituhedronGrassmannian
-import Gnosis.AmplituhedronVertices
-import Gnosis.AmplituhedronWitnesses
 
 namespace AmplituhedronPluckerDichotomy
 

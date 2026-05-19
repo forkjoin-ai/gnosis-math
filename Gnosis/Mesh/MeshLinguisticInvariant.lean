@@ -1,6 +1,5 @@
 import Init
 
-
 /-!
 # Mesh Linguistic Invariant (The Name of the Invariant)
 

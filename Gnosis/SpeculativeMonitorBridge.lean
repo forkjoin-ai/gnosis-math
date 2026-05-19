@@ -1,3 +1,7 @@
+import Gnosis.SpeculativeDecodingAsRetrocausal
+import Gnosis.UniversalIntelligenceSSMConscious
+import Gnosis.ConsciousnessAsInnerVent
+
 /-
   SpeculativeMonitorBridge.lean
   =============================
@@ -34,9 +38,6 @@
   Lean 4. Zero sorries, zero axioms.
 -/
 
-import Gnosis.SpeculativeDecodingAsRetrocausal
-import Gnosis.UniversalIntelligenceSSMConscious
-import Gnosis.ConsciousnessAsInnerVent
 
 namespace Gnosis
 namespace SpeculativeMonitorBridge

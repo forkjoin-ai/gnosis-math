@@ -1,3 +1,5 @@
+import Init
+
 /-
   ThreePhysicsForkRaceFoldBijection.lean
   ======================================
@@ -100,7 +102,6 @@
   `cases <;> rfl` or `decide` on closed Nat statements.
 -/
 
-import Init
 
 namespace ThreePhysicsForkRaceFoldBijection
 

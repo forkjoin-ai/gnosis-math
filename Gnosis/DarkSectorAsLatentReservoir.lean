@@ -1,3 +1,6 @@
+import Gnosis.VacuumFluctuationAsLatentFalsification
+import Gnosis.Dark.DarkSectorEquilibria
+
 /-
   DarkSectorAsLatentReservoir.lean
   ================================
@@ -44,8 +47,6 @@
   Init-only Lean 4. Zero sorries, zero axioms.
 -/
 
-import Gnosis.VacuumFluctuationAsLatentFalsification
-import Gnosis.Dark.DarkSectorEquilibria
 
 namespace Gnosis
 namespace DarkSectorAsLatentReservoir

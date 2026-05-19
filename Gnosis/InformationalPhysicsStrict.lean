@@ -1,3 +1,6 @@
+import Init
+import Gnosis.InformationalPhysics
+
 /-
   InformationalPhysicsStrict.lean
   ===============================
@@ -59,8 +62,6 @@
  10. `workload2_strictly_below_base64` — pinned 350 < 1400.
 -/
 
-import Init
-import Gnosis.InformationalPhysics
 
 namespace InformationalPhysics
 

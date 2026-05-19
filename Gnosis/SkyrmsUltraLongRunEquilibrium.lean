@@ -1,3 +1,9 @@
+import Gnosis.GodFormula
+import Gnosis.NashEquilibrium
+import Gnosis.GatekeepingGames
+import Gnosis.SkyrmsBuleyEquilibria
+import Gnosis.NashSkyrmsBuleyGodLadder
+
 /-
   SkyrmsUltraLongRunEquilibrium.lean
   ==================================
@@ -63,11 +69,6 @@
   `Gnosis.NashSkyrmsBuleyGodLadder`. Zero `sorry`, zero new `axiom`.
 -/
 
-import Gnosis.GodFormula
-import Gnosis.NashEquilibrium
-import Gnosis.GatekeepingGames
-import Gnosis.SkyrmsBuleyEquilibria
-import Gnosis.NashSkyrmsBuleyGodLadder
 
 namespace SkyrmsUltraLongRunEquilibrium
 

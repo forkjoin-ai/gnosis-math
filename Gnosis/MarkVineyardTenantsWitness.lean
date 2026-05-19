@@ -1,10 +1,11 @@
+import Init
+
 /-
   Mark 12:1–11 (wicked tenants): `VineyardTenantsWitness` bundles four discharge registers; Init toy
   `toy_final_envoy_after_three_servant_beats` orders envoy indices. Scholarly / chart “musings” live as
   named `abbrev` hooks below (not this block). Init only. Zero `sorry`, zero new `axiom`.
 -/
 
-import Init
 
 namespace MarkVineyardTenantsWitness
 

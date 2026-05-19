@@ -1,3 +1,5 @@
+import Init
+
 /-
   Death7HolographicCompression.lean
   =================================
@@ -69,7 +71,6 @@
   the concrete witness and on a parametric small-input family.
 -/
 
-import Init
 
 namespace Death7HolographicCompression
 

@@ -1,3 +1,5 @@
+import Gnosis.MathFoundations
+
 /-
   BetheAnsatzIntegrableSystems
   ============================
@@ -45,7 +47,6 @@
   bottom of the file additionally pulls in `MathFoundations`.
 -/
 
-import Gnosis.MathFoundations
 
 namespace BetheAnsatzIntegrableSystems
 

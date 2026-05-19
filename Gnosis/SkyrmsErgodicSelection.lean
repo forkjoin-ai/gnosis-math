@@ -1,3 +1,5 @@
+import Gnosis.SkyrmsUltraLongRunEquilibrium
+
 /-
   SkyrmsErgodicSelection.lean
   ===========================
@@ -63,7 +65,6 @@
   zero new `axiom`.
 -/
 
-import Gnosis.SkyrmsUltraLongRunEquilibrium
 
 namespace SkyrmsErgodicSelection
 

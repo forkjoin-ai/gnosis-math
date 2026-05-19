@@ -1,3 +1,5 @@
+import Init
+
 /-
   AeonFlowTransport.lean
   ======================
@@ -52,7 +54,6 @@
 
   Init-only per the Rustic Church initiative.
 -/
-import Init
 
 namespace AeonFlowTransport
 

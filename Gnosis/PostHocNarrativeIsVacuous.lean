@@ -1,3 +1,5 @@
+import Gnosis.AntiTheory
+
 /-
   PostHocNarrativeIsVacuous.lean
   ==============================
@@ -64,7 +66,6 @@
   Init-only Lean 4. Zero sorries, zero axioms.
 -/
 
-import Gnosis.AntiTheory
 -- `Gnosis.FrostsRoadAsVoidPath` is the parallel module on single-decision
 -- inflation; it is not yet in this codebase, so the structural content
 -- of "narrative inflation > tolerance" is inlined directly below

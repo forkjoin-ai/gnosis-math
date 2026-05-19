@@ -1,3 +1,6 @@
+import Gnosis.AntiTheory
+import Gnosis.FalsificationLedger
+
 /-
   FalsificationEntropy.lean
   =========================
@@ -39,8 +42,6 @@
   Init-only Lean 4. Zero sorries, zero axioms.
 -/
 
-import Gnosis.AntiTheory
-import Gnosis.FalsificationLedger
 
 namespace Gnosis
 namespace FalsificationEntropy

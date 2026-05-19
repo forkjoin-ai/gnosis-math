@@ -1,3 +1,9 @@
+import Init
+import Gnosis.AmplituhedronWireBitwiseContract
+import Gnosis.AmplituhedronCoordinatorContract
+import Gnosis.PositionalDictModeContract
+import Gnosis.BowlMeshRuntimeOracle
+
 /-
   EdgeWorkersPortContract.lean
   ============================
@@ -16,11 +22,6 @@
   Zero `sorry`, zero new `axiom`.
 -/
 
-import Init
-import Gnosis.AmplituhedronWireBitwiseContract
-import Gnosis.AmplituhedronCoordinatorContract
-import Gnosis.PositionalDictModeContract
-import Gnosis.BowlMeshRuntimeOracle
 
 namespace EdgeWorkersPortContract
 

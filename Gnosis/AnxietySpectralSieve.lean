@@ -1,3 +1,7 @@
+import Gnosis.SpectralMeasurementFramework
+import Gnosis.AnxietyAsDestructiveInterference
+import Gnosis.TemporaryNoise
+
 /-
   AnxietySpectralSieve.lean
   ========================
@@ -9,9 +13,6 @@
   calibration layer still carries the stronger Float-bound interpretation.
 -/
 
-import Gnosis.SpectralMeasurementFramework
-import Gnosis.AnxietyAsDestructiveInterference
-import Gnosis.TemporaryNoise
 
 namespace AnxietySpectralSieve
 

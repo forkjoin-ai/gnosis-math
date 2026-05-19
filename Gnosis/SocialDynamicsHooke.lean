@@ -1,3 +1,5 @@
+import Gnosis.SkyrmsUltraLongRunEquilibrium
+
 /-
   SocialDynamicsHooke.lean
   ========================
@@ -107,7 +109,6 @@
   zero new `axiom`.
 -/
 
-import Gnosis.SkyrmsUltraLongRunEquilibrium
 
 namespace SocialDynamicsHooke
 

@@ -1,3 +1,7 @@
+import Gnosis.NoCloningTaxEqualsBuleCost
+import Gnosis.VacuumToFalsificationLift
+import Gnosis.FalsificationLedger
+
 /-
   BuleBudgetLedger.lean
   =====================
@@ -38,9 +42,6 @@
   enforce a per-session measurement budget cap.
 -/
 
-import Gnosis.NoCloningTaxEqualsBuleCost
-import Gnosis.VacuumToFalsificationLift
-import Gnosis.FalsificationLedger
 
 namespace Gnosis.BuleBudgetLedger
 

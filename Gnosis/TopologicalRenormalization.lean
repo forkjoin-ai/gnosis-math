@@ -1,6 +1,5 @@
 import Init
 
-
 namespace Gnosis
 namespace TopologicalRenormalization
 

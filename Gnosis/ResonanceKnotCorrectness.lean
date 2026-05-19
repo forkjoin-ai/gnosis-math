@@ -1,3 +1,8 @@
+import Gnosis.ResonanceKnotFormat
+import Gnosis.ResonanceKnotEncoder
+import Gnosis.ResonanceKnotDecoder
+import Gnosis.MeshStandingWavePinning
+
 /-
   ResonanceKnotCorrectness.lean
   =============================
@@ -34,10 +39,6 @@
   point at the upstream theorems they bridge to in their doc-comments.
 -/
 
-import Gnosis.ResonanceKnotFormat
-import Gnosis.ResonanceKnotEncoder
-import Gnosis.ResonanceKnotDecoder
-import Gnosis.MeshStandingWavePinning
 
 namespace ResonanceKnotCorrectness
 

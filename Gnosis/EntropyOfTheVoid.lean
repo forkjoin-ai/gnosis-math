@@ -1,3 +1,8 @@
+import Gnosis.FalsificationEntropy
+import Gnosis.AntiTheory
+import Gnosis.SpectralNoiseEquilibrium
+import Gnosis.UnknotTheory
+
 /-
   EntropyOfTheVoid.lean
   =====================
@@ -40,10 +45,6 @@
   Init-only Lean 4. Zero sorries, zero axioms. No Mathlib.
 -/
 
-import Gnosis.FalsificationEntropy
-import Gnosis.AntiTheory
-import Gnosis.SpectralNoiseEquilibrium
-import Gnosis.UnknotTheory
 
 namespace Gnosis
 namespace EntropyOfTheVoid

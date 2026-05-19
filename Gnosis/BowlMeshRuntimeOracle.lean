@@ -1,3 +1,8 @@
+import Init
+import Gnosis.EchoChamberAsTaoBowl
+import Gnosis.TaoBowlSignalCoupling
+import Gnosis.BowlMeshNode
+
 /-
   BowlMeshRuntimeOracle.lean
   ==========================
@@ -28,10 +33,6 @@
   layer. Zero `sorry`, zero new `axiom`.
 -/
 
-import Init
-import Gnosis.EchoChamberAsTaoBowl
-import Gnosis.TaoBowlSignalCoupling
-import Gnosis.BowlMeshNode
 
 namespace BowlMeshRuntimeOracle
 

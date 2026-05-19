@@ -1,3 +1,5 @@
+import Gnosis.ResonanceKnotFormat
+
 /-
   ResonanceKnotEncoder.lean
   =========================
@@ -20,7 +22,6 @@
   Float-level error bounds are stated separately (Module 4).
 -/
 
-import Gnosis.ResonanceKnotFormat
 
 namespace ResonanceKnotEncoder
 

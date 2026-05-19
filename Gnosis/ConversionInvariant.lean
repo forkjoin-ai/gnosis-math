@@ -1,3 +1,6 @@
+import Gnosis.CompressionUncertainty
+import Gnosis.InformationCapacity
+
 /-
   ConversionInvariant.lean
   ========================
@@ -27,8 +30,6 @@
   Zero sorries, zero axioms.
 -/
 
-import Gnosis.CompressionUncertainty
-import Gnosis.InformationCapacity
 
 namespace Gnosis
 namespace ConversionInvariant

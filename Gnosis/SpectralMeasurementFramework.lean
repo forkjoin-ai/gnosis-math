@@ -1,3 +1,7 @@
+import Gnosis.SpectralNoiseEquilibrium
+import Gnosis.InterferenceAsTheFifthForce
+import Gnosis.TemporaryNoise
+
 /-
   SpectralMeasurementFramework.lean
   ================================
@@ -32,9 +36,6 @@
     permissive of the four fold cases.
 -/
 
-import Gnosis.SpectralNoiseEquilibrium
-import Gnosis.InterferenceAsTheFifthForce
-import Gnosis.TemporaryNoise
 
 namespace SpectralMeasurementFramework
 

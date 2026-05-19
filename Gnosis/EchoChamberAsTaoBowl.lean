@@ -1,3 +1,7 @@
+import Init
+import Gnosis.EchoChamberAsStandingWave
+import Gnosis.SkyrmsUltraLongRunEquilibrium
+
 /-
   EchoChamberAsTaoBowl.lean
   =========================
@@ -77,9 +81,6 @@
   upstream modules. Zero `sorry`, zero new `axiom`.
 -/
 
-import Init
-import Gnosis.EchoChamberAsStandingWave
-import Gnosis.SkyrmsUltraLongRunEquilibrium
 
 namespace EchoChamberAsTaoBowl
 

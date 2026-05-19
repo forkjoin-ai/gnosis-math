@@ -1,6 +1,5 @@
 import Init
 
-
 namespace MeshCentralLimit
 
 def actualDensity (distance : Nat) : Nat :=

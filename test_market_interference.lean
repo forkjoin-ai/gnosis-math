@@ -1,9 +1,10 @@
+import Gnosis.OrderbookAsInterference
+import Gnosis.LiquidityAsDamping
+
 /-
   Test file for OrderbookAsInterference and LiquidityAsDamping modules.
 -/
 
-import Gnosis.OrderbookAsInterference
-import Gnosis.LiquidityAsDamping
 
 open Gnosis.OrderbookAsInterference
 open Gnosis.LiquidityAsDamping

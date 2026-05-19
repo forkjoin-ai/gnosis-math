@@ -1,3 +1,5 @@
+import Gnosis.MathFoundations
+
 /-
   ReshetikhinTuraev3DTQFT
   =======================
@@ -45,7 +47,6 @@
   pulls in `MathFoundations` for the cyclotomic ring `Cyc 24`.
 -/
 
-import Gnosis.MathFoundations
 
 namespace ReshetikhinTuraev3DTQFT
 

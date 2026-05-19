@@ -1,3 +1,7 @@
+import Init
+import Gnosis.SpectralNoiseEquilibrium
+import Gnosis.InterferenceAsTheFifthForce
+
 /-
   OrderbookAsInterference.lean
   =============================
@@ -22,9 +26,6 @@
   with the Float/runtime calibration layer enforcing the quantitative bounds.
 -/
 
-import Init
-import Gnosis.SpectralNoiseEquilibrium
-import Gnosis.InterferenceAsTheFifthForce
 
 namespace Gnosis
 namespace OrderbookAsInterference

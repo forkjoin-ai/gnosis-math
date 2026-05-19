@@ -1,3 +1,5 @@
+import Init
+
 /-
   InformationalPhysics.lean
   =========================
@@ -103,7 +105,6 @@
   in the sibling-file types) come later, owned by the main thread.
 -/
 
-import Init
 
 namespace InformationalPhysics
 

@@ -1,6 +1,5 @@
 import Init
 
-
 namespace Dewey100ThinTopology
 
 -- 110: Metaphysics (Infinite Unanchored Knots)

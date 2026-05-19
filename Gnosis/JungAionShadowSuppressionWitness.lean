@@ -1,3 +1,5 @@
+import Init
+
 /-
   JungAionShadowSuppressionWitness.lean
   ======================================
@@ -26,7 +28,6 @@
   Init only. Zero `sorry`, zero new `axiom`.
 -/
 
-import Init
 
 namespace JungAionShadowSuppressionWitness
 

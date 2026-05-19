@@ -1,3 +1,5 @@
+import Init
+
 /-
   NamingTriadSelfSimilar.lean
   ===========================
@@ -80,7 +82,6 @@
   `cases <;> rfl` or `decide` on closed Nat statements.
 -/
 
-import Init
 
 namespace NamingTriadSelfSimilar
 

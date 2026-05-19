@@ -1,3 +1,8 @@
+import Gnosis.SpectralNoiseEquilibrium
+import Gnosis.RetrocausalAttractorFixedPoint
+import Gnosis.VacuumAsTimeArrow
+import Gnosis.VacuumIsOnlyForce
+
 /-
 # Structure In Tension: Life as Long Contraction Path to the Vacuum
 
@@ -19,10 +24,6 @@ The structural commitments are kept in datatypes, and `fitness` is rebased
 to `Nat`.
 -/
 
-import Gnosis.SpectralNoiseEquilibrium
-import Gnosis.RetrocausalAttractorFixedPoint
-import Gnosis.VacuumAsTimeArrow
-import Gnosis.VacuumIsOnlyForce
 
 namespace Gnosis
 namespace StructureInTension

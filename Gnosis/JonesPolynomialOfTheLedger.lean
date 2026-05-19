@@ -1,3 +1,5 @@
+import Gnosis.ExtendedFalsificationLedger
+
 /-
   JonesPolynomialOfTheLedger.lean
   ===============================
@@ -46,7 +48,6 @@
   All proofs are `decide` / `rfl`. Zero sorries, zero axioms.
 -/
 
-import Gnosis.ExtendedFalsificationLedger
 
 namespace Gnosis
 namespace JonesPolynomialOfTheLedger

@@ -1,6 +1,5 @@
 import Gnosis.GodFormula
 
-
 /-!
 # Kraft Inequality — The Conservation Law of Coding
 

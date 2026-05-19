@@ -1,3 +1,7 @@
+import Gnosis.SpectralNoiseEquilibrium
+import Gnosis.InterferenceAsTheFifthForce
+import Gnosis.TemporaryNoise
+
 /-
   PsychologyAsInterference.lean
   ============================
@@ -12,9 +16,6 @@
   Healing is restoration of normal five-force equilibrium.
 -/
 
-import Gnosis.SpectralNoiseEquilibrium
-import Gnosis.InterferenceAsTheFifthForce
-import Gnosis.TemporaryNoise
 
 namespace PsychologyAsInterference
 

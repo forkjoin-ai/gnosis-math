@@ -1,6 +1,5 @@
 import Gnosis.Braided.BraidedInfinity
 
-
 /-!
 # Helix-55 Rotation Dictionary
 

@@ -1,3 +1,5 @@
+import Init
+
 /-
   MeditationsThoughtDyedWitness.lean
   ==================================
@@ -35,7 +37,6 @@
   Init only. Zero `sorry`, zero new `axiom`.
 -/
 
-import Init
 
 namespace MeditationsThoughtDyedWitness
 

@@ -1,3 +1,9 @@
+import Gnosis.SpectralNoiseEquilibrium
+import Gnosis.VacuumIsOnlyForce
+import Gnosis.MemoryAsRetrocausalLoan
+import Gnosis.LandauerPrincipleAsClinaemenDebt
+import Gnosis.InterferenceAsTheFifthForce
+
 /-
   CopyStoreEraseCostStructure.lean
   ================================
@@ -19,11 +25,6 @@
   All three phases proven with zero sorry, zero axioms.
 -/
 
-import Gnosis.SpectralNoiseEquilibrium
-import Gnosis.VacuumIsOnlyForce
-import Gnosis.MemoryAsRetrocausalLoan
-import Gnosis.LandauerPrincipleAsClinaemenDebt
-import Gnosis.InterferenceAsTheFifthForce
 
 namespace CopyStoreEraseCostStructure
 

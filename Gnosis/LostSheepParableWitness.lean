@@ -1,3 +1,9 @@
+import Init
+import Gnosis.AchillesTortoiseLadder
+import Gnosis.GodFormula
+import Gnosis.InfinityPath
+import Gnosis.ZenosArrowWitness
+
 /-
   Lost sheep (Luke 15 / Matthew 18): synoptic pericope the `Nat` mnemonic below
   counts (99 + 1 = 100); sibling **`Gnosis.LostCoinParableWitness`** (**9 + 1 = 10**) shares the same
@@ -27,11 +33,6 @@
   `prospectTheoryStragglerSearchFaceValueRational` (same tag name as **`LostCoinParableWitness`**).
 -/
 
-import Init
-import Gnosis.AchillesTortoiseLadder
-import Gnosis.GodFormula
-import Gnosis.InfinityPath
-import Gnosis.ZenosArrowWitness
 
 namespace LostSheepParableWitness
 

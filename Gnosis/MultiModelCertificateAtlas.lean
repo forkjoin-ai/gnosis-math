@@ -1,3 +1,8 @@
+import Gnosis.RuntimeCertificate
+import Gnosis.CrossModelCliff
+import Gnosis.InformationCapacity
+import Gnosis.CompressionUncertainty
+
 /-
   MultiModelCertificateAtlas.lean
   ===============================
@@ -64,10 +69,6 @@
   Init-only Lean 4. Zero sorries, zero axioms.
 -/
 
-import Gnosis.RuntimeCertificate
-import Gnosis.CrossModelCliff
-import Gnosis.InformationCapacity
-import Gnosis.CompressionUncertainty
 
 namespace Gnosis
 namespace MultiModelCertificateAtlas

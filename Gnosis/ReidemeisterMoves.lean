@@ -1,3 +1,7 @@
+import Gnosis.KnotComplexityAsBuleCost
+import Gnosis.SpectralNoiseEquilibrium
+import Gnosis.UnknotTheory
+
 /-
   ReidemeisterMoves.lean
   ======================
@@ -44,9 +48,6 @@
   theorems discharge by `decide` or `rfl`.
 -/
 
-import Gnosis.KnotComplexityAsBuleCost
-import Gnosis.SpectralNoiseEquilibrium
-import Gnosis.UnknotTheory
 
 namespace Gnosis
 namespace ReidemeisterMoves

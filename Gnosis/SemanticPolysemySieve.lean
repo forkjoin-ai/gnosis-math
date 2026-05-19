@@ -1,3 +1,5 @@
+import Gnosis.SpectralMeasurementFramework
+
 /-
   SemanticPolysemySieve.lean
   =========================
@@ -8,7 +10,6 @@
   A sieve detects this by measuring embedding variance across contexts.
 -/
 
-import Gnosis.SpectralMeasurementFramework
 
 namespace SemanticPolysemySieve
 

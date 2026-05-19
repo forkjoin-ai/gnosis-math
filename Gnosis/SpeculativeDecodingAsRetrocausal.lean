@@ -1,3 +1,6 @@
+import Gnosis.CompressionUncertainty
+import Gnosis.CompressionAsRetrocausalClosure
+
 /-
   SpeculativeDecodingAsRetrocausal.lean
   =====================================
@@ -30,8 +33,6 @@
   Lean 4. Zero sorries, zero axioms.
 -/
 
-import Gnosis.CompressionUncertainty
-import Gnosis.CompressionAsRetrocausalClosure
 
 namespace Gnosis
 namespace SpeculativeDecodingAsRetrocausal

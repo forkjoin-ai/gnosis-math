@@ -1,3 +1,6 @@
+import Gnosis.ResonanceKnotFormat
+import Gnosis.ResonanceKnotEncoder
+
 /-
   ResonanceKnotCompressionBound.lean
   ==================================
@@ -25,8 +28,6 @@
   `Nat.le_div_iff_mul_le` toolkit). No `trivial`, no `sorry`, no `axiom`.
 -/
 
-import Gnosis.ResonanceKnotFormat
-import Gnosis.ResonanceKnotEncoder
 
 namespace ResonanceKnotCompressionBound
 

@@ -1,6 +1,5 @@
 import Lean
 
-
 namespace Gnosis.WildExplorationCycleDouglasii50
 
 -- MOONSHOT 1: Knot Invariants to resolve Witness Gap

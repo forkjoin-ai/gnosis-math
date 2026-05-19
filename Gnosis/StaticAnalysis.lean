@@ -1,3 +1,7 @@
+import Init
+import Gnosis.BrunnianScanner
+import Gnosis.CouplingCost
+
 /-
   Gnosis.StaticAnalysis
 
@@ -14,9 +18,6 @@
   - pricing_as_defense_weight            : $9 price = 1 crossing = 1 defenseWeight unit
   - max_crossing_is_hotspot              : the maximum-crossing component dominates cost
 -/
-import Init
-import Gnosis.BrunnianScanner
-import Gnosis.CouplingCost
 
 
 namespace Gnosis.StaticAnalysis

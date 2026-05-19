@@ -1,6 +1,5 @@
 import Gnosis.GodFormula
 
-
 /-!
 # Causal Discovery — Learning the Fork Graph from Data
 

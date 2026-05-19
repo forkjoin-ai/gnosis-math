@@ -1,3 +1,6 @@
+import Init
+import Gnosis.InformationalPhysicsForcedBijection
+
 /-
   InformationalPhysicsCoverThomasAlternative.lean
   ===============================================
@@ -127,8 +130,6 @@
   use `decide`. Section dividers `══`.
 -/
 
-import Init
-import Gnosis.InformationalPhysicsForcedBijection
 
 namespace InformationalPhysicsCoverThomasAlternative
 

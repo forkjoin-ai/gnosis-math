@@ -1,3 +1,7 @@
+import Gnosis.BuleyErgodicClosure
+import Gnosis.ThoughtBowlMechanicsRefined
+import Gnosis.AffectMatrixCompleteness
+
 /-
   StrictRefinementLatticePattern.lean
   ===================================
@@ -27,9 +31,6 @@
   Zero `sorry`, zero new `axiom`.
 -/
 
-import Gnosis.BuleyErgodicClosure
-import Gnosis.ThoughtBowlMechanicsRefined
-import Gnosis.AffectMatrixCompleteness
 
 namespace StrictRefinementLatticePattern
 

@@ -1,3 +1,8 @@
+import Gnosis.KnotComplexityAsBuleCost
+import Gnosis.FalsificationAsKnotInvariant
+import Gnosis.SpectralNoiseEquilibrium
+import Gnosis.AntiTheory
+
 /-
   UnknotTheory.lean
   =================
@@ -56,10 +61,6 @@
   theorems discharge by `decide`.
 -/
 
-import Gnosis.KnotComplexityAsBuleCost
-import Gnosis.FalsificationAsKnotInvariant
-import Gnosis.SpectralNoiseEquilibrium
-import Gnosis.AntiTheory
 
 namespace Gnosis
 namespace UnknotTheory

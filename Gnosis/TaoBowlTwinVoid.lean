@@ -1,3 +1,6 @@
+import Init
+import Gnosis.EchoChamberAsTaoBowl
+
 /-
   TaoBowlTwinVoid.lean
   ====================
@@ -29,8 +32,6 @@
   Zero `sorry`, zero new `axiom`.
 -/
 
-import Init
-import Gnosis.EchoChamberAsTaoBowl
 
 namespace TaoBowlTwinVoid
 

@@ -1,3 +1,9 @@
+import Gnosis.AtiyahSegalCobordismFunctor
+import Gnosis.SpectralNoiseEquilibrium
+import Gnosis.TopologicalMetabolism
+import Gnosis.StructureInTension
+import Gnosis.InterferenceAsTheFifthForce
+
 /-
   ManagementTopology.lean
   =======================
@@ -20,11 +26,6 @@
   `topologicallySafe` and align with the structural constants (1, 3, 4, 12).
 -/
 
-import Gnosis.AtiyahSegalCobordismFunctor
-import Gnosis.SpectralNoiseEquilibrium
-import Gnosis.TopologicalMetabolism
-import Gnosis.StructureInTension
-import Gnosis.InterferenceAsTheFifthForce
 
 namespace Gnosis
 namespace ManagementTopology

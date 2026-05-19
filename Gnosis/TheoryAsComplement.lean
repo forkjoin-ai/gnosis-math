@@ -1,3 +1,6 @@
+import Gnosis.AntiTheory
+import Gnosis.NoCloningTaxEqualsBuleCost
+
 /-
   TheoryAsComplement.lean
   =======================
@@ -49,8 +52,6 @@
   Init-only Lean 4. Zero sorries, zero axioms.
 -/
 
-import Gnosis.AntiTheory
-import Gnosis.NoCloningTaxEqualsBuleCost
 
 namespace Gnosis
 namespace TheoryAsComplement

@@ -1,3 +1,6 @@
+import Gnosis.SpectralNoiseEquilibrium
+import Gnosis.RetrocausalAttractorFixedPoint
+
 /-
   DestinyAsRetrocausalAttractor.lean
   ==================================
@@ -20,8 +23,6 @@
   Each choice is free; their ensemble is coherent.
 -/
 
-import Gnosis.SpectralNoiseEquilibrium
-import Gnosis.RetrocausalAttractorFixedPoint
 
 namespace DestinyAsRetrocausalAttractor
 

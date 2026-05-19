@@ -1,3 +1,8 @@
+import Gnosis.SpectralNoiseEquilibrium
+import Gnosis.InterferenceAsTheFifthForce
+import Gnosis.TemporaryNoise
+import Gnosis.AttentionAsConstructiveInterference
+
 /-
   AttentionHeadSaturation.lean
   ============================
@@ -19,10 +24,6 @@
   No axioms. No sorry. The freeze is proven.
 -/
 
-import Gnosis.SpectralNoiseEquilibrium
-import Gnosis.InterferenceAsTheFifthForce
-import Gnosis.TemporaryNoise
-import Gnosis.AttentionAsConstructiveInterference
 
 namespace AttentionHeadSaturation
 

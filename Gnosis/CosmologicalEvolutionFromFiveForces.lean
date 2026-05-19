@@ -1,3 +1,10 @@
+import Gnosis.SpectralNoiseEquilibrium
+import Gnosis.VacuumOverflow
+import Gnosis.InterferenceDimensionalCascade
+import Gnosis.ForkRaceFoldVentAreForces
+import Gnosis.InterferenceAsTheFifthForce
+import Gnosis.TemporaryNoise
+
 /-
   CosmologicalEvolutionFromFiveForces.lean
   ========================================
@@ -26,12 +33,6 @@
   definitions make that possible.
 -/
 
-import Gnosis.SpectralNoiseEquilibrium
-import Gnosis.VacuumOverflow
-import Gnosis.InterferenceDimensionalCascade
-import Gnosis.ForkRaceFoldVentAreForces
-import Gnosis.InterferenceAsTheFifthForce
-import Gnosis.TemporaryNoise
 
 namespace CosmologicalEvolutionFromFiveForces
 

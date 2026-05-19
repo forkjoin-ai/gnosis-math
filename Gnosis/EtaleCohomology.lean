@@ -1,3 +1,5 @@
+import Gnosis.BirchSwinnertonDyer
+
 /-
   EtaleCohomology
   ===============
@@ -53,7 +55,6 @@
   for curve-by-curve point counts).
 -/
 
-import Gnosis.BirchSwinnertonDyer
 
 namespace EtaleCohomology
 

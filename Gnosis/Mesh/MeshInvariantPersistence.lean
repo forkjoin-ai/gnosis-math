@@ -1,6 +1,5 @@
 import Init
 
-
 /-!
 # Mesh Invariant Persistence (Universal Knowledge)
 

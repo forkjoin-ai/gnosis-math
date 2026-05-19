@@ -1,3 +1,6 @@
+import Gnosis.StepwiseAnalysisFramework
+import Gnosis.TaoBowlTwinVoid
+
 /-
   TaoBowlTwinVoidBridge.lean
   ===========================
@@ -13,8 +16,6 @@
   Zero `sorry`, zero new `axiom`.
 -/
 
-import Gnosis.StepwiseAnalysisFramework
-import Gnosis.TaoBowlTwinVoid
 
 namespace TaoBowlTwinVoidBridge
 

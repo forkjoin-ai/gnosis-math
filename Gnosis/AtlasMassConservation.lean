@@ -1,3 +1,6 @@
+import Gnosis.AtlasGeneralization
+import Gnosis.GnosticValley
+
 /-
   AtlasMassConservation.lean
   ==========================
@@ -62,8 +65,6 @@
   All facts proved by `decide`. Zero sorries, zero axioms.
 -/
 
-import Gnosis.AtlasGeneralization
-import Gnosis.GnosticValley
 
 namespace Gnosis
 namespace AtlasMassConservation

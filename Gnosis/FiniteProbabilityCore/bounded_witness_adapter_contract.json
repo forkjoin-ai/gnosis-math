@@ -1,0 +1,33 @@
+{
+  "contract": "gnosis.finite_probability.bounded_witness_adapters",
+  "version": 1,
+  "leanModule": "Gnosis.FiniteProbabilityCore.BoundedWitnessInterface",
+  "typescriptModule": "@a0n/aeon-logic",
+  "adapters": [
+    {
+      "lean": "queueBoundedWitnessAdapter",
+      "typescript": "queue",
+      "residualFields": ["backlog", "serviceDebt"]
+    },
+    {
+      "lean": "thermodynamicBoundedWitnessAdapter",
+      "typescript": "thermodynamic",
+      "residualFields": ["heatLeak", "entropyDebt"]
+    },
+    {
+      "lean": "meshRoutingBoundedWitnessAdapter",
+      "typescript": "mesh-routing",
+      "residualFields": ["unroutedPressure", "capacityDebt"]
+    },
+    {
+      "lean": "attentionBoundedWitnessAdapter",
+      "typescript": "attention",
+      "residualFields": ["missedWeight", "saturationDebt"]
+    },
+    {
+      "lean": "finiteApproximationBoundedWitnessAdapter",
+      "typescript": "finite-approximation",
+      "residualFields": ["discretizationError", "truncationError"]
+    }
+  ]
+}

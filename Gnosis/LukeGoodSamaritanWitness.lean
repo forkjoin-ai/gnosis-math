@@ -1,3 +1,10 @@
+import Init
+import Gnosis.AchillesTortoiseLadder
+import Gnosis.GodFormula
+import Gnosis.InfinityPath
+import Gnosis.MitzvotTopology
+import Gnosis.ZenosArrowWitness
+
 /-
   Luke 10:30–35 (Good Samaritan): roadside mercy vs office prestige — typed here by
   `GoodSamaritanWitness` tags and **`Nat` beat indices** (priest → Levite → Samaritan).
@@ -29,12 +36,6 @@
   slots (`three_disjoint_beat_slots`, `antiCrowdDiversityHealthy`).
 -/
 
-import Init
-import Gnosis.AchillesTortoiseLadder
-import Gnosis.GodFormula
-import Gnosis.InfinityPath
-import Gnosis.MitzvotTopology
-import Gnosis.ZenosArrowWitness
 
 namespace LukeGoodSamaritanWitness
 

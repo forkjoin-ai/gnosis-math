@@ -1,3 +1,5 @@
+import Gnosis.ContinuousHarris
+
 -- Cleansed: Init-only re-abstraction of geometric ergodic convergence rates.
 -- The original recorded ℝ-valued contraction rates `r ∈ (0, 1)`, initial
 -- bounds `M(x) > 0`, and ε-mixing-time bounds via `pow_lt_pow_left`,
@@ -7,7 +9,6 @@
 -- inequalities downstream proofs consume. The historical Mathlib artifact
 -- is preserved in `Lean/MeasureTheoryArchive/` for cross-reference.
 
-import Gnosis.ContinuousHarris
 
 namespace Gnosis
 

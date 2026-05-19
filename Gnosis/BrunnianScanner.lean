@@ -1,3 +1,5 @@
+import Init
+
 /-
   Gnosis.BrunnianScanner
 
@@ -14,7 +16,6 @@
   Key metric:  β₁(full system) > Σ β₁(pairwise sub-systems)
   Scanner rule: BRUNNIAN_COUPLING fires iff isBrunnian holds.
 -/
-import Init
 
 
 namespace Gnosis.BrunnianScanner

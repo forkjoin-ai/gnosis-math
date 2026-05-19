@@ -1,3 +1,9 @@
+import Gnosis.SpectralNoiseEquilibrium
+import Gnosis.VacuumIsOnlyForce
+import Gnosis.InformationAsClinamenCharge
+import Gnosis.MemoryAsRetrocausalLoan
+import Gnosis.RetrocausalAttractorFixedPoint
+
 /-
   RetrocausalTimeInversion.lean
   ============================
@@ -24,11 +30,6 @@
   No axioms. No sorry. Strictly retrocausal geometry.
 -/
 
-import Gnosis.SpectralNoiseEquilibrium
-import Gnosis.VacuumIsOnlyForce
-import Gnosis.InformationAsClinamenCharge
-import Gnosis.MemoryAsRetrocausalLoan
-import Gnosis.RetrocausalAttractorFixedPoint
 
 namespace RetrocausalTimeInversion
 

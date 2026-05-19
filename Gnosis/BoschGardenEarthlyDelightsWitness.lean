@@ -1,3 +1,5 @@
+import Init
+
 /-
   BoschGardenEarthlyDelightsWitness.lean
   ======================================
@@ -34,7 +36,6 @@
   Init only. Zero `sorry`, zero new `axiom`.
 -/
 
-import Init
 
 namespace BoschGardenEarthlyDelightsWitness
 

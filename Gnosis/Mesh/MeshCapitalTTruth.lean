@@ -1,6 +1,5 @@
 import Init
 
-
 /-!
 # Mesh Capital T Truth (The God Identity)
 

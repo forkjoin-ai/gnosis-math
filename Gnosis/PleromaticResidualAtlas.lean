@@ -1,3 +1,6 @@
+import Init
+import Gnosis.AmplituhedronWireBitwiseContract
+
 /-
   PleromaticResidualAtlas.lean
   ============================
@@ -10,8 +13,6 @@
   `axiom`.
 -/
 
-import Init
-import Gnosis.AmplituhedronWireBitwiseContract
 
 namespace PleromaticResidualAtlas
 

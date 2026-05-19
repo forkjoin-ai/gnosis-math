@@ -1,0 +1,48 @@
+{
+  "contract": "gnosis.finite_probability.runtime_topology",
+  "version": 1,
+  "leanModule": "Gnosis.FiniteProbabilityCore.RuntimeCertificate",
+  "typescriptModule": "@a0n/aeon-logic",
+  "entries": [
+    {
+      "lean": "RuntimeTopologyEvent",
+      "typescript": "TopologyProbabilityEventWitness",
+      "kind": "event-witness"
+    },
+    {
+      "lean": "RuntimeTopologyProbabilityCertificate",
+      "typescript": "TopologyProbabilityCompilation",
+      "kind": "certificate"
+    },
+    {
+      "lean": "RuntimeCheckerTopologyStats",
+      "typescript": "CheckerTopologyStats",
+      "kind": "stats"
+    },
+    {
+      "lean": "witnessTopologyResidualTheorem",
+      "typescript": "witnessTopologyResidualTheorem",
+      "kind": "theorem-witness"
+    },
+    {
+      "lean": "witnessPositiveVisibleMass",
+      "typescript": "witnessPositiveVisibleMass",
+      "kind": "theorem-witness"
+    },
+    {
+      "lean": "witnessCheckerTopologyCompactness",
+      "typescript": "witnessCheckerTopologyCompactness",
+      "kind": "theorem-witness"
+    },
+    {
+      "lean": "witnessObserverAcceptance",
+      "typescript": "witnessObserverAcceptance",
+      "kind": "theorem-witness"
+    },
+    {
+      "lean": "witnessTopologyShadowEquivalence",
+      "typescript": "witnessTopologyShadowEquivalence",
+      "kind": "theorem-witness"
+    }
+  ]
+}

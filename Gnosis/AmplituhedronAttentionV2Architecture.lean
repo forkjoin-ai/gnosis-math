@@ -1,3 +1,6 @@
+import Init
+import Gnosis.AmplituhedronAntisymmetryNoGo
+
 /-
   AmplituhedronAttentionV2Architecture.lean
   =========================================
@@ -48,8 +51,6 @@
   `def`-shaped `Prop`s (named, citeable, but not asserted as theorems).
   Decidable claims use `decide`. Cross-file invocations cite by name only.
 -/
-import Init
-import Gnosis.AmplituhedronAntisymmetryNoGo
 
 namespace AmplituhedronAttentionV2Architecture
 

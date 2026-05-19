@@ -1,3 +1,5 @@
+import Init
+
 /-
   SadeSolipsismThesisRejectedWitness.lean
   =======================================
@@ -46,7 +48,6 @@
   Init only. Zero `sorry`, zero new `axiom`.
 -/
 
-import Init
 
 namespace SadeSolipsismThesisRejectedWitness
 

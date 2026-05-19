@@ -1,3 +1,6 @@
+import Init
+import Gnosis.InformationalPhysics
+
 /-
   InformationalPhysicsForcedBijection.lean
   ========================================
@@ -94,8 +97,6 @@
   PROVED from CONJECTURED inline.
 -/
 
-import Init
-import Gnosis.InformationalPhysics
 
 namespace InformationalPhysicsForcedBijection
 

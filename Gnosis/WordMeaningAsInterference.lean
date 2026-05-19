@@ -1,3 +1,5 @@
+import Init
+
 /-
   WordMeaningAsInterference.lean
   ==============================
@@ -28,7 +30,6 @@
   No axioms. No sorry. The semantic harmonics prove themselves.
 -/
 
-import Init
 
 namespace WordMeaningAsInterference
 

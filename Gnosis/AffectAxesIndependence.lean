@@ -1,3 +1,6 @@
+import Gnosis.VibesAsWaveInference
+import Gnosis.LocalizedOverflowConsciousness
+
 /-
   AffectAxesIndependence.lean
   ===========================
@@ -75,8 +78,6 @@
   `axiom`.
 -/
 
-import Gnosis.VibesAsWaveInference
-import Gnosis.LocalizedOverflowConsciousness
 
 namespace AffectAxesIndependence
 

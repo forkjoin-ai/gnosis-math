@@ -1,6 +1,5 @@
 import Init
 
-
 namespace MeshMemoryLeaks
 
 def availableMemory (t leakRate : Nat) : Nat :=

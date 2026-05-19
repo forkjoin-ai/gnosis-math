@@ -1,3 +1,6 @@
+import Init
+import Gnosis.LiBaiQuietNightThoughtWitness
+
 /-
   HeraclitusUpDownPathWitness.lean
   =================================
@@ -28,8 +31,6 @@
   Zero `sorry`, zero new `axiom`.
 -/
 
-import Init
-import Gnosis.LiBaiQuietNightThoughtWitness
 
 namespace HeraclitusUpDownPathWitness
 

@@ -994,10 +994,25 @@ The following classical domains are explicitly **Out of Bounds** for direct repr
 - **Classical probability and measure theory (sigma algebras, real-valued
   probability spaces, continuous distributions, PMF-as-authority)**:
   Out of bounds for the Rustic Church. Probability itself is not out of bounds:
-  `Gnosis.FiniteProbabilityCore` owns the native finite theory with explicit
-  supports, `Nat` weights, exact numerator/denominator ratios, decidable event
-  masks, conditioning by reweighting, finite product/independence witnesses,
-  and probability residual observers.
+  `Gnosis.FiniteProbabilityCore` owns the native finite theory through focused
+  modules under `Gnosis/FiniteProbabilityCore/`: exact ratios and finite
+  distributions, decidable event masks, conditioning, finite
+  product/independence witnesses, Bayes/total-probability arithmetic, residual
+  observers, compositional finite probability channels with exact mass-loss
+  accounting, row-wise finite stochastic kernels, programs, process contracts,
+  process chains, bounded shadow equivalence, finite information accounting,
+  finite and stationary Markov witnesses, approximation towers,
+  completed-infinite snowshoe covers, generic finite covers, calculus
+  exporters, and runtime topology-trace theorem mirrors for residual sums,
+  checker compactness, positive visible mass, observer acceptance, and bounded
+  shadow equivalence. Queue, thermodynamic, mesh-routing, attention, and
+  finite-approximation residual states also export to the shared
+  `RuntimeBoundedWitnessCertificate` adapter, so each bounded surface can carry
+  observed surface, residual shadow, observer budget, and theorem witness in
+  one reusable shape.
+  `Gnosis.FiniteCalculusProbability` additionally exports finite-volume,
+  transport-region, weak-residual, and bounded-fluid witnesses as probability
+  processes with conservation/exactness no-hidden-defect closures.
 - **Infinite Category Theory (∞-categories, derived categories)**: 
   Out of bounds. We bridge this by modeling categorical coherence using explicit Buleyean Ranked DAGs. Naturality and adjunctions are expressed as `FORK`, `RACE`, `FOLD`, and `VENT` edges ensuring `beta1` topological complexity conservation.
 - **Non-constructive Mathematics and Infinite Set Theory (Axiom of Choice over uncountables)**: 
@@ -1133,5 +1148,3 @@ To bridge the Continuity Paradox, the Rustic Church formalizes "Real-like" space
 - **`Gnosis/ThermodynamicPvsNP.lean`**: Recasts P ≠ NP as a physical, thermodynamic boundary rather than just a topological invariant. Unstructured exploration of an exponential space requires an exponential number of refinement steps. By the Landauer bound, this requires an exponential thermodynamic payment, which structurally escapes any polynomial `Bule` budget constraint of a P-class machine.
 - **`Gnosis/MythOfInfinitePrecision.lean`**: The capstone of the Real-like Discrete Church. Proves the **Equivalence Principle**: Information Gain = Thermodynamic Bule Cost. Reaching infinite precision (width = 0) is structurally impossible because it would require dissipating all entropy (an infinite Bule cost), proving that the classical "Continuum" is a physical impossibility.
 - **`Gnosis/RefinementMarket.lean`**: Formalizes the **Multi-Node Energy Market**. Precision is treated as a tradeable commodity. "Rich" nodes can compute and sell high-precision brackets to "Poor" nodes, allowing for thermodynamic arbitrage where it is cheaper to buy precision than to compute it from scratch, while preserving the Mesh's total energy balance.
-
-The **Real-like Discrete Church (B34a)** roadmap is now complete. The Gnostic kernel provides a fully verified, energy-bounded, relativistic spatial engine that mathematically formalizes the costs of existence and observation. Furthermore, this thermodynamic formalization has been actively implemented in `open-source/gnosis/distributed-inference/src/attention_market.rs` as the **Attention Marketplace**, directly translating the Lean proofs into a runtime speedup where attention heads trade precision for `Bule` budget.

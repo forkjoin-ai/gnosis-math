@@ -1,3 +1,5 @@
+import Init
+
 /-
   FiveDeathsCompositionOrthogonality.lean
   =======================================
@@ -50,7 +52,6 @@
 
   Init-only per the Rustic Church initiative.
 -/
-import Init
 
 namespace FiveDeathsCompositionOrthogonality
 

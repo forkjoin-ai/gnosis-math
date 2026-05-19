@@ -1,3 +1,7 @@
+import Gnosis.AntiTheory
+import Gnosis.NoCloningTaxEqualsBuleCost
+import Gnosis.ConjectureAsCommitment
+
 /-
   SovereignSieveAsAntiTheoryGate.lean
   ===================================
@@ -76,9 +80,6 @@
   Init-only Lean 4. Zero sorries, zero axioms.
 -/
 
-import Gnosis.AntiTheory
-import Gnosis.NoCloningTaxEqualsBuleCost
-import Gnosis.ConjectureAsCommitment
 
 namespace Gnosis
 namespace SovereignSieveAsAntiTheoryGate

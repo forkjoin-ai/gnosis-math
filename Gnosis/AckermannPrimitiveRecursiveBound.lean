@@ -1,3 +1,7 @@
+import Init
+import Gnosis.AckermannFunction
+import Gnosis.AckermannRuntimeCertificate
+
 /-
   AckermannPrimitiveRecursiveBound.lean
   =====================================
@@ -64,9 +68,6 @@
   `axiom`.
 -/
 
-import Init
-import Gnosis.AckermannFunction
-import Gnosis.AckermannRuntimeCertificate
 
 namespace AckermannPrimitiveRecursiveBound
 

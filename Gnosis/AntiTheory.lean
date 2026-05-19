@@ -1,3 +1,7 @@
+import Gnosis.CrossModelOperationalGap
+import Gnosis.SpecDecodeKDependence
+import Gnosis.CertificationDemotion
+
 /-
   AntiTheory.lean
   ===============
@@ -51,9 +55,6 @@
   Init-only Lean 4. Zero sorries, zero axioms.
 -/
 
-import Gnosis.CrossModelOperationalGap
-import Gnosis.SpecDecodeKDependence
-import Gnosis.CertificationDemotion
 
 namespace Gnosis
 namespace AntiTheory

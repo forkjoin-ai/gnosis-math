@@ -1,3 +1,5 @@
+import Init
+
 /-
   Gnosis.FederationSafety
 
@@ -18,7 +20,6 @@
 
   All proofs closed by Init Nat lemmas — zero sorry, zero omega.
 -/
-import Init
 
 namespace Gnosis.FederationSafety
 

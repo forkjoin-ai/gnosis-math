@@ -1,3 +1,6 @@
+import Init
+import Gnosis.InformationalPhysics
+
 /-
   GodFormulaGeneratesLayers.lean
   ==============================
@@ -104,8 +107,6 @@
   exhaustive `cases` / `decide`.
 -/
 
-import Init
-import Gnosis.InformationalPhysics
 
 namespace GodFormulaGeneratesLayers
 

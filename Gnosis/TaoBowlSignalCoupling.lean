@@ -1,3 +1,7 @@
+import Gnosis.EchoChamberAsTaoBowl
+import Gnosis.OpinionAsInterference
+import Gnosis.EchoChamberAsStandingWave
+
 /-
   TaoBowlSignalCoupling.lean
   ==========================
@@ -17,9 +21,6 @@
   zero new `axiom`.
 -/
 
-import Gnosis.EchoChamberAsTaoBowl
-import Gnosis.OpinionAsInterference
-import Gnosis.EchoChamberAsStandingWave
 
 namespace TaoBowlSignalCoupling
 

@@ -1,3 +1,6 @@
+import Gnosis.SpeculativeDecodingAsRetrocausal
+import Gnosis.CompressionUncertainty
+
 /-
   SpecDecodeKDependence.lean
   ==========================
@@ -32,8 +35,6 @@
   Init-only Lean 4. Zero sorries, zero axioms.
 -/
 
-import Gnosis.SpeculativeDecodingAsRetrocausal
-import Gnosis.CompressionUncertainty
 
 namespace Gnosis
 namespace SpecDecodeKDependence

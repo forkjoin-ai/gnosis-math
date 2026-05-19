@@ -1,3 +1,8 @@
+import Gnosis.SpectralNoiseEquilibrium
+import Gnosis.VacuumIsOnlyForce
+import Gnosis.RetrocausalAttractorFixedPoint
+import Gnosis.CopyStoreEraseCostStructure
+
 /-
   EnergyConservationFromVacuum.lean
   ================================
@@ -11,10 +16,6 @@
   preserved as definitional equalities and finite accounting projections.
 -/
 
-import Gnosis.SpectralNoiseEquilibrium
-import Gnosis.VacuumIsOnlyForce
-import Gnosis.RetrocausalAttractorFixedPoint
-import Gnosis.CopyStoreEraseCostStructure
 
 namespace EnergyConservationFromVacuum
 

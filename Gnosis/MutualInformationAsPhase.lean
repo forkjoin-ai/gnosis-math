@@ -1,3 +1,6 @@
+import Gnosis.InformationAsInterferencePattern
+import Init
+
 /-
 MutualInformationAsPhase.lean
 =============================
@@ -20,8 +23,6 @@ standing wave patterns, and the product term is the geometric mean of entropies.
 No imported Mathlib. Init only. No axioms. Phase alignment is real.
 -/
 
-import Gnosis.InformationAsInterferencePattern
-import Init
 
 namespace Gnosis
 namespace MutualInformationAsPhase

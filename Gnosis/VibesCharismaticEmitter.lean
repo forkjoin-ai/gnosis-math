@@ -1,3 +1,8 @@
+import Gnosis.HotellingModel
+import Gnosis.VibesHotellingVoting
+import Gnosis.Bridges.BuleyMeshAttentionBridge
+import Gnosis.EchoChamberAsTaoBowl
+
 /-
   VibesCharismaticEmitter.lean
   ============================
@@ -56,10 +61,6 @@
   `Gnosis.EchoChamberAsTaoBowl`. Zero `sorry`, zero new `axiom`.
 -/
 
-import Gnosis.HotellingModel
-import Gnosis.VibesHotellingVoting
-import Gnosis.Bridges.BuleyMeshAttentionBridge
-import Gnosis.EchoChamberAsTaoBowl
 
 namespace VibesCharismaticEmitter
 

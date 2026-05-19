@@ -1,3 +1,8 @@
+import Init
+import Gnosis.EchoChamberAsTaoBowl
+import Gnosis.TaoBowlSignalCoupling
+import Gnosis.BowlMeshNode
+
 /-
   BowlMeshPinkNoiseBound.lean
   ===========================
@@ -68,10 +73,6 @@
   `axiom`.
 -/
 
-import Init
-import Gnosis.EchoChamberAsTaoBowl
-import Gnosis.TaoBowlSignalCoupling
-import Gnosis.BowlMeshNode
 
 namespace BowlMeshPinkNoiseBound
 

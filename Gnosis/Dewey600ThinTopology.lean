@@ -1,6 +1,5 @@
 import Init
 
-
 namespace Dewey600ThinTopology
 
 -- 610: Medicine (Surgical Graph Severance)

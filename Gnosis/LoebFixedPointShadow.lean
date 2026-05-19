@@ -1,3 +1,6 @@
+import Gnosis.GodelIncompletenessShadow
+import Gnosis.TarskiTruthUndefinability
+
 /-
   LoebFixedPointShadow
   ====================
@@ -143,8 +146,6 @@
   No imports beyond `Init` and the two siblings. No axioms, no `sorry`.
 -/
 
-import Gnosis.GodelIncompletenessShadow
-import Gnosis.TarskiTruthUndefinability
 
 namespace LoebFixedPointShadow
 

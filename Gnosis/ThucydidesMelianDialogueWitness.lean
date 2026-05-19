@@ -1,3 +1,5 @@
+import Init
+
 /-
   ThucydidesMelianDialogueWitness.lean
   ====================================
@@ -33,7 +35,6 @@
   Init only. Zero `sorry`, zero new `axiom`.
 -/
 
-import Init
 
 namespace ThucydidesMelianDialogueWitness
 

@@ -1,3 +1,5 @@
+import Init
+
 /-
   ArrheniusBarrier.lean
   =====================
@@ -13,7 +15,6 @@
   Style: Rustic Church (Init-only).
 -/
 
-import Init
 
 namespace Gnosis.Materials
 

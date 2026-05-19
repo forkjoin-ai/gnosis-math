@@ -1,3 +1,5 @@
+import Gnosis.Closures.JacksonRawClosure
+
 /-
 Second-pass short-file review: this module was still below the review
 threshold after the first burndown annotation. The proof payload remains
@@ -12,7 +14,6 @@ not a collapse placeholder: it exposes a finite Lean surface that participates
 in the strict a0 formal and chapel gates while satisfying the strict chapel proof-style gate.
 -/
 
-import Gnosis.Closures.JacksonRawClosure
 
 namespace Gnosis
 

@@ -1,3 +1,7 @@
+import Gnosis.GeometricLanglands
+import Gnosis.FukayaMirrorSymmetry
+import Gnosis.ModularityTheorem
+
 /-
   BridgeKapustinWitten
   ====================
@@ -77,9 +81,6 @@
   `rfl`, or `decide`.
 -/
 
-import Gnosis.GeometricLanglands
-import Gnosis.FukayaMirrorSymmetry
-import Gnosis.ModularityTheorem
 
 namespace BridgeKapustinWitten
 

@@ -1,3 +1,7 @@
+import Gnosis.SpectralNoiseEquilibrium
+import Gnosis.BuleyClinamenBraid
+import Gnosis.KnotTheory.TorusKnotChebyshevBracket
+
 /-
   ConversationalDodgeball.lean
   ============================
@@ -22,9 +26,6 @@
   - 3D Lift ↔ Braid Crossing in B₂.
 -/
 
-import Gnosis.SpectralNoiseEquilibrium
-import Gnosis.BuleyClinamenBraid
-import Gnosis.KnotTheory.TorusKnotChebyshevBracket
 
 namespace Gnosis
 namespace ConversationalDodgeball

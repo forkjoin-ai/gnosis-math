@@ -1,3 +1,5 @@
+import Gnosis.ExtendedFalsificationLedger
+
 /-
   FalsificationAsKnotInvariant.lean
   =================================
@@ -56,7 +58,6 @@
   sorries, zero axioms.
 -/
 
-import Gnosis.ExtendedFalsificationLedger
 
 namespace Gnosis
 namespace FalsificationAsKnotInvariant

@@ -1,3 +1,5 @@
+import Init
+
 /-
   Death7MarkovBroken.lean
   =======================
@@ -78,7 +80,6 @@
   Imports Init only. Zero `sorry`, zero new `axiom`.
 -/
 
-import Init
 
 namespace Death7MarkovBroken
 

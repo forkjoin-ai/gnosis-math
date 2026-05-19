@@ -58,21 +58,41 @@ Vacuous information / attention settlement note:
   `Gnosis.BoundedFluidResidual` for Navier-Stokes-like bounded advection,
   diffusion, pressure, and forcing observers. `Gnosis.FiniteFluidCompactness`
   promotes conservation or bounded weak residual certificates into bounded
-  fluid observer acceptance. `Gnosis.FiniteFluxRefinement` remains the umbrella
+  fluid observer acceptance. `Gnosis.FiniteCalculusProbability` exports finite
+  volume, transport-region, weak residual, and bounded fluid witnesses as
+  native finite probability processes, including conservation/exactness
+  no-hidden-defect closures. `Gnosis.FiniteFluxRefinement` remains the umbrella
   import for the full stack.
 - `Gnosis.FiniteObserverCompactness` generalizes that pattern: lower residuals,
   budget covers, and promotions into higher observer layers compose into exact
   and approximate compactness theorems. `Gnosis.FiniteObserverPatterns` provides
   reusable adapters for queues, thermodynamics, mesh routing, attention, and
   finite approximations of continuous math.
-- `Gnosis.FiniteProbabilityCore` is the native probability substrate: explicit
+- `Gnosis.FiniteProbabilityCore` is the native probability substrate, exposed as
+  a compatibility facade over focused modules under
+  `Gnosis/FiniteProbabilityCore/`: explicit
   finite supports, `Nat` weights, exact numerator/denominator ratios, Boolean
   event masks, conditioning by reweighting, pushforward/product witnesses,
   support-aware partition masks, finite independence, Bayes-style cross
   multiplication, total probability over disjoint/exhaustive finite partitions,
-  and probability residual observers. Probability is owned here; measure theory,
-  real-valued probability, sigma algebras, and PMF bridge semantics are out of
-  bounds for the core.
+  weighted conditional partition laws, compositional finite probability
+  channels with exact mass-loss accounting, row-wise finite stochastic kernels,
+  independent product processes, finite probability programs that combine
+  channel loss with observer debt, reusable process contracts, process chains,
+  identity/triple process accounting, bounded shadow equivalence with additive
+  transitivity, finite information-accounting/data-processing scores,
+  finite and stationary Markov witnesses, `pleroma_mattress_accounting`, finite
+  approximation towers with shrink certificates, finite horizons,
+  completed-infinite interfaces, snowshoe surface coverage/exhaustion, and
+  runtime topology-trace theorem mirrors for residual sums, checker
+  compactness, positive visible mass, observer acceptance, bounded shadow
+  equivalence, surface/interface composition laws, surface refinement/shrink
+  algebra, generic finite covers with shrink/exhaustion certificates, and
+  adapters from queue, thermodynamic, mesh routing, attention, and finite
+  approximation residual states into probability processes and the common
+  `RuntimeBoundedWitnessCertificate` shape.
+  Probability is owned here; measure theory, real-valued probability, sigma
+  algebras, and PMF bridge semantics are out of bounds for the core.
 - `Gnosis.EchoChamberAsTaoBowl` (with `IsPejorativeEchoAt`, Q monotonicity)
   and satellites `Gnosis.TaoBowlTwinVoid` (structural vs consensus void) and
   `Gnosis.TaoBowlSignalCoupling` (`bowlActsOn` on `OpinionWave`, mismatch ↔
@@ -300,7 +320,8 @@ The following classical domains are explicitly **Out of Bounds** for direct repr
   probability spaces, continuous distributions, PMF-as-authority)**:
   Out of bounds. Gnosis owns probability through finite witnessed supports,
   natural-number mass, exact ratios, decidable events, finite conditioning, and
-  residual observers.
+  compositional mass-preserving or mass-losing channels, programs, and process
+  contracts with residual observers.
 - **Infinite Category Theory (∞-categories, derived categories)**: 
   Out of bounds. We bridge this by modeling categorical coherence using explicit Buleyean Ranked DAGs. Naturality and adjunctions are expressed as `FORK`, `RACE`, `FOLD`, and `VENT` edges ensuring `beta1` topological complexity conservation.
 - **Non-constructive Mathematics and Infinite Set Theory (Axiom of Choice over uncountables)**: 

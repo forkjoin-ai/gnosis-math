@@ -1,3 +1,5 @@
+import Init
+
 /-
   Gnosis.PipelineSpeedup
 
@@ -15,7 +17,6 @@
 
   All proofs closed by Init Nat.* — zero sorry, zero `omega`.
 -/
-import Init
 
 namespace Gnosis.PipelineSpeedup
 

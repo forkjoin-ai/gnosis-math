@@ -1,3 +1,5 @@
+import Gnosis.HaltingProblemShadow
+
 /-
   RecursionRiceShadow
   ===================
@@ -114,7 +116,6 @@
   No axioms, no `sorry`.
 -/
 
-import Gnosis.HaltingProblemShadow
 
 namespace RecursionRiceShadow
 

@@ -1,6 +1,5 @@
 import Gnosis.GodFormula
 
-
 /-!
 # Fibonacci Coding is Zeckendorf Compression
 

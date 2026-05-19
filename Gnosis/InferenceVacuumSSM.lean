@@ -3,7 +3,6 @@ import Gnosis.EREPR_EnrichedEquality
 import Gnosis.TopologicalMemoizationCache
 import Gnosis.RetrocausalMemoization
 
-
 namespace Gnosis
 namespace InferenceVacuumSSM
 

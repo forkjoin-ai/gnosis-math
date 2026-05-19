@@ -1,3 +1,6 @@
+import Gnosis.KhovanovCategorifiesJones
+import Gnosis.ReshetikhinTuraev3DTQFT
+
 /-
   BridgeKhovanovRT3D
   ==================
@@ -56,8 +59,6 @@
   `rfl`, or short case splits.
 -/
 
-import Gnosis.KhovanovCategorifiesJones
-import Gnosis.ReshetikhinTuraev3DTQFT
 
 namespace BridgeKhovanovRT3D
 

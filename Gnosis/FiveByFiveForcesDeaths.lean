@@ -1,3 +1,5 @@
+import Init
+
 /-
   FiveByFiveForcesDeaths.lean
   ===========================
@@ -93,7 +95,6 @@
   conjunction-of-rfl construction.
 -/
 
-import Init
 
 namespace Gnosis
 namespace FiveByFiveForcesDeaths

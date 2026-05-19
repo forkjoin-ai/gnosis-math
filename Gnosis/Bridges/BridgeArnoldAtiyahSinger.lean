@@ -1,3 +1,6 @@
+import Gnosis.ArnoldConjectureFloer
+import Gnosis.AtiyahSingerIndex
+
 /-
   BridgeArnoldAtiyahSinger
   ========================
@@ -49,8 +52,6 @@
   `rfl`, or short case splits.
 -/
 
-import Gnosis.ArnoldConjectureFloer
-import Gnosis.AtiyahSingerIndex
 
 namespace BridgeArnoldAtiyahSinger
 

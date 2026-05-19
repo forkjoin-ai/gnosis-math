@@ -1,3 +1,8 @@
+import Init
+import Gnosis.AmplituhedronCoordinatorContract
+import Gnosis.AmplituhedronWireBitwiseContract
+import Gnosis.BowlMeshRuntimeOracle
+
 /-
   MeshConsumptionWaveMeasurement.lean
   ===================================
@@ -11,10 +16,6 @@
   Zero `sorry`, zero new `axiom`.
 -/
 
-import Init
-import Gnosis.AmplituhedronCoordinatorContract
-import Gnosis.AmplituhedronWireBitwiseContract
-import Gnosis.BowlMeshRuntimeOracle
 
 namespace MeshConsumptionWaveMeasurement
 

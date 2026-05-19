@@ -1,3 +1,7 @@
+import Gnosis.RankFloorScalesWithDim
+import Gnosis.CrossModelOperationalGap
+import Gnosis.CertificationDemotion
+
 /-
   TheoryRecursivelyFalsifies.lean
   ===============================
@@ -67,9 +71,6 @@
   methodology and re-test.
 -/
 
-import Gnosis.RankFloorScalesWithDim
-import Gnosis.CrossModelOperationalGap
-import Gnosis.CertificationDemotion
 
 namespace Gnosis
 namespace TheoryRecursivelyFalsifies

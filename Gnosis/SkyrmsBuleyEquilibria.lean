@@ -309,7 +309,6 @@ Interpretation ladder for training / buleyean-rl sequencing:
 
 **Scope.** This section formalizes ontology for the *coordination object's* temporal span and
 pairs it with discrete closure operators (`TimeIndex`, scopes, `buleyUpdate`). It does **not**
-import a relativistic spacetime, causal structure, or worldline semantics, so it neither proves
 nor refutes closed timelike curves (CTCs) as physics. Globally hyperbolic Lorentzian geometry is
 one modelling tradition; solutions of Einstein's equations with CTCs are another—it is coherent
 (for some energy-condition and cosmic-censorship viewpoints, controversial) to treat CTC-containing

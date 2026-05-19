@@ -1,3 +1,7 @@
+import Gnosis.SpectralMeasurementFramework
+import Gnosis.DepressionAsDampedOscillation
+import Gnosis.TemporaryNoise
+
 /-
   DepressionSpectralSieve.lean
   ============================
@@ -9,9 +13,6 @@
   calibration still carries the stronger Float-bound interpretation.
 -/
 
-import Gnosis.SpectralMeasurementFramework
-import Gnosis.DepressionAsDampedOscillation
-import Gnosis.TemporaryNoise
 
 namespace DepressionSpectralSieve
 

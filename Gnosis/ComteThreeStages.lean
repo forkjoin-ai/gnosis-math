@@ -1,3 +1,7 @@
+import Gnosis.BuleyeanRLCurriculum
+import Gnosis.BuleyErgodicClosure
+import Gnosis.SocialDynamicsHooke
+
 /-
   ComteThreeStages.lean
   =====================
@@ -32,9 +36,6 @@
   Zero `sorry`, zero new `axiom`.
 -/
 
-import Gnosis.BuleyeanRLCurriculum
-import Gnosis.BuleyErgodicClosure
-import Gnosis.SocialDynamicsHooke
 
 namespace Gnosis
 namespace ComteThreeStages

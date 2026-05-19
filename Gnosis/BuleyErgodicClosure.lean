@@ -1,3 +1,7 @@
+import Gnosis.SkyrmsUltraLongRunEquilibrium
+import Gnosis.SkyrmsErgodicSelection
+import Gnosis.BuleyEquilibrium
+
 /-
   BuleyErgodicClosure.lean
   ========================
@@ -93,9 +97,6 @@
   `sorry`, zero new `axiom`.
 -/
 
-import Gnosis.SkyrmsUltraLongRunEquilibrium
-import Gnosis.SkyrmsErgodicSelection
-import Gnosis.BuleyEquilibrium
 
 namespace BuleyErgodicClosure
 

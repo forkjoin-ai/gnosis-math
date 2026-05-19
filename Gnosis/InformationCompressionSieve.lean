@@ -1,3 +1,5 @@
+import Gnosis.SpectralMeasurementFramework
+
 /-
   InformationCompressionSieve.lean
   ===============================
@@ -20,7 +22,6 @@
     calibration layer (Aether spectral kernels, Pneuma trace inspection).
 -/
 
-import Gnosis.SpectralMeasurementFramework
 
 namespace InformationCompressionSieve
 

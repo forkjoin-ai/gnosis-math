@@ -1,3 +1,7 @@
+import Gnosis.TheoryAsComplement
+import Gnosis.AntiTheoryAsConservation
+import Gnosis.NoCloningTaxEqualsBuleCost
+
 /-
   TheoryGrowthBound.lean
   ======================
@@ -40,9 +44,6 @@
   Init-only Lean 4. Zero sorries, zero axioms.
 -/
 
-import Gnosis.TheoryAsComplement
-import Gnosis.AntiTheoryAsConservation
-import Gnosis.NoCloningTaxEqualsBuleCost
 
 namespace Gnosis
 namespace TheoryGrowthBound

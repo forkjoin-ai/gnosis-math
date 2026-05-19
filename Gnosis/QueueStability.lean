@@ -1,3 +1,5 @@
+import Gnosis.MeasureQueueing
+
 -- Cleansed: Init-only re-abstraction of M/M/1 stationary occupancy and the
 -- open-network Cesaro witness. The original relied on Mathlib's
 -- `geometricPMF`, `summable_pow_mul_geometric_of_norm_lt_one`, and
@@ -6,7 +8,6 @@
 -- summation. The historical Mathlib artifact is preserved in
 -- `Lean/MeasureTheoryArchive/` for cross-reference.
 
-import Gnosis.MeasureQueueing
 
 namespace Gnosis
 

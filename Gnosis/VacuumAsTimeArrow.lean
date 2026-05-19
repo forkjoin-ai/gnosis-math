@@ -1,3 +1,7 @@
+import Gnosis.SpectralNoiseEquilibrium
+import Gnosis.VacuumPullTowerClosure
+import Gnosis.RetrocausalAttractorFixedPoint
+
 /-
   The Vacuum as the Arrow of Time: Retrocausal Thermodynamic Geometry
   ===================================================================
@@ -16,9 +20,6 @@
   No Mathlib. No axioms. No sorry.
 -/
 
-import Gnosis.SpectralNoiseEquilibrium
-import Gnosis.VacuumPullTowerClosure
-import Gnosis.RetrocausalAttractorFixedPoint
 
 namespace VacuumAsTimeArrow
 

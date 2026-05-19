@@ -1,3 +1,5 @@
+import Init
+
 /-
   FiveDeathsDeployedReachability.lean
   ===================================
@@ -97,7 +99,6 @@
 
   Init-only per the Rustic Church initiative.
 -/
-import Init
 
 namespace FiveDeathsDeployedReachability
 

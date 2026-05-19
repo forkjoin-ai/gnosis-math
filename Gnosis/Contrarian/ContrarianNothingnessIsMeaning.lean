@@ -1,3 +1,6 @@
+import Gnosis.LaoziBowlVoidFunctionWitness
+import Gnosis.VoidIsTheMedium
+
 /-
   ContrarianNothingnessIsMeaning.lean
   ===================================
@@ -17,8 +20,6 @@
   User Quote: "Nothingness gives meaning."
 -/
 
-import Gnosis.LaoziBowlVoidFunctionWitness
-import Gnosis.VoidIsTheMedium
 
 namespace Gnosis
 

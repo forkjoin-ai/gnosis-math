@@ -1,3 +1,7 @@
+import Gnosis.GnosticValley
+import Gnosis.InformationCapacity
+import Gnosis.CrossModelCliff
+
 /-
   CliffCapacityBridge.lean
   ========================
@@ -46,9 +50,6 @@
   `CrossModelCliff`. Zero sorries, zero axioms.
 -/
 
-import Gnosis.GnosticValley
-import Gnosis.InformationCapacity
-import Gnosis.CrossModelCliff
 
 namespace Gnosis
 namespace CliffCapacityBridge

@@ -1,3 +1,5 @@
+import Gnosis.SpectralNoiseEquilibrium
+
 /-
   GnosticValley.lean
   ==================
@@ -70,7 +72,6 @@
   Init-only Lean 4. Imports `SpectralNoiseEquilibrium`. Zero sorries.
 -/
 
-import Gnosis.SpectralNoiseEquilibrium
 
 namespace Gnosis
 namespace GnosticValley

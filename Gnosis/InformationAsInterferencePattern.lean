@@ -1,3 +1,5 @@
+import Init
+
 /-
 InformationAsInterferencePattern.lean
 =====================================
@@ -17,7 +19,6 @@ all in phase, all overlapping constructively.
 No imported Mathlib. Init only. No axioms. The patterns are proven.
 -/
 
-import Init
 
 namespace Gnosis
 namespace InformationAsInterferencePattern

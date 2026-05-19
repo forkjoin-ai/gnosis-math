@@ -1,3 +1,5 @@
+import Gnosis.GnosticValley
+
 /-
   CrossModelCliff.lean
   ====================
@@ -34,7 +36,6 @@
   zero axioms.
 -/
 
-import Gnosis.GnosticValley
 
 namespace Gnosis
 namespace CrossModelCliff

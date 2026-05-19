@@ -1,3 +1,8 @@
+import Gnosis.SpectralNoiseEquilibrium
+import Gnosis.InterferenceAsTheFifthForce
+import Gnosis.TemporaryNoise
+import Gnosis.PsychologyAsInterference
+
 /-
   TraumaAsStandingWave.lean
   ========================
@@ -12,10 +17,6 @@
   then allow normal race damping to dissipate remaining energy.
 -/
 
-import Gnosis.SpectralNoiseEquilibrium
-import Gnosis.InterferenceAsTheFifthForce
-import Gnosis.TemporaryNoise
-import Gnosis.PsychologyAsInterference
 
 namespace TraumaAsStandingWave
 

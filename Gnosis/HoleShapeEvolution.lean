@@ -1,3 +1,5 @@
+import Gnosis.AntiTheory
+
 /-
   HoleShapeEvolution.lean
   =======================
@@ -50,7 +52,6 @@
   Init-only Lean 4. Zero sorries, zero axioms.
 -/
 
-import Gnosis.AntiTheory
 
 namespace Gnosis
 namespace HoleShapeEvolution

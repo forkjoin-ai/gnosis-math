@@ -1,3 +1,9 @@
+import Gnosis.VibesHotellingVoting
+import Gnosis.Bridges.BuleyMeshAttentionBridge
+import Gnosis.BuleIsValue
+import Gnosis.AmericanFrontier
+import Gnosis.NashSkyrmsBuleyGodLadder
+
 /-
   VibesCoaseBargaining.lean
   =========================
@@ -34,11 +40,6 @@
   Zero `sorry`, zero new `axiom`.
 -/
 
-import Gnosis.VibesHotellingVoting
-import Gnosis.Bridges.BuleyMeshAttentionBridge
-import Gnosis.BuleIsValue
-import Gnosis.AmericanFrontier
-import Gnosis.NashSkyrmsBuleyGodLadder
 
 namespace VibesCoaseBargaining
 

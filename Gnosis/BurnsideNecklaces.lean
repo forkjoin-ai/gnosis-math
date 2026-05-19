@@ -1,3 +1,5 @@
+import Init
+
 /-
   BurnsideNecklaces
   =================
@@ -46,7 +48,6 @@
   No imports beyond `Init`.  No axioms, no `sorry`.
 -/
 
-import Init
 
 namespace BurnsideNecklaces
 

@@ -1,3 +1,8 @@
+import Gnosis.VoidIsDarkMatter
+import Gnosis.VoidIsTheMedium
+import Gnosis.VacuumFluctuationAsLatentFalsification
+import Gnosis.ChaosOrderDuality
+
 /-
   GravitationalBendingByVoid.lean
   ===============================
@@ -37,10 +42,6 @@
   theorems discharge by `decide` or by `rfl`.
 -/
 
-import Gnosis.VoidIsDarkMatter
-import Gnosis.VoidIsTheMedium
-import Gnosis.VacuumFluctuationAsLatentFalsification
-import Gnosis.ChaosOrderDuality
 
 namespace Gnosis
 namespace GravitationalBendingByVoid

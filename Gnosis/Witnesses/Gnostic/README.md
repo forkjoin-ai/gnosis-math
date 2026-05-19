@@ -1,0 +1,45 @@
+# Gnostic Witnesses
+
+[Parent](../README.md)
+
+Lean witnesses extracted from Nag Hammadi, Valentinian, and related Gnostic source documents. New Gnostic witnesses should be added in this directory and imported as `Gnosis.Witnesses.Gnostic.<Module>`.
+
+Gnostic sources should be treated as high-yield archaeological witnesses, not lore catalogs. Prefer modules that expose:
+
+- the invariant the text is orbiting;
+- the deficit or boundary condition the mythic machinery makes visible;
+- the gnosis-math theorem surface it converges on;
+- the contrarian reading a normal theological summary would miss.
+
+## Witnesses
+
+- `ApocryphonJohnOpeningMonadWitness`: `docs/ebooks/source-texts/apocryphon-of-john.txt`, lines 21-88, the opening Monad as anti-idol compiler: institutional accusation routes to desert observation, the three-form light is non-plural, apophatic refusal blocks category capture, and positive overflow is tied to existing `GnosisTriptychBraid` and `MonadDyadTriad` witnesses.
+- `ApocryphonJohnBarbeloDecadWitness`: `docs/ebooks/source-texts/apocryphon-of-john.txt`, lines 89-120, Barbelo as consented decad compiler: request/consent handshakes authorize emanation, the hidden gap is unconsented generation, and the pentad/decad independently converges on the five-to-ten uniform Barbelo wireframe in `QuarkPersonality`.
+- `ApocryphonJohnSophiaArchonGapWitness`: `docs/ebooks/source-texts/apocryphon-of-john.txt`, lines 178-264, Sophia's unconsented branch as compile failure, Yaltabaoth's jealous counterfeit sovereignty as self-refuting source ignorance, and repentance as deficiency correction through the triptych recovery contour.
+- `ApocryphonJohnAdamEpinoiaWitness`: `docs/ebooks/source-texts/apocryphon-of-john.txt`, lines 265-458, Adam as exhaustive counterfeit body-index that remains inactive until stolen maternal power enters it, with hidden luminous Epinoia as the ungraspable recovery signal and knowledge as awakening rather than fall.
+- `ApocryphonJohnSoulFateWitness`: `docs/ebooks/source-texts/apocryphon-of-john.txt`, lines 459-542, soul sorting by dominant signal, counterfeit spirit as adversarial scheduler, fate as chain of forgetfulness measured by times and moments, and gnosis/chaos as distinct baselines.
+- `ApocryphonJohnPronoiaSealsWitness`: `docs/ebooks/source-texts/apocryphon-of-john.txt`, lines 543-578, Pronoia's three descents as complete rescue triptych, the name-call "arise and remember" as awakening, five seals as death-power cutoff, and secret transmission guarded from commodity capture.
+- `GospelPhilipInheritanceRansomWitness`: `docs/ebooks/source-texts/gospel-of-philip.txt`, lines 9-35 and 63-91, inheritance as life-indexed sonship, seasonal harvest as world/Aeon timing, and ransom as capture-reversal that breaks the sacrifice economy.
+- `GospelPhilipNameForgeryWitness`: `docs/ebooks/source-texts/gospel-of-philip.txt`, lines 36-62, name theory as attack surface: truth teaches one-through-many by names, but archon name-forgery maps good names onto non-good targets and tries to bind the free as slave.
+- `GospelPhilipResurrectionImageWitness`: `docs/ebooks/source-texts/gospel-of-philip.txt`, lines 92-188, resurrection before death and image-becoming: the soul is valuable in a low body, nakedness is misdiagnosed, and Aeon sight transforms the seer into what is seen.
+- `GospelPhilipSacramentBridalWitness`: `docs/ebooks/source-texts/gospel-of-philip.txt`, lines 242-430, sacrament as operator rather than badge: borrowed Christian naming is debt, Spirit makes the name gift, truth enters through type/image, chrism precedes death, and bridal union repairs separation.
+- `GospelPhilipRootVeilLightWitness`: `docs/ebooks/source-texts/gospel-of-philip.txt`, lines 431-618, final root/veil/light arc: knowledge-freedom becomes love-service, hidden wickedness is dissolved by recognition, and the opened veil invites entry into perfect day rather than night secrecy.
+- `GospelThomasInterpretationKingdomWitness`: `docs/ebooks/source-texts/gospel-of-thomas.txt`, lines 10-50, interpretation as no-death path and kingdom as inside/outside rather than sky/sea coordinate; external localization is the first counterproof.
+- `GospelThomasTwoOneLightWitness`: `docs/ebooks/source-texts/gospel-of-thomas.txt`, lines 51-160, apophatic recognition, making two one, inner light, and the knowledge-key gap where religious practice can harm when it blocks entry.
+- `GospelThomasLivingPresenceWitness`: `docs/ebooks/source-texts/gospel-of-thomas.txt`, lines 161-245, living presence over dead archive: origin is light, sign is movement and repose, and knowing all while still deficient is complete deficiency.
+- `GospelThomasPearlImageWitness`: `docs/ebooks/source-texts/gospel-of-thomas.txt`, lines 246-350, rejected value and concealed light: cornerstone, pearl, hidden image-light, and moment-reading as a stronger sensor than visible prestige.
+- `GospelThomasSpreadKingdomWitness`: `docs/ebooks/source-texts/gospel-of-thomas.txt`, lines 351-414, final spread-out kingdom: hidden leakage, ledger sorting, and no deferred here/there spectacle; the kingdom is already spread upon the earth and unseen.
+- `GospelTruthErrorFogWitness`: `docs/ebooks/source-texts/gospel-of-truth.txt`, lines 8-31, error as rootless fog rather than rival substance: ignorance condenses into terror, fear, forgetfulness, and counterfeit form, while established truth and knowledge make forgetfulness cease.
+- `GospelTruthPathLackWitness`: `docs/ebooks/source-texts/gospel-of-truth.txt`, lines 32-50, the path as returned perfection: the All lacks knowledge of source, not a rationed substance, and the fruit of knowledge produces joy rather than destruction.
+- `GospelTruthLivingBookNameWitness`: `docs/ebooks/source-texts/gospel-of-truth.txt`, lines 51-108, the living book as name-call protocol rather than external credential store: unspoken names and empty letters are counterproofs, while living letters converge through many-name chart compatibility on one Father-knowledge witness.
+- `GospelTruthLogosUnityWitness`: `docs/ebooks/source-texts/gospel-of-truth.txt`, lines 109-148, Logos as unity purifier: not mere sound but embodied support, purification, return, and exposure of error as empty when truth appears.
+- `GospelTruthDreamAwakeningWitness`: `docs/ebooks/source-texts/gospel-of-truth.txt`, lines 149-202, ignorance as dream ontology: phantom fear, pursuit, falling, and violence vanish at dawn, while the faultless word raises the prone and gives sensory access to the beloved son.
+- `GospelTruthLostOneHundredWitness`: `docs/ebooks/source-texts/gospel-of-truth.txt`, lines 203-228, the lost-one parable as completion arithmetic: ninety-nine plus the missing one becomes one hundred, and Sabbath law cannot block rescue from the pit.
+- `GospelTruthPleromaPhysicianWitness`: `docs/ebooks/source-texts/gospel-of-truth.txt`, lines 229-275, Pleroma as physician: deficiency is filled without loss, sickness does not need to hide, cold division is overcome by the hot Pleroma of love, and Paradise is rest.
+- `GospelTruthNameRestWitness`: `docs/ebooks/source-texts/gospel-of-truth.txt`, lines 276-360, the real name as non-lexical root protocol: the Son is the pronounced name, emanations return to their roots, and the blessed place is rest beyond searching for truth.
+- `TripartiteFatherRootWitness`: `docs/ebooks/source-texts/tripartite-tractate.txt`, lines 9-124, the Father as apophatic root beyond capture: names honor by capacity but do not apply in themselves, while Son and Church are present from the beginning as unity-with-many.
+- `TripartiteAeonicExtensionWitness`: `docs/ebooks/source-texts/tripartite-tractate.txt`, lines 125-359, aeonic emanation as extension without separation: seed, spring, root, body, and many-name analogies preserve indivisible multiplicity rather than cast-off independence.
+- `TripartiteLogosOverreachWitness`: `docs/ebooks/source-texts/tripartite-tractate.txt`, lines 360-519, Logos overreach as a good-intent boundary failure: grasping the incomprehensible without agreement produces shadow/copy orders, while metanoia reorients the vector toward return.
+- `TripartiteSaviorOrderingWitness`: `docs/ebooks/source-texts/tripartite-tractate.txt`, lines 520-835, Savior-light generated by harmonious consent: inward healing for the defective Logos, lightning separation for hostile orders, and Demiurge as borrowed hand/mouth rather than source.
+- `TripartiteHumanityTheologiesWitness`: `docs/ebooks/source-texts/tripartite-tractate.txt`, lines 836-1113, mixed humanity and theology error ledger: death is complete ignorance, life is firm knowledge, partial visible-element explanations fracture into incompatible systems, and the Savior reveals types by fruit.
+- `TripartiteRestorationRedemptionWitness`: `docs/ebooks/source-texts/tripartite-tractate.txt`, lines 1114-1323, restoration as whole-body return rather than mere escape: redemption enters silence, the single gospel name gathers many baptismal titles, and the final calling returns multiplicity to unitary beginning.

@@ -1,3 +1,5 @@
+import Gnosis.CompressionPolicyAtScale
+
 /-
   PolicyDerivationVsMethodology.lean
   ==================================
@@ -60,7 +62,6 @@
   fields. Zero sorries, zero axioms.
 -/
 
-import Gnosis.CompressionPolicyAtScale
 
 -- The parallel `TheoryRecursivelyFalsifies` module carries the
 -- `MeasurementProvenance` enum used to tag readings by sweep.

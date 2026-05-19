@@ -1,3 +1,8 @@
+import Gnosis.SpectralNoiseEquilibrium
+import Gnosis.InterferenceAsTheFifthForce
+import Gnosis.TemporaryNoise
+import Gnosis.PsychologyAsInterference
+
 /-
   DepressionAsDampedOscillation.lean
   ================================
@@ -10,10 +15,6 @@
   with energy bleeding away faster than it accumulates.
 -/
 
-import Gnosis.SpectralNoiseEquilibrium
-import Gnosis.InterferenceAsTheFifthForce
-import Gnosis.TemporaryNoise
-import Gnosis.PsychologyAsInterference
 
 namespace DepressionAsDampedOscillation
 

@@ -1,3 +1,6 @@
+import Gnosis.ConversationalDodgeball
+import Gnosis.UniversalIntelligenceSSM
+
 /-
   SelfTalk.lean
   =============
@@ -20,8 +23,6 @@
   - No Infinity: Guaranteed termination in the Fold.
 -/
 
-import Gnosis.ConversationalDodgeball
-import Gnosis.UniversalIntelligenceSSM
 
 namespace Gnosis
 namespace SelfTalk

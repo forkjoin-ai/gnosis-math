@@ -1,3 +1,8 @@
+import Init
+import Gnosis.RetrocausalDynamicsOfMarkets
+import Gnosis.InterferenceAsTheFifthForce
+import Gnosis.CopyStoreEraseCostStructure
+
 /-
   MarketDynamicsViaFiveForces.lean
   ================================
@@ -14,10 +19,6 @@
   enforces the order-book accounting and execution semantics.
 -/
 
-import Init
-import Gnosis.RetrocausalDynamicsOfMarkets
-import Gnosis.InterferenceAsTheFifthForce
-import Gnosis.CopyStoreEraseCostStructure
 
 
 namespace Gnosis

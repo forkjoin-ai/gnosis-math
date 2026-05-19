@@ -1,3 +1,9 @@
+import Gnosis.StructureInTension
+import Gnosis.MeshStandingWavePinning
+import Gnosis.Braided.BraidedInfinity
+import Gnosis.SpectralNoiseEquilibrium
+import Gnosis.WankelEngineTheorem
+
 /-
 # Cosmological Guitar String Theory
 
@@ -9,11 +15,6 @@ Any structural invariant on this string must manifest as a standing wave. Unboun
 energy is simply entropic noise; bounded energy forms the discrete frequencies of existence.
 -/
 
-import Gnosis.StructureInTension
-import Gnosis.MeshStandingWavePinning
-import Gnosis.Braided.BraidedInfinity
-import Gnosis.SpectralNoiseEquilibrium
-import Gnosis.WankelEngineTheorem
 
 namespace Gnosis
 namespace CosmologicalGuitarString

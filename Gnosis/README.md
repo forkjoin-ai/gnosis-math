@@ -122,6 +122,8 @@ group larger families of related claims.
 - [Civil](./Civil/README.md) - civil-engineering and transportation kernels,
   including queue flow, route equilibrium, and quasicrystal stoplight timing.
 - [EntropyBridge](./EntropyBridge/README.md) - entropy bridge modules.
+- [FiniteProbabilityCore](./FiniteProbabilityCore/README.md) - focused
+  implementation modules behind the native finite probability facade.
 - [GnosisMath](./GnosisMath/README.md) - internal Gnosis math support modules.
 - [GreekLogicCanon](./GreekLogicCanon/README.md) - Greek logic canon modules.
 

@@ -1,3 +1,6 @@
+import Init
+import Gnosis.InformationalPhysics
+
 /-
   InformationalPhysicsAlgebra.lean
   ================================
@@ -61,8 +64,6 @@
   `sorry`, zero new `axiom`. Closed numeric witnesses use `decide`.
 -/
 
-import Init
-import Gnosis.InformationalPhysics
 
 namespace InformationalPhysics
 

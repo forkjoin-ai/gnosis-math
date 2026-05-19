@@ -1,6 +1,5 @@
 import Init
 
-
 namespace MeshUniversalAmnesia
 
 def shuffle (_n : Nat) : Nat := 0 -- Every specific state collapses to the mean

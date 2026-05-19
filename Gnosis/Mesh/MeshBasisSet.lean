@@ -1,6 +1,5 @@
 import Init
 
-
 namespace MeshBasisSet
 
 def basisDimension : Nat := 5

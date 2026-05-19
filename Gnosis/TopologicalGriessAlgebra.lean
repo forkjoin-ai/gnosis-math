@@ -1,4 +1,5 @@
 import Gnosis.TopologicalLucasDynamics
+
 open TopologicalLucasDynamics
 
 namespace Gnosis

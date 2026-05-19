@@ -1,6 +1,5 @@
 import Init
 
-
 namespace MeshTransientFolding
 
 def foldingConfidence (d : Nat) : Nat :=

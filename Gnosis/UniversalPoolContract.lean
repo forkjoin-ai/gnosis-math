@@ -1,3 +1,5 @@
+import Init
+
 /-
   UniversalPoolContract.lean
   ==========================
@@ -22,7 +24,6 @@
   Zero `sorry`, zero new `axiom`. Country-church standard.
 -/
 
-import Init
 
 namespace UniversalPoolContract
 

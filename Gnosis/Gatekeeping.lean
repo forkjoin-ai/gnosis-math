@@ -1,3 +1,6 @@
+import Init
+import Gnosis.GameTheoreticProtocolDeficit
+
 /-
   Gatekeeping.lean
   =================
@@ -24,8 +27,6 @@
   God-formula payoffs, Skyrms convention metrics, and the ladder ordering witness.
 -/
 
-import Init
-import Gnosis.GameTheoreticProtocolDeficit
 
 namespace Gatekeeping
 

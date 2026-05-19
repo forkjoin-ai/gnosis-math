@@ -1,3 +1,6 @@
+import Gnosis.SpectralMeasurementFramework
+import Gnosis.AttentionAsConstructiveInterference
+
 /-
   AttentionWavePattern.lean
   ========================
@@ -12,8 +15,6 @@
   enabling extraction from real neural networks and optimization.
 -/
 
-import Gnosis.SpectralMeasurementFramework
-import Gnosis.AttentionAsConstructiveInterference
 
 namespace AttentionWavePattern
 

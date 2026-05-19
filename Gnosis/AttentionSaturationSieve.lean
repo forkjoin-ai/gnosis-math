@@ -1,3 +1,6 @@
+import Gnosis.SpectralMeasurementFramework
+import Gnosis.AttentionHeadSaturation
+
 /-
   AttentionSaturationSieve.lean
   ============================
@@ -11,8 +14,6 @@
   - Output constancy (should increase → repeated outputs)
 -/
 
-import Gnosis.SpectralMeasurementFramework
-import Gnosis.AttentionHeadSaturation
 
 namespace AttentionSaturationSieve
 

@@ -1,3 +1,7 @@
+import Init
+import Gnosis.InformationalPhysics
+import Gnosis.InformationalPhysicsCoverThomasAlternative
+
 /-
   InformationalPhysicsUnified.lean
   ================================
@@ -95,9 +99,6 @@
   `decide`. Section dividers `══`.
 -/
 
-import Init
-import Gnosis.InformationalPhysics
-import Gnosis.InformationalPhysicsCoverThomasAlternative
 
 namespace InformationalPhysicsUnified
 

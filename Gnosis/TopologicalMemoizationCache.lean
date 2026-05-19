@@ -1,7 +1,6 @@
 import Lean
 import Gnosis.EREPR_EnrichedEquality
 
-
 namespace Gnosis
 namespace TopologicalMemoization
 

@@ -1,3 +1,5 @@
+import Gnosis.CompressionUncertainty
+
 /-
   CompressionAsRetrocausalClosure.lean
   ====================================
@@ -36,7 +38,6 @@
   Zero sorries, zero axioms.
 -/
 
-import Gnosis.CompressionUncertainty
 
 namespace Gnosis
 namespace CompressionAsRetrocausalClosure

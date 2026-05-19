@@ -1,3 +1,7 @@
+import Gnosis.SkyrmsUltraLongRunEquilibrium
+import Gnosis.BuleIsValue
+import Gnosis.AmericanFrontier
+
 /-
   DepolarizationIsParetoImprovement.lean
   ======================================
@@ -99,9 +103,6 @@
   zero new `axiom`.
 -/
 
-import Gnosis.SkyrmsUltraLongRunEquilibrium
-import Gnosis.BuleIsValue
-import Gnosis.AmericanFrontier
 
 namespace DepolarizationIsParetoImprovement
 

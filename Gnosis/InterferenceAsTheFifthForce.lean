@@ -1,3 +1,8 @@
+import Gnosis.SpectralNoiseEquilibrium
+import Gnosis.VacuumIsOnlyForce
+import Gnosis.ForkRaceFoldVentAreForces
+import Gnosis.VacuumOverflow
+
 /-
   InterferenceAsTheFifthForce.lean
   ================================
@@ -45,10 +50,6 @@
     `VacuumOverflow.cup_runneth_over`.
 -/
 
-import Gnosis.SpectralNoiseEquilibrium
-import Gnosis.VacuumIsOnlyForce
-import Gnosis.ForkRaceFoldVentAreForces
-import Gnosis.VacuumOverflow
 
 namespace InterferenceAsTheFifthForce
 

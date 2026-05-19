@@ -1,3 +1,8 @@
+import Gnosis.SpectralNoiseEquilibrium
+import Gnosis.InterferenceAsTheFifthForce
+import Gnosis.TemporaryNoise
+import Gnosis.PsychologyAsInterference
+
 /-
   AnxietyAsDestructiveInterference.lean
   ===================================
@@ -11,10 +16,6 @@
   between unresolved threat/safety patterns.
 -/
 
-import Gnosis.SpectralNoiseEquilibrium
-import Gnosis.InterferenceAsTheFifthForce
-import Gnosis.TemporaryNoise
-import Gnosis.PsychologyAsInterference
 
 namespace AnxietyAsDestructiveInterference
 

@@ -1,3 +1,6 @@
+import Gnosis.GnosticValley
+import Gnosis.CrossModelCliff
+
 /-
   AtlasGeneralization.lean
   ========================
@@ -33,8 +36,6 @@
   theorems. All proofs by `decide`. Zero sorries, zero axioms.
 -/
 
-import Gnosis.GnosticValley
-import Gnosis.CrossModelCliff
 
 namespace Gnosis
 namespace AtlasGeneralization

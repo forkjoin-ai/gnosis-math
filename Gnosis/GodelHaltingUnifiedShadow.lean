@@ -1,3 +1,7 @@
+import Gnosis.KnotRopelengthComplexity
+import Gnosis.Braided.BraidedTower
+import Gnosis.SpectralNoiseEquilibrium
+
 /-
   Gödel Incompleteness + Halting Problem as Ropelength Invariants
   ================================================================
@@ -14,9 +18,6 @@
   No Mathlib. No axioms. No sorry.
 -/
 
-import Gnosis.KnotRopelengthComplexity
-import Gnosis.Braided.BraidedTower
-import Gnosis.SpectralNoiseEquilibrium
 
 namespace GodelHaltingUnifiedShadow
 

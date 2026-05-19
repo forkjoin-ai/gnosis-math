@@ -1,6 +1,5 @@
 import Init
 
-
 namespace Dewey200ThinTopology
 
 -- 210: Natural Theology (Environmental Base-Spaces)

@@ -1,3 +1,9 @@
+import Init
+import Gnosis.AchillesTortoiseLadder
+import Gnosis.GodFormula
+import Gnosis.InfinityPath
+import Gnosis.ZenosArrowWitness
+
 /-
   Lost coin (Luke 15:8–10): ten silver coins, one lost — lamp, sweep, search, find,
   rejoicing. **`Nat` mnemonic `9 + 1 = 10`** mirrors **`LostSheepParableWitness`**
@@ -21,11 +27,6 @@
   `prospectTheoryStragglerSearchFaceValueRational`.
 -/
 
-import Init
-import Gnosis.AchillesTortoiseLadder
-import Gnosis.GodFormula
-import Gnosis.InfinityPath
-import Gnosis.ZenosArrowWitness
 
 namespace LostCoinParableWitness
 

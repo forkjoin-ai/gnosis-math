@@ -1,3 +1,7 @@
+import Gnosis.UniversalIntelligenceSSM
+import Gnosis.ConsciousnessAsInnerVent
+import Gnosis.LifecycleAsForkRaceFoldVentInterfere
+
 /-
   UniversalIntelligenceSSMConscious.lean
   ======================================
@@ -23,9 +27,6 @@
   Init-only otherwise. Zero sorries, zero axioms.
 -/
 
-import Gnosis.UniversalIntelligenceSSM
-import Gnosis.ConsciousnessAsInnerVent
-import Gnosis.LifecycleAsForkRaceFoldVentInterfere
 
 namespace Gnosis
 namespace UniversalIntelligenceSSMConscious

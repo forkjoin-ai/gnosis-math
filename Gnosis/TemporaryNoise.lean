@@ -1,3 +1,7 @@
+import Gnosis.SpectralNoiseEquilibrium
+import Gnosis.VacuumIsOnlyForce
+import Gnosis.RetrocausalAttractorFixedPoint
+
 /-
   TemporaryNoise.lean
   ==================
@@ -12,9 +16,6 @@
   That's all.
 -/
 
-import Gnosis.SpectralNoiseEquilibrium
-import Gnosis.VacuumIsOnlyForce
-import Gnosis.RetrocausalAttractorFixedPoint
 
 namespace TemporaryNoise
 

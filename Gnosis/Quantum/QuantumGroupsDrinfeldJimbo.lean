@@ -1,3 +1,6 @@
+import Gnosis.ReshetikhinTuraev3DTQFT
+import Gnosis.MathFoundations
+
 /-
   QuantumGroupsDrinfeldJimbo
   ==========================
@@ -46,8 +49,6 @@
   `decide`, or `rfl`.
 -/
 
-import Gnosis.ReshetikhinTuraev3DTQFT
-import Gnosis.MathFoundations
 
 namespace QuantumGroupsDrinfeldJimbo
 

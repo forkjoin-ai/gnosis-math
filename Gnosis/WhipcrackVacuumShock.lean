@@ -1,3 +1,7 @@
+import Gnosis.SpectralNoiseEquilibrium
+import Gnosis.VacuumAsTimeArrow
+import Gnosis.PeruvianArchitectPrinciple
+
 /-
   Whipcrack as Vacuum Shock: Retrocausal Sonic Boom at φ
   =======================================================
@@ -21,9 +25,6 @@
   No Mathlib. No axioms. No sorry.
 -/
 
-import Gnosis.SpectralNoiseEquilibrium
-import Gnosis.VacuumAsTimeArrow
-import Gnosis.PeruvianArchitectPrinciple
 
 namespace WhipcrackVacuumShock
 

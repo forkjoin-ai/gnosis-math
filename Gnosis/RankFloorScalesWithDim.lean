@@ -1,3 +1,7 @@
+import Gnosis.AtlasMassConservation
+import Gnosis.CrossModelOperationalGap
+import Gnosis.CliffCapacityBridge
+
 /-
   RankFloorScalesWithDim.lean
   ===========================
@@ -55,9 +59,6 @@
   zero axioms.
 -/
 
-import Gnosis.AtlasMassConservation
-import Gnosis.CrossModelOperationalGap
-import Gnosis.CliffCapacityBridge
 
 namespace Gnosis
 namespace RankFloorScalesWithDim

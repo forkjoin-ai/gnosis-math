@@ -1,7 +1,6 @@
 import Init
 import Gnosis.ArrowBuleDeficit
 
-
 /-!
 # Mesh Critical Thresholds — Markov Cutoff Topology
 

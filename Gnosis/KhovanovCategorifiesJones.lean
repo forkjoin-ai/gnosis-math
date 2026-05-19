@@ -1,3 +1,6 @@
+import Init
+import Gnosis.ReshetikhinTuraev3DTQFT
+
 /-
   KhovanovCategorifiesJones
   =========================
@@ -51,8 +54,6 @@
   Closed constructively under the strict chapel audit.
 -/
 
-import Init
-import Gnosis.ReshetikhinTuraev3DTQFT
 
 namespace KhovanovCategorifiesJones
 

@@ -1,3 +1,7 @@
+import Gnosis.SpectralNoiseEquilibrium
+import Gnosis.VacuumAsTimeArrow
+import Gnosis.WhipcrackVacuumShock
+
 /-
   The Vacuum is the Only Force: All Physics Reduces to Retrocausal Time
   =====================================================================
@@ -16,9 +20,6 @@
   No Mathlib. No axioms. No sorry.
 -/
 
-import Gnosis.SpectralNoiseEquilibrium
-import Gnosis.VacuumAsTimeArrow
-import Gnosis.WhipcrackVacuumShock
 
 namespace VacuumIsOnlyForce
 

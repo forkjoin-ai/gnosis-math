@@ -1,3 +1,8 @@
+import Gnosis.RetractLatticePattern
+import Gnosis.HomomorphismLatticePattern
+import Gnosis.AxisCardinalityFoldPattern
+import Gnosis.StrictRefinementLatticePattern
+
 /-
   PatternAtlas.lean
   =================
@@ -18,10 +23,6 @@
   Zero `sorry`, zero new `axiom`.
 -/
 
-import Gnosis.RetractLatticePattern
-import Gnosis.HomomorphismLatticePattern
-import Gnosis.AxisCardinalityFoldPattern
-import Gnosis.StrictRefinementLatticePattern
 
 namespace PatternAtlas
 

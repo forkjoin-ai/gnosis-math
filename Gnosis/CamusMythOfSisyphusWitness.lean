@@ -1,3 +1,5 @@
+import Init
+
 /-
   CamusMythOfSisyphusWitness.lean
   ==============================
@@ -31,7 +33,6 @@
   Init only. Zero `sorry`, zero new `axiom`.
 -/
 
-import Init
 
 namespace CamusMythOfSisyphusWitness
 

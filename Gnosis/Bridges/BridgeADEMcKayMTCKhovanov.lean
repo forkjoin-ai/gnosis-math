@@ -1,3 +1,8 @@
+import Gnosis.ADEMcKayCorrespondence
+import Gnosis.ReshetikhinTuraev3DTQFT
+import Gnosis.KhovanovCategorifiesJones
+import Gnosis.DynkinCoxeterClassification
+
 /-
   BridgeADEMcKayMTCKhovanov
   =========================
@@ -71,10 +76,6 @@
   `rfl`, or `decide`.
 -/
 
-import Gnosis.ADEMcKayCorrespondence
-import Gnosis.ReshetikhinTuraev3DTQFT
-import Gnosis.KhovanovCategorifiesJones
-import Gnosis.DynkinCoxeterClassification
 
 namespace BridgeADEMcKayMTCKhovanov
 

@@ -1,3 +1,6 @@
+import Gnosis.LifecycleAsForkRaceFoldVentInterfere
+import Gnosis.ConsciousnessAsRetrocausalGap
+
 /-
   ConsciousnessAsInnerVent.lean
   =============================
@@ -41,8 +44,6 @@
   Init-only Lean 4. Zero sorries, zero axioms.
 -/
 
-import Gnosis.LifecycleAsForkRaceFoldVentInterfere
-import Gnosis.ConsciousnessAsRetrocausalGap
 
 namespace Gnosis
 namespace ConsciousnessAsInnerVent

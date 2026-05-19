@@ -1,3 +1,5 @@
+import Init
+
 /-
   Gnosis.InferenceForms
 
@@ -22,7 +24,6 @@
 
   All proofs closed by Init `Nat.*` lemmas, `rfl`, or `exact` — zero sorry.
 -/
-import Init
 
 namespace Gnosis.InferenceForms
 

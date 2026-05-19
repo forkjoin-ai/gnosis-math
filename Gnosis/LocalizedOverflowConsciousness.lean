@@ -1,3 +1,10 @@
+import Gnosis.TraumaSpectralSieve
+import Gnosis.DepressionSpectralSieve
+import Gnosis.InformationCompressionSieve
+import Gnosis.ConsciousnessAsRetrocausalGap
+import Gnosis.PsychologyAsInterference
+import Gnosis.AnxietySpectralSieve
+
 /-
   LocalizedOverflowConsciousness.lean
   ==================================
@@ -29,12 +36,6 @@
   defect: too much tint *vs.* missing reason-chart next to feeling.
 -/
 
-import Gnosis.TraumaSpectralSieve
-import Gnosis.DepressionSpectralSieve
-import Gnosis.InformationCompressionSieve
-import Gnosis.ConsciousnessAsRetrocausalGap
-import Gnosis.PsychologyAsInterference
-import Gnosis.AnxietySpectralSieve
 
 namespace LocalizedOverflowConsciousness
 

@@ -1,3 +1,7 @@
+import Gnosis.EchoChamberAsTaoBowl
+import Gnosis.VibesAsWaveInference
+import Gnosis.VibesHotellingVoting
+
 /-
   ThoughtBowlMechanics.lean
   =========================
@@ -71,9 +75,6 @@
   `Gnosis.VibesHotellingVoting`. Zero `sorry`, zero new `axiom`.
 -/
 
-import Gnosis.EchoChamberAsTaoBowl
-import Gnosis.VibesAsWaveInference
-import Gnosis.VibesHotellingVoting
 
 namespace ThoughtBowlMechanics
 

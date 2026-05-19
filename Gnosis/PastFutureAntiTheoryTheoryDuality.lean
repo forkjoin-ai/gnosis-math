@@ -1,3 +1,6 @@
+import Gnosis.AntiTheory
+import Gnosis.TheoryAsComplement
+
 /-
   PastFutureAntiTheoryTheoryDuality.lean
   ======================================
@@ -42,8 +45,6 @@
   Init-only Lean 4. Zero sorries, zero axioms.
 -/
 
-import Gnosis.AntiTheory
-import Gnosis.TheoryAsComplement
 
 namespace Gnosis
 namespace PastFutureAntiTheoryTheoryDuality

@@ -1,3 +1,5 @@
+import Gnosis.HaltingProblemShadow
+
 /-
   BusyBeaverShadow
   ================
@@ -82,7 +84,6 @@
   No axioms, no `sorry`.
 -/
 
-import Gnosis.HaltingProblemShadow
 
 namespace BusyBeaverShadow
 

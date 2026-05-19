@@ -1,3 +1,5 @@
+import Init
+
 /-
   CohenAnthemWitness.lean
   =======================
@@ -38,7 +40,6 @@
   Init only. Zero `sorry`, zero new `axiom`.
 -/
 
-import Init
 
 namespace CohenAnthemWitness
 

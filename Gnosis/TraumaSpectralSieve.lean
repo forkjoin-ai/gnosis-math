@@ -1,3 +1,7 @@
+import Gnosis.SpectralMeasurementFramework
+import Gnosis.TraumaAsStandingWave
+import Gnosis.TemporaryNoise
+
 /-
   TraumaSpectralSieve.lean
   =======================
@@ -9,9 +13,6 @@
   calibration still carries the stronger Float-bound interpretation.
 -/
 
-import Gnosis.SpectralMeasurementFramework
-import Gnosis.TraumaAsStandingWave
-import Gnosis.TemporaryNoise
 
 namespace TraumaSpectralSieve
 

@@ -1,3 +1,5 @@
+import Init
+
 /-
   WhitneyBlock.lean
   =================
@@ -12,7 +14,6 @@
   Style: Rustic Church (Init-only).
 -/
 
-import Init
 
 namespace Gnosis.Civil
 

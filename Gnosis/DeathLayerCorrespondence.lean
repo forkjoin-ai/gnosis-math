@@ -1,3 +1,5 @@
+import Gnosis.InformationalPhysics
+
 /-
   DeathLayerCorrespondence.lean
   =============================
@@ -82,7 +84,6 @@
   `decide`. Proofs lean on `cases <;> rfl` over the finite enums.
 -/
 
-import Gnosis.InformationalPhysics
 
 namespace DeathLayerCorrespondence
 

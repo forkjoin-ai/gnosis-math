@@ -1,3 +1,5 @@
+import Init
+
 /-
   ThreeGorgesScaleMismatchWitness.lean
   ====================================
@@ -28,7 +30,6 @@
   Init only. Zero `sorry`, zero new `axiom`.
 -/
 
-import Init
 
 namespace ThreeGorgesScaleMismatchWitness
 

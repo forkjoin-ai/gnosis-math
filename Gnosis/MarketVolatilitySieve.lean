@@ -1,3 +1,6 @@
+import Gnosis.SpectralMeasurementFramework
+import Gnosis.OrderbookAsInterference
+
 /-
   MarketVolatilitySieve.lean
   =========================
@@ -9,8 +12,6 @@
   detection.
 -/
 
-import Gnosis.SpectralMeasurementFramework
-import Gnosis.OrderbookAsInterference
 
 namespace MarketVolatilitySieve
 

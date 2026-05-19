@@ -1,3 +1,5 @@
+import Init
+
 /-
 Final short-file closure note: this file was one of the last two modules below
 twenty lines after the first two review passes. It remains intentionally small,
@@ -11,7 +13,6 @@ not a collapse placeholder: it exposes a finite Lean surface that participates
 in the strict a0 formal and chapel gates while satisfying the strict chapel proof-style gate.
 -/
 
-import Init
 
 namespace MoonshotAestheticHypergraphSingularity
 

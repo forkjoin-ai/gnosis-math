@@ -1,3 +1,6 @@
+import Gnosis.CompressionUncertainty
+import Gnosis.GnosticValley
+
 /-
   InformationCapacity.lean
   ========================
@@ -41,8 +44,6 @@
   Init-only otherwise. Zero sorries, zero axioms.
 -/
 
-import Gnosis.CompressionUncertainty
-import Gnosis.GnosticValley
 
 namespace Gnosis
 namespace InformationCapacity

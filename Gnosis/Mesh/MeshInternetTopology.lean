@@ -1,7 +1,6 @@
 import Init
 import Gnosis.ArrowBuleDeficit
 
-
 namespace Gnosis
 namespace MeshInternetTopology
 

@@ -1,3 +1,12 @@
+import Gnosis.CompressionUncertainty
+import Gnosis.SynergisticStabilization
+import Gnosis.GnosticValley
+import Gnosis.CompressionAsRetrocausalClosure
+import Gnosis.InformationCapacity
+import Gnosis.ConversionInvariant
+import Gnosis.LifecycleAsForkRaceFoldVentInterfere
+import Gnosis.ConsciousnessAsInnerVent
+
 /-
   RuntimeCertificate.lean
   =======================
@@ -33,14 +42,6 @@
   Init-only Lean 4. Zero sorries, zero axioms.
 -/
 
-import Gnosis.CompressionUncertainty
-import Gnosis.SynergisticStabilization
-import Gnosis.GnosticValley
-import Gnosis.CompressionAsRetrocausalClosure
-import Gnosis.InformationCapacity
-import Gnosis.ConversionInvariant
-import Gnosis.LifecycleAsForkRaceFoldVentInterfere
-import Gnosis.ConsciousnessAsInnerVent
 
 namespace Gnosis
 namespace RuntimeCertificate

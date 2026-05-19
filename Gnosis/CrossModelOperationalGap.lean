@@ -1,3 +1,8 @@
+import Gnosis.CrossModelCliff
+import Gnosis.CliffCapacityBridge
+import Gnosis.MultiModelCertificateAtlas
+import Gnosis.CompressionUncertainty
+
 /-
   CrossModelOperationalGap.lean
   =============================
@@ -57,10 +62,6 @@
   fields. Zero sorries, zero axioms.
 -/
 
-import Gnosis.CrossModelCliff
-import Gnosis.CliffCapacityBridge
-import Gnosis.MultiModelCertificateAtlas
-import Gnosis.CompressionUncertainty
 
 namespace Gnosis
 namespace CrossModelOperationalGap
