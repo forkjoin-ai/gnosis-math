@@ -1,0 +1,24 @@
+# Hermetic Witnesses
+
+[Parent](../README.md)
+
+Lean witnesses extracted from Hermetic source documents. New Hermetic witnesses should be added in this directory and imported as `Gnosis.Witnesses.Hermetic.<Module>`.
+
+## Witnesses
+
+- `KybalionTransmissionWitness`: `docs/ebooks/source-texts/kybalion-three-initiates.txt`, introduction, guarded transmission as readiness matching, Master-Key reconciliation, anti-mass-disclosure constraint, and Cause/Effect attraction between lips and ears.
+- `KybalionHermeticPhilosophyWitness`: `docs/ebooks/source-texts/kybalion-three-initiates.txt`, chapter 1, Hermes as source-lineage witness, secret/sealed teaching, anti-creed preservation, and mental alchemy as transmutation of mental vibration rather than merely material metal.
+- `KybalionSevenPrinciplesWitness`: `docs/ebooks/source-texts/kybalion-three-initiates.txt`, chapter 2, the seven Hermetic principles as a compact operating ledger: Mentalism, Correspondence, Vibration, Polarity, Rhythm, Cause/Effect, and Gender, including explicit cautions against degraded misuse.
+- `KybalionMentalTransmutationWitness`: `docs/ebooks/source-texts/kybalion-three-initiates.txt`, chapter 3, mental transmutation as practical mental alchemy, polarity as the key to state change, and force usable in opposite directions.
+- `KybalionAllUnknowableWitness`: `docs/ebooks/source-texts/kybalion-three-initiates.txt`, chapter 4, The All as unknowable substantial reality, beyond naming and anthropomorphic theology, with reason reporting infinity, absoluteness, immutability, and living mind.
+- `KybalionMentalUniverseWitness`: `docs/ebooks/source-texts/kybalion-three-initiates.txt`, chapter 5, the universe held in the Mind of The All, relative-but-practical reality, mental power as natural force, and transmutation rather than denial.
+- `KybalionDivineParadoxWitness`: `docs/ebooks/source-texts/kybalion-three-initiates.txt`, chapter 6, the divine paradox that the finite universe is not The All but remains real on its plane; half-wise dream-denial is rejected in favor of using higher law against lower law.
+- `KybalionAllInAllWitness`: `docs/ebooks/source-texts/kybalion-three-initiates.txt`, chapter 7, All in The All and The All in all, immanence without identity collapse, rejected "I am The All" overclaim, involution/evolution, return-home arc, and closed-lips boundary around the why of creation.
+- `KybalionPlanesCorrespondenceWitness`: `docs/ebooks/source-texts/kybalion-three-initiates.txt`, chapter 8, planes as vibration-degree groupings, correspondence across physical/mental/spiritual scales, matter as low-vibration energy, and guarded handling of higher-plane knowledge.
+- `KybalionVibrationScaleWitness`: `docs/ebooks/source-texts/kybalion-three-initiates.txt`, chapter 9, nothing at rest, differences as vibration rates, apparent stillness at scale extremes, mental states as vibrations, and mastery by vibration change.
+- `KybalionPolarityTransmutationWitness`: `docs/ebooks/source-texts/kybalion-three-initiates.txt`, chapter 10, opposites as same-scale degree differences, paradox reconciliation, love/hate and good/evil polarity, and willful pole-shift as mental alchemy.
+- `KybalionRhythmNeutralizationWitness`: `docs/ebooks/source-texts/kybalion-three-initiates.txt`, chapter 11, pendulum rhythm, compensation, higher-plane neutralization, negative swing below consciousness, and will standing above mood cycles.
+- `KybalionCausationLawWitness`: `docs/ebooks/source-texts/kybalion-three-initiates.txt`, chapter 12, cause/effect continuity, chance as unrecognized law, event-chain causation, free/bound as polarity, willing-to-will, and higher law ruling lower law.
+- `KybalionGenderCreationWitness`: `docs/ebooks/source-texts/kybalion-three-initiates.txt`, chapter 13, Gender as a creative principle across planes, sex as one physical-plane manifestation, the feminine pole as active generation rather than weakness, paired creation, and explicit rejection of degraded misuse.
+- `KybalionMentalGenderWitness`: `docs/ebooks/source-texts/kybalion-three-initiates.txt`, chapter 14, the `I`/`Me` split, `Me` as mental womb, `I` as will-witness, correspondence with creation, suggestion as implanted seed-thought, and inactive Will as the exploitable gap.
+- `KybalionAxiomsUseWitness`: `docs/ebooks/source-texts/kybalion-three-initiates.txt`, chapter 15, use as the proof of knowledge, Will-directed Attention, polarity substitution, rhythm neutralization by counterbalance, higher causation over lower causation, and players rather than pawns.

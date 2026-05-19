@@ -140,4 +140,33 @@ no-hidden-defect theorem.
 is the lintable adapter contract for this interface. It ties each Lean adapter
 name to its TypeScript runtime domain name and residual fields, and can be
 checked from the repo root with
-`pnpm run gnode -- run scripts/check-bounded-witness-contract.ts`.
+`node scripts/check-bounded-witness-contract.mjs` or the repo-owned target
+`pnpm run a0 -- run open-source-gnosis-math:bounded-witness-contract`.
+
+The same rows are mirrored inside Lean as
+`boundedWitnessAdapterContractEntries`. Theorems such as
+`bounded_witness_adapter_contract_queue_domain` prove that the contract row for
+each Lean adapter resolves to the adapter's canonical runtime domain, while
+`bounded_witness_adapter_certificate_witness_matches_shadow` proves every
+adapter-generated certificate carries the same residual as its theorem witness.
+That closes the loop: Lean owns the certificate invariant, JSON owns the
+cross-language row artifact, and `a0` fails when the TypeScript runtime metadata
+drifts from either.
+
+`BoundedWitnessRegistryEntry` lifts those rows into a typed finite registry: a
+contract row plus the certificate it emits, a proof that the row resolves to the
+adapter's runtime domain, and a proof that the certificate witness matches the
+residual shadow. `boundedWitnessRegistryToPipeline` derives an accepted
+`RuntimeBoundedWitnessPipeline` from any such registry once the summed residual
+fits the observer budget. The canonical workflow now flows through
+`boundedWitnessWorkflowExampleRegistry`, so the queue-to-finite-approximation
+pipeline is generated from registered bounded runtime surfaces rather than a
+separate hand-maintained witness list.
+
+`BoundedWitnessDomain` is the finite enum for the current canonical bounded
+runtime universe. `boundedWitnessDomains` lists all five cases, and
+`BoundedWitnessDomain.contractEntry` derives the canonical contract row for
+each case. `bounded_witness_workflow_example_registry_complete` proves the
+example registry covers exactly that finite domain list; adding a new canonical
+surface now has one obvious proof obligation: extend the enum, contract row,
+runtime metadata, registry certificate, and `a0` contract check together.

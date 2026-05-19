@@ -34,6 +34,18 @@
         "cwd": "."
       }
     },
+    "bounded-witness-contract": {
+      "executor": "a0:run-commands",
+      "inputs": [
+        "{workspaceRoot}/scripts/check-bounded-witness-contract.mjs",
+        "{workspaceRoot}/open-source/gnosis-math/Gnosis/FiniteProbabilityCore/bounded_witness_adapter_contract.json",
+        "{workspaceRoot}/open-source/aeon-logic/src/bounded-witness.ts"
+      ],
+      "options": {
+        "command": "node scripts/check-bounded-witness-contract.mjs",
+        "cwd": "."
+      }
+    },
     "github:push": {
       "executor": "a0:run-commands",
       "options": {

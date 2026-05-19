@@ -660,10 +660,201 @@ theorem finite_approximation_bounded_witness_shadow_covered
   runtime_bounded_witness_shadow_covered
     (finiteApproximationBoundedWitness observedSurface state observerBudget haccepted)
 
+/-! ## Bounded-witness adapter contract rows -/
+
+structure BoundedWitnessAdapterContractEntry where
+  leanName : String
+  runtimeDomain : String
+  residualFieldCount : Nat
+  deriving Repr, DecidableEq
+
+inductive BoundedWitnessDomain where
+  | queue
+  | thermodynamic
+  | meshRouting
+  | attention
+  | finiteApproximation
+  deriving Repr, DecidableEq
+
+def boundedWitnessDomains : List BoundedWitnessDomain :=
+  [ .queue, .thermodynamic, .meshRouting, .attention, .finiteApproximation ]
+
+theorem bounded_witness_domain_count :
+    boundedWitnessDomains.length = 5 := by
+  rfl
+
+def BoundedWitnessDomain.contractEntry :
+    BoundedWitnessDomain → BoundedWitnessAdapterContractEntry
+  | .queue =>
+      { leanName := "queueBoundedWitnessAdapter"
+        runtimeDomain := queueBoundedWitnessAdapter.domainName
+        residualFieldCount := 2 }
+  | .thermodynamic =>
+      { leanName := "thermodynamicBoundedWitnessAdapter"
+        runtimeDomain := thermodynamicBoundedWitnessAdapter.domainName
+        residualFieldCount := 2 }
+  | .meshRouting =>
+      { leanName := "meshRoutingBoundedWitnessAdapter"
+        runtimeDomain := meshRoutingBoundedWitnessAdapter.domainName
+        residualFieldCount := 2 }
+  | .attention =>
+      { leanName := "attentionBoundedWitnessAdapter"
+        runtimeDomain := attentionBoundedWitnessAdapter.domainName
+        residualFieldCount := 2 }
+  | .finiteApproximation =>
+      { leanName := "finiteApproximationBoundedWitnessAdapter"
+        runtimeDomain := finiteApproximationBoundedWitnessAdapter.domainName
+        residualFieldCount := 2 }
+
+def boundedWitnessAdapterContractEntries :
+    List BoundedWitnessAdapterContractEntry :=
+  boundedWitnessDomains.map (fun domain => domain.contractEntry)
+
+theorem bounded_witness_adapter_contract_entry_count :
+    boundedWitnessAdapterContractEntries.length = 5 := by
+  rfl
+
+theorem bounded_witness_adapter_contract_entries_cover_domains :
+    boundedWitnessAdapterContractEntries.length = boundedWitnessDomains.length := by
+  rfl
+
+theorem bounded_witness_adapter_contract_all_binary_residuals :
+    boundedWitnessAdapterContractEntries.all
+      (fun entry => entry.residualFieldCount == 2) = true := by
+  rfl
+
+theorem bounded_witness_domain_contract_entry_binary
+    (domain : BoundedWitnessDomain) :
+    domain.contractEntry.residualFieldCount = 2 := by
+  cases domain <;> rfl
+
+def boundedWitnessAdapterRuntimeDomainByLeanName
+    (leanName : String) : Option String :=
+  (boundedWitnessAdapterContractEntries.find?
+    (fun entry => entry.leanName == leanName)).map
+      (fun entry => entry.runtimeDomain)
+
+theorem bounded_witness_adapter_contract_queue_domain :
+    boundedWitnessAdapterRuntimeDomainByLeanName
+      "queueBoundedWitnessAdapter" =
+        some queueBoundedWitnessAdapter.domainName := by
+  rfl
+
+theorem bounded_witness_adapter_contract_thermodynamic_domain :
+    boundedWitnessAdapterRuntimeDomainByLeanName
+      "thermodynamicBoundedWitnessAdapter" =
+        some thermodynamicBoundedWitnessAdapter.domainName := by
+  rfl
+
+theorem bounded_witness_adapter_contract_mesh_routing_domain :
+    boundedWitnessAdapterRuntimeDomainByLeanName
+      "meshRoutingBoundedWitnessAdapter" =
+        some meshRoutingBoundedWitnessAdapter.domainName := by
+  rfl
+
+theorem bounded_witness_adapter_contract_attention_domain :
+    boundedWitnessAdapterRuntimeDomainByLeanName
+      "attentionBoundedWitnessAdapter" =
+        some attentionBoundedWitnessAdapter.domainName := by
+  rfl
+
+theorem bounded_witness_adapter_contract_finite_approximation_domain :
+    boundedWitnessAdapterRuntimeDomainByLeanName
+      "finiteApproximationBoundedWitnessAdapter" =
+        some finiteApproximationBoundedWitnessAdapter.domainName := by
+  rfl
+
+def BoundedWitnessDomain.runtimeDomain :
+    BoundedWitnessDomain → String
+  | .queue => queueBoundedWitnessAdapter.domainName
+  | .thermodynamic => thermodynamicBoundedWitnessAdapter.domainName
+  | .meshRouting => meshRoutingBoundedWitnessAdapter.domainName
+  | .attention => attentionBoundedWitnessAdapter.domainName
+  | .finiteApproximation => finiteApproximationBoundedWitnessAdapter.domainName
+
+theorem bounded_witness_domain_contract_runtime_domain
+    (domain : BoundedWitnessDomain) :
+    domain.contractEntry.runtimeDomain = domain.runtimeDomain := by
+  cases domain <;> rfl
+
+theorem bounded_witness_domain_contract_lookup
+    (domain : BoundedWitnessDomain) :
+    boundedWitnessAdapterRuntimeDomainByLeanName
+      domain.contractEntry.leanName =
+        some domain.contractEntry.runtimeDomain := by
+  cases domain <;> rfl
+
+theorem bounded_witness_adapter_certificate_witness_matches_shadow
+    {State : Type}
+    (adapter : BoundedWitnessAdapter State)
+    (observedSurface : Nat)
+    (state : State)
+    (observerBudget : Nat)
+    (haccepted : adapter.residual state ≤ observerBudget) :
+    (adapter.toWitness observedSurface state observerBudget haccepted).theoremWitness =
+      (adapter.toWitness observedSurface state observerBudget haccepted).residualShadow := by
+  rfl
+
+structure BoundedWitnessRegistryEntry where
+  domain : BoundedWitnessDomain
+  contract : BoundedWitnessAdapterContractEntry
+  certificate : RuntimeBoundedWitnessCertificate
+  contractMatchesDomain : contract = domain.contractEntry
+  domainMatches :
+    boundedWitnessAdapterRuntimeDomainByLeanName contract.leanName =
+      some contract.runtimeDomain
+  witnessMatchesShadow :
+    certificate.theoremWitness = certificate.residualShadow
+  deriving Repr
+
+def BoundedWitnessRegistryEntry.accepted
+    (entry : BoundedWitnessRegistryEntry) :
+    entry.certificate.residualShadow ≤ entry.certificate.observerBudget :=
+  entry.certificate.accepted
+
+def boundedWitnessRegistryDomains
+    (registry : List BoundedWitnessRegistryEntry) :
+    List BoundedWitnessDomain :=
+  registry.map (fun entry => entry.domain)
+
+def boundedWitnessRegistryCertificates
+    (registry : List BoundedWitnessRegistryEntry) :
+    List RuntimeBoundedWitnessCertificate :=
+  registry.map (fun entry => entry.certificate)
+
+theorem bounded_witness_registry_certificates_length
+    (registry : List BoundedWitnessRegistryEntry) :
+    (boundedWitnessRegistryCertificates registry).length = registry.length := by
+  simp [boundedWitnessRegistryCertificates]
+
+def boundedWitnessRegistryResidual
+    (registry : List BoundedWitnessRegistryEntry) : Nat :=
+  runtimeBoundedWitnessPipelineResidual
+    (boundedWitnessRegistryCertificates registry)
+
+def boundedWitnessRegistryToPipeline
+    (registry : List BoundedWitnessRegistryEntry)
+    (observerBudget : Nat)
+    (haccepted : boundedWitnessRegistryResidual registry ≤ observerBudget) :
+    RuntimeBoundedWitnessPipeline :=
+  { witnesses := boundedWitnessRegistryCertificates registry
+    residualShadow := boundedWitnessRegistryResidual registry
+    observerBudget := observerBudget
+    residualAccounts := rfl
+    accepted := haccepted }
+
+theorem bounded_witness_registry_pipeline_residual
+    (registry : List BoundedWitnessRegistryEntry)
+    (observerBudget : Nat)
+    (haccepted : boundedWitnessRegistryResidual registry ≤ observerBudget) :
+    (boundedWitnessRegistryToPipeline registry observerBudget haccepted).residualShadow =
+      boundedWitnessRegistryResidual registry := by
+  rfl
+
 /-! ## End-to-end bounded workflow example -/
 
-def boundedWitnessWorkflowExamplePipeline :
-    RuntimeBoundedWitnessPipeline :=
+def boundedWitnessWorkflowExampleRegistry :
+    List BoundedWitnessRegistryEntry :=
   let queue :=
     queueBoundedWitness 1
       { backlog := 7, serviceDebt := 3 } 33 (by native_decide)
@@ -679,15 +870,97 @@ def boundedWitnessWorkflowExamplePipeline :
   let approximation :=
     finiteApproximationBoundedWitness 1
       { discretizationError := 4, truncationError := 2 } 33 (by native_decide)
-  { witnesses := [queue, thermo, mesh, attention, approximation]
-    residualShadow := 33
-    observerBudget := 33
-    residualAccounts := by native_decide
-    accepted := Nat.le_refl 33 }
+  [ { domain := .queue
+      contract := BoundedWitnessDomain.queue.contractEntry
+      certificate := queue
+      contractMatchesDomain := rfl
+      domainMatches := bounded_witness_adapter_contract_queue_domain
+      witnessMatchesShadow := by rfl },
+    { domain := .thermodynamic
+      contract := BoundedWitnessDomain.thermodynamic.contractEntry
+      certificate := thermo
+      contractMatchesDomain := rfl
+      domainMatches := bounded_witness_adapter_contract_thermodynamic_domain
+      witnessMatchesShadow := by rfl },
+    { domain := .meshRouting
+      contract := BoundedWitnessDomain.meshRouting.contractEntry
+      certificate := mesh
+      contractMatchesDomain := rfl
+      domainMatches := bounded_witness_adapter_contract_mesh_routing_domain
+      witnessMatchesShadow := by rfl },
+    { domain := .attention
+      contract := BoundedWitnessDomain.attention.contractEntry
+      certificate := attention
+      contractMatchesDomain := rfl
+      domainMatches := bounded_witness_adapter_contract_attention_domain
+      witnessMatchesShadow := by rfl },
+    { domain := .finiteApproximation
+      contract := BoundedWitnessDomain.finiteApproximation.contractEntry
+      certificate := approximation
+      contractMatchesDomain := rfl
+      domainMatches :=
+        bounded_witness_adapter_contract_finite_approximation_domain
+      witnessMatchesShadow := by rfl } ]
+
+theorem bounded_witness_workflow_example_registry_length :
+    boundedWitnessWorkflowExampleRegistry.length = 5 := by
+  rfl
+
+theorem bounded_witness_workflow_example_registry_domains :
+    boundedWitnessRegistryDomains boundedWitnessWorkflowExampleRegistry =
+      boundedWitnessDomains := by
+  rfl
+
+theorem bounded_witness_workflow_example_registry_covers_queue :
+    BoundedWitnessDomain.queue ∈
+      boundedWitnessRegistryDomains boundedWitnessWorkflowExampleRegistry := by
+  native_decide
+
+theorem bounded_witness_workflow_example_registry_covers_thermodynamic :
+    BoundedWitnessDomain.thermodynamic ∈
+      boundedWitnessRegistryDomains boundedWitnessWorkflowExampleRegistry := by
+  native_decide
+
+theorem bounded_witness_workflow_example_registry_covers_mesh_routing :
+    BoundedWitnessDomain.meshRouting ∈
+      boundedWitnessRegistryDomains boundedWitnessWorkflowExampleRegistry := by
+  native_decide
+
+theorem bounded_witness_workflow_example_registry_covers_attention :
+    BoundedWitnessDomain.attention ∈
+      boundedWitnessRegistryDomains boundedWitnessWorkflowExampleRegistry := by
+  native_decide
+
+theorem bounded_witness_workflow_example_registry_covers_finite_approximation :
+    BoundedWitnessDomain.finiteApproximation ∈
+      boundedWitnessRegistryDomains boundedWitnessWorkflowExampleRegistry := by
+  native_decide
+
+theorem bounded_witness_workflow_example_registry_complete :
+    boundedWitnessRegistryDomains boundedWitnessWorkflowExampleRegistry =
+      boundedWitnessDomains := by
+  rfl
+
+theorem bounded_witness_workflow_example_registry_residual :
+    boundedWitnessRegistryResidual boundedWitnessWorkflowExampleRegistry = 33 := by
+  native_decide
+
+def boundedWitnessWorkflowExampleRegistryPipeline :
+    RuntimeBoundedWitnessPipeline :=
+  boundedWitnessRegistryToPipeline
+    boundedWitnessWorkflowExampleRegistry 33 (by native_decide)
+
+def boundedWitnessWorkflowExamplePipeline :
+    RuntimeBoundedWitnessPipeline :=
+  boundedWitnessWorkflowExampleRegistryPipeline
 
 theorem bounded_witness_workflow_example_process_chain_residual :
-    boundedWitnessWorkflowExamplePipeline.toProcessChain.residual = 33 :=
-  rfl
+    boundedWitnessWorkflowExamplePipeline.toProcessChain.residual = 33 := by
+  native_decide
+
+theorem bounded_witness_workflow_example_registry_pipeline_residual :
+    boundedWitnessWorkflowExampleRegistryPipeline.toProcessChain.residual = 33 := by
+  native_decide
 
 theorem bounded_witness_workflow_example_no_hidden_defect
     (wider : Nat)

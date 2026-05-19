@@ -17,6 +17,15 @@ group larger families of related claims.
   while preserving the intrinsic **3/4** geometric ergodicity rate constraint;
   the same-load mycelial service weakly lowers and clears healthy-anarchy
   backlog without changing that rate.
+- [CrossDomainMycelialTopologicalOrdering.lean](./CrossDomain/CrossDomainMycelialTopologicalOrdering.lean) —
+  finite scheduler certificate for the Aeon Sorts pivot from scalar 1D sorting
+  to topology-aware work ordering: a valid mycelial ordering preserves
+  dependencies, bounds route cost by nutrient/growth cost, bounds peak backlog
+  first by corridor capacity and then by mycelial network capacity, bounds fold
+  debt by graph edges, inherits the existing `mycology_dominates_queueing`
+  capacity theorem for positive node count, and projects the certificate through
+  `TopologicalGrassmannianCompiler` with corridor capacity as the constraint
+  axis.
 - [SkyrmsEnergyTax.lean](./SkyrmsEnergyTax.lean) — chapel-grade dynamic energy
   market settlement: node externalities pay a clinamen-floor Skyrms tax,
   attention/truth/diversity define rebate weight, lower externality strictly
@@ -116,6 +125,8 @@ group larger families of related claims.
 ## Child Directories
 
 - [docs](./docs/README.md) - short bridge-discipline notes (not Lean-checked).
+- [CrossDomain](./CrossDomain/README.md) - finite cross-domain proof bridges,
+  including the mycelial topological ordering certificate used by Aeon Sorts.
 - [Contrarian](./Contrarian/README.md) - compact anti-theorem modules for claims
   where challenge, absence, latency, silence, or other apparent deficits map to
   formal benefits under explicit assumptions.
@@ -129,5 +140,5 @@ group larger families of related claims.
 
 ## Aggregate Import
 
-`../Gnosis.lean` is the package-level aggregate import. Add new modules there
+`../Gnosis.lean` serves as the package-level aggregate import. Add new modules there
 when they should participate in `lake build Gnosis`.

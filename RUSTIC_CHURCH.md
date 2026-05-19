@@ -1130,6 +1130,196 @@ the gates whose drag residual has an internal zero proof, count the gates whose
 coverage depends on named Layer C certificates, and refuse to collapse those
 two counts into one.
 
+## Sovereign Phyle Strategic Dominance
+
+The Rustic Church can also express finite game-theoretic dominance claims when
+the payoff model is a closed `Nat` table. The honest boundary is narrow:
+Lean proves only the arithmetic consequence of the declared structural cost
+profile. Claims about real hardware, deployed organizations, or market behavior
+remain Layer C evidence unless they are threaded in as explicit finite
+certificates.
+
+For the bounded Gnosis strategic model, use three strategies:
+
+- `quantum`: no classical branching deficit, but a twelve-slot decoherence/noise
+  burden matching the Meta-Gnosis noise index.
+- `legacyMonolith`: branch deficit plus synchronization/network entropy.
+- `sovereignPhyle`: the zero-deficit baseline for the finite payoff table.
+
+The utility function is intentionally discrete:
+
+```lean
+utility(s) = 100 / (1 + deficit(s) + entropy(s))
+```
+
+Higher utility is better. Since every table entry is closed arithmetic, the two
+atomic dominance lemmas may end with `decide` after all definitions are unfolded.
+The final theorem is not an open arithmetic `decide`; it is case exhaustion over
+the finite `Strategy` type.
+
+```lean
+import Init
+
+/-!
+# Gnosis Strategic Dominance Model
+
+Formalizes a finite payoff table for three computing paradigms and proves that
+the Sovereign Phyle strategy strictly dominates each distinct alternative under
+the declared Gnosis structural-cost profile.
+
+Zero `sorry`, zero new `axiom`, and no Mathlib.
+-/
+
+namespace Gnosis
+namespace StrategyDominance
+
+/-- The three computational paradigms in the bounded strategic arena. -/
+inductive Strategy where
+  | quantum
+  | legacyMonolith
+  | sovereignPhyle
+deriving DecidableEq
+
+/--
+The structural cost profile assigned to a strategy.
+
+- `deficit`: structural latency overhead from control-flow, stalling, or
+  coordination constraints.
+- `entropy`: environmental vulnerability, decoherence handling, or network
+  synchronization friction.
+-/
+structure CostProfile where
+  deficit : Nat
+  entropy : Nat
+
+/-- Closed Gnosis cost table for the finite strategic model. -/
+def evaluateCost : Strategy → CostProfile
+  | Strategy.quantum => ⟨0, 12⟩
+  | Strategy.legacyMonolith => ⟨5, 20⟩
+  | Strategy.sovereignPhyle => ⟨0, 0⟩
+
+/--
+Operational utility. Higher is strictly better.
+
+The denominator is always positive by construction because of the leading `1`.
+-/
+def utility (s : Strategy) : Nat :=
+  let cost := evaluateCost s
+  100 / (1 + cost.deficit + cost.entropy)
+
+/-- Strict dominance in the finite payoff table. -/
+def StrictlyDominates (a b : Strategy) : Prop :=
+  utility a > utility b
+
+/-- The Sovereign Phyle strictly dominates quantum computing in this table. -/
+theorem sovereign_dominates_quantum :
+    StrictlyDominates Strategy.sovereignPhyle Strategy.quantum := by
+  unfold StrictlyDominates utility evaluateCost
+  -- Left:  100 / (1 + 0 + 0)  = 100
+  -- Right: 100 / (1 + 0 + 12) = 7
+  decide
+
+/-- The Sovereign Phyle strictly dominates legacy monoliths in this table. -/
+theorem sovereign_dominates_monolith :
+    StrictlyDominates Strategy.sovereignPhyle Strategy.legacyMonolith := by
+  unfold StrictlyDominates utility evaluateCost
+  -- Left:  100 / (1 + 0 + 0)  = 100
+  -- Right: 100 / (1 + 5 + 20) = 3
+  decide
+
+/--
+Finite dominance theorem: every strategy distinct from `sovereignPhyle` is
+strictly dominated by `sovereignPhyle` under the declared payoff table.
+-/
+theorem sovereign_phyle_is_strictly_dominant
+    (other : Strategy) (h : other ≠ Strategy.sovereignPhyle) :
+    StrictlyDominates Strategy.sovereignPhyle other := by
+  cases other with
+  | quantum =>
+      exact sovereign_dominates_quantum
+  | legacyMonolith =>
+      exact sovereign_dominates_monolith
+  | sovereignPhyle =>
+      contradiction
+
+end StrategyDominance
+end Gnosis
+```
+
+### Proof Mechanics
+
+- **Closed arithmetic only:** `decide` is used only after `unfold` removes every
+  free variable from the two numeric comparison goals. This matches the Rustic
+  Church allowance for closed numeric goals.
+- **Strategic penalty invariant:** quantum receives the twelve-slot
+  decoherence/noise burden; legacy monoliths receive both branch deficit and
+  synchronization entropy; the phyle receives the zero-deficit baseline.
+- **Finite totality:** the capstone theorem closes by `cases other`, so every
+  inhabitant of `Strategy` is exhausted. Introducing another strategy requires
+  extending the inductive type and adding a new explicit cost-table proof.
+
+This module is a compile-time finite payoff certificate. It does not prove a
+physical quantum-hardware theorem or an empirical market theorem unless those
+external claims are supplied as separate, named finite witnesses.
+
+The checked Lean module [`Gnosis/StrategyDominance.lean`](Gnosis/StrategyDominance.lean)
+therefore exposes both layers: the closed built-in constants above and a generic
+`LayerCCostTable` plus `SovereignPhyleCostCertificate`, where external finite
+evidence supplies the table and Lean proves dominance from zero phyle cost plus
+positive competitor cost.
+
+It is also intentionally playable from Lean:
+
+```lean
+import Gnosis.StrategyDominance
+
+open Gnosis StrategyDominance
+
+#eval defaultPayoffBoard
+#eval payoffBoardUnder tightRaceCostTable
+#eval payoffBoardUnder quantumUpsetCostTable
+#eval auditedPayoffBoard defaultAuditedCostTable
+#eval beatenBy defaultCostTable Strategy.sovereignPhyle
+#eval beatenBy quantumUpsetCostTable Strategy.quantum
+#eval auditedWinner defaultAuditedCostTable
+#eval auditedWinner tightRaceAuditedCostTable
+#eval auditedWinner quantumUpsetAuditedCostTable
+#eval tournamentScoreboard demoTournament
+#eval consensusWinner demoTournament
+#eval demoTournament.map auditedPayoffBoard
+```
+
+The current evaluator outputs:
+
+```text
+[("quantum", 7), ("legacy-monolith", 3), ("sovereign-phyle", 100)]
+[("quantum", 33), ("legacy-monolith", 33), ("sovereign-phyle", 100)]
+[("quantum", 100), ("legacy-monolith", 3), ("sovereign-phyle", 50)]
+(12052026, [("quantum", 7), ("legacy-monolith", 3), ("sovereign-phyle", 100)])
+[Gnosis.StrategyDominance.Strategy.quantum, Gnosis.StrategyDominance.Strategy.legacyMonolith]
+[Gnosis.StrategyDominance.Strategy.legacyMonolith, Gnosis.StrategyDominance.Strategy.sovereignPhyle]
+(12052026, Gnosis.StrategyDominance.Strategy.sovereignPhyle)
+(12052027, Gnosis.StrategyDominance.Strategy.sovereignPhyle)
+(12052028, Gnosis.StrategyDominance.Strategy.quantum)
+[("quantum", 1), ("legacy-monolith", 0), ("sovereign-phyle", 2)]
+Gnosis.StrategyDominance.Strategy.sovereignPhyle
+[(12052026, [("quantum", 7), ("legacy-monolith", 3), ("sovereign-phyle", 100)]),
+ (12052027, [("quantum", 33), ("legacy-monolith", 33), ("sovereign-phyle", 100)]),
+ (12052028, [("quantum", 100), ("legacy-monolith", 3), ("sovereign-phyle", 50)])]
+```
+
+The upset table is deliberately included as a toy counter-model: it shows that
+the generic theorem does not force phyle dominance without a
+`SovereignPhyleCostCertificate`. Change the table, watch the board move, then
+try to build a certificate; Lean accepts the dominance claim exactly when the
+finite hypotheses hold.
+
+The tournament helpers make the toy arena feel like a small game: wrap each
+scenario in an `AuditedCostTable`, inspect each `auditedWinner`, then aggregate
+the list with `tournamentScoreboard` and `consensusWinner`. The demo tournament
+lets quantum win one adverse table while the certified phyle tables still carry
+the 2-1 consensus.
+
 ### 3. The Spectral Barrier (Requires Non-Integer Eigenvalues)
 *   **Rayleigh Quotient:** While discrete, the fundamental frequency omega is rarely an integer, requiring a shift to a Gnostic rational or irrational number system not yet fully integrated into the Civil domain.
 
