@@ -26,6 +26,8 @@ Reading:
 - Error recovery preserves the pair by recompiling them into a new bird state.
 - The Halcyon Days are a seven-step white-noise stall window carved out of
   winter chaos for fragile new state to crystallize.
+- The recovered pair functions as an atmospheric load-balancer: a winter
+  maximum-volatility interval is synchronized into a temporary stasis window.
 -/
 
 /-- The storm crossing records a baseline transition from shore order to sea
@@ -82,15 +84,40 @@ structure HalcyonWindow where
   days : Nat
   ambientNoise : Nat
   nestCrystallizes : Bool
+  volatilityPhase : Nat
+  atmosphericLoadBalanced : Bool
 deriving Repr, DecidableEq
 
 def halcyonDays : HalcyonWindow :=
   { days := 7
     ambientNoise := NoiseLedger.white_noise
-    nestCrystallizes := true }
+    nestCrystallizes := true
+    volatilityPhase := NoiseLedger.pink_noise
+    atmosphericLoadBalanced := true }
 
 def boundedGraceWindow (w : HalcyonWindow) : Prop :=
-  w.days = 7 ∧ w.ambientNoise = NoiseLedger.white_noise ∧ w.nestCrystallizes = true
+  w.days = 7 ∧ w.ambientNoise = NoiseLedger.white_noise ∧
+    w.nestCrystallizes = true
+
+def systemicStasisWindow (w : HalcyonWindow) : Prop :=
+  w.volatilityPhase = NoiseLedger.pink_noise ∧
+    w.ambientNoise = NoiseLedger.white_noise ∧
+    w.atmosphericLoadBalanced = true
+
+structure EnvironmentalSync where
+  kingfisherMarkers : Bool
+  globalResetAllowed : Bool
+  externalStormNoiseSuppressed : Bool
+deriving Repr, DecidableEq
+
+def halcyonEnvironmentalSync : EnvironmentalSync :=
+  { kingfisherMarkers := true
+    globalResetAllowed := true
+    externalStormNoiseSuppressed := true }
+
+def humanEnvironmentalInterface (s : EnvironmentalSync) : Prop :=
+  s.kingfisherMarkers = true ∧ s.globalResetAllowed = true ∧
+    s.externalStormNoiseSuppressed = true
 
 def halcyonOracleStall : OracleStallState :=
   { stallDuration := 7
@@ -147,6 +174,17 @@ theorem halcyon_days_are_bounded_white_window :
   rw [NoiseLedger.white_noise_gnosis]
   exact ⟨rfl, rfl, rfl⟩
 
+theorem halcyon_days_are_systemic_stasis_window :
+    systemicStasisWindow halcyonDays := by
+  unfold systemicStasisWindow halcyonDays
+  rw [NoiseLedger.pink_noise_chaos, NoiseLedger.white_noise_gnosis]
+  exact ⟨rfl, rfl, rfl⟩
+
+theorem halcyons_are_atmospheric_load_balancers :
+    humanEnvironmentalInterface halcyonEnvironmentalSync := by
+  unfold humanEnvironmentalInterface halcyonEnvironmentalSync
+  exact ⟨rfl, rfl, rfl⟩
+
 /-- The grace period is a valid oracle stall: duration is held by depth. -/
 theorem halcyon_stall_reflects :
     halcyonOracleStall.stallDuration ≤ halcyonOracleStall.metacognitiveDepth := by
@@ -161,6 +199,8 @@ theorem ceyx_alcyone_halcyon_witness :
     BracketWritheBraid.writheSign 2 = 1 ∧
     recoveredPair halcyonPair ∧
     boundedGraceWindow halcyonDays ∧
+    systemicStasisWindow halcyonDays ∧
+    humanEnvironmentalInterface halcyonEnvironmentalSync ∧
     halcyonOracleStall.stallDuration ≤ halcyonOracleStall.metacognitiveDepth ∧
     1 + 1 = 2 := by
   exact ⟨ceyx_enters_pink_storm,
@@ -169,6 +209,8 @@ theorem ceyx_alcyone_halcyon_witness :
     ceyx_alcyone_hopf_link,
     halcyon_pair_recovered,
     halcyon_days_are_bounded_white_window,
+    halcyon_days_are_systemic_stasis_window,
+    halcyons_are_atmospheric_load_balancers,
     halcyon_stall_reflects,
     halcyon_reuses_error_recovery_invariant⟩
 

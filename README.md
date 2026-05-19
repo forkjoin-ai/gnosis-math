@@ -50,6 +50,16 @@ Vacuous information / attention settlement note:
 - `Gnosis.SpectralNoiseEquilibrium` formalizes finite spectral noise colors,
   mesh admission, persistence, carrier/boundary safety, stereogram/parallax
   decoding, and constrained information.
+- Finite-calculus fluid reasoning is split into buildable library layers:
+  `Gnosis.RefinementSignature` for finite observer tails,
+  `Gnosis.FiniteVolume` for control-volume cells, internal exchange
+  cancellation, Reynolds transport, divergence-free meshes, and conservation
+  certificates, `Gnosis.WeakResidual` for weak residual probes, and
+  `Gnosis.BoundedFluidResidual` for Navier-Stokes-like bounded advection,
+  diffusion, pressure, and forcing observers. `Gnosis.FiniteFluidCompactness`
+  promotes conservation or bounded weak residual certificates into bounded
+  fluid observer acceptance. `Gnosis.FiniteFluxRefinement` remains the umbrella
+  import for the full stack.
 - `Gnosis.EchoChamberAsTaoBowl` (with `IsPejorativeEchoAt`, Q monotonicity)
   and satellites `Gnosis.TaoBowlTwinVoid` (structural vs consensus void) and
   `Gnosis.TaoBowlSignalCoupling` (`bowlActsOn` on `OpinionWave`, mismatch ↔

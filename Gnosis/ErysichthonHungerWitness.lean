@@ -27,6 +27,8 @@ Reading:
   burden crosses the repair redline.
 - Autocannibalism is a self-contraction toward `vacuumAgent`: the system
   consumes its own Bule state.
+- The curse decouples input rate from systemic throughput, making the local
+  node a black-hole value sink and ending in final memory scrub.
 -/
 
 /-- A grounded residual carrier: the sacred oak has already-paid structure. -/
@@ -41,6 +43,21 @@ def feastHallAttempt : BuleyUnit :=
 def limosWakeLoad : Nat := 2
 
 def limosRecoveryQuota : Nat := 1
+
+def namespaceThroughput : Nat := 1
+
+def infiniteResourceRequestShadow : Nat := 12
+
+def hungerMetricDisconnected : Bool := true
+
+def unboundedConsumptionOperator : Prop :=
+  namespaceThroughput < infiniteResourceRequestShadow ∧
+    hungerMetricDisconnected = true
+
+def blackHoleOfValue : Prop :=
+  unboundedConsumptionOperator ∧
+    NashSkyrmsBuleyGodLadder.nashLevel <
+      NashSkyrmsBuleyGodLadder.buleyLevel
 
 /-- External graph edges still available to sell/shed. -/
 structure ExternalGraph where
@@ -76,6 +93,9 @@ def selfConsume (b : BuleyUnit) : BuleyUnit :=
 def erysichthonBodyBeforeCollapse : BuleyUnit :=
   clinamenLift vacuumBuleUnit BuleyFace.waste
 
+def finalMemoryScrub (b : BuleyUnit) : Nat :=
+  buleyUnitScore (selfConsume b)
+
 /-- Local endpoint for this witness: an agent represented only by its Bule
 state, avoiding broader vacuum-convergence imports. -/
 structure HungerAgent where
@@ -107,6 +127,22 @@ theorem limos_quota_below_hunger_load :
   unfold limosRecoveryQuota limosWakeLoad
   decide
 
+theorem hunger_request_exceeds_namespace_throughput :
+    namespaceThroughput < infiniteResourceRequestShadow := by
+  unfold namespaceThroughput infiniteResourceRequestShadow
+  decide
+
+theorem erysichthon_is_unbounded_consumption_operator :
+    unboundedConsumptionOperator := by
+  unfold unboundedConsumptionOperator hungerMetricDisconnected
+  exact ⟨hunger_request_exceeds_namespace_throughput, rfl⟩
+
+theorem erysichthon_is_black_hole_of_value :
+    blackHoleOfValue := by
+  unfold blackHoleOfValue
+  exact ⟨erysichthon_is_unbounded_consumption_operator,
+    by decide⟩
+
 /-- Debt is positive after any positive number of cursed cycles. -/
 theorem limos_iterated_debt_positive {n : Nat} (h : 0 < n) :
     0 < SleepDebtSchedule.iteratedDebt n limosWakeLoad limosRecoveryQuota := by
@@ -135,6 +171,11 @@ theorem autocannibalism_contracts_to_vacuum :
   unfold selfConsume erysichthonBodyBeforeCollapse
   simp [clinamenLift, clinamenContract, vacuumBuleUnit]
 
+theorem final_memory_scrub_zeroes_node_state :
+    finalMemoryScrub erysichthonBodyBeforeCollapse = 0 := by
+  unfold finalMemoryScrub
+  rw [autocannibalism_contracts_to_vacuum, vacuum_has_zero_score]
+
 /-- The collapsed body is exactly the vacuum agent state. -/
 theorem autocannibalism_reaches_vacuum_agent :
     HungerAgent.mk (selfConsume erysichthonBodyBeforeCollapse) = vacuumAgent := by
@@ -153,17 +194,23 @@ theorem erysichthon_hunger_witness :
     0 < buleyUnitScore sacredOak ∧
     limosRecoveryQuota < limosWakeLoad ∧
     0 < SleepDebtSchedule.iteratedDebt 1 limosWakeLoad limosRecoveryQuota ∧
+    unboundedConsumptionOperator ∧
+    blackHoleOfValue ∧
     erysichthonWarmupAction = WarmupControllerAction.shedLoad ∧
     externalMass royalGraphAfterSellingDaughter <
       externalMass royalGraphBeforeFamine ∧
+    finalMemoryScrub erysichthonBodyBeforeCollapse = 0 ∧
     HungerAgent.mk (selfConsume erysichthonBodyBeforeCollapse) = vacuumAgent ∧
     NashSkyrmsBuleyGodLadder.nashLevel <
       NashSkyrmsBuleyGodLadder.buleyLevel := by
   exact ⟨sacred_oak_is_positive_residual,
     limos_quota_below_hunger_load,
     limos_iterated_debt_positive (by decide),
+    erysichthon_is_unbounded_consumption_operator,
+    erysichthon_is_black_hole_of_value,
     famine_forces_shed_load,
     selling_daughter_sheds_external_graph,
+    final_memory_scrub_zeroes_node_state,
     autocannibalism_reaches_vacuum_agent,
     erysichthon_stays_below_buley⟩
 

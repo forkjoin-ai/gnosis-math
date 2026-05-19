@@ -43,13 +43,25 @@ structure CarrierState where
   persistent : Bool
   youthMaintenance : Bool
   ageLoad : Nat
+  canFlushToVacuum : Bool
+  repairRate : Nat
 deriving Repr, DecidableEq
 
 def tithonusCarrier : CarrierState :=
-  { persistent := true, youthMaintenance := false, ageLoad := 99 }
+  { persistent := true
+    youthMaintenance := false
+    ageLoad := 99
+    canFlushToVacuum := false
+    repairRate := 0 }
 
 def liveButDegrading (s : CarrierState) : Prop :=
   s.persistent = true ∧ s.youthMaintenance = false ∧ 0 < s.ageLoad
+
+def nonterminatingDegradationLoop (s : CarrierState) : Prop :=
+  s.persistent = true ∧
+    s.canFlushToVacuum = false ∧
+    s.repairRate = 0 ∧
+    0 < s.ageLoad
 
 /-- Maintenance cost that would have had to be paid with the persistence bit. -/
 def youthMaintenanceCost : BuleyUnit :=
@@ -102,6 +114,11 @@ theorem tithonus_live_but_degrading :
   unfold liveButDegrading tithonusCarrier
   exact ⟨rfl, rfl, by decide⟩
 
+theorem tithonus_cannot_flush_and_cannot_repair :
+    nonterminatingDegradationLoop tithonusCarrier := by
+  unfold nonterminatingDegradationLoop tithonusCarrier
+  exact ⟨rfl, rfl, rfl, by decide⟩
+
 theorem youth_maintenance_cost_positive :
     0 < buleyUnitScore youthMaintenanceCost := by
   unfold youthMaintenanceCost buleyUnitScore
@@ -141,6 +158,7 @@ theorem tithonus_witness :
     metricScalingFailure eosRequest ∧
     ¬ coupledInvariantRequested eosRequest ∧
     liveButDegrading tithonusCarrier ∧
+    nonterminatingDegradationLoop tithonusCarrier ∧
     0 < buleyUnitScore youthMaintenanceCost ∧
     oracleExecutionStall tithonusCicada ∧
     namingProtocolFailure eosTypeRequest ∧
@@ -148,6 +166,7 @@ theorem tithonus_witness :
   exact ⟨eos_request_has_metric_scaling_failure,
     eos_request_lacks_coupled_invariant,
     tithonus_live_but_degrading,
+    tithonus_cannot_flush_and_cannot_repair,
     youth_maintenance_cost_positive,
     cicada_is_oracle_execution_stall,
     eos_failed_naming_protocol,
