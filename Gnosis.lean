@@ -22,9 +22,18 @@
 import Gnosis.ADEMcKayCorrespondence
 import Gnosis.Witnesses.Islam.QuranAlFatihaOpeningWitness
 import Gnosis.Witnesses.Islam.QuranAlBaqaraAdamGuidanceWitness
+import Gnosis.Witnesses.Islam.QuranAlBaqaraCalfCovenantLifeWitness
+import Gnosis.Witnesses.Islam.QuranAlBaqaraCowDisclosureWitness
+import Gnosis.Witnesses.Islam.QuranAlBaqaraCovenantEthicsWitness
+import Gnosis.Witnesses.Islam.QuranAlBaqaraGabrielCovenantWitness
 import Gnosis.Witnesses.Islam.QuranAlBaqaraGuidanceGroupsWitness
 import Gnosis.Witnesses.Islam.QuranAlBaqaraIsraelCovenantWitness
 import Gnosis.Witnesses.Islam.QuranAlBaqaraIsraelDeliveranceWitness
+import Gnosis.Witnesses.Islam.QuranAlBaqaraMessengerRejectionWitness
+import Gnosis.Witnesses.Islam.QuranAlBaqaraRevelationCorruptionWitness
+import Gnosis.Witnesses.Islam.QuranAlBaqaraRewardPledgeSabbathWitness
+import Gnosis.Witnesses.Islam.QuranAlBaqaraThrownBookMagicWitness
+import Gnosis.Witnesses.Islam.QuranAlBaqaraTownProvisionComplaintWitness
 import Gnosis.Witnesses.Islam.QuranAlBaqaraWorshipChallengeCreationWitness
 import Gnosis.Witnesses.Islam.QuranSubmissionTopologyWitness
 import Gnosis.Witnesses.Bible.SecondCorinthians.SecondCorinthiansComfortTribulationWitness
@@ -632,6 +641,8 @@ import Gnosis.FiniteVolume
 import Gnosis.WeakResidual
 import Gnosis.BoundedFluidResidual
 import Gnosis.FiniteFluidCompactness
+import Gnosis.FiniteObserverCompactness
+import Gnosis.FiniteObserverPatterns
 import Gnosis.FiniteFluxRefinement
 import Gnosis.EnvelopeConvergence
 import Gnosis.EtaleCohomology
@@ -796,6 +807,9 @@ import Gnosis.IoGadflyTelemetryWitness
 import Gnosis.IoKernelDaemonWitness
 import Gnosis.IoGarbageCollectorWitness
 import Gnosis.RuntimeBiologyGarbageCollectorAtlasWitness
+import Gnosis.AutophagyMitophagyWitness
+import Gnosis.ProteostasisWitness
+import Gnosis.CompleteCleanupSystemClosureWitness
 import Gnosis.InformationalPhysicsAlgebra
 import Gnosis.InformationalPhysicsCompleteness
 import Gnosis.InformationalPhysicsCoverThomasAlternative

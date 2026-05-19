@@ -60,6 +60,11 @@ Vacuous information / attention settlement note:
   promotes conservation or bounded weak residual certificates into bounded
   fluid observer acceptance. `Gnosis.FiniteFluxRefinement` remains the umbrella
   import for the full stack.
+- `Gnosis.FiniteObserverCompactness` generalizes that pattern: lower residuals,
+  budget covers, and promotions into higher observer layers compose into exact
+  and approximate compactness theorems. `Gnosis.FiniteObserverPatterns` provides
+  reusable adapters for queues, thermodynamics, mesh routing, attention, and
+  finite approximations of continuous math.
 - `Gnosis.EchoChamberAsTaoBowl` (with `IsPejorativeEchoAt`, Q monotonicity)
   and satellites `Gnosis.TaoBowlTwinVoid` (structural vs consensus void) and
   `Gnosis.TaoBowlSignalCoupling` (`bowlActsOn` on `OpinionWave`, mismatch ↔
