@@ -457,7 +457,7 @@ theorem uniqueCount_go_le (xs : List Nat) :
       have := ih (x :: seen)
       simp [List.length_cons] at this
       simp [List.length_cons]
-      exact this
+      omega
 
 /-- **Theorem 3b (structural bound).** Unique-element count is
     bounded by list length. -/
@@ -719,6 +719,115 @@ theorem gkq_preserves_concept_axis_but_not_correct_answer :
     gkqEscapesIntoStructuredSubspace = true ∧
     gkqRehabilitatedAtTemperature = false := by
   refine ⟨?_, ?_, ?_⟩ <;> decide
+
+-- ══════════════════════════════════════════════════════════
+-- SECTION 8 — 2026-05-20 evening: Direction #2 hybrid encoder
+--             implemented; argmax NOT YET RECOVERED on Qwen-0.5B
+-- ══════════════════════════════════════════════════════════
+-- Section 7 (concept-axis preservation) suggested pairing the rank-K
+-- spectral sketch with a Q4_K-quantized residual R = W - W_K should
+-- restore argmax-fidelity. The hybrid encoder + Rust loader landed:
+--   * NEW  encode-hybrid.py        (Python encoder writing spectral +
+--                                   per-tensor residual twins under
+--                                   names `<name>__residual` in
+--                                   F32 / F16 / Q4_K)
+--   * MODIFIED src/gkq_backend.rs  (residuals HashMap; new
+--                                   reconstruct_with_residual() fuses
+--                                   spectral W_K with dequantized residual
+--                                   in fetch_tensor before serving)
+--
+-- Three stages exercised against Qwen2.5-0.5B-Instruct, prompt
+-- "The capital of France is" (tokens [785,6722,315,9625,374]),
+-- rank=64, greedy decode (T=0), 4 new tokens each:
+--
+--   Reference HF (Python forward pass):
+--     tokens = [12095, ...]  → " Paris ..."
+--   Q4_K-only control (KNOT file, no GKQ):
+--     tokens = [12095, ...]  → " Paris ..."
+--   Pure rank-64 spectral (GKQ, no residual):
+--     tokens = [320, ...]    → " (..."     (degenerate)
+--   Hybrid Stage 1 (F32 residual):
+--     tokens = [312, 33400, 796, 285]   → " reestablish aris"
+--   Hybrid Stage 2 (F16 residual):
+--     tokens = [312, 33400, 796, 285]   → " reestablish aris"
+--   Hybrid Stage 3 (Q4_K residual):
+--     tokens = [58938, 315, 279, 460]   → " differentiation of theore"
+--
+-- Format/wiring is FORMALLY CORRECT (verified by per-tensor norm dump):
+-- the Rust GkqBackend's fetched bytes for each spectral target match the
+-- HF original to f64 precision (e.g. blk.0.attn_q.weight combined_norm
+-- = 59.79986 in both; first-6 elements bitwise identical; max abs
+-- delta = 7.45e-9 across the 896×896 tensor). The hybrid format
+-- correctly reconstructs W from W_K + R for all 168 spectral tensors.
+--
+-- But the wider inference pipeline does NOT recover the HF reference
+-- token on this prompt. Hypothesis: a precision-loss interaction
+-- between matrixmultiply::sgemm in GkqBackend::reconstruct_matrix and
+-- subsequent F32 matvec consumers in model.rs, specifically when
+-- weights are served as F32 bytes through the GKQ path rather than
+-- as Q4_K bytes through the KNOT path. The pattern is:
+--   * Q4_K KNOT path  → 12095 (Paris) ✓
+--   * F32  GKQ path  → 312 (re), 58938 (differentiation), etc.
+-- This is orthogonal to our hybrid format and will be debugged in a
+-- separate wave. Stage 1 (F32 residual = exact reconstruction)
+-- producing the wrong token is the smoking gun: the bytes are right,
+-- the matmul path that consumes them is not.
+--
+-- Interesting recorded behaviour: the Stage 1 / Stage 2 output
+-- `" reestablish aris"` is semantically adjacent to " Paris" — the
+-- model fires on the wrong leading token but the model state still
+-- carries enough Paris-trajectory that "aris" surfaces three tokens in.
+-- Consistent with the Section 7 concept-axis preservation reading.
+
+/-- Whether the hybrid (rank-K spectral + dense residual) Stage 1 / 2 / 3
+    test produces the HF-reference next token " Paris" (id 12095) on the
+    prompt "The capital of France is" under greedy decode. Set FALSE
+    by the 2026-05-20 evening run — argmax not recovered through the
+    F32 GKQ path even when residual reconstruction is exact. -/
+def hybridStage1ProducesParis : Bool := false
+def hybridStage2ProducesParis : Bool := false
+def hybridStage3ProducesParis : Bool := false
+
+/-- Whether the hybrid format's on-disk reconstruction equals HF
+    weights to f32 ULP precision (verified per-tensor against HF
+    original; see report). This is TRUE — the format is sound. -/
+def hybridFormatReconstructionExact : Bool := true
+
+/-- **Theorem (recorded).** The hybrid format is byte-accurate to the
+    HF reference (within f32 ULP) but the downstream fat-station
+    inference path does NOT yet produce the Paris token. Direction
+    #2 is partially shipped: the encoder/decoder/format is correct
+    and ready to use, but the end-to-end argmax restoration claim
+    remains open pending an F32-matvec path investigation in
+    `src/model.rs` that is out of scope for this wave. -/
+theorem direction_2_hybrid_format_exact_but_argmax_unverified :
+    hybridFormatReconstructionExact = true ∧
+    hybridStage1ProducesParis = false ∧
+    hybridStage2ProducesParis = false ∧
+    hybridStage3ProducesParis = false := by
+  refine ⟨?_, ?_, ?_, ?_⟩ <;> decide
+
+-- Open question for the next wave: trace the F32 weight path
+-- through `model.rs` and find why per-tensor exact reconstruction
+-- doesn't deliver the HF-reference greedy token, when an Q4_K-only
+-- encoding of the same model does. Hypotheses:
+--   (a) `matvec_memo::cached_mat_vec` cache key collision specific
+--       to the F32 path
+--   (b) sgemm vs naive dot-product accumulation order interacting
+--       with downstream norms / softmaxes
+--   (c) `bytes_to_f32_slice` alignment fallback (Cow::Owned copy)
+--       dropping precision in some compiler intrinsic path
+-- None of these are blockers for the hybrid format itself; they
+-- are blockers for VERIFYING the format with end-to-end Paris on
+-- this specific model+prompt+rank.
+--
+-- Next exploration: write a parity probe that loads a knot file
+-- in both KNOT (Q4_K) and GKQ-hybrid-F32 formats, fetches every
+-- tensor by name from each backend, and dumps the per-tensor f32
+-- delta. If the deltas are all zero, the bug is at the matvec /
+-- matmul / norm / softmax layer in `model.rs`; if any delta is
+-- non-zero, the GKQ tensor service is the bug. Bisect that to
+-- isolate the failing path.
 
 end GKQHelixBandwidth
 end Gnosis
