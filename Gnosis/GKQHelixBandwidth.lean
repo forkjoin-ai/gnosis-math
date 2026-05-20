@@ -60,6 +60,98 @@ claim. Strong rank-K compression of LLM weights does not preserve
 greedy-decoding output for natural inference prompts, even with all
 downstream pipeline bugs eliminated.
 
+## The story (2026-05-18 → 2026-05-20) — failure recovery as data
+
+This module exists because every formal claim in it was paid for in
+empirical failures. The narrative matters; the theorems are easier to
+trust when you know what they cost. Recorded here so future readers
+(human or LLM) see the journey before the conclusions.
+
+**Act 1 — Hopium.** GKQ shipped to R2 as five binary artifacts with
+a "14,000× compression, <1.5% accuracy loss" pitch. Format spec, encoder,
+decoder, Rust loader, mesh integration — all real, all built, all
+deployed. The math sounded good (rank-3 SVD as semantic skeleton).
+The test was never run.
+
+**Act 2 — Crisis.** First end-to-end test: every prompt produced the
+same single repeated token. Qwen-0.5B at rank-256 → `[21371] × 8`.
+Llama-72B at rank-64 → `[220] × N`. The compression claim collapsed
+under one curl. Easy reading: rank-K SVD is the wrong algorithm for
+LLM weights, period.
+
+**Act 3 — Misdirection.** Formalized the easy reading: Lean theorem
+`argmax_not_preserved_under_lowrank` with the [10,5,3]/[4,5,3]
+counterexample. Recall@K = 14.41% at K=100 on real Qwen hidden states.
+Wrote it off. Began re-encode plan to Q4_K, treating GKQ as a research
+artifact.
+
+**Act 4 — The engineering confound.** Got Paris from Q4_K Qwen-0.5B
+in 94 ms — but only at `max_tokens=1`. At `max_tokens=8` Q4_K ALSO
+produced garbage (`A1200000`). Investigation found two bugs in
+`fat-station`'s `handle_generate`: `max_new_tokens.min(NATIVE_BATCH_CAPACITY=8)`
+silently capped output, AND the prefill stride truncated chat-templated
+prompts to their last 8 tokens with RoPE positions applied against a
+zeroed KV cache. *The "always one repeated token" pattern we'd been
+blaming on rank-K spectral collapse had been a decode-loop bug all
+along — confounded.*
+
+**Act 5 — Decoupling.** Fixed the decode loop (gnosis `9789024d`).
+Q4_K Qwen-0.5B now produced coherent multi-token English. Retested
+GKQ rank-256 with the bug controlled out: still `[537] × 8 = " not"`.
+The Lean theorem was confirmed empirically in the typical case, not
+just at adversarial inputs. GKQ argmax IS dead. The crisis (Act 2)
+was real, just half-engineering-half-algorithm.
+
+**Act 6 — The second confound.** Tried Direction #3: temperature
+sampling. Got byte-identical outputs across T∈[0.0, 2.0] on BOTH
+knots. fat-station's `/generate` had been silently ignoring the
+`temperature` parameter the whole time — hardcoded greedy argmax.
+Another engineering bug masking another algorithm question.
+
+**Act 7 — Gold.** Patched real softmax temperature sampling
+(gnosis `feeff944`). Re-ran the sweep. Q4_K diverged naturally
+across temperatures (sampling works). GKQ at T≥1.0 escaped the 537
+attractor — but didn't fall into noise. It fell into a *coherent
+cross-lingual semantic cluster*:
+
+```
+  537    " not"       (English negation, greedy attractor)
+  2806   " Not"       (English negation, capitalized)
+  101431 "合法"        (Chinese: legal/lawful)
+  105955 "不愿意"      (Chinese: unwilling)
+```
+
+For prompt "The capital of France is", GKQ rank-256 projects the
+output distribution onto a single concept axis — negation/legality —
+that crosses the English/Chinese language boundary. The 14.41%
+recall@K signal we'd written off as "above noise but below router
+threshold" was the *fingerprint of concept-axis preservation*. We
+didn't compute the right metric the first time.
+
+**Act 8 — Reframe.** GKQ is not a next-token generator. It IS a
+cross-lingual concept-axis sketch. The argmax-non-preservation
+theorem still holds; what changes is the interpretation of what
+rank-K reconstruction *does* preserve. Direction #4 (rank-K as
+top-K classifier seed) is the gold seam. Direction #2 (spectral +
+Q4_K residual, LoRA-inverse) is the natural ship-target: keep the
+concept-axis sketch as the cheap early-exit signal, restore argmax
+fidelity with a small dense delta.
+
+**Moral.** Every failure left a useful artifact. The decode-loop bug
+became commit `9789024d` (Q4_K now produces coherent text for ANY
+caller). The temperature-sampling oversight became commit `feeff944`
+(real softmax sampling in the production binary). The "GKQ is dead"
+reading became Sections 6 + 7 of this module (formal + empirical
+boundaries on what rank-K does and doesn't preserve). The compression
+claim that started this is gone. What remains is sturdier: a
+documented map of where rank-K succeeds (concept-axis), where it
+fails (argmax), how the engineering and the algorithm confounded
+each other, and what the next compression scheme inherits from
+the wreckage.
+
+The gold was always there. We needed two engineering bug fixes
+and a metric reframe to see it.
+
 ## 2026-05-20 — open question: where's the gold?
 
 The Lean theorem is an *existence* claim (∃ a counterexample). The
