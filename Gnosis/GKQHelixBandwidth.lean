@@ -446,5 +446,67 @@ def randomBaselineK100Ppm : Nat := 660     -- 100/151643
 theorem rank64_signal_above_random :
     recallAtK100Rank64Ppm > 100 * randomBaselineK100Ppm := by decide
 
+-- ──────────────────────────────────────────────────────────
+-- 2026-05-20 — Direction #3 retest (temperature sampling)
+-- ──────────────────────────────────────────────────────────
+-- Open question #3 from the preamble asked whether sampling
+-- temperature τ > 0 rehabilitates GKQ rank-256: does breaking the
+-- argmax lock recover coherent stochastic generation?
+--
+-- Experiment: fat-station `/generate` was patched to do real
+-- softmax-with-temperature multinomial sampling (previously the
+-- decode loop was argmax-only and silently ignored the `temperature`
+-- body field). Prompt tokens [785, 6722, 315, 9625, 374]
+-- ("The capital of France is"), max_new_tokens = 8, three trials per
+-- temperature ∈ {0.0, 0.5, 1.0, 1.5, 2.0}, on both Q4_K control and
+-- GKQ rank-256.
+--
+-- Q4_K control behaviour (confirms sampler works):
+--   T = 0.0 → deterministic " Paris is …" across all trials
+--   T ∈ (0, 1] → varied outputs, "Paris"/"France" appear in most trials
+--   T ≥ 1.5 → degrades to multilingual token soup (as expected)
+--
+-- GKQ rank-256 behaviour:
+--   T = 0.0 → [537]×8 = "not not not not not not not not"  (argmax lock)
+--   T = 0.5 → still ~95% token 537, occasional bursts of 49238 / 2806
+--   T = 1.0 → 537-lock broken, output is mixed-language token soup
+--             (e.g. " not spect non合法不愿意 not合法 not"); no
+--             geographic content, no "Paris", no France, no coherent
+--             English clause
+--   T = 1.5 → wholly incoherent mixed-script salad, no recognizable
+--             completion of the prompt
+--   T = 2.0 → noise (CJK / Arabic / Hebrew / Korean fragments)
+--
+-- No trial at any tested temperature produced a sensible English
+-- completion of "The capital of France is". The format-coherence
+-- split (`format_split_on_coherence`) is preserved across the full
+-- temperature axis — degeneracy is structural, not just an
+-- argmax-locking artifact.
+
+/-- Whether the temperature retest produced any GKQ trial with
+    coherent English text mentioning "Paris" / geographic content.
+    Set FALSE by the 2026-05-20 retest. -/
+def gkqRehabilitatedAtTemperature : Bool := false
+
+/-- Whether Q4_K control responded to T > 0 with varied outputs
+    (sanity check that the sampler itself is functioning). -/
+def q4kRespondsToTemperatureSampling : Bool := true
+
+/-- **Theorem (recorded).** GKQ rank-256 resists temperature
+    sampling on the tested grid: the format-coherence split between
+    Q4_K and GKQ is preserved even when greedy argmax is replaced
+    with softmax-with-temperature multinomial sampling. This
+    falsifies the optimistic reading of preamble open-question #3:
+    breaking the argmax lock does NOT restore coherent generation.
+
+    Formally we just observe that the sampler responded for Q4_K
+    (`q4kRespondsToTemperatureSampling = true`) but GKQ did not
+    rehabilitate (`gkqRehabilitatedAtTemperature = false`), so the
+    two booleans disagree — the same shape as
+    `format_split_on_coherence` but lifted to the sampling regime. -/
+theorem gkq_resists_temperature_sampling :
+    q4kRespondsToTemperatureSampling ≠ gkqRehabilitatedAtTemperature := by
+  decide
+
 end GKQHelixBandwidth
 end Gnosis
