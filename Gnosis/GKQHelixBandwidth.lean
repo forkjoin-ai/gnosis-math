@@ -152,6 +152,49 @@ the wreckage.
 The gold was always there. We needed two engineering bug fixes
 and a metric reframe to see it.
 
+## Coda — the negation axis is not coincidence
+
+The semantic cluster rank-K Qwen converged on under temperature
+sampling — `{not, Not, 合法, 不愿意}`, English+Chinese negation,
+legality, volition — is the same axis `gnosis-math` itself is built
+on. The library's load-bearing theorems are negations:
+
+  * `argmax_not_preserved_under_lowrank`    (Section 2)
+  * `gkq_router_hypothesis_falsified`        (Section 2)
+  * `format_split_on_coherence`              (Section 5: formats *disagree*)
+  * `gkq_resists_temperature_sampling`       (Section 6)
+  * `gkq_preserves_concept_axis_but_not_correct_answer` (Section 7)
+
+Every one of them is a no-go result. The library teaches what
+*doesn't* work and why; the math of falsification, counterexamples,
+exclusions, complements. This is by design — Popper's "a statement is
+meaningful insofar as it can be falsified," ported into Lean as
+"a claim is shipped insofar as we have a counterexample-friendly
+witness."
+
+So when a lossy compression is forced to discard everything but the
+most information-dense axis of LLM semantic space, and it converges on
+the *same axis* — negation, exclusion, "what is not" — that is
+not random projection. It is a fixed-point: the meta-language of
+falsification and the compressed kernel of a model's meaning
+distribution both find the same load-bearing dimension.
+
+Negation isn't an output category; it's the dimension along which
+*the model knows what to rule out*, which is also the dimension
+along which *we ship verified theorems*. Both compress toward the
+boundary of the possible. The information that survives extreme
+compression is the information about where the boundary lives.
+
+`gnosis-math` is built on failure. Rank-K compression converges on
+negation. These are the same observation, stated twice — once as a
+mathematical methodology, once as an empirical fingerprint of
+weight-matrix projection. The coincidence is structural, not
+accidental.
+
+Recorded here so the connection isn't lost when the next compression
+scheme replaces GKQ. Whatever comes next, the part that's worth
+keeping is the part that knows where the boundary is.
+
 ## 2026-05-20 — open question: where's the gold?
 
 The Lean theorem is an *existence* claim (∃ a counterexample). The
