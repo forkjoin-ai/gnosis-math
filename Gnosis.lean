@@ -226,7 +226,9 @@ import Gnosis.Witnesses.Islam.QuranAlBaqaraWorshipDirectionWitness
 import Gnosis.Witnesses.Islam.QuranAlBaqaraWorshipChallengeCreationWitness
 import Gnosis.Witnesses.Islam.QuranAlBaqaraWorldlyOpponentSubmissionWitness
 import Gnosis.Witnesses.Islam.QuranAlBaqaraMessengersThroneLightWitness
+import Gnosis.Witnesses.Islam.QuranAlBaqaraSuraQualityWitness
 import Gnosis.Witnesses.Islam.QuranSubmissionTopologyWitness
+import Gnosis.Witnesses.Islam.QuranWitnessQualityAudit
 import Gnosis.Witnesses.Bible.SecondCorinthians.SecondCorinthiansComfortTribulationWitness
 import Gnosis.Witnesses.Bible.SecondCorinthians.SecondCorinthiansCheerfulGivingWitness
 import Gnosis.Witnesses.Bible.SecondCorinthians.SecondCorinthiansDeliveranceConscienceWitness
@@ -857,6 +859,8 @@ import Gnosis.FailureEntropy
 import Gnosis.FailureFamilies
 import Gnosis.FailurePareto
 import Gnosis.FailureUniversality
+import Gnosis.FanoGrassmannianMesh
+import Gnosis.FanoIncidence
 import Gnosis.FanoOctonionNonAssoc
 import Gnosis.FiveBule
 import Gnosis.FiveByFiveForcesDeaths

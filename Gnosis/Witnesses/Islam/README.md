@@ -4,12 +4,17 @@
 
 Lean witnesses extracted from Islamic source documents and Quran-key readings. New Islam witnesses should be added in this directory and imported as `Gnosis.Witnesses.Islam.<Module>`.
 
+## Quality Audit
+
+- `QuranWitnessQualityAudit`: salvage decision for the existing Quran Lean surface. The directory builds cleanly, but much of the earlier Quran pass is literal inventory rather than the later quality framework. Keep the modules, upgrade in place, and use the repaired opening modules as the pattern: invariant, gap/counterproof, and framework convergence.
+- `QuranAlBaqaraSuraQualityWitness`: Sura 2 quality spine over all 56 Al-Baqara witness modules. Treats the individual modules as the source-order ledger and adds the sura-level invariant, gap ledger, and archaeological access proof.
+
 ## Witnesses
 
 - `QuranSubmissionTopologyWitness`: `docs/ebooks/key-to-the-quran.md`, sections 1-6 and Master Theorem.
-- `QuranAlFatihaOpeningWitness`: Quran 1, Al-Fatiha / The Opening.
-- `QuranAlBaqaraGuidanceGroupsWitness`: Quran 2:1-20, Al-Baqara opening guidance groups.
-- `QuranAlBaqaraWorshipChallengeCreationWitness`: Quran 2:21-29, worship, revelation challenge, parable, covenant rupture, and creation-return.
+- `QuranAlFatihaOpeningWitness`: Quran 1, Al-Fatiha / The Opening. Upgraded with many-names convergence and guidance-gap witness.
+- `QuranAlBaqaraGuidanceGroupsWitness`: Quran 2:1-20, Al-Baqara opening guidance groups. Upgraded with archaeological access over positive and negative guidance samples.
+- `QuranAlBaqaraWorshipChallengeCreationWitness`: Quran 2:21-29, worship, revelation challenge, parable, covenant rupture, and creation-return. Covered by the Sura 2 quality spine as the revelation-challenge counterproof.
 - `QuranAlBaqaraAdamGuidanceWitness`: Quran 2:30-39, Adamic succession, knowledge, refusal, fall, repentance, and guidance outcomes.
 - `QuranAlBaqaraIsraelCovenantWitness`: Quran 2:40-46, Children of Israel covenant, truth, worship, integrity, and return.
 - `QuranAlBaqaraIsraelDeliveranceWitness`: Quran 2:47-57, Israel's favor, judgment warning, Pharaoh deliverance, Moses, repentance, revival, and provision.

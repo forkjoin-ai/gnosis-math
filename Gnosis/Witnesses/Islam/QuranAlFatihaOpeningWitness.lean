@@ -1,4 +1,4 @@
-import Init
+import Gnosis.TruthOneManyNamesWitness
 
 namespace Gnosis.Witnesses.Islam
 namespace QuranAlFatihaOpeningWitness
@@ -18,7 +18,16 @@ This bounded witness tracks Abdel Haleem's translation of Al-Fatiha:
   * guidance is requested to the straight path;
   * the path is distinguished from anger and straying.
 
-`import Init` only. Zero new `axiom`, no Mathlib.
+Sat/unseen reading:
+
+Al-Fatiha is not only an opening prayer. It is the kernel contract for the
+Quranic runtime: names, praise, mercy, judgment, worship, help, and guidance all
+address the same operator, while the final verse records the negative witness.
+The gap is not lack of guidance in the abstract; it is the branch where path
+selection collapses into anger or straying. The source therefore witnesses both
+the invariant address and the forbidden paths that make the invariant visible.
+
+Uses `Gnosis.TruthOneManyNamesWitness`. Zero new `axiom`, no Mathlib.
 -/
 
 /-- The seven opening movements in source order. -/
@@ -42,6 +51,27 @@ def alFatihaMovements : List AlFatihaMovement :=
   , AlFatihaMovement.guideStraightPath
   , AlFatihaMovement.blessedNotAngerNorAstray
   ]
+
+/-- Registers of the opening address. -/
+inductive AlFatihaAddressRegister
+  | divineName
+  | mercyName
+  | judgmentName
+  | worshipName
+  | guidanceName
+deriving DecidableEq, Repr, Nonempty
+
+/-- The invariant target reached through each opening register. -/
+inductive AlFatihaInvariant
+  | oneMercifulJudgeGuide
+deriving DecidableEq, Repr
+
+/-- Al-Fatiha's many address-registers converge on one invariant operator. -/
+def alFatihaRegistersAgree :
+    TruthOneManyNamesWitness.manyNamesAgree
+      (fun _ : AlFatihaAddressRegister => AlFatihaInvariant.oneMercifulJudgeGuide)
+      AlFatihaInvariant.oneMercifulJudgeGuide :=
+  TruthOneManyNamesWitness.constant_names_agree AlFatihaInvariant.oneMercifulJudgeGuide
 
 /-- Invocation and praise features in verses 1-4. -/
 structure OpeningPraisePattern where
@@ -79,6 +109,18 @@ def worshipGuidancePattern : WorshipGuidancePattern where
   notAnger := true
   notAstray := true
 
+/-- The negative witness: requested guidance is bounded by two failed branches. -/
+def guidanceGapExcludesCollapse (p : WorshipGuidancePattern) : Prop :=
+  p.guideStraightPath = true ∧
+  p.pathOfBlessed = true ∧
+  p.notAnger = true ∧
+  p.notAstray = true
+
+theorem al_fatiha_guidance_gap :
+    guidanceGapExcludesCollapse worshipGuidancePattern := by
+  unfold guidanceGapExcludesCollapse worshipGuidancePattern
+  exact ⟨rfl, rfl, rfl, rfl⟩
+
 /-- The bounded Quran 1 / Al-Fatiha witness. -/
 theorem quran_al_fatiha_opening_witness :
     alFatihaMovements.length = 7
@@ -95,8 +137,12 @@ theorem quran_al_fatiha_opening_witness :
     ∧ worshipGuidancePattern.guideStraightPath = true
     ∧ worshipGuidancePattern.pathOfBlessed = true
     ∧ worshipGuidancePattern.notAnger = true
-    ∧ worshipGuidancePattern.notAstray = true := by
-  refine ⟨?_, ?_, ?_, ?_, ?_, ?_, ?_, ?_, ?_, ?_, ?_, ?_, ?_, ?_, ?_⟩
+    ∧ worshipGuidancePattern.notAstray = true
+    ∧ guidanceGapExcludesCollapse worshipGuidancePattern
+    ∧ TruthOneManyNamesWitness.manyNamesAgree
+      (fun _ : AlFatihaAddressRegister => AlFatihaInvariant.oneMercifulJudgeGuide)
+      AlFatihaInvariant.oneMercifulJudgeGuide := by
+  refine ⟨?_, ?_, ?_, ?_, ?_, ?_, ?_, ?_, ?_, ?_, ?_, ?_, ?_, ?_, ?_, ?_, ?_⟩
   · rfl
   · rfl
   · rfl
@@ -112,6 +158,8 @@ theorem quran_al_fatiha_opening_witness :
   · rfl
   · rfl
   · rfl
+  · exact al_fatiha_guidance_gap
+  · exact alFatihaRegistersAgree
 
 end QuranAlFatihaOpeningWitness
 end Gnosis.Witnesses.Islam

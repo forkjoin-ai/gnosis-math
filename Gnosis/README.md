@@ -8,6 +8,11 @@ group larger families of related claims.
 
 ## Key Modules
 
+- [FanoIncidence.lean](./FanoIncidence.lean) and
+  [FanoGrassmannianMesh.lean](./FanoGrassmannianMesh.lean) — finite Fano-plane
+  incidence contracts: every distinct seven-point pair has a unique completing
+  third point, and each such pair embeds as a valid `Gr(2,12)` Plucker gate in
+  the 66-label Aeon mesh.
 - [AnarchyJacksonQueueBridge.lean](./AnarchyJacksonQueueBridge.lean) — reads
   the Anarchy/control tradeoff game from `PhysarumRopelength` as a finite
   Jackson queue: control pressure becomes arrival load, distributed local
