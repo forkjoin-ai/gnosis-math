@@ -195,6 +195,14 @@ Recorded here so the connection isn't lost when the next compression
 scheme replaces GKQ. Whatever comes next, the part that's worth
 keeping is the part that knows where the boundary is.
 
+**Sequel module.** This Coda is formalized as a small Lean kernel in
+`Gnosis/FailureAsStandingWave.lean` (`StandingWaveMode`,
+`support_disjoint_from_falsifications`, the worked 4-claim example,
+and the `fixed_point_recorded` witness tying compression-failure
+axis to methodology-failure axis). The accompanying essay
+`docs/FAILURE_AS_STANDING_WAVE.md` makes the math-physics framing
+explicit and lays out the research program.
+
 ## 2026-05-20 — open question: where's the gold?
 
 The Lean theorem is an *existence* claim (∃ a counterexample). The
