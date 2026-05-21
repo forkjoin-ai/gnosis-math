@@ -1,3 +1,4 @@
+import Gnosis.PrometheusContractWitness
 import Gnosis.Witnesses.Chaldean.ChaldeanGenesisFragmentRecoveryWitness
 import Gnosis.Witnesses.Chaldean.ErrorToTruthFragmentMethodWitness
 import Gnosis.Witnesses.Chaldean.MummuTiamatuWaterChaosCarrierWitness
@@ -29,6 +30,12 @@ voice and language, spends the day among people, returns to the deep at night,
 and teaches letters, sciences, arts, cities, temples, laws, geometry,
 agriculture, and manners. This is not generic wisdom; it is civilization
 bootstrap through an amphibious boundary agent.
+
+Oannes also admits a bounded Prometheus comparison. Both are civilization
+bootstrap carriers, but the agency differs: Prometheus raises human technology
+load through stolen fire and requires continuous audit; Oannes delivers learning
+as a sea-emergent teacher. The proved comparison is payload topology, not
+identity of mythic role.
 
 No `sorry`, no new `axiom`.
 -/
@@ -82,6 +89,23 @@ def civilizationBootstrapPayload (c : CivilizingKnowledgePayload) : Prop :=
   c.geometryExplained = true ∧
   c.agricultureAndFruitGatheringTaught = true ∧
   c.mannersHumanized = true
+
+structure PrometheusComparisonReserve where
+  civilizationBootstrapShared : Bool := true
+  nonlocalCapabilityDeliveredToHumans : Bool := true
+  oannesSeaTeacherNotFireThief : Bool := true
+  prometheusStolenFireRequiresAudit : Bool := true
+  topologyComparisonNotIdentity : Bool := true
+deriving DecidableEq, Repr
+
+def prometheusComparisonReserve : PrometheusComparisonReserve := {}
+
+def oannesPrometheusPayloadAnalogy (p : PrometheusComparisonReserve) : Prop :=
+  p.civilizationBootstrapShared = true ∧
+  p.nonlocalCapabilityDeliveredToHumans = true ∧
+  p.oannesSeaTeacherNotFireThief = true ∧
+  p.prometheusStolenFireRequiresAudit = true ∧
+  p.topologyComparisonNotIdentity = true
 
 structure SculptureCorroboration where
   berosusMentionsFigure : Bool := true
@@ -146,6 +170,11 @@ theorem oannes_civilization_bootstrap_payload :
   unfold civilizationBootstrapPayload civilizingKnowledgePayload
   exact ⟨rfl, rfl, rfl, rfl, rfl, rfl, rfl, rfl, rfl⟩
 
+theorem oannes_prometheus_payload_analogy :
+    oannesPrometheusPayloadAnalogy prometheusComparisonReserve := by
+  unfold oannesPrometheusPayloadAnalogy prometheusComparisonReserve
+  exact ⟨rfl, rfl, rfl, rfl, rfl⟩
+
 theorem oannes_image_carrier_supports_description :
     imageCarrierSupportsDescription sculptureCorroboration := by
   unfold imageCarrierSupportsDescription sculptureCorroboration
@@ -178,14 +207,25 @@ theorem oannes_inherits_fragment_method_reserve :
     ErrorToTruthFragmentMethodWitness.error_to_truth_revisable_fragment_method,
     oannes_unrecovered_archive_hole⟩
 
+theorem oannes_compares_to_prometheus_without_identity :
+    Gnosis.PrometheusContractWitness.fireRaisesHumanityLoad
+      Gnosis.PrometheusContractWitness.stolenFire ∧
+    civilizationBootstrapPayload civilizingKnowledgePayload ∧
+    oannesPrometheusPayloadAnalogy prometheusComparisonReserve := by
+  exact ⟨Gnosis.PrometheusContractWitness.fire_requires_continuous_audit,
+    oannes_civilization_bootstrap_payload,
+    oannes_prometheus_payload_analogy⟩
+
 theorem oannes_sea_teacher_unrecovered_witness :
     oannesSeaTeacher seaTeacherComposite ∧
     civilizationBootstrapPayload civilizingKnowledgePayload ∧
+    oannesPrometheusPayloadAnalogy prometheusComparisonReserve ∧
     imageCarrierSupportsDescription sculptureCorroboration ∧
     unrecoveredSeaTeacherArchiveHole unrecoveredCreationLegend ∧
     seaMediatesLearning liminalInstructionBoundary := by
   exact ⟨oannes_sea_teacher,
     oannes_civilization_bootstrap_payload,
+    oannes_prometheus_payload_analogy,
     oannes_image_carrier_supports_description,
     oannes_unrecovered_archive_hole,
     oannes_sea_mediates_learning⟩
