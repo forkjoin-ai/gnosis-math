@@ -152,6 +152,7 @@ import Gnosis.Witnesses.Interfaith.MalabarSerraEarlyHistoryWitness
 import Gnosis.Witnesses.Interfaith.MalabarStThomasCulturalTopologyWitness
 import Gnosis.Witnesses.Interfaith.MalabarTranslationCaptureWitness
 import Gnosis.Witnesses.Interfaith.MargamkaliRitualTopologyWitness
+import Gnosis.Witnesses.Interfaith.OathStabilityGateWitness
 import Gnosis.Witnesses.Interfaith.OathStabilityTopologyWitness
 import Gnosis.Witnesses.Interfaith.VarthamanappusthakamPolyphonicNetworkWitness
 import Gnosis.Witnesses.Mandaean.MandaeanJordanVoiceJohnWitness
@@ -1137,6 +1138,7 @@ import Gnosis.DepolarizationIsParetoImprovement
 import Gnosis.DepressionAsDampedOscillation
 import Gnosis.DestinyAsRetrocausalAttractor
 import Gnosis.DeterminantAnomalyUnified
+import Gnosis.EntropyDeficitGateway
 import Gnosis.DiscreteClosedTimelikeStep
 import Gnosis.DiscreteContinuumConstants
 import Gnosis.DiscreteContinuumConstantRefinement

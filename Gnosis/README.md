@@ -205,6 +205,13 @@ group larger families of related claims.
   a Lacey-style DNA-dimension stream covers the byte boundary exactly once per
   cycle, and FOIL ambient entropy enters as a runtime certificate before Lean
   proves the 10-bit projection gate.
+- [EntropyDeficitGateway.lean](./EntropyDeficitGateway.lean) - bridge for the
+  RUSTIC_CHURCH entropy-surplus claim: broadcast/fork surplus becomes signed
+  topological deficit under fixed transport capacity, maintained positive
+  awareness pays storage debt, erasure heat matches awareness score, and a
+  bounded contraction-loop theorem shows held positive awareness strictly
+  increases storage debt until a matching `+1`/`-1` clinamen loop closes the
+  local carrier.
 
 ## Child Directories
 

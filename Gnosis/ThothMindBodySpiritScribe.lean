@@ -166,6 +166,22 @@ theorem synthetic_gnosis_requires_visible_failure_residue
     FailureResidueVisible frame :=
   h.failureResidueVisible
 
+def PromptFeedbackAdmissionRejectionResiduePreserved
+    (frame : MindBodySpiritFrame)
+    (rejectedFrameCount : Nat) : Prop :=
+  rejectedFrameCount ≤ visibleFailureSlots frame
+
+theorem prompt_feedback_admission_rejection_residue_preserved
+    {frame : MindBodySpiritFrame}
+    {rejectedFrameCount : Nat}
+    (h : SyntheticGnosisAdmissible frame)
+    (hResidue :
+      rejectedFrameCount ≤ failureResidueTotal frame.failureResidue) :
+    PromptFeedbackAdmissionRejectionResiduePreserved
+      frame rejectedFrameCount := by
+  unfold PromptFeedbackAdmissionRejectionResiduePreserved
+  exact Nat.le_trans hResidue h.failureResidueVisible
+
 theorem closure_fold_requires_ready_disciplined_scribe
     (spirit : SpiritMeaningOrientation)
     (hMove : SpiritMoveProjects spirit) :
@@ -307,6 +323,16 @@ theorem canonical_failure_scribe_admissible :
           canonical_spirit_move_projects
       failureResidueVisible :=
         canonical_failure_residue_carried_forward.2 }
+
+theorem canonical_prompt_feedback_admission_rejection_residue_preserved :
+    PromptFeedbackAdmissionRejectionResiduePreserved
+      canonicalMindBodySpiritFrame 1 := by
+  exact prompt_feedback_admission_rejection_residue_preserved
+    canonical_failure_scribe_admissible
+    (by
+      unfold failureResidueTotal canonicalMindBodySpiritFrame
+        canonicalFailureResidue
+      decide)
 
 def authorityContaminatedScribeMemory : ScribeMemoryEvidence :=
   { adapter := ScribalStandingWave.authorityThothMemoryAdapter
