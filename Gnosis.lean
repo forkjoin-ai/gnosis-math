@@ -391,6 +391,7 @@ import Gnosis.Witnesses.Bible.FirstJohn.FirstJohnCainDeedTruthWitness
 import Gnosis.Witnesses.Bible.FirstJohn.FirstJohnSpiritLoveWitness
 import Gnosis.Witnesses.Bible.FirstJohn.FirstJohnRecordIdolWitness
 import Gnosis.Witnesses.Bible.FirstJohn.FirstJohnSourceQualityWitness
+import Gnosis.Witnesses.Bible.SecondJohn.SecondJohnTruthLoveHospitalityWitness
 import Gnosis.Witnesses.Bible.Philemon.PhilemonLoveRefreshWitness
 import Gnosis.Witnesses.Bible.Philemon.PhilemonOnesimusDebtWitness
 import Gnosis.Witnesses.Bible.Philemon.PhilemonSourceQualityWitness

@@ -18,6 +18,7 @@ Bible witness modules are grouped by biblical book.
 - [Philippians](Philippians/README.md)
 - [Romans](Romans/README.md)
 - [Second Corinthians](SecondCorinthians/README.md)
+- [Second John](SecondJohn/README.md)
 - [Second Peter](SecondPeter/README.md)
 - [Second Thessalonians](SecondThessalonians/README.md)
 - [Second Timothy](SecondTimothy/README.md)
