@@ -55,6 +55,12 @@ group larger families of related claims.
   held as self-accountability promises only, never as external enforcement over
   another speaker. It also formalizes compatible release classes and a bounded
   next-task pressure selector for runtime antiqueue scheduling.
+- [ThothMindBodySpiritScribe.lean](./ThothMindBodySpiritScribe.lean) —
+  unifying Thoth synthetic-gnosis certificate over body evidence, mind/tool
+  reasoning, spirit/closure orientation, transcript memory, and failure
+  residue. It proves admissible frames remain non-authoritative, preserve
+  visible audit gaps, route closure through prosody discipline, and carry
+  unresolved failure forward instead of erasing it.
 - [FanoIncidence.lean](./FanoIncidence.lean) and
   [FanoGrassmannianMesh.lean](./FanoGrassmannianMesh.lean) — finite Fano-plane
   incidence contracts: every distinct seven-point pair has a unique completing

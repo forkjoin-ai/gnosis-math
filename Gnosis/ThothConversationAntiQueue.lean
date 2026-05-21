@@ -175,7 +175,7 @@ theorem runtime_discharge_preserves_self_accountability
 theorem loop_exit_release_compatible_for_open_question
     (exit : ConversationLoopExit) :
     releaseCompatible AntiQueueItemKind.openQuestion (releaseForLoopExit exit) := by
-  cases exit <;> decide
+  cases exit <;> unfold releaseForLoopExit releaseCompatible <;> trivial
 
 theorem walkaway_open_question_runtime_discharge_sound
     (closureDischargeId : String) :

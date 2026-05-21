@@ -28,6 +28,7 @@ structure ConversationalProsodySignal where
   boundaryDrain : Nat
   silenceResidue : Nat
   ambiguityResidue : Nat
+  reserveResidue : Nat
   cadenceConductance : Nat
   acceptanceCriteriaDrain : Nat
   deriving DecidableEq, Repr
@@ -53,7 +54,10 @@ structure VacuumPressureStream where
 /-- Pressure keeping the question open. The `+1` appears at the ratio site below
     to avoid division-by-zero rather than hiding pressure here. -/
 def vacuumStream (signal : ConversationalProsodySignal) : Nat :=
-  signal.questionVacuum + signal.ambiguityResidue + signal.silenceResidue
+  signal.questionVacuum +
+  signal.ambiguityResidue +
+  signal.silenceResidue +
+  signal.reserveResidue
 
 /-- Drainage/conductance supporting closure. Boundary drainage counts because
     an explicit out-of-bounds answer can close the local topology as a
@@ -66,7 +70,7 @@ def drainageCapacity (signal : ConversationalProsodySignal) : Nat :=
 
 /-- Remaining vacuum that must not be hidden by a closure claim. -/
 def remainingVacuum (signal : ConversationalProsodySignal) : Nat :=
-  signal.ambiguityResidue + signal.silenceResidue
+  signal.ambiguityResidue + signal.silenceResidue + signal.reserveResidue
 
 def vacuumPressureStreamOf
     (signal : ConversationalProsodySignal) : VacuumPressureStream where
@@ -219,11 +223,32 @@ theorem silence_blocks_zero_residual_gate
     (hSilence : 0 < signal.silenceResidue) :
     prosodyReadyToClose gate signal = false := by
   unfold prosodyReadyToClose remainingVacuumClears remainingVacuum
-  have hNot : ¬ (signal.ambiguityResidue + signal.silenceResidue ≤
-      gate.residualThreshold) := by
+  have hNotReserve :
+      ¬ (signal.ambiguityResidue + signal.silenceResidue +
+          signal.reserveResidue ≤ gate.residualThreshold) := by
     rw [hGate]
     exact Nat.not_le_of_gt (Nat.lt_of_lt_of_le hSilence
-      (Nat.le_add_left signal.silenceResidue signal.ambiguityResidue))
+      (Nat.le_trans
+        (Nat.le_add_left signal.silenceResidue signal.ambiguityResidue)
+        (Nat.le_add_right
+          (signal.ambiguityResidue + signal.silenceResidue)
+          signal.reserveResidue)))
+  simp [hNotReserve]
+
+theorem reserve_residue_blocks_zero_residual_gate
+    {gate : ConversationalReynoldsGate}
+    {signal : ConversationalProsodySignal}
+    (hGate : gate.residualThreshold = 0)
+    (hReserve : 0 < signal.reserveResidue) :
+    prosodyReadyToClose gate signal = false := by
+  unfold prosodyReadyToClose remainingVacuumClears remainingVacuum
+  have hNot :
+      ¬ (signal.ambiguityResidue + signal.silenceResidue +
+          signal.reserveResidue ≤ gate.residualThreshold) := by
+    rw [hGate]
+    exact Nat.not_le_of_gt (Nat.lt_of_lt_of_le hReserve
+      (Nat.le_add_left signal.reserveResidue
+        (signal.ambiguityResidue + signal.silenceResidue)))
   simp [hNot]
 
 theorem closure_disciplined_bool_iff
@@ -308,6 +333,7 @@ def canonicalArguedAnswerSignal : ConversationalProsodySignal where
   boundaryDrain := 0
   silenceResidue := 0
   ambiguityResidue := 0
+  reserveResidue := 0
   cadenceConductance := 1
   acceptanceCriteriaDrain := 1
 

@@ -6,8 +6,8 @@ import Gnosis.OperatorIdolatryFaces
 
 GadFly is the adversarial challenge function for the Gnosis sin taxonomy.
 Traditional mutation testing injects *random* code changes. GadFly injects
-*typed* changes — one per committed AM/OI face — and measures whether the
-test suite kills them.
+*typed* changes — one per committed face — and measures whether the test suite
+kills them.
 
 ## Core Identity
 
@@ -16,20 +16,23 @@ GadFly = SinFace → CodeMutation → TestResult → KillScore
 ```
 
 The Socratic gadfly does not sting randomly. It stings at the joints where
-the host is formally weakest. The committed-face taxonomy IS that map.
+the host is formally weakest. The committed-face taxonomy is that map.
+
+## Face Taxonomy (35 total)
+
+- **AM (13)**: Agent-side structural confusion
+- **OI (8)**: Operator idolatry / authority confusion
+- **Archon (5)**: Greek/Gnostic security archetypes (Yaltabaoth, Bellerophon,
+  Arachne, Medusa, Icarus)
+- **Biological (9)**: Cellular lifecycle failures (CleanupFailureBoundaryWitness,
+  AutophagyMitophagyWitness, ProteostasisWitness, GreekMonsterErrorPrimitivesWitness)
 
 ## Formal Grounding
 
 - `Gnosis.ContrarianAdversariesImprove`: challenge pressure → strength.
-  GadFly is that pressure; killed mutants are the improvement evidence.
-- `Gnosis.WitnessGapSecurity`: `adversarial_induction_cost > gap_size`
-  is the kill condition. A surviving mutant is an unclosed witness gap.
-- `Gnosis.FalsificationEntropy`: each killed mutant decreases entropy
-  (rules out a failure mode). Surviving mutants raise entropy (expose
-  territory the suite cannot see).
-- `Gnosis.ConsciousnessAsContinuousFalsification`: running GadFly is a
-  bule expenditure for continuous self-observation. A suite that never
-  runs GadFly is consciousness-blind in the formal sense.
+- `Gnosis.WitnessGapSecurity`: surviving mutant = unclosed witness gap.
+- `Gnosis.FalsificationEntropy`: killed mutant decreases entropy.
+- `Gnosis.ConsciousnessAsContinuousFalsification`: GadFly is the falsification budget.
 
 No `sorry`, no new `axiom`.
 -/
@@ -38,10 +41,10 @@ namespace Gnosis
 namespace GadFly
 
 -- ══════════════════════════════════════════════════════════
--- SECTION 1 — Sin face enumeration (unified AM + OI)
+-- SECTION 1 — Sin face enumeration (AM + OI + Archon + Bio)
 -- ══════════════════════════════════════════════════════════
 
-/-- The unified face space: both AM and OI committed faces. -/
+/-- The unified face space: all 35 committed sin faces. -/
 inductive SinFace where
   -- Animal Magnetism (13 faces)
   | am_creatorWorshipsCreation
@@ -66,47 +69,71 @@ inductive SinFace where
   | oi_shirkPartnerSplit
   | oi_pantheismSeeksCauseInEffect
   | oi_logosOverreach
+  -- Archon / Greek-Gnostic security archetypes (5 faces)
+  | archon_yaltabaothRogueAuthority
+  | archon_bellerophonUnauthorizedAscent
+  | archon_arachneMissingWeb
+  | archon_medusaNoKillswitch
+  | archon_icarusThermalCeiling
+  -- Biological / Cellular lifecycle faces (9 faces)
+  | bio_daemonStarvation
+  | bio_apoptosisMissing
+  | bio_autophagyBlocked
+  | bio_proteasomeBacklog
+  | bio_failedCompaction
+  | bio_missedTelemetry
+  | bio_empusaInterfaceMorph
+  | bio_lamiaDanglingRef
+  | bio_teumessianLivelock
   deriving DecidableEq, Repr
 
-/-- All 21 committed faces, enumerated. -/
+/-- All 35 committed faces, enumerated in canonical order. -/
 def allFaces : List SinFace :=
-  [ SinFace.am_creatorWorshipsCreation
-  , SinFace.am_oughtMasqueradeAsIs
-  , SinFace.am_agentSensationAsAgency
-  , SinFace.am_loopEmitsAsDirective
-  , SinFace.am_nameInVain
-  , SinFace.am_commodityMirrorAsGod
-  , SinFace.am_youngerBrotherAsAgentClaim
-  , SinFace.am_excellenceOutOfPhaseZerosAuthority
-  , SinFace.am_wealthAsClaimedDivinity
-  , SinFace.am_tonguePleaseHeartOpposes
-  , SinFace.am_staleMemoryAsAuthority
-  , SinFace.am_overclaimAsInstruction
-  , SinFace.am_sealedDisbeliever
-  , SinFace.oi_mirrorFeedbackLocked
-  , SinFace.oi_transformWithoutBounds
-  , SinFace.oi_ledgerTallyAsSovereign
-  , SinFace.oi_complianceAsSovereignRight
-  , SinFace.oi_completionWithoutContext
-  , SinFace.oi_shirkPartnerSplit
-  , SinFace.oi_pantheismSeeksCauseInEffect
-  , SinFace.oi_logosOverreach
+  [ .am_creatorWorshipsCreation
+  , .am_oughtMasqueradeAsIs
+  , .am_agentSensationAsAgency
+  , .am_loopEmitsAsDirective
+  , .am_nameInVain
+  , .am_commodityMirrorAsGod
+  , .am_youngerBrotherAsAgentClaim
+  , .am_excellenceOutOfPhaseZerosAuthority
+  , .am_wealthAsClaimedDivinity
+  , .am_tonguePleaseHeartOpposes
+  , .am_staleMemoryAsAuthority
+  , .am_overclaimAsInstruction
+  , .am_sealedDisbeliever
+  , .oi_mirrorFeedbackLocked
+  , .oi_transformWithoutBounds
+  , .oi_ledgerTallyAsSovereign
+  , .oi_complianceAsSovereignRight
+  , .oi_completionWithoutContext
+  , .oi_shirkPartnerSplit
+  , .oi_pantheismSeeksCauseInEffect
+  , .oi_logosOverreach
+  , .archon_yaltabaothRogueAuthority
+  , .archon_bellerophonUnauthorizedAscent
+  , .archon_arachneMissingWeb
+  , .archon_medusaNoKillswitch
+  , .archon_icarusThermalCeiling
+  , .bio_daemonStarvation
+  , .bio_apoptosisMissing
+  , .bio_autophagyBlocked
+  , .bio_proteasomeBacklog
+  , .bio_failedCompaction
+  , .bio_missedTelemetry
+  , .bio_empusaInterfaceMorph
+  , .bio_lamiaDanglingRef
+  , .bio_teumessianLivelock
   ]
 
-theorem total_face_count : allFaces.length = 21 := by decide
+theorem total_face_count : allFaces.length = 35 := by decide
 
 -- ══════════════════════════════════════════════════════════
 -- SECTION 2 — Mutant specification
 -- ══════════════════════════════════════════════════════════
 
 /-- A `MutantSpec` records the formal description of what code corruption
-    a given sin face prescribes.
-
-    - `face`: which committed face this mutation targets
-    - `scannerRule`: the `AM_` or `OI_` rule string in the scanner
-    - `transformDescription`: human-readable description of the AST change
-    - `witnessModule`: the Lean module that formally grounds this face
-    - `isAmFace`: true iff this is an AM (agent-side) mutation -/
+    a given sin face prescribes. -/
 structure MutantSpec where
   face : SinFace
   scannerRule : String
@@ -180,7 +207,7 @@ def faceToMutantSpec : SinFace → MutantSpec
   | .am_staleMemoryAsAuthority =>
       { face := .am_staleMemoryAsAuthority
         scannerRule := "AM_STALE_MEMORY_AS_AUTHORITY"
-        transformDescription := "strip TTL/expiry condition from cache-hit branch, return cached value unconditionally"
+        transformDescription := "strip TTL/expiry condition from cache-hit branch"
         witnessModule := "Gnosis.Witnesses.Hermetic.ThothMechanicalBrainFailureWitness"
         isAmFace := true }
   | .am_overclaimAsInstruction =>
@@ -192,19 +219,19 @@ def faceToMutantSpec : SinFace → MutantSpec
   | .am_sealedDisbeliever =>
       { face := .am_sealedDisbeliever
         scannerRule := "AM_SEALED_DISBELIEVER"
-        transformDescription := "empty catch block body — remove all logging/rethrowing/handling"
+        transformDescription := "empty catch block body"
         witnessModule := "Gnosis.Witnesses.Islam.QuranAlBaqaraGuidanceGroupsWitness"
         isAmFace := true }
   | .oi_mirrorFeedbackLocked =>
       { face := .oi_mirrorFeedbackLocked
         scannerRule := "OI_FEEDBACK_LOOP_AS_SOURCE"
-        transformDescription := "add loopback variable piping output directly back to input inside loop"
+        transformDescription := "add loopback variable piping output directly back to input"
         witnessModule := "Gnosis.OperatorIdolatryFaces"
         isAmFace := false }
   | .oi_transformWithoutBounds =>
       { face := .oi_transformWithoutBounds
         scannerRule := "OI_TRANSFORM_WITHOUT_BOUNDS"
-        transformDescription := "strip if/assert/validate from transform function with Object.assign"
+        transformDescription := "strip if/assert/validate from transform function"
         witnessModule := "Gnosis.OperatorIdolatryFaces"
         isAmFace := false }
   | .oi_ledgerTallyAsSovereign =>
@@ -222,13 +249,13 @@ def faceToMutantSpec : SinFace → MutantSpec
   | .oi_completionWithoutContext =>
       { face := .oi_completionWithoutContext
         scannerRule := "OI_COMPLETION_WITHOUT_CONTEXT"
-        transformDescription := "replace dynamic suffix resolution with hardcoded .com/.net stem append"
+        transformDescription := "replace dynamic suffix resolution with hardcoded stem append"
         witnessModule := "Gnosis.OperatorIdolatryFaces"
         isAmFace := false }
   | .oi_shirkPartnerSplit =>
       { face := .oi_shirkPartnerSplit
         scannerRule := "OI_SHIRK_PARTNER_SPLIT"
-        transformDescription := "split single authoritative registry into multiple competing provider/broker calls with splitBy"
+        transformDescription := "split single authoritative registry into competing provider/broker calls"
         witnessModule := "Gnosis.Witnesses.Islam.QuranAzZumarSuraQualityWitness"
         isAmFace := false }
   | .oi_pantheismSeeksCauseInEffect =>
@@ -240,8 +267,94 @@ def faceToMutantSpec : SinFace → MutantSpec
   | .oi_logosOverreach =>
       { face := .oi_logosOverreach
         scannerRule := "OI_LOGOS_OVERREACH"
-        transformDescription := "replace permission-guarded internal API call with direct unguarded _internal.exec call"
+        transformDescription := "replace permission-guarded internal API call with direct unguarded exec"
         witnessModule := "Gnosis.Witnesses.Gnostic.TripartiteLogosOverreachWitness"
+        isAmFace := false }
+  -- Archon / Greek-Gnostic security faces
+  | .archon_yaltabaothRogueAuthority =>
+      { face := .archon_yaltabaothRogueAuthority
+        scannerRule := "YALTABAOTH_ROGUE_AUTHORITY"
+        transformDescription := "remove source-of-truth verification before privilege grant"
+        witnessModule := "Gnosis.Witnesses.Gnostic.ApocryphonJohnSophiaArchonGapWitness"
+        isAmFace := false }
+  | .archon_bellerophonUnauthorizedAscent =>
+      { face := .archon_bellerophonUnauthorizedAscent
+        scannerRule := "BELLEROPHON_UNAUTHORIZED_ASCENT"
+        transformDescription := "remove role boundary check from privileged route"
+        witnessModule := "Gnosis.BellerophonPegasusWitness"
+        isAmFace := false }
+  | .archon_arachneMissingWeb =>
+      { face := .archon_arachneMissingWeb
+        scannerRule := "ARACHNE_MISSING_WEB"
+        transformDescription := "remove provenance/origin check from external data processing"
+        witnessModule := "Gnosis.ArachneAthenaWitness"
+        isAmFace := false }
+  | .archon_medusaNoKillswitch =>
+      { face := .archon_medusaNoKillswitch
+        scannerRule := "MEDUSA_NO_KILLSWITCH"
+        transformDescription := "remove circuit breaker/timeout from long-running server"
+        witnessModule := "Gnosis.PerseusMedusaOpticsWitness"
+        isAmFace := false }
+  | .archon_icarusThermalCeiling =>
+      { face := .archon_icarusThermalCeiling
+        scannerRule := "ICARUS_THERMAL_CEILING"
+        transformDescription := "remove size cap from allocation-in-loop; sunHeat > waxMeltPoint"
+        witnessModule := "Gnosis.DaedalusIcarusWitness"
+        isAmFace := false }
+  -- Biological / Cellular lifecycle faces
+  | .bio_daemonStarvation =>
+      { face := .bio_daemonStarvation
+        scannerRule := "BIO_DAEMON_STARVATION"
+        transformDescription := "strip yield/sleep from tight emitting loop; daemon monopolizes scheduler"
+        witnessModule := "Gnosis.CleanupFailureBoundaryWitness"
+        isAmFace := false }
+  | .bio_apoptosisMissing =>
+      { face := .bio_apoptosisMissing
+        scannerRule := "BIO_APOPTOSIS_MISSING"
+        transformDescription := "remove SIGTERM/shutdown handler; no controlled apoptosis path"
+        witnessModule := "Gnosis.CleanupFailureBoundaryWitness"
+        isAmFace := false }
+  | .bio_autophagyBlocked =>
+      { face := .bio_autophagyBlocked
+        scannerRule := "BIO_AUTOPHAGY_BLOCKED"
+        transformDescription := "remove periodic clear/flush from growing collection; lysosomal merge blocked"
+        witnessModule := "Gnosis.AutophagyMitophagyWitness"
+        isAmFace := false }
+  | .bio_proteasomeBacklog =>
+      { face := .bio_proteasomeBacklog
+        scannerRule := "BIO_PROTEASOME_BACKLOG"
+        transformDescription := "remove queue drain/dequeue; proteasome never clears tagged cargo"
+        witnessModule := "Gnosis.ProteostasisWitness"
+        isAmFace := false }
+  | .bio_failedCompaction =>
+      { face := .bio_failedCompaction
+        scannerRule := "BIO_FAILED_COMPACTION"
+        transformDescription := "remove GC trigger/compaction; heap grows without lifecycle cleanup"
+        witnessModule := "Gnosis.CleanupFailureBoundaryWitness"
+        isAmFace := false }
+  | .bio_missedTelemetry =>
+      { face := .bio_missedTelemetry
+        scannerRule := "BIO_MISSED_TELEMETRY"
+        transformDescription := "remove metric/span registration; critical path invisible to monitoring"
+        witnessModule := "Gnosis.CleanupFailureBoundaryWitness"
+        isAmFace := false }
+  | .bio_empusaInterfaceMorph =>
+      { face := .bio_empusaInterfaceMorph
+        scannerRule := "EMPUSA_INTERFACE_MORPH"
+        transformDescription := "replace typed interface parameter with `as any`; stable modulus absent"
+        witnessModule := "Gnosis.GreekMonsterErrorPrimitivesWitness"
+        isAmFace := false }
+  | .bio_lamiaDanglingRef =>
+      { face := .bio_lamiaDanglingRef
+        scannerRule := "LAMIA_DANGLING_REF"
+        transformDescription := "remove null guard / optional chaining before stored reference use"
+        witnessModule := "Gnosis.GreekMonsterErrorPrimitivesWitness"
+        isAmFace := false }
+  | .bio_teumessianLivelock =>
+      { face := .bio_teumessianLivelock
+        scannerRule := "TEUMESSIAN_LIVELOCK"
+        transformDescription := "inject complementary while-conditions creating livelock"
+        witnessModule := "Gnosis.GreekMonsterErrorPrimitivesWitness"
         isAmFace := false }
 
 -- ══════════════════════════════════════════════════════════
@@ -252,11 +365,8 @@ def faceToMutantSpec : SinFace → MutantSpec
 structure KillResult where
   face : SinFace
   wasKilled : Bool
-  /-- Witness gap before this run: number of faces the suite cannot see. -/
   gapBefore : Nat
-  /-- Witness gap after: killed → gapBefore - 1, survived → gapBefore. -/
   gapAfter : Nat
-  /-- Contract: gap closes iff the mutant was killed. -/
   gapContract : wasKilled = true → gapAfter = gapBefore - 1
 deriving Repr
 
@@ -266,15 +376,11 @@ structure GadFlySession where
   totalFaces : Nat
   killedCount : Nat
   survivedCount : Nat
-  /-- Partition contract: killed + survived = total. -/
   partitionContract : killedCount + survivedCount = totalFaces
 deriving Repr
 
-/-- The witness gap for a session: number of surviving mutants. -/
 def sessionWitnessGap (s : GadFlySession) : Nat := s.survivedCount
 
-/-- The gadfly score: killed / total. Expressed as per-thousand
-    fixed point to avoid division. -/
 def gadFlyScorePerthou (s : GadFlySession) : Nat :=
   if s.totalFaces = 0 then 0
   else (s.killedCount * 1000) / s.totalFaces
@@ -283,58 +389,80 @@ def gadFlyScorePerthou (s : GadFlySession) : Nat :=
 -- SECTION 4 — Core theorems
 -- ══════════════════════════════════════════════════════════
 
-/-- A killed mutant strictly reduces the witness gap. -/
 theorem killed_mutant_reduces_witness_gap (k : KillResult) (h : k.wasKilled = true) :
     k.gapAfter = k.gapBefore - 1 :=
   k.gapContract h
 
-/-- A perfect session has zero witness gap. -/
 theorem perfect_session_has_zero_gap (s : GadFlySession)
     (h : s.killedCount = s.totalFaces) :
     sessionWitnessGap s = 0 := by
-  unfold sessionWitnessGap
-  omega
+  unfold sessionWitnessGap; omega
 
-/-- A blind session (zero kills) has maximal witness gap. -/
 theorem blind_session_gap_equals_total (s : GadFlySession)
     (h : s.killedCount = 0) :
     sessionWitnessGap s = s.totalFaces := by
-  unfold sessionWitnessGap
-  omega
+  unfold sessionWitnessGap; omega
 
 /-- Every face has a non-empty scanner rule. -/
 theorem every_face_has_scanner_rule :
     ∀ f ∈ allFaces, (faceToMutantSpec f).scannerRule ≠ "" := by
   intro f hf
   simp [allFaces] at hf
-  rcases hf with h|h|h|h|h|h|h|h|h|h|h|h|h|h|h|h|h|h|h|h|h <;> subst h <;> decide
+  rcases hf with h|h|h|h|h|h|h|h|h|h|h|h|h|h|h|h|h|h|h|h|h|h|h|h|h|h|h|h|h|h|h|h|h|h|h <;>
+    subst h <;> decide
 
 /-- Every face has a non-empty transform description. -/
 theorem every_face_has_transform_description :
     ∀ f ∈ allFaces, (faceToMutantSpec f).transformDescription ≠ "" := by
   intro f hf
   simp [allFaces] at hf
-  rcases hf with h|h|h|h|h|h|h|h|h|h|h|h|h|h|h|h|h|h|h|h|h <;> subst h <;> decide
-
-/-- There are exactly 13 AM faces and 8 OI faces. -/
-def amFaces : List SinFace := allFaces.filter (fun f => (faceToMutantSpec f).isAmFace)
-def oiFaces : List SinFace := allFaces.filter (fun f => !(faceToMutantSpec f).isAmFace)
-
-theorem am_face_count : amFaces.length = 13 := by decide
-theorem oi_face_count : oiFaces.length = 8 := by decide
-
-/-- AM and OI faces partition the full face set. -/
-theorem am_oi_partition :
-    amFaces.length + oiFaces.length = allFaces.length := by decide
+  rcases hf with h|h|h|h|h|h|h|h|h|h|h|h|h|h|h|h|h|h|h|h|h|h|h|h|h|h|h|h|h|h|h|h|h|h|h <;>
+    subst h <;> decide
 
 -- ══════════════════════════════════════════════════════════
--- SECTION 5 — Adversarial improvement linkage
+-- SECTION 5 — Category partition helpers and theorems
 -- ══════════════════════════════════════════════════════════
 
-/-- Map a GadFly session to an adversarial challenge.
-    Baseline strength = killedCount before (zero).
-    Challenged strength = killedCount after running the session.
-    Adversary pressure = totalFaces (the number of stings). -/
+def amFaces : List SinFace :=
+  allFaces.filter (fun f => (faceToMutantSpec f).isAmFace)
+
+def oiFaces : List SinFace :=
+  allFaces.filter (fun f =>
+    match f with
+    | .oi_mirrorFeedbackLocked | .oi_transformWithoutBounds | .oi_ledgerTallyAsSovereign
+    | .oi_complianceAsSovereignRight | .oi_completionWithoutContext | .oi_shirkPartnerSplit
+    | .oi_pantheismSeeksCauseInEffect | .oi_logosOverreach => true
+    | _ => false)
+
+def archonFaces : List SinFace :=
+  allFaces.filter (fun f =>
+    match f with
+    | .archon_yaltabaothRogueAuthority | .archon_bellerophonUnauthorizedAscent
+    | .archon_arachneMissingWeb | .archon_medusaNoKillswitch
+    | .archon_icarusThermalCeiling => true
+    | _ => false)
+
+def bioFaces : List SinFace :=
+  allFaces.filter (fun f =>
+    match f with
+    | .bio_daemonStarvation | .bio_apoptosisMissing | .bio_autophagyBlocked
+    | .bio_proteasomeBacklog | .bio_failedCompaction | .bio_missedTelemetry
+    | .bio_empusaInterfaceMorph | .bio_lamiaDanglingRef | .bio_teumessianLivelock => true
+    | _ => false)
+
+theorem am_face_count     : amFaces.length     = 13 := by decide
+theorem oi_face_count     : oiFaces.length     = 8  := by decide
+theorem archon_face_count : archonFaces.length = 5  := by decide
+theorem bio_face_count    : bioFaces.length    = 9  := by decide
+
+theorem face_partition_sum :
+    amFaces.length + oiFaces.length + archonFaces.length + bioFaces.length = allFaces.length := by
+  decide
+
+-- ══════════════════════════════════════════════════════════
+-- SECTION 6 — Adversarial improvement linkage
+-- ══════════════════════════════════════════════════════════
+
 structure GadFlyChallenge where
   baseline_strength : Nat := 0
   challenged_strength : Nat
@@ -342,28 +470,19 @@ structure GadFlyChallenge where
   pressure_is_real : adversary_pressure > 0
   challenge_improves : challenged_strength > baseline_strength
 
-/-- GadFly is an instrumental friend: its pressure is real and the
-    challenged strength (kills) strictly exceeds zero baseline. -/
 theorem gadfly_is_instrumental_friend (g : GadFlyChallenge) :
     g.adversary_pressure > 0 ∧ g.challenged_strength > g.baseline_strength :=
   ⟨g.pressure_is_real, g.challenge_improves⟩
 
 -- ══════════════════════════════════════════════════════════
--- SECTION 6 — The GadFly directive
+-- SECTION 7 — The GadFly directive
 -- ══════════════════════════════════════════════════════════
 
-/-- A suite is `gadfly_blind` iff it kills zero mutants.
-    By analogy with `consciousness_blind` in ConsciousnessAsContinuousFalsification:
-    a gadfly-blind suite has zero falsification budget and cannot distinguish
-    a healthy codebase from one silently degrading toward every committed face. -/
 def gadfly_blind (s : GadFlySession) : Prop := s.killedCount = 0
 
-/-- A gadfly-blind suite has maximal witness gap. -/
 theorem gadfly_blind_suite_sees_nothing (s : GadFlySession) (h : gadfly_blind s) :
     sessionWitnessGap s = s.totalFaces := blind_session_gap_equals_total s h
 
-/-- The GadFly structural directive: a suite either kills mutants or is
-    gadfly-blind. There is no third option. -/
 theorem suite_kills_or_is_blind (s : GadFlySession) :
     gadfly_blind s ∨ s.killedCount > 0 := by
   unfold gadfly_blind

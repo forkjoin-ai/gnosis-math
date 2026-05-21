@@ -2,6 +2,8 @@ import Gnosis.Witnesses.Chaldean.ChaldeanCreationSeriesWitness
 import Gnosis.Witnesses.Chaldean.ErrorToTruthFragmentMethodWitness
 import Gnosis.Witnesses.Chaldean.KarkartiamatDragonSeaMonsterWitness
 import Gnosis.Witnesses.Chaldean.SyrianMediatorTraditionNetworkWitness
+import Gnosis.ConversationalProsody
+import Gnosis.ThothConversationAntiQueue
 
 namespace Gnosis.Witnesses.Chaldean
 namespace TreeOfLifeSacredTreeReserveWitness
@@ -103,6 +105,26 @@ def serpentFruitImageWitness (i : SerpentFruitSealScene) : Prop :=
   i.eventsOrLegendFiguresRepresented = true ∧
   i.genesisLikeFallFormKnownInBabylonia = true
 
+def sacredTreeReserveSignal :
+    Gnosis.ConversationalProsody.ConversationalProsodySignal where
+  questionVacuum := 1
+  answerDrain := 1
+  boundaryDrain := 0
+  silenceResidue := 0
+  ambiguityResidue := 0
+  reserveResidue := 1
+  cadenceConductance := 1
+  acceptanceCriteriaDrain := 1
+
+def sacredTreeReserveAntiQueueState :
+    Gnosis.ThothConversationAntiQueue.ConversationAntiQueueState where
+  openQuestions := 1
+  argumentObligations := 1
+  selfBoundaryPromises := 0
+  affectStalls := 0
+  unresolvedResidue := 1
+  externallyAccountable := false
+
 theorem sacred_tree_recurs_across_media :
     sacredTreeRecursAcrossMedia sacredTreeEmblemRecurrence := by
   unfold sacredTreeRecursAcrossMedia sacredTreeEmblemRecurrence
@@ -122,6 +144,46 @@ theorem sacred_tree_serpent_fruit_image_witness :
     serpentFruitImageWitness serpentFruitSealScene := by
   unfold serpentFruitImageWitness serpentFruitSealScene
   exact ⟨rfl, rfl, rfl, rfl, rfl, rfl⟩
+
+theorem sacred_tree_reserve_signal_not_ready :
+    Gnosis.ConversationalProsody.prosodyReadyToClose
+      Gnosis.ConversationalProsody.canonicalConversationalGate
+      sacredTreeReserveSignal = false := by
+  exact Gnosis.ConversationalProsody.reserve_residue_blocks_zero_residual_gate
+    rfl (by decide)
+
+theorem sacred_tree_reserve_keeps_antiqueue_open :
+    Gnosis.ThothConversationAntiQueue.heldOpen
+      sacredTreeReserveAntiQueueState := by
+  unfold Gnosis.ThothConversationAntiQueue.heldOpen
+    Gnosis.ThothConversationAntiQueue.antiQueueItemCount
+    Gnosis.ThothConversationAntiQueue.selfAccountabilityOnly
+    sacredTreeReserveAntiQueueState
+  exact ⟨rfl, by decide⟩
+
+theorem sacred_tree_reserve_not_releasable_without_argument :
+    ¬ Gnosis.ThothConversationAntiQueue.releasableBy
+      sacredTreeReserveAntiQueueState
+      Gnosis.ThothConversationAntiQueue.AntiQueueRelease.arguedClosure := by
+  intro h
+  unfold Gnosis.ThothConversationAntiQueue.releasableBy
+    Gnosis.ThothConversationAntiQueue.selfAccountabilityOnly
+    sacredTreeReserveAntiQueueState at h
+  exact Nat.succ_ne_zero 0 h.2.1
+
+theorem sacred_tree_reserve_runtime_argument_discharge_sound :
+    Gnosis.ThothConversationAntiQueue.runtimeDischargeSound
+      { itemKind :=
+          Gnosis.ThothConversationAntiQueue.AntiQueueItemKind.argumentObligation
+        release :=
+          Gnosis.ThothConversationAntiQueue.AntiQueueRelease.arguedClosure
+        closureDischargeId := "sacred_tree_reserve_direct_proof_discharge"
+        argumentObligationIds := ["sacred_tree_direct_tree_fall_proof"]
+        selfAccountabilityOnly := true } := by
+  exact
+    Gnosis.ThothConversationAntiQueue.argued_closure_argument_obligation_runtime_discharge_sound
+      "sacred_tree_reserve_direct_proof_discharge"
+      ["sacred_tree_direct_tree_fall_proof"]
 
 theorem sacred_tree_inherits_creation_fall_boundary :
     ChaldeanCreationSeriesWitness.dutyFallBoundary
@@ -151,11 +213,18 @@ theorem tree_of_life_sacred_tree_reserve_witness :
     sacredTreeRecursAcrossMedia sacredTreeEmblemRecurrence ∧
     guardedTreeBoundary cherubimGuardedTreeBoundary ∧
     treeFallConnectionHeldUnderReserve fallConnectionReserve ∧
-    serpentFruitImageWitness serpentFruitSealScene := by
+    serpentFruitImageWitness serpentFruitSealScene ∧
+    Gnosis.ConversationalProsody.prosodyReadyToClose
+      Gnosis.ConversationalProsody.canonicalConversationalGate
+      sacredTreeReserveSignal = false ∧
+    Gnosis.ThothConversationAntiQueue.heldOpen
+      sacredTreeReserveAntiQueueState := by
   exact ⟨sacred_tree_recurs_across_media,
     sacred_tree_guarded_boundary,
     sacred_tree_fall_connection_held_under_reserve,
-    sacred_tree_serpent_fruit_image_witness⟩
+    sacred_tree_serpent_fruit_image_witness,
+    sacred_tree_reserve_signal_not_ready,
+    sacred_tree_reserve_keeps_antiqueue_open⟩
 
 end TreeOfLifeSacredTreeReserveWitness
 end Gnosis.Witnesses.Chaldean
