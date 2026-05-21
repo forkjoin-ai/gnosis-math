@@ -113,7 +113,7 @@ theorem nat_abs_diff_triangle
     natAbsDiff left right ≤
       natAbsDiff left middle + natAbsDiff middle right := by
   unfold natAbsDiff
-  omega
+  grind
 
 theorem process_shadow_equivalent_trans_add
     (left middle right : FiniteProbabilityProcess)
@@ -134,7 +134,7 @@ theorem process_shadow_equivalent_observer_accepts
     (observer : ScalarObserver)
     (depth : Nat)
     (hequivalent : ProcessShadowEquivalent budget left right)
-    (hleft : left.residual ≤ observer.tolerance)
+    (_hleft : left.residual ≤ observer.tolerance)
     (hcovers : ObserverBudgetCovers natBudgetMeasure budget wider)
     (hbudget : wider ≤ depth) :
     natResidualSignature.answer
@@ -149,7 +149,7 @@ theorem process_shadow_equivalent_observer_accepts
       (left.residual - right.residual)) hequivalent
   have hcovered : budget ≤ depth :=
     Nat.le_trans hcovers hbudget
-  omega
+  grind
 
 end FiniteProbabilityCore
 end Gnosis

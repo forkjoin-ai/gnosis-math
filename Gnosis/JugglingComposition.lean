@@ -5,10 +5,10 @@ import Gnosis.JugglingOrbit
 # Juggling Composition
 
 Finite composition-kernel witnesses for the juggling chaos orchestration MCP
-rows, under the historical `ForkRaceFoldTheorems` namespace.
+rows, under the canonical `Gnosis` namespace.
 -/
 
-namespace ForkRaceFoldTheorems
+namespace Gnosis
 
 structure CompositionCorpus where
   patternCount : Nat
@@ -100,4 +100,4 @@ theorem juggling_composition_evolution_elitist_monotone
   unfold nextBestScore
   exact Nat.le_add_right step.previousBestScore step.mutationGain
 
-end ForkRaceFoldTheorems
+end Gnosis

@@ -584,29 +584,16 @@ What we did **not** prove:
     sub-lattices. The "physical topology fragment" result here is
     relative to the specific homomorphism `bowlOfField` we work
     with.
-  * Anything about the *measure* of the unreachable subspace.
+  * Anything about the analytic size of the unreachable subspace.
     `TaoBowl` has four `Nat` dials, so both the reachable
-    sub-lattice and its complement are countably infinite. A
-    measure-theoretic gap quantification would require a Mathlib
-    lift.
+    sub-lattice and its complement are countably infinite. That
+    quantification is outside this Rustic module.
 
 ## Next exploration
 
-`Gnosis/ThoughtBowlMultisetEquivalence.lean` — define
-`canonicalize : List VibeWave → List VibeWave` as
-`canonicalField ∘ bowlOfField` and prove
-`bowlOfField (canonicalize waves) = bowlOfField waves`. That gives
-the *opposite* round-trip on the multiset class: every wave field
-is `bowlOfField`-equivalent to its canonical-field representative,
-so the homomorphism factors through the multiset coequalizer of
-the wave-ordering action. The natural target is a quotient-style
-witness:
-
-    bowlOfField waves₁ = bowlOfField waves₂  ⟺
-      canonicalize waves₁ = canonicalize waves₂
-
-making the multiset structure of the homomorphism a theorem rather
-than a comment.
+Closed by `Gnosis.ThoughtBowlMultisetEquivalence`: `canonicalize`
+now preserves `bowlOfField`, giving the opposite round-trip on the
+finite multiset class.
 -/
 
 end ThoughtBowlMechanicsRefined

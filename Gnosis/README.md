@@ -8,6 +8,47 @@ group larger families of related claims.
 
 ## Key Modules
 
+- [ScribalStandingWave.lean](./ScribalStandingWave.lean) — shared finite
+  contract for Thoth-style mechanical/scribal interfaces: canonical failure
+  boundary claims, viable audited-use claims, event-log projection to boundary
+  input, executable response-envelope validation, strict multi-turn audit-trace
+  folding for Thoth memory, Body Politick admission bridging into scribal
+  envelopes, reusable `ScribalStandingWaveMode`, and Rust-facing
+  boundary/certificate records for assisted reasoning, hallucination rejection,
+  source-substitution rejection, and failure-audit support.
+- [ScribalStandingWave/PayloadTraceLineage.lean](./ScribalStandingWave/PayloadTraceLineage.lean)
+  — companion payload-trace lineage contract for Body Politick-derived Thoth
+  memory: generated-content hashes remain visible audit observations while
+  trace authority and theorem lineage reduce to the folded child envelopes.
+- [ScribalStandingWave/TaggedTranscriptMode.lean](./ScribalStandingWave/TaggedTranscriptMode.lean)
+  — product-facing default transcript mode for Thoth output: turns are tagged
+  with scribal audit envelopes by default, and raw escape remains explicit and
+  non-authoritative.
+- [ScribalStandingWave/TranscriptAuditTrace.lean](./ScribalStandingWave/TranscriptAuditTrace.lean)
+  — CRDT-shaped ordered audit memory for tagged transcript sessions: replicas
+  merge turn audit atoms monotonically, preserve raw escape gaps as visible
+  observations, and reject source-authority claims.
+- [ScribalStandingWave/TranscriptCrdtLaws.lean](./ScribalStandingWave/TranscriptCrdtLaws.lean)
+  and [TranscriptDampeningAmnesia.lean](./ScribalStandingWave/TranscriptDampeningAmnesia.lean)
+  — canonical CRDT algebra plus bounded recall for transcript audit atoms:
+  normalized joins are idempotent/commutative/associative, old turns dampen
+  into lower-weight memory, and raw escapes become explicit amnesia gaps.
+- [ScribalStandingWave/RecallPromotionGate.lean](./ScribalStandingWave/RecallPromotionGate.lean)
+  — promotion gate for dampened transcript recall: fresh tagged corroboration
+  can restore active weight, while stale evidence and raw escape gaps cannot.
+- [ScribalStandingWave/MemoryBudgetScheduler.lean](./ScribalStandingWave/MemoryBudgetScheduler.lean)
+  — finite active-memory scheduler for Thoth recall: promoted fresh tagged
+  atoms outrank recent active atoms, dampened atoms remain available when
+  budget permits, and amnesia gaps stay outside active context.
+- [ScribalStandingWave/ThothMemorySession.lean](./ScribalStandingWave/ThothMemorySession.lean)
+  — full product-session package for tagged Thoth memory: turns fold into CRDT
+  audit trace, recall view, promotion gate, and scheduled active memory while
+  preserving non-authority after merges and raw escapes.
+- [ScribalStandingWave/ThothMemoryAdapter.lean](./ScribalStandingWave/ThothMemoryAdapter.lean)
+  — Thoth-facing adapter for product callers: transcript inputs default to
+  tagged audit memory, raw output requires an explicit escape request, and
+  consumed generation context is derived from scheduled recall rather than
+  accumulated output.
 - [FanoIncidence.lean](./FanoIncidence.lean) and
   [FanoGrassmannianMesh.lean](./FanoGrassmannianMesh.lean) — finite Fano-plane
   incidence contracts: every distinct seven-point pair has a unique completing
@@ -72,6 +113,9 @@ group larger families of related claims.
   channels to the Monster-vector floor, the FOIL projection matches the Aeon
   Flow header width, and the quantum-facing carrier matches the already-proved
   twelve-slot noise bridge.
+- [CacheObservation.lean](./CacheObservation.lean) — cache-hit and cold/stale
+  miss accounting for marginal fold work, folded directly into the `Gnosis`
+  namespace.
 - [IncompletenessBettiFrontier.lean](./IncompletenessBettiFrontier.lean) —
   ties the bounded Goedel proof-budget wall, Betti/void duality, and the
   negative-knowledge ledger into one frontier certificate: residual unmeasured
@@ -121,6 +165,23 @@ group larger families of related claims.
 - [RLBudgetLedgerBridge.lean](./RLBudgetLedgerBridge.lean) - bridge proving
   one-bule-per-rejection ledger spend matches rejection-trained budget growth
   and weakly lowers Buleyean RL cost.
+- [ConversationalDodgeball.lean](./ConversationalDodgeball.lean) - finite
+  negotiation-tactic kernel for dodge/duck/dive/dip/repeated-dodge moves,
+  extended with fact-checking closure discipline: silence, bare truth-dip, and
+  unresolved residue are reported as non-closures, while argued answers and
+  explicit boundary rejections satisfy closure. It also separates disciplined
+  dodge/duck refinement from closure: refinement can improve question precision
+  and preserve acceptance criteria, but must still terminate in argued closure.
+- [ConversationalProsody.lean](./ConversationalProsody.lean) - finite
+  vacuum-pressure stream gate for Thoth conversation closure: open questions
+  create a source vacuum, answer/boundary/cadence/acceptance signals provide
+  drainage and conductance, unresolved residue routes to glossolalia probing,
+  and ready but undisciplined closure routes to an audit gap.
+- [AffectLabelingPatternInterrupt.lean](./AffectLabelingPatternInterrupt.lean) - finite
+  affect-labeling interrupt for Dodgeball validation: emotion naming and
+  response space are required, valence deficit plus arousal regulation distance
+  form the optimizing cost, improvement and final-window stabilization validate
+  the interrupt, and metric degeneration authorizes a bounded stall route.
 - [ProvableRandomness.lean](./ProvableRandomness.lean) - Init-only randomness
   boundary certificate: deterministic byte cycles cover all 256 byte values,
   a Lacey-style DNA-dimension stream covers the byte boundary exactly once per
@@ -141,7 +202,10 @@ group larger families of related claims.
 - [FiniteProbabilityCore](./FiniteProbabilityCore/README.md) - focused
   implementation modules behind the native finite probability facade.
 - [GnosisMath](./GnosisMath/README.md) - internal Gnosis math support modules.
-- [GreekLogicCanon](./GreekLogicCanon/README.md) - Greek logic canon modules.
+- [GreekLogicCanon](./GreekLogicCanon/README.md) - Init-only Greek logic canon
+  modules, including the 24-form categorical syllogism catalog and the common
+  propositional inference-rule catalog, plus finite question-vacuum formats for
+  open inference slots and the Precision Q&A category/subcategory map.
 
 ## Aggregate Import
 

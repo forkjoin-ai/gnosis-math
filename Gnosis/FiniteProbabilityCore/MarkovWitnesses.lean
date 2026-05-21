@@ -127,7 +127,7 @@ theorem finite_markov_witness_append_total_shadow
   unfold FiniteMarkovWitness.append FiniteMarkovWitness.totalShadow
   rw [kernel_list_lost_mass_append]
   simp
-  omega
+  ac_rfl
 
 theorem finite_markov_no_hidden_defect
     (witness : FiniteMarkovWitness)
@@ -183,7 +183,8 @@ theorem stationary_finite_markov_kernel_loss_zero
   have hbalance := finite_stochastic_kernel_balance witness.kernel
   have hinput := witness.stationaryMass.1
   have houtput := witness.stationaryMass.2
-  omega
+  rw [hinput, houtput] at hbalance
+  grind
 
 theorem stationary_finite_markov_total_shadow_eq_residual
     (witness : StationaryFiniteMarkovWitness) :

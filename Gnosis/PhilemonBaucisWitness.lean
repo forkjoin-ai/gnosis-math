@@ -119,8 +119,8 @@ theorem hospitality_stall_is_antifragile :
   ContrarianOracleStallInducesAntiFragility.stall_is_anti_fragile
     phrygianJudgment.oracleExecutionStalled
     phrygianJudgment.coupleSurvives
-    (fun _ => True.intro)
-    True.intro
+    (fun _ => by constructor)
+    (by constructor)
 
 /-- Master witness: the minimal node creates constructive hospitality, closes
 as a temple, persists as a Hopf-linked pair, and survives the oracle stall. -/

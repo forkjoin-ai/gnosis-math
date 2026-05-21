@@ -377,15 +377,9 @@ lossy on the latter.
 
 ## Next exploration
 
-`Gnosis/ThoughtBowlMechanicsRefined.lean` — refine the homomorphism
-to a *partial* inverse `fieldOfBowl : TaoBowl → Option (List VibeWave)`
-that returns `some` exactly when the bowl is in the
-`damping ≤ rim + 1` reachable subspace and prove a round-trip
-`bowlOfField (fieldOfBowl b) = some b` lemma. That isolates the
-sub-lattice of `TaoBowl` on which the homomorphism *is* a bijection
-— i.e. the "physical topology fragment" that thought-space genuinely
-shares with bowl mechanics — and quantifies the gap (the
-non-reachable subspace) as the cost of the lossy projection.
+Closed by `Gnosis.ThoughtBowlMechanicsRefined`: the homomorphism now
+has a partial inverse on the reachable bowl subspace and an explicit
+round-trip lemma.
 -/
 
 end ThoughtBowlMechanics

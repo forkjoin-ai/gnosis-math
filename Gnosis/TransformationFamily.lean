@@ -1,4 +1,4 @@
-namespace ForkRaceFoldTheorems
+namespace Gnosis
 
 /-!
 Init-only transformation-family surface.
@@ -101,4 +101,4 @@ theorem decompose_then_reinforce_requires_restoration
   rw [hFeatureless] at hPositive
   exact Nat.lt_irrefl 0 hPositive
 
-end ForkRaceFoldTheorems
+end Gnosis

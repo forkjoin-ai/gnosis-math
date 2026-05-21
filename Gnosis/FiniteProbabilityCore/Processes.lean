@@ -167,7 +167,7 @@ theorem process_triple_accounting
   rw [← triple.second.balance]
   rw [triple.connectsSecondThird]
   rw [← triple.third.balance]
-  omega
+  ac_rfl
 
 theorem process_triple_data_processing
     (triple : ProcessTriple) :

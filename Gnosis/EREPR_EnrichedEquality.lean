@@ -41,6 +41,20 @@ def BettiGeodesic.length : BettiGeodesic x y → Nat
   | .step _ => 1
   | .er_bridge _ _ _ => 0 -- The ER bridge has ZERO length in the bulk.
 
+/-- Public Nat-valued ER distance used by runtime-facing contracts.  Matching
+boundary traces select the ER bridge and therefore have zero distance; otherwise
+the finite Init model records one classical hop. -/
+def geodesicLength (x y : Nat) : Nat :=
+  if boundaryTrace x = boundaryTrace y then 0 else 1
+
+/-- Matching boundary traces collapse the public geodesic length to zero. -/
+theorem geodesic_zero_on_trace_match
+    (x y : Nat) (h : boundaryTrace x = boundaryTrace y) :
+    geodesicLength x y = 0 := by
+  unfold geodesicLength
+  rw [h]
+  exact if_pos rfl
+
 /--
   The ER=EPR Identity.
   Shared boundary traces collapse topological distance to zero.

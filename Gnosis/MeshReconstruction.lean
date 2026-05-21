@@ -6,7 +6,7 @@ import Init
 Finite observability tripwire contracts for stale mesh-reconstruction MCP rows.
 -/
 
-namespace ForkRaceFoldTheorems
+namespace Gnosis
 
 structure ReconstructionSpec where
   observedMass : Nat
@@ -54,4 +54,4 @@ theorem tripwires_are_disjoint
       systemHealthTripwire kernel systemThreshold := by
   exact ⟨by simp [rowObservabilityTripwire, hSameUnobserved], rfl⟩
 
-end ForkRaceFoldTheorems
+end Gnosis

@@ -310,25 +310,14 @@ What this module does **not** prove:
     that proof has more bookkeeping than this introduction
     needs.
   * That the categorical reading is faithful. We have a structure
-    with the data of a split mono, but no proof that it forms a
-    `Category`-instance compatible thing. That would require
-    Mathlib.
+    with the data of a split mono, but no category instance or
+    compatibility laws in this Rustic module.
 
 ## Next exploration
 
-`Gnosis/HomomorphismLatticePattern.lean` — the cross-domain
-counterpart for `BuleyErgodicClosure`. Where the retract pattern
-captures "forget-and-recover," the homomorphism pattern captures
-"forget-but-preserve-an-invariant." The natural target is
-
-    structure Homomorphism (A B C : Type) where
-      forget   : A → C        -- the invariant projection
-      lift     : A → B        -- the structural lift
-      coherence : ∀ a, project (lift a) = forget a
-
-with `BuleyErgodicClosure.liftToBuleyState` as the canonical
-instance and `Gnosis.bulkOf` as the invariant. That would close
-the second cross-cutting pattern from the audit at theorem level.
+Closed by `Gnosis.HomomorphismLatticePattern`: the cross-domain
+"forget-but-preserve-an-invariant" pattern is now represented by a
+theorem-level homomorphism witness.
 -/
 
 end RetractLatticePattern

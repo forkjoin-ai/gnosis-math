@@ -100,7 +100,7 @@ theorem add_probability_residual_state_eq_add
   cases left
   cases right
   simp [addProbabilityResidualState, probabilityResidual]
-  omega
+  ac_rfl
 
 structure ProgramComposite where
   first : FiniteProbabilityProgram

@@ -1,4 +1,5 @@
 import Gnosis.BuleyErgodicClosure
+import Gnosis.FoilZeroDragCompatibility
 
 /-
   HomomorphismLatticePattern.lean
@@ -138,6 +139,9 @@ What this module proves:
     `skyrms_ulr_lifts_through_invariant_hom`, and
     `bulk_novikov_target_invariant_eq_fifty_five` (the latter rewrites
     the bulk conjunct through `coherence`).
+  * A second concrete homomorphism over a structured certificate:
+    FOIL signal gates lift to their selected channel count while
+    preserving the selected-channel and drag-residual certificate.
 
 What this module does **not** prove:
 
@@ -147,16 +151,77 @@ What this module does **not** prove:
   * A section `BuleyState → PolarizationState` or a retract structure
     on the bulk index. The lift is genuinely one-way at the type
     level; Pattern A does not apply.
-  * That other modules in the monolith fit `InvariantHomomorphism`
+  * That arbitrary modules in the monolith fit `InvariantHomomorphism`
     with the same `C`; each instance must be checked separately.
+-/
 
-## Next exploration
+/-! ## Structured-certificate FOIL instance -/
 
-Add a second concrete `InvariantHomomorphism` instance where `C` is
-not `Nat` but a structured certificate type (for example a bundled
-`Prop` invariant), and prove a small composition lemma when two lifts
-share the same target invariant — only if a real use case appears in
-`Gnosis` to avoid vacuous abstraction.
+open Gnosis.FoilZeroDragCompatibility
+
+/-- A structured FOIL coverage certificate: selected channels plus the
+    residual drag against the projected frame width. -/
+structure FoilCoverageCertificate where
+  selectedChannels : Nat
+  dragResidual : Nat
+
+/-- The certificate carried by a full FOIL gate. -/
+def foilGateCoverageCertificate
+    (gate : FoilSignalGate) : FoilCoverageCertificate where
+  selectedChannels := activeChannels gate
+  dragResidual := foilDrag foilProjectedFrameWidth (activeChannels gate)
+
+/-- The same certificate read after lifting a gate to just its selected
+    channel count. -/
+def selectedChannelCoverageCertificate
+    (selectedChannels : Nat) : FoilCoverageCertificate where
+  selectedChannels := selectedChannels
+  dragResidual := foilDrag foilProjectedFrameWidth selectedChannels
+
+/-- FOIL gate projection is a second concrete invariant homomorphism,
+    this time preserving a structured certificate rather than a bare
+    `Nat`. -/
+def foilGateCoverageInvariantHom :
+    InvariantHomomorphism FoilSignalGate Nat FoilCoverageCertificate where
+  sourceInvariant := foilGateCoverageCertificate
+  targetInvariant := selectedChannelCoverageCertificate
+  lift := activeChannels
+  coherence := fun _ => rfl
+
+theorem foil_gate_coverage_preserved
+    (gate : FoilSignalGate) :
+    selectedChannelCoverageCertificate
+        (foilGateCoverageInvariantHom.lift gate) =
+      foilGateCoverageCertificate gate :=
+  foilGateCoverageInvariantHom.preserves gate
+
+theorem cleared_gate_lift_has_zero_drag_certificate
+    (gate : FoilSignalGate)
+    (hSignal : gate.activationThreshold ≤ gate.witnessSignal)
+    (hPotential : monsterVectorFloor ≤ gate.potentialChannels) :
+    (selectedChannelCoverageCertificate
+        (foilGateCoverageInvariantHom.lift gate)).dragResidual = 0 := by
+  exact cleared_gate_implies_projection_zero_drag gate hSignal hPotential
+
+theorem structured_certificate_homomorphism_witness :
+    (∀ gate : FoilSignalGate,
+        selectedChannelCoverageCertificate
+            (foilGateCoverageInvariantHom.lift gate) =
+          foilGateCoverageCertificate gate) ∧
+    (∀ gate : FoilSignalGate,
+      gate.activationThreshold ≤ gate.witnessSignal →
+      monsterVectorFloor ≤ gate.potentialChannels →
+        (selectedChannelCoverageCertificate
+            (foilGateCoverageInvariantHom.lift gate)).dragResidual = 0) :=
+  ⟨foil_gate_coverage_preserved,
+    cleared_gate_lift_has_zero_drag_certificate⟩
+
+/-! ## Next exploration
+
+Closed by the FOIL structured-certificate instance above: `C` is now
+`FoilCoverageCertificate`, not `Nat`, and the lift from a full signal
+gate to selected channels preserves both the selected-channel field and
+the projected drag residual.
 -/
 
 end HomomorphismLatticePattern

@@ -416,26 +416,16 @@ It does **not** say:
   • Anything about *the* long-run occupation measure, because in
     Init-only Lean we cannot take real limits.
 
-The forward bridge to a future Mathlib lift is the predicate triple
-`Irreducible`, `UlrAttractive`, `NashLeaky`. A measure-theoretic
-upgrade can quote these exact predicates verbatim as the hypotheses of
-the limit theorem; the names will line up, and the discrete witnesses
-proved here will become finite-time approximations that subsume into
-the genuine `lim` statement once the analytic infrastructure exists.
+The Rustic boundary is the predicate triple `Irreducible`,
+`UlrAttractive`, `NashLeaky`. Any later analytic upgrade can quote
+these exact predicates as hypotheses; the discrete witnesses proved
+here remain finite-time approximations.
 
 ## Next exploration
 
-`Gnosis/SkyrmsErgodicSelectionMatrix.lean` — generalize the three-basin
-lumped kernel to a finite-state kernel indexed by the seven
-`PolarizationState` snapshots along
-`SkyrmsUltraLongRunEquilibrium.iterate 0..6 nashPolarizationTrap`,
-keeping the same `Irreducible`/`UlrAttractive`/`NashLeaky` predicates
-but at the un-lumped resolution. The natural target: prove that the
-absorbing-rate of the ULR snapshot dominates each non-ULR snapshot's
-escape rate row-wise, exposing a finite-state Lyapunov function
-(`polarization` itself) without needing a stationary distribution.
-That keeps the next discrete bite honest in Init Lean while moving
-closer to the spectral structure a Mathlib lift would need.
+Closed by `Gnosis.SkyrmsErgodicSelectionMatrix`: the lumped kernel now
+has an un-lumped seven-snapshot finite kernel with the same
+irreducible, ULR-attractive, Nash-leaky shape.
 -/
 
 end SkyrmsErgodicSelection

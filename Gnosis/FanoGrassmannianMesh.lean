@@ -130,6 +130,152 @@ def fanoPairGate (a b : FanoPoint) : List Nat :=
   let j := fanoColumn b
   if i < j then [i, j] else [j, i]
 
+/-- Numeric Aeon-tier cache key for a Fano endpoint pair: the sorted pair of
+embedded Fano phase columns. This is the pair form of `fanoPairGate`, intended
+for runtime maps that do not want to allocate a two-element label list. -/
+def fanoPairPhaseCacheKey (a b : FanoPoint) : Nat × Nat :=
+  let i := fanoColumn a
+  let j := fanoColumn b
+  if i < j then (i, j) else (j, i)
+
+/-- Rehydrate the numeric cache key as the sorted two-column label. -/
+def fanoPhaseCacheKeyGate (key : Nat × Nat) : List Nat :=
+  [key.1, key.2]
+
+theorem fanoPairPhaseCacheKey_eq_fanoPairGate (a b : FanoPoint) :
+    fanoPhaseCacheKeyGate (fanoPairPhaseCacheKey a b) = fanoPairGate a b := by
+  cases a <;> cases b <;> native_decide
+
+theorem fanoPairPhaseCacheKey_swap_invariant
+    (a b : FanoPoint) :
+    fanoPairPhaseCacheKey a b = fanoPairPhaseCacheKey b a := by
+  cases a <;> cases b <;> native_decide
+
+theorem fanoPairPhaseCacheKey_fst_lt_sixteen
+    (a b : FanoPoint) :
+    (fanoPairPhaseCacheKey a b).1 < 16 := by
+  cases a <;> cases b <;> native_decide
+
+theorem fanoPairPhaseCacheKey_snd_lt_sixteen
+    (a b : FanoPoint) :
+    (fanoPairPhaseCacheKey a b).2 < 16 := by
+  cases a <;> cases b <;> native_decide
+
+def fanoPairPhaseCacheKeyGate0 (a b : FanoPoint) : Fin 16 :=
+  ⟨(fanoPairPhaseCacheKey a b).1,
+    fanoPairPhaseCacheKey_fst_lt_sixteen a b⟩
+
+def fanoPairPhaseCacheKeyGate1 (a b : FanoPoint) : Fin 16 :=
+  ⟨(fanoPairPhaseCacheKey a b).2,
+    fanoPairPhaseCacheKey_snd_lt_sixteen a b⟩
+
+/-- The complete 21-entry direct-table keyspace for distinct unordered Fano
+phase pairs embedded in the first seven Aeon columns. -/
+def fanoPhaseCacheKeyTable : List (Nat × Nat) :=
+  [(0, 1), (0, 2), (0, 3), (0, 4), (0, 5), (0, 6),
+   (1, 2), (1, 3), (1, 4), (1, 5), (1, 6),
+   (2, 3), (2, 4), (2, 5), (2, 6),
+   (3, 4), (3, 5), (3, 6),
+   (4, 5), (4, 6),
+   (5, 6)]
+
+theorem fanoPhaseCacheKeyTable_length :
+    fanoPhaseCacheKeyTable.length = 21 :=
+  rfl
+
+theorem fanoPairPhaseCacheKey_mem_table
+    (a b : FanoPoint) (hab : a ≠ b) :
+    fanoPairPhaseCacheKey a b ∈ fanoPhaseCacheKeyTable := by
+  cases a <;> cases b <;> simp [fanoPairPhaseCacheKey,
+    fanoPhaseCacheKeyTable, fanoColumn, pointIndex] at hab ⊢
+
+private theorem fanoPhaseCacheKeyTable_idx_lt_all :
+    fanoPhaseCacheKeyTable.all
+      (fun key => decide (fanoPhaseCacheKeyTable.idxOf key < 21)) = true := by
+  native_decide
+
+theorem fanoPhaseCacheKeyTable_idx_lt_twenty_one
+    (key : Nat × Nat) (hkey : key ∈ fanoPhaseCacheKeyTable) :
+    fanoPhaseCacheKeyTable.idxOf key < 21 := by
+  have hall := List.all_eq_true.mp fanoPhaseCacheKeyTable_idx_lt_all key hkey
+  simpa using hall
+
+/-- Total 21-slot table index for an admitted Fano phase key. -/
+def fanoPhaseCacheKeyTableIndex
+    (key : Nat × Nat) (hkey : key ∈ fanoPhaseCacheKeyTable) : Fin 21 :=
+  ⟨fanoPhaseCacheKeyTable.idxOf key,
+    fanoPhaseCacheKeyTable_idx_lt_twenty_one key hkey⟩
+
+/-- Direct index for a distinct Fano endpoint pair. -/
+def fanoPairPhaseCacheKeyTableIndex
+    (a b : FanoPoint) (hab : a ≠ b) : Fin 21 :=
+  fanoPhaseCacheKeyTableIndex (fanoPairPhaseCacheKey a b)
+    (fanoPairPhaseCacheKey_mem_table a b hab)
+
+theorem fanoPairPhaseCacheKeyTableIndex_swap_invariant
+    (a b : FanoPoint) (hab : a ≠ b) :
+    fanoPairPhaseCacheKeyTableIndex a b hab =
+      fanoPairPhaseCacheKeyTableIndex b a (Ne.symm hab) := by
+  simp [fanoPairPhaseCacheKeyTableIndex, fanoPhaseCacheKeyTableIndex,
+    fanoPairPhaseCacheKey_swap_invariant]
+
+/-- Closed lexicographic rank for a sorted Fano phase key `(i,j)`,
+specialized to the seven visible Fano phases. For valid keys with
+`0 ≤ i < j < 7`, this is the direct 21-slot array index. -/
+def fanoPhaseCacheKeyRankCore (key : Nat × Nat) : Nat :=
+  key.1 * (13 - key.1) / 2 + (key.2 - (key.1 + 1))
+
+private theorem fanoPhaseCacheKeyRankCore_eq_idxOf_all :
+    fanoPhaseCacheKeyTable.all
+      (fun key => decide
+        (fanoPhaseCacheKeyRankCore key = fanoPhaseCacheKeyTable.idxOf key)) =
+      true := by
+  native_decide
+
+theorem fanoPhaseCacheKeyRankCore_eq_idxOf
+    (key : Nat × Nat) (hkey : key ∈ fanoPhaseCacheKeyTable) :
+    fanoPhaseCacheKeyRankCore key = fanoPhaseCacheKeyTable.idxOf key := by
+  have hall := List.all_eq_true.mp fanoPhaseCacheKeyRankCore_eq_idxOf_all key hkey
+  simpa using hall
+
+theorem fanoPhaseCacheKeyRankCore_lt_twenty_one
+    (key : Nat × Nat) (hkey : key ∈ fanoPhaseCacheKeyTable) :
+    fanoPhaseCacheKeyRankCore key < 21 := by
+  rw [fanoPhaseCacheKeyRankCore_eq_idxOf key hkey]
+  exact fanoPhaseCacheKeyTable_idx_lt_twenty_one key hkey
+
+/-- Closed-form `Fin 21` index for an admitted Fano phase key. -/
+def fanoPhaseCacheKeyRank
+    (key : Nat × Nat) (hkey : key ∈ fanoPhaseCacheKeyTable) : Fin 21 :=
+  ⟨fanoPhaseCacheKeyRankCore key,
+    fanoPhaseCacheKeyRankCore_lt_twenty_one key hkey⟩
+
+theorem fanoPhaseCacheKeyRank_eq_table_index
+    (key : Nat × Nat) (hkey : key ∈ fanoPhaseCacheKeyTable) :
+    fanoPhaseCacheKeyRank key hkey = fanoPhaseCacheKeyTableIndex key hkey := by
+  apply Fin.ext
+  exact fanoPhaseCacheKeyRankCore_eq_idxOf key hkey
+
+theorem fanoPairPhaseCacheKeyRank_swap_invariant
+    (a b : FanoPoint) (hab : a ≠ b) :
+    fanoPhaseCacheKeyRank (fanoPairPhaseCacheKey a b)
+        (fanoPairPhaseCacheKey_mem_table a b hab) =
+      fanoPhaseCacheKeyRank (fanoPairPhaseCacheKey b a)
+        (fanoPairPhaseCacheKey_mem_table b a (Ne.symm hab)) := by
+  simp [fanoPairPhaseCacheKey_swap_invariant]
+
+def monsterAeonFanoCanonicalCertificate
+    (m n : Nat) (a b : FanoPoint) : MonsterAeonFanoCertificate where
+  monsterColumns := [m, n]
+  aeonPhases := [fanoColumn a, fanoColumn b]
+  aeonGate := fanoPairGate a b
+  fanoStates := [a.state, b.state]
+  completion := collide a.state b.state
+  orientationSign := if fanoColumn a < fanoColumn b then 1 else -1
+  positiveGate := true
+  residualValidated := true
+  fingerprintVerified := true
+
 /-- Oriented two-column Plucker label before canonical sorting. -/
 def orientedFanoPairGate (a b : FanoPoint) : List Nat :=
   [fanoColumn a, fanoColumn b]
@@ -303,6 +449,74 @@ theorem fanoColumnPoint_fanoColumn (p : FanoPoint) :
     fanoColumnPoint (fanoColumn p) = some p := by
   cases p <;> rfl
 
+theorem fanoColumnPoint_eq_some_implies_column
+    (phase : Nat) (p : FanoPoint)
+    (h : fanoColumnPoint phase = some p) :
+    phase = fanoColumn p := by
+  revert p h
+  cases phase with
+  | zero =>
+      intro p h
+      cases p <;> simp [fanoColumnPoint, fanoColumn, pointIndex] at h ⊢
+  | succ phase =>
+      cases phase with
+      | zero =>
+          intro p h
+          cases p <;> simp [fanoColumnPoint, fanoColumn, pointIndex] at h ⊢
+      | succ phase =>
+          cases phase with
+          | zero =>
+              intro p h
+              cases p <;> simp [fanoColumnPoint, fanoColumn, pointIndex] at h ⊢
+          | succ phase =>
+              cases phase with
+              | zero =>
+                  intro p h
+                  cases p <;> simp [fanoColumnPoint, fanoColumn, pointIndex] at h ⊢
+              | succ phase =>
+                  cases phase with
+                  | zero =>
+                      intro p h
+                      cases p <;> simp [fanoColumnPoint, fanoColumn, pointIndex] at h ⊢
+                  | succ phase =>
+                      cases phase with
+                      | zero =>
+                          intro p h
+                          cases p <;> simp [fanoColumnPoint, fanoColumn, pointIndex] at h ⊢
+                      | succ phase =>
+                          cases phase with
+                          | zero =>
+                              intro p h
+                              cases p <;> simp [fanoColumnPoint, fanoColumn, pointIndex] at h ⊢
+                          | succ phase =>
+                              intro p h
+                              cases p <;> simp [fanoColumnPoint] at h
+
+theorem aeonPhaseFanoState_isSome_eq_fanoColumnPoint_isSome
+    (phase : Nat) :
+    (aeonPhaseFanoState phase).isSome = (fanoColumnPoint phase).isSome := by
+  cases phase with
+  | zero => rfl
+  | succ phase =>
+      cases phase with
+      | zero => rfl
+      | succ phase =>
+          cases phase with
+          | zero => rfl
+          | succ phase =>
+              cases phase with
+              | zero => rfl
+              | succ phase =>
+                  cases phase with
+                  | zero => rfl
+                  | succ phase =>
+                      cases phase with
+                      | zero => rfl
+                      | succ phase =>
+                          cases phase with
+                          | zero => rfl
+                          | succ phase => rfl
+
 /-- Decode a Monster-side column through its Aeon-12 phase into the embedded
 first-seven Fano subatlas, when that phase is Fano-visible. -/
 def monsterColumnFanoPoint (column : Nat) : Option FanoPoint :=
@@ -332,6 +546,14 @@ def monsterPairFanoGate (a b : Nat) : Option (List Nat) :=
   | some (x, y) => if x ≠ y then some (fanoPairGate x y) else none
   | none => none
 
+/-- Monster-side numeric Aeon-tier cache key after Fano projection. It is
+defined exactly when both Monster columns decode to distinct embedded Fano
+endpoints, and it forgets the original Monster column addresses. -/
+def monsterPairFanoPhaseCacheKey (a b : Nat) : Option (Nat × Nat) :=
+  match monsterPairFanoPoints a b with
+  | some (x, y) => if x ≠ y then some (fanoPairPhaseCacheKey x y) else none
+  | none => none
+
 theorem monsterPairFanoPoints_eq_some_of_phases
     (m n : Nat) (a b : FanoPoint)
     (hm : monsterColumnPhase m = fanoColumn a)
@@ -349,6 +571,25 @@ theorem monsterPairFanoPoints_decode_visible
     cases hn : fanoColumnPoint (monsterColumnPhase n) <;>
     simp [monsterPairFanoPoints, monsterColumnFanoPoint, monsterColumnFanoVisible,
       aeonPhaseFanoVisible, hm, hn] at hdecode ⊢
+
+theorem monsterPairFanoPoints_eq_some_implies_phases
+    (m n : Nat) (a b : FanoPoint)
+    (hdecode : monsterPairFanoPoints m n = some (a, b)) :
+    monsterColumnPhase m = fanoColumn a ∧
+      monsterColumnPhase n = fanoColumn b := by
+  unfold monsterPairFanoPoints monsterColumnFanoPoint at hdecode
+  cases hm : fanoColumnPoint (monsterColumnPhase m) with
+  | none => simp [hm] at hdecode
+  | some lhs =>
+      cases hn : fanoColumnPoint (monsterColumnPhase n) with
+      | none => simp [hm, hn] at hdecode
+      | some rhs =>
+          simp [hm, hn] at hdecode
+          rcases hdecode with ⟨hlhs, hrhs⟩
+          subst lhs
+          subst rhs
+          exact ⟨fanoColumnPoint_eq_some_implies_column (monsterColumnPhase m) a hm,
+            fanoColumnPoint_eq_some_implies_column (monsterColumnPhase n) b hn⟩
 
 /-- Decode a two-column label in the embedded first-seven Fano subatlas back
 to its ordered endpoint pair. Labels outside the embedded subatlas do not
@@ -575,6 +816,193 @@ def monsterPairFanoXorRuntimeStack
       if x ≠ y then some (fanoPairCanonicalXorRuntimeStack x y) else none
   | none => none
 
+/-- Monster-side fast payload dispatch through the Fano subatlas. This is the
+stack-free version of `monsterPairFanoXorRuntimeStack` for callers that only
+need the unique XOR completion payload. -/
+def monsterPairFanoXorPayload (a b : Nat) : Option TritonState :=
+  match monsterPairFanoPoints a b with
+  | some (x, y) =>
+      if x ≠ y then some (collide x.state y.state) else none
+  | none => none
+
+/-- Status bits for the compact stack-free Monster/Fano XOR route. This is the
+Lean mirror of the Rust packed `u16` route status field: admitted payload,
+same Aeon phase, outside the Fano subatlas, or shadow validation required. -/
+inductive PackedFanoXorRouteStatus
+  | admitted
+  | samePhase
+  | outsideFanoSubatlas
+  | shadowValidationRequired
+  deriving DecidableEq, Repr
+
+/-- Compact route record before bit-packing. Runtime implementations may pack
+`status`, `payload`, and the two gate columns into a small integer; this
+structure states the semantic payload that the packed bits must preserve. -/
+structure PackedFanoXorRoute where
+  status : PackedFanoXorRouteStatus
+  payload : Option TritonState
+  aeonGate : List Nat
+deriving DecidableEq, Repr
+
+def packedFanoXorRoutePayload (route : PackedFanoXorRoute) : Option TritonState :=
+  match route.status with
+  | PackedFanoXorRouteStatus.admitted => route.payload
+  | _ => none
+
+def packedFanoXorRouteStatusCode : PackedFanoXorRouteStatus → Nat
+  | PackedFanoXorRouteStatus.admitted => 0
+  | PackedFanoXorRouteStatus.samePhase => 1
+  | PackedFanoXorRouteStatus.outsideFanoSubatlas => 2
+  | PackedFanoXorRouteStatus.shadowValidationRequired => 3
+
+/-- Arithmetic mirror of the Rust `u16` packed route:
+`status:2 | gate1:4 | gate0:4 | value:3`. -/
+def packedFanoXorRouteWord
+    (status : PackedFanoXorRouteStatus) (value : Fin 8)
+    (gate0 gate1 : Fin 16) : Nat :=
+  packedFanoXorRouteStatusCode status * 2048 +
+    gate1.val * 128 + gate0.val * 8 + value.val
+
+def packedFanoXorRouteWordStatusCode (word : Nat) : Nat :=
+  (word / 2048) % 4
+
+def packedFanoXorRouteWordValue (word : Nat) : Nat :=
+  word % 8
+
+def packedFanoXorRouteWordGate0 (word : Nat) : Nat :=
+  (word / 8) % 16
+
+def packedFanoXorRouteWordGate1 (word : Nat) : Nat :=
+  (word / 128) % 16
+
+theorem packedFanoXorRouteWord_status_round_trip
+    (status : PackedFanoXorRouteStatus) (value : Fin 8)
+    (gate0 gate1 : Fin 16) :
+    packedFanoXorRouteWordStatusCode
+        (packedFanoXorRouteWord status value gate0 gate1) =
+      packedFanoXorRouteStatusCode status := by
+  unfold packedFanoXorRouteWordStatusCode
+  have hdiv :
+      packedFanoXorRouteWord status value gate0 gate1 / 2048 =
+        packedFanoXorRouteStatusCode status := by
+    cases status <;>
+      unfold packedFanoXorRouteWord packedFanoXorRouteStatusCode <;>
+      omega
+  rw [hdiv]
+  cases status <;> rfl
+
+theorem packedFanoXorRouteWord_value_round_trip
+    (status : PackedFanoXorRouteStatus) (value : Fin 8)
+    (gate0 gate1 : Fin 16) :
+    packedFanoXorRouteWordValue
+        (packedFanoXorRouteWord status value gate0 gate1) =
+      value.val := by
+  cases status <;>
+    unfold packedFanoXorRouteWordValue
+      packedFanoXorRouteWord packedFanoXorRouteStatusCode <;>
+    omega
+
+theorem packedFanoXorRouteWord_gate0_round_trip
+    (status : PackedFanoXorRouteStatus) (value : Fin 8)
+    (gate0 gate1 : Fin 16) :
+    packedFanoXorRouteWordGate0
+        (packedFanoXorRouteWord status value gate0 gate1) =
+      gate0.val := by
+  cases status <;>
+    unfold packedFanoXorRouteWordGate0
+      packedFanoXorRouteWord packedFanoXorRouteStatusCode <;>
+    omega
+
+theorem packedFanoXorRouteWord_gate1_round_trip
+    (status : PackedFanoXorRouteStatus) (value : Fin 8)
+    (gate0 gate1 : Fin 16) :
+    packedFanoXorRouteWordGate1
+        (packedFanoXorRouteWord status value gate0 gate1) =
+      gate1.val := by
+  cases status <;>
+    unfold packedFanoXorRouteWordGate1
+      packedFanoXorRouteWord packedFanoXorRouteStatusCode <;>
+    omega
+
+def packedFanoXorRouteHotWord (a b : FanoPoint) : Nat :=
+  packedFanoXorRouteWord
+    PackedFanoXorRouteStatus.admitted
+    (collide a.state b.state)
+    (fanoPairPhaseCacheKeyGate0 a b)
+    (fanoPairPhaseCacheKeyGate1 a b)
+
+def packedFanoXorRouteHintPositiveWord (word : Nat) : Nat :=
+  word + 8192
+
+def packedFanoXorRouteHotPositiveHintWord (a b : FanoPoint) : Nat :=
+  packedFanoXorRouteHintPositiveWord (packedFanoXorRouteHotWord a b)
+
+theorem packedFanoXorRouteHotWord_extractors
+    (a b : FanoPoint) :
+    packedFanoXorRouteWordStatusCode
+        (packedFanoXorRouteHotWord a b) =
+      packedFanoXorRouteStatusCode PackedFanoXorRouteStatus.admitted ∧
+    packedFanoXorRouteWordValue
+        (packedFanoXorRouteHotWord a b) =
+      (collide a.state b.state).val ∧
+    packedFanoXorRouteWordGate0
+        (packedFanoXorRouteHotWord a b) =
+      (fanoPairPhaseCacheKey a b).1 ∧
+    packedFanoXorRouteWordGate1
+        (packedFanoXorRouteHotWord a b) =
+      (fanoPairPhaseCacheKey a b).2 := by
+  unfold packedFanoXorRouteHotWord
+  exact ⟨
+    packedFanoXorRouteWord_status_round_trip
+      PackedFanoXorRouteStatus.admitted
+      (collide a.state b.state)
+      (fanoPairPhaseCacheKeyGate0 a b)
+      (fanoPairPhaseCacheKeyGate1 a b),
+    packedFanoXorRouteWord_value_round_trip
+      PackedFanoXorRouteStatus.admitted
+      (collide a.state b.state)
+      (fanoPairPhaseCacheKeyGate0 a b)
+      (fanoPairPhaseCacheKeyGate1 a b),
+    packedFanoXorRouteWord_gate0_round_trip
+      PackedFanoXorRouteStatus.admitted
+      (collide a.state b.state)
+      (fanoPairPhaseCacheKeyGate0 a b)
+      (fanoPairPhaseCacheKeyGate1 a b),
+    packedFanoXorRouteWord_gate1_round_trip
+      PackedFanoXorRouteStatus.admitted
+      (collide a.state b.state)
+      (fanoPairPhaseCacheKeyGate0 a b)
+      (fanoPairPhaseCacheKeyGate1 a b)⟩
+
+/-- Stack-free compact Monster/Fano dispatch. The admitted branch is exactly
+the existing `monsterPairFanoXorPayload`; the other branches retain the
+runtime reason needed by the wire adapter without materializing the 66-stack. -/
+def monsterPairFanoXorPackedRoute
+    (a b : Nat) (residualValidated fingerprintVerified : Bool) :
+    PackedFanoXorRoute :=
+  let i := monsterColumnPhase a
+  let j := monsterColumnPhase b
+  let gate := if i < j then [i, j] else [j, i]
+  match monsterPairFanoPoints a b with
+  | some (x, y) =>
+      if x ≠ y then
+        if residualValidated && fingerprintVerified then
+          { status := PackedFanoXorRouteStatus.admitted
+            payload := some (collide x.state y.state)
+            aeonGate := fanoPairGate x y }
+        else
+          { status := PackedFanoXorRouteStatus.shadowValidationRequired
+            payload := none
+            aeonGate := gate }
+      else
+        { status := PackedFanoXorRouteStatus.samePhase
+          payload := none
+          aeonGate := gate }
+  | none =>
+      { status := PackedFanoXorRouteStatus.outsideFanoSubatlas
+        payload := none
+        aeonGate := gate }
+
 theorem fanoLabelCanonicalXorRuntimeStack_fanoPairGate
     (a b : FanoPoint) (hab : a ≠ b) :
     fanoLabelCanonicalXorRuntimeStack (fanoPairGate a b) =
@@ -762,12 +1190,166 @@ theorem monsterPairFanoGate_eq_fanoPairGate_of_decode
     monsterPairFanoGate m n = some (fanoPairGate a b) := by
   simp [monsterPairFanoGate, hdecode, hab]
 
+theorem monsterPairFanoPhaseCacheKey_eq_of_decode
+    (m n : Nat) (a b : FanoPoint)
+    (hdecode : monsterPairFanoPoints m n = some (a, b)) (hab : a ≠ b) :
+    monsterPairFanoPhaseCacheKey m n = some (fanoPairPhaseCacheKey a b) := by
+  simp [monsterPairFanoPhaseCacheKey, hdecode, hab]
+
+theorem monsterPairFanoPhaseCacheKey_mem_table_of_decode
+    (m n : Nat) (a b : FanoPoint)
+    (hdecode : monsterPairFanoPoints m n = some (a, b)) (hab : a ≠ b) :
+    ∃ key,
+      monsterPairFanoPhaseCacheKey m n = some key ∧
+      key ∈ fanoPhaseCacheKeyTable := by
+  exact ⟨fanoPairPhaseCacheKey a b,
+    monsterPairFanoPhaseCacheKey_eq_of_decode m n a b hdecode hab,
+    fanoPairPhaseCacheKey_mem_table a b hab⟩
+
+theorem monsterPairFanoGate_eq_phase_cache_key_gate_of_decode
+    (m n : Nat) (a b : FanoPoint)
+    (hdecode : monsterPairFanoPoints m n = some (a, b)) (hab : a ≠ b) :
+    monsterPairFanoGate m n =
+      some (fanoPhaseCacheKeyGate (fanoPairPhaseCacheKey a b)) := by
+  rw [monsterPairFanoGate_eq_fanoPairGate_of_decode m n a b hdecode hab,
+    fanoPairPhaseCacheKey_eq_fanoPairGate a b]
+
 theorem monsterPairFanoXorRuntimeStack_eq_pair_canonical_of_decode
     (m n : Nat) (a b : FanoPoint)
     (hdecode : monsterPairFanoPoints m n = some (a, b)) (hab : a ≠ b) :
     monsterPairFanoXorRuntimeStack m n =
       some (fanoPairCanonicalXorRuntimeStack a b) := by
   simp [monsterPairFanoXorRuntimeStack, hdecode, hab]
+
+theorem monsterPairFanoXorPayload_eq_completion_of_decode
+    (m n : Nat) (a b : FanoPoint)
+    (hdecode : monsterPairFanoPoints m n = some (a, b)) (hab : a ≠ b) :
+    monsterPairFanoXorPayload m n = some (completePair a b).state := by
+  simp [monsterPairFanoXorPayload, hdecode, hab, completePair_state_eq_xor a b hab]
+
+theorem monsterPairFanoXorPackedRoute_payload_eq_stack_free
+    (m n : Nat) :
+    packedFanoXorRoutePayload (monsterPairFanoXorPackedRoute m n true true) =
+      monsterPairFanoXorPayload m n := by
+  unfold monsterPairFanoXorPackedRoute monsterPairFanoXorPayload
+  unfold monsterPairFanoPoints monsterColumnFanoPoint
+  cases fanoColumnPoint (monsterColumnPhase m) with
+  | none => simp [packedFanoXorRoutePayload]
+  | some a =>
+      cases fanoColumnPoint (monsterColumnPhase n) with
+      | none => simp [packedFanoXorRoutePayload]
+      | some b =>
+          by_cases hab : a ≠ b
+          · simp [packedFanoXorRoutePayload, hab]
+          · simp [packedFanoXorRoutePayload, hab]
+
+theorem monsterPairFanoXorPackedRoute_admitted_eq_completion_of_decode
+    (m n : Nat) (a b : FanoPoint)
+    (hdecode : monsterPairFanoPoints m n = some (a, b)) (hab : a ≠ b) :
+    packedFanoXorRoutePayload (monsterPairFanoXorPackedRoute m n true true) =
+      some (completePair a b).state := by
+  rw [monsterPairFanoXorPackedRoute_payload_eq_stack_free m n]
+  exact monsterPairFanoXorPayload_eq_completion_of_decode m n a b hdecode hab
+
+theorem monsterPairFanoXorPayload_eq_stack_unique_payload
+    (m n : Nat) (stack : List (Option TritonState))
+    (hstack : monsterPairFanoXorRuntimeStack m n = some stack) :
+    ∃ payload,
+      monsterPairFanoXorPayload m n = some payload ∧
+      some payload ∈ stack ∧
+      optionPayloadCount stack = 1 ∧
+      (∀ out, out ∈ stack → out = none ∨ out = some payload) ∧
+      ∀ a b,
+        monsterPairFanoPoints m n = some (a, b) →
+        a ≠ b →
+        collide (collide a.state b.state) payload = godPosition := by
+  obtain ⟨a, b, hdecode, hab, hcount, hpayload, hnowrong, _hparity⟩ :=
+    monsterPairFanoXorRuntimeStack_payload_law m n stack hstack
+  refine ⟨(completePair a b).state, ?_, hpayload, hcount, hnowrong, ?_⟩
+  · exact monsterPairFanoXorPayload_eq_completion_of_decode m n a b hdecode hab
+  · intro a' b' hdecode' _hab'
+    have hpair : (a', b') = (a, b) := by
+      rw [hdecode] at hdecode'
+      exact (Option.some.inj hdecode').symm
+    cases hpair
+    exact completePair_xor_parity_zero a b hab
+
+theorem monsterPairFanoXorPayload_some_iff_stack_unique_payload
+    (m n : Nat) (payload : TritonState) :
+    monsterPairFanoXorPayload m n = some payload ↔
+      ∃ stack,
+        monsterPairFanoXorRuntimeStack m n = some stack ∧
+        some payload ∈ stack ∧
+        optionPayloadCount stack = 1 ∧
+        (∀ out, out ∈ stack → out = none ∨ out = some payload) := by
+  constructor
+  · intro hpayload
+    unfold monsterPairFanoXorPayload at hpayload
+    cases hdecode : monsterPairFanoPoints m n with
+    | none => simp [hdecode] at hpayload
+    | some pair =>
+        cases pair with
+        | mk a b =>
+            by_cases hab : a ≠ b
+            · simp [hdecode, hab] at hpayload
+              have hpayload_eq : payload = (completePair a b).state := by
+                rw [← hpayload]
+                exact (completePair_state_eq_xor a b hab).symm
+              refine ⟨fanoPairCanonicalXorRuntimeStack a b,
+                monsterPairFanoXorRuntimeStack_eq_pair_canonical_of_decode m n a b hdecode hab,
+                ?_, ?_, ?_⟩
+              · rw [hpayload_eq]
+                exact fanoPairCanonicalXorRuntimeStack_gate_payload a b hab
+              · exact fanoPairCanonicalXorRuntimeStack_payload_count_one a b hab
+              · intro out hout
+                have hwrong := fanoPairCanonicalXorRuntimeStack_no_wrong_payload a b hab out hout
+                rcases hwrong with hnone | hsome
+                · exact Or.inl hnone
+                · exact Or.inr (by simpa [hpayload_eq] using hsome)
+            · simp [hdecode, hab] at hpayload
+  · intro hstack
+    obtain ⟨stack, hstack, hpayload_mem, _hcount, hnowrong⟩ := hstack
+    obtain ⟨fastPayload, hfast, _hfast_mem, _hfast_count, _hfast_nowrong, _hparity⟩ :=
+      monsterPairFanoXorPayload_eq_stack_unique_payload m n stack hstack
+    have hpayload_eq : payload = fastPayload := by
+      have h := hnowrong (some fastPayload) _hfast_mem
+      rcases h with hnone | hsome
+      · cases hnone
+      · exact Option.some.inj hsome.symm
+    rw [hpayload_eq]
+    exact hfast
+
+theorem monsterPairFanoXorPayload_swap_invariant_of_phases
+    (m n : Nat) (a b : FanoPoint)
+    (hm : monsterColumnPhase m = fanoColumn a)
+    (hn : monsterColumnPhase n = fanoColumn b) (hab : a ≠ b) :
+    monsterPairFanoXorPayload m n = monsterPairFanoXorPayload n m := by
+  rw [monsterPairFanoXorPayload_eq_completion_of_decode m n a b
+      (monsterPairFanoPoints_eq_some_of_phases m n a b hm hn) hab,
+    monsterPairFanoXorPayload_eq_completion_of_decode n m b a
+      (monsterPairFanoPoints_eq_some_of_phases n m b a hn hm) (Ne.symm hab)]
+  exact congrArg (fun p => some p.state) (fano_plucker_sign_shadow_certificate a b hab).2.1
+
+theorem monsterPairFanoXorPayload_exists_iff_decoded_distinct
+    (m n : Nat) :
+    (∃ payload, monsterPairFanoXorPayload m n = some payload) ↔
+      ∃ a b, monsterPairFanoPoints m n = some (a, b) ∧ a ≠ b := by
+  constructor
+  · intro hpayload
+    obtain ⟨payload, hpayload⟩ := hpayload
+    unfold monsterPairFanoXorPayload at hpayload
+    cases hdecode : monsterPairFanoPoints m n with
+    | none => simp [hdecode] at hpayload
+    | some pair =>
+        cases pair with
+        | mk a b =>
+            by_cases hab : a ≠ b
+            · exact ⟨a, b, by simp, hab⟩
+            · simp [hdecode, hab] at hpayload
+  · intro hdecode
+    obtain ⟨a, b, hdecode, hab⟩ := hdecode
+    exact ⟨(completePair a b).state,
+      monsterPairFanoXorPayload_eq_completion_of_decode m n a b hdecode hab⟩
 
 theorem monsterPairFanoXorRuntimeStack_eq_label_runtime_of_decode
     (m n : Nat) (a b : FanoPoint)
@@ -899,6 +1481,507 @@ theorem monster_aeon_projection_to_fano_xor_runtime_certificate_of_phases
     hcert.2.2.2.2.2.2.1, hcert.2.2.2.2.2.2.2.1,
     hcert.2.2.2.2.2.2.2.2⟩
 
+/-- Validated Monster/Aeon/Fano certificates and direct Monster/Fano XOR stack
+dispatch agree on the same visible phase pairs. -/
+theorem monsterAeonFanoCertificate_validated_dispatches_to_xor_stack_of_phases
+    (m n : Nat) (a b : FanoPoint)
+    (hm : monsterColumnPhase m = fanoColumn a)
+    (hn : monsterColumnPhase n = fanoColumn b) (hab : a ≠ b) :
+    (monsterAeonFanoCertificate m n true true).isSome = true ∧
+      monsterPairFanoXorRuntimeStack m n =
+        some (fanoPairCanonicalXorRuntimeStack a b) := by
+  constructor
+  · unfold monsterAeonFanoCertificate monsterPairAeonGate
+    rw [hm, hn]
+    cases a <;> cases b <;> simp [fanoColumn, pointIndex, aeonPhaseFanoState] at hab ⊢
+  · exact monsterPairFanoXorRuntimeStack_eq_pair_canonical_of_decode m n a b
+      (monsterPairFanoPoints_eq_some_of_phases m n a b hm hn) hab
+
+/-- Phase-indexed inverse runtime gate: whenever direct Monster/Fano XOR stack
+dispatch returns a stack for explicitly identified visible Fano phases, the
+validated Monster/Aeon/Fano certificate path is also open and carries the same
+phase-pair completion as the unique runtime payload. -/
+theorem monsterPairFanoXorRuntimeStack_dispatch_implies_validated_certificate_of_phases
+    (m n : Nat) (a b : FanoPoint)
+    (hm : monsterColumnPhase m = fanoColumn a)
+    (hn : monsterColumnPhase n = fanoColumn b) (hab : a ≠ b)
+    (stack : List (Option TritonState))
+    (hstack : monsterPairFanoXorRuntimeStack m n = some stack) :
+    (monsterAeonFanoCertificate m n true true).isSome = true ∧
+      optionPayloadCount stack = 1 ∧
+      some (completePair a b).state ∈ stack ∧
+      (∀ out, out ∈ stack → out = none ∨ out = some (completePair a b).state) ∧
+      ∀ payload,
+        some payload ∈ stack →
+          collide (collide a.state b.state) payload = godPosition := by
+  have hcert :=
+    monsterAeonFanoCertificate_validated_dispatches_to_xor_stack_of_phases m n a b hm hn hab
+  rw [hcert.2] at hstack
+  have hstack_eq : stack = fanoPairCanonicalXorRuntimeStack a b := by
+    exact (Option.some.inj hstack).symm
+  subst stack
+  exact ⟨hcert.1,
+    fanoPairCanonicalXorRuntimeStack_payload_count_one a b hab,
+    fanoPairCanonicalXorRuntimeStack_gate_payload a b hab,
+    fanoPairCanonicalXorRuntimeStack_no_wrong_payload a b hab,
+    fun payload hout => fanoPairCanonicalXorRuntimeStack_payload_parity_zero a b hab payload hout⟩
+
+theorem monsterPairFanoXorRuntimeStack_dispatch_implies_phase_evidence
+    (m n : Nat) (stack : List (Option TritonState))
+    (hstack : monsterPairFanoXorRuntimeStack m n = some stack) :
+    ∃ a b,
+      monsterPairFanoPoints m n = some (a, b) ∧
+      monsterColumnPhase m = fanoColumn a ∧
+      monsterColumnPhase n = fanoColumn b ∧
+      a ≠ b := by
+  obtain ⟨a, b, hdecode, hab, _hcount, _hpayload, _hnowrong, _hparity⟩ :=
+    monsterPairFanoXorRuntimeStack_payload_law m n stack hstack
+  have hphases := monsterPairFanoPoints_eq_some_implies_phases m n a b hdecode
+  exact ⟨a, b, hdecode, hphases.1, hphases.2, hab⟩
+
+/-- Full inverse runtime gate: whenever direct Monster/Fano XOR stack dispatch
+returns a stack, the validated Monster/Aeon/Fano certificate path is also open
+and carries the decoded-pair completion as the unique parity-closing payload. -/
+theorem monsterPairFanoXorRuntimeStack_dispatch_implies_validated_certificate
+    (m n : Nat) (stack : List (Option TritonState))
+    (hstack : monsterPairFanoXorRuntimeStack m n = some stack) :
+    (monsterAeonFanoCertificate m n true true).isSome = true ∧
+      ∃ a b,
+        monsterPairFanoPoints m n = some (a, b) ∧
+        a ≠ b ∧
+        optionPayloadCount stack = 1 ∧
+        some (completePair a b).state ∈ stack ∧
+        (∀ out, out ∈ stack → out = none ∨ out = some (completePair a b).state) ∧
+        ∀ payload,
+          some payload ∈ stack →
+            collide (collide a.state b.state) payload = godPosition := by
+  obtain ⟨a, b, hdecode, hm, hn, hab⟩ :=
+    monsterPairFanoXorRuntimeStack_dispatch_implies_phase_evidence m n stack hstack
+  have hinv :=
+    monsterPairFanoXorRuntimeStack_dispatch_implies_validated_certificate_of_phases
+      m n a b hm hn hab stack hstack
+  exact ⟨hinv.1, a, b, hdecode, hab, hinv.2.1, hinv.2.2.1,
+    hinv.2.2.2.1, hinv.2.2.2.2⟩
+
+/-- Bidirectional runtime contract: a Monster/Fano XOR stack is returned
+exactly when the Monster pair decodes to distinct embedded Fano endpoints whose
+validated certificate path is open, and the returned stack is the canonical
+one-payload XOR stack for that decoded pair. -/
+theorem monsterPairFanoXorRuntimeStack_some_iff_validated_certificate_payload
+    (m n : Nat) (stack : List (Option TritonState)) :
+    monsterPairFanoXorRuntimeStack m n = some stack ↔
+      ∃ a b,
+        monsterPairFanoPoints m n = some (a, b) ∧
+        a ≠ b ∧
+        (monsterAeonFanoCertificate m n true true).isSome = true ∧
+        stack = fanoPairCanonicalXorRuntimeStack a b ∧
+        optionPayloadCount stack = 1 ∧
+        some (completePair a b).state ∈ stack ∧
+        (∀ out, out ∈ stack → out = none ∨ out = some (completePair a b).state) ∧
+        ∀ payload,
+          some payload ∈ stack →
+            collide (collide a.state b.state) payload = godPosition := by
+  constructor
+  · intro hstack
+    obtain ⟨a, b, hdecode, hm, hn, hab⟩ :=
+      monsterPairFanoXorRuntimeStack_dispatch_implies_phase_evidence m n stack hstack
+    have hcert :=
+      monsterAeonFanoCertificate_validated_dispatches_to_xor_stack_of_phases m n a b hm hn hab
+    rw [hcert.2] at hstack
+    have hstack_eq : stack = fanoPairCanonicalXorRuntimeStack a b := by
+      exact (Option.some.inj hstack).symm
+    subst stack
+    exact ⟨a, b, hdecode, hab, hcert.1, rfl,
+      fanoPairCanonicalXorRuntimeStack_payload_count_one a b hab,
+      fanoPairCanonicalXorRuntimeStack_gate_payload a b hab,
+      fanoPairCanonicalXorRuntimeStack_no_wrong_payload a b hab,
+      fun payload hout => fanoPairCanonicalXorRuntimeStack_payload_parity_zero a b hab payload hout⟩
+  · intro hcontract
+    obtain ⟨a, b, hdecode, hab, _hcert, hstack_eq, _hcount, _hpayload,
+      _hnowrong, _hparity⟩ := hcontract
+    rw [hstack_eq]
+    exact monsterPairFanoXorRuntimeStack_eq_pair_canonical_of_decode m n a b hdecode hab
+
+theorem monsterPairFanoXorRuntimeStack_exists_iff_decoded_distinct
+    (m n : Nat) :
+    (∃ stack, monsterPairFanoXorRuntimeStack m n = some stack) ↔
+      ∃ a b, monsterPairFanoPoints m n = some (a, b) ∧ a ≠ b := by
+  constructor
+  · intro hstack
+    obtain ⟨stack, hstack⟩ := hstack
+    obtain ⟨a, b, hdecode, _hm, _hn, hab⟩ :=
+      monsterPairFanoXorRuntimeStack_dispatch_implies_phase_evidence m n stack hstack
+    exact ⟨a, b, hdecode, hab⟩
+  · intro hdecode
+    obtain ⟨a, b, hdecode, hab⟩ := hdecode
+    exact ⟨fanoPairCanonicalXorRuntimeStack a b,
+      monsterPairFanoXorRuntimeStack_eq_pair_canonical_of_decode m n a b hdecode hab⟩
+
+/-- Aeon-tier cache reuse law: once two Monster-side pairs decode to the same
+distinct embedded Fano endpoint pair, both the 66-slot runtime stack and the
+stack-free payload are identical.  The Monster columns themselves have no
+remaining influence after this projection. -/
+theorem monsterPairFanoXorRuntimeStack_same_decoded_pair_cache_key
+    (m n m' n' : Nat) (a b : FanoPoint)
+    (hdecode : monsterPairFanoPoints m n = some (a, b))
+    (hdecode' : monsterPairFanoPoints m' n' = some (a, b))
+    (hab : a ≠ b) :
+    monsterPairFanoXorRuntimeStack m n =
+      monsterPairFanoXorRuntimeStack m' n' ∧
+    monsterPairFanoXorPayload m n =
+      monsterPairFanoXorPayload m' n' := by
+  rw [monsterPairFanoXorRuntimeStack_eq_pair_canonical_of_decode m n a b hdecode hab,
+    monsterPairFanoXorRuntimeStack_eq_pair_canonical_of_decode m' n' a b hdecode' hab,
+    monsterPairFanoXorPayload_eq_completion_of_decode m n a b hdecode hab,
+    monsterPairFanoXorPayload_eq_completion_of_decode m' n' a b hdecode' hab]
+  exact ⟨rfl, rfl⟩
+
+/-- Numeric key form of the Aeon-tier cache reuse law. The stored key is the
+sorted Fano phase pair, so equal decoded endpoints force equal runtime keys. -/
+theorem monsterPairFanoPhaseCacheKey_same_decoded_pair
+    (m n m' n' : Nat) (a b : FanoPoint)
+    (hdecode : monsterPairFanoPoints m n = some (a, b))
+    (hdecode' : monsterPairFanoPoints m' n' = some (a, b))
+    (hab : a ≠ b) :
+    monsterPairFanoPhaseCacheKey m n =
+      monsterPairFanoPhaseCacheKey m' n' := by
+  rw [monsterPairFanoPhaseCacheKey_eq_of_decode m n a b hdecode hab,
+    monsterPairFanoPhaseCacheKey_eq_of_decode m' n' a b hdecode' hab]
+
+/-- Phase form of the same cache law: Monster columns with the same two
+Fano-visible Aeon phases share the same decoded-pair cache key. -/
+theorem monsterPairFanoXorRuntimeStack_same_fano_phases_cache_key
+    (m n m' n' : Nat) (a b : FanoPoint)
+    (hm : monsterColumnPhase m = fanoColumn a)
+    (hn : monsterColumnPhase n = fanoColumn b)
+    (hm' : monsterColumnPhase m' = fanoColumn a)
+    (hn' : monsterColumnPhase n' = fanoColumn b)
+    (hab : a ≠ b) :
+    monsterPairFanoXorRuntimeStack m n =
+      monsterPairFanoXorRuntimeStack m' n' ∧
+    monsterPairFanoXorPayload m n =
+      monsterPairFanoXorPayload m' n' := by
+  exact monsterPairFanoXorRuntimeStack_same_decoded_pair_cache_key m n m' n' a b
+    (monsterPairFanoPoints_eq_some_of_phases m n a b hm hn)
+    (monsterPairFanoPoints_eq_some_of_phases m' n' a b hm' hn') hab
+
+/-- Numeric phase-key form: Monster columns with the same two Fano-visible
+Aeon phases reduce to the same sorted `(Nat × Nat)` cache key. -/
+theorem monsterPairFanoPhaseCacheKey_same_fano_phases
+    (m n m' n' : Nat) (a b : FanoPoint)
+    (hm : monsterColumnPhase m = fanoColumn a)
+    (hn : monsterColumnPhase n = fanoColumn b)
+    (hm' : monsterColumnPhase m' = fanoColumn a)
+    (hn' : monsterColumnPhase n' = fanoColumn b)
+    (hab : a ≠ b) :
+    monsterPairFanoPhaseCacheKey m n =
+      monsterPairFanoPhaseCacheKey m' n' := by
+  exact monsterPairFanoPhaseCacheKey_same_decoded_pair m n m' n' a b
+    (monsterPairFanoPoints_eq_some_of_phases m n a b hm hn)
+    (monsterPairFanoPoints_eq_some_of_phases m' n' a b hm' hn') hab
+
+/-- Direct-table admission: every emitted Monster/Fano phase cache key belongs
+to the finite 21-key Fano table. -/
+theorem monsterPairFanoPhaseCacheKey_emits_only_table_keys
+    (m n : Nat) (key : Nat × Nat)
+    (hkey : monsterPairFanoPhaseCacheKey m n = some key) :
+    key ∈ fanoPhaseCacheKeyTable := by
+  unfold monsterPairFanoPhaseCacheKey at hkey
+  cases hdecode : monsterPairFanoPoints m n with
+  | none => simp [hdecode] at hkey
+  | some pair =>
+      cases pair with
+      | mk a b =>
+          by_cases hab : a ≠ b
+          · simp [hdecode, hab] at hkey
+            rw [← hkey]
+            exact fanoPairPhaseCacheKey_mem_table a b hab
+          · simp [hdecode, hab] at hkey
+
+/-- Existence form for runtime adapters: if a Monster/Fano numeric phase key
+is emitted, then it is one of exactly the 21 direct-table entries. -/
+theorem monsterPairFanoPhaseCacheKey_direct_table_admission
+    (m n : Nat) :
+    (∃ key, monsterPairFanoPhaseCacheKey m n = some key) →
+      ∃ key,
+        monsterPairFanoPhaseCacheKey m n = some key ∧
+        key ∈ fanoPhaseCacheKeyTable ∧
+        fanoPhaseCacheKeyTable.length = 21 := by
+  intro hemits
+  obtain ⟨key, hkey⟩ := hemits
+  exact ⟨key, hkey,
+    monsterPairFanoPhaseCacheKey_emits_only_table_keys m n key hkey,
+    fanoPhaseCacheKeyTable_length⟩
+
+/-- Array-index admission: every emitted Monster/Fano phase key resolves to a
+total `Fin 21` direct-table index. -/
+theorem monsterPairFanoPhaseCacheKey_direct_table_index_admission
+    (m n : Nat) (key : Nat × Nat)
+    (hkey : monsterPairFanoPhaseCacheKey m n = some key) :
+    ∃ idx : Fin 21,
+      idx =
+        fanoPhaseCacheKeyTableIndex key
+          (monsterPairFanoPhaseCacheKey_emits_only_table_keys m n key hkey) := by
+  exact ⟨fanoPhaseCacheKeyTableIndex key
+    (monsterPairFanoPhaseCacheKey_emits_only_table_keys m n key hkey), rfl⟩
+
+/-- Decoded-pair form of the array-index admission. -/
+theorem monsterPairFanoPhaseCacheKey_index_eq_pair_index_of_decode
+    (m n : Nat) (a b : FanoPoint)
+    (hdecode : monsterPairFanoPoints m n = some (a, b)) (hab : a ≠ b) :
+    ∃ key,
+      ∃ hkey : monsterPairFanoPhaseCacheKey m n = some key,
+        fanoPhaseCacheKeyTableIndex key
+          (monsterPairFanoPhaseCacheKey_emits_only_table_keys m n key hkey) =
+        fanoPairPhaseCacheKeyTableIndex a b hab := by
+  refine ⟨fanoPairPhaseCacheKey a b, ?_⟩
+  refine ⟨monsterPairFanoPhaseCacheKey_eq_of_decode m n a b hdecode hab, ?_⟩
+  simp [fanoPairPhaseCacheKeyTableIndex, fanoPhaseCacheKeyTableIndex]
+
+/-- Closed-form rank admission: every emitted Monster/Fano phase key has a
+`Fin 21` index computed by arithmetic, and that rank agrees with the table
+index. -/
+theorem monsterPairFanoPhaseCacheKey_closed_rank_admission
+    (m n : Nat) (key : Nat × Nat)
+    (hkey : monsterPairFanoPhaseCacheKey m n = some key) :
+    ∃ idx : Fin 21,
+      idx =
+        fanoPhaseCacheKeyRank key
+          (monsterPairFanoPhaseCacheKey_emits_only_table_keys m n key hkey) ∧
+      idx =
+        fanoPhaseCacheKeyTableIndex key
+          (monsterPairFanoPhaseCacheKey_emits_only_table_keys m n key hkey) := by
+  let hmem := monsterPairFanoPhaseCacheKey_emits_only_table_keys m n key hkey
+  refine ⟨fanoPhaseCacheKeyRank key hmem, rfl, ?_⟩
+  exact fanoPhaseCacheKeyRank_eq_table_index key hmem
+
+/-- Exact-hot packed runtime contract: once a Monster pair decodes to distinct
+Fano endpoints, the default packed route is keyed by the finite 21-entry Fano
+rank table and its word extractors recover admitted status, XOR payload, and
+the sorted Fano phase gate. This is the Lean boundary mirrored by the Rust
+`route_monster_fano_xor_payload_default_packed` hotpath. -/
+theorem monsterPairFanoXorPackedRoute_exact_hot_cache_rank_word
+    (m n : Nat) (a b : FanoPoint)
+    (hdecode : monsterPairFanoPoints m n = some (a, b)) (hab : a ≠ b) :
+    ∃ key,
+      ∃ hkey : monsterPairFanoPhaseCacheKey m n = some key,
+        key ∈ fanoPhaseCacheKeyTable ∧
+        (∃ idx : Fin 21,
+          idx =
+            fanoPhaseCacheKeyRank key
+              (monsterPairFanoPhaseCacheKey_emits_only_table_keys m n key hkey) ∧
+          idx =
+            fanoPhaseCacheKeyTableIndex key
+              (monsterPairFanoPhaseCacheKey_emits_only_table_keys m n key hkey)) ∧
+        packedFanoXorRouteWordStatusCode
+            (packedFanoXorRouteHotWord a b) =
+          packedFanoXorRouteStatusCode PackedFanoXorRouteStatus.admitted ∧
+        packedFanoXorRouteWordValue
+            (packedFanoXorRouteHotWord a b) =
+          (collide a.state b.state).val ∧
+        packedFanoXorRouteWordGate0
+            (packedFanoXorRouteHotWord a b) =
+          key.1 ∧
+        packedFanoXorRouteWordGate1
+            (packedFanoXorRouteHotWord a b) =
+          key.2 := by
+  let key := fanoPairPhaseCacheKey a b
+  let hkey := monsterPairFanoPhaseCacheKey_eq_of_decode m n a b hdecode hab
+  have hmem : key ∈ fanoPhaseCacheKeyTable :=
+    fanoPairPhaseCacheKey_mem_table a b hab
+  have hrank :=
+    monsterPairFanoPhaseCacheKey_closed_rank_admission m n key hkey
+  have hword := packedFanoXorRouteHotWord_extractors a b
+  refine ⟨key, hkey, hmem, hrank, hword.1, hword.2.1, ?_, ?_⟩
+  · exact hword.2.2.1
+  · exact hword.2.2.2
+
+theorem monsterAeonFanoCertificate_isSome_iff_decoded_distinct
+    (m n : Nat) :
+    (monsterAeonFanoCertificate m n true true).isSome = true ↔
+      ∃ a b, monsterPairFanoPoints m n = some (a, b) ∧ a ≠ b := by
+  constructor
+  · intro hcert
+    unfold monsterAeonFanoCertificate monsterPairAeonGate at hcert
+    unfold monsterPairFanoPoints monsterColumnFanoPoint
+    cases hm : fanoColumnPoint (monsterColumnPhase m) with
+    | none =>
+        cases hs : aeonPhaseFanoState (monsterColumnPhase m)
+        · simp [hs] at hcert
+        · have hsome : (aeonPhaseFanoState (monsterColumnPhase m)).isSome = true := by
+            simp [hs]
+          rw [aeonPhaseFanoState_isSome_eq_fanoColumnPoint_isSome, hm] at hsome
+          cases hsome
+    | some a =>
+        cases hn : fanoColumnPoint (monsterColumnPhase n) with
+        | none =>
+            cases hs : aeonPhaseFanoState (monsterColumnPhase n)
+            · simp [hs] at hcert
+            · have hsome : (aeonPhaseFanoState (monsterColumnPhase n)).isSome = true := by
+                simp [hs]
+              rw [aeonPhaseFanoState_isSome_eq_fanoColumnPoint_isSome, hn] at hsome
+              cases hsome
+        | some b =>
+            refine ⟨a, b, rfl, ?_⟩
+            intro hab
+            subst b
+            have hmcol := fanoColumnPoint_eq_some_implies_column (monsterColumnPhase m) a hm
+            have hncol := fanoColumnPoint_eq_some_implies_column (monsterColumnPhase n) a hn
+            have hphase : monsterColumnPhase m = monsterColumnPhase n := by
+              rw [hmcol, hncol]
+            simp [hphase] at hcert
+  · intro hdecode
+    obtain ⟨a, b, hdecode, hab⟩ := hdecode
+    have hphases := monsterPairFanoPoints_eq_some_implies_phases m n a b hdecode
+    exact (monsterAeonFanoCertificate_validated_dispatches_to_xor_stack_of_phases
+      m n a b hphases.1 hphases.2 hab).1
+
+theorem monsterAeonFanoCertificate_isSome_iff_fano_xor_stack_exists
+    (m n : Nat) :
+    (monsterAeonFanoCertificate m n true true).isSome = true ↔
+      ∃ stack, monsterPairFanoXorRuntimeStack m n = some stack := by
+  constructor
+  · intro hcert
+    have hdecoded :=
+      (monsterAeonFanoCertificate_isSome_iff_decoded_distinct m n).mp hcert
+    exact (monsterPairFanoXorRuntimeStack_exists_iff_decoded_distinct m n).mpr hdecoded
+  · intro hstack
+    have hdecoded :=
+      (monsterPairFanoXorRuntimeStack_exists_iff_decoded_distinct m n).mp hstack
+    exact (monsterAeonFanoCertificate_isSome_iff_decoded_distinct m n).mpr hdecoded
+
+theorem monsterAeonFanoCertificate_eq_canonical_of_phases
+    (m n : Nat) (a b : FanoPoint)
+    (hm : monsterColumnPhase m = fanoColumn a)
+    (hn : monsterColumnPhase n = fanoColumn b) (hab : a ≠ b) :
+    monsterAeonFanoCertificate m n true true =
+      some (monsterAeonFanoCanonicalCertificate m n a b) := by
+  unfold monsterAeonFanoCertificate monsterPairAeonGate
+    monsterAeonFanoCanonicalCertificate fanoPairGate
+  rw [hm, hn]
+  cases a <;> cases b <;>
+    simp [fanoColumn, pointIndex, aeonPhaseFanoState, FanoPoint.state, collide,
+      tritonXor, xorNat] at hab ⊢
+
+/-- Exact certificate/payload contract: an emitted Monster/Aeon/Fano
+certificate is exactly the canonical record for decoded distinct Fano endpoints,
+and that record's completion is the unique payload in the canonical XOR stack. -/
+theorem monsterAeonFanoCertificate_eq_some_iff_canonical_xor_payload
+    (m n : Nat) (cert : MonsterAeonFanoCertificate) :
+    monsterAeonFanoCertificate m n true true = some cert ↔
+      ∃ a b stack,
+        monsterPairFanoPoints m n = some (a, b) ∧
+        a ≠ b ∧
+        cert = monsterAeonFanoCanonicalCertificate m n a b ∧
+        monsterPairFanoXorRuntimeStack m n = some stack ∧
+        stack = fanoPairCanonicalXorRuntimeStack a b ∧
+        some cert.completion ∈ stack ∧
+        collide (collide a.state b.state) cert.completion = godPosition := by
+  constructor
+  · intro hcert
+    have hcertSome : (monsterAeonFanoCertificate m n true true).isSome = true := by
+      rw [hcert]
+      rfl
+    obtain ⟨a, b, hdecode, hab⟩ :=
+      (monsterAeonFanoCertificate_isSome_iff_decoded_distinct m n).mp hcertSome
+    have hphases := monsterPairFanoPoints_eq_some_implies_phases m n a b hdecode
+    have hcanonical :=
+      monsterAeonFanoCertificate_eq_canonical_of_phases m n a b hphases.1 hphases.2 hab
+    have hcert_eq : cert = monsterAeonFanoCanonicalCertificate m n a b := by
+      rw [hcanonical] at hcert
+      exact (Option.some.inj hcert).symm
+    let stack := fanoPairCanonicalXorRuntimeStack a b
+    have hstack : monsterPairFanoXorRuntimeStack m n = some stack :=
+      monsterPairFanoXorRuntimeStack_eq_pair_canonical_of_decode m n a b hdecode hab
+    refine ⟨a, b, stack, hdecode, hab, hcert_eq, hstack, rfl, ?_, ?_⟩
+    · subst cert
+      dsimp [monsterAeonFanoCanonicalCertificate]
+      rw [← completePair_state_eq_xor a b hab]
+      exact fanoPairCanonicalXorRuntimeStack_gate_payload a b hab
+    · subst cert
+      dsimp [monsterAeonFanoCanonicalCertificate]
+      cases a <;> cases b <;>
+        simp [godPosition, collide, tritonXor, xorNat, FanoPoint.state] at hab ⊢
+  · intro hpayload
+    obtain ⟨a, b, _stack, hdecode, hab, hcert_eq, _hstack, _hstack_eq,
+      _hpayload, _hparity⟩ := hpayload
+    have hphases := monsterPairFanoPoints_eq_some_implies_phases m n a b hdecode
+    rw [hcert_eq]
+    exact monsterAeonFanoCertificate_eq_canonical_of_phases m n a b
+      hphases.1 hphases.2 hab
+
+theorem monsterPairFanoXorPayload_isSome_iff_validated_certificate
+    (m n : Nat) :
+    (monsterPairFanoXorPayload m n).isSome = true ↔
+      (monsterAeonFanoCertificate m n true true).isSome = true := by
+  constructor
+  · intro hpayload
+    have hdecoded :=
+      (monsterPairFanoXorPayload_exists_iff_decoded_distinct m n).mp
+        (Option.isSome_iff_exists.mp hpayload)
+    exact (monsterAeonFanoCertificate_isSome_iff_decoded_distinct m n).mpr hdecoded
+  · intro hcert
+    have hdecoded :=
+      (monsterAeonFanoCertificate_isSome_iff_decoded_distinct m n).mp hcert
+    exact Option.isSome_iff_exists.mpr
+      ((monsterPairFanoXorPayload_exists_iff_decoded_distinct m n).mpr hdecoded)
+
+theorem monsterPairFanoXorPayload_eq_certificate_completion
+    (m n : Nat) (cert : MonsterAeonFanoCertificate)
+    (hcert : monsterAeonFanoCertificate m n true true = some cert) :
+    monsterPairFanoXorPayload m n = some cert.completion := by
+  obtain ⟨a, b, _stack, hdecode, hab, hcert_eq, _hstack, _hstack_eq,
+    _hpayload, _hparity⟩ :=
+    (monsterAeonFanoCertificate_eq_some_iff_canonical_xor_payload m n cert).mp hcert
+  rw [hcert_eq]
+  dsimp [monsterAeonFanoCanonicalCertificate]
+  rw [← completePair_state_eq_xor a b hab]
+  exact monsterPairFanoXorPayload_eq_completion_of_decode m n a b hdecode hab
+
+theorem monsterPairFanoXorPackedRoute_preserves_validated_certificate_payload
+    (m n : Nat) (cert : MonsterAeonFanoCertificate)
+    (hcert : monsterAeonFanoCertificate m n true true = some cert) :
+    packedFanoXorRoutePayload (monsterPairFanoXorPackedRoute m n true true) =
+      some cert.completion := by
+  rw [monsterPairFanoXorPackedRoute_payload_eq_stack_free m n]
+  exact monsterPairFanoXorPayload_eq_certificate_completion m n cert hcert
+
+theorem fanoPairCanonicalXorRuntimeStack_swap_invariant
+    (a b : FanoPoint) (hab : a ≠ b) :
+    fanoPairCanonicalXorRuntimeStack a b =
+      fanoPairCanonicalXorRuntimeStack b a := by
+  cases a <;> cases b <;> first | contradiction | native_decide
+
+theorem fanoPairXorRuntimeStack_swap_invariant
+    (a b : FanoPoint) (hab : a ≠ b) :
+    fanoPairXorRuntimeStack a b = fanoPairXorRuntimeStack b a := by
+  rw [fanoPairXorRuntimeStack_eq_pair_canonical_xor a b hab]
+  rw [fanoPairXorRuntimeStack_eq_pair_canonical_xor b a (Ne.symm hab)]
+  exact fanoPairCanonicalXorRuntimeStack_swap_invariant a b hab
+
+theorem monsterAeonFanoCanonicalCertificate_swap_xor_invariant
+    (m n : Nat) (a b : FanoPoint) (hab : a ≠ b) :
+    let cert := monsterAeonFanoCanonicalCertificate m n a b
+    let swapped := monsterAeonFanoCanonicalCertificate n m b a
+    cert.aeonGate = swapped.aeonGate ∧
+      cert.completion = swapped.completion ∧
+      cert.positiveGate = swapped.positiveGate ∧
+      swapped.orientationSign = -cert.orientationSign ∧
+      fanoPairCanonicalXorRuntimeStack a b =
+        fanoPairCanonicalXorRuntimeStack b a ∧
+      some cert.completion ∈ fanoPairCanonicalXorRuntimeStack a b ∧
+      some swapped.completion ∈ fanoPairCanonicalXorRuntimeStack b a := by
+  dsimp [monsterAeonFanoCanonicalCertificate]
+  refine ⟨?_, ?_, rfl, ?_, ?_, ?_, ?_⟩
+  · exact (fano_plucker_sign_shadow_certificate a b hab).1
+  · exact (fano_plucker_sign_shadow_certificate a b hab).2.2.1
+  · exact (fano_plucker_sign_shadow_certificate a b hab).2.2.2
+  · cases a <;> cases b <;> first | contradiction | native_decide
+  · rw [← completePair_state_eq_xor a b hab]
+    exact fanoPairCanonicalXorRuntimeStack_gate_payload a b hab
+  · rw [← completePair_state_eq_xor b a (Ne.symm hab)]
+    exact fanoPairCanonicalXorRuntimeStack_gate_payload b a (Ne.symm hab)
+
 /-- Atlas form of the Monster-visible phase bridge: any Monster pair whose
 Aeon phases are explicitly identified with distinct embedded Fano columns
 enters the generic Aeon gate, the Fano label decoder, and the canonical
@@ -910,10 +1993,11 @@ theorem monster_aeon_projection_to_fano_xor_runtime_phase_atlas_certificate :
     (kSubsets 2 Gnosis.AeonStandingWaveCoordinateBridge.ambientDim).length = 66 ∧
     ∀ (m n : Nat) (a b : FanoPoint),
       monsterColumnPhase m = fanoColumn a →
-      monsterColumnPhase n = fanoColumn b →
+        monsterColumnPhase n = fanoColumn b →
       a ≠ b →
         let gate := fanoPairGate a b
         let stack := fanoPairCanonicalXorRuntimeStack a b
+        (monsterAeonFanoCertificate m n true true).isSome = true ∧
         monsterColumnFanoVisible m = true ∧
           monsterColumnFanoVisible n = true ∧
           monsterPairAeonGate m n = some gate ∧
@@ -929,21 +2013,14 @@ theorem monster_aeon_projection_to_fano_xor_runtime_phase_atlas_certificate :
               collide (collide a.state b.state) payload = godPosition := by
   refine ⟨monsterMoonshineDim_eq_ambient_blocks, by native_decide, by native_decide, ?_⟩
   intro m n a b hm hn hab
-  exact monster_aeon_projection_to_fano_xor_runtime_certificate_of_phases
-    m n a b hm hn hab
-
-theorem fanoPairCanonicalXorRuntimeStack_swap_invariant
-    (a b : FanoPoint) (hab : a ≠ b) :
-    fanoPairCanonicalXorRuntimeStack a b =
-      fanoPairCanonicalXorRuntimeStack b a := by
-  cases a <;> cases b <;> first | contradiction | native_decide
-
-theorem fanoPairXorRuntimeStack_swap_invariant
-    (a b : FanoPoint) (hab : a ≠ b) :
-    fanoPairXorRuntimeStack a b = fanoPairXorRuntimeStack b a := by
-  rw [fanoPairXorRuntimeStack_eq_pair_canonical_xor a b hab]
-  rw [fanoPairXorRuntimeStack_eq_pair_canonical_xor b a (Ne.symm hab)]
-  exact fanoPairCanonicalXorRuntimeStack_swap_invariant a b hab
+  have hvalidated :=
+    monsterAeonFanoCertificate_validated_dispatches_to_xor_stack_of_phases m n a b hm hn hab
+  have hcert :=
+    monster_aeon_projection_to_fano_xor_runtime_certificate_of_phases m n a b hm hn hab
+  exact ⟨hvalidated.1, hcert.1, hcert.2.1, hcert.2.2.1, hcert.2.2.2.1,
+    hcert.2.2.2.2.1, hcert.2.2.2.2.2.1, hcert.2.2.2.2.2.2.1,
+    hcert.2.2.2.2.2.2.2.1, hcert.2.2.2.2.2.2.2.2.1,
+    hcert.2.2.2.2.2.2.2.2.2.1, hcert.2.2.2.2.2.2.2.2.2.2⟩
 
 /-- Line form: when `c` is the Fano line completion of a distinct pair, the
 Plucker-derived runtime stack is the canonical XOR-only stack carrying `c`. -/
@@ -1331,6 +2408,278 @@ theorem fano_pair_gate_budget_twenty_one :
 theorem aeon_pair_gate_budget_sixty_six :
     (kSubsets 2 Gnosis.AeonStandingWaveCoordinateBridge.ambientDim).length = 66 := by
   exact Gnosis.AeonStandingWaveCoordinateBridge.vertexCount_2_ambientDim_eq_sixty_six
+
+/-- Compact runtime wire magic for the FANO transport payload. These are the
+ASCII bytes `FANO`, modeled as natural bytes so the theorem can mirror the
+TypeScript/Rust wire contract without importing an IO byte-array layer. -/
+def fanoWireMagic : List Nat :=
+  [70, 65, 78, 79]
+
+def u24WireBytes (n : Nat) : List Nat :=
+  [n / 65536, (n % 65536) / 256, n % 256]
+
+def u24WireDecode (hi mid lo : Nat) : Nat :=
+  hi * 65536 + mid * 256 + lo
+
+/-- The eleven-byte FANO transport payload:
+`FANO || lhs:u24 || rhs:u24 || flags`. The default flag byte `3` means both
+finite residual and fingerprint checks have already admitted the XOR route. -/
+def fanoWirePayload (lhs rhs : Nat) : List Nat :=
+  fanoWireMagic ++ u24WireBytes lhs ++ u24WireBytes rhs ++ [3]
+
+def fanoWireDecodeColumns : List Nat → Option (Nat × Nat × Bool × Bool)
+  | [70, 65, 78, 79, a2, a1, a0, b2, b1, b0, flags] =>
+      if a2 < 256 ∧ a1 < 256 ∧ a0 < 256 ∧
+          b2 < 256 ∧ b1 < 256 ∧ b0 < 256 ∧ flags < 256 then
+        some (
+          u24WireDecode a2 a1 a0,
+          u24WireDecode b2 b1 b0,
+          flags % 2 = 1,
+          (flags / 2) % 2 = 1
+        )
+      else none
+  | _ => none
+
+def fanoWireRouteCertificate (payload : List Nat) :
+    Option MonsterAeonFanoCertificate :=
+  match fanoWireDecodeColumns payload with
+  | some (lhs, rhs, residualValidated, fingerprintVerified) =>
+      monsterAeonFanoCertificate lhs rhs residualValidated fingerprintVerified
+  | none => none
+
+def u16WireBytes (n : Nat) : List Nat :=
+  [(n / 256) % 256, n % 256]
+
+def u16WireDecode (payload : List Nat) : Option Nat :=
+  match payload with
+  | [hi, lo] =>
+      if hi < 256 ∧ lo < 256 then
+        some (hi * 256 + lo)
+      else none
+  | _ => none
+
+theorem u16WireBytes_decode_round_trip (n : Nat) (h : n < 65536) :
+    u16WireDecode (u16WireBytes n) = some n := by
+  unfold u16WireDecode u16WireBytes
+  have hhi : (n / 256) % 256 < 256 := Nat.mod_lt _ (by decide)
+  have hlo : n % 256 < 256 := Nat.mod_lt _ (by decide)
+  simp [hhi, hlo]
+  omega
+
+theorem packedFanoXorRouteWord_u16WireBytes_decode_round_trip
+    (status : PackedFanoXorRouteStatus) (value : Fin 8)
+    (gate0 gate1 : Fin 16) :
+    u16WireDecode
+        (u16WireBytes (packedFanoXorRouteWord status value gate0 gate1)) =
+      some (packedFanoXorRouteWord status value gate0 gate1) := by
+  apply u16WireBytes_decode_round_trip
+  have hstatus : packedFanoXorRouteStatusCode status ≤ 3 := by
+    cases status <;> simp [packedFanoXorRouteStatusCode]
+  have hvalue : value.val ≤ 7 := Nat.le_of_lt_succ value.isLt
+  have hgate0 : gate0.val ≤ 15 := Nat.le_of_lt_succ gate0.isLt
+  have hgate1 : gate1.val ≤ 15 := Nat.le_of_lt_succ gate1.isLt
+  unfold packedFanoXorRouteWord
+  omega
+
+theorem packedFanoXorRouteWord_lt_u16
+    (status : PackedFanoXorRouteStatus) (value : Fin 8)
+    (gate0 gate1 : Fin 16) :
+    packedFanoXorRouteWord status value gate0 gate1 < 65536 := by
+  have hstatus : packedFanoXorRouteStatusCode status ≤ 3 := by
+    cases status <;> simp [packedFanoXorRouteStatusCode]
+  have hvalue : value.val ≤ 7 := Nat.le_of_lt_succ value.isLt
+  have hgate0 : gate0.val ≤ 15 := Nat.le_of_lt_succ gate0.isLt
+  have hgate1 : gate1.val ≤ 15 := Nat.le_of_lt_succ gate1.isLt
+  unfold packedFanoXorRouteWord
+  omega
+
+def packedFanoXorRouteWireWord (route : PackedFanoXorRoute) : Option Nat :=
+  match route.payload with
+  | some value =>
+      match route.aeonGate with
+      | [gate0, gate1] =>
+          some (packedFanoXorRouteWord route.status value
+            ⟨gate0 % 16, Nat.mod_lt _ (by decide)⟩
+            ⟨gate1 % 16, Nat.mod_lt _ (by decide)⟩)
+      | _ => none
+  | none =>
+      match route.aeonGate with
+      | [gate0, gate1] =>
+          some (packedFanoXorRouteWord route.status ⟨0, by decide⟩
+            ⟨gate0 % 16, Nat.mod_lt _ (by decide)⟩
+            ⟨gate1 % 16, Nat.mod_lt _ (by decide)⟩)
+      | [] =>
+          some (packedFanoXorRouteWord route.status ⟨0, by decide⟩
+            ⟨0, by decide⟩ ⟨0, by decide⟩)
+      | _ => none
+
+def fanoWireRouteWord (payload : List Nat) : Option Nat :=
+  match fanoWireDecodeColumns payload with
+  | some (lhs, rhs, residualValidated, fingerprintVerified) =>
+      packedFanoXorRouteWireWord
+        (monsterPairFanoXorPackedRoute lhs rhs residualValidated fingerprintVerified)
+  | none => none
+
+def fanoWirePackedRouteResponse (payload : List Nat) : List Nat :=
+  match fanoWireRouteWord payload with
+  | some word => [1] ++ u16WireBytes word
+  | none => [0, 255, 255]
+
+def fanoWirePackedRouteResponseWord : List Nat → Option Nat
+  | [1, hi, lo] => u16WireDecode [hi, lo]
+  | _ => none
+
+theorem packedFanoXorRouteHotPositiveHint_canonical_wire :
+    packedFanoXorRouteHotWord FanoPoint.b001 FanoPoint.b010 = 131 ∧
+    packedFanoXorRouteHotPositiveHintWord FanoPoint.b001 FanoPoint.b010 =
+      8323 ∧
+    packedFanoXorRouteWordStatusCode
+        (packedFanoXorRouteHotPositiveHintWord FanoPoint.b001 FanoPoint.b010) =
+      packedFanoXorRouteStatusCode PackedFanoXorRouteStatus.admitted ∧
+    packedFanoXorRouteWordValue
+        (packedFanoXorRouteHotPositiveHintWord FanoPoint.b001 FanoPoint.b010) =
+      3 ∧
+    packedFanoXorRouteWordGate0
+        (packedFanoXorRouteHotPositiveHintWord FanoPoint.b001 FanoPoint.b010) =
+      0 ∧
+    packedFanoXorRouteWordGate1
+        (packedFanoXorRouteHotPositiveHintWord FanoPoint.b001 FanoPoint.b010) =
+      1 ∧
+    fanoWirePackedRouteResponseWord [1, 32, 131] = some 8323 := by
+  native_decide
+
+theorem packedFanoXorRouteWireWord_lt_u16
+    (route : PackedFanoXorRoute) (word : Nat)
+    (hword : packedFanoXorRouteWireWord route = some word) :
+    word < 65536 := by
+  unfold packedFanoXorRouteWireWord at hword
+  cases hpayload : route.payload with
+  | some value =>
+      cases hgate : route.aeonGate with
+      | nil => simp [hpayload, hgate] at hword
+      | cons gate0 gateTail =>
+          cases gateTail with
+          | nil => simp [hpayload, hgate] at hword
+          | cons gate1 rest =>
+              cases rest with
+              | nil =>
+                  simp [hpayload, hgate] at hword
+                  rw [← hword]
+                  exact packedFanoXorRouteWord_lt_u16 route.status value
+                    ⟨gate0 % 16, Nat.mod_lt _ (by decide)⟩
+                    ⟨gate1 % 16, Nat.mod_lt _ (by decide)⟩
+              | cons _ _ => simp [hpayload, hgate] at hword
+  | none =>
+      cases hgate : route.aeonGate with
+      | nil =>
+          simp [hpayload, hgate] at hword
+          rw [← hword]
+          exact packedFanoXorRouteWord_lt_u16 route.status ⟨0, by decide⟩
+            ⟨0, by decide⟩ ⟨0, by decide⟩
+      | cons gate0 gateTail =>
+          cases gateTail with
+          | nil => simp [hpayload, hgate] at hword
+          | cons gate1 rest =>
+              cases rest with
+              | nil =>
+                  simp [hpayload, hgate] at hword
+                  rw [← hword]
+                  exact packedFanoXorRouteWord_lt_u16 route.status ⟨0, by decide⟩
+                    ⟨gate0 % 16, Nat.mod_lt _ (by decide)⟩
+                    ⟨gate1 % 16, Nat.mod_lt _ (by decide)⟩
+              | cons _ _ => simp [hpayload, hgate] at hword
+
+theorem fanoWireRouteWord_lt_u16
+    (payload : List Nat) (word : Nat)
+    (hword : fanoWireRouteWord payload = some word) :
+    word < 65536 := by
+  unfold fanoWireRouteWord at hword
+  cases hdecoded : fanoWireDecodeColumns payload with
+  | none =>
+      simp [hdecoded] at hword
+  | some decoded =>
+      rcases decoded with ⟨lhs, rhs, residualValidated, fingerprintVerified⟩
+      simp [hdecoded] at hword
+      exact packedFanoXorRouteWireWord_lt_u16
+        (monsterPairFanoXorPackedRoute lhs rhs residualValidated fingerprintVerified)
+        word hword
+
+theorem fanoWirePackedRouteResponse_decode_round_trip
+    (payload : List Nat) (word : Nat)
+    (hword : fanoWireRouteWord payload = some word) :
+    fanoWirePackedRouteResponseWord
+        (fanoWirePackedRouteResponse payload) = some word := by
+  unfold fanoWirePackedRouteResponse fanoWirePackedRouteResponseWord
+  rw [hword]
+  exact u16WireBytes_decode_round_trip word
+    (fanoWireRouteWord_lt_u16 payload word hword)
+
+theorem fano_wire_payload_routes_visible_monster_pair :
+    fanoWirePayload 0 13 = [70, 65, 78, 79, 0, 0, 0, 0, 0, 13, 3] ∧
+    fanoWireDecodeColumns (fanoWirePayload 0 13) =
+      some (0, 13, true, true) ∧
+    fanoWireRouteCertificate (fanoWirePayload 0 13) =
+      monsterAeonFanoCertificate 0 13 true true ∧
+    fanoWireRouteCertificate (fanoWirePayload 0 13) =
+      some {
+        monsterColumns := [0, 13]
+        aeonPhases := [0, 1]
+        aeonGate := [0, 1]
+        fanoStates := [FanoPoint.b001.state, FanoPoint.b010.state]
+        completion := FanoPoint.b011.state
+        orientationSign := 1
+        positiveGate := true
+        residualValidated := true
+        fingerprintVerified := true
+      } := by
+  native_decide
+
+theorem fano_wire_payload_emits_packed_route_word :
+    fanoWireRouteWord (fanoWirePayload 0 13) =
+      some (packedFanoXorRouteHotWord FanoPoint.b001 FanoPoint.b010) ∧
+    fanoWirePackedRouteResponse (fanoWirePayload 0 13) =
+      [1, 0, 131] ∧
+    packedFanoXorRouteWordStatusCode
+        (packedFanoXorRouteHotWord FanoPoint.b001 FanoPoint.b010) =
+      packedFanoXorRouteStatusCode PackedFanoXorRouteStatus.admitted ∧
+    packedFanoXorRouteWordValue
+        (packedFanoXorRouteHotWord FanoPoint.b001 FanoPoint.b010) = 3 ∧
+    packedFanoXorRouteWordGate0
+        (packedFanoXorRouteHotWord FanoPoint.b001 FanoPoint.b010) = 0 ∧
+    packedFanoXorRouteWordGate1
+        (packedFanoXorRouteHotWord FanoPoint.b001 FanoPoint.b010) = 1 := by
+  native_decide
+
+theorem fano_wire_payload_rejects_unadmitted_shadow :
+    fanoWireRouteCertificate [70, 65, 78, 79, 0, 0, 0, 0, 0, 13, 1] = none ∧
+    fanoWireRouteCertificate [70, 65, 78, 79, 0, 0, 0, 0, 0, 13, 2] = none ∧
+    fanoWireRouteCertificate [70, 65, 78, 79, 0, 0, 0, 0, 0, 13, 0] = none := by
+  native_decide
+
+/-- Bounded runtime atlas witness: each adjacent visible Aeon phase pair can be
+encoded as compact FANO wire and decoded back to the same Monster certificate.
+This keeps the executable contract finite while the general u24 arithmetic
+round-trip is promoted into its own theorem target. -/
+theorem fano_wire_visible_phase_runtime_atlas :
+    fanoWireRouteCertificate (fanoWirePayload 0 13) =
+      monsterAeonFanoCertificate 0 13 true true ∧
+    fanoWireRouteCertificate (fanoWirePayload 1 14) =
+      monsterAeonFanoCertificate 1 14 true true ∧
+    fanoWireRouteCertificate (fanoWirePayload 2 15) =
+      monsterAeonFanoCertificate 2 15 true true ∧
+    fanoWireRouteCertificate (fanoWirePayload 3 16) =
+      monsterAeonFanoCertificate 3 16 true true ∧
+    fanoWireRouteCertificate (fanoWirePayload 4 17) =
+      monsterAeonFanoCertificate 4 17 true true ∧
+    fanoWireRouteCertificate (fanoWirePayload 5 18) =
+      monsterAeonFanoCertificate 5 18 true true := by
+  native_decide
+
+theorem fano_wire_same_phase_runtime_rejects :
+    fanoWireRouteCertificate (fanoWirePayload 0 12) = none ∧
+    fanoWireRouteCertificate (fanoWirePayload 1 13) = none ∧
+    fanoWireRouteCertificate (fanoWirePayload 6 18) = none := by
+  native_decide
 
 end FanoGrassmannianMesh
 end Gnosis

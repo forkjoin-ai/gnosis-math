@@ -34,11 +34,11 @@ Vacuous information / attention settlement note:
 | Area | Examples |
 |------|----------|
 | Buleyean kernel | `BuleyeanLogic`, `BuleyeanProbability`, `FiniteProbabilityCore`, `BuleyBiSidedBit`, `BuleyLabelPermutation` |
-| Fork/race/fold dynamics | `ForkRaceFoldDynamics`, `SchedulerComposition`, `RaceWinnerCorrectness` |
+| Fork/race/fold dynamics | `ForkRaceFoldDynamics`, `CacheObservation`, `SchedulerComposition`, `RaceWinnerCorrectness`, `ConversationalDodgeball`, `ConversationalProsody`, `AffectLabelingPatternInterrupt` |
 | Compiler/runtime limits | `KernelGap`, `OptimalityUndecidable`, `SelfHostingOptimality` |
 | Mesh and consensus | `Mesh/*`, `Quorum*`, `Spiderweb*`, `ReynoldsBFT` |
 | Topological reductions | `TopologicalMetabolism`, `TopologicalRenormalization`, `FoldHeatHierarchy` |
-| Classical math bridges | `ArnoldCatMapOrder5`, `ZeckendorfCompleteness`, `QuadraticReciprocityInstances`, `OneCobFrobenius` |
+| Classical math bridges | `ArnoldCatMapOrder5`, `ZeckendorfCompleteness`, `QuadraticReciprocityInstances`, `OneCobFrobenius`, `GreekLogicCanon/SyllogisticLogic`, `GreekLogicCanon/PropositionalInference`, `GreekLogicCanon/QuestionVacuum` |
 | Domain bridges | finance, queues, hydrology, sleep, compliance, security, HFT, genomics, and other bounded bridge files |
 | Contrarian anti-theorems | `Gnosis/Contrarian/*`, including adversarial pressure as strict improvement |
 

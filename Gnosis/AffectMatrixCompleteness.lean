@@ -461,16 +461,9 @@ What we did **not** prove:
 
 ## Next exploration
 
-`Gnosis/AffectMatrixTemporalAxis.lean` — extend `EmotionPhenomenon`
-with a `tempo : Nat` field measuring phase duration and prove that
-two phenomena with the same `(locale, valence, tendency)` snapshots
-but different tempo cannot be distinguished by the 18-cell grid.
-That makes time itself a representational axis the matrix collapses
-— the same shape of gap as mixed valence and locale shift, but on
-the rate-of-change dimension. The natural target: a tempo-faithful
-representability predicate `IsTempoRepresentable` and a
-`fast_grief_and_slow_grief_collapse_in_grid` theorem witnessing
-that the 18-cell coordinate is tempo-blind.
+Closed by `Gnosis.AffectMatrixTemporalAxis`: tempo-blindness is now
+exhibited by two enriched phenomena with the same 18-cell projection
+and different faithful temporal projections.
 -/
 
 end AffectMatrixCompleteness

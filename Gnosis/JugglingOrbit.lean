@@ -4,10 +4,10 @@ import Init
 # Juggling Orbit
 
 Finite orbit-control witnesses for the juggling reducer MCP rows. The file
-restores the historical `ForkRaceFoldTheorems` namespace used by the ledger.
+restores the historical `Gnosis` namespace used by the ledger.
 -/
 
-namespace ForkRaceFoldTheorems
+namespace Gnosis
 
 inductive JugglingHand where
   | left
@@ -130,4 +130,4 @@ theorem conservation_balance_does_not_force_closed_orbit :
   rcases hAll transition hBalanced with ⟨nextId, hNext⟩
   cases hNext
 
-end ForkRaceFoldTheorems
+end Gnosis

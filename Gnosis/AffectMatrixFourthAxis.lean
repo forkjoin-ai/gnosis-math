@@ -395,20 +395,9 @@ What we did **not** prove:
 
 ## Next exploration
 
-`Gnosis/AffectMatrixAgencyAxis.lean` — instantiate the same scaling
-pattern with `Agency := { selfCaused | otherCaused | impersonal }`
-to land a 5-axis grid (`3 × 2 × 3 × 3 × 3 = 162` cells). The
-architectural deliverable would be a **higher-order** scaling
-lemma:
-
-    cell_inhabited_n_lifts_to_n_plus_one :
-      ∀ (Axis : Type) [DecidableEq Axis], ...
-
-making the parameter the *axis itself*, not a fixed instance. That
-closes the "scaffolding generalizes" claim at the meta-level: a
-single theorem covers every possible additional axis with finite
-cardinality, and the cell-count growth becomes a fold over the
-axis-cardinality list.
+Closed by `Gnosis.AffectMatrixAgencyAxis`: the same scaling pattern
+now carries the agency axis and the manual finite cardinality growth
+through the five-, six-, and seven-axis grids.
 -/
 
 end AffectMatrixFourthAxis

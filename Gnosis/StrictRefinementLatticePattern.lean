@@ -204,11 +204,8 @@ What this module does not prove:
 
 ## Next exploration
 
-`Gnosis/PatternAtlas.lean` - bundle Patterns A-D (`Retract`,
-`InvariantHomomorphism`, `axisCells`, `StrictPredicateRefinement`) into
-one atlas theorem that records which Gnosis modules instantiate which
-structural shape, without forcing unrelated domains into a single
-over-general abstraction.
+Closed by `Gnosis.PatternAtlas`: Patterns A-D are now bundled into one
+atlas theorem that records their concrete Gnosis module witnesses.
 -/
 
 end StrictRefinementLatticePattern

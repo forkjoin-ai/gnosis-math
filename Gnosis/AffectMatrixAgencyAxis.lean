@@ -39,19 +39,14 @@ import Gnosis.AffectMatrixFourthAxis
      gridCells cards * k` is the meta-version of "adding a k-state
      axis multiplies the grid by k."
 
-  ## Honesty note on `Fintype`
+  ## Honesty note on Rustic counting
 
-  The user's hint included `[Fintype Axis]`. Lean's `Init` does
-  not ship `Fintype`; that lives in Mathlib. The honest
-  observation here is that **the lift itself does not need
-  finiteness**: given *any* axis `a : Axis`, the meta-lemma
-  produces a lifted witness. Finiteness only enters when we count
-  cells. We model that part with a plain `List Nat` of axis
-  cardinalities (one entry per axis) and a multiplicative fold,
-  which is faithful to the cell-count growth pattern without
-  requiring Mathlib. Where a future Mathlib lift is honest, it
-  would be to derive the cardinality list automatically from
-  `Fintype.card` instances rather than supplying it manually.
+  The lift itself does not need a finiteness typeclass: given any
+  axis `a : Axis`, the meta-lemma produces a lifted witness.
+  Counting enters separately. We model that part with a plain
+  `List Nat` of axis cardinalities (one entry per axis) and a
+  multiplicative fold, which is faithful to the Rustic Church
+  cell-count growth pattern.
 
   Imports `Gnosis.AffectMatrixFourthAxis` (transitively pulls in
   `LocalizedOverflowConsciousness`, `VibesAsWaveInference`, and
@@ -391,10 +386,8 @@ What we proved:
 What we did **not** prove:
 
   * That the cardinality list really matches the type cardinalities.
-    Without `Fintype.card` from Mathlib we cannot derive it
-    automatically. The list is supplied manually, and the burden
-    of correctness is on the user to keep it in sync with the axis
-    enumerations. A future Mathlib lift would close this gap.
+    The list is supplied manually, and the burden of correctness is
+    on the user to keep it in sync with the axis enumerations.
   * That further axes are *empirically meaningful*. The architecture
     will accept any new `Type` as an axis; that does not mean every
     new axis maps to a real phenomenological coordinate. Picking
@@ -408,19 +401,10 @@ What we did **not** prove:
 
 ## Next exploration
 
-`Gnosis/AffectMatrixCardinalityFromFintype.lean` — once a Mathlib
-dependency is acceptable, replace the manually-supplied
-cardinality `List Nat` with a derivation from `Fintype.card`
-instances. The natural target is
-
-    theorem grid_cells_from_fintypes
-        (Axes : List (Σ T : Type, Fintype T)) :
-        gridCells (Axes.map (fun ⟨T, _⟩ => Fintype.card T))
-          = ∏ axis in Axes, Fintype.card axis.1
-
-closing the loop between the *type-level* axis specification and
-the *count-level* cardinality fold without any manual
-synchronization.
+The Rustic Church boundary keeps this module at the manual
+cardinality-list level. Do not route this file to external cardinality
+machinery; add a new finite axis only when the local enumeration and
+manual count are both updated together.
 -/
 
 end AffectMatrixAgencyAxis

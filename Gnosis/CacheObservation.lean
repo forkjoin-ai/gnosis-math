@@ -1,6 +1,6 @@
 import Init
 
-namespace ForkRaceFoldTheorems
+namespace Gnosis
 
 /-!
 # Cache Hits As Zero-Marginal-Fold Observations
@@ -186,4 +186,4 @@ theorem cache_observation_master
       resolve_marginal_zero_iff line work,
       amortize_cold_then_hits work count⟩
 
-end ForkRaceFoldTheorems
+end Gnosis

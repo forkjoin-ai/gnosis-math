@@ -113,11 +113,11 @@ theorem one_checkpoint_breaks_featurelessness
 
 theorem featureless_transformation_cannot_reinforce
     (weightBefore weightAfter : Nat) :
-    ¬ ForkRaceFoldTheorems.isSuccessfulReinforcementWitness
+    ¬ Gnosis.isSuccessfulReinforcementWitness
       { beforeCrossings := 0
         afterCrossings := 0
         beforeWeight := weightBefore
         afterWeight := weightAfter } :=
-  ForkRaceFoldTheorems.featureless_states_cannot_reinforce _ rfl
+  Gnosis.featureless_states_cannot_reinforce _ rfl
 
 end CancerReinforcement

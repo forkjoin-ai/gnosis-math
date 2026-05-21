@@ -109,7 +109,7 @@ def emptyBoundedCertificate : ForkRaceFoldCertificate :=
         voidBound := 0
         bounded := Nat.le_refl 0 }
     branchEntropy := []
-    allBranchEntropyZero := True.intro }
+    allBranchEntropyZero := by constructor }
 
 theorem empty_bounded_certificate_speedup_one :
     oracleSpeedupMultiplier emptyBoundedCertificate.branchEntropy = 1 :=

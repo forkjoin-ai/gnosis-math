@@ -1,4 +1,4 @@
-namespace ForkRaceFoldTheorems
+namespace Gnosis
 
 /-!
 Finite certified-allocation kernel.
@@ -257,4 +257,4 @@ theorem certified_allocation_loop_progress_or_explicit_failure
     · exact Or.inr ⟨.notCalibrated, rfl⟩
   · exact Or.inr ⟨.deadlineExceeded, rfl⟩
 
-end ForkRaceFoldTheorems
+end Gnosis

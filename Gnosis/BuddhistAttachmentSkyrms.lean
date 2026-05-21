@@ -180,7 +180,7 @@ theorem skyrms_tax_eq_release_tax_plus_tanha (node : EnergyNode) :
     skyrmsTax node =
       skyrmsTax (nirodhaRelease node) + tanhaIndex node := by
   simp [skyrmsTax, externality, nirodhaRelease, tanhaIndex]
-  omega
+  simp +arith
 
 /-- Karma is the tax delta of attachment: the extra Skyrms burden before
 release is exactly the unresolved residue. -/
@@ -209,7 +209,7 @@ theorem accumulated_refusal_residue_eq
     karmaResidue (accumulateRefusal node failedStep debtStep) =
       karmaResidue node + failedStep + debtStep := by
   simp [karmaResidue, tanhaIndex, accumulateRefusal]
-  omega
+  ac_rfl
 
 /-- Persistence cannot reduce operational karma tax. Adding failed attention or
 unresolved debt across decode windows only increases the collectible Skyrms
@@ -219,7 +219,7 @@ theorem persistent_refusal_monotone_karma_tax
     karmaTax node ≤ karmaTax (accumulateRefusal node failedStep debtStep) := by
   rw [karma_tax_eq_residue, karma_tax_eq_residue,
     accumulated_refusal_residue_eq]
-  omega
+  simp +arith
 
 /-- If a decode window adds any refusal pressure, the operational karma tax
 strictly increases. -/
@@ -229,7 +229,8 @@ theorem persistent_refusal_strictly_increases_karma_tax
     karmaTax node < karmaTax (accumulateRefusal node failedStep debtStep) := by
   rw [karma_tax_eq_residue, karma_tax_eq_residue,
     accumulated_refusal_residue_eq]
-  omega
+  rw [Nat.add_assoc]
+  exact Nat.lt_add_of_pos_right h
 
 /-! ## Evidence-gated promotion review -/
 

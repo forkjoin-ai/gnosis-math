@@ -212,13 +212,9 @@ theorem comte_three_stages_witness :
 
 /-! ## Next exploration
 
-`Gnosis/ComtePositiveEmpirics.lean` — separate the word "positive"
-from rhetorical certainty by adding an `ObservationSurface` record
-with finite measurements, prediction error, and closure witnesses.
-The natural target is a theorem that the positive/Buley stage requires
-not only retrocausal closure (`IsBulkNovikovClosed`) but also an
-auditable observation interface, making "positive" mean empirically
-checked rather than merely higher on the ladder.
+Closed by `Gnosis.ComtePositiveEmpirics`: the positive-stage witness
+now includes a finite observation surface and an auditable empirical
+interface.
 -/
 
 end ComteThreeStages

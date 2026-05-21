@@ -462,14 +462,9 @@ What we did *not* prove:
 
 ## Next exploration
 
-`Gnosis/SocialDynamicsResonance.lean` — add an external periodic
-drive `drive : Nat → Int` to `undampedStep` and prove that drives
-of period exactly 6 (the natural period) accumulate amplitude over
-several cycles, while drives of period 7 or 5 do not. That would
-introduce *resonance* as a discrete-Int phenomenon, give a
-finite-witness analogue of the bowl Q-factor's frequency-selectivity
-reading, and bridge to `EchoChamberAsTaoBowl.IsPejorativeEcho` at
-the dynamical level rather than only the static one.
+Closed by `Gnosis.SocialDynamicsResonance`: finite periodic drives now
+separate the natural six-step response from five- and seven-step
+comparators.
 -/
 
 end SocialDynamicsHooke

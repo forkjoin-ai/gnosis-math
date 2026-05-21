@@ -521,22 +521,15 @@ What we did **not** prove:
     *enforce* the bulk-state invariant. Whether the un-lumped
     state-space kernel could enforce it is a separate question for
     a future module.
-  * Anything about the *retrocausal* arrow as a measure-theoretic
-    object. The backward kernel here is a discrete `Nat`-step
-    function; a measure-theoretic retrocausal-conditioning calculus
-    requires Mathlib.
+  * Anything about the *retrocausal* arrow as an analytic object.
+    The backward kernel here is a discrete `Nat`-step function;
+    analytic conditioning machinery is outside this Rustic module.
 
 ## Next exploration
 
-`Gnosis/BuleyKenomaCycleWitness.lean` — extend the bulk-state index
-to a *period-10 forward orbit invariant*: prove that
-`bulkOf (iterate 10 nashPolarizationTrap) = bulkOf
-skyrmsUltraLongRunFixedPoint = 55`, i.e., the kenoma modulus 10 is
-*also* the forward-orbit period for any state in the ULR basin
-under the mutation kernel. That would close the kenoma cycle as a
-*dynamical* invariant, not just an algebraic one, and would be the
-honest discrete analogue of "the kenoma Buley cycle has period 10
-in time."
+Closed by `Gnosis.BuleyKenomaCycleWitness`: the ten-step
+Nash-trap orbit now reaches the same bulk index as the ULR fixed
+point in the finite iterator.
 -/
 
 end BuleyErgodicClosure

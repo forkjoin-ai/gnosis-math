@@ -6,6 +6,7 @@ Lean witnesses extracted from Taoist source documents. New Tao witnesses should 
 
 ## Witnesses
 
+- `TaoTeChingReturnRootMetaWitness`: Tao-wide meta witness over chapters 1-81. Folds name-boundary, productive void, root stillness, completion-by-lack, trace-less governance, diminishing practice, low-place wu-wei, and closing counterproof into the return-root invariant.
 - `TaoTeChingNameMysteryWitness`: `docs/ebooks/source-texts/tao-te-ching-legge.txt`, chapters 1-4, the named/unnamed Tao as a capture boundary: names teach by capacity but do not exhaust the enduring Tao; polarity co-arises; wu-wei and wordless instruction keep process from becoming ownership.
 - `TaoTeChingBellowsWaterWitness`: `docs/ebooks/source-texts/tao-te-ching-legge.txt`, chapters 5-10, non-possessive power as bellows, valley, water, last-place endurance, and mysterious quality: usefulness increases where self-claim and fullness are refused.
 - `TaoTeChingVoidSensorWitness`: `docs/ebooks/source-texts/tao-te-ching-legge.txt`, chapters 11-14, productive void and anti-sensory Tao: wheel, vessel, and room depend on empty use-sites, while sight/hearing/grasping fail and blend into the One.

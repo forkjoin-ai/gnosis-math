@@ -1,6 +1,7 @@
 import Init
 import Gnosis.FailureAsStandingWave
 import Gnosis.FanoFRFVI
+import Gnosis.SpeakerStandingWaveDiarization
 
 /-!
 # Universal Standing-Wave Theorem
@@ -88,6 +89,7 @@ namespace UniversalStandingWaveTheorem
 
 open Gnosis.FailureAsStandingWave
 open Gnosis.FanoFRFVI
+open SpeakerStandingWaveDiarization
 
 -- ══════════════════════════════════════════════════════════
 -- SECTION 1 — Compression regimes (the universality scope)
@@ -407,6 +409,77 @@ theorem all_kernel_bridges_recorded :
     ∧ pleromaAeonMonsterBridgeRecorded = true
     ∧ gnosisTriptychBraidBridgeRecorded = true
     ∧ universalIntelligenceSSMBridgeRecorded = true := by decide
+
+-- ══════════════════════════════════════════════════════════
+-- SECTION 6b — Transcript diarization certificate bridge
+-- ══════════════════════════════════════════════════════════
+
+/-- A transcript standing-wave certificate is a runtime object that supplies
+    segmented turns, paragraph/turn carriers, and transcript tags. It is not a
+    human-identity proof; it is a finite coverage witness for language
+    compression under speaker/tone/emotion tagging. -/
+structure TranscriptStandingWaveCertificate where
+  turns : List TurnSpan
+  carriers : List ParagraphCarrier
+  tags : List ParagraphTranscriptTag
+  deriving Repr
+
+/-- A transcript certificate is admitted to the universal theorem only when it
+    satisfies the already-proved diarization bookkeeping gates: segmentation
+    covers carriers, tags cover turns, and tag confidence dials are bounded. -/
+def TranscriptCertificateAdmissible (limit : Nat)
+    (cert : TranscriptStandingWaveCertificate) : Prop :=
+  SegmentationCoversCarriers cert.turns cert.carriers ∧
+  TagsCoverTurns cert.tags cert.turns ∧
+  WellFormedTranscriptTags limit cert.tags
+
+/-- The diarized transcript substrate lives under the neural-language regime:
+    it is a measured language pipeline that compresses turn text into speaker,
+    tone, emotion, mood, and prosody tags. -/
+def transcriptCertificateRegime
+    (_cert : TranscriptStandingWaveCertificate) : CompressionRegime :=
+  CompressionRegime.neural
+
+/-- A transcript certificate uses the same Fano address layer as the neural
+    standing-wave regime. Runtime tags are the substrate-specific fingerprints;
+    this theorem records only the address-layer bridge. -/
+theorem transcript_certificate_uses_universal_fano_line
+    (cert : TranscriptStandingWaveCertificate) :
+    regimeFanoEmbedding (transcriptCertificateRegime cert) StandingWaveAxis.kAxis = FRFVIPoint.fork
+    ∧ regimeFanoEmbedding (transcriptCertificateRegime cert) StandingWaveAxis.qAxis = FRFVIPoint.race
+    ∧ regimeFanoEmbedding (transcriptCertificateRegime cert) StandingWaveAxis.vAxis = FRFVIPoint.fold :=
+  universal_fano_line (transcriptCertificateRegime cert)
+
+/-- Admissible transcript certificates inherit the no-residual segmentation
+    boundary from `SpeakerStandingWaveDiarization`. -/
+theorem transcript_certificate_has_no_segmentation_residuals
+    (limit : Nat) (cert : TranscriptStandingWaveCertificate)
+    (h : TranscriptCertificateAdmissible limit cert) :
+    NoSegmentationResiduals cert.turns cert.carriers :=
+  segmentation_coverage_no_residuals cert.turns cert.carriers h.1
+
+/-- Admissible transcript certificates project tags onto exactly the carriers
+    consumed by diarization. This is the formal target of the runtime
+    `--certificate` JSON path. -/
+theorem transcript_certificate_tags_project_to_carriers
+    (limit : Nat) (cert : TranscriptStandingWaveCertificate)
+    (h : TranscriptCertificateAdmissible limit cert) :
+    cert.tags.map (fun tag => tag.carrier) = cert.carriers :=
+  tags_cover_segmentation_carriers cert.tags cert.turns cert.carriers h.2.1 h.1
+
+/-- Admissible transcript certificates preserve tag confidence bounds. -/
+theorem transcript_certificate_tags_are_confidence_bounded
+    (limit : Nat) (cert : TranscriptStandingWaveCertificate)
+    (h : TranscriptCertificateAdmissible limit cert) :
+    ∀ tag ∈ cert.tags, TagConfidenceBoundedBy limit tag :=
+  well_formed_tag_projects_confidence_bound limit cert.tags h.2.2
+
+/-- Recorded cross-reference: the Pneuma transcript certificate path is a
+    neural-language instance of the universal standing-wave theorem. -/
+def pneumaTranscriptCertificateBridgeRecorded : Bool := true
+
+theorem transcript_certificate_bridge_recorded :
+    pneumaTranscriptCertificateBridgeRecorded = true := by decide
 
 -- ══════════════════════════════════════════════════════════
 -- SECTION 7 — Commercial / engineering implications

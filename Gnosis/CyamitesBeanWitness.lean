@@ -87,7 +87,7 @@ theorem bean_taboo_blocks_first_quorum :
     ¬ reachesQuorum emptyTally 1 := by
   unfold reachesQuorum emptyTally
   rw [vacuum_has_zero_score]
-  omega
+  decide
 
 /-- Confusing the tally mechanism with the source is already classified as
 operator idolatry in the existing sin taxonomy. -/

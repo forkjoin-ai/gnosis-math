@@ -4,11 +4,11 @@ import Init
 # Progressive Mesh / Granular Bridge
 
 Finite contracts for the progressive mesh orchestrator rows that used to live
-under the historical `ForkRaceFoldTheorems.ProgressiveMeshGranularBridge`
+under the canonical `Gnosis.ProgressiveMeshGranularBridge`
 namespace.
 -/
 
-namespace ForkRaceFoldTheorems
+namespace Gnosis
 namespace ProgressiveMeshGranularBridge
 
 inductive MeshBranchDim where
@@ -136,4 +136,4 @@ theorem granular_stratScore_le_combinatorial_cap
   column.hCap
 
 end ProgressiveMeshGranularBridge
-end ForkRaceFoldTheorems
+end Gnosis

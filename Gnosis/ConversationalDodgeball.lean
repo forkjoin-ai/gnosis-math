@@ -18,6 +18,9 @@ import Gnosis.KnotTheory.TorusKnotChebyshevBracket
 
   Constraints:
   - Lying: Forbidden (Out of bounds). Violates manifold continuity.
+  - Silence: Not a closure.
+  - Bare truth-dip: Not a fact-checking closure unless separately argued.
+  - Unresolved residue: Not a closure.
 
   Topological Mapping:
   - Negotiation State ↔ BuleyUnit (waste, opportunity, diversity).
@@ -66,6 +69,238 @@ def initialNegotiation (leverage : Nat) : NegotiationState :=
 -/
 def is_lying (old new : NegotiationState) : Prop :=
   new.waste < old.waste -- You cannot "un-reveal" information without a fold
+
+/--
+  Fact-checking closure states for conversation scanners.
+
+  `argued` and `boundaryRejected` close the local topology. `silence`,
+  `bareTruth`, and `unresolved` are visible residual states that a runtime
+  scanner should report instead of treating as closure.
+-/
+inductive ConversationClosure where
+  | argued
+  | boundaryRejected
+  | silence
+  | bareTruth
+  | unresolved
+  deriving DecidableEq, Repr
+
+/-- Runtime conversation moves: either one dodgeball tactic, a direct argued
+    answer, or silence. -/
+inductive ConversationMove where
+  | tactic (tactic : DodgeballTactic)
+  | directAnswer
+  | silence
+  deriving DecidableEq, Repr
+
+/-- Dodgeball tactics do not include direct argued answers. -/
+def closureOfTactic : DodgeballTactic → ConversationClosure
+  | .dodge       => .unresolved
+  | .duck        => .unresolved
+  | .dive        => .boundaryRejected
+  | .dip         => .bareTruth
+  | .dodgeRepeat => .unresolved
+
+/-- Lift a runtime move into the fact-checking closure lattice. -/
+def closureOfMove : ConversationMove → ConversationClosure
+  | .tactic tactic => closureOfTactic tactic
+  | .directAnswer  => .argued
+  | .silence       => .silence
+
+def isSilenceClosure : ConversationClosure → Prop
+  | .silence => True
+  | _        => False
+
+def isBareTruthClosure : ConversationClosure → Prop
+  | .bareTruth => True
+  | _          => False
+
+def isUnresolvedClosure : ConversationClosure → Prop
+  | .unresolved => True
+  | _           => False
+
+/-- Fact-checking closure discipline: no silence, no bare truth-dip, and no
+    unresolved residue. -/
+def closureDiscipline (closure : ConversationClosure) : Prop :=
+  ¬ isSilenceClosure closure ∧
+  ¬ isBareTruthClosure closure ∧
+  ¬ isUnresolvedClosure closure
+
+theorem no_silence_closure :
+    ¬ closureDiscipline .silence := by
+  intro h
+  exact h.1 True.intro
+
+theorem no_bare_truth_closure :
+    ¬ closureDiscipline .bareTruth := by
+  intro h
+  exact h.2.1 True.intro
+
+theorem no_unresolved_closure :
+    ¬ closureDiscipline .unresolved := by
+  intro h
+  exact h.2.2 True.intro
+
+theorem argued_closure_has_discipline :
+    closureDiscipline .argued := by
+  constructor
+  · intro h
+    cases h
+  · constructor
+    · intro h
+      cases h
+    · intro h
+      cases h
+
+theorem boundary_rejection_has_discipline :
+    closureDiscipline .boundaryRejected := by
+  constructor
+  · intro h
+    cases h
+  · constructor
+    · intro h
+      cases h
+    · intro h
+      cases h
+
+/-- A disciplined closure is either an argued answer or an explicit boundary
+    rejection. -/
+theorem closure_discipline_classifies
+    {closure : ConversationClosure} (h : closureDiscipline closure) :
+    closure = .argued ∨ closure = .boundaryRejected := by
+  cases closure with
+  | argued => exact Or.inl rfl
+  | boundaryRejected => exact Or.inr rfl
+  | silence => exact False.elim (no_silence_closure h)
+  | bareTruth => exact False.elim (no_bare_truth_closure h)
+  | unresolved => exact False.elim (no_unresolved_closure h)
+
+theorem direct_answer_closes_with_discipline :
+    closureDiscipline (closureOfMove .directAnswer) := by
+  exact argued_closure_has_discipline
+
+theorem silence_move_not_closure :
+    ¬ closureDiscipline (closureOfMove .silence) := by
+  exact no_silence_closure
+
+theorem dodgeball_tactic_never_argued_closure (tactic : DodgeballTactic) :
+    closureOfTactic tactic ≠ .argued := by
+  cases tactic <;> simp [closureOfTactic]
+
+theorem dodge_tactic_leaves_unresolved :
+    closureOfTactic .dodge = .unresolved := rfl
+
+theorem duck_tactic_leaves_unresolved :
+    closureOfTactic .duck = .unresolved := rfl
+
+theorem dive_tactic_boundary_rejects :
+    closureOfTactic .dive = .boundaryRejected := rfl
+
+theorem dip_tactic_is_bare_truth :
+    closureOfTactic .dip = .bareTruth := rfl
+
+theorem dodge_repeat_tactic_leaves_unresolved :
+    closureOfTactic .dodgeRepeat = .unresolved := rfl
+
+theorem dip_tactic_not_fact_checking_closure :
+    ¬ closureDiscipline (closureOfTactic .dip) := by
+  exact no_bare_truth_closure
+
+theorem repeated_dodge_not_fact_checking_closure :
+    ¬ closureDiscipline (closureOfTactic .dodgeRepeat) := by
+  exact no_unresolved_closure
+
+/-- A scanner-facing question frame. `precision` measures how well-scoped the
+    question is; `acceptanceCriteria` counts explicit answer/closure criteria. -/
+structure QuestionFrame where
+  precision : Nat
+  acceptanceCriteria : Nat
+  deriving Repr, DecidableEq
+
+/-- A better question strictly raises precision and does not discard acceptance
+    criteria already earned. -/
+def improvesQuestion (old new : QuestionFrame) : Prop :=
+  old.precision < new.precision ∧
+  old.acceptanceCriteria ≤ new.acceptanceCriteria
+
+/-- A dodgeball move is disciplined refinement when it leaves closure open on
+    purpose and improves the question frame. This separates useful Socratic
+    refinement from pretending a dodge closed the topology. -/
+def disciplinedRefinementMove
+    (tactic : DodgeballTactic) (old new : QuestionFrame) : Prop :=
+  closureOfTactic tactic = .unresolved ∧ improvesQuestion old new
+
+def isRefinementTactic : DodgeballTactic → Prop
+  | .dodge       => True
+  | .duck        => True
+  | .dodgeRepeat => True
+  | _            => False
+
+theorem dodge_can_refine_question
+    {old new : QuestionFrame} (h : improvesQuestion old new) :
+    disciplinedRefinementMove .dodge old new := by
+  exact ⟨rfl, h⟩
+
+theorem duck_can_refine_question
+    {old new : QuestionFrame} (h : improvesQuestion old new) :
+    disciplinedRefinementMove .duck old new := by
+  exact ⟨rfl, h⟩
+
+theorem repeated_dodge_can_refine_question
+    {old new : QuestionFrame} (h : improvesQuestion old new) :
+    disciplinedRefinementMove .dodgeRepeat old new := by
+  exact ⟨rfl, h⟩
+
+theorem disciplined_refinement_raises_precision
+    {tactic : DodgeballTactic} {old new : QuestionFrame}
+    (h : disciplinedRefinementMove tactic old new) :
+    old.precision < new.precision := by
+  exact h.2.1
+
+theorem disciplined_refinement_preserves_acceptance_criteria
+    {tactic : DodgeballTactic} {old new : QuestionFrame}
+    (h : disciplinedRefinementMove tactic old new) :
+    old.acceptanceCriteria ≤ new.acceptanceCriteria := by
+  exact h.2.2
+
+theorem disciplined_refinement_is_not_closure
+    {tactic : DodgeballTactic} {old new : QuestionFrame}
+    (h : disciplinedRefinementMove tactic old new) :
+    ¬ closureDiscipline (closureOfTactic tactic) := by
+  rw [h.1]
+  exact no_unresolved_closure
+
+theorem disciplined_refinement_uses_refinement_tactic
+    {tactic : DodgeballTactic} {old new : QuestionFrame}
+    (h : disciplinedRefinementMove tactic old new) :
+    isRefinementTactic tactic := by
+  cases tactic with
+  | dodge => exact True.intro
+  | duck => exact True.intro
+  | dive => cases h.1
+  | dip => cases h.1
+  | dodgeRepeat => exact True.intro
+
+/-- Finite refinement chains are useful only when they end in a disciplined
+    closure. Runtime scanners should report both the refinement steps and the
+    remaining closure obligation. -/
+structure RefinementChain where
+  stepCount : Nat
+  finalClosure : ConversationClosure
+  deriving Repr, DecidableEq
+
+def closesAfterRefinement (chain : RefinementChain) : Prop :=
+  closureDiscipline chain.finalClosure
+
+theorem direct_answer_closes_after_refinement (stepCount : Nat) :
+    closesAfterRefinement
+      { stepCount := stepCount, finalClosure := closureOfMove .directAnswer } := by
+  exact direct_answer_closes_with_discipline
+
+theorem unresolved_chain_does_not_close (stepCount : Nat) :
+    ¬ closesAfterRefinement
+      { stepCount := stepCount, finalClosure := .unresolved } := by
+  exact no_unresolved_closure
 
 -- ══════════════════════════════════════════════════════════
 -- 2D PROJECTION (MOVEMENTS)

@@ -83,9 +83,8 @@ What this module does not prove:
 
 ## Next exploration
 
-`Gnosis/PatternAtlasExtensions.lean` - add new rows only when a fresh
-domain module supplies a real theorem-level instance of one of the four
-pattern shapes, rather than by analogy alone.
+Closed by `Gnosis.PatternAtlasExtensions`: extension rows are now
+theorem-backed by concrete domain modules rather than analogy alone.
 -/
 
 end PatternAtlas
