@@ -28,6 +28,13 @@ inductive AntiQueueRelease where
   | selfBoundaryHonored
 deriving DecidableEq, Repr
 
+inductive ConversationLoopExit where
+  | stayInDodgeball
+  | walkback
+  | walkaway
+  | arguedClosure
+deriving DecidableEq, Repr
+
 structure ConversationAntiQueueState where
   openQuestions : Nat := 0
   argumentObligations : Nat := 0
@@ -86,6 +93,23 @@ def releaseCompatible (k : AntiQueueItemKind) (r : AntiQueueRelease) : Prop :=
   | AntiQueueItemKind.unresolvedResidue, AntiQueueRelease.selfBoundaryHonored => True
   | _, _ => False
 
+def releaseForLoopExit : ConversationLoopExit → AntiQueueRelease
+  | ConversationLoopExit.stayInDodgeball => AntiQueueRelease.arguedClosure
+  | ConversationLoopExit.walkback => AntiQueueRelease.disciplinedWalkback
+  | ConversationLoopExit.walkaway => AntiQueueRelease.explicitWalkaway
+  | ConversationLoopExit.arguedClosure => AntiQueueRelease.arguedClosure
+
+structure RuntimeDischarge where
+  itemKind : AntiQueueItemKind
+  release : AntiQueueRelease
+  closureDischargeId : String
+  argumentObligationIds : List String := []
+  selfAccountabilityOnly : Bool := true
+deriving DecidableEq, Repr
+
+def runtimeDischargeSound (d : RuntimeDischarge) : Prop :=
+  d.selfAccountabilityOnly = true ∧ releaseCompatible d.itemKind d.release
+
 def kindPressure : AntiQueueItemKind → Nat
   | AntiQueueItemKind.openQuestion => 5
   | AntiQueueItemKind.argumentObligation => 7
@@ -141,6 +165,40 @@ theorem compatible_release_preserves_self_accountability
     selfAccountabilityOnly s := by
   intro h _
   exact h
+
+theorem runtime_discharge_preserves_self_accountability
+    (d : RuntimeDischarge) :
+    runtimeDischargeSound d → d.selfAccountabilityOnly = true := by
+  intro h
+  exact h.left
+
+theorem loop_exit_release_compatible_for_open_question
+    (exit : ConversationLoopExit) :
+    releaseCompatible AntiQueueItemKind.openQuestion (releaseForLoopExit exit) := by
+  cases exit <;> decide
+
+theorem walkaway_open_question_runtime_discharge_sound
+    (closureDischargeId : String) :
+    runtimeDischargeSound
+      { itemKind := AntiQueueItemKind.openQuestion
+        release := AntiQueueRelease.explicitWalkaway
+        closureDischargeId := closureDischargeId
+        argumentObligationIds := []
+        selfAccountabilityOnly := true } := by
+  unfold runtimeDischargeSound releaseCompatible
+  exact ⟨rfl, trivial⟩
+
+theorem argued_closure_argument_obligation_runtime_discharge_sound
+    (closureDischargeId : String)
+    (argumentObligationIds : List String) :
+    runtimeDischargeSound
+      { itemKind := AntiQueueItemKind.argumentObligation
+        release := AntiQueueRelease.arguedClosure
+        closureDischargeId := closureDischargeId
+        argumentObligationIds := argumentObligationIds
+        selfAccountabilityOnly := true } := by
+  unfold runtimeDischargeSound releaseCompatible
+  exact ⟨rfl, trivial⟩
 
 theorem self_boundary_not_released_by_argued_closure :
     ¬ releaseCompatible AntiQueueItemKind.selfBoundary AntiQueueRelease.arguedClosure := by
