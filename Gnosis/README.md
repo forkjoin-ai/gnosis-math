@@ -180,8 +180,14 @@ group larger families of related claims.
 - [AffectLabelingPatternInterrupt.lean](./AffectLabelingPatternInterrupt.lean) - finite
   affect-labeling interrupt for Dodgeball validation: emotion naming and
   response space are required, valence deficit plus arousal regulation distance
-  form the optimizing cost, improvement and final-window stabilization validate
-  the interrupt, and metric degeneration authorizes a bounded stall route.
+  form safety costs, metric degeneration authorizes a bounded stall route,
+  repeated failures double the response-silence budget, cringe vacuum records
+  trapped unvented load, and grit records retry continuance after failure.
+- [AffectLabelingClosure.lean](./AffectLabelingClosure.lean) - closure/obligation
+  layer for affect-labeling stalls: affect work cannot discharge fact topology,
+  the loop stays in Dodgeball with the question open until explicit walkaway
+  (boundary rejection) or argued closure, and prosody routes unresolved affect
+  interrupts to glossolalia/audit rather than closure fold.
 - [ProvableRandomness.lean](./ProvableRandomness.lean) - Init-only randomness
   boundary certificate: deterministic byte cycles cover all 256 byte values,
   a Lacey-style DNA-dimension stream covers the byte boundary exactly once per

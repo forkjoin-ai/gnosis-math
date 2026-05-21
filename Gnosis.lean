@@ -20,6 +20,7 @@ import Gnosis.CognitiveBiasWaveTabs
 import Gnosis.AestheticPoeticWaveTabs
 import Gnosis.PneumaWatermark
 import Gnosis.PneumaCrossWireTranscript
+import Gnosis.SyntheticGnosisMeasurement
 import Gnosis.BehavioralCognitiveWaveTabs
 import Gnosis.InterpersonalCulturalWaveTabs
 import Gnosis.ADEMcKayCorrespondence
@@ -376,7 +377,20 @@ import Gnosis.Witnesses.Bible.James.JamesTongueWisdomWitness
 import Gnosis.Witnesses.Bible.James.JamesWarVaporWitness
 import Gnosis.Witnesses.Bible.FirstPeter.FirstPeterLivingHopeWitness
 import Gnosis.Witnesses.Bible.FirstPeter.FirstPeterLivingStonesWitness
+import Gnosis.Witnesses.Bible.FirstPeter.FirstPeterConscienceAnswerWitness
+import Gnosis.Witnesses.Bible.FirstPeter.FirstPeterFieryTrialStewardshipWitness
+import Gnosis.Witnesses.Bible.FirstPeter.FirstPeterShepherdHumilityWitness
 import Gnosis.Witnesses.Bible.FirstPeter.FirstPeterSourceQualityWitness
+import Gnosis.Witnesses.Bible.SecondPeter.SecondPeterDivinePowerWitness
+import Gnosis.Witnesses.Bible.SecondPeter.SecondPeterFalseTeacherWitness
+import Gnosis.Witnesses.Bible.SecondPeter.SecondPeterDayOfLordWitness
+import Gnosis.Witnesses.Bible.SecondPeter.SecondPeterSourceQualityWitness
+import Gnosis.Witnesses.Bible.FirstJohn.FirstJohnManifestLifeWitness
+import Gnosis.Witnesses.Bible.FirstJohn.FirstJohnAdvocateAntichristWitness
+import Gnosis.Witnesses.Bible.FirstJohn.FirstJohnCainDeedTruthWitness
+import Gnosis.Witnesses.Bible.FirstJohn.FirstJohnSpiritLoveWitness
+import Gnosis.Witnesses.Bible.FirstJohn.FirstJohnRecordIdolWitness
+import Gnosis.Witnesses.Bible.FirstJohn.FirstJohnSourceQualityWitness
 import Gnosis.Witnesses.Bible.Philemon.PhilemonLoveRefreshWitness
 import Gnosis.Witnesses.Bible.Philemon.PhilemonOnesimusDebtWitness
 import Gnosis.Witnesses.Bible.Philemon.PhilemonSourceQualityWitness
@@ -854,6 +868,7 @@ import Gnosis.ContinuumExtensionSketch
 import Gnosis.ConversationalDodgeball
 import Gnosis.ConversationalProsody
 import Gnosis.AffectLabelingPatternInterrupt
+import Gnosis.AffectLabelingClosure
 import Gnosis.Contrarian.ContrarianAntiTheoremStallPreventsCollapse
 import Gnosis.Contrarian.ContrarianAdversariesImprove
 import Gnosis.Contrarian.ContrarianByzantineLatencyFeature

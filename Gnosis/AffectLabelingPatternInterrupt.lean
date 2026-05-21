@@ -133,6 +133,45 @@ def affectInterruptValidated (trace : AffectInterruptTrace) : Prop :=
   traceStabilizesValence trace ∧
   traceStabilizesArousal trace
 
+instance instDecidableTraceImproves
+    (trace : AffectInterruptTrace) : Decidable (traceImproves trace) :=
+  by
+    unfold traceImproves affectImproves
+    infer_instance
+
+instance instDecidableTraceDegenerates
+    (trace : AffectInterruptTrace) : Decidable (traceDegenerates trace) :=
+  by
+    unfold traceDegenerates affectDegenerates
+    infer_instance
+
+instance instDecidableTraceStabilizesValence
+    (trace : AffectInterruptTrace) :
+    Decidable (traceStabilizesValence trace) :=
+  by
+    unfold traceStabilizesValence valenceStable
+    infer_instance
+
+instance instDecidableTraceStabilizesArousal
+    (trace : AffectInterruptTrace) :
+    Decidable (traceStabilizesArousal trace) :=
+  by
+    unfold traceStabilizesArousal arousalStable
+    infer_instance
+
+instance instDecidableTraceIterates
+    (trace : AffectInterruptTrace) : Decidable (traceIterates trace) :=
+  by
+    unfold traceIterates
+    infer_instance
+
+instance instDecidableAffectInterruptValidated
+    (trace : AffectInterruptTrace) :
+    Decidable (affectInterruptValidated trace) :=
+  by
+    unfold affectInterruptValidated
+    infer_instance
+
 inductive AffectInterruptRoute where
   | continueStall
   | degenerationStall
@@ -157,14 +196,26 @@ def exponentialBackoff : Nat → Nat
   | failures + 1 => 2 * exponentialBackoff failures
 
 /-- Backoff state for a stall loop. `baseDelay` is a runtime unit: ticks,
-    frames, turns, or milliseconds depending on the caller. -/
+    frames, turns, or milliseconds depending on the caller. `baseSilence`
+    is the minimum response-space silence granted after affect labeling. -/
 structure StallBackoffState where
   failures : Nat
   baseDelay : Nat
+  baseSilence : Nat
   deriving Repr, DecidableEq
 
 def stallBackoffDelay (state : StallBackoffState) : Nat :=
   state.baseDelay * exponentialBackoff state.failures
+
+def responseSilenceBudget (state : StallBackoffState) : Nat :=
+  state.baseSilence * exponentialBackoff state.failures
+
+/-- Cringe vacuum records trapped social load when silence/backoff is not
+    vented by response, walkaway, or closure. This mirrors the runtime
+    `cringe_conservation` surface where unvented load remains in local
+    geometry. -/
+def cringeVacuum (state : StallBackoffState) : Nat :=
+  responseSilenceBudget state + state.failures
 
 def registerStallFailure (state : StallBackoffState) : StallBackoffState :=
   { state with failures := state.failures + 1 }
@@ -176,6 +227,53 @@ def applyStallBackoffOnFailure
     registerStallFailure state
   else
     state
+
+/-- Grit metrics mirror the runtime citizenship score at the finite proof
+    surface: continuance is not raw success, but retries, alternatives,
+    constraint adaptation, exhausted options, and recovery after failure. -/
+structure GritMetric where
+  retryCount : Nat
+  alternativePaths : Nat
+  constraintAdaptations : Nat
+  exhaustedBeforeEscalation : Nat
+  recoveryFromFailure : Nat
+  failureCount : Nat
+  deriving Repr, DecidableEq
+
+def gritContinuance (metric : GritMetric) : Nat :=
+  metric.retryCount +
+  metric.alternativePaths +
+  metric.constraintAdaptations +
+  metric.exhaustedBeforeEscalation +
+  metric.recoveryFromFailure
+
+def registerGritRetryAfterFailure (metric : GritMetric) : GritMetric :=
+  { metric with
+      retryCount := metric.retryCount + 1
+      failureCount := metric.failureCount + 1 }
+
+def continuanceInFaceOfFailure (old new : GritMetric) : Prop :=
+  old.failureCount < new.failureCount ∧
+  old.retryCount < new.retryCount
+
+def applyGritOnStallFailure
+    (trace : AffectInterruptTrace)
+    (metric : GritMetric) : GritMetric :=
+  if traceDegenerates trace then
+    registerGritRetryAfterFailure metric
+  else
+    metric
+
+/-- Beckett-style continuance: the system registers impossibility pressure and
+    still records the next attempt. -/
+structure BeckettContinuance where
+  mustGoOn : Bool
+  cannotGoOn : Bool
+  goesOn : Bool
+  deriving Repr, DecidableEq
+
+def beckettGrit (state : BeckettContinuance) : Prop :=
+  state.mustGoOn = true ∧ state.cannotGoOn = true ∧ state.goesOn = true
 
 def affectStallState
     (old new : AffectMetric) : ContrarianStallIsOptimal.StallState :=
@@ -287,12 +385,38 @@ theorem register_stall_failure_preserves_base_delay
     (registerStallFailure state).baseDelay = state.baseDelay := by
   rfl
 
+theorem register_stall_failure_preserves_base_silence
+    (state : StallBackoffState) :
+    (registerStallFailure state).baseSilence = state.baseSilence := by
+  rfl
+
 theorem register_stall_failure_doubles_delay
     (state : StallBackoffState) :
     stallBackoffDelay (registerStallFailure state) =
       2 * stallBackoffDelay state := by
   unfold stallBackoffDelay registerStallFailure
-  simp [exponentialBackoff, Nat.mul_assoc, Nat.mul_comm, Nat.mul_left_comm]
+  simp [exponentialBackoff, Nat.mul_left_comm]
+
+theorem register_stall_failure_doubles_response_silence
+    (state : StallBackoffState) :
+    responseSilenceBudget (registerStallFailure state) =
+      2 * responseSilenceBudget state := by
+  unfold responseSilenceBudget registerStallFailure
+  simp [exponentialBackoff, Nat.mul_left_comm]
+
+theorem cringe_vacuum_contains_response_silence
+    (state : StallBackoffState) :
+    responseSilenceBudget state ≤ cringeVacuum state := by
+  unfold cringeVacuum
+  exact Nat.le_add_right (responseSilenceBudget state) state.failures
+
+theorem registered_failure_cringe_contains_doubled_silence
+    (state : StallBackoffState) :
+    2 * responseSilenceBudget state ≤
+      cringeVacuum (registerStallFailure state) := by
+  rw [← register_stall_failure_doubles_response_silence state]
+  exact cringe_vacuum_contains_response_silence
+    (registerStallFailure state)
 
 theorem degenerating_trace_applies_stall_backoff
     {trace : AffectInterruptTrace} (state : StallBackoffState)
@@ -316,6 +440,55 @@ theorem degenerating_trace_backoff_doubles_delay
       2 * stallBackoffDelay state := by
   rw [degenerating_trace_applies_stall_backoff state h]
   exact register_stall_failure_doubles_delay state
+
+theorem degenerating_trace_backoff_doubles_response_silence
+    {trace : AffectInterruptTrace} (state : StallBackoffState)
+    (h : traceDegenerates trace) :
+    responseSilenceBudget (applyStallBackoffOnFailure trace state) =
+      2 * responseSilenceBudget state := by
+  rw [degenerating_trace_applies_stall_backoff state h]
+  exact register_stall_failure_doubles_response_silence state
+
+theorem degenerating_trace_cringe_contains_doubled_silence
+    {trace : AffectInterruptTrace} (state : StallBackoffState)
+    (h : traceDegenerates trace) :
+    2 * responseSilenceBudget state ≤
+      cringeVacuum (applyStallBackoffOnFailure trace state) := by
+  rw [degenerating_trace_applies_stall_backoff state h]
+  exact registered_failure_cringe_contains_doubled_silence state
+
+theorem register_grit_retry_increments_retry
+    (metric : GritMetric) :
+    (registerGritRetryAfterFailure metric).retryCount =
+      metric.retryCount + 1 := by
+  rfl
+
+theorem register_grit_retry_increments_failure
+    (metric : GritMetric) :
+    (registerGritRetryAfterFailure metric).failureCount =
+      metric.failureCount + 1 := by
+  rfl
+
+theorem register_grit_retry_is_continuance
+    (metric : GritMetric) :
+    continuanceInFaceOfFailure metric
+      (registerGritRetryAfterFailure metric) := by
+  constructor
+  · exact Nat.lt_succ_self metric.failureCount
+  · exact Nat.lt_succ_self metric.retryCount
+
+theorem degenerating_trace_updates_grit_continuance
+    {trace : AffectInterruptTrace} (metric : GritMetric)
+    (h : traceDegenerates trace) :
+    continuanceInFaceOfFailure metric
+      (applyGritOnStallFailure trace metric) := by
+  unfold applyGritOnStallFailure
+  simp [h, register_grit_retry_is_continuance metric]
+
+theorem beckett_grit_goes_on
+    {state : BeckettContinuance} (h : beckettGrit state) :
+    state.goesOn = true := by
+  exact h.2.2
 
 theorem degenerating_metrics_activate_stall
     {old new : AffectMetric} (h : affectDegenerates old new) :
