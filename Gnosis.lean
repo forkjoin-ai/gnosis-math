@@ -36,6 +36,7 @@ import Gnosis.Witnesses.Chaldean.CuthaCompositeCreatureWitness
 import Gnosis.Witnesses.Chaldean.AirChaosWaterOrderWitness
 import Gnosis.Witnesses.Chaldean.DelugeSeventhDayBirdProbeWitness
 import Gnosis.Witnesses.Chaldean.EtanaEagleSerpentAscentWitness
+import Gnosis.Witnesses.Chaldean.GenesisNameMigrationWitness
 import Gnosis.Witnesses.Chaldean.HeaAlternativeJudgmentWitness
 import Gnosis.Witnesses.Chaldean.HeabaniEarthTakesLamentWitness
 import Gnosis.Witnesses.Chaldean.HumbabaForestGateTempestWitness
@@ -49,6 +50,7 @@ import Gnosis.Witnesses.Chaldean.SevenGodsFanoRuleWitness
 import Gnosis.Witnesses.Chaldean.SevenfoldAgencyRecurrenceMetaWitness
 import Gnosis.Witnesses.Chaldean.SevenWickedGodsStormRuleWitness
 import Gnosis.Witnesses.Chaldean.SevenWindsContainmentDeepWitness
+import Gnosis.Witnesses.Chaldean.SyrianMediatorTraditionNetworkWitness
 import Gnosis.Witnesses.Chaldean.MummuTiamatuWaterChaosCarrierWitness
 import Gnosis.Witnesses.Chaldean.MummuTiamatuPleromaMattressWitness
 import Gnosis.Witnesses.Chaldean.TiamatBoundaryCombatWitness
