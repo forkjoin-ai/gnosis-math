@@ -35,6 +35,7 @@ import Gnosis.Witnesses.Chaldean.ComparativeFloodMethodReserveWitness
 import Gnosis.Witnesses.Chaldean.CuthaCompositeCreatureWitness
 import Gnosis.Witnesses.Chaldean.AirChaosWaterOrderWitness
 import Gnosis.Witnesses.Chaldean.DelugeSeventhDayBirdProbeWitness
+import Gnosis.Witnesses.Chaldean.ErrorToTruthFragmentMethodWitness
 import Gnosis.Witnesses.Chaldean.EtanaEagleSerpentAscentWitness
 import Gnosis.Witnesses.Chaldean.GenesisNameMigrationWitness
 import Gnosis.Witnesses.Chaldean.HeaAlternativeJudgmentWitness
@@ -46,6 +47,7 @@ import Gnosis.Witnesses.Chaldean.IzdubarCleansingCloakHealthWitness
 import Gnosis.Witnesses.Chaldean.IzdubarErechReturnCityBoundaryWitness
 import Gnosis.Witnesses.Chaldean.KarkartiamatDragonSeaMonsterWitness
 import Gnosis.Witnesses.Chaldean.LubaraSevenWarriorGodsWitness
+import Gnosis.Witnesses.Chaldean.SargonArkLegitimacyWitness
 import Gnosis.Witnesses.Chaldean.SevenGodsFanoRuleWitness
 import Gnosis.Witnesses.Chaldean.SevenfoldAgencyRecurrenceMetaWitness
 import Gnosis.Witnesses.Chaldean.SevenWickedGodsStormRuleWitness
