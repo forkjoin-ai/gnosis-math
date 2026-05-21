@@ -34,7 +34,7 @@ Vacuous information / attention settlement note:
 | Area | Examples |
 |------|----------|
 | Buleyean kernel | `BuleyeanLogic`, `BuleyeanProbability`, `FiniteProbabilityCore`, `BuleyBiSidedBit`, `BuleyLabelPermutation` |
-| Fork/race/fold dynamics | `ForkRaceFoldDynamics`, `CacheObservation`, `SchedulerComposition`, `RaceWinnerCorrectness`, `ConversationalDodgeball`, `ConversationalProsody`, `AffectLabelingPatternInterrupt`, `AffectLabelingClosure` |
+| Fork/race/fold dynamics | `ForkRaceFoldDynamics`, `CacheObservation`, `SchedulerComposition`, `RaceWinnerCorrectness`, `ConversationalDodgeball`, `ConversationalProsody`, `ConversationalProsodyClosure`, `SemanticAuthorityBoundary`, `NeurosymbolicToolUseMarkov`, `AffectLabelingPatternInterrupt`, `AffectLabelingClosure` |
 | Compiler/runtime limits | `KernelGap`, `OptimalityUndecidable`, `SelfHostingOptimality` |
 | Mesh and consensus | `Mesh/*`, `Quorum*`, `Spiderweb*`, `ReynoldsBFT` |
 | Topological reductions | `TopologicalMetabolism`, `TopologicalRenormalization`, `FoldHeatHierarchy` |

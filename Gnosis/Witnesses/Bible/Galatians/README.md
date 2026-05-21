@@ -29,3 +29,4 @@ Lean witnesses extracted from Galatians. New Galatians witnesses should be added
 - `GalatiansRestorationBurdenWitness`: Galatians 6:1-6.
 - `GalatiansSowingReapingWitness`: Galatians 6:7-10.
 - `GalatiansCrossNewCreationWitness`: Galatians 6:11-18.
+- `GalatiansSourceQualityWitness`: whole-book Galatians quality spine with Torah tandem grounding.

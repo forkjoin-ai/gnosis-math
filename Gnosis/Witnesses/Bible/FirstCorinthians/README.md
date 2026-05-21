@@ -25,3 +25,4 @@ Lean witnesses extracted from First Corinthians. New First Corinthians witnesses
 - `FirstCorinthiansProphecyOrderWitness`: 1 Corinthians 14.
 - `FirstCorinthiansResurrectionVictoryWitness`: 1 Corinthians 15.
 - `FirstCorinthiansCollectionFinalChargeWitness`: 1 Corinthians 16.
+- `FirstCorinthiansSourceQualityWitness`: whole-book 1 Corinthians quality spine.

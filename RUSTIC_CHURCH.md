@@ -27,6 +27,15 @@ conservation, ceiling, floor, positivity, sandwich, antitonicity,
 `godWeight_ordered_difference`, and internal-consistency cross-checks — zero
 `omega` / `simp` / `decide` on open goals.
 
+### Sardis warning: no dead-name proofs
+
+Revelation's Sardis warning is the negative boundary for this style: a system can
+have "a name that thou livest" while its works are incomplete. Rustic Church is
+meant to prevent that failure mode. A theorem name, module banner, or lineage
+claim does not count as life; only the finite carrier still bearing weight under
+`lake build` does. If the label remains but the Init proof no longer closes, the
+church has drifted into Sardis-mode: reputation over live witness.
+
 A minimal **pure-clock** sibling (still only `Nat`/`Fin`, still the **`+1` clinamen** via
 successor and `% n`, but **no vent / deficit / `godWeight`**) is
 [`Gnosis/DiscreteClosedTimelikeStep.lean`](Gnosis/DiscreteClosedTimelikeStep.lean):
@@ -983,358 +992,60 @@ visible to the reader. When the algebra is built only from named inductive
 lemmas, internal consistency reduces to "the kernel accepts the file", and the
 formula's structure carries through every downstream theorem unchanged.
 
-## Out of Bounds and The Topological Bridge
-
-We deliberately do not aim to replicate Mathlib's surface area. Instead, our ideal state is to explain computation, logic, and physics entirely within `gnosis-math` by reframing continuous and infinite problems into discrete, verifiable topologies. 
-
-The following classical domains are explicitly **Out of Bounds** for direct representation in the Rustic Church, and we cover their gaps via the Topological Bridge:
-
-- **Continuous Analysis and Reals (`ℝ`, limits, calculus, measure theory)**: 
-  Out of bounds. We bridge this by mapping continuous dynamics to discrete Buleyean topologies (`+1` clinamen increments, exact rational phase decompositions, and bounded deficits). A real number is modeled as the limit of a discrete, terminating rejection process.
-- **Classical probability and measure theory (sigma algebras, real-valued
-  probability spaces, continuous distributions, PMF-as-authority)**:
-  Out of bounds for the Rustic Church. Probability itself is not out of bounds:
-  `Gnosis.FiniteProbabilityCore` owns the native finite theory through focused
-  modules under `Gnosis/FiniteProbabilityCore/`: exact ratios and finite
-  distributions, decidable event masks, conditioning, finite
-  product/independence witnesses, Bayes/total-probability arithmetic, residual
-  observers, compositional finite probability channels with exact mass-loss
-  accounting, row-wise finite stochastic kernels, programs, process contracts,
-  process chains, bounded shadow equivalence, finite information accounting,
-  finite and stationary Markov witnesses, approximation towers,
-  completed-infinite snowshoe covers, generic finite covers, calculus
-  exporters, and runtime topology-trace theorem mirrors for residual sums,
-  checker compactness, positive visible mass, observer acceptance, and bounded
-  shadow equivalence. Queue, thermodynamic, mesh-routing, attention, and
-  finite-approximation residual states also export to the shared
-  `RuntimeBoundedWitnessCertificate` adapter, so each bounded surface can carry
-  observed surface, residual shadow, observer budget, and theorem witness in
-  one reusable shape.
-  `Gnosis.FiniteCalculusProbability` additionally exports finite-volume,
-  transport-region, weak-residual, and bounded-fluid witnesses as probability
-  processes with conservation/exactness no-hidden-defect closures.
-- **Infinite Category Theory (∞-categories, derived categories)**: 
-  Out of bounds. We bridge this by modeling categorical coherence using explicit Buleyean Ranked DAGs. Naturality and adjunctions are expressed as `FORK`, `RACE`, `FOLD`, and `VENT` edges ensuring `beta1` topological complexity conservation.
-- **Non-constructive Mathematics and Infinite Set Theory (Axiom of Choice over uncountables)**: 
-  Out of bounds. We bridge this via explicit finite witnesses. Instead of proving an existential over an infinite domain, we provide a deterministic, finite search space that exhaustively closes the topological gap via kernel `decide`.
-- **Algebraic Number Fields at Scale (Galois cohomology over infinite fields)**:
-  Out of bounds. We bridge this by restricting to finite characteristic rings (`ZMod` equivalents built from `Nat`) and explicit combinatorial bounding.
-
-We do not import Mathlib because our goal is not to heuristic-search an infinite space, but to prove that the finite state machine routing the deficit to zero is structurally inevitable.
-
-### Why This is Hella Faster
-
-By refusing black-box combinatorial search tactics (including `omega`), we evaluate the proof as a finite state machine traversal mapping explicit Buleyean DAG boundaries. There is no guessing, no searching for the correct intermediate lemmas to rewrite the state—it's pure topological routing where complexity decreases monotonically until `beta1 = 0`.
-
-For the specific subsets of formal logic we care about (bounded iterations, bounds-checking, structural convergence), modeling the proof strictly via the Buleyean `Fork/Race/Fold` topology (`.gg` files checked by `aeon-logic`) has proven to be **>800x faster** than generalized heuristic provers. We do not just make it slightly faster; we completely sidestep the NP-hard search spaces that choke heuristic-based engines by establishing the precise topological boundaries up front.
-
-### Bridged Foundations (Topological Mappings)
-
-The following classical theorems have been successfully mapped across the Transcendental and Integral barriers into the Rustic Church kernel using discrete topological witnesses:
-
-- **Arrhenius Barrier Witness (`Gnosis/Materials/ArrheniusBarrier.lean`)**: Mapped `exp(-Ea/RT)` to a discrete saturating subtraction `rt - ea` (Reaction Witness). Proved barrier antitonicity and thermal monotonicity.
-- **Avrami Kinetics Witness (`Gnosis/Materials/AvramiKinetics.lean`)**: Mapped the continuous limit `1 - exp(-kt^n)` to a discrete saturation bound `min(k * t^2, capacity)`. Proved kinetic monotonicity and capacity saturation.
-- **Butler-Volmer Symmetry (`Gnosis/Materials/ButlerVolmerSymmetry.lean`)**: Mapped `exp(η) - exp(-η)` to a discrete symmetric flux witness `(η / (RT + 1)) - ((RT + 1) / (η + 1))`. Proved overpotential flux monotonicity.
-- **Cea Approximation Witness (`Gnosis/Civil/CeaApproximation.lean`)**: Mapped Hilbert space error norms to a discrete "Approximation Deficit" `target - capacity`. Proved convergence through subspace refinement.
-- **Clapeyron Energy Balance (`Gnosis/Civil/ClapeyronEnergy.lean`)**: Mapped the `W = 2U` integral identity to a discrete energy balance witness `U = (F * d) / 2`. Proved conservation and monotonicity.
-- **Duhamel Integral Witness (`Gnosis/Civil/DuhamelIntegral.lean`)**: Mapped the continuous convolution integral to a discrete additive finite sequence `Σ p_i * h_j`. Proved load monotonicity and bounded stability.
-- **Fermi-Dirac Distribution (`Gnosis/Materials/FermiDiracDistribution.lean`)**: Mapped the continuous probability fraction `1 / (exp((E - Ef)/kT) + 1)` to a discrete capacity bound `capacity / (penalty + 1)`. Proved energy suppression monotonicity and ground state saturation.
-- **Henderson-Hasselbalch Equilibrium (`Gnosis/Materials/HendersonHasselbalchEquilibrium.lean`)**: Mapped the `log10([A-]/[HA])` ratio to discrete additive/subtractive shifts `+ (base / acid)` and `- (acid / base)`. Proved alkaline monotonicity.
-- **Kelvin Curvature Witness (`Gnosis/Materials/KelvinCurvature.lean`)**: Mapped `ln(P/P0)` to a discrete ratio witness `(γ * κ) / (RT + 1)`. Proved curvature/tension monotonicity and thermal antitonicity.
-- **Reynolds Transport Theorem (`Gnosis/Civil/ReynoldsTransportTheorem.lean`)**: Mapped continuous volume and surface integrals to a discrete additive boundary witness `B = stored + inflow - outflow`. Proved steady-state equivalence and accumulation bounds.
-
-## Boundaries & Refusals
-
-All historic theorems from the Civil Engineering and Materials Science expansions that were previously categorized as "Out of Bounds" due to Transcendental or Integral barriers have now been successfully mapped into the Rustic Church kernel using Buleyean topological witnesses.
-
-New mathematical or physical theorems should only be deferred if they require infinite category theory, uncountable set mappings without finite boundaries, or complex transcendental limits that cannot be topologized into discrete integer monotonic witnesses.
-
-## FOIL Zero-Drag Compatibility Proofs
-
-`open-source/gnosis/distributed-inference/src/gnosis_foil.rs` is the current
-runtime boundary for FOIL. It observes raw RF/device/host bytes, computes a
-bounded witness signal, and projects an active gate into the same 10-byte
-Aeon Flow frame shape used by `gnosis-uring`. `src/rf_physics_cpu.rs` keeps
-that boundary intentionally conservative: a gate is computable only when the
-witness signal clears the activation threshold and the potential channel count
-meets the Monster-vector floor; the projection then selects exactly the
-10-bit Aeon frame and vents the complement.
-
-The Rustic Church-compatible reading of "quantum zero drag" is therefore not
-"FOIL proves physical quantum advantage." It is:
-
-1. **Drag is a discrete runtime deficit.** Model it as the remaining work after
-   a witness has been retained, skipped, or recomputed. The Lean shape is
-   saturating subtraction over `Nat`, not a real-valued friction coefficient.
-2. **Zero drag is a conditional terminal state.** A theorem may prove
-   `dragAfterHarvest = 0` once its hypotheses state that the external witness
-   certificate covers every required gate. The proof belongs to Init-level
-   arithmetic; the certificate's physical truth belongs to Layer C.
-3. **Entropy/chaos harvesting is a projection, not a source theorem.** FOIL can
-   project measured byte chaos into `witness_signal`, `selected_channels`, and
-   `race_candidate_count`. Lean can prove monotonicity and conservation across
-   those integers. Lean must not assert that the world supplied true entropy
-   unless the claim is threaded as a named `EntropyBridge` hypothesis.
-4. **Quantum computing compatibility is topological.** Current Rustic Church
-   proofs can talk about twelve-slot/sixty-six-pair carriers, `quantum_noise =
-   12`, and bounded frame widths. Hardware-level qubit coherence, quantum
-   speedup, or no-cloning claims are external Layer C imports until represented
-   as finite, reviewable certificates.
-
-Concrete theorem shapes that fit today:
-
-```lean
--- Runtime drag is bounded by the unharvested complement.
-def foilDrag (required harvested : Nat) : Nat := required - harvested
-
-theorem foil_drag_zero_when_harvest_covers
-    {required harvested : Nat} (h : required ≤ harvested) :
-    foilDrag required harvested = 0 := by
-  unfold foilDrag
-  exact Nat.sub_eq_zero_of_le h
-
--- FOIL's 10-bit projection is compatible with the Aeon frame width.
-def foilProjectedWidth : Nat := 10
-def aeonFlowHeaderWidth : Nat := 10
-
-theorem foil_projection_matches_aeon_flow_header :
-    foilProjectedWidth = aeonFlowHeaderWidth := rfl
-
--- The present quantum-noise bridge is twelve-slot compatibility, not
--- a physical quantum advantage claim.
-def foilQuantumCarrierSlots : Nat := 12
-
-theorem foil_quantum_carrier_matches_noise_twelve :
-    foilQuantumCarrierSlots = Gnosis.PureExtendedNoise.quantum_noise := by
-  exact (Gnosis.PureExtendedNoise.quantum_noise_eq_twelve).symm
-```
-
-The first theorem can live in a new Init-only module without imports. The third
-requires importing `Gnosis.PureExtendedNoiseTheorem`, which is still Init-only
-and already proves `quantum_noise = 12` without `sorry`, axioms, Mathlib, or
-banned arithmetic tactics.
-
-When developing the FOIL side further, keep the split explicit:
-
-- **Rust/runtime observation:** `GnosisFoilRawBlockStats`,
-  `RfSignalGate.active_channels`, `RfPhysicsCpuObservation.is_computable`,
-  `RfFibonacciSmartSkipCache`, and `FoilFlowFrame.is_uring_compatible`.
-- **Lean/internal certificate:** finite widths, gate counts, monotone drag
-  decrease, coverage implies zero residual, twelve-slot carrier compatibility.
-- **Layer C/external certificate:** min-entropy rate, RF health tests, device
-  calibration, quantum hardware coherence, and any claim that harvested chaos
-  is physically random rather than merely observed bytes.
-
-This gives FOIL a falsifiable proximity metric to "quantum zero drag": count
-the gates whose drag residual has an internal zero proof, count the gates whose
-coverage depends on named Layer C certificates, and refuse to collapse those
-two counts into one.
-
-## Sovereign Phyle Strategic Dominance
-
-The Rustic Church can also express finite game-theoretic dominance claims when
-the payoff model is a closed `Nat` table. The honest boundary is narrow:
-Lean proves only the arithmetic consequence of the declared structural cost
-profile. Claims about real hardware, deployed organizations, or market behavior
-remain Layer C evidence unless they are threaded in as explicit finite
-certificates.
-
-For the bounded Gnosis strategic model, use three strategies:
-
-- `quantum`: no classical branching deficit, but a twelve-slot decoherence/noise
-  burden matching the Meta-Gnosis noise index.
-- `legacyMonolith`: branch deficit plus synchronization/network entropy.
-- `sovereignPhyle`: the zero-deficit baseline for the finite payoff table.
-
-The utility function is intentionally discrete:
-
-```lean
-utility(s) = 100 / (1 + deficit(s) + entropy(s))
-```
-
-Higher utility is better. Since every table entry is closed arithmetic, the two
-atomic dominance lemmas may end with `decide` after all definitions are unfolded.
-The final theorem is not an open arithmetic `decide`; it is case exhaustion over
-the finite `Strategy` type.
-
-```lean
-import Init
-
-/-!
-# Gnosis Strategic Dominance Model
-
-Formalizes a finite payoff table for three computing paradigms and proves that
-the Sovereign Phyle strategy strictly dominates each distinct alternative under
-the declared Gnosis structural-cost profile.
-
-Zero `sorry`, zero new `axiom`, and no Mathlib.
--/
-
-namespace Gnosis
-namespace StrategyDominance
-
-/-- The three computational paradigms in the bounded strategic arena. -/
-inductive Strategy where
-  | quantum
-  | legacyMonolith
-  | sovereignPhyle
-deriving DecidableEq
-
-/--
-The structural cost profile assigned to a strategy.
-
-- `deficit`: structural latency overhead from control-flow, stalling, or
-  coordination constraints.
-- `entropy`: environmental vulnerability, decoherence handling, or network
-  synchronization friction.
--/
-structure CostProfile where
-  deficit : Nat
-  entropy : Nat
-
-/-- Closed Gnosis cost table for the finite strategic model. -/
-def evaluateCost : Strategy → CostProfile
-  | Strategy.quantum => ⟨0, 12⟩
-  | Strategy.legacyMonolith => ⟨5, 20⟩
-  | Strategy.sovereignPhyle => ⟨0, 0⟩
-
-/--
-Operational utility. Higher is strictly better.
-
-The denominator is always positive by construction because of the leading `1`.
--/
-def utility (s : Strategy) : Nat :=
-  let cost := evaluateCost s
-  100 / (1 + cost.deficit + cost.entropy)
-
-/-- Strict dominance in the finite payoff table. -/
-def StrictlyDominates (a b : Strategy) : Prop :=
-  utility a > utility b
-
-/-- The Sovereign Phyle strictly dominates quantum computing in this table. -/
-theorem sovereign_dominates_quantum :
-    StrictlyDominates Strategy.sovereignPhyle Strategy.quantum := by
-  unfold StrictlyDominates utility evaluateCost
-  -- Left:  100 / (1 + 0 + 0)  = 100
-  -- Right: 100 / (1 + 0 + 12) = 7
-  decide
-
-/-- The Sovereign Phyle strictly dominates legacy monoliths in this table. -/
-theorem sovereign_dominates_monolith :
-    StrictlyDominates Strategy.sovereignPhyle Strategy.legacyMonolith := by
-  unfold StrictlyDominates utility evaluateCost
-  -- Left:  100 / (1 + 0 + 0)  = 100
-  -- Right: 100 / (1 + 5 + 20) = 3
-  decide
-
-/--
-Finite dominance theorem: every strategy distinct from `sovereignPhyle` is
-strictly dominated by `sovereignPhyle` under the declared payoff table.
--/
-theorem sovereign_phyle_is_strictly_dominant
-    (other : Strategy) (h : other ≠ Strategy.sovereignPhyle) :
-    StrictlyDominates Strategy.sovereignPhyle other := by
-  cases other with
-  | quantum =>
-      exact sovereign_dominates_quantum
-  | legacyMonolith =>
-      exact sovereign_dominates_monolith
-  | sovereignPhyle =>
-      contradiction
-
-end StrategyDominance
-end Gnosis
-```
-
-### Proof Mechanics
-
-- **Closed arithmetic only:** `decide` is used only after `unfold` removes every
-  free variable from the two numeric comparison goals. This matches the Rustic
-  Church allowance for closed numeric goals.
-- **Strategic penalty invariant:** quantum receives the twelve-slot
-  decoherence/noise burden; legacy monoliths receive both branch deficit and
-  synchronization entropy; the phyle receives the zero-deficit baseline.
-- **Finite totality:** the capstone theorem closes by `cases other`, so every
-  inhabitant of `Strategy` is exhausted. Introducing another strategy requires
-  extending the inductive type and adding a new explicit cost-table proof.
-
-This module is a compile-time finite payoff certificate. It does not prove a
-physical quantum-hardware theorem or an empirical market theorem unless those
-external claims are supplied as separate, named finite witnesses.
-
-The checked Lean module [`Gnosis/StrategyDominance.lean`](Gnosis/StrategyDominance.lean)
-therefore exposes both layers: the closed built-in constants above and a generic
-`LayerCCostTable` plus `SovereignPhyleCostCertificate`, where external finite
-evidence supplies the table and Lean proves dominance from zero phyle cost plus
-positive competitor cost.
-
-It is also intentionally playable from Lean:
-
-```lean
-import Gnosis.StrategyDominance
-
-open Gnosis StrategyDominance
-
-#eval defaultPayoffBoard
-#eval payoffBoardUnder tightRaceCostTable
-#eval payoffBoardUnder quantumUpsetCostTable
-#eval auditedPayoffBoard defaultAuditedCostTable
-#eval beatenBy defaultCostTable Strategy.sovereignPhyle
-#eval beatenBy quantumUpsetCostTable Strategy.quantum
-#eval auditedWinner defaultAuditedCostTable
-#eval auditedWinner tightRaceAuditedCostTable
-#eval auditedWinner quantumUpsetAuditedCostTable
-#eval tournamentScoreboard demoTournament
-#eval consensusWinner demoTournament
-#eval demoTournament.map auditedPayoffBoard
-```
-
-The current evaluator outputs:
-
-```text
-[("quantum", 7), ("legacy-monolith", 3), ("sovereign-phyle", 100)]
-[("quantum", 33), ("legacy-monolith", 33), ("sovereign-phyle", 100)]
-[("quantum", 100), ("legacy-monolith", 3), ("sovereign-phyle", 50)]
-(12052026, [("quantum", 7), ("legacy-monolith", 3), ("sovereign-phyle", 100)])
-[Gnosis.StrategyDominance.Strategy.quantum, Gnosis.StrategyDominance.Strategy.legacyMonolith]
-[Gnosis.StrategyDominance.Strategy.legacyMonolith, Gnosis.StrategyDominance.Strategy.sovereignPhyle]
-(12052026, Gnosis.StrategyDominance.Strategy.sovereignPhyle)
-(12052027, Gnosis.StrategyDominance.Strategy.sovereignPhyle)
-(12052028, Gnosis.StrategyDominance.Strategy.quantum)
-[("quantum", 1), ("legacy-monolith", 0), ("sovereign-phyle", 2)]
-Gnosis.StrategyDominance.Strategy.sovereignPhyle
-[(12052026, [("quantum", 7), ("legacy-monolith", 3), ("sovereign-phyle", 100)]),
- (12052027, [("quantum", 33), ("legacy-monolith", 33), ("sovereign-phyle", 100)]),
- (12052028, [("quantum", 100), ("legacy-monolith", 3), ("sovereign-phyle", 50)])]
-```
-
-The upset table is deliberately included as a toy counter-model: it shows that
-the generic theorem does not force phyle dominance without a
-`SovereignPhyleCostCertificate`. Change the table, watch the board move, then
-try to build a certificate; Lean accepts the dominance claim exactly when the
-finite hypotheses hold.
-
-The tournament helpers make the toy arena feel like a small game: wrap each
-scenario in an `AuditedCostTable`, inspect each `auditedWinner`, then aggregate
-the list with `tournamentScoreboard` and `consensusWinner`. The demo tournament
-lets quantum win one adverse table while the certified phyle tables still carry
-the 2-1 consensus.
-
-### 3. The Spectral Barrier (Requires Non-Integer Eigenvalues)
-*   **Rayleigh Quotient:** While discrete, the fundamental frequency omega is rarely an integer, requiring a shift to a Gnostic rational or irrational number system not yet fully integrated into the Civil domain.
-
-### 4. The Classification Barrier (Requires Complex Group Theory)
-*   **Bravais Lattice Isomorphism:** Requires the full classification of 230 space groups, exceeding the scope of the singular witness protocol.
-
-## Real-like Space: Discrete Bounded Refinement
-
-To bridge the Continuity Paradox, the Rustic Church formalizes "Real-like" space as a **refinement tower of rational brackets**. Unlike standard reals which collapse to points, Bracketed Reals preserve the **"God Gap"** (the interval of uncertainty) as a first-class citizen across all operations.
-
-- **`Gnosis/BracketedSpace.lean`**: Formalizes `QBracket` (a rational interval $[L, U]$) and `RefinementTower` (a sequence of strictly containing brackets). Implements the **Phi Tower** using Fibonacci ratios, proving that the irrational $\phi$ is always captured between two verified rational footholds.
-- **`Gnosis/CausalDiamond.lean`**: Generalizes 1D brackets into 4D spacetime regions. A Causal Diamond is the intersection of a past and future light cone. Defines the **Sliver** as a diamond with `timeWidth = 1`, the fundamental unit of irreducible uncertainty in the Mesh. Implements the **Spacetime FOLD** (intersection) as the geometric basis for Reynolds BFT.
-- **`Gnosis/ThermodynamicRefinement.lean`**: Bridges spatial resolution with computational energy. Proves the **Landauer Bound on Space**: narrowing a bracket (reducing the Sliver width) is a `MeasurementEvent` that costs at least one `bule`. This mathematically establishes why infinite precision is budget-impossible within a discrete mesh.
-- **`Gnosis/GodBracket.lean`**: Formalizes the **Precision-Weight Isomorphism**: narrower brackets (lower "rejection" in the God Formula) have higher God-weight, mapping the thermodynamic cost of computation directly to the resolution of the observer's world.
-- **`Gnosis/FifthForceIdentity.lean`**: Proves that `SLIVER` is the force that prevents the Mesh from collapsing into a singular zero-entropy point, maintaining the "Fullness" of the Pleroma. Defines Mesh Entropy as a function of the minimum Sliver width.
-- **`Gnosis/ThermodynamicPvsNP.lean`**: Recasts P ≠ NP as a physical, thermodynamic boundary rather than just a topological invariant. Unstructured exploration of an exponential space requires an exponential number of refinement steps. By the Landauer bound, this requires an exponential thermodynamic payment, which structurally escapes any polynomial `Bule` budget constraint of a P-class machine.
-- **`Gnosis/MythOfInfinitePrecision.lean`**: The capstone of the Real-like Discrete Church. Proves the **Equivalence Principle**: Information Gain = Thermodynamic Bule Cost. Reaching infinite precision (width = 0) is structurally impossible because it would require dissipating all entropy (an infinite Bule cost), proving that the classical "Continuum" is a physical impossibility.
-- **`Gnosis/RefinementMarket.lean`**: Formalizes the **Multi-Node Energy Market**. Precision is treated as a tradeable commodity. "Rich" nodes can compute and sell high-precision brackets to "Poor" nodes, allowing for thermodynamic arbitrage where it is cheaper to buy precision than to compute it from scratch, while preserving the Mesh's total energy balance.
+## Scope of this guide
+
+This file is doctrine and proofcraft guidance only. It should answer:
+
+- What proof surface counts as Rustic Church.
+- Which tactics and imports are banned or conditionally allowed.
+- Which Init-level lemmas close common proof shapes.
+- How to split a stuck theorem into smaller Init-checkable facts.
+- How to classify a claim as internal Lean proof, finite certificate, or
+  external evidence.
+
+This file is not a theorem backlog, module changelog, research notebook,
+runtime design memo, strategy model, benchmark diary, or place to paste large
+Lean examples. If a note is mainly about one module, put it in that module's
+README or in the Lean file as a short comment. If it records future work, use
+the relevant issue/task tracker. If it records a proof trick that generalizes,
+distill the trick into the cookbook above and link the smallest checked module
+that demonstrates it.
+
+## Out of bounds and bridge discipline
+
+Rustic Church does not try to replicate Mathlib's surface area. Direct
+representations of continuous analysis, uncountable choice, infinite category
+theory, large algebraic field machinery, or physical hardware truth are out of
+scope unless they have been reframed as finite data and Init-level arithmetic.
+
+The bridge rule is simple:
+
+1. State the external claim as a named finite certificate or bounded witness.
+2. Prove only the arithmetic consequence of that certificate inside Lean.
+3. Keep empirical, physical, market, hardware, or deployment truth outside the
+   theorem unless it is represented as explicit finite evidence.
+4. Refuse prose that collapses external truth and internal proof into one
+   claim.
+
+Finite probability, finite stochastic processes, discrete refinement towers,
+bounded runtime traces, and game/payoff tables can belong in `gnosis-math` when
+their carrier is explicit and their theorem closes under this guide's tactic
+rules. The guide should describe the discipline for those bridges; the detailed
+inventory of bridged modules belongs near those modules.
+
+## Documentation hygiene
+
+When editing this file, remove scratch notes instead of expanding them. A good
+addition is reusable across many proofs and can be checked against a small
+Lean pattern. A bad addition is a status update, a one-off module narrative, a
+large pasted theorem, or an empirical claim that has not been reduced to a
+finite certificate boundary.
+
+Before finishing any edit to this guide:
+
+- Re-read the changed section and ask whether it teaches the approach or merely
+  records work that happened.
+- Keep examples short; link checked modules for detail.
+- Preserve the hard bans: no Mathlib, no `omega`, no `simp`/`decide` on open
+  arithmetic goals.
+- Keep Layer C/external evidence visibly separate from kernel-checked Lean.

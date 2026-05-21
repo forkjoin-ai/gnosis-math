@@ -4,6 +4,7 @@
 
 Bible witness modules are grouped by biblical book.
 
+- [Acts](Acts/README.md)
 - [Colossians](Colossians/README.md)
 - [Ephesians](Ephesians/README.md)
 - [First Corinthians](FirstCorinthians/README.md)
@@ -14,13 +15,16 @@ Bible witness modules are grouped by biblical book.
 - [Galatians](Galatians/README.md)
 - [Hebrews](Hebrews/README.md)
 - [James](James/README.md)
+- [Jude](Jude/README.md)
 - [Philemon](Philemon/README.md)
 - [Philippians](Philippians/README.md)
+- [Revelation](Revelation/README.md)
 - [Romans](Romans/README.md)
 - [Second Corinthians](SecondCorinthians/README.md)
 - [Second John](SecondJohn/README.md)
 - [Second Peter](SecondPeter/README.md)
 - [Second Thessalonians](SecondThessalonians/README.md)
 - [Second Timothy](SecondTimothy/README.md)
+- [Third John](ThirdJohn/README.md)
 - [Titus](Titus/README.md)
 - [Torah](Torah/README.md)

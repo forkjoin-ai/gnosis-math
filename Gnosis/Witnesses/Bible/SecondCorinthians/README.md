@@ -22,3 +22,4 @@ Lean witnesses extracted from Second Corinthians. New Second Corinthians witness
 - `SecondCorinthiansFoolishBoastingInfirmitiesWitness`: 2 Corinthians 11.
 - `SecondCorinthiansWeaknessStrengthEdifyingWitness`: 2 Corinthians 12.
 - `SecondCorinthiansExamineFinalGraceWitness`: 2 Corinthians 13.
+- `SecondCorinthiansSourceQualityWitness`: whole-book 2 Corinthians quality spine.

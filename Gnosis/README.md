@@ -49,6 +49,12 @@ group larger families of related claims.
   tagged audit memory, raw output requires an explicit escape request, and
   consumed generation context is derived from scheduled recall rather than
   accumulated output.
+- [ThothConversationAntiQueue.lean](./ThothConversationAntiQueue.lean) —
+  internal conversation task/todo antiqueue for Thoth: open questions,
+  argument obligations, affect stalls, unresolved residue, and boundaries are
+  held as self-accountability promises only, never as external enforcement over
+  another speaker. It also formalizes compatible release classes and a bounded
+  next-task pressure selector for runtime antiqueue scheduling.
 - [FanoIncidence.lean](./FanoIncidence.lean) and
   [FanoGrassmannianMesh.lean](./FanoGrassmannianMesh.lean) — finite Fano-plane
   incidence contracts: every distinct seven-point pair has a unique completing

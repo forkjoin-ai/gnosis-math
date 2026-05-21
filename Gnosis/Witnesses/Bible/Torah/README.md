@@ -13,3 +13,4 @@ Lean witnesses extracted from Torah passages. New Torah witnesses should be adde
 - `TorahGalatiansCircumcisionTandemWitness`: Genesis 17:2-14 paired with Galatians 2 without duplicating Galatians text coverage.
 - `TorahGalatiansPromiseLawTandemWitness`: Genesis, Leviticus, and Deuteronomy paired with Galatians 3 without duplicating source coverage.
 - `TorahGalatiansHagarSarahTandemWitness`: Genesis Hagar/Sarah anchors paired with Galatians 4 without duplicating source coverage.
+- `TorahAnchorSourceQualityWitness`: scoped Torah anchor quality spine for the currently covered Abraham/Galatians overlap surface.

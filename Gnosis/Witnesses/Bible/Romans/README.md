@@ -6,6 +6,7 @@ Lean witnesses extracted from Romans. New Romans witnesses should be added in th
 
 ## Witnesses
 
+- `RomansOpeningGospelExchangeWitness`: Romans 1:1-25.
 - `RomansVileAffectionsRecompenseWitness`: Romans 1:26-27.
 - `RomansReprobateMindJudgmentWitness`: Romans 1:28-32.
 - `RomansInexcusableJudgmentWrathWitness`: Romans 2:1-5.
@@ -29,3 +30,10 @@ Lean witnesses extracted from Romans. New Romans witnesses should be added in th
 - `RomansPromiseFaithGraceFatherWitness`: Romans 4:13-17.
 - `RomansAbrahamHopeStrongFaithWitness`: Romans 4:18-22.
 - `RomansRaisedForJustificationWitness`: Romans 4:23-25.
+- `RomansPeaceAdamBaptismWitness`: Romans 5-6.
+- `RomansLawSpiritAdoptionWitness`: Romans 7-8.
+- `RomansIsraelMercyStumblingWitness`: Romans 9-11.
+- `RomansLivingSacrificeBodyWitness`: Romans 12-13.
+- `RomansWeakStrongUnityWitness`: Romans 14-15.
+- `RomansPhoebeGreetingsWitness`: Romans 16.
+- `RomansSourceQualityWitness`: whole-book Romans quality spine.
