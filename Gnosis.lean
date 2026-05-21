@@ -55,6 +55,7 @@ import Gnosis.Witnesses.Chaldean.SevenWindsContainmentDeepWitness
 import Gnosis.Witnesses.Chaldean.SyrianMediatorTraditionNetworkWitness
 import Gnosis.Witnesses.Chaldean.MummuTiamatuWaterChaosCarrierWitness
 import Gnosis.Witnesses.Chaldean.MummuTiamatuPleromaMattressWitness
+import Gnosis.Witnesses.Chaldean.OannesSeaTeacherUnrecoveredWitness
 import Gnosis.Witnesses.Chaldean.TiamatBoundaryCombatWitness
 import Gnosis.Witnesses.Chaldean.UddusunamirSphinxHadesGateWitness
 import Gnosis.Witnesses.Chaldean.WiseManAirRiddleWitness
