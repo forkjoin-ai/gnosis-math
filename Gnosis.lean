@@ -939,6 +939,7 @@ import Gnosis.Materials.FickSecondLaw
 import Gnosis.Materials.OstwaldRipening
 import Gnosis.ChineseRemainderInstances
 import Gnosis.ChromaticBuleSieve
+import Gnosis.ColorTheory
 import Gnosis.ChurchPillars
 import Gnosis.CioranTroubleWithBeingBornWitness
 import Gnosis.CircadianGnosisAlignment
@@ -1140,6 +1141,7 @@ import Gnosis.DestinyAsRetrocausalAttractor
 import Gnosis.DeterminantAnomalyUnified
 import Gnosis.EntropyDeficitGateway
 import Gnosis.DiscreteClosedTimelikeStep
+import Gnosis.DiscreteHarmonicSieve
 import Gnosis.DiscreteContinuumConstants
 import Gnosis.DiscreteContinuumConstantRefinement
 import Gnosis.DiscreteMachineNumberApproximation
@@ -1635,6 +1637,7 @@ import Gnosis.ObservableUniverseFinite
 import Gnosis.OceanographyCybernetics
 import Gnosis.OneCobFrobenius
 import Gnosis.OpinionAsInterference
+import Gnosis.OptimalHarmonicStride
 import Gnosis.OptimalityUndecidable
 import Gnosis.Oracle.OracleExecutionStallAnnihilation
 import Gnosis.Oracle.OracleExecutionStallBreakthrough

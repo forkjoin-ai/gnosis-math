@@ -85,6 +85,10 @@ inductive SinFace where
   | bio_empusaInterfaceMorph
   | bio_lamiaDanglingRef
   | bio_teumessianLivelock
+  -- Standing Wave / Epistemic failures (3 faces)
+  | sw_boundaryCollapse
+  | sw_traumaLivelock
+  | sw_echoChamberPhaseLock
   deriving DecidableEq, Repr
 
 /-- All 35 committed faces, enumerated in canonical order. -/
@@ -124,9 +128,12 @@ def allFaces : List SinFace :=
   , .bio_empusaInterfaceMorph
   , .bio_lamiaDanglingRef
   , .bio_teumessianLivelock
+  , .sw_boundaryCollapse
+  , .sw_traumaLivelock
+  , .sw_echoChamberPhaseLock
   ]
 
-theorem total_face_count : allFaces.length = 35 := by decide
+theorem total_face_count : allFaces.length = 38 := by decide
 
 -- ══════════════════════════════════════════════════════════
 -- SECTION 2 — Mutant specification
@@ -356,6 +363,24 @@ def faceToMutantSpec : SinFace → MutantSpec
         transformDescription := "inject complementary while-conditions creating livelock"
         witnessModule := "Gnosis.GreekMonsterErrorPrimitivesWitness"
         isAmFace := false }
+  | .sw_boundaryCollapse =>
+      { face := .sw_boundaryCollapse
+        scannerRule := "SW_BOUNDARY_COLLAPSE"
+        transformDescription := "remove dirichlet boundary condition that vanishes amplitude on falsified claims"
+        witnessModule := "Gnosis.FailureAsStandingWave"
+        isAmFace := false }
+  | .sw_traumaLivelock =>
+      { face := .sw_traumaLivelock
+        scannerRule := "SW_TRAUMA_LIVELOCK"
+        transformDescription := "lock standing wave at high amplitude by disabling decay/destructive interference damping"
+        witnessModule := "Gnosis.TraumaAsStandingWave"
+        isAmFace := false }
+  | .sw_echoChamberPhaseLock =>
+      { face := .sw_echoChamberPhaseLock
+        scannerRule := "SW_ECHO_CHAMBER_PHASE_LOCK"
+        transformDescription := "disable destructive interference filtering from external mismatched frequency information"
+        witnessModule := "Gnosis.EchoChamberAsStandingWave"
+        isAmFace := false }
 
 -- ══════════════════════════════════════════════════════════
 -- SECTION 3 — Kill result and witness gap
@@ -408,7 +433,7 @@ theorem every_face_has_scanner_rule :
     ∀ f ∈ allFaces, (faceToMutantSpec f).scannerRule ≠ "" := by
   intro f hf
   simp [allFaces] at hf
-  rcases hf with h|h|h|h|h|h|h|h|h|h|h|h|h|h|h|h|h|h|h|h|h|h|h|h|h|h|h|h|h|h|h|h|h|h|h <;>
+  rcases hf with h|h|h|h|h|h|h|h|h|h|h|h|h|h|h|h|h|h|h|h|h|h|h|h|h|h|h|h|h|h|h|h|h|h|h|h|h|h <;>
     subst h <;> decide
 
 /-- Every face has a non-empty transform description. -/
@@ -416,7 +441,7 @@ theorem every_face_has_transform_description :
     ∀ f ∈ allFaces, (faceToMutantSpec f).transformDescription ≠ "" := by
   intro f hf
   simp [allFaces] at hf
-  rcases hf with h|h|h|h|h|h|h|h|h|h|h|h|h|h|h|h|h|h|h|h|h|h|h|h|h|h|h|h|h|h|h|h|h|h|h <;>
+  rcases hf with h|h|h|h|h|h|h|h|h|h|h|h|h|h|h|h|h|h|h|h|h|h|h|h|h|h|h|h|h|h|h|h|h|h|h|h|h|h <;>
     subst h <;> decide
 
 -- ══════════════════════════════════════════════════════════

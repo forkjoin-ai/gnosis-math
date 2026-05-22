@@ -130,9 +130,9 @@ def fasterEquilibration (lp1 lp2 : LiquidityProvision) : Prop :=
 /-- Liquidity provision with tighter spread redistributes clinamen faster. -/
 theorem liquidity_provision_is_redistribution_speed
     (lp : LiquidityProvision)
-    (hBid : 0 < lp.bidVolume)
-    (hAsk : 0 < lp.askVolume)
-    (hTime : 0 < lp.secondsActive) :
+    (_hBid : 0 < lp.bidVolume)
+    (_hAsk : 0 < lp.askVolume)
+    (_hTime : 0 < lp.secondsActive) :
     -- Liquidity provider's cost is the equilibration cost
     let cost := equilibrationCost lp
     buleyUnitScore cost = redistributionRate lp + spreadWidth lp ∧
@@ -176,8 +176,8 @@ def clinamenCapturedDuringLag (setup : LatencyArbitrageSetup) : BuleyUnit :=
 /-- Latency arbitrage is vacuum-pull lag exploitation. -/
 def latencyArbitrageIsVacuumLag (setup : LatencyArbitrageSetup) : Prop :=
   -- Before vacuum pull completes equilibration, faster trader acts
-  let fastCost := hftAgentCost setup.fastTrader
-  let vacPull := vacuumPullSpeed setup
+  let _fastCost := hftAgentCost setup.fastTrader
+  let _vacPull := vacuumPullSpeed setup
   let captured := clinamenCapturedDuringLag setup
   -- Fast trader's latency edge allows them to capture clinamen before
   -- the vacuum pull redistributes it
@@ -190,7 +190,7 @@ def latencyArbitrageIsVacuumLag (setup : LatencyArbitrageSetup) : Prop :=
     that the slower actor cannot reach in time. -/
 theorem latency_arbitrage_is_vacuum_pull_lag
     (setup : LatencyArbitrageSetup)
-    (hSetup : latencyArbitrageIsVacuumLag setup) :
+    (_hSetup : latencyArbitrageIsVacuumLag setup) :
     ∃ (capturedCharge : BuleyUnit),
     (buleyUnitScore capturedCharge =
      lag setup * setup.imbalanceBeforeEquilibration + lag setup) ∧
@@ -239,7 +239,7 @@ def hftEquilibrationStep (priorVacuumPull : BuleyUnit) : BuleyUnit :=
 
 /-- HFT equilibration: repeatedly contract the opportunity face until fair
     price is reached (no latency arbitrage possible). -/
-def hftReachesEquilibrium (agents : List HFTAgent) (rounds : Nat) : BuleyUnit :=
+def hftReachesEquilibrium (agents : List HFTAgent) (_rounds : Nat) : BuleyUnit :=
   let initialVacuum := hftMarketVacuumPull agents
   repeatedLift (clinamenContract initialVacuum .waste) .diversity (List.length agents)
 
@@ -266,7 +266,7 @@ theorem hft_complete_clinamen_redistribution
     (lp : LiquidityProvision)
     (setup : LatencyArbitrageSetup)
     (hArb : arbitrageIsImbalanceDetection opp)
-    (hLiq : 0 < lp.bidVolume ∧ 0 < lp.askVolume ∧ 0 < lp.secondsActive)
+    (_hLiq : 0 < lp.bidVolume ∧ 0 < lp.askVolume ∧ 0 < lp.secondsActive)
     (_hLat : latencyArbitrageIsVacuumLag setup) :
     -- All three HFT mechanisms move market toward equilibrium
     (∃ arbitrageCharge, buleyUnitScore arbitrageCharge = opp.imbalanceSize + opp.imbalanceSize) ∧
