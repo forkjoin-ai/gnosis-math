@@ -1909,6 +1909,9 @@ import Gnosis.ToneCircle
 import Gnosis.TootsiePopBraidMixing
 import Gnosis.TopologicalAmplituhedron
 import Gnosis.TopologicalChemicalMatchings
+import Gnosis.TopologicalDeblurAnnealing
+import Gnosis.TopologicalDepthInference
+import Gnosis.TopologicalMultiView
 import Gnosis.TopologicalCinema
 import Gnosis.TopologicalConvergence
 import Gnosis.TopologicalCyclicHomology
@@ -1918,6 +1921,7 @@ import Gnosis.TopologicalGoldenIgnition
 import Gnosis.TopologicalGrassmannianCompiler
 import Gnosis.TopologicalGriessAlgebra
 import Gnosis.TopologicalLucasDynamics
+import Gnosis.TopologicalSegmentation
 import Gnosis.TopologicalMemoizationCache
 import Gnosis.TopologicalMetabolism
 import Gnosis.TopologicalMismatchAdequacy
