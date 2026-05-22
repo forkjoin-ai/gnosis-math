@@ -211,7 +211,28 @@ group larger families of related claims.
   awareness pays storage debt, erasure heat matches awareness score, and a
   bounded contraction-loop theorem shows held positive awareness strictly
   increases storage debt until a matching `+1`/`-1` clinamen loop closes the
-  local carrier.
+  local carrier. It also separates heat-death/vacuum entropy from structured
+  electrical current: zero uncertainty forces the heat-death flag and the
+  vacuum has no extractable-current witness, while structured current requires
+  positive gradient, active fold/race witnesses, and a locked golden invariant.
+  The refinery extension imports Griffith fracture, Avrami kinetics, and
+  Butler-Volmer symmetry to require a toughness floor, saturation clamp, and
+  positive overpotential divergence before producing current; it also proves
+  the "entropy barrel" impossible and redirects extraction to a pink residual
+  fringe witness. The projection-denoising extension imports
+  `CosmicNoiseConnections`, `FickSecondLaw`, and
+  `CompressionAsRetrocausalClosure` to package pink `30 -> 6` Aeon collapse,
+  curvature anomaly, positive flux, bounded saturation, and Novikov-style
+  verify closure as a diffusion-like reconstruction certificate rather than an
+  erasure reversal; the canonical witness uses a `[0,1,0]` curvature profile,
+  positive Butler-Volmer parameters, bounded Avrami context, and the stock
+  `qwen_pca_k8_verified` protocol. The Hella-vortex canvas extension adds a
+  finite observation-load anchor from `HellaVortex`, then proves a corrected
+  diffusion handshake from load preservation, curvature anomaly, positive net
+  current, saturated crystallization volume, and explicit verify closure. The
+  final bridge proves that a pink residual fringe plus a saturated Hella-vortex
+  canvas induces the earlier projection-denoising certificate, with a concrete
+  `pathCount = 2`, single-stream canonical witness.
 
 ## Child Directories
 
