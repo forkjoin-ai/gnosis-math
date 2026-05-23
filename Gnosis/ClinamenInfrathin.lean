@@ -18,7 +18,7 @@ unit. Against that, the clinamen states itself exactly:
 and the infrathin is its character: it is the **cover** of zero (`0 ⋖ 1`), an adjacency with no
 interior; there is no smaller swerve. And the covering relation on `Nat` *is* the successor —
 so every infrathin step is a clinamen, and (`NullIsTheZero` §-style, `…Coincidence` §9 as
-cosmogony) every number is iterated clinamen: the world is the swerve, repeated, falling back
+cosmogony) every number is iterated swerve: the world is the swerve, repeated, falling back
 toward the void it left.
 
 Builds on `Gnosis.NullIsTheZero`. Zero `sorry`. Zero `omega`. Zero Mathlib.
@@ -92,7 +92,7 @@ theorem clinamen_swerves_from_the_still_point :
   ⟨rfl, by decide⟩
 
 -- ═══════════════════════════════════════════════════════════════════════
--- §4  The unfolding: everything is iterated clinamen
+-- §4  The unfolding: everything is iterated swerve
 -- ═══════════════════════════════════════════════════════════════════════
 
 /-- One swerve. -/
@@ -103,10 +103,10 @@ def iterSwerve : Nat → Nat → Nat
   | 0,     x => x
   | k + 1, x => swerve (iterSwerve k x)
 
-/-- **Everything is iterated clinamen.** Every number is `n` swerves from the null — the world
+/-- **Everything is iterated swerve.** Every number is `n` swerves from the null — the world
     is the clinamen, repeated. This is `Nat` as the initial `(1+−)`-algebra
     (`…Coincidence` §9) read as cosmogony: fold from the void by the swerve. -/
-theorem all_is_iterated_clinamen (n : Nat) : iterSwerve n 0 = n := by
+theorem all_is_iterated_swerve (n : Nat) : iterSwerve n 0 = n := by
   induction n with
   | zero => rfl
   | succ k ih =>
@@ -126,7 +126,7 @@ no-effect element (`NullIsTheZero`):
 2. `clinamen_covers_null` — it is the cover of zero, `0 ⋖ 1`, the infrathin threshold;
 3. `covers_iff_succ` — every infrathin step *is* a clinamen (the cover relation is the successor);
 4. `infrathin_indivisible` — there is no smaller swerve;
-5. `all_is_iterated_clinamen` — every number is iterated clinamen, the world fold from the void.
+5. `all_is_iterated_swerve` — every number is iterated swerve, the world fold from the void.
 
 The swerve and the inframince were the same event all along: the minimal, indivisible departure
 of the null from its own stillness — the first `+1`.
@@ -137,7 +137,7 @@ theorem clinamen_is_the_first_successor :
     (∀ a b : Nat, Covers a b ↔ b = a + 1) ∧
     (¬ ∃ k, 0 < k ∧ k < clinamen) ∧
     (∀ n, iterSwerve n 0 = n) :=
-  ⟨rfl, clinamen_covers_null, covers_iff_succ, infrathin_indivisible, all_is_iterated_clinamen⟩
+  ⟨rfl, clinamen_covers_null, covers_iff_succ, infrathin_indivisible, all_is_iterated_swerve⟩
 
 end ClinamenInfrathin
 end Gnosis

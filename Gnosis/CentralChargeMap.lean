@@ -215,7 +215,7 @@ canonical sum of forced axis cardinalities* — reduces to: why are
 *these* the forced axes? Each axis is forced by an existing theorem
 (`bule_unit_decomposes_into_three_faces`,
 `lift_then_contract_round_trip_when_face_positive`, `secondDegreeDiff`,
-`vacuum_has_zero_score`, `clinamen_lift_score_strict_increment`).
+`vacuum_has_zero_score`, `swerve_lift_score_strict_increment`).
 Replacing any of these theorems with a stronger / weaker / different
 form would change the axis decomposition and the constant. The 10 is
 canonical *given the existing theorems*, which are themselves the

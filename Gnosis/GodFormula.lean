@@ -21,7 +21,7 @@ pinned to one canonical form.
 ## Topological derivation
 
 `Gnosis.BuleSpider` derives this formula from the BuleSpider primitives:
-build the budget by `R` clinamen lifts on the waste face, apply `v`
+build the budget by `R` swerve lifts on the waste face, apply `v`
 contracts (vent's per-face filter), apply the universal pentad-closure
 `+1` lift, project to face score. See
 `god_formula_is_pentad_face_projection` for the master derivation, and

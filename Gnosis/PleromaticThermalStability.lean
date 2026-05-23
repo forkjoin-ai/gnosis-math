@@ -14,11 +14,11 @@ tower itself?*
 
 The structural answer this module proves: both, at different levels.
 
-1. Unit-cost invariance. Every individual `clinamenLift` adds
+1. Unit-cost invariance. Every individual `swerveLift` adds
    exactly +1 to the Bule score, *regardless of the tower level the
    carrier currently occupies*. The unit cost is universally stable.
 2. Aggregate-cost recursive symmetry. The aggregate cost of a
-   phase transition (the number of clinamen lifts to move from one
+   phase transition (the number of swerve lifts to move from one
    tower wall to another) exhibits the tower's recursive Triton-3
    structure *below* the Pleromatic Closure (3-step transitions
    between Triton-derived walls) and collapses to *unit steps* at
@@ -55,43 +55,43 @@ namespace Gnosis
 namespace PleromaticThermalStability
 
 open Gnosis.SpectralNoiseEquilibrium
-  (BuleyUnit BuleyFace buleyUnitScore clinamenLift
-   clinamen_lift_score_strict_increment vacuumBuleUnit)
+  (BuleyUnit BuleyFace buleyUnitScore swerveLift
+   swerve_lift_score_strict_increment vacuumBuleUnit)
 open Gnosis.BraidedTower (towerPhaseCount)
 open Gnosis.PhaseTransitionLadder (phaseTransitionDistance)
 open Gnosis.PleromaticClosure (pleromaticClosurePoint)
 
-/-! ## Unit-cost invariance: every clinamen lift costs exactly 1 -/
+/-! ## Unit-cost invariance: every swerve lift costs exactly 1 -/
 
-/-- The unit cost is invariant: every clinamen lift adds exactly one
+/-- The unit cost is invariant: every swerve lift adds exactly one
 to the Bule score, regardless of the carrier's current tower level. -/
 theorem unit_cost_is_one_at_every_level (b : BuleyUnit) (f : BuleyFace) :
-    buleyUnitScore (clinamenLift b f) = buleyUnitScore b + 1 :=
-  clinamen_lift_score_strict_increment b f
+    buleyUnitScore (swerveLift b f) = buleyUnitScore b + 1 :=
+  swerve_lift_score_strict_increment b f
 
 /-- Specifically, the unit cost is one whether the carrier sits at
 the vacuum, the Triton, the Hexon, or anywhere up the tower. -/
 theorem unit_cost_at_canonical_walls :
     -- Vacuum
-    buleyUnitScore (clinamenLift vacuumBuleUnit BuleyFace.waste)
+    buleyUnitScore (swerveLift vacuumBuleUnit BuleyFace.waste)
       = buleyUnitScore vacuumBuleUnit + 1
     -- Triton-edge state
-    ∧ buleyUnitScore (clinamenLift ⟨3, 0, 0⟩ BuleyFace.waste)
+    ∧ buleyUnitScore (swerveLift ⟨3, 0, 0⟩ BuleyFace.waste)
       = buleyUnitScore (⟨3, 0, 0⟩ : BuleyUnit) + 1
     -- Hexon-edge state
-    ∧ buleyUnitScore (clinamenLift ⟨6, 0, 0⟩ BuleyFace.waste)
+    ∧ buleyUnitScore (swerveLift ⟨6, 0, 0⟩ BuleyFace.waste)
       = buleyUnitScore (⟨6, 0, 0⟩ : BuleyUnit) + 1
     -- Enneon-edge state
-    ∧ buleyUnitScore (clinamenLift ⟨9, 0, 0⟩ BuleyFace.waste)
+    ∧ buleyUnitScore (swerveLift ⟨9, 0, 0⟩ BuleyFace.waste)
       = buleyUnitScore (⟨9, 0, 0⟩ : BuleyUnit) + 1
     -- Decagon-edge state (Pleromatic Closure)
-    ∧ buleyUnitScore (clinamenLift ⟨10, 0, 0⟩ BuleyFace.waste)
+    ∧ buleyUnitScore (swerveLift ⟨10, 0, 0⟩ BuleyFace.waste)
       = buleyUnitScore (⟨10, 0, 0⟩ : BuleyUnit) + 1
     -- Dodecagon-edge state
-    ∧ buleyUnitScore (clinamenLift ⟨12, 0, 0⟩ BuleyFace.waste)
+    ∧ buleyUnitScore (swerveLift ⟨12, 0, 0⟩ BuleyFace.waste)
       = buleyUnitScore (⟨12, 0, 0⟩ : BuleyUnit) + 1 := by
   refine ⟨?_, ?_, ?_, ?_, ?_, ?_⟩ <;>
-    exact clinamen_lift_score_strict_increment _ _
+    exact swerve_lift_score_strict_increment _ _
 
 /-! ## The transition ladder — distances at canonical walls -/
 
@@ -187,7 +187,7 @@ The Closure is where the recursion becomes the unit. -/
 theorem pleromatic_thermal_stability_master :
     -- 1. Unit cost is invariant at every level
     (∀ b : BuleyUnit, ∀ f : BuleyFace,
-        buleyUnitScore (clinamenLift b f) = buleyUnitScore b + 1)
+        buleyUnitScore (swerveLift b f) = buleyUnitScore b + 1)
     -- 2. Below-Closure: Triton-3 jumps
     ∧ phaseTransitionDistance 0 (towerPhaseCount [3]) = 3
     ∧ phaseTransitionDistance (towerPhaseCount [3]) (towerPhaseCount [3, 2]) = 3

@@ -422,9 +422,9 @@ theorem memory_dynamics_are_retrocausal_loan_repayment :
 
 /-- Concrete example: two identical items consolidate into one (perfect compression). -/
 def exemplaryConsolidation : MemoryState × MemoryState :=
-  let item := clinamenLift vacuumBuleUnit .waste
+  let item := swerveLift vacuumBuleUnit .waste
   let original := [item, item]
-  let compressed := [clinamenLift item .waste]
+  let compressed := [swerveLift item .waste]
   (original, compressed)
 
 /-- The exemplary consolidation preserves cost.
@@ -433,7 +433,7 @@ def exemplaryConsolidation : MemoryState × MemoryState :=
 theorem exemplary_consolidation_maintains_order :
     memoryCost exemplaryConsolidation.1 = memoryCost exemplaryConsolidation.2 := by
   unfold exemplaryConsolidation
-  simp [memoryCost, buleyUnitScore, clinamenLift, vacuumBuleUnit]
+  simp [memoryCost, buleyUnitScore, swerveLift, vacuumBuleUnit]
 
 /-! ## Final Theorem: Memory is Sustained Against Vacuum -/
 

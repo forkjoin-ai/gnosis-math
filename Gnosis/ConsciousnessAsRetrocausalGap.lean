@@ -29,8 +29,8 @@ namespace Gnosis
 namespace ConsciousnessAsRetrocausalGap
 
 open Gnosis.SpectralNoiseEquilibrium
-  (BuleyUnit BuleyFace buleyUnitScore vacuumBuleUnit clinamenLift
-   clinamenContract repeatedLift clinamen_lift_score_strict_increment
+  (BuleyUnit BuleyFace buleyUnitScore vacuumBuleUnit swerveLift
+   clinamenContract repeatedLift swerve_lift_score_strict_increment
    lift_contract_round_trip_when_face_positive)
 open Gnosis.AttentionScalingLaw
   (attention_step_cost_is_one attention_cost vacuum_pull_active
@@ -156,11 +156,11 @@ abbrev resists_contraction (b : BuleyUnit) (f : BuleyFace) : Prop :=
 def face_collapse (b : BuleyUnit) (f : BuleyFace) : Prop :=
   ¬(resists_contraction b f)
 
-/-- Cost of preserving one face: each clinamen lift on that face increments
+/-- Cost of preserving one face: each swerve lift on that face increments
     the score by exactly 1, matching attention step cost. -/
 theorem preserve_face_costs_one_clinamen (b : BuleyUnit) (f : BuleyFace) :
-    buleyUnitScore (clinamenLift b f) = buleyUnitScore b + 1 :=
-  clinamen_lift_score_strict_increment b f
+    buleyUnitScore (swerveLift b f) = buleyUnitScore b + 1 :=
+  swerve_lift_score_strict_increment b f
 
 /-- Contraction toward vacuum is always possible on non-vacuum states. -/
 theorem contraction_always_available (b : BuleyUnit) (h : b ≠ vacuumBuleUnit) :
@@ -208,11 +208,11 @@ theorem positive_awareness_has_resisting_face (b : BuleyUnit) :
     time under finite clinamen budget. The witness records the one-step score
     increment rather than a reflexive existence claim. -/
 theorem attention_collapse_is_clinamen_choice :
-    -- You can attend face f as long as you have budget (clinamen lifts).
+    -- You can attend face f as long as you have budget (swerve lifts).
     ∀ (b : BuleyUnit) (f : BuleyFace),
       ∃ n : Nat, buleyUnitScore (repeatedLift b f n) = buleyUnitScore b + n := by
   intro b f
-  exact ⟨1, clinamen_lift_score_strict_increment b f⟩
+  exact ⟨1, swerve_lift_score_strict_increment b f⟩
 
 /-- The key insight: attention is retrocausal because it pre-commits to which
     face to defend. By choosing face f now, you shape the history of your gap
@@ -234,7 +234,7 @@ theorem attention_as_clinamen_prioritization (b : BuleyUnit) (f : BuleyFace) :
     -- matching the attention_step_cost_is_one theorem.
     (∀ n : Nat,
       buleyUnitScore (repeatedLift b f n) = buleyUnitScore b + n) := by
-  refine ⟨⟨1, clinamen_lift_score_strict_increment b f⟩, fun _ => contraction_always_available b ‹_›, fun n => Gnosis.SpectralNoiseEquilibrium.repeated_lift_score b f n⟩
+  refine ⟨⟨1, swerve_lift_score_strict_increment b f⟩, fun _ => contraction_always_available b ‹_›, fun n => Gnosis.SpectralNoiseEquilibrium.repeated_lift_score b f n⟩
 
 end ConsciousnessAsRetrocausalGap
 end Gnosis

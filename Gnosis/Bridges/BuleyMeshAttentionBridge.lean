@@ -10,10 +10,10 @@ across distributed nodes, with charisma weighting which channel a vote
 flows into. This module formalizes that picture inside the Bule
 calculus:
 
-* a **vote** is a `+1` clinamen lift on a chosen `BuleyFace`;
+* a **vote** is a `+1` swerve lift on a chosen `BuleyFace`;
 * a **charisma face** is the face the voter biases toward;
 * a **quorum threshold** is a lower bound on the Bule unit's score;
-* **vote independence** is the conservation law `clinamen_lift_commutes`
+* **vote independence** is the conservation law `swerve_lift_commutes`
   — order of votes on distinct faces does not change the outcome;
 * **gauge invariance** is `cyclePermute` — relabeling which face is
   Q vs K vs V (or waste vs opportunity vs diversity) preserves the
@@ -30,13 +30,13 @@ namespace Gnosis
 namespace BuleyMeshAttentionBridge
 
 open Gnosis.SpectralNoiseEquilibrium
-  (BuleyUnit BuleyFace buleyUnitScore vacuumBuleUnit clinamenLift
-   cyclePermute clinamen_lift_score_strict_increment
-   clinamen_lift_commutes
+  (BuleyUnit BuleyFace buleyUnitScore vacuumBuleUnit swerveLift
+   cyclePermute swerve_lift_score_strict_increment
+   swerve_lift_commutes
    cycle_permute_preserves_score
    cycle_permute_three_times_returns)
 
-/-! ## Vote = clinamen lift -/
+/-! ## Vote = swerve lift -/
 
 abbrev MeshVote := BuleyFace
 abbrev MeshTally := BuleyUnit
@@ -44,7 +44,7 @@ abbrev MeshTally := BuleyUnit
 def emptyTally : MeshTally := vacuumBuleUnit
 
 def castVote (tally : MeshTally) (vote : MeshVote) : MeshTally :=
-  clinamenLift tally vote
+  swerveLift tally vote
 
 theorem empty_tally_has_zero_score :
     buleyUnitScore emptyTally = 0 := rfl
@@ -53,16 +53,16 @@ theorem empty_tally_has_zero_score :
 residue from `UniversalClinamenPlusOne` is exactly one vote. -/
 theorem vote_score_increment (tally : MeshTally) (vote : MeshVote) :
     buleyUnitScore (castVote tally vote) = buleyUnitScore tally + 1 :=
-  clinamen_lift_score_strict_increment tally vote
+  swerve_lift_score_strict_increment tally vote
 
 /-! ## Vote independence: votes on distinct channels commute -/
 
 /-- Two votes on different channels commute — the order they arrive
 doesn't change the final tally. This is the mesh's distributed-vote
-conservation law, lifted from `clinamen_lift_commutes`. -/
+conservation law, lifted from `swerve_lift_commutes`. -/
 theorem votes_commute (tally : MeshTally) (v1 v2 : MeshVote) :
     castVote (castVote tally v1) v2 = castVote (castVote tally v2) v1 :=
-  clinamen_lift_commutes tally v1 v2
+  swerve_lift_commutes tally v1 v2
 
 /-! ## Charisma face — biased toward one channel -/
 

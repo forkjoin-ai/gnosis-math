@@ -5,7 +5,7 @@ import Init
 
 Answers the reviewer's question: can we couple a `k=2` reciprocity
 braid and a `k=3` Jones braid to form a `k=6` interference pattern,
-or do the clinamens remain domain-isolated?
+or do the swerves remain domain-isolated?
 
 ## The answer: they combine cleanly, via CRT
 
@@ -157,7 +157,7 @@ cycles three times and the Triad cycles four times simultaneously.
 
 The ledger's "structural columns / tribes / disciples / hours"
 framing of Aeon now has a concrete dynamical reading: Aeon is the
-*minimal period* at which Luminary and Triad clinamens align. -/
+*minimal period* at which Luminary and Triad swerves align. -/
 
 theorem aeon_is_luminary_triad_return :
     iteratePairSucc 4 3 12 (0, 0) = (0, 0) := by decide
@@ -228,7 +228,7 @@ theorem braid_tensor_product_master :
 **Reviewer's question**: "Does the substrate support a tensor product
 of these dynamical systems (e.g., coupling a k=2 reciprocity braid
 and a k=3 Jones braid to form a k=6 interference pattern), or do the
-clinamens remain strictly domain-isolated?"
+swerves remain strictly domain-isolated?"
 
 **Answer** (formalized): yes, the substrate supports tensor products,
 and the product is itself an abelian braid with return time

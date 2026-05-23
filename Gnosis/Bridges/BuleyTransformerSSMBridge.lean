@@ -14,7 +14,7 @@ product on the braided tower. This module makes that explicit:
 * The bijection `BuleyUnit ↔ QKVProjection` sends `waste ↦ Q`,
   `opportunity ↦ K`, `diversity ↦ V`. Score is preserved.
 * An attention update on Q, K, or V — i.e., a single-channel write —
-  is a clinamen lift on the corresponding Bule face. The +1 residue per
+  is a swerve lift on the corresponding Bule face. The +1 residue per
   update matches `UniversalClinamenPlusOne`.
 * A single attention head's Q → K → V → Q rotation across stacked
   layers is the phase-3 cycle of `BuleyClinamenBraid`.
@@ -37,13 +37,13 @@ namespace Gnosis
 namespace BuleyTransformerSSMBridge
 
 open Gnosis.SpectralNoiseEquilibrium
-  (BuleyUnit BuleyFace buleyUnitScore vacuumBuleUnit clinamenLift
+  (BuleyUnit BuleyFace buleyUnitScore vacuumBuleUnit swerveLift
    wasteFaceFromBule actionFaceFromBule entropyFaceFromBule
    bule_unit_decomposes_into_three_faces
    waste_face_score_equals_waste
    action_face_score_equals_opportunity
    entropy_face_score_equals_diversity
-   clinamen_lift_score_strict_increment)
+   swerve_lift_score_strict_increment)
 
 open Gnosis.BraidedTower (towerPhaseCount towerBraid)
 
@@ -78,7 +78,7 @@ theorem qkv_bule_round_trip (p : QKVProjection) :
 theorem qkv_score_equals_bule_score (b : BuleyUnit) :
     qkvScore (buleToQKV b) = buleyUnitScore b := rfl
 
-/-! ## Attention updates as clinamen lifts -/
+/-! ## Attention updates as swerve lifts -/
 
 /-- Single-channel attention updates: each of Q, K, V can be incremented
 independently. -/
@@ -86,18 +86,18 @@ def updateQ (p : QKVProjection) : QKVProjection := ⟨p.q + 1, p.k, p.v⟩
 def updateK (p : QKVProjection) : QKVProjection := ⟨p.q, p.k + 1, p.v⟩
 def updateV (p : QKVProjection) : QKVProjection := ⟨p.q, p.k, p.v + 1⟩
 
-/-- Updating Q on a QKVProjection is the same as a `clinamenLift` on the
+/-- Updating Q on a QKVProjection is the same as a `swerveLift` on the
 `waste` face of the projected Bule unit. -/
-theorem update_Q_is_clinamen_lift_waste (p : QKVProjection) :
-    qkvToBule (updateQ p) = clinamenLift (qkvToBule p) .waste := by
+theorem update_Q_is_swerve_lift_waste (p : QKVProjection) :
+    qkvToBule (updateQ p) = swerveLift (qkvToBule p) .waste := by
   cases p; rfl
 
-theorem update_K_is_clinamen_lift_opportunity (p : QKVProjection) :
-    qkvToBule (updateK p) = clinamenLift (qkvToBule p) .opportunity := by
+theorem update_K_is_swerve_lift_opportunity (p : QKVProjection) :
+    qkvToBule (updateK p) = swerveLift (qkvToBule p) .opportunity := by
   cases p; rfl
 
-theorem update_V_is_clinamen_lift_diversity (p : QKVProjection) :
-    qkvToBule (updateV p) = clinamenLift (qkvToBule p) .diversity := by
+theorem update_V_is_swerve_lift_diversity (p : QKVProjection) :
+    qkvToBule (updateV p) = swerveLift (qkvToBule p) .diversity := by
   cases p; rfl
 
 /-- Each Q/K/V update adds exactly +1 to the QKV score. The unit

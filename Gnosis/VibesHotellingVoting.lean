@@ -18,7 +18,7 @@ import Gnosis.Bridges.BuleyMeshAttentionBridge
   * **Demand** — `leftDemand4` from `Gnosis.HotellingModel` gives each
     emitter's nearest-neighbor mass on the 5-point city.
   * **Attention vote** — each captured listener contributes a +1
-    `clinamenLift` onto a chosen `BuleyFace`, lifted via
+    `swerveLift` onto a chosen `BuleyFace`, lifted via
     `Gnosis.BuleyMeshAttentionBridge.castVote`.
   * **Strict dominance** — `AttentionDominates s s' y` =
     `Dominates (leftDemand4 s y) (leftDemand4 s' y)` — the
@@ -158,7 +158,7 @@ open Gnosis.BuleyMeshAttentionBridge
   (MeshTally castVote emptyTally reachesQuorum
    vote_score_increment empty_tally_has_zero_score)
 
-/-- One attention vote: a +1 clinamen lift on a chosen charisma face. -/
+/-- One attention vote: a +1 swerve lift on a chosen charisma face. -/
 def attentionVote (face : BuleyFace) (tally : MeshTally) : MeshTally :=
   castVote tally face
 

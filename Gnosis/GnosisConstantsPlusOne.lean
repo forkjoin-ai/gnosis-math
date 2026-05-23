@@ -140,7 +140,7 @@ specials — `{4, 6, 10}` — share a shape:
 - `10 = 1 + 2 + 3 + 4` (the triangular number of the Luminary)
 
 These are three ways the substrate's small atoms combine to produce a
-structural size. The clinamen lifts each of the three into the
+structural size. The swerve lifts each of the three into the
 Ramanujan-special-prime ring. The Aeon (12) sits outside this
 correspondence — it's a structurally *completed* object (the full
 zodiac of tribes / hours / disciples), not an intermediate size

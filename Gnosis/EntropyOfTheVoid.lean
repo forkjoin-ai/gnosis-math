@@ -436,7 +436,7 @@ theorem inference_happens_in_the_void :
     pressure at that state is `1023` and the void entropy
     is the full `10000` perthou.
 
-    Each `clinamenLift` corresponds to one bule paid, one
+    Each `swerveLift` corresponds to one bule paid, one
     bit of void collapsed. The two ledgers track the same
     accounting. -/
 theorem vacuum_buley_unit_corresponds_to_max_void_pressure :
@@ -451,15 +451,15 @@ theorem vacuum_buley_unit_corresponds_to_max_void_pressure :
   · decide
   · decide
 
-/-- One `clinamenLift` on the vacuum bule unit advances its
+/-- One `swerveLift` on the vacuum bule unit advances its
     score by exactly +1, mirroring the +1 bule paid that
     collapses one bit of void. -/
-theorem one_clinamen_lift_collapses_one_bit_of_void
+theorem one_swerve_lift_collapses_one_bit_of_void
     (f : SpectralNoiseEquilibrium.BuleyFace) :
     SpectralNoiseEquilibrium.buleyUnitScore
-        (SpectralNoiseEquilibrium.clinamenLift
+        (SpectralNoiseEquilibrium.swerveLift
             SpectralNoiseEquilibrium.vacuumBuleUnit f) = 1 := by
-  have h := SpectralNoiseEquilibrium.clinamen_lift_score_strict_increment
+  have h := SpectralNoiseEquilibrium.swerve_lift_score_strict_increment
               SpectralNoiseEquilibrium.vacuumBuleUnit f
   rw [SpectralNoiseEquilibrium.vacuum_has_zero_score] at h
   exact h

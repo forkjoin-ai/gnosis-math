@@ -14,7 +14,7 @@ first distinction is *binding*, not light.
 
 Light is electromagnetism. In the canonical Five (`TheFiveIsOne`: Fork/Race/Fold/Vent/Interfere
 = Strong/Weak/EM/Gravity/Unified), electromagnetism is **Fold**, ordinal **3**. So the order of
-creation, counted as clinamens from the void, is:
+creation, counted as swerves from the void, is:
 
 ```
   step 0 — Vacuum        the null. (0,0,0). the still point. nothing yet.
@@ -27,7 +27,7 @@ creation, counted as clinamens from the void, is:
 
 Light came to be at **step 3** — three swerves deep, after the vacuum, after binding, after
 decay. The vacuum was first. This module makes that obvious to all: the order is just counting
-from zero, and creation is iterated clinamen (`Nat` as the initial algebra, read as cosmogony).
+from zero, and creation is iterated swerve (`Nat` as the initial algebra, read as cosmogony).
 
 This is the *ordinal* order of the gnosis Five with the void prepended — a structural claim
 inside this framework (EM = Fold = 3), not the empirical cosmological clock. Builds on
@@ -40,7 +40,7 @@ namespace LetThereBeVacuum
 open Gnosis.ClinamenInfrathin
 
 -- ═══════════════════════════════════════════════════════════════════════
--- §1  The creation sequence: successive clinamens from the void
+-- §1  The creation sequence: successive swerves from the void
 -- ═══════════════════════════════════════════════════════════════════════
 
 /-- The ordered milestones of creation. Each is a successor (`+1`) from the void; the ordinals
@@ -54,7 +54,7 @@ inductive CreationStep
   | Interference  -- 5: Interfere / unified
   deriving DecidableEq, Repr
 
-/-- Each milestone's ordinal: how many clinamens it stands from the void. -/
+/-- Each milestone's ordinal: how many swerves it stands from the void. -/
 def CreationStep.ordinal : CreationStep → Nat
   | .Vacuum       => 0
   | .Binding      => 1
@@ -90,10 +90,10 @@ theorem light_is_not_first :
     CreationStep.Vacuum.ordinal < CreationStep.Light.ordinal := by decide
 
 /-- Light arrives only after the vacuum, binding, and decay: three swerves deep. And this is
-    exactly iterated clinamen — creation as induction from the void
-    (`ClinamenInfrathin.all_is_iterated_clinamen`). -/
+    exactly iterated swerve — creation as induction from the void
+    (`ClinamenInfrathin.all_is_iterated_swerve`). -/
 theorem light_after_three_swerves : CreationStep.Light.ordinal = iterSwerve 3 0 :=
-  (all_is_iterated_clinamen 3).symm
+  (all_is_iterated_swerve 3).symm
 
 -- ═══════════════════════════════════════════════════════════════════════
 -- §3  The order is just counting from zero (obvious by inspection)
@@ -141,7 +141,7 @@ theorem light_is_succ_succ_succ_void :
 
 /-- The same keystone in our own operators: light is the clinamen (`swerve`) applied three
     times to the void (`0`). -/
-theorem light_is_three_clinamens_on_the_void :
+theorem light_is_three_swerves_on_the_void :
     CreationStep.Light.ordinal = swerve (swerve (swerve 0)) := rfl
 
 /--

@@ -60,7 +60,7 @@ structure Agent where
 deriving Repr, DecidableEq
 
 /-- The Operator: the clinamen `+1 mod k`. A function, not a value. -/
-def clinamenOperator (k : Nat) (i : Nat) : Nat :=
+def swerveOperator (k : Nat) (i : Nat) : Nat :=
   (i + 1) % k
 
 /-- God's position: characterized by prose, not computable. Distinct
@@ -75,8 +75,8 @@ def agentMan : Agent := { name := "man (compiled)", modulus := 79 }
 def agentCassini : Agent := { name := "Fibonacci Cassini braid", modulus := 2 }
 def agentAeon : Agent := { name := "Aeon braid", modulus := 12 }
 
-def operatorAtK3 (i : Nat) : Nat := clinamenOperator 3 i
-def operatorAtK5 (i : Nat) : Nat := clinamenOperator 5 i
+def operatorAtK3 (i : Nat) : Nat := swerveOperator 3 i
+def operatorAtK5 (i : Nat) : Nat := swerveOperator 5 i
 
 def kernelPosition : KernelPosition :=
   { characterization :=
@@ -95,10 +95,10 @@ theorem agent_has_modulus :
 /-- The Operator produces specific `Nat` outputs but is itself a
 function, not a value. We witness its action on specific inputs. -/
 theorem operator_acts :
-    clinamenOperator 3 0 = 1
-    ∧ clinamenOperator 3 1 = 2
-    ∧ clinamenOperator 3 2 = 0
-    ∧ clinamenOperator 5 4 = 0 := by decide
+    swerveOperator 3 0 = 1
+    ∧ swerveOperator 3 1 = 2
+    ∧ swerveOperator 3 2 = 0
+    ∧ swerveOperator 5 4 = 0 := by decide
 
 /-- God's position has a characterization but no computable modulus. -/
 theorem god_characterized_not_computed :
@@ -129,7 +129,7 @@ theorem god_has_characterization :
 Within this substrate, every constructable object is one of:
 
 - An `Agent` (finite compiled thing, has `modulus`).
-- An `Operator` application (result of `clinamenOperator k i`).
+- An `Operator` application (result of `swerveOperator k i`).
 - A `KernelPosition` (characterized, not computed).
 
 No object is simultaneously two of these. The types are disjoint by
@@ -147,8 +147,8 @@ theorem closed_system_trichotomy :
     agentMan.name = "man (compiled)"
     ∧ agentMan.modulus = 79
     -- Operator acts (is a function, witnessed by specific calls)
-    ∧ clinamenOperator 3 0 = 1
-    ∧ clinamenOperator 5 4 = 0
+    ∧ swerveOperator 3 0 = 1
+    ∧ swerveOperator 5 4 = 0
     -- God is characterized (non-empty string, no modulus)
     ∧ kernelPosition.characterization ≠ ""
     -- Agents have specific names; God does not have a `name`
@@ -171,11 +171,11 @@ The Agents ARE varied: 79+ modules this session, each with its own
 /-- Two Operator applications at different `k` share the same
 structural form. -/
 theorem operator_universal_form :
-    (clinamenOperator 3 0 = 1) ∧ (clinamenOperator 5 0 = 1) := by decide
+    (swerveOperator 3 0 = 1) ∧ (swerveOperator 5 0 = 1) := by decide
 
 /-- Operator is idempotent at the null step. -/
 theorem operator_null_step :
-    clinamenOperator 3 2 = 0 ∧ clinamenOperator 5 4 = 0 := by decide
+    swerveOperator 3 2 = 0 ∧ swerveOperator 5 4 = 0 := by decide
 
 /-! ## Master witness -/
 
@@ -185,9 +185,9 @@ theorem god_operator_agent_trichotomy_master :
     ∧ agentCassini.modulus = 2
     ∧ agentAeon.modulus = 12
     -- Operator witnesses
-    ∧ clinamenOperator 3 0 = 1
-    ∧ clinamenOperator 3 2 = 0
-    ∧ clinamenOperator 5 4 = 0
+    ∧ swerveOperator 3 0 = 1
+    ∧ swerveOperator 3 2 = 0
+    ∧ swerveOperator 5 4 = 0
     -- God witness
     ∧ kernelPosition.characterization ≠ ""
     -- Agents differ from each other

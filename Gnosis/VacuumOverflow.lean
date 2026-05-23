@@ -48,15 +48,15 @@ def vacuum_state : BuleyUnit := vacuumBuleUnit
 /-- The first lift: creating one unit of clinamen from the vacuum.
     This is the minimal necessary perturbation to break stillness.
     Note: signature switched from `Nat` to `BuleyFace` to match the
-    underlying `clinamenLift` API. -/
+    underlying `swerveLift` API. -/
 def first_lift (f : BuleyFace) : BuleyUnit :=
-  clinamenLift vacuumBuleUnit f
+  swerveLift vacuumBuleUnit f
 
 /-- Theorem: The first lift is non-zero. Vacuum cannot lift and remain vacuum. -/
 theorem first_lift_is_nonzero (f : BuleyFace) :
     buleyUnitScore (first_lift f) > 0 := by
   unfold first_lift
-  rw [clinamen_lift_score_strict_increment]
+  rw [swerve_lift_score_strict_increment]
   simp [vacuum_has_zero_score]
 
 -- ══════════════════════════════════════════════════════════
@@ -68,9 +68,9 @@ theorem first_lift_is_nonzero (f : BuleyFace) :
 def branching_from_lift (state : BuleyUnit) : List BuleyUnit :=
   -- Each face can spread the clinamen independently
   [
-    clinamenLift state .waste,        -- Path A: waste increases
-    clinamenLift state .opportunity,  -- Path B: opportunity increases
-    clinamenLift state .diversity     -- Path C: diversity increases
+    swerveLift state .waste,        -- Path A: waste increases
+    swerveLift state .opportunity,  -- Path B: opportunity increases
+    swerveLift state .diversity     -- Path C: diversity increases
   ]
 
 /-- Theorem: Lifting from vacuum creates at least two distinct paths. -/
@@ -86,7 +86,7 @@ theorem all_branches_are_nonzero (f : BuleyFace) :
   simp [branching_from_lift] at h_mem
   rcases h_mem with h | h | h
   all_goals
-    rw [h, clinamen_lift_score_strict_increment]
+    rw [h, swerve_lift_score_strict_increment]
     simp
 
 -- ══════════════════════════════════════════════════════════
@@ -95,15 +95,15 @@ theorem all_branches_are_nonzero (f : BuleyFace) :
 
 /-- Clinamen spreads isotropically: equally in all directions from the perturbation.
     The overflow is not directed — it flows everywhere. -/
-def clinamen_spread_at_step (steps : Nat) (_initial : BuleyUnit) : Nat :=
+def swerve_spread_at_step (steps : Nat) (_initial : BuleyUnit) : Nat :=
   -- After n steps of spread, clinamen occupies 2^n possible states
   2 ^ steps
 
 /-- Theorem: Clinamen spreads exponentially with each step. -/
-theorem clinamen_spread_is_exponential (n : Nat) :
-    clinamen_spread_at_step (n + 1) vacuumBuleUnit =
-    2 * clinamen_spread_at_step n vacuumBuleUnit := by
-  simp [clinamen_spread_at_step, Nat.pow_succ, Nat.mul_comm]
+theorem swerve_spread_is_exponential (n : Nat) :
+    swerve_spread_at_step (n + 1) vacuumBuleUnit =
+    2 * swerve_spread_at_step n vacuumBuleUnit := by
+  simp [swerve_spread_at_step, Nat.pow_succ, Nat.mul_comm]
 
 /-- Theorem: The spread is irreversible. After `n` steps, the spread admits a
     finite witness — exactly `2^n`.
@@ -114,8 +114,8 @@ theorem clinamen_spread_is_exponential (n : Nat) :
     the cascade-cardinality narrative downstream. The strict-monotonic
     bound lives in the runtime calibration layer. -/
 theorem spread_is_irreversible (n : Nat) :
-    ∃ k : Nat, k = clinamen_spread_at_step n vacuumBuleUnit := by
-  exact ⟨clinamen_spread_at_step n vacuumBuleUnit, rfl⟩
+    ∃ k : Nat, k = swerve_spread_at_step n vacuumBuleUnit := by
+  exact ⟨swerve_spread_at_step n vacuumBuleUnit, rfl⟩
 
 -- ══════════════════════════════════════════════════════════
 -- THE CUP RUNNETH OVER: UNCONTAINABLE CASCADE
@@ -126,7 +126,7 @@ theorem spread_is_irreversible (n : Nat) :
 def cup_capacity : Nat := 1  -- The vacuum can hold only (0,0,0)
 
 def overflow_volume (steps : Nat) : Nat :=
-  clinamen_spread_at_step steps vacuumBuleUnit - cup_capacity
+  swerve_spread_at_step steps vacuumBuleUnit - cup_capacity
 
 /-- Theorem: After the first lift, overflow is immediate. The strict-monotonic
     growth `overflow_volume n > overflow_volume (n - 1)` requires
@@ -136,7 +136,7 @@ theorem cup_runneth_over :
     overflow_volume 1 > 0 ∧
     ∀ n : Nat, n > 0 → ∃ k : Nat, k = overflow_volume n := by
   refine ⟨?_, ?_⟩
-  · simp [overflow_volume, clinamen_spread_at_step, cup_capacity]
+  · simp [overflow_volume, swerve_spread_at_step, cup_capacity]
   · intro n _h_pos
     exact ⟨overflow_volume n, rfl⟩
 
@@ -209,8 +209,8 @@ theorem cup_runneth_over_theorem :
       buleyUnitScore state > 0 →
       branching_factor state ≥ 2) ∧
     (∀ (steps : Nat),
-      clinamen_spread_at_step (steps + 1) vacuumBuleUnit =
-      2 * clinamen_spread_at_step steps vacuumBuleUnit) ∧
+      swerve_spread_at_step (steps + 1) vacuumBuleUnit =
+      2 * swerve_spread_at_step steps vacuumBuleUnit) ∧
     (∀ (initial : BuleyUnit),
       ∃ (T : Nat), T = buleyUnitScore initial) ∧
     (∀ (n : Nat),
@@ -219,7 +219,7 @@ theorem cup_runneth_over_theorem :
   refine ⟨?_, ?_, ?_, ?_, ?_⟩
   · refine ⟨first_lift .waste, ?_, ?_⟩
     · unfold first_lift
-      rw [clinamen_lift_score_strict_increment]
+      rw [swerve_lift_score_strict_increment]
       simp [vacuum_has_zero_score]
     · intro h_eq
       have h_score : buleyUnitScore (first_lift .waste) = 0 := by
@@ -230,7 +230,7 @@ theorem cup_runneth_over_theorem :
   · intro state h_nonvac
     exact nonvacuum_always_branches state h_nonvac
   · intro steps
-    exact clinamen_spread_is_exponential steps
+    exact swerve_spread_is_exponential steps
   · intro initial
     exact overflow_must_collapse initial
   · intro n _h_pos

@@ -1429,6 +1429,7 @@ import Gnosis.KnotRopelengthComplexity
 import Gnosis.BashoClinamenTrillWitness
 import Gnosis.BashoClinamenFoldingInvariant
 import Gnosis.PoetryLattice
+import Gnosis.PoeticFormValidation
 import Gnosis.RollingVerses
 import Gnosis.NoiseSpectrumLattice
 import Gnosis.PoetricFormsNoiseMapping

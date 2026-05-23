@@ -2429,7 +2429,7 @@ theorem ten_bit_frame_turing_step_preserves_accounting :
     Gnosis.BuleyTopologicalTuringMachine.hexonStateFace
     Gnosis.HexonBraid.hexonSucc
     Gnosis.SpectralNoiseEquilibrium.vacuumBuleUnit
-    Gnosis.SpectralNoiseEquilibrium.clinamenLift
+    Gnosis.SpectralNoiseEquilibrium.swerveLift
     Gnosis.SpectralNoiseEquilibrium.buleyUnitScore
     trihexenneonWaveCarrier coolerCricketOscillator warmerCricketOscillator
     trihexenneonTemperatureCircuit insectPulseResponse foldHeatRate

@@ -271,7 +271,7 @@ theorem learning_reduces_waste (tob : TheoryOfBusiness) (env_entropy : Nat) :
 def innovation_lift (tob : TheoryOfBusiness) (f : BuleyFace) : TheoryOfBusiness :=
   { assumptions := { 
       tob.assumptions with 
-      mission := clinamenLift tob.assumptions.mission f 
+      mission := swerveLift tob.assumptions.mission f 
   } }
 
 /-- 
@@ -314,7 +314,7 @@ def double_loop_learning (tob : TheoryOfBusiness) (f : BuleyFace) : TheoryOfBusi
   let tob' := innovation_lift tob f -- First loop: Innovation/Mission shift
   { assumptions := {
       tob'.assumptions with
-      competence := clinamenLift tob'.assumptions.competence f -- Second loop: Competence shift
+      competence := swerveLift tob'.assumptions.competence f -- Second loop: Competence shift
   } }
 
 /--

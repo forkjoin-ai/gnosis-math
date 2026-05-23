@@ -28,7 +28,7 @@ Reading:
 
 /-- A positive carrier representing the magic herb's structural charge. -/
 def magicHerb : BuleyUnit :=
-  clinamenLift vacuumBuleUnit BuleyFace.opportunity
+  swerveLift vacuumBuleUnit BuleyFace.opportunity
 
 /-- Glaucus's false ascent tries to jump from Nash floor to God position. -/
 structure FalseAscent where
@@ -87,7 +87,7 @@ def nashPolarizationTrap (trap : NashTrap) : Prop :=
 theorem magic_herb_has_positive_charge :
     0 < buleyUnitScore magicHerb := by
   unfold magicHerb
-  rw [clinamen_lift_score_strict_increment, vacuum_has_zero_score]
+  rw [swerve_lift_score_strict_increment, vacuum_has_zero_score]
   decide
 
 /-- The magic herb cannot be duplicated as free cost-algebra value. -/
@@ -105,7 +105,7 @@ theorem glaucus_false_ascent_skips_buley :
   unfold skipsBuleyCost glaucusHerbAscent
   rw [show buleyUnitScore magicHerb = 1 by
     unfold magicHerb
-    rw [clinamen_lift_score_strict_increment, vacuum_has_zero_score]]
+    rw [swerve_lift_score_strict_increment, vacuum_has_zero_score]]
   exact ⟨rfl, by decide, rfl⟩
 
 /-- Circe's rogue mediation is classified by the existing operator-idolatry

@@ -219,7 +219,7 @@ theorem standing_waves_persist :
     refine ⟨0, h_pos, ?_⟩
     simp
   · -- Score of constructive interference of two waste-lifts is 2.
-    simp [constructive_interference, first_lift, clinamenLift, buleyUnitScore,
+    simp [constructive_interference, first_lift, swerveLift, buleyUnitScore,
           vacuumBuleUnit]
 
 -- ══════════════════════════════════════════════════════════
@@ -258,7 +258,7 @@ theorem beats_modulate_overflow :
 /-- The trill in Basho's haiku is not just response to sting.
     The trill is the STING INTERFERING WITH ITS OWN ECHO.
 
-    The sting (clinamen lift) propagates outward.
+    The sting (swerve lift) propagates outward.
     It bounces back (retrocausal pull toward vacuum).
     The outgoing and returning waves interfere.
     The interference pattern is the trill: periodic oscillation,
@@ -322,7 +322,7 @@ theorem trill_emerges_from_interference :
 /-- The five fundamental forces as topological operations:
 
     1. FORK: split a state into N branches
-       Operation: clinamenLift (creates new degrees of freedom)
+       Operation: swerveLift (creates new degrees of freedom)
 
     2. RACE: drive all branches toward vacuum
        Operation: clinamenContract (entropy increase)

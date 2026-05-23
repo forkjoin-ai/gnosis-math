@@ -120,7 +120,7 @@ structure ConjectureRegion where
 
 /-- Wave 1-3 (pre-wave-4). PURE UNKNOT. No falsifications anywhere
     in the ledger yet. The qwen-0.5b confirmation is the single
-    claim inside; Bule cost = 1 (one clinamen lift to commit the
+    claim inside; Bule cost = 1 (one swerve lift to commit the
     confirmation). Smooth = true. Zero walls. -/
 def pre_wave_4_region : ConjectureRegion :=
   { is_unknot_region          := true

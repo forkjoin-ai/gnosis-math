@@ -13,7 +13,7 @@ the Init-only package.
 -/
 
 open KnotComplexityAsBuleCost
-open Gnosis.SpectralNoiseEquilibrium (BuleyUnit BuleyFace clinamenLift)
+open Gnosis.SpectralNoiseEquilibrium (BuleyUnit BuleyFace swerveLift)
 
 def connectedSum (left right : KnotDiagram) : KnotDiagram :=
   mkKnot (left.crossing_count + right.crossing_count)
@@ -91,21 +91,21 @@ theorem session_ledger_decomposes_as_connected_sum :
         f5_falsification_knot).crossing_count = 5 := by
   decide
 
-theorem clinamen_lift_connected_sum_with_one_crossing
+theorem swerve_lift_connected_sum_with_one_crossing
     (bule : BuleyUnit)
     (face : BuleyFace) :
-    knot_of_buley_unit (clinamenLift bule face) =
+    knot_of_buley_unit (swerveLift bule face) =
       connectedSum (knot_of_buley_unit bule) (mkKnot 1) := by
   apply congrArg mkKnot
-  exact clinamen_lift_adds_one_crossing bule face
+  exact swerve_lift_adds_one_crossing bule face
 
-theorem clinamen_lift_cost_is_connected_sum_cost
+theorem swerve_lift_cost_is_connected_sum_cost
     (bule : BuleyUnit)
     (face : BuleyFace) :
-    bule_cost_of_knot (knot_of_buley_unit (clinamenLift bule face)) =
+    bule_cost_of_knot (knot_of_buley_unit (swerveLift bule face)) =
       bule_cost_of_knot
         (connectedSum (knot_of_buley_unit bule) (mkKnot 1)) := by
-  rw [clinamen_lift_connected_sum_with_one_crossing]
+  rw [swerve_lift_connected_sum_with_one_crossing]
 
 theorem two_crossing_self_sum_even (knot : KnotDiagram) :
     ∃ half : Nat, (connectedSum knot knot).crossing_count = 2 * half := by

@@ -23,7 +23,7 @@ def ouroboros : Nat := 55
 /-- The Decomposition Gate constant. -/
 def decompositionGate : Nat := 7
 
-/-- The Clinamen lift constant. -/
+/-- The Swerve lift constant. -/
 def clinamen : Nat := 1
 
 /-- The Tone Shift Theorem:

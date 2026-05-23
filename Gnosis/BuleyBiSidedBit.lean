@@ -49,12 +49,12 @@ def biSidedScore (b : BiSidedBit) : Nat :=
 theorem vacuum_bisided_score_zero :
     biSidedScore vacuumBiSidedBit = 0 := rfl
 
-/-! ## Clinamen lift and declinamen contraction on each side -/
+/-! ## Swerve lift and declinamen contraction on each side -/
 
-def clinamenLiftLifted (b : BiSidedBit) : BiSidedBit :=
+def swerveLiftLifted (b : BiSidedBit) : BiSidedBit :=
   ⟨b.lifted + 1, b.contracted⟩
 
-def clinamenLiftContracted (b : BiSidedBit) : BiSidedBit :=
+def swerveLiftContracted (b : BiSidedBit) : BiSidedBit :=
   ⟨b.lifted, b.contracted + 1⟩
 
 def declinamenContractLifted (b : BiSidedBit) : BiSidedBit :=
@@ -64,14 +64,14 @@ def declinamenContractContracted (b : BiSidedBit) : BiSidedBit :=
   ⟨b.lifted, b.contracted - 1⟩
 
 theorem lifted_lift_score_increment (b : BiSidedBit) :
-    biSidedScore (clinamenLiftLifted b) = biSidedScore b + 1 := by
+    biSidedScore (swerveLiftLifted b) = biSidedScore b + 1 := by
   cases b with
   | mk l c =>
     show (l + 1) + c = l + c + 1
     exact Nat.add_right_comm l 1 c
 
 theorem contracted_lift_score_increment (b : BiSidedBit) :
-    biSidedScore (clinamenLiftContracted b) = biSidedScore b + 1 := by
+    biSidedScore (swerveLiftContracted b) = biSidedScore b + 1 := by
   cases b with
   | mk l c =>
     show l + (c + 1) = l + c + 1
@@ -79,7 +79,7 @@ theorem contracted_lift_score_increment (b : BiSidedBit) :
 
 theorem lift_contract_round_trip_lifted_when_positive
     (b : BiSidedBit) (h : 0 < b.lifted) :
-    clinamenLiftLifted (declinamenContractLifted b) = b := by
+    swerveLiftLifted (declinamenContractLifted b) = b := by
   cases b with
   | mk l c =>
     have hL : 0 < l := h
@@ -88,7 +88,7 @@ theorem lift_contract_round_trip_lifted_when_positive
 
 theorem lift_contract_round_trip_contracted_when_positive
     (b : BiSidedBit) (h : 0 < b.contracted) :
-    clinamenLiftContracted (declinamenContractContracted b) = b := by
+    swerveLiftContracted (declinamenContractContracted b) = b := by
   cases b with
   | mk l c =>
     have hC : 0 < c := h
@@ -174,13 +174,13 @@ theorem bisided_decomposes_into_waste_and_action (b : BiSidedBit) :
 
 /-! ## +1 / −1 clinamen residue on the bi-sided bit -/
 
-/-- Every clinamen lift on either side adds exactly +1 to the bi-sided
+/-- Every swerve lift on either side adds exactly +1 to the bi-sided
 score. The complementary contraction subtracts exactly 1 on the same
 positive face. The lift/contract pair is the literal +1/−1 residue from
 `UniversalClinamenPlusOne`, embedded in the bit. -/
 theorem bisided_lift_residue_is_plus_one (b : BiSidedBit) :
-    biSidedScore (clinamenLiftLifted b) = biSidedScore b + 1
-    ∧ biSidedScore (clinamenLiftContracted b) = biSidedScore b + 1 :=
+    biSidedScore (swerveLiftLifted b) = biSidedScore b + 1
+    ∧ biSidedScore (swerveLiftContracted b) = biSidedScore b + 1 :=
   ⟨lifted_lift_score_increment b, contracted_lift_score_increment b⟩
 
 theorem bisided_contract_residue_is_minus_one_when_positive

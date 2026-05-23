@@ -57,7 +57,7 @@ theorem copy_costs_zero :
   exact (Nat.two_mul (buleyUnitScore source)).symm
 
 /-- The copy operation is fork: clinamen spreads isotropically.
-    Spec-level: the parameterised `clinamenLift` invariant is enforced at the
+    Spec-level: the parameterised `swerveLift` invariant is enforced at the
     runtime calibration layer; this theorem is the executable copy witness. -/
 theorem copy_is_fork :
     ∀ (source : BuleyUnit), copy_bit source = (source, source) := by

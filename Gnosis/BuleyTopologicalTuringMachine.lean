@@ -19,13 +19,13 @@ The Bule clinamen calculus literally builds a Turing machine. The
 * State advance — `hexonSucc` rotates the control state along the
   hexon's phase-6 cycle.
 * Transition — read + state-conditioned write + head move +
-  `hexonSucc`. Each transition costs one clinamen lift on a Bule unit
+  `hexonSucc`. Each transition costs one swerve lift on a Bule unit
   whose face is selected by the current control state.
 
 The classical Turing machine reads as: tape symbols are bi-sided bits,
 the control automaton is a hexon braid, the program is a function
 `HexonPhase × BiSidedSide → BiSidedSide × Direction`. The Bule unit
-counts the work performed (one clinamen lift per transition step), so
+counts the work performed (one swerve lift per transition step), so
 the Bule score of a halted machine is exactly its step count.
 
 This module proves:
@@ -45,8 +45,8 @@ namespace BuleyTopologicalTuringMachine
 
 open Gnosis.HexonBraid (HexonPhase BiSidedSide hexonSucc)
 open Gnosis.SpectralNoiseEquilibrium
-  (BuleyUnit buleyUnitScore vacuumBuleUnit clinamenLift BuleyFace
-   clinamen_lift_score_strict_increment)
+  (BuleyUnit buleyUnitScore vacuumBuleUnit swerveLift BuleyFace
+   swerve_lift_score_strict_increment)
 
 /-! ## Tape and head -/
 
@@ -96,7 +96,7 @@ structure Program where
   trans : HexonPhase → BiSidedSide → BiSidedSide × Direction × Bool
 
 /-- The full machine configuration. `bule` records the work done: each
-transition step is one clinamen lift on the face indexed by the current
+transition step is one swerve lift on the face indexed by the current
 control state. -/
 structure Configuration where
   state : HexonPhase
@@ -127,7 +127,7 @@ def hexonStateFace : HexonPhase → BuleyFace
   | .futureContracted  => .diversity
 
 /-- One transition step: read, run the program, write, move, advance the
-state, charge one clinamen lift to the Bule unit, increment step count.
+state, charge one swerve lift to the Bule unit, increment step count.
 If the machine has already halted, the configuration is fixed. -/
 def step (p : Program) (c : Configuration) : Configuration :=
   if c.halted then c
@@ -138,7 +138,7 @@ def step (p : Program) (c : Configuration) : Configuration :=
     let face := hexonStateFace c.state
     { state := hexonSucc c.state
       tape := tape'
-      bule := clinamenLift c.bule face
+      bule := swerveLift c.bule face
       steps := c.steps + 1
       halted := halt }
 
@@ -167,9 +167,9 @@ theorem step_bule_score_increment (p : Program) (c : Configuration)
     buleyUnitScore (step p c).bule = buleyUnitScore c.bule + 1 := by
   unfold step
   rw [h]
-  show buleyUnitScore (clinamenLift c.bule (hexonStateFace c.state))
+  show buleyUnitScore (swerveLift c.bule (hexonStateFace c.state))
         = buleyUnitScore c.bule + 1
-  exact clinamen_lift_score_strict_increment c.bule (hexonStateFace c.state)
+  exact swerve_lift_score_strict_increment c.bule (hexonStateFace c.state)
 
 /-- Step count accounting: a non-halted step advances the step counter
 by exactly one. -/
@@ -200,7 +200,7 @@ def initFlipper : Configuration :=
   initialConfiguration .pastLifted blankTape
 
 /-- After 5 steps of the flipper, the Bule score is exactly 5 — five
-clinamen lifts charged across whichever faces the state cycle visited. -/
+swerve lifts charged across whichever faces the state cycle visited. -/
 theorem flipper_five_step_bule_score :
     (runFor flipper initFlipper 5).bule.waste
     + (runFor flipper initFlipper 5).bule.opportunity
@@ -212,7 +212,7 @@ theorem flipper_five_step_count :
     (runFor flipper initFlipper 5).steps = 5 := by decide
 
 /-- After 6 steps of the flipper, the Bule score is exactly 6 (one more
-than at step 5). The clinamen lift is the unit of computational work. -/
+than at step 5). The swerve lift is the unit of computational work. -/
 theorem flipper_six_step_bule_score :
     (runFor flipper initFlipper 6).bule.waste
     + (runFor flipper initFlipper 6).bule.opportunity
@@ -282,7 +282,7 @@ structure BizarroProgram where
   trans : HexonPhase → BiSidedSide → BiSidedSide → BiSidedSide × Direction × Bool
 
 /-- One bizarro-parallax step: read past + future, write present, move,
-advance state, charge one clinamen lift. -/
+advance state, charge one swerve lift. -/
 def bizarroStep (p : BizarroProgram) (c : Configuration) : Configuration :=
   if c.halted then c
   else
@@ -292,22 +292,22 @@ def bizarroStep (p : BizarroProgram) (c : Configuration) : Configuration :=
     let face := hexonStateFace c.state
     { state := hexonSucc c.state
       tape := tape'
-      bule := clinamenLift c.bule face
+      bule := swerveLift c.bule face
       steps := c.steps + 1
       halted := halt }
 
 /-- Bizarro work accounting: one bizarro step also adds exactly +1 to
 the Bule score on a non-halted configuration. The parallax read does
-not change the cost; cost is one clinamen lift per transition,
+not change the cost; cost is one swerve lift per transition,
 classical or bizarro. -/
 theorem bizarro_step_bule_score_increment
     (p : BizarroProgram) (c : Configuration) (h : c.halted = false) :
     buleyUnitScore (bizarroStep p c).bule = buleyUnitScore c.bule + 1 := by
   unfold bizarroStep
   rw [h]
-  show buleyUnitScore (clinamenLift c.bule (hexonStateFace c.state))
+  show buleyUnitScore (swerveLift c.bule (hexonStateFace c.state))
         = buleyUnitScore c.bule + 1
-  exact clinamen_lift_score_strict_increment c.bule (hexonStateFace c.state)
+  exact swerve_lift_score_strict_increment c.bule (hexonStateFace c.state)
 
 /-- A bizarro program that mirrors past into present (writes the past
 symbol it reads). Witness that the parallax read is non-vacuous. -/

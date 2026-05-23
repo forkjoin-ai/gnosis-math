@@ -5,7 +5,7 @@ import Gnosis.Braided.BraidedTower
 # Attention Scaling Law
 
 Derives scaling laws from the clinamen cost structure of the Bule unit.
-Each clinamen lift on a Bule unit adds exactly +1 to the buleyUnitScore,
+Each swerve lift on a Bule unit adds exactly +1 to the buleyUnitScore,
 providing a foundation for modeling multi-head attention cost.
 
 This module formalizes the relationship between individual attention steps
@@ -25,16 +25,16 @@ open Gnosis.BraidedTower
 
 /-! ## Individual attention step cost -/
 
-/-- Each Q/K/V update (via clinamenLift on any Bule face) adds +1 to the cost.
+/-- Each Q/K/V update (via swerveLift on any Bule face) adds +1 to the cost.
 The fourth disjunct is the key witness: lifting strictly increases the score. -/
 theorem attention_step_cost_is_one (q k v : BuleyUnit) :
-    (clinamenLift q .waste = q) ∨ (clinamenLift k .waste = k) ∨
-    (clinamenLift v .waste = v) ∨
-    (buleyUnitScore (clinamenLift q .waste) = buleyUnitScore q + 1) := by
+    (swerveLift q .waste = q) ∨ (swerveLift k .waste = k) ∨
+    (swerveLift v .waste = v) ∨
+    (buleyUnitScore (swerveLift q .waste) = buleyUnitScore q + 1) := by
   right
   right
   right
-  exact clinamen_lift_score_strict_increment q .waste
+  exact swerve_lift_score_strict_increment q .waste
 
 /-! ## Multi-head cost via arithmetic -/
 
@@ -57,15 +57,15 @@ theorem tower_level_is_attention_depth :
 four lifts on distinct Bule faces yields a strictly increased score. -/
 theorem scaling_law_from_clinamen_budget (b : BuleyUnit) :
     buleyUnitScore b ≤
-      buleyUnitScore (clinamenLift (clinamenLift (clinamenLift
-        (clinamenLift b .waste) .opportunity) .diversity) .waste) := by
+      buleyUnitScore (swerveLift (swerveLift (swerveLift
+        (swerveLift b .waste) .opportunity) .diversity) .waste) := by
   -- Apply the four lifts step by step, each adding +1 to the score.
-  have h1 := clinamen_lift_score_strict_increment b .waste
-  have h2 := clinamen_lift_score_strict_increment (clinamenLift b .waste) .opportunity
-  have h3 := clinamen_lift_score_strict_increment
-    (clinamenLift (clinamenLift b .waste) .opportunity) .diversity
-  have h4 := clinamen_lift_score_strict_increment
-    (clinamenLift (clinamenLift (clinamenLift b .waste) .opportunity) .diversity) .waste
+  have h1 := swerve_lift_score_strict_increment b .waste
+  have h2 := swerve_lift_score_strict_increment (swerveLift b .waste) .opportunity
+  have h3 := swerve_lift_score_strict_increment
+    (swerveLift (swerveLift b .waste) .opportunity) .diversity
+  have h4 := swerve_lift_score_strict_increment
+    (swerveLift (swerveLift (swerveLift b .waste) .opportunity) .diversity) .waste
   -- The final score is the initial score plus 4.
   rw [h4, h3, h2, h1]
   -- Initial score + 4 >= initial score is a consequence of Nat.le_add_right.

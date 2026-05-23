@@ -39,7 +39,7 @@ def Trajectory := Nat → BuleyUnit
 
 /-- A trajectory evolves when each step transitions to the next via clinamen. -/
 def is_evolving_trajectory (traj : Trajectory) : Prop :=
-  ∀ step, ∃ face, clinamenLift (traj step) face = traj (step + 1)
+  ∀ step, ∃ face, swerveLift (traj step) face = traj (step + 1)
 
 /-- The vacuum is the unique stable state: score 0, all faces zero. -/
 def is_vacuum_state (state : BuleyUnit) : Prop :=
@@ -76,7 +76,7 @@ theorem vacuum_state_equals_unit :
 theorem evolution_always_possible :
     ∀ (traj : Trajectory),
     is_evolving_trajectory traj ↔
-    (∀ step, ∃ face, clinamenLift (traj step) face = traj (step + 1)) := by
+    (∀ step, ∃ face, swerveLift (traj step) face = traj (step + 1)) := by
   intro traj
   simp [is_evolving_trajectory]
 
@@ -85,12 +85,12 @@ theorem vacuum_is_score_zero :
     buleyUnitScore vacuumBuleUnit = 0 := by
   simp [buleyUnitScore, vacuumBuleUnit]
 
-/-- Theorem: All states can evolve forward (via some clinamen lift). -/
+/-- Theorem: All states can evolve forward (via some swerve lift). -/
 theorem all_states_can_evolve :
     ∀ (state : BuleyUnit),
-    ∃ next_state face, clinamenLift state face = next_state := by
+    ∃ next_state face, swerveLift state face = next_state := by
   intro state
-  exact ⟨clinamenLift state BuleyFace.waste, BuleyFace.waste, rfl⟩
+  exact ⟨swerveLift state BuleyFace.waste, BuleyFace.waste, rfl⟩
 
 /-- Corollary: The vacuum is universal destiny—the unique score-0 state. -/
 theorem vacuum_is_universal_destiny :

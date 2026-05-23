@@ -135,7 +135,7 @@ structure LiftPath where
 
     We deliberately do NOT enforce a per-step "valid clinamen-lift
     transition" predicate on `EmpiricalClaimStatus` itself: in this
-    calculus ANY state-to-state transition is a clinamen lift, and the
+    calculus ANY state-to-state transition is a swerve lift, and the
     bule cost is +1 per transition regardless of the start/end faces.
     The cost semantics live entirely in the count of transitions. -/
 def is_well_formed_lift (p : LiftPath) : Bool :=
@@ -358,7 +358,7 @@ theorem all_three_lifts_have_witnessed_termini :
 
 /-- The bridge mapping: a `LiftPath` of `bule_cost = n` corresponds to
     `repeatedLift vacuumBuleUnit .opportunity n` — the canonical
-    `BuleyUnit` reached from the vacuum by `n` clinamen lifts on the
+    `BuleyUnit` reached from the vacuum by `n` swerve lifts on the
     `opportunity` face.
 
     We choose the `opportunity` face because the empirical lift is
@@ -368,14 +368,14 @@ theorem all_three_lifts_have_witnessed_termini :
     choice is a runtime convention; the cost theorem below holds
     independent of which single face is chosen because `repeatedLift`
     on any single face increments `buleyUnitScore` by exactly +1
-    per step (`clinamen_lift_score_strict_increment`). -/
+    per step (`swerve_lift_score_strict_increment`). -/
 def buleUnitOfLiftPath (p : LiftPath) : BuleyUnit :=
   repeatedLift vacuumBuleUnit BuleyFace.opportunity p.bule_cost
 
 /-- THE BRIDGE THEOREM.
 
     The `bule_cost` of any `LiftPath` equals the `buleyUnitScore` of
-    the `BuleyUnit` reached by walking the chain of clinamen lifts
+    the `BuleyUnit` reached by walking the chain of swerve lifts
     from the vacuum.
 
     This is the link between the operational ledger ("how many

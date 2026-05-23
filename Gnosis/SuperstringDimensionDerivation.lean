@@ -24,7 +24,7 @@ canonical axes, 10 is the unique total.
 | Bi-sided sides | 2 | breathing identity (lift/contract pair) | `lift_then_contract_round_trip_when_face_positive` |
 | Temporal phases | 3 | second-degree diff (past/present/future) | `secondDegreeDiff` (Triton) |
 | Vacuum reference | 1 | no-cloning theorem (unique zero-score state) | `vacuum_has_zero_score` |
-| Clinamen direction | 1 | the `+1` perturbation as forward generator | `clinamen_lift_score_strict_increment` |
+| Clinamen direction | 1 | the `+1` perturbation as forward generator | `swerve_lift_score_strict_increment` |
 
 Sum: `3 + 2 + 3 + 1 + 1 = 10`.
 
@@ -194,7 +194,7 @@ Witten's 1995 result identified the M-theory 11th dimension as the
 strengthens, a new spatial dimension of size `R ∝ g_s · l_s` opens
 up. In the cost-algebra, the analog of the coupling constant is the
 clinamen step itself — the smallest non-trivial perturbation, a
-single `+1`. Each clinamen lift is one quantum of coupling.
+single `+1`. Each swerve lift is one quantum of coupling.
 
 The identification is *discrete* where Witten's is continuous:
 physics has a continuous `g_s`; our calculus has a discrete `+1` per

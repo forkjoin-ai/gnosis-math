@@ -33,7 +33,7 @@ Reading:
 
 /-- A grounded residual carrier: the sacred oak has already-paid structure. -/
 def sacredOak : BuleyUnit :=
-  clinamenLift vacuumBuleUnit BuleyFace.diversity
+  swerveLift vacuumBuleUnit BuleyFace.diversity
 
 /-- The feast hall is the myopic attempted utility extracted from the oak. -/
 def feastHallAttempt : BuleyUnit :=
@@ -91,7 +91,7 @@ def selfConsume (b : BuleyUnit) : BuleyUnit :=
   clinamenContract b BuleyFace.waste
 
 def erysichthonBodyBeforeCollapse : BuleyUnit :=
-  clinamenLift vacuumBuleUnit BuleyFace.waste
+  swerveLift vacuumBuleUnit BuleyFace.waste
 
 def finalMemoryScrub (b : BuleyUnit) : Nat :=
   buleyUnitScore (selfConsume b)
@@ -109,7 +109,7 @@ def vacuumAgent : HungerAgent :=
 theorem sacred_oak_is_positive_residual :
     0 < buleyUnitScore sacredOak := by
   unfold sacredOak
-  rw [clinamen_lift_score_strict_increment, vacuum_has_zero_score]
+  rw [swerve_lift_score_strict_increment, vacuum_has_zero_score]
   decide
 
 /-- The oak cannot be freely cloned in the Bule cost algebra. -/
@@ -169,7 +169,7 @@ theorem selling_daughter_sheds_external_graph :
 theorem autocannibalism_contracts_to_vacuum :
     selfConsume erysichthonBodyBeforeCollapse = vacuumBuleUnit := by
   unfold selfConsume erysichthonBodyBeforeCollapse
-  simp [clinamenLift, clinamenContract, vacuumBuleUnit]
+  simp [swerveLift, clinamenContract, vacuumBuleUnit]
 
 theorem final_memory_scrub_zeroes_node_state :
     finalMemoryScrub erysichthonBodyBeforeCollapse = 0 := by

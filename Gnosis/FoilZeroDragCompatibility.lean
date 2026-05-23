@@ -215,7 +215,7 @@ theorem entropy_chaos_harvest_certificate_implies_zero_drag
 
 /-! ## Identity-lift tactic for chaos-backed FOIL runtime -/
 
-/-- The ordinary clinamen lift: advance one phase. -/
+/-- The ordinary swerve lift: advance one phase. -/
 def plusOneLift (n : Nat) : Nat := n + 1
 
 /-- Multiplicative identity lift: expose a multiplicative gate without changing

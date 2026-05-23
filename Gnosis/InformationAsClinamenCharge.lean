@@ -9,7 +9,7 @@ constraint. Entropy is how spread out the charge gets before contracting.
 
 This module proves three mechanics:
 
-1. bit_is_clinamen_unit: 0 = vacuum (score 0), 1 = one clinamen lift away
+1. bit_is_clinamen_unit: 0 = vacuum (score 0), 1 = one swerve lift away
    (score 1). A classical bit IS this binary topological state.
 
 2. computation_is_clinamen_redistribution: Any computable function
@@ -38,7 +38,7 @@ inductive Bit where
 /-- Interpret a bit as a Bule unit: 0 = vacuum, 1 = one waste-face lift. -/
 def bitToBule : Bit → BuleyUnit
   | .zero => vacuumBuleUnit
-  | .one => clinamenLift vacuumBuleUnit .waste
+  | .one => swerveLift vacuumBuleUnit .waste
 
 theorem bit_is_clinamen_unit : ∀ (b : Bit),
     (b = .zero → buleyUnitScore (bitToBule b) = 0) ∧
@@ -110,8 +110,8 @@ theorem lifting_is_computable (b : BuleyUnit) (f : BuleyFace) :
   refine ⟨1, fun _ => buleyUnitScore b + 1, ?_, ?_⟩
   · intro _b' _hEq; rfl
   · intro b' hEq
-    refine ⟨clinamenLift b' f, ?_⟩
-    rw [clinamen_lift_score_strict_increment, hEq]
+    refine ⟨swerveLift b' f, ?_⟩
+    rw [swerve_lift_score_strict_increment, hEq]
 
 /-- Redistribution is computable: rearrange faces without changing score. -/
 theorem redistribution_is_computable (b : BuleyUnit) :
@@ -186,10 +186,10 @@ theorem entropy_zero_implies_vacuum (b : BuleyUnit) (h : clinamenDispersalEntrop
 /-- Vacuum has zero entropy. -/
 theorem vacuum_has_zero_entropy : clinamenDispersalEntropy vacuumBuleUnit = 0 := rfl
 
-/-- Entropy increases with each clinamen lift (strictly). -/
-theorem entropy_increases_on_clinamen_lift (b : BuleyUnit) (f : BuleyFace) :
-    clinamenDispersalEntropy (clinamenLift b f) = clinamenDispersalEntropy b + 1 := by
-  rw [entropy_equals_score, clinamen_lift_score_strict_increment, entropy_equals_score]
+/-- Entropy increases with each swerve lift (strictly). -/
+theorem entropy_increases_on_swerve_lift (b : BuleyUnit) (f : BuleyFace) :
+    clinamenDispersalEntropy (swerveLift b f) = clinamenDispersalEntropy b + 1 := by
+  rw [entropy_equals_score, swerve_lift_score_strict_increment, entropy_equals_score]
 
 /-- A single-face Bule unit has entropy equal to that single face's value. -/
 theorem single_face_entropy (b : BuleyUnit) :

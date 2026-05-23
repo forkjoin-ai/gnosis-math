@@ -71,7 +71,7 @@ import Gnosis.NoCloningTaxEqualsBuleCost
     * `Gnosis.AntiTheory` — the anti-theory ledger; the catch is
       a methodology-pinning event.
     * `Gnosis.NoCloningTaxEqualsBuleCost` — the visibility/bule
-      ledger; the +1 bule paid for the catch is a clinamen lift
+      ledger; the +1 bule paid for the catch is a swerve lift
       from `VacuousNoExperimentSpecified` (the unnamed
       misattribution) to `NotYetFalsified` (the named correction).
 
@@ -151,7 +151,7 @@ def corrected_attribution : AttributionEvent :=
 /-- The bule cost of an attribution event.
 
       * `1` if the event was caught and corrected — one bule
-        paid for the visibility of the catch (a clinamen lift
+        paid for the visibility of the catch (a swerve lift
         from the void into the measured ledger).
       * `0` otherwise — the attribution slipped past unmeasured;
         the void absorbed it. By no-cloning, an unmeasured

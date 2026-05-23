@@ -77,7 +77,7 @@ namespace WaveMonotonicityFails
       • `bule_paid_in_this_wave` — the number of bule units paid
         for status-changing measurements during this wave, in the
         sense of `NoCloningTaxEqualsBuleCost`. Each is one
-        `clinamenLift` from the vacuum unit.
+        `swerveLift` from the vacuum unit.
 
       • `falsifications_added_this_wave` — the number of empirical
         claims that transitioned from `NotYetFalsified` to

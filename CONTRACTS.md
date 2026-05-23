@@ -108,7 +108,7 @@ import Gnosis.Braided.BraidedTower
 
 **Must prove (four theorems, zero sorry, zero axiom):**
 
-1. `attention_step_cost_is_one : ∀ q k v : BuleyUnit, (clinamenLift q .waste = q) ∨ (clinamenLift k .waste = k) ∨ (clinamenLift v .waste = v) ∨ (buleyUnitScore (clinamenLift q .waste) = buleyUnitScore q + 1)`
+1. `attention_step_cost_is_one : ∀ q k v : BuleyUnit, (swerveLift q .waste = q) ∨ (swerveLift k .waste = k) ∨ (swerveLift v .waste = v) ∨ (buleyUnitScore (swerveLift q .waste) = buleyUnitScore q + 1)`
    - Each Q/K/V update adds +1 to bule cost.
 
 2. `n_head_attention_cost_is_n : ∀ n t : Nat, (n * t) = (n * t)`
@@ -117,7 +117,7 @@ import Gnosis.Braided.BraidedTower
 3. `tower_level_is_attention_depth : towerPhaseCount [] = 1`
    - Tower level relates to attention depth (base case: empty tower = phase 1).
 
-4. `scaling_law_from_clinamen_budget : ∀ b : BuleyUnit, buleyUnitScore b ≤ buleyUnitScore (clinamenLift (clinamenLift (clinamenLift (clinamenLift b .waste) .opportunity) .diversity) .waste)`
+4. `scaling_law_from_clinamen_budget : ∀ b : BuleyUnit, buleyUnitScore b ≤ buleyUnitScore (swerveLift (swerveLift (swerveLift (swerveLift b .waste) .opportunity) .diversity) .waste)`
    - Model capacity bounded by clinamen budget (composing lifts increases score monotonically).
 
 5. `vacuum_is_optimal_initial_state : buleyUnitScore vacuumBuleUnit ≤ ∀ b : BuleyUnit, buleyUnitScore b`

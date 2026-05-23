@@ -22,7 +22,7 @@ import Gnosis.SpectralNoiseEquilibrium
       pinned) to `NotYetFalsified` (methodology pinned, no
       counterexamples yet) costs entropy admitted into the ledger.
 
-    • BULE CLINAMEN LIFT. A `clinamenLift` on a `BuleyUnit` raises
+    • BULE CLINAMEN LIFT. A `swerveLift` on a `BuleyUnit` raises
       the score of one face by exactly +1; the vacuum unit
       `vacuumBuleUnit` has score 0, and any non-vacuum unit can
       only be reached by a finite sequence of +1 lifts.
@@ -46,10 +46,10 @@ import Gnosis.SpectralNoiseEquilibrium
         from `VacuousNoExperimentSpecified` without a positive bule
         payment having been made.
 
-    (4) `each_lift_from_vacuum_to_definite_status_is_one_clinamen_lift`
-        — formal bridge to `Gnosis.SpectralNoiseEquilibrium.clinamenLift`:
+    (4) `each_lift_from_vacuum_to_definite_status_is_one_swerve_lift`
+        — formal bridge to `Gnosis.SpectralNoiseEquilibrium.swerveLift`:
         each +1 in the Anti-Theory bule ledger corresponds to exactly
-        one application of `clinamenLift` from `vacuumBuleUnit`.
+        one application of `swerveLift` from `vacuumBuleUnit`.
 
   Per-instance:
 
@@ -78,7 +78,7 @@ namespace NoCloningTaxEqualsBuleCost
 
 open Gnosis.AntiTheory (EmpiricalClaimStatus)
 open Gnosis.SpectralNoiseEquilibrium
-  (BuleyUnit BuleyFace vacuumBuleUnit clinamenLift buleyUnitScore)
+  (BuleyUnit BuleyFace vacuumBuleUnit swerveLift buleyUnitScore)
 
 -- ══════════════════════════════════════════════════════════
 -- THE MEASUREMENT EVENT
@@ -115,22 +115,22 @@ structure MeasurementEvent where
 
 /-- The structural BULE COST of a status transition, in `Nat`
     units of the same `+1`-clinamen-lift currency that
-    `Gnosis.SpectralNoiseEquilibrium.clinamenLift` admits.
+    `Gnosis.SpectralNoiseEquilibrium.swerveLift` admits.
 
     Concretely:
 
       • `VacuousNoExperimentSpecified → NotYetFalsified`:        +1
-        (one clinamen lift from the vacuum face — pinning a
+        (one swerve lift from the vacuum face — pinning a
          methodology raises visibility from "we did not look" to
          "we are looking, and so far it holds").
 
       • `VacuousNoExperimentSpecified → FalsifiedByMeasurement`: +1
-        (one clinamen lift from the vacuum face — pinning a
+        (one swerve lift from the vacuum face — pinning a
          methodology AND simultaneously hitting a counterexample
          is still ONE crossing of the visibility boundary).
 
       • `NotYetFalsified → FalsifiedByMeasurement`:              +1
-        (one clinamen lift — moving from "consistent so far" to
+        (one swerve lift — moving from "consistent so far" to
          "definitely refuted" raises visibility by one rung).
 
       • `NotYetFalsified → VacuousNoExperimentSpecified`:        +1
@@ -367,9 +367,9 @@ theorem cannot_clone_measurement_without_bule_payment
 
 /-- The "post-measurement" Bule unit corresponding to a
     measurement event. By convention, every status-changing
-    event is realised as exactly one `clinamenLift` on the
+    event is realised as exactly one `swerveLift` on the
     `waste` face of the vacuum Bule unit; the choice of face
-    is conventional, since `clinamenLift` raises the score by
+    is conventional, since `swerveLift` raises the score by
     `+1` regardless of face.
 
     Same-status events leave the Bule unit at the vacuum.
@@ -381,23 +381,23 @@ def buleUnitOfMeasurement (evt : MeasurementEvent) : BuleyUnit :=
   if evt.prior_status = evt.posterior_status then
     vacuumBuleUnit
   else
-    clinamenLift vacuumBuleUnit BuleyFace.waste
+    swerveLift vacuumBuleUnit BuleyFace.waste
 
 /-- Theorem: EACH-LIFT-FROM-VACUUM-TO-DEFINITE-STATUS-IS-ONE-
               CLINAMEN-LIFT.
 
-    Formal bridge to `Gnosis.SpectralNoiseEquilibrium.clinamenLift`.
+    Formal bridge to `Gnosis.SpectralNoiseEquilibrium.swerveLift`.
 
     For every `MeasurementEvent`, the Anti-Theory bule cost
     equals the `buleyUnitScore` of the Bule unit reached from
-    the vacuum by `clinamenLift` applied `bule_cost_of_measurement
+    the vacuum by `swerveLift` applied `bule_cost_of_measurement
     evt` times.
 
     The two ledgers are isomorphic in their cost accounting:
     each +1 in the Anti-Theory bule ledger corresponds to
-    exactly one `clinamenLift` application from `vacuumBuleUnit`,
+    exactly one `swerveLift` application from `vacuumBuleUnit`,
     and vice versa. -/
-theorem each_lift_from_vacuum_to_definite_status_is_one_clinamen_lift
+theorem each_lift_from_vacuum_to_definite_status_is_one_swerve_lift
     (evt : MeasurementEvent) :
     buleyUnitScore (buleUnitOfMeasurement evt)
       = bule_cost_of_measurement evt := by
@@ -406,24 +406,24 @@ theorem each_lift_from_vacuum_to_definite_status_is_one_clinamen_lift
   · rw [if_pos h, if_pos h]
     decide
   · rw [if_neg h, if_neg h]
-    -- `clinamenLift vacuumBuleUnit .waste = ⟨1, 0, 0⟩`,
+    -- `swerveLift vacuumBuleUnit .waste = ⟨1, 0, 0⟩`,
     -- whose score is `1`.
     decide
 
 /-- Corollary: every status-changing event corresponds to a
     Bule unit with score exactly `1`, i.e. it is reached from
-    the vacuum by exactly one clinamen lift. -/
-theorem status_changing_event_is_one_clinamen_lift_from_vacuum
+    the vacuum by exactly one swerve lift. -/
+theorem status_changing_event_is_one_swerve_lift_from_vacuum
     (evt : MeasurementEvent)
     (h : evt.prior_status ≠ evt.posterior_status) :
     buleyUnitScore (buleUnitOfMeasurement evt) = 1 := by
-  rw [each_lift_from_vacuum_to_definite_status_is_one_clinamen_lift]
+  rw [each_lift_from_vacuum_to_definite_status_is_one_swerve_lift]
   unfold bule_cost_of_measurement
   rw [if_neg h]
 
 /-- Corollary: every same-status event corresponds to the
-    vacuum Bule unit, i.e. zero clinamen lifts. -/
-theorem same_status_event_is_zero_clinamen_lifts
+    vacuum Bule unit, i.e. zero swerve lifts. -/
+theorem same_status_event_is_zero_swerve_lifts
     (evt : MeasurementEvent)
     (h : evt.prior_status = evt.posterior_status) :
     buleUnitOfMeasurement evt = vacuumBuleUnit := by
@@ -446,7 +446,7 @@ theorem same_status_event_is_zero_clinamen_lifts
 
     Witnesses: 30 (the rollback rate measurement).
 
-    Bule cost: +1 (one clinamen lift, the visibility boundary
+    Bule cost: +1 (one swerve lift, the visibility boundary
     of the falsification ledger has been crossed by exactly one
     rung). -/
 def wave_4_qwen_coder_7b_measurement_event : MeasurementEvent :=
@@ -501,9 +501,9 @@ theorem wave_8_llama_1b_admission_costs_one_bule :
               CLINAMEN-LIFT-FROM-VACUUM.
 
     Bridge instance: each of the two named per-instance events
-    realises as exactly one `clinamenLift` application on the
+    realises as exactly one `swerveLift` application on the
     vacuum Bule unit, with score `1`. Decide-checked. -/
-theorem both_named_events_are_one_clinamen_lift_from_vacuum :
+theorem both_named_events_are_one_swerve_lift_from_vacuum :
     buleyUnitScore (buleUnitOfMeasurement
         wave_4_qwen_coder_7b_measurement_event) = 1
     ∧ buleyUnitScore (buleUnitOfMeasurement
@@ -535,7 +535,7 @@ theorem wave_4_and_wave_8_pay_the_same_bule_cost :
     The named per-instance events both:
       (a) are status-changing (so they pay a positive bule cost),
       (b) cost exactly one bule, and
-      (c) realise as exactly one `clinamenLift` from the vacuum.
+      (c) realise as exactly one `swerveLift` from the vacuum.
 
     Decide-checked. -/
 theorem the_no_cloning_tax_is_the_bule_cost :
@@ -547,7 +547,7 @@ theorem the_no_cloning_tax_is_the_bule_cost :
     -- (b) one bule each
     ∧ bule_cost_of_measurement wave_4_qwen_coder_7b_measurement_event = 1
     ∧ bule_cost_of_measurement wave_8_llama_1b_admission_event       = 1
-    -- (c) realised as one clinamen lift from vacuum
+    -- (c) realised as one swerve lift from vacuum
     ∧ buleyUnitScore (buleUnitOfMeasurement
         wave_4_qwen_coder_7b_measurement_event) = 1
     ∧ buleyUnitScore (buleUnitOfMeasurement

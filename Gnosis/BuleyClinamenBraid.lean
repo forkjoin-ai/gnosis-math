@@ -7,7 +7,7 @@ import Gnosis.Braided.BraidedInfinity
 Bridges the Bule unit's three faces (`waste`, `opportunity`, `diversity`)
 to the braided-infinity cycle structure of `Gnosis.BraidedInfinity`.
 
-The Bule clinamen lift is a `+1` step on a chosen face. When the face
+The Bule swerve lift is a `+1` step on a chosen face. When the face
 choice itself is cycled — waste → opportunity → diversity → waste — the
 sequence is exactly a `BraidedAsymptote` of `phaseCount = 3`.
 
@@ -18,7 +18,7 @@ This module proves:
 * a partial iteration of length `1` or `2` does not return;
 * the canonical Bule braid is a concrete `BraidedAsymptote` instance.
 
-Together with `clinamen_lift_residue_is_universal_plus_one`, this anchors
+Together with `swerve_lift_residue_is_universal_plus_one`, this anchors
 the Bule clinamen as the same `+1` perturbation that generates the
 braided infinity, not a separate object that merely resembles it.
 

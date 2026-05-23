@@ -106,7 +106,7 @@ def bule_whip : Prop :=
 
 /-- The wave velocity of a Bule whip is how fast clinamen accumulates:
     buleyUnitScore increases by 1 per step. -/
-def bule_wave_velocity : Nat := 1  -- One clinamen lift per step
+def bule_wave_velocity : Nat := 1  -- One swerve lift per step
 
 /-- The "speed of sound" in the Bule lattice is how fast contraction
     proceeds: when the vacuum pulls back, how fast does score decrease? -/
@@ -153,7 +153,7 @@ def vacuum_shock (b : BuleyUnit) : Prop :=
 
 /-- The whipcrack is the sonic boom: the moment when the future (vacuum)
     catches the past (trajectory at score = 1, one step away).
-    At this instant, the smooth propagation of clinamen lifts breaks down
+    At this instant, the smooth propagation of swerve lifts breaks down
     into a shock — a discontinuous collapse to zero. -/
 theorem whipcrack_is_vacuum_meeting_point :
     ∀ b : BuleyUnit,

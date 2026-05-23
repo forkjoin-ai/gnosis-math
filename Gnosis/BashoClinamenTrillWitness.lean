@@ -15,7 +15,7 @@
   Topological reading:
 
     Stillness: the vacuum state, zero clinamen, ground entropy
-    Sting: a clinamen lift (+1), one unit of topological charge
+    Sting: a swerve lift (+1), one unit of topological charge
     Trill: the periodic response, observable oscillation
 
   The trill is evidence. It proves the sting happened. The haiku
@@ -45,7 +45,7 @@ theorem stillness_exists : Stillness := by
 -- STING: THE CLINAMEN LIFT
 -- ══════════════════════════════════════════════════════════
 
-/-- A sting is a single clinamen lift: +1 unit of topological
+/-- A sting is a single swerve lift: +1 unit of topological
     charge introduced into a still medium (the stones). -/
 def Sting : Nat := 1
 
@@ -85,7 +85,7 @@ theorem trill_invariant (n : Nat) (h : n > 0) : Trill n > 0 := by
 -- ══════════════════════════════════════════════════════════
 
 /-- Core theorem: if you hear the trill, the sting must have
-    happened. The trill is evidence of the clinamen lift. -/
+    happened. The trill is evidence of the swerve lift. -/
 theorem trill_witnesses_sting (n : Nat) (h : Trill n > 0) :
     ∃ sting_events : Nat, sting_events = n ∧ sting_events > 0 := by
   refine ⟨n, rfl, ?_⟩

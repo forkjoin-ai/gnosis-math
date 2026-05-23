@@ -20,7 +20,7 @@
          cycles in a space.  The ropelength = total Betti.
 
     (R2) Clinamen cost: each computational step lifts +1 Betti
-         (one clinamen lift = one unit of topological charge).
+         (one swerve lift = one unit of topological charge).
          k steps → Betti budget = k.
 
     (R3) NP solution space for n boolean variables has β₁ = 2^n
@@ -70,7 +70,7 @@ def ropelength (β : BettiSig) : Nat :=
 -- CLINAMEN COST (computational charge from Gnosis primitives)
 -- ══════════════════════════════════════════════════════════
 
-/-- Each computational step costs exactly one clinamen lift.
+/-- Each computational step costs exactly one swerve lift.
     In the Betti calculus, a step = +1 topological charge.
     k steps → total Betti budget = k. -/
 def bettiCostPerStep : Nat := 1

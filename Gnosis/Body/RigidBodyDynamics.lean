@@ -3,6 +3,7 @@ import Gnosis.Body.RigidBody
 import Gnosis.Body.Joints
 import Gnosis.Body.Stability
 import Gnosis.Body.FacialActionCoding
+import Gnosis.Body.KinSelection
 
 /-!
 # Rigid-Body Dynamics — Aggregator / Build Root
@@ -18,6 +19,7 @@ Single import surface for the Lean-verified rigid-body dynamics consumed by the
 * `Joints`    — hinge/ball/fixed limits with `clampAngle_admissible`.
 * `Stability` — support-polygon containment via exact integer cross-product.
 * `FacialActionCoding` — FACS Action Units + somatic → emotion → expression.
+* `KinSelection` — inclusive fitness / Hamilton's rule (the payoff of pan).
 
 `scripts/extract-lean-body-constants.ts` extracts the verified constants/limits
 here into `aeon-corpus/src/generated/body_constants.rs` and the FACS tables into

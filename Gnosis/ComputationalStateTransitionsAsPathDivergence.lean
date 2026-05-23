@@ -20,7 +20,7 @@ This module proves five mechanics:
    from vacuum) − (how far the alternative Q travels from vacuum). Optimal
    computation takes the shortest vacuum-relative distance.
 
-3. branching_factor_is_clinamen_spread: N-way branch point at a state
+3. branching_factor_is_swerve_spread: N-way branch point at a state
    = spreading available clinamen across N possible next states. Total
    clinamen at branch = sum of clinamen across all branches.
 
@@ -103,9 +103,9 @@ theorem divergence_of_vacuum : stateDivergence terminalState = 0 := by
   exact vacuum_has_zero_score
 
 theorem divergence_monotone_on_lift (b : BuleyUnit) (f : BuleyFace) :
-    stateDivergence (clinamenLift b f) = stateDivergence b + 1 := by
+    stateDivergence (swerveLift b f) = stateDivergence b + 1 := by
   unfold stateDivergence
-  exact clinamen_lift_score_strict_increment b f
+  exact swerve_lift_score_strict_increment b f
 
 /-! ## Part 2: Decision Cost as Path Divergence -/
 
@@ -231,7 +231,7 @@ theorem decision_cost_equals_path_length (p q : Path) :
 /-- Spec-level: branching factor identity and weakened conservation.
     The precise sum-conservation across branches is enforced at the runtime
     scheduler layer. -/
-theorem branching_factor_is_clinamen_spread (d : DecisionPoint) :
+theorem branching_factor_is_swerve_spread (d : DecisionPoint) :
     branchingFactor d = d.branches.length := by
   rfl
 

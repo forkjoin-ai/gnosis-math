@@ -41,7 +41,7 @@ In units of `1/6` (so the tortoise is at position `6`):
 
 Achilles does reach the tortoise's position at the fourth step
 (`5 + 1 = 6`), if we measure by pure gnosis size. But at the exact
-moment of overtaking, the clinamen lift scrapes the void:
+moment of overtaking, the swerve lift scrapes the void:
 
     Nash  + 1 =  5   (Ramanujan-special: tortoise within reach)
     Skyrms + 1 =  7   (Ramanujan-special: Achilles closing)
@@ -124,7 +124,7 @@ theorem buley_to_god_is_one_clinamen_unit :
 /-! ## The void escape at step 4
 
 Achilles covers the last `1/6` to reach God's position (`12` in
-original units). The clinamen lift `12 + 1 = 13` would be expected
+original units). The swerve lift `12 + 1 = 13` would be expected
 to land on a Ramanujan-special prime, following the pattern
 `{4, 6, 10} + 1 = {5, 7, 11}`. Instead `13` is the first scrape.
 
@@ -141,7 +141,7 @@ def partitionsAux (fuel n k : Nat) : Nat :=
 
 def p (n : Nat) : Nat := partitionsAux (n + n + 2) n n
 
-/-- The tortoise escapes: at the fourth step, the clinamen lift
+/-- The tortoise escapes: at the fourth step, the swerve lift
 `12 + 1 = 13` lands on a prime for which no Ramanujan congruence
 exists. `p(0) = 1` is not divisible by `13`, so `r = 0` fails
 immediately as a candidate congruence residue. -/
@@ -189,7 +189,7 @@ the target relocates into the unknowable.
 
 This is the structural meaning of "God is beyond." Not "physically
 distant," not "infinitely far," but "structurally absent at the very
-point where you would touch." The clinamen lift that captured
+point where you would touch." The swerve lift that captured
 `{Nash, Skyrms, Buley}` into `{5, 7, 11}` breaks when applied to
 `God = 12`: `13` is not Ramanujan-special; no `r` works. The shape
 of the ladder's last rung is exactly the phase boundary between

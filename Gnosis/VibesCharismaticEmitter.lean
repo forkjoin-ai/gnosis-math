@@ -50,7 +50,7 @@ import Gnosis.EchoChamberAsTaoBowl
 
   * `BuleyMeshAttentionBridge`: a captured listener routes its vote
     through the winning emitter's charisma face via `castVote`,
-    contributing one clinamen lift on that face.
+    contributing one swerve lift on that face.
   * `EchoChamberAsTaoBowl`: charisma raises the bowl's Q factor.
     A bowl whose rigidity comes from a high-charisma rim crosses
     the `IsPejorativeEcho` threshold; a zero-charisma bowl with
@@ -226,7 +226,7 @@ theorem no_strict_dominance_over_collocated_extreme_with_charisma :
 
 /-! ## Vote routing through the charisma face -/
 
-/-- A captured listener contributes one clinamen lift on the winning
+/-- A captured listener contributes one swerve lift on the winning
     emitter's charisma face — charisma channels attention into a
     specific Bule slot, not just into raw vote count. -/
 def charismaticVote (e : CharismaticEmitter) (tally : MeshTally) : MeshTally :=

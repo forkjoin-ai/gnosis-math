@@ -16,7 +16,7 @@ the repository's token/tally mechanics.
 Reading:
 
 - A bean is a discrete vote token: one `MeshVote`, hence one `+1`
-  clinamen lift on a `MeshTally`.
+  swerve lift on a `MeshTally`.
 - Cyamites is modeled as the local cultivator/operator who supplies those
   finite tokens for voting and allocation.
 - Bean taboo is modeled as refusal of the finite token. With no token cast,

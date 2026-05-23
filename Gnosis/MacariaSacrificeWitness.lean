@@ -20,7 +20,7 @@ Reading:
 - The oracle's demand is modeled as a hard recovery quota of one.
 - The lottery convention is the Skyrms layer; Macaria's voluntary absorption
   reaches the Buley layer.
-- Her act is a one-unit clinamen lift: one high-density cost token clears the
+- Her act is a one-unit swerve lift: one high-density cost token clears the
   Athens system's residual debt.
 - The named spring is modeled as a positive structural residual that remains
   available after the cost is paid.
@@ -47,7 +47,7 @@ deriving DecidableEq, Repr
 
 /-- Macaria's token is one intentional lift from vacuum. -/
 def macariaToken : BuleyUnit :=
-  clinamenLift vacuumBuleUnit BuleyFace.waste
+  swerveLift vacuumBuleUnit BuleyFace.waste
 
 /-- A local residual atlas entry for the permanent spring. This mirrors the
 structural-residual shape without importing the broader catalog target. -/
@@ -93,7 +93,7 @@ def macarianOracleStall : OracleStallState :=
 theorem macaria_token_score_is_one :
     buleyUnitScore macariaToken = 1 := by
   unfold macariaToken
-  rw [clinamen_lift_score_strict_increment, vacuum_has_zero_score]
+  rw [swerve_lift_score_strict_increment, vacuum_has_zero_score]
 
 /-- The oracle quota is cleared: `wakeLoad + carriedDebt <= token score`. -/
 theorem macaria_clears_recovery_quota :
@@ -120,7 +120,7 @@ theorem voluntary_absorption_reaches_buley_rung :
   unfold reachesBuleyRung
   exact ⟨rfl, by decide⟩
 
-/-- The same one-unit act is the clinamen lift needed to break the stall. -/
+/-- The same one-unit act is the swerve lift needed to break the stall. -/
 theorem macaria_injects_one_clinamen :
     buleyUnitScore macariaToken =
       buleyUnitScore vacuumBuleUnit + NashSkyrmsBuleyGodLadder.clinamen := by

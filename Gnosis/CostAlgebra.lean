@@ -37,9 +37,9 @@ namespace Gnosis
 namespace CostAlgebra
 
 open Gnosis.SpectralNoiseEquilibrium
-  (BuleyUnit BuleyFace buleyUnitScore vacuumBuleUnit clinamenLift
-   vacuum_has_zero_score clinamen_lift_score_strict_increment
-   clinamen_lift_commutes cyclePermute cycle_permute_preserves_score)
+  (BuleyUnit BuleyFace buleyUnitScore vacuumBuleUnit swerveLift
+   vacuum_has_zero_score swerve_lift_score_strict_increment
+   swerve_lift_commutes cyclePermute cycle_permute_preserves_score)
 open Gnosis.RealityMesh (OperationalMesh repeatedLiftSeq)
 
 /-! ## The cost-algebra structure -/
@@ -153,7 +153,7 @@ basis (a function `F → S` whose images all have score 1), and the
 induced `lift s f = compose s (basis f)`. -/
 
 /-- A `CostFaceBasis` for a `CostAlgebra` is a face-indexed family of
-unit-score elements — these become the per-face clinamen lifts in the
+unit-score elements — these become the per-face swerve lifts in the
 induced mesh. -/
 structure CostFaceBasis {S : Type} (A : CostAlgebra S) (F : Type) where
   unit : F → S
@@ -193,11 +193,11 @@ def buleyFaceBasis : CostFaceBasis buleyCostAlgebra BuleyFace :=
     unit_score := buley_face_unit_score }
 
 /-- Composing the Bule unit with `buleyFaceUnit f` is the same as a
-`clinamenLift` on face `f`. The CostAlgebra perspective and the
+`swerveLift` on face `f`. The CostAlgebra perspective and the
 OperationalMesh perspective agree on the Bule unit. -/
-theorem buley_compose_with_face_unit_is_clinamen_lift
+theorem buley_compose_with_face_unit_is_swerve_lift
     (b : BuleyUnit) (f : BuleyFace) :
-    BuleyUnit.add b (buleyFaceUnit f) = clinamenLift b f := by
+    BuleyUnit.add b (buleyFaceUnit f) = swerveLift b f := by
   cases b with
   | mk w o d =>
     cases f <;>

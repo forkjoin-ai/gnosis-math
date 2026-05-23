@@ -63,7 +63,7 @@ theorem nonvacuum_has_positive_entropy (b : BuleyUnit) (h : b ≠ vacuumBuleUnit
 
 /-- The vacuum is the *maximum disorder* state paradoxically: it has zero
     local structure (all faces = 0) but infinite global reach (unbounded
-    path-integration via clinamen lifts from vacuum to any state).
+    path-integration via swerve lifts from vacuum to any state).
 
     Heat death is the state of uniform temperature (no gradients).
     The vacuum is uniform structurelessness: from its perspective, all
@@ -71,7 +71,7 @@ theorem nonvacuum_has_positive_entropy (b : BuleyUnit) (h : b ≠ vacuumBuleUnit
 theorem vacuum_is_maximum_structural_reach :
     -- From the vacuum, every Bule unit is reachable in finite lifts
     ∀ b : BuleyUnit, ∃ n : Nat,
-      -- Apply n clinamen lifts starting from vacuum, reach any b
+      -- Apply n swerve lifts starting from vacuum, reach any b
       -- (by accumulating the three faces in sequence)
       buleyUnitScore b = n := by
   intro b
@@ -115,10 +115,10 @@ def second_law_is_lyapunov :
     ∀ b b' : BuleyUnit,
       -- If b' is the result of a natural (spontaneous) process from b,
       -- then the Bule score cannot decrease
-      (∃ f : BuleyFace, b' = clinamenLift b f) →
+      (∃ f : BuleyFace, b' = swerveLift b f) →
       buleyUnitScore b ≤ buleyUnitScore b' := by
   intro b b' ⟨f, hb'⟩
-  rw [hb', clinamen_lift_score_strict_increment]
+  rw [hb', swerve_lift_score_strict_increment]
   exact Nat.le_succ _
 
 /-- The arrow of time is the one-way direction of increasing Bule charge.
@@ -132,7 +132,7 @@ theorem arrow_points_from_vacuum_to_structure :
     (∀ b : BuleyUnit, b ≠ vacuumBuleUnit →
       ∃ n : Nat, n > 0 ∧ buleyUnitScore b = n) ∧
     -- (3) The arrow: time flows from low Bule (near vacuum) to high Bule
-    -- by accumulating clinamen lifts (increasing disorder / spreading charge)
+    -- by accumulating swerve lifts (increasing disorder / spreading charge)
     (∀ b : BuleyUnit,
       buleyUnitScore b = 0 → b = vacuumBuleUnit) := by
   refine ⟨?_, ?_, ?_⟩
@@ -257,7 +257,7 @@ theorem vacuum_arrow_unifies_all_irreversibility :
       b = vacuumBuleUnit ∨ (∃ n : Nat, n > 0 ∧ buleyUnitScore b = n)) ∧
     -- (3) Spontaneous lifts never decrease Bule charge (Second Law)
     (∀ b : BuleyUnit, ∀ f : BuleyFace,
-      buleyUnitScore b ≤ buleyUnitScore (clinamenLift b f)) := by
+      buleyUnitScore b ≤ buleyUnitScore (swerveLift b f)) := by
   refine ⟨⟨vacuumBuleUnit, rfl, ?_⟩, ?_, ?_⟩
   · intro b; exact ⟨buleyUnitScore b, rfl⟩
   · intro b
@@ -277,9 +277,9 @@ theorem vacuum_arrow_unifies_all_irreversibility :
           have hW_O : w = 0 ∧ o = 0 := Nat.add_eq_zero_iff.mp hWO_D.left
           exact h hW_O.left hW_O.right hWO_D.right
   · intro b f
-    -- A clinamen lift increments the score by exactly 1, so the pre-lift
+    -- A swerve lift increments the score by exactly 1, so the pre-lift
     -- score is at most the post-lift score (Nat.le_succ).
-    rw [clinamen_lift_score_strict_increment]
+    rw [swerve_lift_score_strict_increment]
     exact Nat.le_succ _
 
 end VacuumAsTimeArrow

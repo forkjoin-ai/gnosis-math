@@ -24,7 +24,7 @@ import Gnosis.TemporaryNoise
   UNIVERSAL PRINCIPLE: interference creates all observed structure at every era.
 
   Note (2026-05-02 Init-only sweep): The originals depended on a Mathlib-style
-  proof environment with `(repeat n)` operator notation, `clinamen_spread_at_step`,
+  proof environment with `(repeat n)` operator notation, `swerve_spread_at_step`,
   `first_lift_is_nonzero`, `fold_creates_coherence`, `cooling_trajectory`,
   `constructive_amplifies`, `epoch_inflation`, `MeshOperator`, etc. Many of those
   upstream identifiers no longer exist in the Init-only / 4.28.0 reduction. The
@@ -48,7 +48,7 @@ open TemporaryNoise
 -- ══════════════════════════════════════════════════════════════════════════════
 
 /-- During inflation, the vacuum lifts and immediately branches exponentially.
-    Spec-level: the spread-doubling identity `clinamen_spread_at_step (steps + 1) = 2 * …`
+    Spec-level: the spread-doubling identity `swerve_spread_at_step (steps + 1) = 2 * …`
     is enforced at the runtime calibration layer; the structural claim here is
     the strict successor step. -/
 theorem first_lift_is_inflation : ∀ (steps : Nat), steps < steps + 1 := by

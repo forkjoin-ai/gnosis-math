@@ -10,7 +10,7 @@ This module formalizes Taylor's wave-11 insight: the universe charges
 a cost for the complexity of knots. That cost *maps to* the Bule unit;
 that complexity *maps to* the `buleyUnitScore`.
 
-Five field labels — knot crossings, Bule clinamen lifts, no-cloning tax
+Five field labels — knot crossings, Bule swerve lifts, no-cloning tax
 quanta, Shannon entropy admissions, conjecture-complex Betti `b₁` — name
 the same accounting object: a non-trivial 1-cycle in conjecture-space
 that doesn't bound is a knot, and its crossing number is the universe's
@@ -27,7 +27,7 @@ tax for that complexity.
   are the same.
 * `unknot_has_zero_bule_cost` — `vacuumBuleUnit` maps to the unknot
   (zero crossings = zero tax).
-* `clinamen_lift_adds_one_crossing` — each `clinamenLift` literally
+* `swerve_lift_adds_one_crossing` — each `swerveLift` literally
   adds one crossing.
 
 ## Session ledger
@@ -74,8 +74,8 @@ namespace Gnosis
 namespace KnotComplexityAsBuleCost
 
 open Gnosis.SpectralNoiseEquilibrium
-  (BuleyUnit BuleyFace buleyUnitScore vacuumBuleUnit clinamenLift
-   vacuum_has_zero_score clinamen_lift_score_strict_increment)
+  (BuleyUnit BuleyFace buleyUnitScore vacuumBuleUnit swerveLift
+   vacuum_has_zero_score swerve_lift_score_strict_increment)
 open Gnosis.BraidedTower (towerBraid towerPhaseCount)
 
 /-! ## The KnotDiagram structure -/
@@ -142,21 +142,21 @@ theorem unknot_has_zero_bule_cost :
   exact vacuum_has_zero_score
 
 /-- The "lift adds a crossing" theorem. For any `BuleyUnit b` and
-`BuleyFace f`, applying `clinamenLift` literally adds one crossing to
-the natural knot. Each clinamen lift = one new crossing. -/
-theorem clinamen_lift_adds_one_crossing (b : BuleyUnit) (f : BuleyFace) :
-    (knot_of_buley_unit (clinamenLift b f)).crossing_count
+`BuleyFace f`, applying `swerveLift` literally adds one crossing to
+the natural knot. Each swerve lift = one new crossing. -/
+theorem swerve_lift_adds_one_crossing (b : BuleyUnit) (f : BuleyFace) :
+    (knot_of_buley_unit (swerveLift b f)).crossing_count
       = (knot_of_buley_unit b).crossing_count + 1 := by
   unfold knot_of_buley_unit
-  show buleyUnitScore (clinamenLift b f) = buleyUnitScore b + 1
-  exact clinamen_lift_score_strict_increment b f
+  show buleyUnitScore (swerveLift b f) = buleyUnitScore b + 1
+  exact swerve_lift_score_strict_increment b f
 
-/-- A clinamen lift adds exactly one Bule unit of cost. -/
-theorem clinamen_lift_adds_one_bule_cost (b : BuleyUnit) (f : BuleyFace) :
-    bule_cost_of_knot (knot_of_buley_unit (clinamenLift b f))
+/-- A swerve lift adds exactly one Bule unit of cost. -/
+theorem swerve_lift_adds_one_bule_cost (b : BuleyUnit) (f : BuleyFace) :
+    bule_cost_of_knot (knot_of_buley_unit (swerveLift b f))
       = bule_cost_of_knot (knot_of_buley_unit b) + 1 := by
   unfold bule_cost_of_knot
-  exact clinamen_lift_adds_one_crossing b f
+  exact swerve_lift_adds_one_crossing b f
 
 /-! ## Session falsifications as 1-crossing knots
 
@@ -297,7 +297,7 @@ theorem enneon_tower_is_nine_crossing_knot :
 
 /-! ## The five-label identity, mechanized
 
-Knot crossings = Bule clinamen lifts = no-cloning tax quanta = Shannon
+Knot crossings = Bule swerve lifts = no-cloning tax quanta = Shannon
 entropy admissions = conjecture-complex `b₁`. The chain of `rfl`s
 below witnesses the identity at the level of natural numbers — every
 intermediate step is the same `Nat`. -/

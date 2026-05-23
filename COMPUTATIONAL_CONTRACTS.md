@@ -40,7 +40,7 @@
 **Must prove**:
 1. `decision_is_path_divergence`: Computational state transition (A → B) = choosing a clinamen trajectory from one buleyUnitScore configuration to another; multiple choices = multiple divergent paths
 2. `decision_cost_equals_path_length`: Cost of choosing path P over path Q = (distance P travels away from vacuum) - (distance Q travels away from vacuum); optimal computation takes the shortest vacuum-relative path
-3. `branching_factor_is_clinamen_spread`: N-way branch point = spreading available clinamen across N possible next states; total clinamen at decision node = sum across all branches
+3. `branching_factor_is_swerve_spread`: N-way branch point = spreading available clinamen across N possible next states; total clinamen at decision node = sum across all branches
 4. `optimal_decision_minimizes_future_regret`: Best computational choice at step i = the one that leaves maximum clinamen to spend on future steps; greedy choice = locally maximizing return-to-vacuum trajectory
 5. `computational_complexity_is_path_divergence`: P-class problems = staying on polynomial-length paths from start to vacuum; NP-class = requiring exponential-length paths; P ≠ NP because exponential paths are irreversible (cannot compress back to polynomial without losing information)
 

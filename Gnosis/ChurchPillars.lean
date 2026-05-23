@@ -922,12 +922,12 @@ Anchor: the big-bang reach from the vacuum.
 
 Already mechanized in `Gnosis.SpectralNoiseEquilibrium.vacuum_reaches_any_bule`
 and reflected here as a third anchor for symmetry: every Bule unit is
-reachable from the vacuum by a finite sequence of clinamen lifts. The
+reachable from the vacuum by a finite sequence of swerve lifts. The
 present cost-state is the past's accumulated `+1` perturbations.
 -/
 
 /-- Past-pillar anchor: the big-bang reach. Every Bule unit is
-reached from the vacuum by `score`-many clinamen lifts. The present is
+reached from the vacuum by `score`-many swerve lifts. The present is
 the past's deposit. -/
 theorem past_pillar_big_bang_anchor (b : Gnosis.SpectralNoiseEquilibrium.BuleyUnit) :
     Gnosis.SpectralNoiseEquilibrium.vacuumToBule b = b :=

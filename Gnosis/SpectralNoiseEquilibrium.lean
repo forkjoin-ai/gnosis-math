@@ -616,7 +616,7 @@ theorem recoverable_information_casts_positive_bule_shadow
   show 0 < shadowHeatQuanta unitThermodynamicShadow p
   exact recoverable_information_casts_positive_thermodynamic_shadow h
 
-/-! ## Vacuum and the +1 clinamen lift on the Bule unit -/
+/-! ## Vacuum and the +1 swerve lift on the Bule unit -/
 
 /-- The vacuum Bule unit: all three faces zero, score zero. The operational
 vacuum of the calculus — no waste, no unspent opportunity, no diversity
@@ -632,23 +632,23 @@ inductive BuleyFace where
   | diversity
   deriving DecidableEq, Repr
 
-/-- The +1 clinamen lift on a Bule unit: bump the chosen face by one. The
+/-- The +1 swerve lift on a Bule unit: bump the chosen face by one. The
 unit-magnitude perturbation that, applied finitely many times to the
 vacuum, reaches any Bule unit in the lattice. The plus-residue per step is
 exactly +1, matching the universal-clinamen catalog. -/
-def clinamenLift (b : BuleyUnit) : BuleyFace → BuleyUnit
+def swerveLift (b : BuleyUnit) : BuleyFace → BuleyUnit
   | .waste       => { b with waste := b.waste + 1 }
   | .opportunity => { b with opportunity := b.opportunity + 1 }
   | .diversity   => { b with diversity := b.diversity + 1 }
 
-theorem clinamen_lift_score_strict_increment
+theorem swerve_lift_score_strict_increment
     (b : BuleyUnit) (f : BuleyFace) :
-    buleyUnitScore (clinamenLift b f) = buleyUnitScore b + 1 := by
-  cases f <;> unfold clinamenLift buleyUnitScore <;> simp [Nat.add_assoc, Nat.add_comm, Nat.add_left_comm]
+    buleyUnitScore (swerveLift b f) = buleyUnitScore b + 1 := by
+  cases f <;> unfold swerveLift buleyUnitScore <;> simp [Nat.add_assoc, Nat.add_comm, Nat.add_left_comm]
 
-/-- The −1 clinamen contraction: the dual of `clinamenLift`. On Nat, faces
+/-- The −1 clinamen contraction: the dual of `swerveLift`. On Nat, faces
     that are already zero stay zero (saturating subtraction), so contraction is
-    a partial inverse and round-trips with `clinamenLift` only when the chosen
+    a partial inverse and round-trips with `swerveLift` only when the chosen
     face is strictly positive. The pair (lift, contract) is the breathing
     operator on the Bule lattice: expand by +1, contract by −1, matching the
     plus/minus residues catalogued in `UniversalClinamenPlusOne`. -/
@@ -663,32 +663,32 @@ theorem lift_contract_round_trip_when_face_positive
          | .waste => 0 < b.waste
          | .opportunity => 0 < b.opportunity
          | .diversity => 0 < b.diversity) :
-    clinamenLift (clinamenContract b f) f = b := by
+    swerveLift (clinamenContract b f) f = b := by
   cases b with | mk w o d =>
   cases f
-  · unfold clinamenLift clinamenContract; dsimp at h; rw [Nat.sub_add_cancel h]
-  · unfold clinamenLift clinamenContract; dsimp at h; rw [Nat.sub_add_cancel h]
-  · unfold clinamenLift clinamenContract; dsimp at h; rw [Nat.sub_add_cancel h]
-/-- Repeated clinamen lift on a single face. -/
+  · unfold swerveLift clinamenContract; dsimp at h; rw [Nat.sub_add_cancel h]
+  · unfold swerveLift clinamenContract; dsimp at h; rw [Nat.sub_add_cancel h]
+  · unfold swerveLift clinamenContract; dsimp at h; rw [Nat.sub_add_cancel h]
+/-- Repeated swerve lift on a single face. -/
 def repeatedLift (b : BuleyUnit) (f : BuleyFace) : Nat → BuleyUnit
   | 0 => b
-  | n + 1 => clinamenLift (repeatedLift b f n) f
+  | n + 1 => swerveLift (repeatedLift b f n) f
 
 theorem repeated_lift_score (b : BuleyUnit) (f : BuleyFace) (n : Nat) :
     buleyUnitScore (repeatedLift b f n) = buleyUnitScore b + n := by
   induction n with
   | zero => rfl
   | succ k ih =>
-      show buleyUnitScore (clinamenLift (repeatedLift b f k) f)
+      show buleyUnitScore (swerveLift (repeatedLift b f k) f)
             = buleyUnitScore b + (k + 1)
-      rw [clinamen_lift_score_strict_increment, ih, Nat.add_assoc]
+      rw [swerve_lift_score_strict_increment, ih, Nat.add_assoc]
 
 theorem repeated_waste_lift_from_vacuum (n : Nat) :
     repeatedLift vacuumBuleUnit .waste n = ⟨n, 0, 0⟩ := by
   induction n with
   | zero => rfl
   | succ k ih =>
-      show clinamenLift (repeatedLift vacuumBuleUnit .waste k) .waste
+      show swerveLift (repeatedLift vacuumBuleUnit .waste k) .waste
             = ⟨k + 1, 0, 0⟩
       rw [ih]; rfl
 
@@ -697,7 +697,7 @@ theorem repeated_opportunity_lift_from_waste (w n : Nat) :
   induction n with
   | zero => rfl
   | succ k ih =>
-      show clinamenLift (repeatedLift ⟨w, 0, 0⟩ .opportunity k) .opportunity
+      show swerveLift (repeatedLift ⟨w, 0, 0⟩ .opportunity k) .opportunity
             = ⟨w, k + 1, 0⟩
       rw [ih]; rfl
 
@@ -706,7 +706,7 @@ theorem repeated_diversity_lift_from_opportunity (w o n : Nat) :
   induction n with
   | zero => rfl
   | succ k ih =>
-      show clinamenLift (repeatedLift ⟨w, o, 0⟩ .diversity k) .diversity
+      show swerveLift (repeatedLift ⟨w, o, 0⟩ .diversity k) .diversity
             = ⟨w, o, k + 1⟩
       rw [ih]; rfl
 
@@ -719,7 +719,7 @@ def vacuumToBule (b : BuleyUnit) : BuleyUnit :=
   repeatedLift afterOpportunity .diversity b.diversity
 
 /-- Big-bang theorem: every Bule unit in the lattice is reachable from the
-vacuum by a finite sequence of +1 clinamen lifts. The unit-magnitude
+vacuum by a finite sequence of +1 swerve lifts. The unit-magnitude
 perturbation generates the entire operational cost lattice from zero. -/
 theorem vacuum_reaches_any_bule (b : BuleyUnit) :
     vacuumToBule b = b := by
@@ -736,14 +736,14 @@ theorem vacuum_reaches_any_bule (b : BuleyUnit) :
         repeated_diversity_lift_from_opportunity]
 
 /-- The big-bang score identity: building any Bule unit from the vacuum
-costs exactly its score in clinamen lifts. -/
+costs exactly its score in swerve lifts. -/
 theorem vacuum_to_bule_score (b : BuleyUnit) :
     buleyUnitScore (vacuumToBule b) = buleyUnitScore b := by
   rw [vacuum_reaches_any_bule]
 
 /-- The vacuum face: a Bule unit lens onto the `opportunity` face only. The
 "vacuum potential" of an operational state is the opportunity not yet
-collapsed into waste. The +1 clinamen lift on the opportunity face is a
+collapsed into waste. The +1 swerve lift on the opportunity face is a
 unit pull of the vacuum: it adds one unit of available potential without
 adding either heat (waste) or color spread (diversity). -/
 def vacuumFaceFromBule (b : BuleyUnit) : BuleyUnit :=
@@ -759,24 +759,24 @@ positive face) returns the original Bule unit. Expansion +1 followed by
 contraction −1 is the identity on positive faces. -/
 theorem lift_then_contract_round_trip_when_face_positive
     (b : BuleyUnit) (f : BuleyFace) :
-    clinamenContract (clinamenLift b f) f = b := by
+    clinamenContract (swerveLift b f) f = b := by
   cases b with | mk w o d =>
   cases f
-  · unfold clinamenLift clinamenContract; rfl
-  · unfold clinamenLift clinamenContract; rfl
-  · unfold clinamenLift clinamenContract; rfl
+  · unfold swerveLift clinamenContract; rfl
+  · unfold swerveLift clinamenContract; rfl
+  · unfold swerveLift clinamenContract; rfl
 
 /-! ## Universal clinamen residue: the plus/minus phase pair (+1, -1) -/
 
 /-- Plus/minus residue pair attached to a clinamen step on a Bule unit.
-The plus-residue is the score change of `clinamenLift`; the minus-residue
+The plus-residue is the score change of `swerveLift`; the minus-residue
 is the score change of `clinamenContract` on a positive face. -/
-structure ClinamenResidue where
+structure SwerveResidue where
   plusResidue : Int
   minusResidue : Int
 deriving Repr, DecidableEq
 
-def clinamenLiftResidue (_b : BuleyUnit) (_f : BuleyFace) : ClinamenResidue :=
+def swerveLiftResidue (_b : BuleyUnit) (_f : BuleyFace) : SwerveResidue :=
   { plusResidue := 1, minusResidue := -1 }
 
 /-- Every clinamen step on a Bule unit carries plus-residue exactly +1 and
@@ -784,10 +784,10 @@ minus-residue exactly −1, matching the universal-clinamen catalog
 (`UniversalClinamenPlusOne`) and the strong sign claims:
 every minus-residue is −1, every plus-residue is strictly positive. The
 Bule clinamen is the *exact-+1* case (no outliers). -/
-theorem clinamen_lift_residue_is_universal_plus_one
+theorem swerve_lift_residue_is_universal_plus_one
     (b : BuleyUnit) (f : BuleyFace) :
-    (clinamenLiftResidue b f).plusResidue = 1
-    ∧ (clinamenLiftResidue b f).minusResidue = -1 :=
+    (swerveLiftResidue b f).plusResidue = 1
+    ∧ (swerveLiftResidue b f).minusResidue = -1 :=
   ⟨rfl, rfl⟩
 
 /-! ## More physics faces of the Bule unit
@@ -864,17 +864,17 @@ theorem bule_unit_decomposes_into_three_faces (b : BuleyUnit) :
       entropy_face_score_equals_diversity]
   rfl
 
-/-! ## Conservation: clinamen lifts commute on distinct faces
+/-! ## Conservation: swerve lifts commute on distinct faces
 
 The Bule analogue of Noether-style conservation: the three faces are
-independent channels, and the time-order of clinamen lifts on them does
+independent channels, and the time-order of swerve lifts on them does
 not affect the final unit. This is the formal statement that the unit is
 "gauge-invariant under face reordering."
 -/
 
-theorem clinamen_lift_commutes
+theorem swerve_lift_commutes
     (b : BuleyUnit) (f g : BuleyFace) :
-    clinamenLift (clinamenLift b f) g = clinamenLift (clinamenLift b g) f := by
+    swerveLift (swerveLift b f) g = swerveLift (swerveLift b g) f := by
   cases b with
   | mk w o d =>
     cases f <;> cases g <;> rfl

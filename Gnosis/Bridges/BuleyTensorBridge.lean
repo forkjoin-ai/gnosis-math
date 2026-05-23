@@ -18,7 +18,7 @@ this module makes them precise.
 * **Parallel tensor (BraidTensorProduct):** the cycle visits both
   coordinates simultaneously via `pairSucc`. The return time is
   `lcm(k₁, k₂)`, which only equals `k₁ × k₂` when the factors are
-  coprime. Two clinamens advancing in lockstep.
+  coprime. Two swerves advancing in lockstep.
 
 The two agree exactly when `gcd(k₁, k₂) = 1` (CRT regime). This module
 exhibits both regimes and connects them to the multi-head transformer

@@ -49,7 +49,7 @@ def smoothingSucc (s : Smoothing) : Smoothing := (s + 1) % 2
 theorem smoothing_succ_0 : smoothingSucc 0 = 1 := by decide
 theorem smoothing_succ_1 : smoothingSucc 1 = 0 := by decide
 
-/-- Two clinamens return: `k=2` braid on the smoothing. -/
+/-- Two swerves return: `k=2` braid on the smoothing. -/
 theorem smoothing_returns : smoothingSucc (smoothingSucc 0) = 0 := by decide
 
 /-! ## State sum over `n` crossings

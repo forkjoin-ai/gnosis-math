@@ -53,7 +53,7 @@ open Gnosis.NoCloningTaxEqualsBuleCost
   (MeasurementEvent bule_cost_of_measurement
    buleUnitOfMeasurement)
 open Gnosis.SpectralNoiseEquilibrium
-  (BuleyUnit BuleyFace vacuumBuleUnit clinamenLift
+  (BuleyUnit BuleyFace vacuumBuleUnit swerveLift
    buleyUnitScore repeatedLift)
 
 -- ══════════════════════════════════════════════════════════
@@ -67,7 +67,7 @@ open Gnosis.SpectralNoiseEquilibrium
       • `bule_units_paid` — total bule cost accumulated across every
         measurement event in the ledger. This is the canonical unit of
         the structural cost calculus; one bule equals one
-        `clinamenLift` from the vacuum.
+        `swerveLift` from the vacuum.
 
       • `entropy_perthou_paid` — the absolute value of the Shannon
         entropy delta admitted into the ledger, in per-thousand bits.
@@ -130,7 +130,7 @@ def total_visibility (V : VisibilityGained) : Nat :=
 -- ══════════════════════════════════════════════════════════
 
 /-- The total budget spent, in canonical bule units. The bule is the
-    load-bearing currency: one bule equals one clinamen lift from the
+    load-bearing currency: one bule equals one swerve lift from the
     vacuum equals one boundary crossing. -/
 def total_budget (B : MeasurementBudget) : Nat :=
   B.bule_units_paid
@@ -419,7 +419,7 @@ theorem conservation_is_structural_not_empirical :
 -- ══════════════════════════════════════════════════════════
 
 /-- The Bule unit reached from the vacuum by `bule_units_paid`
-    applications of `clinamenLift` along the `.opportunity` face.
+    applications of `swerveLift` along the `.opportunity` face.
     The face choice is conventional; the score is what matters. -/
 def bule_unit_of_budget (B : MeasurementBudget) : BuleyUnit :=
   repeatedLift vacuumBuleUnit BuleyFace.opportunity B.bule_units_paid
@@ -427,13 +427,13 @@ def bule_unit_of_budget (B : MeasurementBudget) : BuleyUnit :=
 /-- Theorem: BULE-UNITS-PAID-EQUALS-CLINAMEN-LIFT-COUNT.
 
     The `MeasurementBudget.bule_units_paid` field equals the number
-    of `clinamenLift` applications it would take to construct the
+    of `swerveLift` applications it would take to construct the
     corresponding chain in `SpectralNoiseEquilibrium`. The bule
     ledger and the clinamen chain are the same accounting object,
     viewed from the runtime side (Anti-Theory's `MeasurementEvent`
     list) versus the equilibrium side (the Bule lattice's
     `repeatedLift`). -/
-theorem bule_units_paid_equals_clinamen_lift_count
+theorem bule_units_paid_equals_swerve_lift_count
     (B : MeasurementBudget) :
     buleyUnitScore (bule_unit_of_budget B) = B.bule_units_paid := by
   unfold bule_unit_of_budget
@@ -451,7 +451,7 @@ theorem bule_units_paid_equals_clinamen_lift_count
 theorem clinamen_chain_score_equals_total_visibility (L : Ledger) :
     buleyUnitScore (bule_unit_of_budget (derive_budget L))
       = total_visibility (derive_visibility L) := by
-  rw [bule_units_paid_equals_clinamen_lift_count]
+  rw [bule_units_paid_equals_swerve_lift_count]
   exact derived_budget_equals_derived_visibility L
 
 -- ══════════════════════════════════════════════════════════

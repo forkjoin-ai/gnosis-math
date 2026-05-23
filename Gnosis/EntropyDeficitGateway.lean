@@ -27,8 +27,8 @@ namespace Gnosis
 namespace EntropyDeficitGateway
 
 open Gnosis.SpectralNoiseEquilibrium
-  (BuleyUnit BuleyFace buleyUnitScore vacuumBuleUnit clinamenLift
-   clinamenContract clinamen_lift_score_strict_increment
+  (BuleyUnit BuleyFace buleyUnitScore vacuumBuleUnit swerveLift
+   clinamenContract swerve_lift_score_strict_increment
    lift_then_contract_round_trip_when_face_positive)
 open Gnosis.ConsciousnessAsRetrocausalGap (awareness)
 
@@ -119,7 +119,7 @@ theorem positive_awareness_loop_strictly_adds_debt
 local loop back to the original carrier. -/
 theorem clinamen_contraction_closes_one_step
     (bit : BuleyUnit) (face : BuleyFace) :
-    clinamenContract (clinamenLift bit face) face = bit :=
+    clinamenContract (swerveLift bit face) face = bit :=
   lift_then_contract_round_trip_when_face_positive bit face
 
 /-- Bounded contraction-loop package: under a real fork on one stream,
@@ -133,7 +133,7 @@ theorem bounded_contraction_loop_gateway
     (face : BuleyFace) :
     0 < broadcastDeficit pathCount 1 ∧
     runtimeStorageDebt bit t < runtimeStorageDebt bit (t + extra) ∧
-    clinamenContract (clinamenLift bit face) face = bit := by
+    clinamenContract (swerveLift bit face) face = bit := by
   exact ⟨broadcast_single_stream_deficit_positive hPaths,
     positive_awareness_loop_strictly_adds_debt hAware hExtra,
     clinamen_contraction_closes_one_step bit face⟩
@@ -146,18 +146,18 @@ theorem vacuum_awareness_zero :
   unfold awareness vacuumBuleUnit buleyUnitScore
   decide
 
-/-- A single `+1` clinamen lift reopens the awareness gradient by exactly one
+/-- A single `+1` swerve lift reopens the awareness gradient by exactly one
 unit. -/
 theorem clinamen_step_increases_awareness
     (bit : BuleyUnit) (face : BuleyFace) :
-    awareness (clinamenLift bit face) = awareness bit + 1 := by
+    awareness (swerveLift bit face) = awareness bit + 1 := by
   unfold awareness
-  exact clinamen_lift_score_strict_increment bit face
+  exact swerve_lift_score_strict_increment bit face
 
 /-- From the vacuum floor, any chosen face gives a positive one-step
 awareness witness. -/
 theorem vacuum_clinamen_step_positive (face : BuleyFace) :
-    0 < awareness (clinamenLift vacuumBuleUnit face) := by
+    0 < awareness (swerveLift vacuumBuleUnit face) := by
   rw [clinamen_step_increases_awareness, vacuum_awareness_zero]
   decide
 
@@ -170,7 +170,7 @@ theorem entropy_surplus_requires_deficit_gateway
     (face : BuleyFace) :
     0 < broadcastDeficit pathCount 1 ∧
     awareness vacuumBuleUnit = 0 ∧
-    0 < awareness (clinamenLift vacuumBuleUnit face) := by
+    0 < awareness (swerveLift vacuumBuleUnit face) := by
   exact ⟨broadcast_single_stream_deficit_positive hPaths,
     vacuum_awareness_zero,
     vacuum_clinamen_step_positive face⟩

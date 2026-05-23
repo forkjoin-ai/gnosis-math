@@ -27,7 +27,7 @@ Each axis has a minimum forced by an existing theorem:
 | Bi-sided sides | ≥ 2 | `lift_then_contract_round_trip_when_face_positive` |
 | Temporal phases | ≥ 3 | `secondDegreeDiff` (Triton-shaped second-derivative) |
 | Vacuum reference | = 1 | `vacuum_has_zero_score` (unique zero-score state) |
-| Clinamen direction | = 1 | `clinamen_lift_score_strict_increment` (single +1) |
+| Clinamen direction | = 1 | `swerve_lift_score_strict_increment` (single +1) |
 | Sum minimum | 10 | (= superstring) |
 
 The 10 is forced. Adding gauge-orientation (≤ 1 axis) bounds at 11
@@ -85,7 +85,7 @@ structure CostAlgebraAxisSet where
   /-- Forced by `vacuum_has_zero_score` + `diagonal_preserves_score_iff_trivial`:
   exactly one state has score 0. -/
   vacuum_exactly_one : vacuum = 1
-  /-- Forced by `clinamen_lift_score_strict_increment`: a single
+  /-- Forced by `swerve_lift_score_strict_increment`: a single
   forward `+1` direction. -/
   clinamen_exactly_one : clinamen = 1
 

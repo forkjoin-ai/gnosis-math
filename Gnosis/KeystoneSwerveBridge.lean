@@ -83,7 +83,7 @@ theorem keystone_is_iterswerve_one :
 -- ═══════════════════════════════════════════════════════════════════════
 
 /-- **Light is three swerves up from the void** — the same operation, applied thrice instead of
-    once. (This is `LetThereBeVacuum.light_is_three_clinamens_on_the_void`.) -/
+    once. (This is `LetThereBeVacuum.light_is_three_swerves_on_the_void`.) -/
 theorem light_is_three_swerves :
     LetThereBeVacuum.CreationStep.Light.ordinal = swerve (swerve (swerve 0)) := rfl
 

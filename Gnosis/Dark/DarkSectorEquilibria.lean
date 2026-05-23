@@ -51,7 +51,7 @@ score) but doesn't interact with SM fields at the SM walls.
 
 The Higgs sits at the vacuum (`vacuumBuleUnit`), and
 `vacuum_reaches_any_bule` proves every Bule unit is reached from the
-vacuum by `score`-many clinamen lifts. The vacuum's *operational
+vacuum by `score`-many swerve lifts. The vacuum's *operational
 presence* — its role as the source from which every named state
 emerges — is structurally dark-energy-like: a uniform background that
 doesn't interact directly but is everywhere reachable.
@@ -174,7 +174,7 @@ theorem hendecagon_dark_witness :
 
 Dark energy reads as the *operational presence* of the vacuum
 carrier — the structural fact that every Bule unit traces back to the
-vacuum via clinamen lifts (`vacuum_reaches_any_bule`). The vacuum is
+vacuum via swerve lifts (`vacuum_reaches_any_bule`). The vacuum is
 not a dark-sector particle (it's the Higgs). But its pervasive reach
 is the dark-energy-like background: a state that "is everywhere"
 because every other state is reachable from it. -/

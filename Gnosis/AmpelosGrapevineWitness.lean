@@ -59,7 +59,7 @@ structure RecoveredTechnology where
 deriving Repr
 
 def firstWine : BuleyUnit :=
-  clinamenLift vacuumBuleUnit BuleyFace.opportunity
+  swerveLift vacuumBuleUnit BuleyFace.opportunity
 
 def firstGrapevine : RecoveredTechnology :=
   { carrier := firstWine
@@ -86,12 +86,12 @@ theorem dionysian_grief_stall_reflects :
     dionysianGriefStall.stallDuration ≤ dionysianGriefStall.metacognitiveDepth := by
   exact oracle_stall_induces_metacognitive_acceleration dionysianGriefStall
 
-/-- The first wine is a positive Bule carrier: a single clinamen lift from
+/-- The first wine is a positive Bule carrier: a single swerve lift from
 vacuum on the opportunity face. -/
 theorem first_wine_has_positive_bule_score :
     0 < buleyUnitScore firstWine := by
   unfold firstWine
-  rw [clinamen_lift_score_strict_increment, vacuum_has_zero_score]
+  rw [swerve_lift_score_strict_increment, vacuum_has_zero_score]
   decide
 
 /-- The grapevine keeps the loss boundary while producing positive carrier

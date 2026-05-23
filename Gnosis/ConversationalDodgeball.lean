@@ -311,11 +311,11 @@ theorem unresolved_chain_does_not_close (stepCount : Nat) :
   Each tactic is a 2D projection of the 3D conversation braid.
 -/
 def applyTactic (state : NegotiationState) : DodgeballTactic → NegotiationState
-  | .dodge       => clinamenLift state .diversity -- Adds complexity, preserves leverage
-  | .duck        => clinamenLift (clinamenContract state .opportunity) .diversity -- Shifts leverage to complexity
-  | .dive        => clinamenLift state .opportunity -- Increases leverage/barrier
+  | .dodge       => swerveLift state .diversity -- Adds complexity, preserves leverage
+  | .duck        => swerveLift (clinamenContract state .opportunity) .diversity -- Shifts leverage to complexity
+  | .dive        => swerveLift state .opportunity -- Increases leverage/barrier
   | .dip         => ⟨state.waste + state.opportunity, 0, 1⟩ -- Collapse: All leverage becomes waste (Truth)
-  | .dodgeRepeat => clinamenLift (clinamenLift state .diversity) .diversity
+  | .dodgeRepeat => swerveLift (swerveLift state .diversity) .diversity
 
 /-- 
   Theorem: The "Dip" (Truth) is a sink that zero-sets leverage.
@@ -330,7 +330,7 @@ theorem dip_is_leverage_sink (s : NegotiationState) :
 -/
 theorem dodge_preserves_leverage (s : NegotiationState) :
     (applyTactic s .dodge).opportunity = s.opportunity := by
-  unfold applyTactic clinamenLift; rfl
+  unfold applyTactic swerveLift; rfl
 
 -- ══════════════════════════════════════════════════════════
 -- 3D LIFTED REPRESENTATION (BRAIDING)
@@ -394,8 +394,8 @@ def mirror (state : NegotiationState) (opponent : NegotiationState) : Negotiatio
   It acts as a Fork operation, initiating the Race.
 -/
 def theThrow (s : NegotiationState) (f : BuleyFace) : NegotiationState :=
-  -- Fork operation: A clinamen lift that creates a new independent thread
-  clinamenLift s f
+  -- Fork operation: A swerve lift that creates a new independent thread
+  swerveLift s f
 
 /--
   Final Analysis:

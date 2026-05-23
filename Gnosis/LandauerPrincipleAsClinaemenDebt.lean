@@ -60,13 +60,13 @@ def irreversibleTransition (t : StateTransition) : Prop :=
 
 /-- Erasure: a transition that kills a bit (reduces a one-bit state to vacuum). -/
 def erasureTransition : StateTransition :=
-  ⟨clinamenLift vacuumBuleUnit .waste, vacuumBuleUnit⟩
+  ⟨swerveLift vacuumBuleUnit .waste, vacuumBuleUnit⟩
 
 /-- Proof: erasure is irreversible. One bit's charge (score 1) is lost forever. -/
 theorem erasure_is_irreversible : irreversibleTransition erasureTransition := by
   unfold irreversibleTransition erasureTransition
-  show buleyUnitScore vacuumBuleUnit < buleyUnitScore (clinamenLift vacuumBuleUnit .waste)
-  rw [clinamen_lift_score_strict_increment, vacuum_has_zero_score]
+  show buleyUnitScore vacuumBuleUnit < buleyUnitScore (swerveLift vacuumBuleUnit .waste)
+  rw [swerve_lift_score_strict_increment, vacuum_has_zero_score]
   exact Nat.zero_lt_succ 0
 
 /-- Erasure is not reversible: there is no reverse path that reconstructs the bit. -/
@@ -75,7 +75,7 @@ theorem erasure_not_reversible : ¬ reversibleTransition erasureTransition := by
   -- hpres : score erasureTransition.inputState = score erasureTransition.outputState
   unfold erasureTransition at hpres
   show False
-  rw [clinamen_lift_score_strict_increment, vacuum_has_zero_score] at hpres
+  rw [swerve_lift_score_strict_increment, vacuum_has_zero_score] at hpres
   exact Nat.succ_ne_zero 0 hpres
 
 /-- Formal erasure cost: erasing a single bit destroys exactly one unit of clinamen. -/
@@ -89,8 +89,8 @@ def clinamenDebt (t : StateTransition) : Nat :=
 /-- For single-bit erasure, the debt is exactly one unit of buleyUnitScore. -/
 theorem single_bit_erasure_debt : clinamenDebt erasureTransition = 1 := by
   unfold clinamenDebt erasureCost erasureTransition
-  show buleyUnitScore (clinamenLift vacuumBuleUnit .waste) - buleyUnitScore vacuumBuleUnit = 1
-  rw [clinamen_lift_score_strict_increment, vacuum_has_zero_score]
+  show buleyUnitScore (swerveLift vacuumBuleUnit .waste) - buleyUnitScore vacuumBuleUnit = 1
+  rw [swerve_lift_score_strict_increment, vacuum_has_zero_score]
 
 /-- Spec-level: the per-bit erasure-chain claim is weakened to `True`.
     Original used `Fin bits` indexing with `push_neg`/`omega` gymnastics; the

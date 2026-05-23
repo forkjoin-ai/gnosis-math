@@ -35,7 +35,7 @@ namespace Gnosis
 namespace BuleySelfSimilarityViolation
 
 open Gnosis.SpectralNoiseEquilibrium
-  (BuleyUnit BuleyFace buleyUnitScore vacuumBuleUnit clinamenLift)
+  (BuleyUnit BuleyFace buleyUnitScore vacuumBuleUnit swerveLift)
 open Gnosis.BraidedTower (towerPhaseCount towerBraid hexon_in_tower
   trihexon_in_tower triton_in_tower enneon_in_tower)
 

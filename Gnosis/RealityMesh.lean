@@ -31,8 +31,8 @@ namespace Gnosis
 namespace RealityMesh
 
 open Gnosis.SpectralNoiseEquilibrium
-  (BuleyUnit BuleyFace buleyUnitScore vacuumBuleUnit clinamenLift
-   vacuum_has_zero_score clinamen_lift_score_strict_increment)
+  (BuleyUnit BuleyFace buleyUnitScore vacuumBuleUnit swerveLift
+   vacuum_has_zero_score swerve_lift_score_strict_increment)
 
 /-! ## The shape of an operational mesh -/
 
@@ -51,10 +51,10 @@ structure OperationalMesh (S : Type) (F : Type) where
 
 def buleyMesh : OperationalMesh BuleyUnit BuleyFace :=
   { vacuum := vacuumBuleUnit
-    lift := clinamenLift
+    lift := swerveLift
     score := buleyUnitScore
     vacuum_zero := vacuum_has_zero_score
-    lift_increment := clinamen_lift_score_strict_increment }
+    lift_increment := swerve_lift_score_strict_increment }
 
 theorem buley_mesh_vacuum_score : buleyMesh.score buleyMesh.vacuum = 0 :=
   buleyMesh.vacuum_zero
@@ -119,7 +119,7 @@ theorem reality_mesh_vacuum_isomorphism
   rw [M.vacuum_zero, buleyMesh.vacuum_zero]
 
 /-- Single-step specialization: any operational mesh after one lift has
-score 1, matching the Bule mesh after one clinamen lift. -/
+score 1, matching the Bule mesh after one swerve lift. -/
 theorem reality_mesh_one_lift_isomorphism
     {S F : Type} (M : OperationalMesh S F) (f : F) (g : BuleyFace) :
     M.score (M.lift M.vacuum f)

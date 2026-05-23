@@ -40,7 +40,7 @@ import Gnosis.UnknotTheory
   THE COMPLEMENT: leaving an unknot region (running into a
   falsification wall) costs +1 bule per crossing added — which is
   what `Gnosis.KnotComplexityAsBuleCost` charges for each
-  `clinamenLift`. Reidemeister moves never cross walls; they shuffle
+  `swerveLift`. Reidemeister moves never cross walls; they shuffle
   within rooms. The runtime should plan its inference trajectory to
   maximize Reidemeister-only segments.
 

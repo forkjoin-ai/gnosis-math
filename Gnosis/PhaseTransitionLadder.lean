@@ -60,7 +60,7 @@ open Gnosis.BraidedTower (towerPhaseCount)
 /-! ## Phase-transition distance -/
 
 /-- The phase-transition distance from wall `m` to wall `n` is the
-number of clinamen lifts required to traverse them. For `m ≤ n`,
+number of swerve lifts required to traverse them. For `m ≤ n`,
 this is `n - m`; otherwise the lift sequence runs backwards via
 declinamen contractions, and we return the absolute magnitude. -/
 def phaseTransitionDistance (m n : Nat) : Nat :=
@@ -117,14 +117,14 @@ theorem decagon_is_octagon_plus_bisided :
   decide
 
 /-- Hendecagon = Decagon + 1. M-theory's extra dimension above
-superstring is structurally a single clinamen lift. -/
+superstring is structurally a single swerve lift. -/
 theorem hendecagon_is_decagon_plus_one :
     phaseTransitionDistance (towerPhaseCount [5, 2]) (towerPhaseCount [11]) = 1 := by
   unfold phaseTransitionDistance
   decide
 
 /-- Dodecagon = Hendecagon + 1. The fermion wall is structurally
-one clinamen lift above M-theory. -/
+one swerve lift above M-theory. -/
 theorem dodecagon_is_hendecagon_plus_one :
     phaseTransitionDistance (towerPhaseCount [11]) (towerPhaseCount [3, 2, 2]) = 1 := by
   unfold phaseTransitionDistance

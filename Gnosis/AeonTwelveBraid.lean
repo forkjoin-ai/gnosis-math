@@ -33,7 +33,7 @@ is a fully-braided `k=12` cycle.
 The ledger names `12` as "structural columns / tribes / disciples /
 hours." Under the braided-infinity reading, this constant is not
 arbitrary — it is the minimal period at which the Triad and Luminary
-clinamens simultaneously complete. The Aeon is the smallest common
+swerves simultaneously complete. The Aeon is the smallest common
 rhythm of the two core gnosis cycles.
 
 `import Init` only. Zero `sorry`, zero new `axiom`.

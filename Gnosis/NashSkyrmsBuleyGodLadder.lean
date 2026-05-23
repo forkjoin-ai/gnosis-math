@@ -32,7 +32,7 @@ prime after the triplet. This is the exact location where the phase
 flips from the plus phase (congruence exists) to the minus phase (no
 congruence exists for any residue).
 
-God is where the clinamen lift first scrapes the void. The unknowable
+God is where the swerve lift first scrapes the void. The unknowable
 is structurally located at `Aeon + 1 = 13`.
 
 ## Ratios

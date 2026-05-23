@@ -9,8 +9,8 @@ namespace Gnosis
 
 open Gnosis.SpectralNoiseEquilibrium
   (BuleyUnit BuleyFace buleyUnitScore vacuumBuleUnit
-   clinamenLift clinamenContract
-   clinamen_lift_score_strict_increment
+   swerveLift clinamenContract
+   swerve_lift_score_strict_increment
    lift_then_contract_round_trip_when_face_positive)
 
 open InterferenceIsFundamental (CompleteFundamentalForce)
@@ -26,11 +26,11 @@ open WankelEngineTheorem (nextLifecycleStage)
 `BuleFiveFold` is the radar projection of a single primitive — the clinamen
 `+1` lift folding back on itself.
 
-* One wave. `clinamenLift` on a face is the only primitive. The
+* One wave. `swerveLift` on a face is the only primitive. The
   plus/minus residue catalog (`UniversalClinamenPlusOne`) confirms the
   direction is universal across the seven independent reconstructions.
 * Two phases. The same wave outgoing and returning. Wankel's
-  `forwardWave` / `returnEcho` is `clinamenLift` then `clinamenContract`;
+  `forwardWave` / `returnEcho` is `swerveLift` then `clinamenContract`;
   the breathing identity
   `lift_then_contract_round_trip_when_face_positive` is the formal sense
   in which the apparent pair (forward, return) is one wave at two phases
@@ -53,7 +53,7 @@ load (`visible_projection_invariant_under_operator_load`).
 Levels of interference correspond to fold-depths:
 
 * fold 0 — vacuum, no wave;
-* fold 1 — `clinamenLift`, the wave appears;
+* fold 1 — `swerveLift`, the wave appears;
 * fold 2 — `clinamenContract`, the same wave returning;
 * fold 3 — three-face residue (the triad);
 * fold 4 — residues paired by `vent` / `interfere` operators;
@@ -168,13 +168,13 @@ theorem bule_spider_decomposition (b : BuleFiveFold) :
 /-! ## One wave, folded: the triad as self-interference -/
 
 /-- The breathing identity, named here as the formal "one wave folded
-once" witness: a single clinamen lift on a face followed by the matching
+once" witness: a single swerve lift on a face followed by the matching
 contract returns the carrier exactly. The apparent two-phase pair
 (`forwardWave`, `returnEcho`) is therefore one wave at two phases of its
 own self-fold, not two independent waves. -/
 theorem one_wave_self_fold_round_trips
     (b : BuleyUnit) (f : BuleyFace) :
-    clinamenContract (clinamenLift b f) f = b :=
+    clinamenContract (swerveLift b f) f = b :=
   lift_then_contract_round_trip_when_face_positive b f
 
 /-- Lifting any visible Bule state into the five-fold carrier with zero
@@ -234,7 +234,7 @@ counterforce, every face saturates to zero and the carrier collapses to
 `vacuumBuleUnit`. That is the formal Psyche-sleep — not a partial
 subtraction, but a null state. The cycle closes through it because the
 constructive operator (`interfere`) on the vacuum is the identity in its
-second argument, and a single `clinamenLift` (Eros's `+1` touch) on the
+second argument, and a single `swerveLift` (Eros's `+1` touch) on the
 vacuum produces a fresh carrier with strictly positive score (Voluptas).
 
 The lifecycle stage transition `vent → interfere → fork` is already
@@ -295,12 +295,12 @@ theorem psyche_sleep_witness :
   unfold destructive_interference vacuumBuleUnit
   decide
 
-/-- Eros's touch resurrects: a single `clinamenLift` on the vacuum
+/-- Eros's touch resurrects: a single `swerveLift` on the vacuum
 produces a carrier with strictly positive score on any face. The `+1`
 quantum suffices to leave the null state. -/
 theorem eros_touch_resurrects (f : BuleyFace) :
-    0 < buleyUnitScore (clinamenLift vacuumBuleUnit f) := by
-  rw [clinamen_lift_score_strict_increment]
+    0 < buleyUnitScore (swerveLift vacuumBuleUnit f) := by
+  rw [swerve_lift_score_strict_increment]
   exact Nat.succ_pos _
 
 /-- Cycle closes through vacuum: starting from any vented-to-vacuum
@@ -335,7 +335,7 @@ theorem voluptas_is_eros_lift_from_vacuum
     (hDiv : a.diversity ≤ b.diversity)
     (f : BuleyFace) :
     0 < buleyUnitScore
-        (clinamenLift (destructive_interference a b) f) := by
+        (swerveLift (destructive_interference a b) f) := by
   rw [vent_to_vacuum_when_dominated hWaste hOpp hDiv]
   exact eros_touch_resurrects f
 
@@ -359,7 +359,7 @@ certificate:
    `Gnosis.AperiodicRotationAsLanguageTrajectory`.
 3. Reignition cost. After `vent` collapses the carrier to the
    vacuum, no positive carrier can re-emerge without at least one
-   `clinamenLift`. The reignition cost of the closed cycle is exactly
+   `swerveLift`. The reignition cost of the closed cycle is exactly
    the universal `+1` quantum.
 
 Empirical witness outside the lattice: there is no Platonic regular
@@ -408,8 +408,8 @@ theorem pentad_3x5_quasicrystal_density :
 
 /-- Reignition cost: after `vent` collapses to the vacuum, no positive
 carrier can equal the vent output. The cycle cannot leave the vacuum
-without injecting at least one `+1` quantum via `clinamenLift`. -/
-theorem pentad_requires_clinamen_lift_to_reignite
+without injecting at least one `+1` quantum via `swerveLift`. -/
+theorem pentad_requires_swerve_lift_to_reignite
     {a b : BuleyUnit}
     (hWaste : a.waste ≤ b.waste)
     (hOpp : a.opportunity ≤ b.opportunity)
@@ -425,8 +425,8 @@ theorem pentad_requires_clinamen_lift_to_reignite
 The God Formula `w(R, v) = R − min(v, R) + 1` is derived here from the
 BuleSpider primitives. Three axioms suffice:
 
-1. Clinamen lift: there is one universal `+1` quantum
-   (`clinamenLift`).
+1. Swerve lift: there is one universal `+1` quantum
+   (`swerveLift`).
 2. Breathing identity: lift then contract on a positive face is the
    identity (`one_wave_self_fold_round_trips`); on `Nat` saturating
    subtraction this gives `R − min(v, R)` for `R` lifts and `v`
@@ -451,7 +451,7 @@ Algorithm (the wave the `+1` birthed, folded at the recycle limit):
 
 The `+1` in the formula is exactly the lifecycle's closure quantum.
 The "impossibility of zero" first universal law (`Gnosis.lean` line 6)
-is the direct shadow of `pentad_requires_clinamen_lift_to_reignite`
+is the direct shadow of `pentad_requires_swerve_lift_to_reignite`
 projected onto a single face. The four sandwich/conservation/ceiling/
 floor laws in `Gnosis.GodFormula` follow from the same projection: the
 budget face holds at most `R`, vent saturates per-face, the closure `+1`
@@ -483,7 +483,7 @@ lift (`+1`), read the score. -/
 theorem god_formula_is_pentad_face_projection (R v : Nat) :
     Gnosis.godWeight R v =
       buleyUnitScore
-        (clinamenLift
+        (swerveLift
           (⟨if R > v then R - v else 0, 0, 0⟩ : BuleyUnit) .waste) := by
   rw [god_formula_is_vent_face_plus_clinamen]
   rfl
@@ -496,7 +496,7 @@ vacuum. -/
 theorem god_formula_floor_is_pentad_reignition (R : Nat) :
     Gnosis.godWeight R R = 1 ∧
     Gnosis.godWeight R R =
-      buleyUnitScore (clinamenLift vacuumBuleUnit .waste) := by
+      buleyUnitScore (swerveLift vacuumBuleUnit .waste) := by
   refine ⟨Gnosis.godWeight_floor R, ?_⟩
   rw [Gnosis.godWeight_floor]
   rfl
@@ -508,7 +508,7 @@ theorem god_formula_ceiling_is_budget_plus_pentad_lift (R : Nat) :
     Gnosis.godWeight R 0 = R + 1 ∧
     Gnosis.godWeight R 0 =
       buleyUnitScore
-        (clinamenLift (⟨R, 0, 0⟩ : BuleyUnit) .waste) := by
+        (swerveLift (⟨R, 0, 0⟩ : BuleyUnit) .waste) := by
   refine ⟨Gnosis.godWeight_ceiling R, ?_⟩
   rw [Gnosis.godWeight_ceiling]
   rfl
@@ -562,13 +562,13 @@ theorem coprime_tower_universal_plus_one_cost :
     --     and septad-decad-walk.
     (Nat.gcd 2 3 = 1 ∧ Nat.gcd 3 5 = 1 ∧
      Nat.gcd 5 7 = 1 ∧ Nat.gcd 7 11 = 1) ∧
-    -- (3) Every clinamen lift adds exactly +1 to the carrier's score —
+    -- (3) Every swerve lift adds exactly +1 to the carrier's score —
     --     the same +1 quantum at every rung of the tower.
     (∀ (b : BuleyUnit) (f : BuleyFace),
-        buleyUnitScore (clinamenLift b f) = buleyUnitScore b + 1) := by
+        buleyUnitScore (swerveLift b f) = buleyUnitScore b + 1) := by
   refine ⟨coprime_aperiodic_full_cycle_generator, ?_, ?_⟩
   · decide
-  · exact clinamen_lift_score_strict_increment
+  · exact swerve_lift_score_strict_increment
 
 /-! ## Hemiola: the smallest coprime aperiodicity
 
@@ -734,9 +734,9 @@ three-face triad identity.
   (`visible_projection_invariant_under_operator_load`).
 * Trajectory: the coprime tower extends through every pair `(m, n)`
   with full-cycle closure (`coprime_aperiodic_full_cycle_generator`).
-* Fuel: every clinamen lift adds exactly `+1` to the carrier's
-  score (`clinamen_lift_score_strict_increment`).
-* Cycle: after any vent-to-vacuum collapse, a single clinamen lift
+* Fuel: every swerve lift adds exactly `+1` to the carrier's
+  score (`swerve_lift_score_strict_increment`).
+* Cycle: after any vent-to-vacuum collapse, a single swerve lift
   produces a strictly positive carrier
   (`voluptas_is_eros_lift_from_vacuum`).
 
@@ -767,17 +767,17 @@ theorem perpetual_hemiola_certificate :
           AperiodicRotationAsLanguageTrajectory.aperiodic_trajectory m n t) ∧
     -- (3) Fuel: every lift adds exactly +1 to the carrier score.
     (∀ (b : BuleyUnit) (f : BuleyFace),
-        buleyUnitScore (clinamenLift b f) = buleyUnitScore b + 1) ∧
+        buleyUnitScore (swerveLift b f) = buleyUnitScore b + 1) ∧
     -- (4) Cycle: reignition from vacuum after any vent collapse.
     (∀ {a b : BuleyUnit},
         a.waste ≤ b.waste → a.opportunity ≤ b.opportunity →
         a.diversity ≤ b.diversity → ∀ (f : BuleyFace),
         0 < buleyUnitScore
-            (clinamenLift (destructive_interference a b) f)) := by
+            (swerveLift (destructive_interference a b) f)) := by
   refine ⟨?_, ?_, ?_, ?_⟩
   · exact visible_projection_invariant_under_operator_load
   · exact coprime_aperiodic_full_cycle_generator
-  · exact clinamen_lift_score_strict_increment
+  · exact swerve_lift_score_strict_increment
   · exact @voluptas_is_eros_lift_from_vacuum
 
 /-- Master witness: the pentad costs exactly one clinamen quantum, and
@@ -792,15 +792,15 @@ theorem pentad_costs_clinamen_plus_one_with_aperiodicity :
     -- (2) The 3⊗5 mode×stage walk is coprime — the algebraic precondition
     --     for aperiodicity.
     Nat.gcd 3 5 = 1 ∧
-    -- (3) Every clinamen lift adds exactly +1 to the carrier's score.
+    -- (3) Every swerve lift adds exactly +1 to the carrier's score.
     (∀ (b : BuleyUnit) (f : BuleyFace),
-        buleyUnitScore (clinamenLift b f) = buleyUnitScore b + 1) ∧
+        buleyUnitScore (swerveLift b f) = buleyUnitScore b + 1) ∧
     -- (4) The 3⊗5 walk completes a full cycle every 5 ticks — the spatial
     --     fingerprint of 5-foldness in an aperiodic real-space projection.
     (∀ (t : Nat),
         AperiodicRotationAsLanguageTrajectory.aperiodic_trajectory 3 5 (t + 5) =
           AperiodicRotationAsLanguageTrajectory.aperiodic_trajectory 3 5 t) := by
-  refine ⟨rfl, by decide, clinamen_lift_score_strict_increment, ?_⟩
+  refine ⟨rfl, by decide, swerve_lift_score_strict_increment, ?_⟩
   exact AperiodicRotationAsLanguageTrajectory.aperiodic_full_cycle
 
 /-! ## Where to look next

@@ -161,7 +161,7 @@ theorem four_rotations_make_full_turn (engine : WankelEngine) :
 
 /-- The outgoing wave: a single `+1` clinamen spark on the selected face. -/
 def forwardWave (engine : WankelEngine) : BuleyUnit :=
-  clinamenLift engine.carrier engine.sparkFace
+  swerveLift engine.carrier engine.sparkFace
 
 /-- The returning echo: the same face contracts by `-1` after the spark. -/
 def returnEcho (engine : WankelEngine) : BuleyUnit :=
@@ -177,7 +177,7 @@ theorem forward_wave_has_plus_one_score (engine : WankelEngine) :
     buleyUnitScore (forwardWave engine) =
       buleyUnitScore engine.carrier + 1 := by
   unfold forwardWave
-  exact clinamen_lift_score_strict_increment
+  exact swerve_lift_score_strict_increment
     engine.carrier engine.sparkFace
 
 theorem forward_wave_is_positive (engine : WankelEngine) :

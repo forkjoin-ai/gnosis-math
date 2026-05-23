@@ -10,7 +10,7 @@ namespace Gnosis
 
 open Gnosis.SpectralNoiseEquilibrium
   (BuleyUnit BuleyFace buleyUnitScore vacuumBuleUnit
-   clinamenLift clinamen_lift_score_strict_increment)
+   swerveLift swerve_lift_score_strict_increment)
 
 open InterferenceAsTheFifthForce
   (constructive_interference destructive_interference)
@@ -59,14 +59,14 @@ independent proof paths landing on the same quantity:
    exactly `+1`; the seventh has `+2` (still positive, same
    direction). All seven have minus-residue exactly `−1`.
 
-2. Structural necessity (`pentad_requires_clinamen_lift_to_reignite`,
+2. Structural necessity (`pentad_requires_swerve_lift_to_reignite`,
    `god_formula_floor_is_pentad_reignition` in `Gnosis.BuleSpider`):
    without a `+1` lift, `vent` collapses the carrier to the vacuum and
    the cycle dissipates. The `+1` is what makes the closed cycle close.
 
 3. Algebraic derivation (`god_formula_is_pentad_face_projection` in
    `Gnosis.BuleSpider`): the formula `R − min(v, R) + 1` is derived
-   from `vent`'s per-face filter plus one clinamen lift, projected onto
+   from `vent`'s per-face filter plus one swerve lift, projected onto
    a single face. The `+1` is not added to the formula; it falls out of
    the projection.
 
@@ -247,7 +247,7 @@ The proper kind distinction is the existing three-way trichotomy of
 * Agent (`GodOperatorAgentTrichotomy.Agent`): finite compiled
   forced objects with `modulus : Nat`. The Ramanujan triplet primes
   (`5`, `7`, `11`) are three Agent instances.
-* Operator (`clinamenOperator k i = (i + 1) % k`): the universal
+* Operator (`swerveOperator k i = (i + 1) % k`): the universal
   `+1` action, a function. Not an Agent — it has no modulus.
 * God (`GodsPosition`): the unique limit-position where every
   Agent's signature simultaneously closes via the Operator.
@@ -297,9 +297,9 @@ theorem bulespider_specialness_trichotomy :
     ramanujanAgent5.modulus = 5 ∧
     ramanujanAgent7.modulus = 7 ∧
     ramanujanAgent11.modulus = 11 ∧
-    GodOperatorAgentTrichotomy.clinamenOperator 5 4 = 0 ∧
-    GodOperatorAgentTrichotomy.clinamenOperator 7 6 = 0 ∧
-    GodOperatorAgentTrichotomy.clinamenOperator 11 10 = 0 ∧
+    GodOperatorAgentTrichotomy.swerveOperator 5 4 = 0 ∧
+    GodOperatorAgentTrichotomy.swerveOperator 7 6 = 0 ∧
+    GodOperatorAgentTrichotomy.swerveOperator 11 10 = 0 ∧
     latticeConvergenceAsGodsPosition.characterization ≠ "" := by
   decide
 
@@ -363,7 +363,7 @@ theorem operator_idolatry_and_agent_as_god_are_type_errors :
     ramanujanAgent5.name = "Ramanujan modulus 5" ∧
     ramanujanAgent5.modulus = 5 ∧
     latticeConvergenceAsGodsPosition.characterization ≠ "" ∧
-    GodOperatorAgentTrichotomy.clinamenOperator 5 4 = 0 := by
+    GodOperatorAgentTrichotomy.swerveOperator 5 4 = 0 := by
   decide
 
 /-! ## Witness completeness: the four exhaustive witness kinds

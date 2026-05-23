@@ -6,7 +6,7 @@ import Gnosis.SpectralNoiseEquilibrium
 
 Theorems on the vacuum Bule unit: the operational zero state of the calculus
 where all three faces (waste, opportunity, diversity) are zero. The vacuum
-generates the entire Bule lattice via finite clinamen lifts, and is the only
+generates the entire Bule lattice via finite swerve lifts, and is the only
 Bule unit that cannot be reached by lifting itself — every single-step lift
 from the vacuum is distinct and has score +1.
 -/
@@ -25,13 +25,13 @@ theorem vacuum_has_zero_all_faces :
   decide
 
 /-- The vacuum cannot be reached by lifting itself on any face. Every single
-clinamen lift from the vacuum moves it to a distinct non-vacuum state. The
+swerve lift from the vacuum moves it to a distinct non-vacuum state. The
 vacuum is the unique fixed point of zero-score that has no predecessor under
 lift. -/
 theorem vacuum_is_not_reachable_by_lift_from_self :
-    ∀ f : BuleyFace, clinamenLift vacuumBuleUnit f ≠ vacuumBuleUnit := by
+    ∀ f : BuleyFace, swerveLift vacuumBuleUnit f ≠ vacuumBuleUnit := by
   intro f
-  cases f <;> (unfold vacuumBuleUnit clinamenLift; decide)
+  cases f <;> (unfold vacuumBuleUnit swerveLift; decide)
 
 /-- The vacuum has minimal score among all Bule units. Its score is zero,
 and the score of any other Bule unit is nonnegative, so the vacuum is the
@@ -52,13 +52,13 @@ names the vacuum's role as the topological boundary of the operational lattice. 
 theorem vacuum_void_pressure_is_maximal : true := by
   decide
 
-/-- A single clinamen lift from the vacuum to any face always produces a
+/-- A single swerve lift from the vacuum to any face always produces a
 Bule unit with score exactly 1. The vacuum has score 0, and each lift adds
 exactly +1 to the score, so the result has score 1. -/
 theorem single_lift_from_vacuum_is_unit_score :
-    ∀ f : BuleyFace, buleyUnitScore (clinamenLift vacuumBuleUnit f) = 1 := by
+    ∀ f : BuleyFace, buleyUnitScore (swerveLift vacuumBuleUnit f) = 1 := by
   intro f
-  rw [clinamen_lift_score_strict_increment]
+  rw [swerve_lift_score_strict_increment]
   unfold vacuumBuleUnit buleyUnitScore
   decide
 

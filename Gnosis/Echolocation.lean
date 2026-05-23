@@ -5,7 +5,7 @@ import Gnosis.Braided.BraidedTower
 /-!
 # Echolocation
 
-A formal echolocation event is the round-trip of a clinamen lift
+A formal echolocation event is the round-trip of a swerve lift
 through a manifold of unknown ceiling. The agent emits a known
 perturbation, observes the manifold's response (whether the
 post-emit carrier exceeds the ceiling and by how many corrective
@@ -15,9 +15,9 @@ contracts), and infers the manifold's ceiling from the return.
 
 Three discrete steps:
 
-1. Emit — apply `clinamenLift` on a chosen `BuleyFace` from a
+1. Emit — apply `swerveLift` on a chosen `BuleyFace` from a
    known starting carrier. The emit is deterministic: the post-emit
-   carrier's score is exactly `score + 1` (`clinamen_lift_score_strict_increment`).
+   carrier's score is exactly `score + 1` (`swerve_lift_score_strict_increment`).
 2. Probe — classify the post-emit carrier against a candidate
    ceiling via `selfSimilarityViolation`. If a violation is reported,
    `correctiveContractCount` quantifies the over-shoot exactly. If no
@@ -55,8 +55,8 @@ namespace Echolocation
 
 open Gnosis.SpectralNoiseEquilibrium
   (BuleyUnit BuleyFace buleyUnitScore vacuumBuleUnit
-   clinamenLift clinamenContract
-   clinamen_lift_score_strict_increment
+   swerveLift clinamenContract
+   swerve_lift_score_strict_increment
    lift_then_contract_round_trip_when_face_positive)
 open Gnosis.BuleySelfSimilarityViolation
   (insideManifold selfSimilarityViolation correctiveContractCount
@@ -74,20 +74,20 @@ structure EcholocationEmit where
 /-- Emit: lift the carrier on a chosen face and record the
 post-emit state and score. -/
 def emit (b : BuleyUnit) (f : BuleyFace) : EcholocationEmit :=
-  let post := clinamenLift b f
+  let post := swerveLift b f
   { postEmit := post, emitScore := buleyUnitScore post }
 
 /-- The emit step adds exactly +1 to the carrier's score. -/
 theorem emit_score_increment (b : BuleyUnit) (f : BuleyFace) :
     (emit b f).emitScore = buleyUnitScore b + 1 := by
   unfold emit
-  exact clinamen_lift_score_strict_increment b f
+  exact swerve_lift_score_strict_increment b f
 
 /-- The post-emit carrier's score is the source's score + 1. -/
 theorem post_emit_score (b : BuleyUnit) (f : BuleyFace) :
     buleyUnitScore (emit b f).postEmit = buleyUnitScore b + 1 := by
-  show buleyUnitScore (clinamenLift b f) = buleyUnitScore b + 1
-  exact clinamen_lift_score_strict_increment b f
+  show buleyUnitScore (swerveLift b f) = buleyUnitScore b + 1
+  exact swerve_lift_score_strict_increment b f
 
 /-- The result of a probe step: whether the post-emit carrier
 violates a candidate ceiling, and the deterministic remediation
@@ -166,7 +166,7 @@ theorem echolocation_round_trip_closes
     (b : BuleyUnit) (f : BuleyFace) (ceiling : ManifoldPhaseCount) :
     (echolocate b f ceiling).postReturn = b := by
   unfold echolocate emit
-  -- The post-return is `clinamenContract (clinamenLift b f) f`
+  -- The post-return is `clinamenContract (swerveLift b f) f`
   -- which equals `b` by the breathing identity.
   exact lift_then_contract_round_trip_when_face_positive b f
 
