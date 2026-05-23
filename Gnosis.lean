@@ -650,8 +650,11 @@ import Gnosis.AeonCyclicPluckerLabels
 import Gnosis.AeonFlowTransport
 import Gnosis.AeonFluxSiteAdequacy
 import Gnosis.AeonNoise
+import Gnosis.FiniteDynamicsCore
 import Gnosis.ErgodicCutoffDuality
 import Gnosis.ErgodicCutoffCycleType
+import Gnosis.FiniteDynamicsUnification
+import Gnosis.DvdLogoCorner
 import Gnosis.AeonGamutToneShift
 import Gnosis.AeonStandingWaveCoordinateBridge
 import Gnosis.AeonTwelveBraid
@@ -1965,6 +1968,7 @@ import Gnosis.VibesCharismaticEmitter
 import Gnosis.VibesCoaseBargaining
 import Gnosis.VibesHotellingVoting
 import Gnosis.VoiceCoarticulationContinuity
+import Gnosis.VoiceIntelligibilityCliff
 import Gnosis.VoiceFormantHarmonicCoupling
 import Gnosis.VoiceRecognitionAsTaoBowlInterference
 import Gnosis.VotingSkeletonHomology
