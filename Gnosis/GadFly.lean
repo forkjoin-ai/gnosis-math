@@ -421,12 +421,16 @@ theorem killed_mutant_reduces_witness_gap (k : KillResult) (h : k.wasKilled = tr
 theorem perfect_session_has_zero_gap (s : GadFlySession)
     (h : s.killedCount = s.totalFaces) :
     sessionWitnessGap s = 0 := by
-  unfold sessionWitnessGap; omega
+  unfold sessionWitnessGap
+  rw [s.partitionContract.symm] at h
+  exact Nat.sub_eq_zero_of_le (Nat.le_of_eq h.symm)
 
 theorem blind_session_gap_equals_total (s : GadFlySession)
     (h : s.killedCount = 0) :
     sessionWitnessGap s = s.totalFaces := by
-  unfold sessionWitnessGap; omega
+  unfold sessionWitnessGap
+  rw [h, Nat.add_comm] at s.partitionContract
+  exact s.partitionContract
 
 /-- Every face has a non-empty scanner rule. -/
 theorem every_face_has_scanner_rule :
@@ -511,7 +515,7 @@ theorem gadfly_blind_suite_sees_nothing (s : GadFlySession) (h : gadfly_blind s)
 theorem suite_kills_or_is_blind (s : GadFlySession) :
     gadfly_blind s ∨ s.killedCount > 0 := by
   unfold gadfly_blind
-  omega
+  exact Nat.eq_zero_or_pos s.killedCount
 
 end GadFly
 end Gnosis

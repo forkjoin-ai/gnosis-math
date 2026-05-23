@@ -882,14 +882,29 @@ theorem packedFanoXorRouteWord_status_round_trip
         (packedFanoXorRouteWord status value gate0 gate1) =
       packedFanoXorRouteStatusCode status := by
   unfold packedFanoXorRouteWordStatusCode
+  have h_rem : gate1.val * 128 + gate0.val * 8 + value.val < 2048 := by
+    calc gate1.val * 128 + gate0.val * 8 + value.val
+        ≤ 15 * 128 + 15 * 8 + 7 := by
+          apply Nat.add_le_add
+          · apply Nat.add_le_add
+            · exact Nat.mul_le_mul_right 128 (Nat.le_of_lt_succ gate1.is_lt)
+            · exact Nat.mul_le_mul_right 8 (Nat.le_of_lt_succ gate0.is_lt)
+          · exact Nat.le_of_lt_succ value.is_lt
+      _ = 2047 := by decide
+      _ < 2048 := by decide
   have hdiv :
       packedFanoXorRouteWord status value gate0 gate1 / 2048 =
         packedFanoXorRouteStatusCode status := by
-    cases status <;>
-      unfold packedFanoXorRouteWord packedFanoXorRouteStatusCode <;>
-      omega
+      unfold packedFanoXorRouteWord
+      rw [Nat.add_assoc, Nat.add_assoc, Nat.add_comm (packedFanoXorRouteStatusCode status * 2048)]
+      rw [Nat.mul_comm (packedFanoXorRouteStatusCode status) 2048]
+      rw [Nat.add_mul_div_left _ _ (by decide : 0 < 2048)]
+      rw [← Nat.add_assoc]
+      rw [Nat.div_eq_of_lt h_rem]
+      rw [Nat.zero_add]
   rw [hdiv]
-  cases status <;> rfl
+  exact Nat.mod_eq_of_lt (by
+    cases status <;> simp [packedFanoXorRouteStatusCode] <;> decide)
 
 theorem packedFanoXorRouteWord_value_round_trip
     (status : PackedFanoXorRouteStatus) (value : Fin 8)
@@ -897,10 +912,25 @@ theorem packedFanoXorRouteWord_value_round_trip
     packedFanoXorRouteWordValue
         (packedFanoXorRouteWord status value gate0 gate1) =
       value.val := by
-  cases status <;>
-    unfold packedFanoXorRouteWordValue
-      packedFanoXorRouteWord packedFanoXorRouteStatusCode <;>
-    omega
+  unfold packedFanoXorRouteWordValue packedFanoXorRouteWord
+  rw [Nat.add_mod]
+  have h_mul : (packedFanoXorRouteStatusCode status * 2048 + gate1.val * 128 + gate0.val * 8) % 8 = 0 := by
+    rw [Nat.add_mod]
+    rw [Nat.add_mod (packedFanoXorRouteStatusCode status * 2048) (gate1.val * 128) 8]
+    have h1 : (packedFanoXorRouteStatusCode status * 2048) % 8 = 0 := by
+      rw [show 2048 = 256 * 8 from rfl, ← Nat.mul_assoc]
+      rw [Nat.mul_comm (packedFanoXorRouteStatusCode status * 256) 8]
+      exact Nat.mul_mod_right 8 (packedFanoXorRouteStatusCode status * 256)
+    have h2 : (gate1.val * 128) % 8 = 0 := by
+      rw [show 128 = 16 * 8 from rfl, ← Nat.mul_assoc]
+      rw [Nat.mul_comm (gate1.val * 16) 8]
+      exact Nat.mul_mod_right 8 (gate1.val * 16)
+    have h3 : (gate0.val * 8) % 8 = 0 := by
+      rw [Nat.mul_comm gate0.val 8]
+      exact Nat.mul_mod_right 8 gate0.val
+    rw [h1, h2, h3]
+  rw [h_mul, Nat.zero_add, Nat.mod_mod]
+  exact Nat.mod_eq_of_lt value.is_lt
 
 theorem packedFanoXorRouteWord_gate0_round_trip
     (status : PackedFanoXorRouteStatus) (value : Fin 8)
@@ -908,10 +938,23 @@ theorem packedFanoXorRouteWord_gate0_round_trip
     packedFanoXorRouteWordGate0
         (packedFanoXorRouteWord status value gate0 gate1) =
       gate0.val := by
-  cases status <;>
-    unfold packedFanoXorRouteWordGate0
-      packedFanoXorRouteWord packedFanoXorRouteStatusCode <;>
-    omega
+  unfold packedFanoXorRouteWordGate0 packedFanoXorRouteWord
+  have h_split : packedFanoXorRouteStatusCode status * 2048 + gate1.val * 128 + gate0.val * 8 + value.val
+      = (packedFanoXorRouteStatusCode status * 256 + gate1.val * 16 + gate0.val) * 8 + value.val := by
+    rw [Nat.add_mul, Nat.add_mul, Nat.mul_assoc, Nat.mul_assoc]
+  rw [h_split]
+  rw [Nat.add_comm ((packedFanoXorRouteStatusCode status * 256 + gate1.val * 16 + gate0.val) * 8) value.val]
+  rw [Nat.mul_comm (packedFanoXorRouteStatusCode status * 256 + gate1.val * 16 + gate0.val) 8]
+  rw [Nat.add_mul_div_left _ _ (by decide : 0 < 8)]
+  rw [Nat.div_eq_of_lt value.is_lt]
+  rw [Nat.zero_add]
+  have h_mod : (packedFanoXorRouteStatusCode status * 256 + gate1.val * 16 + gate0.val)
+      = (packedFanoXorRouteStatusCode status * 16 + gate1.val) * 16 + gate0.val := by
+    rw [Nat.add_mul, Nat.mul_assoc]
+  rw [h_mod]
+  rw [Nat.add_comm]
+  rw [Nat.add_mul_mod_self_right]
+  exact Nat.mod_eq_of_lt gate0.is_lt
 
 theorem packedFanoXorRouteWord_gate1_round_trip
     (status : PackedFanoXorRouteStatus) (value : Fin 8)
@@ -919,10 +962,25 @@ theorem packedFanoXorRouteWord_gate1_round_trip
     packedFanoXorRouteWordGate1
         (packedFanoXorRouteWord status value gate0 gate1) =
       gate1.val := by
-  cases status <;>
-    unfold packedFanoXorRouteWordGate1
-      packedFanoXorRouteWord packedFanoXorRouteStatusCode <;>
-    omega
+  unfold packedFanoXorRouteWordGate1 packedFanoXorRouteWord
+  have h_split : packedFanoXorRouteStatusCode status * 2048 + gate1.val * 128 + gate0.val * 8 + value.val
+      = (packedFanoXorRouteStatusCode status * 16 + gate1.val) * 128 + (gate0.val * 8 + value.val) := by
+    rw [Nat.add_mul, Nat.mul_assoc, show 16 * 128 = 2048 from rfl]
+    rw [Nat.add_assoc]
+  rw [h_split]
+  rw [Nat.add_comm ((packedFanoXorRouteStatusCode status * 16 + gate1.val) * 128) (gate0.val * 8 + value.val)]
+  rw [Nat.mul_comm (packedFanoXorRouteStatusCode status * 16 + gate1.val) 128]
+  rw [Nat.add_mul_div_left _ _ (by decide : 0 < 128)]
+  have h_rem : gate0.val * 8 + value.val < 128 := by
+    calc gate0.val * 8 + value.val
+        ≤ 15 * 8 + 7 := Nat.add_le_add (Nat.mul_le_mul_right 8 (Nat.le_of_lt_succ gate0.is_lt)) (Nat.le_of_lt_succ value.is_lt)
+      _ = 127 := by decide
+      _ < 128 := by decide
+  rw [Nat.div_eq_of_lt h_rem]
+  rw [Nat.zero_add]
+  rw [Nat.add_comm]
+  rw [Nat.add_mul_mod_self_right]
+  exact Nat.mod_eq_of_lt gate1.is_lt
 
 def packedFanoXorRouteHotWord (a b : FanoPoint) : Nat :=
   packedFanoXorRouteWord
@@ -2464,7 +2522,9 @@ theorem u16WireBytes_decode_round_trip (n : Nat) (h : n < 65536) :
   have hhi : (n / 256) % 256 < 256 := Nat.mod_lt _ (by decide)
   have hlo : n % 256 < 256 := Nat.mod_lt _ (by decide)
   simp [hhi, hlo]
-  omega
+  rw [Nat.mod_eq_of_lt (show n / 256 < 256 from Nat.div_lt_of_lt_mul h)]
+  rw [Nat.mul_comm (n / 256) 256]
+  exact Nat.div_add_mod n 256
 
 theorem packedFanoXorRouteWord_u16WireBytes_decode_round_trip
     (status : PackedFanoXorRouteStatus) (value : Fin 8)
@@ -2479,7 +2539,17 @@ theorem packedFanoXorRouteWord_u16WireBytes_decode_round_trip
   have hgate0 : gate0.val ≤ 15 := Nat.le_of_lt_succ gate0.isLt
   have hgate1 : gate1.val ≤ 15 := Nat.le_of_lt_succ gate1.isLt
   unfold packedFanoXorRouteWord
-  omega
+  calc packedFanoXorRouteStatusCode status * 2048 + gate1.val * 128 + gate0.val * 8 + value.val
+      ≤ 3 * 2048 + 15 * 128 + 15 * 8 + 7 := by
+        apply Nat.add_le_add
+        · apply Nat.add_le_add
+          · apply Nat.add_le_add
+            · exact Nat.mul_le_mul_right 2048 hstatus
+            · exact Nat.mul_le_mul_right 128 hgate1
+          · exact Nat.mul_le_mul_right 8 hgate0
+        · exact hvalue
+    _ = 8191 := by decide
+    _ < 65536 := by decide
 
 theorem packedFanoXorRouteWord_lt_u16
     (status : PackedFanoXorRouteStatus) (value : Fin 8)
@@ -2491,7 +2561,17 @@ theorem packedFanoXorRouteWord_lt_u16
   have hgate0 : gate0.val ≤ 15 := Nat.le_of_lt_succ gate0.isLt
   have hgate1 : gate1.val ≤ 15 := Nat.le_of_lt_succ gate1.isLt
   unfold packedFanoXorRouteWord
-  omega
+  calc packedFanoXorRouteStatusCode status * 2048 + gate1.val * 128 + gate0.val * 8 + value.val
+      ≤ 3 * 2048 + 15 * 128 + 15 * 8 + 7 := by
+        apply Nat.add_le_add
+        · apply Nat.add_le_add
+          · apply Nat.add_le_add
+            · exact Nat.mul_le_mul_right 2048 hstatus
+            · exact Nat.mul_le_mul_right 128 hgate1
+          · exact Nat.mul_le_mul_right 8 hgate0
+        · exact hvalue
+    _ = 8191 := by decide
+    _ < 65536 := by decide
 
 def packedFanoXorRouteWireWord (route : PackedFanoXorRoute) : Option Nat :=
   match route.payload with

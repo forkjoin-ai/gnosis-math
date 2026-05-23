@@ -1,5 +1,6 @@
 import Gnosis.ArticulatorySynthesis
 import Gnosis.Real
+import Gnosis.LaryngealPhysics
 
 namespace Gnosis
 namespace Articulatory
@@ -24,7 +25,7 @@ def getGestures : Phoneme → PhonemeGestures
       lipRounding    := { target := 0.0, dominance := 0.2 },
       lipClosure     := { target := 1.0, dominance := 1.0 },
       velumOpening   := { target := 1.0, dominance := 1.0 },
-      larynx         := defaultLarynx,
+      larynx         := vowelLarynx false,
       duration       := 0.1
     }
   | Phoneme.B => {
@@ -33,7 +34,7 @@ def getGestures : Phoneme → PhonemeGestures
       lipRounding    := { target := 0.0, dominance := 0.2 },
       lipClosure     := { target := 1.0, dominance := 1.0 },
       velumOpening   := { target := 0.0, dominance := 1.0 },
-      larynx         := defaultLarynx,
+      larynx         := vowelLarynx false,
       duration       := 0.08
     }
   | Phoneme.AA => {
@@ -42,7 +43,7 @@ def getGestures : Phoneme → PhonemeGestures
       lipRounding    := { target := 0.0,  dominance := 0.5 },
       lipClosure     := { target := 0.0,  dominance := 0.5 },
       velumOpening   := { target := 0.0,  dominance := 0.8 },
-      larynx         := defaultLarynx,
+      larynx         := vowelLarynx false,
       duration       := 0.15
     }
   | Phoneme.IY => {
@@ -51,7 +52,7 @@ def getGestures : Phoneme → PhonemeGestures
       lipRounding    := { target := 0.0,  dominance := 0.5 },
       lipClosure     := { target := 0.0,  dominance := 0.5 },
       velumOpening   := { target := 0.0,  dominance := 1.0 },
-      larynx         := defaultLarynx,
+      larynx         := vowelLarynx false,
       duration       := 0.15
     }
   | Phoneme.S => {
@@ -60,7 +61,7 @@ def getGestures : Phoneme → PhonemeGestures
       lipRounding    := { target := 0.0,  dominance := 0.0 },
       lipClosure     := { target := 0.0,  dominance := 0.5 },
       velumOpening   := { target := 0.0,  dominance := 1.0 },
-      larynx         := { defaultLarynx with isVoiced := false, pressure := 0.8 },
+      larynx         := fricativeLarynx false,
       duration       := 0.12
     }
   | Phoneme.DH => { -- "The"
@@ -69,7 +70,7 @@ def getGestures : Phoneme → PhonemeGestures
       lipRounding    := { target := 0.0,  dominance := 0.0 },
       lipClosure     := { target := 0.0,  dominance := 0.0 },
       velumOpening   := { target := 0.0,  dominance := 1.0 },
-      larynx         := defaultLarynx,
+      larynx         := vowelLarynx false,
       duration       := 0.08
     }
   | Phoneme.F => { -- "Of"
@@ -78,7 +79,7 @@ def getGestures : Phoneme → PhonemeGestures
       lipRounding    := { target := 0.0,  dominance := 0.0 },
       lipClosure     := { target := 0.5,  dominance := 1.0 },
       velumOpening   := { target := 0.0,  dominance := 1.0 },
-      larynx         := { defaultLarynx with isVoiced := false, pressure := 0.7 },
+      larynx         := fricativeLarynx false,
       duration       := 0.1
     }
   | Phoneme.L => { -- "Light", "Clear"
@@ -87,7 +88,7 @@ def getGestures : Phoneme → PhonemeGestures
       lipRounding    := { target := 0.0,  dominance := 0.0 },
       lipClosure     := { target := 0.0,  dominance := 0.0 },
       velumOpening   := { target := 0.0,  dominance := 1.0 },
-      larynx         := defaultLarynx,
+      larynx         := vowelLarynx false,
       duration       := 0.1
     }
   | Phoneme.R => {
@@ -96,7 +97,7 @@ def getGestures : Phoneme → PhonemeGestures
       lipRounding    := { target := 0.5,  dominance := 0.8 },
       lipClosure     := { target := 0.0,  dominance := 0.0 },
       velumOpening   := { target := 0.0,  dominance := 1.0 },
-      larynx         := defaultLarynx,
+      larynx         := vowelLarynx false,
       duration       := 0.1
     }
   | Phoneme.AY => {
@@ -105,7 +106,7 @@ def getGestures : Phoneme → PhonemeGestures
       lipRounding    := { target := 0.0,  dominance := 0.5 },
       lipClosure     := { target := 0.0,  dominance := 0.5 },
       velumOpening   := { target := 0.0,  dominance := 1.0 },
-      larynx         := defaultLarynx,
+      larynx         := vowelLarynx false,
       duration       := 0.15
     }
   | Phoneme.AE => {
@@ -114,7 +115,7 @@ def getGestures : Phoneme → PhonemeGestures
       lipRounding    := { target := 0.0,  dominance := 0.5 },
       lipClosure     := { target := 0.0,  dominance := 0.5 },
       velumOpening   := { target := 0.0,  dominance := 1.0 },
-      larynx         := defaultLarynx,
+      larynx         := vowelLarynx false,
       duration       := 0.15
     }
   | Phoneme.EH => {
@@ -123,7 +124,7 @@ def getGestures : Phoneme → PhonemeGestures
       lipRounding    := { target := 0.0,  dominance := 0.5 },
       lipClosure     := { target := 0.0,  dominance := 0.5 },
       velumOpening   := { target := 0.0,  dominance := 1.0 },
-      larynx         := defaultLarynx,
+      larynx         := vowelLarynx false,
       duration       := 0.12
     }
   | _ => {
@@ -132,7 +133,7 @@ def getGestures : Phoneme → PhonemeGestures
       lipRounding    := { target := 0.0, dominance := 0.5 },
       lipClosure     := { target := 0.0, dominance := 0.5 },
       velumOpening   := { target := 0.0, dominance := 0.5 },
-      larynx         := defaultLarynx,
+      larynx         := vowelLarynx false,
       duration       := 0.12
     }
 
@@ -161,11 +162,8 @@ def getBlendedTarget (cur : Gesture) (future : List PhonemeGestures) (getG : Pho
   match lookAhead future with
   | none => cur.target
   | some nextG =>
-      let totalDom := cur.dominance + nextG.dominance
-      if totalDom > 0.0 then
-        (cur.target * cur.dominance + nextG.target * nextG.dominance) / totalDom
-      else
-        cur.target
+      -- Use formalized weighted averaging from LaryngealPhysics
+      weightedAverage cur.target nextG.target cur.dominance nextG.dominance
 
 def isVowel : Phoneme → Bool
   | Phoneme.IY | Phoneme.IH | Phoneme.EH | Phoneme.AE | Phoneme.AA | Phoneme.AH | Phoneme.AO | Phoneme.OW | Phoneme.UH | Phoneme.UW | Phoneme.OY | Phoneme.AY | Phoneme.AW | Phoneme.EY | Phoneme.ER => true
@@ -177,9 +175,10 @@ def isVowel : Phoneme → Bool
 -/
 def applySyllabicStress (_ps : List PhonemeGestures) (p : Phoneme) (pg : PhonemeGestures) : PhonemeGestures :=
   if isVowel p then
-    -- Nucleus detected: Increase pressure and duration
-    { pg with duration := pg.duration * 1.2,
-              larynx   := { pg.larynx with pressure := pg.larynx.pressure * 1.3 } }
+    -- Nucleus detected: Apply formalized stress scaling
+    { pg with 
+      duration := pg.duration * defaultStressScaling.duration_factor,
+      larynx   := applyStressScaling pg.larynx defaultStressScaling }
   else pg
 
 def buildTrack (ps : List PhonemeGestures) (getG : PhonemeGestures → Gesture) : List (TrackEvent Float) :=
@@ -213,9 +212,20 @@ def compileWord (word : List Phoneme) : GesturalScore :=
     elongate stressedPgs
 
   let rec buildLarynx (ps : List PhonemeGestures) (curTime : Float) : List (TrackEvent LarynxState) :=
-    match ps with
-    | [] => []
-    | p :: rest => { value := p.larynx, startTime := curTime } :: buildLarynx rest (curTime + p.duration)
+    let rec scan (l : List PhonemeGestures) (prevLarynx : Option LarynxState) (curTime : Float) : List (TrackEvent LarynxState) :=
+      match l with
+      | [] => []
+      | p :: rest =>
+          let currentLarynx := 
+            match prevLarynx with
+            | none => p.larynx
+            | some prev => 
+              -- Apply formalized blending for smooth transitions
+              if Float.abs (p.larynx.pitch - prev.pitch) > 0.1 then
+                blendLarynxStates prev p.larynx 0.7 0.3
+              else p.larynx
+          { value := currentLarynx, startTime := curTime } :: scan rest (some currentLarynx) (curTime + p.duration)
+    scan ps none 0.0
 
   { tongueHeight   := buildTrack pgs (·.tongueHeight),
     tongueBackness := buildTrack pgs (·.tongueBackness),

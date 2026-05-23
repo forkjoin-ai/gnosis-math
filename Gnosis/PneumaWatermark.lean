@@ -276,7 +276,11 @@ theorem packet_carries_dimensions_from_affect
     PacketCarriesSemanticDimensions packet := by
   unfold PacketCarriesSemanticDimensions
   have hpos : 0 < packet.affectTabs.length := List.length_pos_of_mem h
-  omega
+  calc 0
+      < packet.affectTabs.length := hpos
+    _ ≤ packet.toneTabs.length + packet.affectTabs.length := Nat.le_add_left _ _
+    _ ≤ (packet.toneTabs.length + packet.affectTabs.length) + packet.biasTabs.length := Nat.le_add_right _ _
+    _ ≤ ((packet.toneTabs.length + packet.affectTabs.length) + packet.biasTabs.length) + packet.aestheticTabs.length := Nat.le_add_right _ _
 
 /-! ## Pure symbolic encode/decode round trip -/
 

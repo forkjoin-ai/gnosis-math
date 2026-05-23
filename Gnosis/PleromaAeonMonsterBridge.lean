@@ -1338,25 +1338,31 @@ theorem verifier_cost_after_triton_preflight_cons
 /-- Lean-side version of the runtime hotpath invariant: verifier entries are
 bounded by payloads whose preflight admitted plus payloads that intentionally
 use the escape hatch. -/
-theorem triton_preflight_verifier_calls_eq_admitted_plus_escape :
-    ∀ payloads : List TritonPreflightOutcome,
-      verifierCallsAfterTritonPreflight payloads =
-        countTritonAdmitted payloads + countEscapeHatch payloads
-  | [] => by rfl
-  | .escapeHatch :: xs => by
-      rw [verifier_calls_after_triton_preflight_cons,
-        triton_preflight_verifier_calls_eq_admitted_plus_escape xs]
-      simp [tritonPreflightReachesVerifier, countTritonAdmitted, countEscapeHatch]
-      omega
-  | .tritonAdmitted :: xs => by
-      rw [verifier_calls_after_triton_preflight_cons,
-        triton_preflight_verifier_calls_eq_admitted_plus_escape xs]
-      simp [tritonPreflightReachesVerifier, countTritonAdmitted, countEscapeHatch]
-      omega
-  | .tritonDropped :: xs => by
-      rw [verifier_calls_after_triton_preflight_cons,
-        triton_preflight_verifier_calls_eq_admitted_plus_escape xs]
-      simp [tritonPreflightReachesVerifier, countTritonAdmitted, countEscapeHatch]
+theorem triton_preflight_verifier_calls_eq_admitted_plus_escape
+    (payloads : List TritonPreflightOutcome) :
+    verifierCallsAfterTritonPreflight payloads =
+      countTritonAdmitted payloads + countEscapeHatch payloads := by
+  induction payloads with
+  | nil => rfl
+  | cons x xs ih =>
+      rw [verifier_calls_after_triton_preflight_cons]
+      cases x
+      · -- escapeHatch
+        unfold countTritonAdmitted countEscapeHatch tritonPreflightReachesVerifier
+        rw [ih]
+        rw [← Nat.add_assoc]
+        rw [Nat.add_comm 1 (countTritonAdmitted xs)]
+        rw [Nat.add_assoc]
+        rw [Nat.add_comm 1 (countEscapeHatch xs)]
+      · -- tritonAdmitted
+        unfold countTritonAdmitted countEscapeHatch tritonPreflightReachesVerifier
+        rw [ih]
+        rw [← Nat.add_assoc]
+        rw [Nat.add_comm 1 (countTritonAdmitted xs)]
+      · -- tritonDropped
+        unfold countTritonAdmitted countEscapeHatch tritonPreflightReachesVerifier
+        rw [ih]
+        rw [Nat.zero_add]
 
 theorem triton_preflight_verifier_calls_le_total
     (payloads : List TritonPreflightOutcome) :
@@ -1365,7 +1371,12 @@ theorem triton_preflight_verifier_calls_le_total
   | nil => simp [verifierCallsAfterTritonPreflight]
   | cons x xs ih =>
       rw [verifier_calls_after_triton_preflight_cons]
-      cases x <;> simp [tritonPreflightReachesVerifier] <;> omega
+      cases x <;> simp [tritonPreflightReachesVerifier]
+      · rw [Nat.add_comm xs.length 1]
+        exact Nat.add_le_add_left ih 1
+      · rw [Nat.add_comm xs.length 1]
+        exact Nat.add_le_add_left ih 1
+      · exact Nat.le_trans ih (Nat.le_succ _)
 
 /-- Dropped preflight payloads do not increase verifier cost. -/
 theorem triton_dropped_payload_has_zero_verifier_cost :

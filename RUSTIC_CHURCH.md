@@ -65,6 +65,47 @@ storytelling: **gcd** divisibility for the stride exponent, one **native_decide*
 to **`cyclicSucc`**, a **GodTwelveSlice** conservation hook at **`R = 12`**, and **rotPairNat**
 invariance of **`shortChord`** across the **66** pairs.
 
+### Honest-unification exemplar: prove the dichotomy, refute the over-claim
+
+[`Gnosis/ErgodicCutoffDuality.lean`](Gnosis/ErgodicCutoffDuality.lean) is the exemplar for
+the Sardis-warning's positive use: it takes a sweeping "everything is the same torus
+automorphism quotient" pitch and resolves it into what `lake build` will actually carry.
+The disciplined moves:
+
+- **Separate the regimes instead of identifying them.** `Returns f T x := iter f T x = x`
+  (conservative) versus `DissipativeSystem` with a monovariant that drops by 1 per step
+  (`step_sub_one`, `dissipative_mono_after`, `dissipative_absorbs`). The genuine theorem is
+  a **dichotomy**: `dissipative_not_periodic` proves a dissipative state with positive
+  monovariant is **aperiodic**, so the two regimes meet only at the absorbing point. This
+  replaces the prose "healing IS scrambling" with the proved "healing is the dissipative
+  *complement* of a closed orbit."
+- **Demote coincidences to coincidences.** The cat map on `(Z/5)²` and the out-shuffle on
+  12 cards share **period 10** (reused from `AeonNoise`), but `distinct_orbit_structure`
+  `decide`s that their fixed-point counts differ (1 vs 2): same period, **not** the same
+  quotient. Equal magnitudes are not a shared invariant. The sibling
+  [`Gnosis/ErgodicCutoffCycleType.lean`](Gnosis/ErgodicCutoffCycleType.lean) carries this
+  to a full **antitheorem**: it proves both maps have order *exactly* 10 (period set =
+  multiples of 10, via `period_dvd_ten`) yet have different cycle types
+  (`1+2+2+10+10` vs `1+1+10`), with `actions_are_not_conjugate` certifying the
+  fingerprint mismatch under *zero* axioms. An antitheorem — a proved non-match where a
+  match was expected — is as load-bearing here as a theorem.
+- **Subsume, don't restate.** `cancerDissipative` instantiates the generic absorbing law,
+  and `iter_eq_iterateRestoration` bridges back to `CancerTopology.iterateRestoration`, so
+  `cancer_recovers_in_seven_bridged` falls out as a *corollary* of the abstract theorem —
+  the "7" is exposed as `gbmCombined.deficit = 9 - 2`, an instance parameter, never a constant.
+- **Name the open obligation in prose.** The "7 riffle shuffles" in
+  `Gnosis/Mesh/MeshCriticalThresholds.lean` is a hard-coded entry in `getThreshold`, not a
+  proved Markov / total-variation cutoff (the `threshold_*` theorems only show a threshold
+  is *reachable*). Until a real mixing-time witness exists, riffle-7 stays a **label**, so it
+  is deliberately **excluded** from the duality rather than smuggled in. (The auto-generated
+  [`MCP_OPEN_OBLIGATIONS.md`](MCP_OPEN_OBLIGATIONS.md) only counts `sorry`/`admit`/`axiom`
+  tokens; an unproved *label* like this is invisible to it and must be tracked in prose here.)
+
+Axioms: `propext` only (the `by_cases` stays constructive through `Nat`'s `DecidableEq`); no
+`Classical.choice`, no `sorryAx`. The lesson: a top-down "they are all one thing" story earns
+its keep only at the granularity where `lake build` still bears weight — prove the relation
+that survives, and label the rest.
+
 ## How you close goals instead of `omega`
 
 After `unfold`, the goal almost always fits one of the patterns in the cookbook

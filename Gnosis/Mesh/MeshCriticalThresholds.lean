@@ -25,6 +25,7 @@ inductive MixingDomain
   | cardTopToRandom      -- ~236 shuffles (n log n)
   | socialDegrees        -- 6 degrees
   | rubikCubeMixing      -- 26 moves
+  | cardOutShuffle12     -- 10 shuffles
 deriving Repr, DecidableEq
 
 def getThreshold (d : MixingDomain) : Nat :=
@@ -33,6 +34,7 @@ def getThreshold (d : MixingDomain) : Nat :=
   | MixingDomain.cardTopToRandom   => 236
   | MixingDomain.socialDegrees      => 6
   | MixingDomain.rubikCubeMixing    => 26
+  | MixingDomain.cardOutShuffle12   => 10
 
 inductive MixingForce
   | topologicalVacuum    -- Pre-threshold structure
@@ -90,8 +92,9 @@ theorem threshold_master :
     buleDeficit structuredDeckWitness = buleDeficit randomizedDeckWitness ∧
     (getThreshold MixingDomain.cardRiffleShuffle = 7) ∧
     (getThreshold MixingDomain.socialDegrees = 6) ∧
-    (getThreshold MixingDomain.rubikCubeMixing = 26) := by
-  refine ⟨threshold_is_reachable, threshold_deficit_conservation.left, rfl, rfl, rfl⟩
+    (getThreshold MixingDomain.rubikCubeMixing = 26) ∧
+    (getThreshold MixingDomain.cardOutShuffle12 = 10) := by
+  refine ⟨threshold_is_reachable, threshold_deficit_conservation.left, rfl, rfl, rfl, rfl⟩
 
 end MeshCriticalThresholds
 end Gnosis

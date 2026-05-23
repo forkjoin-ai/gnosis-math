@@ -192,19 +192,74 @@ theorem combined_p53_restoration_improves :
       combinedP53Restoration.topology.deficit := by
   exact combinedP53Restoration.restoration_lowers_or_preserves_deficit
 
+/-- A single self-healing cellular restoration step for cell vent capacity. -/
+def stepRestoration (curr : CellVentTopology) : CellVentTopology where
+  healthyVentBeta1 := curr.healthyVentBeta1
+  tumorVentBeta1 := 
+    if curr.tumorVentBeta1 < curr.healthyVentBeta1 then
+      curr.tumorVentBeta1 + 1
+    else
+      curr.tumorVentBeta1
+  tumorBound := by
+    by_cases h : curr.tumorVentBeta1 < curr.healthyVentBeta1
+    · simp [h]
+      exact h
+    · simp [h]
+      exact curr.tumorBound
+
+theorem step_restoration_decreases_deficit (curr : CellVentTopology) (hPos : 0 < curr.deficit) :
+    (stepRestoration curr).deficit = curr.deficit - 1 := by
+  unfold CellVentTopology.deficit
+  dsimp [stepRestoration]
+  have h_lt : curr.tumorVentBeta1 < curr.healthyVentBeta1 := by
+    have h_def : curr.deficit = curr.healthyVentBeta1 - curr.tumorVentBeta1 := rfl
+    rw [h_def] at hPos
+    exact Nat.lt_of_sub_pos hPos
+  simp [h_lt]
+  exact Nat.sub_add_eq curr.healthyVentBeta1 curr.tumorVentBeta1 1
+
+/-- Forward iterate of self-healing restoration steps. -/
+def iterateRestoration (n : Nat) (curr : CellVentTopology) : CellVentTopology :=
+  match n with
+  | 0 => curr
+  | k + 1 => iterateRestoration k (stepRestoration curr)
+
+/--
+Theorem: Self-Healing Bounded Cancer Stabilization.
+Any cell vent topology undergoing iterative feedback restoration steps is guaranteed
+to reach exactly 0 deficit (full recovery) after `curr.deficit` iterations.
+-/
+theorem iterate_restoration_achieves_zero_deficit (n : Nat) (curr : CellVentTopology) (h_eq : curr.deficit = n) :
+    (iterateRestoration n curr).deficit = 0 := by
+  induction n generalizing curr with
+  | zero =>
+    dsimp [iterateRestoration]
+    exact h_eq
+  | succ k ih =>
+    dsimp [iterateRestoration]
+    have h_next : (stepRestoration curr).deficit = k := by
+      have hPos : 0 < curr.deficit := by
+        rw [h_eq]
+        exact Nat.zero_lt_succ k
+      rw [step_restoration_decreases_deficit curr hPos, h_eq]
+      rfl
+    exact ih (stepRestoration curr) h_next
+
 theorem cancer_topology_restored_master :
     gbmClassical.deficit = 2 ∧
       gbmMesenchymal.deficit = 3 ∧
       gbmCombined.deficit = 7 ∧
       gbmClassical.deficit < gbmCombined.deficit ∧
       combinedP53Restoration.restoredTopology.deficit ≤
-        combinedP53Restoration.topology.deficit := by
+        combinedP53Restoration.topology.deficit ∧
+      (iterateRestoration 7 gbmCombined).deficit = 0 := by
   exact
     ⟨gbm_classical_deficit,
       gbm_mesenchymal_deficit,
       gbm_combined_deficit,
       gbm_combined_more_severe_than_classical,
-      combined_p53_restoration_improves⟩
+      combined_p53_restoration_improves,
+      iterate_restoration_achieves_zero_deficit 7 gbmCombined rfl⟩
 
 end CancerTopology
 end Gnosis
