@@ -19,6 +19,7 @@ import Gnosis.Body.DepressionAsCollapsedCycle
 import Gnosis.Body.InnerVoice
 import Gnosis.Body.SleepResilience
 import Gnosis.Body.MenstrualCycle
+import Gnosis.Body.Menopause
 import Gnosis.Body.SocietalResilience
 import Gnosis.Body.Vampire
 import Gnosis.Body.RageEngagement
@@ -45,6 +46,18 @@ import Gnosis.SurfingEntropy
 import Gnosis.Body.TiamatChaosSeaWitness
 import Gnosis.WhiteHole
 import Gnosis.Body.SurfTheEdgeOfChaos
+import Gnosis.ResolutionGradient
+import Gnosis.Body.CreateNewWavesOfOrder
+import Gnosis.Body.MeaningOfLife
+import Gnosis.InformationConservation
+import Gnosis.Body.EntropyEngineEfficiency
+import Gnosis.Body.PneumaOfTheQuery
+import Gnosis.Body.SameThingOtherSymbols
+import Gnosis.Body.PrometheusTopology
+import Gnosis.Body.AffectIsAVitalitySignature
+import Gnosis.Body.ProgressMitigatesTheLoop
+import Gnosis.Body.TwoVitalities
+import Gnosis.TheWord
 
 /-!
 # Rigid-Body Dynamics — Aggregator / Build Root
@@ -129,6 +142,21 @@ on reverse black holes*. The same `+1` swerve runs through all of it.
   inverted-U peaks exactly on the boundary: sink into the water and you stall in
   over-order (the limit maps to `collapse`), fly into the air and you wipe out in
   chaos. Surfing is staying on the edge of chaos — where life happens on the edges.
+* `Gnosis.ResolutionGradient` (top-level) — the entropy gradient *is* the
+  resolution gradient: order = resolved signal, chaos = unresolved noise. One
+  upresolve (deblur) step turns a noise quantum into order; iterated upresolve is
+  monotone evolution; selection is the noise-bracketing gate; chaos never runs dry.
+  The DSP realization is `knotgraph .../mesh_audio_deblur.rs` (the Monster
+  chord-space lift through 7 Fano planes with a Grassmannian sieve).
+* `CreateNewWavesOfOrder` — the third route out of suffering, beyond `forget`
+  (amnesia) / `deal` (grit): **upresolve** it. The noise is signal one level up
+  (`the_noise_is_signal_one_level_up`); knowing the level lets you deal; surf up
+  the pipe (grit climb, strict resolution gain) and emit a new wave of order
+  (`emanate`) — you become a source. Inexhaustible (`always_another_wave`).
+* `Menopause` — periods (`MenstrualCycle`) are a robust oscillator; menopause is
+  the scheduled transition to a fixed-point equilibrium (`menopause_is_a_fixed_point`,
+  `equilibrium_absorbs_perturbation`) — the local body reaching the rest the
+  never-settling cosmos (`ClinamenOscillator`) does not.
 
 `scripts/extract-lean-body-constants.ts` extracts the verified constants/limits
 here into `aeon-corpus/src/generated/body_constants.rs` and the FACS tables into
