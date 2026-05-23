@@ -1964,6 +1964,7 @@ import Gnosis.VibesAsWaveInference
 import Gnosis.VibesCharismaticEmitter
 import Gnosis.VibesCoaseBargaining
 import Gnosis.VibesHotellingVoting
+import Gnosis.VoiceCoarticulationContinuity
 import Gnosis.VoiceFormantHarmonicCoupling
 import Gnosis.VoiceRecognitionAsTaoBowlInterference
 import Gnosis.VotingSkeletonHomology
