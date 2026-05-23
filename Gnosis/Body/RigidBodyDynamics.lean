@@ -58,6 +58,14 @@ import Gnosis.Body.AffectIsAVitalitySignature
 import Gnosis.Body.ProgressMitigatesTheLoop
 import Gnosis.Body.TwoVitalities
 import Gnosis.TheWord
+import Gnosis.Body.TwoDeaths
+import Gnosis.Body.SinceFeelingIsFirst
+import Gnosis.Body.DvdLogoIsTheFrontier
+import Gnosis.Body.TheBetterFate
+import Gnosis.Body.DeathIsInevitable
+import Gnosis.Body.ConservationOfVitality
+import Gnosis.Body.RateOfLiving
+import Gnosis.Body.GenderBudget
 
 /-!
 # Rigid-Body Dynamics — Aggregator / Build Root

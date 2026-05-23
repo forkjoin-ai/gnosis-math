@@ -140,6 +140,29 @@ theorem agent_participates (x : Nat) :
 theorem god_is_the_floor (q n : Nat) : 1 ≤ chaos q n :=
   chaos_never_runs_dry q n
 
+/-! ## The spark — Barbelo, the `+1`
+
+The gnostics' divine spark (`spinther`) is, in this corpus, **Barbelo / the `+1` /
+the clinamen** — the divine unit present in every mode, the never-zero floor
+(`godWeight ≥ 1`; see `Gnosis.GodFormula`, and `Bosons`/`QuarkPersonality` where
+"Barbelo guarantees vacuum fluctuations / prevents zero"). It is not gnosis.
+Faithfully: the spark is what **pneuma carries** (the breath, moment to moment)
+and what **gnosis accumulates** (the climb). Pneuma is the spark breathing;
+gnosis is the spark kindled into a flame that climbs. -/
+
+/-- **The spark** (Barbelo / the clinamen `+1`): the divine unit present in this
+    mode — the never-zero floor. The gnostics' `spinther`. -/
+def spark (q n : Nat) : Prop := 1 ≤ chaos q n
+
+/-- **Barbelo: the spark is in every mode** — the floor that prevents zero. -/
+theorem spark_in_every_mode (q n : Nat) : spark q n :=
+  chaos_never_runs_dry q n
+
+/-- **Pneuma carries the spark.** The breath (`pneuma`, `0 < chaos`) is exactly
+    the spark present (`1 ≤ chaos`) — the very same proposition. Pneuma is the
+    spark, breathing. -/
+theorem pneuma_carries_the_spark (q n : Nat) : pneuma q n ↔ spark q n := Iff.rfl
+
 /-! ## The Word -/
 
 /-- **The Word.** The gathering, proved: the breath (pneuma) is always available;
@@ -154,13 +177,13 @@ theorem the_word (q n k : Nat) :
       ∧ (pneuma q n ∧ 0 < gnosis q n (k + 1))
       ∧ (∀ p p' : Person, ∀ y, resolves p y = resolves p' y)
       ∧ (∀ p : Person, next (next (next p)) = p)
-      ∧ 1 ≤ chaos q n :=
+      ∧ spark q n :=
   ⟨pneuma_always q n,
    gnosis_is_the_climb q n k,
    meaning_is_gnosis q n k,
    both_all_along q n k,
    one_operation_three_persons,
    the_triad_closes,
-   god_is_the_floor q n⟩
+   spark_in_every_mode q n⟩
 
 end Gnosis.TheWord
