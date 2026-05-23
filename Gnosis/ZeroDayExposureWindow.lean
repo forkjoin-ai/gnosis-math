@@ -69,26 +69,26 @@ theorem zero_window_zero_probability (e : Nat) :
 /-- **T3** Breach probability is monotone in exposure window. -/
 theorem prob_mono_window (e w k : Nat) :
     breachProbabilityScaled e w ≤ breachProbabilityScaled e (w + k) := by
-  simp only [breachProbabilityScaled]
-  nlinarith [Nat.zero_le e, Nat.zero_le k]
+  unfold breachProbabilityScaled
+  exact Nat.mul_le_mul_left e (Nat.le_add_right _ _)
 
 /-- **T4** Breach probability is monotone in exploit rate. -/
 theorem prob_mono_exploit_rate (e k w : Nat) :
     breachProbabilityScaled e w ≤ breachProbabilityScaled (e + k) w := by
-  simp only [breachProbabilityScaled]
-  nlinarith [Nat.zero_le w, Nat.zero_le k]
+  unfold breachProbabilityScaled
+  exact Nat.mul_le_mul_right w (Nat.le_add_right _ _)
 
 /-- **T5** Expected breach cost is monotone in breach cost per incident. -/
 theorem expected_cost_mono_breach_cost (p k c : Nat) :
     expectedBreachCost p c ≤ expectedBreachCost p (c + k) := by
-  simp only [expectedBreachCost]
+  unfold expectedBreachCost
   apply Nat.div_le_div_right
   exact Nat.mul_le_mul_left _ (Nat.le_add_right _ _)
 
 /-- **T6** Expected breach cost is monotone in breach probability. -/
 theorem expected_cost_mono_prob (p k c : Nat) :
     expectedBreachCost p c ≤ expectedBreachCost (p + k) c := by
-  simp only [expectedBreachCost]
+  unfold expectedBreachCost
   apply Nat.div_le_div_right
   exact Nat.mul_le_mul_right _ (Nat.le_add_right _ _)
 
@@ -96,58 +96,60 @@ theorem expected_cost_mono_prob (p k c : Nat) :
 theorem scanner_shrinks_window (m : ExposureModel)
     (h : m.remediationDays < m.scanIntervalDays) :
     exposureWindowDaysWithScanner m < exposureWindowDaysNoScanner m := by
-  simp [exposureWindowDaysWithScanner, exposureWindowDaysNoScanner]
-  exact h
+  unfold exposureWindowDaysWithScanner exposureWindowDaysNoScanner; exact h
 
 /-- **T8** Breach cost with scanner ≤ breach cost without scanner when remediation ≤ interval. -/
 theorem scanner_reduces_breach_cost (m : ExposureModel)
     (h : m.remediationDays ≤ m.scanIntervalDays) :
     breachCostWithScanner m ≤ breachCostNoScanner m := by
-  simp only [breachCostWithScanner, breachCostNoScanner,
-             expectedBreachCost, breachProbabilityScaled,
-             exposureWindowDaysWithScanner, exposureWindowDaysNoScanner]
+  unfold breachCostWithScanner breachCostNoScanner
+    expectedBreachCost breachProbabilityScaled
+    exposureWindowDaysWithScanner exposureWindowDaysNoScanner
   apply Nat.div_le_div_right
-  exact Nat.mul_le_mul_left _ h
+  exact Nat.mul_le_mul_left _ (Nat.mul_le_mul_left _ h)
 
 /-- **T9** Breach cost is monotone in scan interval (longer gaps = higher risk). -/
 theorem breach_cost_mono_interval (m : ExposureModel) (k : Nat) :
     breachCostNoScanner m ≤
     breachCostNoScanner { m with scanIntervalDays := m.scanIntervalDays + k } := by
-  simp only [breachCostNoScanner, expectedBreachCost, breachProbabilityScaled,
-             exposureWindowDaysNoScanner]
+  unfold breachCostNoScanner expectedBreachCost breachProbabilityScaled
+    exposureWindowDaysNoScanner
   apply Nat.div_le_div_right
-  nlinarith [Nat.zero_le m.exploitsPerDay10k, Nat.zero_le k]
+  exact Nat.mul_le_mul_left _ (Nat.mul_le_mul_left _ (Nat.le_add_right _ _))
 
 /-- **T10** Breach cost without scanner is monotone in exploit rate. -/
 theorem breach_cost_no_scanner_mono_exploit (m : ExposureModel) (k : Nat) :
     breachCostNoScanner m ≤
     breachCostNoScanner { m with exploitsPerDay10k := m.exploitsPerDay10k + k } := by
-  simp only [breachCostNoScanner, expectedBreachCost, breachProbabilityScaled,
-             exposureWindowDaysNoScanner]
+  unfold breachCostNoScanner expectedBreachCost breachProbabilityScaled
+    exposureWindowDaysNoScanner
   apply Nat.div_le_div_right
-  nlinarith [Nat.zero_le m.scanIntervalDays, Nat.zero_le k]
+  exact Nat.mul_le_mul_left _ (Nat.mul_le_mul_right _ (Nat.le_add_right _ _))
 
 /-- **T11** Exposure ROI is monotone in scan interval (longer gaps favor scanner more). -/
 theorem roi_mono_scan_interval (m : ExposureModel) (k : Nat) :
     exposureROI m ≤
     exposureROI { m with scanIntervalDays := m.scanIntervalDays + k } := by
-  simp only [exposureROI, breachCostNoScanner, breachCostWithScanner, expectedBreachCost,
-             breachProbabilityScaled, exposureWindowDaysNoScanner, exposureWindowDaysWithScanner]
+  unfold exposureROI breachCostNoScanner breachCostWithScanner expectedBreachCost
+    breachProbabilityScaled exposureWindowDaysNoScanner exposureWindowDaysWithScanner
   have h : m.exploitsPerDay10k * m.scanIntervalDays * m.breachCostCents / 10000 ≤
            m.exploitsPerDay10k * (m.scanIntervalDays + k) * m.breachCostCents / 10000 :=
-    Nat.div_le_div_right (by nlinarith [Nat.zero_le m.exploitsPerDay10k, Nat.zero_le k])
-  push_cast
-  linarith [(Nat.cast_le (α := Int)).mpr h]
+    Nat.div_le_div_right (Nat.mul_le_mul_left _ (Nat.mul_le_mul_left _ (Nat.le_add_right _ _)))
+  apply Int.sub_le_sub_right
+  apply Int.sub_le_sub_right
+  exact Int.ofNat_le.mpr h
 
 /-- **T12** Exposure ROI is positive whenever breach cost reduction exceeds scanner cost. -/
 theorem roi_positive (m : ExposureModel)
     (h : breachCostNoScanner m > breachCostWithScanner m + m.scannerCostCents) :
     exposureROI m > 0 := by
-  simp only [exposureROI]
-  push_cast
-  have h' : (m.scannerCostCents : Int) + breachCostWithScanner m < breachCostNoScanner m := by
-    exact_mod_cast h
-  linarith
+  unfold exposureROI
+  have h_sub : (breachCostNoScanner m : Int) - (breachCostWithScanner m : Int) =
+      ((breachCostNoScanner m - breachCostWithScanner m : Nat) : Int) := by
+    rw [Int.ofNat_sub]
+    exact Nat.le_of_lt (Nat.lt_of_le_of_lt (Nat.le_add_right _ _) h)
+  rw [h_sub, ← Int.ofNat_sub_pos]
+  exact Nat.sub_lt_left_of_lt_add (Nat.le_of_lt (Nat.lt_of_le_of_lt (Nat.le_add_right _ _) h)) h
 
 /-- **T13** Scanner reduces expected breach cost when remediation < scan interval. -/
 theorem breach_saving_formula (m : ExposureModel)

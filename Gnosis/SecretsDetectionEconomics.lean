@@ -76,26 +76,26 @@ theorem zero_window_zero_fraud (r : Nat) :
 /-- **T3** Abuse probability is monotone in exposure window. -/
 theorem abuse_prob_mono_window (r w k : Nat) :
     abuseProbabilityScaled r w ≤ abuseProbabilityScaled r (w + k) := by
-  simp only [abuseProbabilityScaled]
-  nlinarith [Nat.zero_le r, Nat.zero_le k]
+  unfold abuseProbabilityScaled
+  exact Nat.mul_le_mul_left r (Nat.le_add_right _ _)
 
 /-- **T4** Abuse probability is monotone in abuse rate. -/
 theorem abuse_prob_mono_rate (r k w : Nat) :
     abuseProbabilityScaled r w ≤ abuseProbabilityScaled (r + k) w := by
-  simp only [abuseProbabilityScaled]
-  nlinarith [Nat.zero_le w, Nat.zero_le k]
+  unfold abuseProbabilityScaled
+  exact Nat.mul_le_mul_right w (Nat.le_add_right _ _)
 
 /-- **T5** Expected fraud cost is monotone in credential value. -/
 theorem fraud_cost_mono_value (p k v : Nat) :
     expectedFraudCostCents p v ≤ expectedFraudCostCents p (v + k) := by
-  simp only [expectedFraudCostCents]
+  unfold expectedFraudCostCents
   apply Nat.div_le_div_right
   exact Nat.mul_le_mul_left _ (Nat.le_add_right _ _)
 
 /-- **T6** Expected fraud cost is monotone in abuse probability. -/
 theorem fraud_cost_mono_prob (p k v : Nat) :
     expectedFraudCostCents p v ≤ expectedFraudCostCents (p + k) v := by
-  simp only [expectedFraudCostCents]
+  unfold expectedFraudCostCents
   apply Nat.div_le_div_right
   exact Nat.mul_le_mul_right _ (Nat.le_add_right _ _)
 
@@ -103,56 +103,62 @@ theorem fraud_cost_mono_prob (p k v : Nat) :
 theorem scanner_shrinks_window (m : SecretsModel)
     (h : m.remediationSec < m.rotationIntervalSec) :
     exposureWindowWithScanner m < exposureWindowNoScanner m := by
-  simp [exposureWindowWithScanner, exposureWindowNoScanner]; exact h
+  unfold exposureWindowWithScanner exposureWindowNoScanner; exact h
 
 /-- **T8** Fraud cost with scanner ≤ fraud cost without scanner. -/
 theorem scanner_reduces_fraud_cost (m : SecretsModel)
     (h : m.remediationSec ≤ m.rotationIntervalSec) :
     fraudCostWithScanner m ≤ fraudCostNoScanner m := by
-  simp only [fraudCostWithScanner, fraudCostNoScanner, expectedFraudCostCents,
-             abuseProbabilityScaled, exposureWindowWithScanner, exposureWindowNoScanner]
+  unfold fraudCostWithScanner fraudCostNoScanner expectedFraudCostCents
+    abuseProbabilityScaled exposureWindowWithScanner exposureWindowNoScanner
   apply Nat.div_le_div_right
-  exact Nat.mul_le_mul_left _ h
+  exact Nat.mul_le_mul_left _ (Nat.mul_le_mul_left _ h)
 
 /-- **T9** Portfolio fraud cost without scanner is monotone in credential count. -/
 theorem portfolio_fraud_mono_count (m : SecretsModel) (k : Nat) :
     portfolioFraudNoScanner m ≤
     portfolioFraudNoScanner { m with credentialCount := m.credentialCount + k } := by
-  simp only [portfolioFraudNoScanner]
-  nlinarith [Nat.zero_le (fraudCostNoScanner m), Nat.zero_le k]
+  unfold portfolioFraudNoScanner
+  exact Nat.mul_le_mul_left _ (Nat.le_add_right _ _)
 
 /-- **T10** Portfolio fraud cost is monotone in rotation interval. -/
 theorem portfolio_fraud_mono_rotation (m : SecretsModel) (k : Nat) :
     portfolioFraudNoScanner m ≤
     portfolioFraudNoScanner { m with rotationIntervalSec := m.rotationIntervalSec + k } := by
-  simp only [portfolioFraudNoScanner, fraudCostNoScanner, expectedFraudCostCents,
-             abuseProbabilityScaled, exposureWindowNoScanner]
+  unfold portfolioFraudNoScanner fraudCostNoScanner expectedFraudCostCents
+    abuseProbabilityScaled exposureWindowNoScanner
   apply Nat.mul_le_mul_right
   apply Nat.div_le_div_right
-  nlinarith [Nat.zero_le m.abuseRatePerSec10k, Nat.zero_le m.credentialValueCents, Nat.zero_le k]
+  exact Nat.mul_le_mul_left _ (Nat.mul_le_mul_left _ (Nat.le_add_right _ _))
 
 /-- **T11** Secrets scanner ROI is monotone in credential count. -/
 theorem secrets_roi_mono_count (m : SecretsModel) (k : Nat) :
     secretsROI m ≤ secretsROI { m with credentialCount := m.credentialCount + k } := by
-  simp only [secretsROI, portfolioFraudNoScanner, portfolioFraudWithScanner]
+  unfold secretsROI portfolioFraudNoScanner portfolioFraudWithScanner
+    fraudCostNoScanner fraudCostWithScanner expectedFraudCostCents
+    abuseProbabilityScaled exposureWindowNoScanner exposureWindowWithScanner
   have hno : fraudCostNoScanner m * m.credentialCount ≤
              fraudCostNoScanner m * (m.credentialCount + k) :=
     Nat.mul_le_mul_left _ (Nat.le_add_right _ _)
-  have hwith : fraudCostWithScanner m * (m.credentialCount + k) ≥
-               fraudCostWithScanner m * m.credentialCount :=
+  have hwith : fraudCostWithScanner m * m.credentialCount ≤
+               fraudCostWithScanner m * (m.credentialCount + k) :=
     Nat.mul_le_mul_left _ (Nat.le_add_right _ _)
-  push_cast
-  linarith [(Nat.cast_le (α := Int)).mpr hno, (Nat.cast_le (α := Int)).mpr hwith]
+  apply Int.sub_le_sub_right
+  apply Int.sub_le_sub
+  · exact Int.ofNat_le.mpr hno
+  · exact Int.ofNat_le.mpr hwith
 
 /-- **T12** Secrets ROI is positive when portfolio fraud saving exceeds scanner cost. -/
 theorem secrets_roi_positive (m : SecretsModel)
     (h : portfolioFraudNoScanner m > portfolioFraudWithScanner m + m.scannerCostCentsPerYear) :
     secretsROI m > 0 := by
-  simp only [secretsROI]
-  push_cast
-  have h' : (m.scannerCostCentsPerYear : Int) + portfolioFraudWithScanner m <
-            portfolioFraudNoScanner m := by exact_mod_cast h
-  linarith
+  unfold secretsROI
+  have h_sub : (portfolioFraudNoScanner m : Int) - (portfolioFraudWithScanner m : Int) =
+      ((portfolioFraudNoScanner m - portfolioFraudWithScanner m : Nat) : Int) := by
+    rw [Int.ofNat_sub]
+    exact Nat.le_of_lt (Nat.lt_of_le_of_lt (Nat.le_add_right _ _) h)
+  rw [h_sub, ← Int.ofNat_sub_pos]
+  exact Nat.sub_lt_left_of_lt_add (Nat.le_of_lt (Nat.lt_of_le_of_lt (Nat.le_add_right _ _) h)) h
 
 /-- **T13** Fraud reduction is at least (rotationInterval − remediationSec) × abuseRate × value
     per credential when scanner closes the window. -/

@@ -457,7 +457,7 @@ theorem uniqueCount_go_le (xs : List Nat) :
       have := ih (x :: seen)
       simp [List.length_cons] at this
       simp [List.length_cons]
-      omega
+      exact Nat.le_trans this (Nat.le_succ _)
 
 /-- **Theorem 3b (structural bound).** Unique-element count is
     bounded by list length. -/

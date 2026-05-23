@@ -549,7 +549,7 @@ exact Nat.lt_of_lt_of_le h_d (Nat.le_add_left d (w + o))    -- if 0 < d
 Or universal: case-split with `cases w`, `cases o`, `cases d` and refute the
 all-zero case from the contrapositive. Used in
 `AttentionScalingLaw.non_vacuum_experiences_pull` and
-`VacuumAsTimeArrow.everything_else_is_temporary`.
+`TemporaryNoise.everything_else_is_temporary`.
 
 #### `simp only [if_pos h]` / `simp only [if_neg h]` to surface a branch
 

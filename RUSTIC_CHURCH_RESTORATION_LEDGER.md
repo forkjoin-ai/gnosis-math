@@ -82,3 +82,20 @@ The honest Init replacement is a finite Nat core:
 - `Gnosis/Cancer/CancerTopology.lean`: restored from placeholder to finite Init core. Verified with `lake build Gnosis.Cancer.CancerTopology`.
 - `Gnosis/CombinatorialBruteForce.lean`: restored from placeholder to finite Init core. Verified with `lake build Gnosis.CombinatorialBruteForce`.
 - High-priority collapsed ledger list is now restored through `Gnosis/CombinatorialBruteForce.lean`; remaining restored row in this section is `Gnosis/Cancer/CancerTreatments.lean`.
+
+## Quality Error Burndown (2026-05-22)
+
+A comprehensive sweep was performed to address quality errors identified in `RUSTIC_CHURCH.md` and verify adherence to the "church gates":
+
+- **Banned Tactic Removal:** `omega`, `nlinarith`, and `ring` tactics were removed from the following files and replaced with Init-level `Nat`/`Int` lemmas:
+    - `Gnosis/MultiRegionDeploymentCost.lean`
+    - `Gnosis/GadFly.lean`
+    - `Gnosis/FanoGrassmannianMesh.lean`
+    - `Gnosis/PneumaWatermark.lean`
+    - `Gnosis/PleromaAeonMonsterBridge.lean`
+    - `Gnosis/MultiTenantIsolationCost.lean`
+    - `Gnosis/SecretsDetectionEconomics.lean`
+    - `Gnosis/GKQHelixBandwidth.lean`
+    - `Gnosis/ZeroDayExposureWindow.lean`
+- **Documentation Fixes:** Corrected the theorem attribution in `RUSTIC_CHURCH.md`: `everything_else_is_temporary` lives in `TemporaryNoise`, not `VacuumAsTimeArrow`.
+- **Validation:** All identified files now build successfully with `lake build` without using banned tactics on open goals. The full `gnosis-math` corpus passes `lake build`.
