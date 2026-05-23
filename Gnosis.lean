@@ -649,6 +649,7 @@ import Gnosis.AeonCycleTwelveShadow
 import Gnosis.AeonCyclicPluckerLabels
 import Gnosis.AeonFlowTransport
 import Gnosis.AeonFluxSiteAdequacy
+import Gnosis.AeonNoise
 import Gnosis.AeonGamutToneShift
 import Gnosis.AeonStandingWaveCoordinateBridge
 import Gnosis.AeonTwelveBraid
@@ -1961,6 +1962,7 @@ import Gnosis.VibesAsWaveInference
 import Gnosis.VibesCharismaticEmitter
 import Gnosis.VibesCoaseBargaining
 import Gnosis.VibesHotellingVoting
+import Gnosis.VoiceRecognitionAsTaoBowlInterference
 import Gnosis.VotingSkeletonHomology
 import Gnosis.Void.VoidArchaeology
 import Gnosis.Void.VoidMineGodsPosition
