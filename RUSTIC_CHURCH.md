@@ -85,7 +85,7 @@ The disciplined moves:
   quotient. Equal magnitudes are not a shared invariant. The sibling
   [`Gnosis/ErgodicCutoffCycleType.lean`](Gnosis/ErgodicCutoffCycleType.lean) carries this
   to a full **antitheorem**: it proves both maps have order *exactly* 10 (period set =
-  multiples of 10, via `period_dvd_ten`) yet have different cycle types
+  multiples of 10, via `period_dvd`) yet have different cycle types
   (`1+2+2+10+10` vs `1+1+10`), with `actions_are_not_conjugate` certifying the
   fingerprint mismatch under *zero* axioms. An antitheorem — a proved non-match where a
   match was expected — is as load-bearing here as a theorem.
@@ -105,6 +105,32 @@ Axioms: `propext` only (the `by_cases` stays constructive through `Nat`'s `Decid
 `Classical.choice`, no `sorryAx`. The lesson: a top-down "they are all one thing" story earns
 its keep only at the granularity where `lake build` still bears weight — prove the relation
 that survives, and label the rest.
+
+### The shared core (and where it stops)
+
+When the conjecture arose that this ties together "most of the contrarian formalizations,"
+the honest move was to test it, not toast it. [`Gnosis/FiniteDynamicsCore.lean`](Gnosis/FiniteDynamicsCore.lean)
+extracts the genuinely shared spine — `iter`, `Returns`/`ReturnsAll`, the order theorem
+`period_dvd`, the conservative `returns_conserves`, the dissipative `dissipative_not_periodic`,
+and two **antitheorem schemas** (`separates`: a differing invariant refutes an identity;
+`not_forced_by_witness`: a witness refutes "structure forces property", both *axiom-free*).
+`ErgodicCutoffDuality` and `ErgodicCutoffCycleType` now import it rather than carrying their
+own copies — single source of truth.
+
+[`Gnosis/FiniteDynamicsUnification.lean`](Gnosis/FiniteDynamicsUnification.lean) is the
+demonstration: through that one core it re-derives the discrete-clock period (substrate of
+`DiscreteClosedTimelikeStep` / the `AeonTwelve*` clocks), the cat-map order at modulus 3 and 5
+(`ArnoldCatMapOrder5`), and the Collatz `{1,2,4}` cycle (`CollatzOneTwoFourBraid`), and emits
+fresh antitheorems (`out_shuffle_ne_clock`, `catMod3_ne_catMod5`) from `separates`.
+
+But the tie is bounded, and the module says so. The `Gnosis/Contrarian/` corpus is dominated
+by *inversions* (`chaos_is_order`, `efficiency_is_fragility`, `death_limit_enables_vitality`):
+thin bounded consequences of a structure field, sharing the anti-theory **stance**, not this
+**core**. The claim "one structure unifies all 90 contrarian files" would itself be the
+recursive-trap overreach this manifesto warns against. So the file states a *falsifiable*
+conjecture instead — every Contrarian headline factors as a `separates`, a
+`not_forced_by_witness`, a monovariant inversion, or a `period_dvd`/conservation/dissipation
+fact — with the falsifying test named: find one that fits none.
 
 ## How you close goals instead of `omega`
 
