@@ -1,4 +1,5 @@
 import Init
+import Gnosis.FiniteDynamicsCore
 import Gnosis.AeonNoise
 import Gnosis.Cancer.CancerTopology
 
@@ -66,79 +67,11 @@ namespace ErgodicCutoffDuality
 
 open Gnosis.AeonNoise
 open Gnosis.CancerTopology
+open Gnosis.FiniteDynamicsCore
 
--- ═══════════════════════════════════════════════════════════════════════
--- §0  Generic iteration of a self-map
--- ═══════════════════════════════════════════════════════════════════════
-
-/-- Iterate a self-map `f` exactly `n` times. -/
-def iter {α : Type} (f : α → α) : Nat → α → α
-  | 0,     x => x
-  | k + 1, x => f (iter f k x)
-
-/-- `f` carries `x` back to itself after `T` ticks: a closed (conservative) orbit. -/
-def Returns {α : Type} (f : α → α) (T : Nat) (x : α) : Prop := iter f T x = x
-
--- ═══════════════════════════════════════════════════════════════════════
--- §1  Conservative regime — closed orbits conserve every observable
--- ═══════════════════════════════════════════════════════════════════════
-
-/-- Over one full period, *any* `Nat`-valued observable returns to its start
-    value. This is the precise content of "conservative": no quantity is
-    monotonically created or destroyed across a closed orbit. -/
-theorem returns_conserves {α : Type} (f : α → α) (T : Nat) (x : α) (m : α → Nat)
-    (h : Returns f T x) : m (iter f T x) = m x := by
-  unfold Returns at h
-  rw [h]
-
--- ═══════════════════════════════════════════════════════════════════════
--- §2  Dissipative regime — strict descent to an absorbing fixed point
--- ═══════════════════════════════════════════════════════════════════════
-
-/-- A dissipative system: a step with a `Nat` monovariant `mono` that drops by
-    exactly 1 while positive (`descent`) and is fixed at 0 (`absorb`). -/
-structure DissipativeSystem (α : Type) where
-  step : α → α
-  mono : α → Nat
-  descent : ∀ x, 0 < mono x → mono (step x) = mono x - 1
-  absorb  : ∀ x, mono x = 0 → mono (step x) = 0
-
-/-- Uniform descent: every step drops the monovariant by 1 in saturating `Nat`
-    subtraction, whether or not it has already been absorbed. -/
-theorem step_sub_one {α : Type} (S : DissipativeSystem α) (x : α) :
-    S.mono (S.step x) = S.mono x - 1 := by
-  by_cases h : S.mono x = 0
-  · rw [S.absorb x h, h]
-  · exact S.descent x (Nat.pos_of_ne_zero h)
-
-/-- The monovariant after `n` steps is the saturating `mono x - n`: linear,
-    deterministic descent that clamps at the absorbing value 0. -/
-theorem dissipative_mono_after {α : Type} (S : DissipativeSystem α) (n : Nat) (x : α) :
-    S.mono (iter S.step n x) = S.mono x - n := by
-  induction n with
-  | zero => rfl
-  | succ k ih =>
-      show S.mono (S.step (iter S.step k x)) = S.mono x - (k + 1)
-      rw [step_sub_one S (iter S.step k x), ih, Nat.sub_sub]
-
-/-- Convergence time equals the initial monovariant: after exactly `mono x` steps
-    the system is absorbed. The cancer "7-step recovery" is this with `mono = deficit`. -/
-theorem dissipative_absorbs {α : Type} (S : DissipativeSystem α) (n : Nat) (x : α)
-    (h : S.mono x = n) : S.mono (iter S.step n x) = 0 := by
-  rw [dissipative_mono_after S n x, h, Nat.sub_self]
-
-/-- **The duality theorem.** A dissipative state with a *positive* monovariant is
-    aperiodic: it never returns for any positive number of steps. A state is in the
-    conservative regime (returns) or the dissipative regime (descends), never both
-    — the only overlap is the absorbing point where `mono = 0`. -/
-theorem dissipative_not_periodic {α : Type} (S : DissipativeSystem α) (x : α) (T : Nat)
-    (hx : 0 < S.mono x) (hT : 0 < T) : iter S.step T x ≠ x := by
-  intro hreturn
-  have hafter : S.mono (iter S.step T x) = S.mono x - T := dissipative_mono_after S T x
-  rw [hreturn] at hafter
-  have hlt : S.mono x - T < S.mono x := Nat.sub_lt hx hT
-  rw [← hafter] at hlt
-  exact Nat.lt_irrefl _ hlt
+/-! The generic primitives (`iter`, `Returns`, `returns_conserves`, `DissipativeSystem`,
+`dissipative_not_periodic`, …) now live in `Gnosis/FiniteDynamicsCore.lean`; this module
+supplies the cat-map / out-shuffle / cancer *instances*. -/
 
 -- ═══════════════════════════════════════════════════════════════════════
 -- §3  Conservative instances — cat map and out-shuffle, both period 10
