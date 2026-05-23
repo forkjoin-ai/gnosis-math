@@ -659,6 +659,7 @@ import Gnosis.FiveVerdictOperatorCoincidence
 import Gnosis.NullIsTheZero
 import Gnosis.ClinamenInfrathin
 import Gnosis.LetThereBeVacuum
+import Gnosis.KeystoneSwerveBridge
 import Gnosis.DvdLogoCorner
 import Gnosis.AeonGamutToneShift
 import Gnosis.AeonStandingWaveCoordinateBridge
@@ -1973,6 +1974,7 @@ import Gnosis.VibesCharismaticEmitter
 import Gnosis.VibesCoaseBargaining
 import Gnosis.VibesHotellingVoting
 import Gnosis.VoiceCliffSusceptibility
+import Gnosis.VoiceFormantSummationNonaccidental
 import Gnosis.VoiceCoarticulationContinuity
 import Gnosis.VoiceIntelligibilityCliff
 import Gnosis.VoiceFormantHarmonicCoupling
