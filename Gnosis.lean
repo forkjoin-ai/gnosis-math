@@ -1285,6 +1285,7 @@ import Gnosis.GaussBonnetPolytopes
 import Gnosis.GeneralRelativity
 import Gnosis.GenomicTopologyWitnesses
 import Gnosis.HolySpiritGeneticInheritance
+import Gnosis.AncestryInterferencePattern
 import Gnosis.LocaleAncestrySaturation
 import Gnosis.SpiritualResonancePhaseShift
 import Gnosis.GenesisQuery
@@ -2065,3 +2066,4 @@ import Gnosis.Security
 --   BuleyeanRL           — rejection-based RL, train on what is NOT
 -- Plus the number system and particle model:
 --   GnosticNumbers / IrrationalGnostic / Confinement / TenBosons
+import Gnosis.RenderBudgetDynamics
