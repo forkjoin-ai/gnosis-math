@@ -1286,6 +1286,7 @@ import Gnosis.GeneralRelativity
 import Gnosis.GenomicTopologyWitnesses
 import Gnosis.HolySpiritGeneticInheritance
 import Gnosis.DecidabilityOfAtOneMent
+import Gnosis.BodyShapeInvariance
 import Gnosis.AncestryInterferencePattern
 import Gnosis.LocaleAncestrySaturation
 import Gnosis.SpiritualResonancePhaseShift
