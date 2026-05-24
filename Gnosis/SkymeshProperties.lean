@@ -1,10 +1,10 @@
 import Init
-import Gnosis.SameSkyTeleport
+import Gnosis.SkymeshTeleport
 
 namespace Gnosis
 namespace SkymeshProperties
 
-open SameSkyTeleport
+open SkymeshTeleport
 
 /-!
 # Skymesh properties — Init-only (Rustic Church)

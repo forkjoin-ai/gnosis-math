@@ -1,10 +1,10 @@
 import Init
-import Gnosis.SameSkyTeleport
+import Gnosis.SkymeshTeleport
 
 namespace Gnosis
 namespace RhizomeRouting
 
-open SameSkyTeleport
+open SkymeshTeleport
 
 /-!
 # Rhizome routing soundness — Init-only (Rustic Church)
@@ -32,7 +32,7 @@ routing-soundness algebra:
   3. an address resolves IFF its target is reachable (`resolves_iff_reachable`),
   4. a disconnected target does NOT resolve — fail honest, no phantom route
      (`disconnected_target_unresolved`, `empty_world_resolves_nothing`),
-  5. a resolved holder served over the same-sky teleport replays at
+  5. a resolved holder served over the Skymesh teleport replays at
      `geodesicLength = 0` (`resolve_then_teleport_is_geodesic_zero`).
 
 No `omega`, no `simp`/`decide` on open goals; `decide` only on closed numerics.
@@ -216,10 +216,10 @@ theorem disconnected_target_unresolved (edges : List (Nat × Nat))
 
 /--
 `resolve_then_teleport_is_geodesic_zero`: if an address resolves to a holder AND
-the holder passes the protocol69 same-sky admission, the served cached replay
+the holder passes the protocol69 Skymesh admission, the served cached replay
 traverses no compute space (`geodesicLength = 0`). The reachable route witnesses
-WHO holds the volume; `SameSkyTeleport.Admitted` witnesses that it may be served;
-`SameSkyTeleport.geodesic_is_zero` gives the zero-length replay. Clean corollary —
+WHO holds the volume; `SkymeshTeleport.Admitted` witnesses that it may be served;
+`SkymeshTeleport.geodesic_is_zero` gives the zero-length replay. Clean corollary —
 no extra hypotheses, the route and the admission combine.
 -/
 theorem resolve_then_teleport_is_geodesic_zero
@@ -233,7 +233,7 @@ theorem resolve_then_teleport_is_geodesic_zero
 
 /--
 The same corollary keyed on the underlying gates: a resolved route plus a holder
-whose own four same-sky gates all hold yields the zero-geodesic replay. Mirrors
+whose own four Skymesh gates all hold yields the zero-geodesic replay. Mirrors
 `SkymeshProperties.skymesh_pillars` SOVEREIGN clause — admission is the holder's
 own key alone, and a resolved route plus that key serves at geodesicLength = 0.
 -/

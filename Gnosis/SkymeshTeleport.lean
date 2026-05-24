@@ -1,12 +1,12 @@
 import Init
 
 namespace Gnosis
-namespace SameSkyTeleport
+namespace SkymeshTeleport
 
 /-!
-# Same Sky teleport admission — Init-only shape
+# Skymesh teleport admission — Init-only shape
 
-Mirrors `open-source/gnosis/rtlsdr-mock-sim/{same-sky-witness,same-sky}.ts`.
+Mirrors `open-source/gnosis/rtlsdr-mock-sim/{skymesh-witness,skymesh}.ts`.
 
 Two air-gapped RTL-SDR stations derive a witness from the SAME ambient sky and
 each is admitted to the `geodesicLength:0` cached replay iff:
@@ -84,7 +84,7 @@ theorem disagree_one_of_three : ¬ Agree 1 2 := by
 structure Admission where
   /-- A witness was locked off the air. -/
   locked : Prop
-  /-- The witness agrees with the reference (same sky). -/
+  /-- The witness agrees with the reference (Skymesh: the same sky). -/
   agree : Prop
   /-- The protocol69 projection is canonical (= 69). -/
   projectionOk : Prop
@@ -131,5 +131,5 @@ theorem genuine_sky_forged_key_denied
     ¬ Admitted a :=
   forged_projection_denied a hForged
 
-end SameSkyTeleport
+end SkymeshTeleport
 end Gnosis
