@@ -106,6 +106,44 @@ Axioms: `propext` only (the `by_cases` stays constructive through `Nat`'s `Decid
 its keep only at the granularity where `lake build` still bears weight — prove the relation
 that survives, and label the rest.
 
+### Quality-margin admissibility: the bound and its antitheorem
+
+The distributed-inference quality gate — an admitted model must *predict the expected token*,
+not merely carry the catalog name — is the operational twin of the Sardis warning, and it has a
+clean bound+antitheorem certificate. Model a logit vector as `Int`-scaled scores over a finite
+token index (argmax is scale-invariant, so integers are faithful and keep the proof `omega`-free).
+Two halves, both load-bearing:
+
+- **The bound (live witness).** If `i⋆` is the strict argmax of `L` with runner-up margin `γ`,
+  and a substituted vector `L'` (a cross-model cache hit, or an approximate / replayed
+  reconstruction) satisfies the sup-norm bound `∀ k, |L k − L' k| < τ` with `2·τ ≤ γ`, then `i⋆`
+  is *also* the strict argmax of `L'`: the substitution is indistinguishable from the real
+  computation **to the gate**. It closes pairwise (`∀ j ≠ i⋆, L' j < L' i⋆`) with the Int
+  cookbook (`Int.add_lt_add_right`, `Int.lt_of_lt_of_le`, `Int.lt_trichotomy` — see "Bridging Nat
+  with Int") — never `omega`.
+
+- **The antitheorem (Sardis signature).** The bound is *tight*: a witness with `2·τ > γ` flips the
+  argmax while the cache still **reports a hit**. That is precisely "a name that liveth, and is
+  dead" — a green status over a wrong answer. The proved flip-witness is as load-bearing as the
+  bound (same discipline as `ErgodicCutoffDuality`'s `distinct_orbit_structure`): it forbids
+  accepting any approximate / cross-model hit whose tolerance is not provably below `γ/2`.
+
+Doctrine: a content-addressed, cross-model, or replay inference cache earns admission only at the
+granularity where the margin bound still carries it; beyond `γ/2` it must **miss, not lie**. (This
+is the formal floor under the runtime corruptors found by the quality gate this cycle — an
+unbounded Q-filter / replay substitution silently violated `2τ ≤ γ` and flipped the token.)
+
+The certificate is live Init-only in
+[`Gnosis/QualityMarginCacheAdmissibility.lean`](Gnosis/QualityMarginCacheAdmissibility.lean):
+`argmax_preserved` (the bound), `predicted_token_preserved` (gate equivalence),
+`cache_hit_admissible`, and the tightness antitheorem `argmax_can_flip_when_bound_violated`
+(a closed `Fin 2` flip witness). The bound chains three named Int helpers
+(`lt_add_of_neg_lt_sub`, `sub_lt_of_sub_lt`, `add_tau_le_sub_tau` — the margin absorbing two
+tolerances) through `Int.lt_trans`/`Int.lt_of_lt_of_le`; `#print axioms` is `propext` only — no
+`omega`, no Mathlib, no `Quot.sound`. The lineage matters: an earlier `omega` draft *built* but
+was Sardis-mode (a name, not the live Init witness) until this port re-derived it from the
+cookbook.
+
 ### The shared core (and where it stops)
 
 When the conjecture arose that this ties together "most of the contrarian formalizations,"
