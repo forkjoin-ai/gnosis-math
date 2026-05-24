@@ -1498,6 +1498,7 @@ import Gnosis.MenckenConscienceShadowWitness
 import Gnosis.MinimalismObjecthoodSpaceWitness
 import Gnosis.MeshReconstruction
 import Gnosis.MeshStandingWavePinning
+import Gnosis.MeshBatchSpeedup
 import Gnosis.MemoryAsRetrocausalLoan
 import Gnosis.Mesh.MeshAgelessUniverse
 import Gnosis.Mesh.MeshArithmeticOrigin
