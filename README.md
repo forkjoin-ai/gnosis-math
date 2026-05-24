@@ -34,7 +34,7 @@ Vacuous information / attention settlement note:
 | Area | Examples |
 |------|----------|
 | Buleyean kernel | `BuleyeanLogic`, `BuleyeanProbability`, `FiniteProbabilityCore`, `BuleyBiSidedBit`, `BuleyLabelPermutation` |
-| Fork/race/fold dynamics | `ForkRaceFoldDynamics`, `CacheObservation`, `SchedulerComposition`, `RaceWinnerCorrectness`, `ConversationalDodgeball`, `ConversationalProsody`, `ConversationalProsodyClosure`, `SemanticAuthorityBoundary`, `NeurosymbolicToolUseMarkov`, `ThothMindBodySpiritScribe`, `AffectLabelingPatternInterrupt`, `AffectLabelingClosure` |
+| Fork/race/fold dynamics | `ForkRaceFoldDynamics`, `TritonCanonical`, `TritonForkRaceFold`, `CacheObservation`, `SchedulerComposition`, `RaceWinnerCorrectness`, `ConversationalDodgeball`, `ConversationalProsody`, `ConversationalProsodyClosure`, `SemanticAuthorityBoundary`, `NeurosymbolicToolUseMarkov`, `ThothMindBodySpiritScribe`, `AffectLabelingPatternInterrupt`, `AffectLabelingClosure` |
 | Compiler/runtime limits | `KernelGap`, `OptimalityUndecidable`, `SelfHostingOptimality` |
 | Mesh and consensus | `Mesh/*`, `Quorum*`, `Spiderweb*`, `ReynoldsBFT` |
 | Topological reductions | `TopologicalMetabolism`, `TopologicalRenormalization`, `FoldHeatHierarchy` |
@@ -44,6 +44,21 @@ Vacuous information / attention settlement note:
 
 ## Current Formal Frontiers
 
+- `Gnosis.TritonForkRaceFold` mechanizes the trit `{Decline,Abstain,Accept}` +
+  fork/race/fold as a structural/algebraic unification of computation (master:
+  `computation_unification_master`, axioms `[propext, Quot.sound]` only). Six
+  decided facets: classical = collapsed trit (`embedBool` injective,
+  `collapse_embedBool` retraction, `embedBool_not_surjective` — abstain has no
+  bool preimage); concurrent = the fold (`fold_safety` / `fold_fault_tolerance`
+  3=2f+1 / `fold_closure` over all 27 ballots); quantum-shaped = spin-1
+  eigentriple (`sign_range_is_spin_triple`, `abstain_is_superposed`);
+  `fold_is_idempotent_collapse` — the measurement-projection theorem
+  (`measure = embedBool ∘ collapse`, `measure_idempotent` P∘P=P, fixed points =
+  {accept,decline}); and dynamics `fast_veto` / `straggler_defers_not_kills` /
+  `monotone_commit` — the soundness contract for early-commit streaming folds.
+  Built on `Gnosis.TritonCanonical` (Verdict / sign / quorum). Honest boundary:
+  algebraic unification with checked projections, not a unification of physics.
+  Race-speed payoff measured in the runtime gates (see below).
 - `Gnosis.FrfWitnessTowerTruncation` proves prefix/tail (`List.take` / `List.drop`) recombination laws for
   `triadMerge` / `xorMerge` / the digit parity track — the algebraic interface for “tower truncation” beside
   multiset merges (`triad_merge_perm`, `triad_merge_not_injective`).

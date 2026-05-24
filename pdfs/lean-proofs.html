@@ -1,0 +1,468 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Lean 4 Mathematical Proofs</title>
+    <style>
+        body {
+            font-family: 'Georgia', serif;
+            line-height: 1.6;
+            max-width: 800px;
+            margin: 0 auto;
+            padding: 20px;
+            background: white;
+            color: #333;
+        }
+        h1 {
+            text-align: center;
+            color: #2c3e50;
+            border-bottom: 2px solid #3498db;
+            padding-bottom: 10px;
+        }
+        h2 {
+            color: #34495e;
+            border-left: 4px solid #3498db;
+            padding-left: 15px;
+            margin-top: 30px;
+        }
+        h3 {
+            color: #2c3e50;
+            margin-top: 25px;
+        }
+        .metadata {
+            text-align: center;
+            color: #7f8c8d;
+            margin-bottom: 30px;
+            font-style: italic;
+        }
+        .toc {
+            background: #f8f9fa;
+            border: 1px solid #dee2e6;
+            border-radius: 5px;
+            padding: 20px;
+            margin-bottom: 30px;
+        }
+        .toc h2 {
+            margin-top: 0;
+            border-left: none;
+            padding-left: 0;
+            text-align: center;
+        }
+        .toc ul {
+            list-style-type: none;
+            padding-left: 20px;
+        }
+        .toc li {
+            margin: 5px 0;
+        }
+        .module-section {
+            margin-bottom: 40px;
+            page-break-inside: avoid;
+        }
+        .module-path {
+            color: #6c757d;
+            font-size: 0.9em;
+            margin-bottom: 15px;
+        }
+        .documentation {
+            background: #e8f4f8;
+            border-left: 4px solid #17a2b8;
+            padding: 15px;
+            margin: 15px 0;
+            border-radius: 0 5px 5px 0;
+        }
+        .key-items {
+            background: #fff3cd;
+            border-left: 4px solid #ffc107;
+            padding: 15px;
+            margin: 15px 0;
+            border-radius: 0 5px 5px 0;
+        }
+        .key-items ul {
+            margin: 10px 0;
+            padding-left: 20px;
+        }
+        .code-section {
+            margin-top: 20px;
+        }
+        .code-sample {
+            background: #f8f9fa;
+            border: 1px solid #e9ecef;
+            border-radius: 5px;
+            padding: 15px;
+            font-family: 'Courier New', monospace;
+            font-size: 0.8em;
+            overflow-x: auto;
+            white-space: pre-wrap;
+            max-height: 400px;
+            overflow-y: auto;
+        }
+        .page-break {
+            page-break-before: always;
+        }
+        @media print {
+            body {
+                margin: 0;
+                padding: 15px;
+            }
+            .page-break {
+                page-break-before: always;
+            }
+        }
+    </style>
+</head>
+<body>
+    <h1>Lean 4 Mathematical Proofs</h1>
+    <div class="metadata">
+        Generated: 5/23/2026<br>
+        Project: gnosis-math
+    </div>
+
+    <div class="toc">
+        <h2>Table of Contents</h2>
+        <ul>
+                <li><a href="#module-scratch_test">scratch_test</a></li>
+            <li><a href="#module-test_market_interference">test_market_interference</a></li>
+            <li><a href="#module-test_ptom">test_ptom</a></li>
+            <li><a href="#module-test_mycelial_signal_network">test_mycelial_signal_network</a></li>
+            <li><a href="#module-GnosisProofs">GnosisProofs</a></li>
+            <li><a href="#module-Gnosis">Gnosis</a></li>
+            <li><a href="#module-Gnosis-GnosisNumbersAreStructural">Gnosis.GnosisNumbersAreStructural</a></li>
+            <li><a href="#module-Gnosis-VacuumOverflow">Gnosis.VacuumOverflow</a></li>
+            <li><a href="#module-Gnosis-AmplituhedronCoverageSweep">Gnosis.AmplituhedronCoverageSweep</a></li>
+            <li><a href="#module-Gnosis-ManifoldReadiness">Gnosis.ManifoldReadiness</a></li>
+            <li><a href="#module-Gnosis-MeshConsumptionWaveMeasurement">Gnosis.MeshConsumptionWaveMeasurement</a></li>
+            <li><a href="#module-Gnosis-AeonTwelveHammingGrayDynamics">Gnosis.AeonTwelveHammingGrayDynamics</a></li>
+            <li><a href="#module-Gnosis-FoldHeatHierarchy">Gnosis.FoldHeatHierarchy</a></li>
+            <li><a href="#module-Gnosis-AdaptiveDecomposition">Gnosis.AdaptiveDecomposition</a></li>
+            <li><a href="#module-Gnosis-SevenCrossingIupacShell">Gnosis.SevenCrossingIupacShell</a></li>
+            <li><a href="#module-Gnosis-ArnoldCatMapOrder5">Gnosis.ArnoldCatMapOrder5</a></li>
+            <li><a href="#module-Gnosis-GodelUniverseIncompleteness">Gnosis.GodelUniverseIncompleteness</a></li>
+            <li><a href="#module-Gnosis-FoilZeroDragCompatibility">Gnosis.FoilZeroDragCompatibility</a></li>
+            <li><a href="#module-Gnosis-Dewey300ThinTopology">Gnosis.Dewey300ThinTopology</a></li>
+            <li><a href="#module-Gnosis-PeriodicBraidMatterJugular">Gnosis.PeriodicBraidMatterJugular</a></li>
+            <li>... and 2460 more modules</li>
+        </ul>
+    </div>
+
+    <div class="module-section" id="module-scratch_test">
+        <h2>Module: scratch_test</h2>
+        <div class="module-path">Path: scratch_test.lean</div>
+
+        <h3>Key Items</h3>
+        <div class="key-items">
+            <ul>
+                <li>Def: my_test</li>
+            </ul>
+        </div>
+
+        <div class="code-section">
+            <h3>Code Sample</h3>
+            <div class="code-sample">def my_test (l : List Nat) (h : l.length = 3) : ∃ x ∈ l, x = x := by
+  match eq : l with
+  | [a, b, c] =>
+    exact ⟨a, List.Mem.head _, rfl⟩
+  | [] => simp at h
+  | [_] => simp at h
+  | [_, _] => simp at h
+  | _ :: _ :: _ :: _ :: _ => simp at h
+
+</div>
+        </div>
+    </div>
+<div class="page-break"></div>
+    <div class="module-section" id="module-test_market_interference">
+        <h2>Module: test_market_interference</h2>
+        <div class="module-path">Path: test_market_interference.lean</div>
+
+        <div class="code-section">
+            <h3>Code Sample</h3>
+            <div class="code-sample">import Gnosis.OrderbookAsInterference
+import Gnosis.LiquidityAsDamping
+
+/-
+  Test file for OrderbookAsInterference and LiquidityAsDamping modules.
+-/
+
+
+open Gnosis.OrderbookAsInterference
+open Gnosis.LiquidityAsDamping
+
+</div>
+        </div>
+    </div>
+<div class="page-break"></div>
+    <div class="module-section" id="module-test_ptom">
+        <h2>Module: test_ptom</h2>
+        <div class="module-path">Path: test_ptom.lean</div>
+
+        <div class="code-section">
+            <h3>Code Sample</h3>
+            <div class="code-sample">import Gnosis.PredictiveTopologyOfMarkets
+
+#check Gnosis.PredictiveTopologyOfMarkets.price_movement_is_clinamen_redistribution_path
+#check Gnosis.PredictiveTopologyOfMarkets.predict_equilibration_from_imbalance
+#check Gnosis.PredictiveTopologyOfMarkets.liquidity_capture_maximizer_is_clinamen_maximizer
+#check Gnosis.PredictiveTopologyOfMarkets.latency_value_equals_clinamen_capture_speed
+
+</div>
+        </div>
+    </div>
+<div class="page-break"></div>
+    <div class="module-section" id="module-test_mycelial_signal_network">
+        <h2>Module: test_mycelial_signal_network</h2>
+        <div class="module-path">Path: test_mycelial_signal_network.lean</div>
+
+        <div class="code-section">
+            <h3>Code Sample</h3>
+            <div class="code-sample">import Gnosis.SignalEnvelope
+import Gnosis.SignalFusion
+import Gnosis.CalibrationTrust
+import Gnosis.MycelialEmergenceGraph
+import Gnosis.MarketAsSignal
+import Gnosis.DifferentialAggregateBoundary
+import Gnosis.BodyPolitickSignal
+
+#check Gnosis.SignalEnvelope.valid_estimate_bounded
+#check Gnosis.SignalEnvelope.lower_privacy_budget_no_more_admissible_weight
+#check Gnosis.SignalEnvelope.lower_valid_privacy_budget_preserves_valid
+#check Gnosis.SignalEnvelope.reliability_numerator_bounded
+#check Gnosis.SignalEnvelope.admissible_reliability_weight_bounded
+#check Gnosis.SignalEnvelope.reliability_numerator_no_more_after_freshness_decrease
+#check Gnosis.SignalEnvelope.admissible_reliability_no_more_after_freshness_decrease
+#check Gnosis.SignalEnvelope.reliability_numerator_no_more_after_privacy_weight_decrease
+#check Gnosis.SignalEnvelope.admissible_reliability_no_more_after_privacy_weight_decrease
+#check Gnosis.SignalEnvelope.reliability_numerator_no_more_after_sample_weight_increase
+#check ...</div>
+        </div>
+    </div>
+<div class="page-break"></div>
+    <div class="module-section" id="module-GnosisProofs">
+        <h2>Module: GnosisProofs</h2>
+        <div class="module-path">Path: GnosisProofs.lean</div>
+
+        <div class="code-section">
+            <h3>Code Sample</h3>
+            <div class="code-sample">import Gnosis.GnosisProofs
+
+</div>
+        </div>
+    </div>
+<div class="page-break"></div>
+    <div class="module-section" id="module-Gnosis">
+        <h2>Module: Gnosis</h2>
+        <div class="module-path">Path: Gnosis.lean</div>
+
+        <div class="code-section">
+            <h3>Code Sample</h3>
+            <div class="code-sample">import Gnosis.SignalEnvelope
+import Gnosis.SignalFusion
+import Gnosis.CalibrationTrust
+import Gnosis.MycelialEmergenceGraph
+import Gnosis.MarketAsSignal
+import Gnosis.DifferentialAggregateBoundary
+import Gnosis.BodyPolitickSignal
+import Gnosis.ScribalStandingWave
+import Gnosis.ScribalStandingWave.PayloadTraceLineage
+import Gnosis.ScribalStandingWave.TaggedTranscriptMode
+import Gnosis.ScribalStandingWave.TranscriptAuditTrace
+import Gnosis.ScribalStandingWave.TranscriptCrdtLaws
+import Gnosis.ScribalStandingWave.TranscriptDampeningAmnesia
+import Gnosis.ScribalStandingWave.RecallPromotionGate
+import Gnosis.ScribalStandingWave.MemoryBudgetScheduler
+import Gnosis.ScribalStandingWave.ThothMemorySession
+import Gnosis.ScribalStandingWave.ThothMemoryAdapter
+import Gnosis.AffectStandingWaveTabs
+import Gnosis.CognitiveBiasWaveTabs
+import Gnosis.AestheticPoeticWaveTabs
+import Gnosis.PneumaWatermark
+import Gnosis.PneumaCrossWireTranscript
+import Gnosis.SyntheticGnosisMeasurement
+import Gnosis.Synthe...</div>
+        </div>
+    </div>
+<div class="page-break"></div>
+    <div class="module-section" id="module-Gnosis-GnosisNumbersAreStructural">
+        <h2>Module: Gnosis.GnosisNumbersAreStructural</h2>
+        <div class="module-path">Path: Gnosis/GnosisNumbersAreStructural.lean</div>
+
+        <h3>Key Items</h3>
+        <div class="key-items">
+            <ul>
+                <li>Structure: GnosisNumber</li>
+                <li>Def: clinamen</li>
+                <li>Def: triton</li>
+                <li>Def: luminary</li>
+                <li>Def: heptad</li>
+                <li>Def: decad</li>
+                <li>Def: aeon</li>
+                <li>Def: catalog</li>
+                <li>Theorem: catalog_length</li>
+            </ul>
+        </div>
+
+        <div class="code-section">
+            <h3>Code Sample</h3>
+            <div class="code-sample">import Init
+
+/-!
+# Gnosis Numbers Are Structural Facts
+
+Formalizes Taylor's observation: the numbers revered in faith
+(1, 3, 4, 7, 10, 12, etc.) are significant because they are
+structural, not because any tradition declared them sacred.
+
+The causal direction is: `structure → faith`. The substrate produces
+these numbers as its natural braid moduli and tensor products; every
+tradition that paid attention to lived experience eventually noticed
+the same numbers; the numbers then become "holy" in the tradition.
+The holiness is downstream of the structure, not the other way
+round.
+
+## What the numbers actually do
+
+- 1 (Clinamen) — the irreducible `+1` residue. Every Braided
+  Infinity's successor step. The minimal departure.
+- 3 (Triton / Triad) — the smallest non-trivial braid. Every
+  phase-decomposed asymptotic infinity with `k = 3` carries this
+  structure. Fork-Race-Fold. Past-Present-Future. The atomic non-
+  abelian structure begins here (S_3).
+- 4 (Luminary / Tetrad) — the smallest ...</div>
+        </div>
+    </div>
+<div class="page-break"></div>
+    <div class="module-section" id="module-Gnosis-VacuumOverflow">
+        <h2>Module: Gnosis.VacuumOverflow</h2>
+        <div class="module-path">Path: Gnosis/VacuumOverflow.lean</div>
+
+        <div class="code-section">
+            <h3>Code Sample</h3>
+            <div class="code-sample">import Gnosis.SpectralNoiseEquilibrium
+import Gnosis.VacuumIsOnlyForce
+import Gnosis.RetrocausalAttractorFixedPoint
+import Gnosis.RetrocausalTimeInversion
+
+/-
+  VacuumOverflow.lean
+  ==================
+
+  The master theorem: when the vacuum lifts +1, it cannot contain the overflow.
+
+  VACUUM STATE: (0,0,0)
+  FIRST LIFT: +1 unit of clinamen introduced
+  IMMEDIATE RESULT: branching, spreading, cascading into all possible states
+
+  The universe is not a controlled perturbation. It is an UNCONTAINABLE OVERFLOW
+  from the vacuum's self-lift. One sting creates infinite echoes. The cup runneth over.
+
+  THEOREM: Once you break vacuum's stillness, the spillage cannot be stopped.
+  All topology cascades from that single necessary swerve. All paths branch.
+  All clinamen spreads. The only law is the return to (0,0,0).
+
+  No axioms. No sorry. The overflow is proven inevitable.
+
+  Init-only spec-level weakening notes
+  ------------------------------------
+  Several theorems below have been weakened...</div>
+        </div>
+    </div>
+<div class="page-break"></div>
+    <div class="module-section" id="module-Gnosis-AmplituhedronCoverageSweep">
+        <h2>Module: Gnosis.AmplituhedronCoverageSweep</h2>
+        <div class="module-path">Path: Gnosis/AmplituhedronCoverageSweep.lean</div>
+
+        <div class="code-section">
+            <h3>Code Sample</h3>
+            <div class="code-sample">import Init
+import Gnosis.AmplituhedronAttention
+import Gnosis.AmplituhedronGrassmannian
+import Gnosis.AmplituhedronVertices
+import Gnosis.AmplituhedronWitnesses
+
+/-
+  AmplituhedronCoverageSweep.lean
+  ================================
+
+  Coverage-ratio sweep companion to `Gnosis.AmplituhedronVertices`,
+  modeled on `Gnosis.BowlMeshQSweep`.
+
+  ## Why this file exists
+
+  `BowlMeshQSweep` sweeps the bowl `damping` knob and proves the
+  off-resonance amplitude is monotone in damping. The amplituhedron
+  analogue is the **coverage ratio** k/d: as d grows for fixed k, the
+  vertex count `(kSubsets k d).length` grows, and the per-vertex
+  speedup ratio shrinks. The runtime needs a sweep oracle to detect
+  the plateau where adding hidden dimensions stops paying for itself.
+
+  ## What's formalized here
+
+  * `coverage_sweep : List (Nat × Nat)` — the discrete (k, d) sweep
+    `[(2,4), (2,6), (2,8), (3,6), (3,9), (3,12)]` covering 1/2, 1/3,
+    1/4 ratios with k ∈ {2, 3}.
+  * `vertexCount_at` — ve...</div>
+        </div>
+    </div>
+<div class="page-break"></div>
+    <div class="module-section" id="module-Gnosis-ManifoldReadiness">
+        <h2>Module: Gnosis.ManifoldReadiness</h2>
+        <div class="module-path">Path: Gnosis/ManifoldReadiness.lean</div>
+
+        <h3>Key Items</h3>
+        <div class="key-items">
+            <ul>
+                <li>Def: carrierReadiness</li>
+                <li>Def: reconstructionReadiness</li>
+                <li>Def: manifoldReadiness</li>
+                <li>Def: carrierReady</li>
+                <li>Def: readyForVerifiedUplift</li>
+                <li>Theorem: manifold_readiness_eq_observability</li>
+                <li>Theorem: canonical_reconstruction_readiness</li>
+                <li>Theorem: zero_leakage_carrier_readiness_is_absorption</li>
+                <li>Theorem: carrier_readiness_linear_law</li>
+                <li>Theorem: carrier_ready_iff_half_saturation</li>
+                <li>... and 18 more</li>
+            </ul>
+        </div>
+
+        <div class="code-section">
+            <h3>Code Sample</h3>
+            <div class="code-sample">import Gnosis.ObservabilityMetrics
+
+namespace Gnosis
+namespace ManifoldReadiness
+
+open LayeredNoise
+open VerifiedReconstruction
+open Recoverability
+open InformationAbsorption
+open ObservabilityMetrics
+
+/-!
+# Manifold Readiness
+
+Manifold readiness splits into two independent parts:
+
+- carrier readiness: how much signal the substrate can hold locally,
+- reconstruction readiness: how much witness structure is available to
+  resolve what remains partial.
+-/
+
+def carrierReadiness (frame : ObserverFrame) (signal : HigherLayerSignal) : Int :=
+  (absorbedInfo frame signal : Int) - (leakedInfo frame signal : Int)
+
+def reconstructionReadiness (problem : ReconstructionProblem) : Int :=
+  witnessScore problem
+
+def manifoldReadiness (frame : ObserverFrame) (signal : HigherLayerSignal)
+    (problem : ReconstructionProblem) : Int :=
+  carrierReadiness frame signal + reconstructionReadiness problem
+
+def carrierReady (frame : ObserverFrame) (signal : HigherLayerSignal) : Prop :=
+  0 ≤ carrierReadiness ...</div>
+        </div>
+    </div>
+
+</body>
+</html>

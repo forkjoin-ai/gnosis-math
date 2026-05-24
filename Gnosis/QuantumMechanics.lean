@@ -80,6 +80,10 @@ theorem commutation_relation_canonical (x p i h_bar : Int) :
   λ h => h
 
 /-- 11. Born Rule Projection -/
+-- REINTEGRATION NOTE (2026-05-24): this isolated `norm_sq` is bridged in
+-- `Gnosis.TritonReintegration` (`born_projection_is_sign_sq`) — on the bare trit it is
+-- degenerate (`StandingWaveAmplitudeBridge.trit_born_is_degenerate`); the non-degenerate
+-- Born rule lives on the varying standing-wave amplitude (`born_intensity_is_weight`).
 def born_rule_projection (psi : Complex) : Int :=
   Complex.norm_sq psi
 

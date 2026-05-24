@@ -29,6 +29,10 @@ import Gnosis.ThothMindBodySpiritScribe
 import Gnosis.BehavioralCognitiveWaveTabs
 import Gnosis.InterpersonalCulturalWaveTabs
 import Gnosis.ADEMcKayCorrespondence
+import Gnosis.AncestryMixingSaturation
+import Gnosis.AncestryCollisionTopology
+import Gnosis.ConsanguinityDilution
+import Gnosis.MeshProbabilityCollapse
 import Gnosis.StrategyDominance
 import Gnosis.Witnesses.Bible.Acts.ActsBoatSeaFearAnimalMagnetismWitness
 import Gnosis.Witnesses.Chaldean.AssyrianMonumentalContinuityWitness
@@ -689,6 +693,7 @@ import Gnosis.AmplituhedronGrassmannian
 import Gnosis.AmplituhedronPluckerDichotomy
 import Gnosis.AmplituhedronVertices
 import Gnosis.AmplituhedronWitnesses
+import Gnosis.AnalogGravityLensing
 import Gnosis.AnarchyJacksonQueueBridge
 import Gnosis.AnimalMagnetismCatalog
 import Gnosis.AntColonyCollectiveIntelligence
@@ -959,6 +964,7 @@ import Gnosis.Claims
 import Gnosis.ClassFieldTheoryArtinReciprocity
 import Gnosis.ClinamenDeclinamenTheorem
 import Gnosis.ClinamenProofMechanism
+import Gnosis.ClinamenUnification
 import Gnosis.Closures.AnomalyCancellationClosure
 import Gnosis.Closures.JacksonEnvelopeClosure
 import Gnosis.Closures.JacksonRawClosure
@@ -1202,6 +1208,7 @@ import Gnosis.RefinementSignature
 import Gnosis.FiniteVolume
 import Gnosis.WeakResidual
 import Gnosis.BoundedFluidResidual
+import Gnosis.BoundedGravitationalResidual
 import Gnosis.FiniteFluidCompactness
 import Gnosis.FiniteObserverCompactness
 import Gnosis.FiniteObserverPatterns
@@ -1277,6 +1284,9 @@ import Gnosis.GaussBonnetBurnsideIndex
 import Gnosis.GaussBonnetPolytopes
 import Gnosis.GeneralRelativity
 import Gnosis.GenomicTopologyWitnesses
+import Gnosis.HolySpiritGeneticInheritance
+import Gnosis.LocaleAncestrySaturation
+import Gnosis.SpiritualResonancePhaseShift
 import Gnosis.GenesisQuery
 import Gnosis.GeometricErgodicity
 import Gnosis.GeometricLanglands
@@ -1297,6 +1307,7 @@ import Gnosis.GnosticNumbers
 import Gnosis.GnosticTime
 import Gnosis.GodAndNatureSufficientWitness
 import Gnosis.GodFormula
+import Gnosis.GodFormulaIsBule
 import Gnosis.GodFormulaPhaseManifestations
 import Gnosis.GodFormulaQuine
 import Gnosis.GodGap
@@ -1315,6 +1326,7 @@ import Gnosis.GoyaSleepOfReasonWitness
 import Gnosis.GreenbergRosenbergAbstractExpressionismWitness
 import Gnosis.GradientDescentHopeGap
 import Gnosis.GradientOfIgnorance
+import Gnosis.GravitationalResidualRefinement
 import Gnosis.GrandReduction
 import Gnosis.GrandReductionTriton
 import Gnosis.GrandUnification
@@ -1633,6 +1645,7 @@ import Gnosis.NetflixFrontier
 import Gnosis.NikMapTwelveCarrier
 import Gnosis.NoiseLedgerTheorem
 import Gnosis.NoiseTopology
+import Gnosis.NoiseSieveEfficiency
 import Gnosis.NoiseIsObservational
 import Gnosis.NonAbelianBraid
 import Gnosis.NonEmpiricalPrediction
@@ -1876,6 +1889,7 @@ import Gnosis.StableInftyCategories
 import Gnosis.StagedExpansion
 import Gnosis.StepwiseAnalysisFramework
 import Gnosis.StallIsOptimal
+import Gnosis.StandingWaveAmplitudeBridge
 import Gnosis.StandardModelGaugeGroup
 import Gnosis.StatisticalMechanics
 import Gnosis.StateDependentQueueFamilies
@@ -1953,6 +1967,12 @@ import Gnosis.TriadicCosmicBreath
 import Gnosis.TriadicNormalForm
 import Gnosis.TripleCompositions
 import Gnosis.TritonAudacious
+import Gnosis.TritonCanonical
+import Gnosis.TritonDeferGateBridges
+import Gnosis.TritonDeferGatePayoff
+import Gnosis.TritonForkRaceFold
+import Gnosis.TritonQuantizationInversion
+import Gnosis.TritonReintegration
 import Gnosis.TruthOneManyNamesWitness
 import Gnosis.UltrametricBufferInstance
 import Gnosis.UniversalDomainConservation
@@ -2025,7 +2045,7 @@ import Gnosis.SpeakerStandingWaveDiarization
 import Gnosis.UniversalStandingWaveTheorem
 import Gnosis.PneumaTranscriptWitness
 import Gnosis.PneumaAuralCertificate
-
+import Gnosis.Security
 -- Gnosis: the mathematical kernel of gnosis
 --
 -- One formula. Five symbols. Everything.

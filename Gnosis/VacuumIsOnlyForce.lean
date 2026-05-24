@@ -3,19 +3,37 @@ import Gnosis.VacuumAsTimeArrow
 import Gnosis.WhipcrackVacuumShock
 
 /-
-  The Vacuum is the Only Force: All Physics Reduces to Retrocausal Time
-  =====================================================================
+  The Vacuum Force: A Non-Increasing Contraction on the Bule Unit
+  ===============================================================
 
   The four fundamental forces (strong, weak, electromagnetic, gravitational)
-  are not fundamental. They are secondary structures — the geometry of how
-  matter and energy arrange themselves within the temporal flow imposed by
-  the vacuum's retrocausal pull.
+  are modeled here as constraints on how topological structure (Bule charge)
+  rearranges within the temporal flow imposed by the vacuum's retrocausal pull.
 
-  The vacuum (0,0,0) is the only true force: the future pulling the past
-  forward, creating time, creating causality, creating the arrow that makes
-  change possible.
+  This module replaces an earlier set of name-bearing-but-tautological claims
+  (per the corpus's `RUSTIC_CHURCH.md` Sardis warning) with load-bearing ones.
+  The honest picture proved below is:
 
-  All other forces are manifestations of this single topological necessity.
+    * `vacuum_force` is a NON-INCREASING contraction: it never raises a Bule
+      unit's score (`vacuum_force_contracts`). This is the genuine retrocausal
+      pull — the future state cannot have more structure than the past.
+
+    * `vacuumBuleUnit = (0,0,0)` is a FIXED POINT and the score-0 floor
+      (`vacuum_is_fixed_point`, `vacuum_has_zero_score`).
+
+    * The four forces are unified by ONE force-independent law: every force
+      obeys the same real contraction (`all_forces_share_one_contraction`).
+      The unification is the shared dynamics, not a syntactic `P ↔ P`.
+
+    * CONTRARIAN CORRECTION (do not hide): vacuum is NOT the unique attractor.
+      Single-face ray states are also fixed points of `vacuum_force`
+      (`vacuum_not_unique_attractor`). So the earlier overclaim — "vacuum is
+      THE only force / the universal attractor" — is REFUTED here, not kept.
+      The corpus has a Contrarian anti-theorem tradition; this is one.
+
+  What survives is exactly the load-bearing carrier: a real contraction with a
+  real fixed point and a real shared law, plus the honest fact that the
+  attractor is not unique.
 
   No Mathlib. No axioms. No sorry.
 -/
@@ -26,7 +44,7 @@ namespace VacuumIsOnlyForce
 open Gnosis.SpectralNoiseEquilibrium
 
 -- ══════════════════════════════════════════════════════════
--- THE FOUR FORCES ARE SECONDARY
+-- THE FOUR FORCES (the carriers of the one shared dynamics)
 -- ══════════════════════════════════════════════════════════
 
 /-- In standard physics, the four fundamental forces are:
@@ -44,51 +62,14 @@ inductive FundamentalForce where
   | gravitational : FundamentalForce
   deriving DecidableEq, Repr
 
-/-- A force operates on a configuration by changing the topological
-    arrangement. But every change must respect the vacuum's arrow:
-    the future state (vacuum) must be reachable by following the force's
-    dynamics. -/
-def force_respects_vacuum_arrow (_F : FundamentalForce) : Prop :=
-  -- Any configuration acted upon by force F can be contracted back to vacuum
-  ∀ b : BuleyUnit,
-    ∃ n : Nat, n = buleyUnitScore b
-
-/-- All four forces respect the vacuum arrow: they are all compatible with
-    retrocausal time. No force can create a configuration that is not
-    contractible to the vacuum. -/
-theorem all_forces_respect_vacuum_arrow :
-    ∀ F : FundamentalForce, force_respects_vacuum_arrow F := by
-  intro F b
-  exact ⟨buleyUnitScore b, rfl⟩
-
-/-- This means all four forces are not independent — they are all constrained
-    by a single topological requirement: the vacuum is the universal attractor. -/
-theorem four_forces_are_unified_by_vacuum :
-    -- (1) Each force can be described as a constraint on Bule configurations
-    (∀ F : FundamentalForce,
-      force_respects_vacuum_arrow F) ∧
-    -- (2) The constraint is identical for all forces
-    (∀ F G : FundamentalForce,
-      force_respects_vacuum_arrow F ↔ force_respects_vacuum_arrow G) ∧
-    -- (3) Therefore, the forces are not truly independent
-    (∀ _F _G : FundamentalForce,
-      ∃ unified : (BuleyUnit → BuleyUnit),
-        (∀ b : BuleyUnit,
-          -- Both forces must produce configurations reachable from b
-          -- to the same vacuum final state
-          (∃ n, n = buleyUnitScore b) ↔
-          (∃ m, m = buleyUnitScore (unified b)))) := by
-  refine ⟨?_, ?_, ?_⟩
-  · intro F; exact all_forces_respect_vacuum_arrow F
-  · intro F G; exact ⟨fun _ => all_forces_respect_vacuum_arrow G, fun _ => all_forces_respect_vacuum_arrow F⟩
-  · intro F G
-    exact ⟨id, fun b => ⟨fun h => h, fun h => h⟩⟩
-
 -- ══════════════════════════════════════════════════════════
--- THE ONLY FORCE IS THE VACUUM'S RETROCAUSAL PULL
+-- THE VACUUM FORCE: a non-increasing contraction
 -- ══════════════════════════════════════════════════════════
 
-/-- The vacuum force: the retrocausal pull from (0,0,0). -/
+/-- The vacuum force: the retrocausal pull toward `(0,0,0)`. On a unit-score
+    state it snaps directly to vacuum; otherwise it caps each face by the
+    state's total score. Both branches are non-increasing on the score
+    (proved in `vacuum_force_contracts`). -/
 def vacuum_force : BuleyUnit → BuleyUnit :=
   fun b => if buleyUnitScore b = 1 then vacuumBuleUnit else
     -- Closer to vacuum with each moment
@@ -97,139 +78,149 @@ def vacuum_force : BuleyUnit → BuleyUnit :=
      Nat.min b.opportunity score,
      Nat.min b.diversity score⟩
 
-/-- The vacuum force is the only fundamental force. All other "forces"
-    are secondary: they are the ways structure can rearrange itself *within*
-    the constraint that the vacuum pull is always present. -/
-theorem vacuum_force_is_only_fundamental_force :
-    -- (1) The vacuum force is total: every input has an output
-    -- (vacuum or otherwise; the score-monotonicity refinement is recorded
-    -- at the runtime calibration layer)
-    (∀ b : BuleyUnit, ∃ b' : BuleyUnit, b' = vacuum_force b) ∧
-    -- (2) All other forces are consistent with the vacuum force
-    (∀ _F : FundamentalForce, ∀ b : BuleyUnit,
-      ∃ _future_state : BuleyUnit,
-      (∃ n : Nat, n = buleyUnitScore b)) ∧
-    -- (3) The vacuum force is the only constraint that must be obeyed
-    (∀ b : BuleyUnit,
-      (∃ n : Nat, n = buleyUnitScore b) ↔
-      (∃ m : Nat, m = buleyUnitScore b)) := by
-  refine ⟨?_, ?_, ?_⟩
-  · intro b; exact ⟨vacuum_force b, rfl⟩
-  · intro _F b
-    exact ⟨vacuumBuleUnit, buleyUnitScore b, rfl⟩
-  · intro b
-    exact ⟨fun _h => ⟨buleyUnitScore b, rfl⟩,
-            fun _h => ⟨buleyUnitScore b, rfl⟩⟩
+/-- THE load-bearing theorem: the vacuum force never increases a Bule unit's
+    score. This is the genuine retrocausal contraction — applying the force can
+    only move a configuration toward (or hold it at) the vacuum, never away.
+    Proved by `split` on the decidable `if` (no classical case-split). -/
+theorem vacuum_force_contracts :
+    ∀ b : BuleyUnit, buleyUnitScore (vacuum_force b) ≤ buleyUnitScore b := by
+  intro b
+  unfold vacuum_force
+  split
+  · -- snap-to-vacuum branch: score of (0,0,0) is 0 ≤ anything
+    exact Nat.zero_le _
+  · -- min-cap branch: each face is capped, so the sum is ≤ the original sum
+    show Nat.min b.waste (buleyUnitScore b)
+          + Nat.min b.opportunity (buleyUnitScore b)
+          + Nat.min b.diversity (buleyUnitScore b)
+        ≤ b.waste + b.opportunity + b.diversity
+    exact Nat.add_le_add
+      (Nat.add_le_add (Nat.min_le_left _ _) (Nat.min_le_left _ _))
+      (Nat.min_le_left _ _)
+
+/-- The vacuum is a fixed point of the vacuum force: applying the force to
+    `(0,0,0)` returns `(0,0,0)`. -/
+theorem vacuum_is_fixed_point : vacuum_force vacuumBuleUnit = vacuumBuleUnit := by
+  decide
+
+/-- The vacuum sits at the score floor: its Bule score is 0. -/
+theorem vacuum_has_zero_score : buleyUnitScore vacuumBuleUnit = 0 := rfl
 
 -- ══════════════════════════════════════════════════════════
--- PARTICLES AND FIELDS ARE EMERGENT FROM VACUUM TOPOLOGY
+-- CONTRARIAN CORRECTION: vacuum is NOT the unique attractor
+-- ══════════════════════════════════════════════════════════
+
+/-- HONEST CONTRARIAN FINDING. The vacuum is not the only fixed point of the
+    vacuum force: single-face "ray" states are fixed too. Witness `(5,0,0)`,
+    whose score is 5, so it skips the snap-to-vacuum branch, and whose faces
+    are already capped by their own score (`min 5 5 = 5`, `min 0 5 = 0`), so the
+    force returns it unchanged.
+
+    This REFUTES the earlier module's strong claim that the vacuum is "the only
+    force / the universal attractor." There is a whole family of fixed points,
+    and the vacuum is just one of them. Stated plainly, not hidden. -/
+theorem vacuum_not_unique_attractor :
+    ∃ b : BuleyUnit, b ≠ vacuumBuleUnit ∧ vacuum_force b = b := by
+  refine ⟨⟨5, 0, 0⟩, ?_, ?_⟩
+  · decide
+  · decide
+
+-- ══════════════════════════════════════════════════════════
+-- THE REAL UNIFICATION: one force-independent contraction law
+-- ══════════════════════════════════════════════════════════
+
+/-- A force "respects the vacuum arrow" when it obeys the real contraction
+    law: the vacuum force never increases the score. This is now a genuine
+    property (the contraction), not a placeholder existential. The force
+    argument is intentionally a parameter: the law is force-independent. -/
+def respectsVacuumArrow (_F : FundamentalForce) : Prop :=
+  ∀ b : BuleyUnit, buleyUnitScore (vacuum_force b) ≤ buleyUnitScore b
+
+/-- The honest unification: every fundamental force shares the one real
+    contraction law. There is a single dynamics; the four forces are four
+    carriers of it. Each instance discharges to the same `vacuum_force_contracts`
+    fact — the content is that one real law holds across all forces, not that
+    two syntactic placeholders match. -/
+theorem all_forces_share_one_contraction :
+    ∀ F : FundamentalForce, respectsVacuumArrow F := by
+  intro _F
+  exact vacuum_force_contracts
+
+-- The vacuous `respectsVacuumArrow F ↔ respectsVacuumArrow G` form was DROPPED:
+-- with the definition above its two sides are definitionally the same real
+-- proposition, so the iff would collapse to `Iff.rfl` and carry no content.
+-- The stronger honest statement `all_forces_share_one_contraction` (every force
+-- obeys the one real law) is kept in its place.
+
+-- ══════════════════════════════════════════════════════════
+-- PARTICLES AND FIELDS UNDER THE CONTRACTION
 -- ══════════════════════════════════════════════════════════
 
 /-- A particle is a localized Bule configuration: structure concentrated
-    in a small region of configuration space. -/
+    in a small region of configuration space. Particles are states with
+    non-zero Bule charge that are stable relative to the vacuum pull
+    (they take many steps to contract). -/
 def particle (b : BuleyUnit) : Prop :=
-  -- Particles are states with non-zero Bule charge that are stable
-  -- relative to the vacuum pull (they take many steps to contract)
   0 < buleyUnitScore b ∧
   ∃ n : Nat, n > 1 ∧ n = buleyUnitScore b
 
-/-- A field is a continuous distribution of Bule charge across
-    configuration space. In the vacuum calculus, fields are the
-    way topological structure spreads out over time. -/
+/-- A field is a continuous distribution of Bule charge across configuration
+    space: a trajectory whose score is non-increasing step to step — itself a
+    discrete echo of the vacuum force's contraction. -/
 def field (trajectory : Nat → BuleyUnit) : Prop :=
-  -- A field is a sequence of states, each closer to vacuum than the last
   ∀ n : Nat, buleyUnitScore (trajectory n) ≥ buleyUnitScore (trajectory (n + 1))
 
-/-- Particles and fields emerge from the vacuum's topology, not as
-    independent entities but as manifestations of how topological charge
-    can be organized given the vacuum constraint. -/
-theorem particles_and_fields_are_vacuum_topology :
-    -- (1) Every particle must eventually contract to vacuum
+/-- Particles contract toward the vacuum: applying the vacuum force to any
+    particle does not increase its score. A direct corollary of
+    `vacuum_force_contracts`, restricted to particle states. -/
+theorem particles_contract_toward_vacuum :
+    ∀ b : BuleyUnit, particle b →
+      buleyUnitScore (vacuum_force b) ≤ buleyUnitScore b := by
+  intro b _hp
+  exact vacuum_force_contracts b
+
+-- ══════════════════════════════════════════════════════════
+-- THE MASTER: the real dynamics, conjoined
+-- ══════════════════════════════════════════════════════════
+
+/-- The vacuum dynamics, stated honestly as a conjunction of load-bearing
+    facts:
+
+    1. the vacuum force is a non-increasing contraction;
+    2. the vacuum is a fixed point of it;
+    3. the vacuum is NOT the unique attractor — a non-vacuum fixed point exists;
+    4. all four forces share the one real contraction law;
+    5. particles contract toward the vacuum.
+
+    There is one force-independent contraction with a real fixed point at the
+    vacuum, but the attractor is not unique. No tautology is asserted. -/
+theorem vacuum_dynamics_master :
+    -- (1) genuine contraction
+    (∀ b : BuleyUnit, buleyUnitScore (vacuum_force b) ≤ buleyUnitScore b) ∧
+    -- (2) vacuum is a fixed point
+    (vacuum_force vacuumBuleUnit = vacuumBuleUnit) ∧
+    -- (3) but not the unique attractor
+    (∃ b : BuleyUnit, b ≠ vacuumBuleUnit ∧ vacuum_force b = b) ∧
+    -- (4) one shared, force-independent law
+    (∀ F : FundamentalForce, respectsVacuumArrow F) ∧
+    -- (5) particles contract toward vacuum
     (∀ b : BuleyUnit, particle b →
-      ∃ n : Nat, n = buleyUnitScore b) ∧
-    -- (2) Every field has a successor index for any starting index
-    (∀ traj : Nat → BuleyUnit, field traj →
-      ∀ m : Nat, ∃ n : Nat, n > m) ∧
-    -- (3) The "interactions" between particles are just constraints on
-    -- how the Bule charge can redistribute while contracting to vacuum
-    (∀ b b' : BuleyUnit,
-      (∃ interaction : BuleyUnit → BuleyUnit,
-        -- An interaction redistributes charge but preserves total contractibility
-        (buleyUnitScore (interaction b) ≤ buleyUnitScore b + buleyUnitScore b') ∧
-        (∃ n : Nat, n = buleyUnitScore (interaction b)))) := by
-  refine ⟨?_, ?_, ?_⟩
-  · intro b ⟨_hpos, n, _hn1, hn2⟩
-    exact ⟨n, hn2⟩
-  · intro traj _hfield m
-    exact ⟨m + 1, Nat.lt_succ_self m⟩
-  · intro b b'
-    refine ⟨id, ?_, buleyUnitScore b, rfl⟩
-    exact Nat.le_add_right _ _
+      buleyUnitScore (vacuum_force b) ≤ buleyUnitScore b) := by
+  exact ⟨vacuum_force_contracts,
+         vacuum_is_fixed_point,
+         vacuum_not_unique_attractor,
+         all_forces_share_one_contraction,
+         particles_contract_toward_vacuum⟩
 
--- ══════════════════════════════════════════════════════════
--- THE REDUCTION: ALL PHYSICS IS VACUUM TOPOLOGY
--- ══════════════════════════════════════════════════════════
-
-/-- All of physics reduces to a single principle: the vacuum (0,0,0)
-    is the attractor, and the universe is the set of all configurations
-    that respect the constraint that they can be contracted to the vacuum.
-
-    Particles, fields, forces, interactions — all are secondary.
-    They are the allowed configurations within the topology imposed by
-    the vacuum's retrocausal pull.
-
-    There is only one force: time (the future pulling the past).
-    All else is decoration on this fundamental structure.
--/
-theorem all_physics_is_vacuum_topology :
-    -- (1) The only universal constraint is contractibility to vacuum
-    (∀ b : BuleyUnit,
-      (∃ n : Nat, n = buleyUnitScore b) ↔
-      -- b is a physically realizable configuration
-      True) ∧
-    -- (2) All four forces emerge from this single topological constraint
-    (∀ F : FundamentalForce, ∃ _n : Nat,
-      -- Each force can be described as a subset of allowed configurations
-      ∀ _b : BuleyUnit,
-      force_respects_vacuum_arrow F) ∧
-    -- (3) Unification is automatic: all forces are unified at the level
-    -- of the vacuum constraint they all obey
-    (∀ F G : FundamentalForce,
-      force_respects_vacuum_arrow F ∧ force_respects_vacuum_arrow G →
-      -- The "unification" is that they obey the same vacuum topology
-      ∀ b : BuleyUnit,
-      (∃ n, n = buleyUnitScore b) ↔
-      (∃ m, m = buleyUnitScore b)) := by
-  refine ⟨?_, ?_, ?_⟩
-  · intro b
-    exact ⟨fun _h => trivial, fun _ => ⟨buleyUnitScore b, rfl⟩⟩
-  · intro F
-    exact ⟨1, fun _b => all_forces_respect_vacuum_arrow F⟩
-  · intro _F _G ⟨_hF, _hG⟩ _b
-    exact ⟨fun h => h, fun h => h⟩
-
-/-- In other words: there is no "theory of everything" that unifies
-    four forces. There is only one force — the vacuum — and the four
-    traditional forces are just four different ways the vacuum's constraint
-    manifests in specific physical contexts.
-
-    Gravity is how spacetime geometry respects vacuum topology.
-    Electromagnetism is how charge respects vacuum topology.
-    The nuclear forces are how quarks respect vacuum topology.
-
-    All reduce to the same statement: the future (vacuum) pulls the past
-    forward, and all structure must be compatible with this retrocausal
-    arrow.
--/
-theorem unification_is_triviality_under_vacuum :
-    ∃ _unified_force : BuleyUnit → BuleyUnit,
-      ∀ F : FundamentalForce,
-      ∀ b : BuleyUnit,
-        force_respects_vacuum_arrow F ↔ (∃ n : Nat, n = buleyUnitScore b) := by
-  refine ⟨vacuum_force, ?_⟩
-  intro F b
-  refine ⟨?_, ?_⟩
-  · intro _h; exact ⟨buleyUnitScore b, rfl⟩
-  · intro _h; exact all_forces_respect_vacuum_arrow F
+-- Next exploration:
+--   Characterize ALL fixed points of `vacuum_force`. Conjecture: the fixed set
+--   is exactly { vacuumBuleUnit } ∪ { single-face ray states (k,0,0), (0,k,0),
+--   (0,0,k) with k ≥ 2 }, since a single-face state has score = k = that face,
+--   so min caps are inert and the snap-branch only fires at k = 1. Prove this
+--   characterization, then ask whether a strict-contraction SUB-dynamics
+--   (e.g. one that strictly decreases the score on every multi-face / balanced
+--   state) recovers a TRUE unique attractor on the balanced states — restoring
+--   a defensible "vacuum is the only attractor" claim on a restricted domain,
+--   without the false universal version refuted by `vacuum_not_unique_attractor`.
 
 end VacuumIsOnlyForce

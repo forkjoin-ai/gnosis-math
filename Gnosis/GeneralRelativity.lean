@@ -3,6 +3,14 @@ import Gnosis.VacuumIsOnlyForce
 
 namespace Gnosis.GeneralRelativity
 
+-- REINTEGRATION NOTE (2026-05-24): the curvature / field-equation definitions in this
+-- module are structural stubs (curvature ≡ 0, tautological field equation). The real,
+-- checked discrete content now lives in `Gnosis.AnalogGravityLensing` (lensing
+-- kinematics: a least-time geodesic bends toward mass), `Gnosis.BoundedGravitationalResidual`
+-- (dynamics: a discriminating finite-volume weak-residual certificate for `G = κ·T`), and
+-- `Gnosis.GravitationalResidualRefinement` (the `residual → 0` continuum limit). Continuum
+-- existence / smoothness remains OPEN (deferred as for every corpus PDE).
+
 /-!
 # General Relativity in Gnosis
 

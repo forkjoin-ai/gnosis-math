@@ -464,6 +464,9 @@ theorem fork_implies_diversity_physics :
     correspondence formalized in `Gnosis/DeathLayerCorrespondence.lean`,
     but for Forks instead of Folds. Stated as a Prop receiver; the
     witness is open work. -/
+-- REINTEGRATION NOTE (2026-05-24): the third-physics content is now supplied by
+-- `Gnosis.ClinamenUnification.clinamen_is_the_generator` (the clinamen +1 as the shared
+-- generator of the four projections). This `True` stub is kept as the namespace anchor.
 def OpenThirdPhysicsContent : Prop :=
   ∃ (DiversityLayer : Type) (_diversityLayerInhabited : DiversityLayer),
     -- The shape of "diversity physics has its own layer enumeration
@@ -475,6 +478,10 @@ def OpenThirdPhysicsContent : Prop :=
     emptiness-as-function) the same physics, or distinct
     sub-physics within the third physics? Stated as a Prop
     receiver; the resolution is open work. -/
+-- REINTEGRATION NOTE (2026-05-24): RESOLVED downstream in
+-- `Gnosis.TritonReintegration.triton_void_equivalence_resolved` — the trit, the Bule
+-- faces, and the sign-0 / abstain (void) medium are one structure via `verdictToBule`
+-- (`triton_is_the_bule`). This `True` stub is kept (avoids an import cycle) as the anchor.
 def OpenTritonVoidEquivalence : Prop :=
   -- Either they are the same physics (Diversity = Triton = Void)
   -- or they are distinct sub-physics that share the Fork primitive.

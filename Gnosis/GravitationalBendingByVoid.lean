@@ -46,6 +46,11 @@ import Gnosis.ChaosOrderDuality
 namespace Gnosis
 namespace GravitationalBendingByVoid
 
+-- REINTEGRATION NOTE (2026-05-24): the decision-lensing here (runtime trajectories bent
+-- by void pressure, measured in perthou) is the audit-level METAPHOR that is realized
+-- geometrically in `Gnosis.AnalogGravityLensing.void_sources_the_lens` — a least-time
+-- geodesic that genuinely deflects toward the high-index (mass / void) region.
+
 open Gnosis.VoidIsTheMedium (RuntimePosition)
 
 -- ══════════════════════════════════════════════════════════

@@ -191,6 +191,10 @@ theorem fold_is_electromagnetic_force :
   intro b; exact fold_creates_coherence b
 
 /-- Vent operation maps to gravity. -/
+-- REINTEGRATION NOTE (2026-05-24): this score-tripling label is upgraded to checked
+-- physics in `Gnosis.TritonReintegration.vent_gravity_upgraded`, citing the real lensing
+-- (`AnalogGravityLensing.lensing_bends_toward_mass`) and the medium-sourced field-equation
+-- residual (`BoundedGravitationalResidual.void_sources_stress_energy`).
 theorem vent_is_gravity :
     ∀ b : BuleyUnit,
       buleyUnitScore (vent_operator b) = 3 * buleyUnitScore b := by

@@ -83,6 +83,9 @@ def isViable (F : FalsificationSet) (c : Claim) : Bool :=
     Field `vanishesOnFalsified` enforces the BC at the type level.
     Any constructor of `StandingWaveMode F` ships a mathematical
     proof that the mode respects all of `F`'s no-go boundaries. -/
+-- REINTEGRATION NOTE (2026-05-24): this mode's `amplitude` is bridged to the trit in
+-- `Gnosis.TritonReintegration` — the zero-amplitude state (the Dirichlet node) is the trit
+-- node `abstain` (`StandingWaveAmplitudeBridge.node_is_abstain`, `tritAmplitude = |sign|`).
 structure StandingWaveMode (F : FalsificationSet) where
   amplitude            : Claim → Nat
   vanishesOnFalsified  : ∀ c, F.isFalsified c = true → amplitude c = 0
