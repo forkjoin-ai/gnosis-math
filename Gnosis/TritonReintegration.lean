@@ -7,6 +7,7 @@ import Gnosis.ThreePhysicsForkRaceFoldBijection
 import Gnosis.FailureAsStandingWave
 import Gnosis.QuantumMechanics
 import Gnosis.ForkRaceFoldVentAreForces
+import Gnosis.VacuumIsOnlyForce
 
 /-!
 # TritonReintegration — the clinamen / triton arc, reconnected as checked bridges
@@ -580,6 +581,31 @@ work.
 --   fork↔death conjugacy via the existing Five-Deaths modules — discharging all three open
 --   props downstream without editing the upstream `True` defs.
 -/
+
+-- ══════════════════════════════════════════════════════════
+-- §  THE VOID BRIDGE — vacuum/void: one ground state across the arc
+-- ══════════════════════════════════════════════════════════
+
+open VacuumIsOnlyForce (vacuum_force vacuum_force_contracts vacuum_not_unique_attractor)
+open Gnosis.SpectralNoiseEquilibrium (BuleyUnit buleyUnitScore vacuumBuleUnit)
+open Gnosis.BoundedGravitationalResidual (SatisfiesFieldEq vacuumCell vacuum_residual_bounded)
+
+/-- **The void bridge.** The void/vacuum is one ground state in three CHECKED roles
+    (each conjunct cites a load-bearing theorem). HONEST tightness: this is a
+    SHARED-GROUND-STATE correspondence, NOT a type isomorphism — `VacuumIsOnlyForce`
+    lives on `BuleyUnit`, the gravitational residual on `EinsteinCell`; the bridge
+    asserts the void plays each role, it does not identify the state spaces.
+      (a) ATTRACTOR — `vacuum_force` is score-non-increasing (the pull toward the void);
+      (b) GRAVITATIONAL VACUUM — the empty-void cell solves `G = κ·T` at any tolerance;
+      (c) NOT-UNIQUE caveat — single-face ray states are also fixed
+          (`vacuum_not_unique_attractor`), so it is "a" ground state, not "the" one.
+    Now that both sides bear weight (`VacuumIsOnlyForce` was proven out of its earlier
+    tautologies), this bridge is honest rather than a tautology borrowing credibility. -/
+theorem void_is_attractor_and_gravitational_vacuum :
+    (∀ b : BuleyUnit, buleyUnitScore (vacuum_force b) ≤ buleyUnitScore b)
+    ∧ (∀ tol : Nat, SatisfiesFieldEq tol vacuumCell)
+    ∧ (∃ b : BuleyUnit, b ≠ vacuumBuleUnit ∧ vacuum_force b = b) :=
+  ⟨vacuum_force_contracts, vacuum_residual_bounded, vacuum_not_unique_attractor⟩
 
 end TritonReintegration
 end Gnosis
