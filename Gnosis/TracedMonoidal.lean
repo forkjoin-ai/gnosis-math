@@ -9,32 +9,13 @@ This module formalizes the Fork/Race/Fold (FRF) execution model as a
 traced symmetric monoidal category, following the Init-only proof style.
 
 - Objects: Natural numbers (representing the dimension of the VoidBoundary).
-- Morphisms: Transformations between boundaries.
 - Tensor Product: Parallel composition (FORK), where dimensions add.
 - Unit: 0 (the empty boundary).
+- β₁: The first Betti number, representing the deficit of the topology.
 -/
 
 /-- The objects of our category are natural numbers. -/
 abbrev FRFObject := Nat
-
-/-- 
-A basic process morphism preserves the dimension of the boundary.
-It represents a sequential step in the topology.
--/
-structure FRFMorphism (A B : FRFObject) where
-  process : Unit -- Placeholder for the actual transformation logic
-
-/--
-FORK: A → A + N
-Parallel expansion increases the dimension of the boundary.
--/
-def fork (A : FRFObject) (N : Nat) : FRFObject := A + N
-
-/--
-FOLD: A + N → A
-Collapse reduction decreases the dimension of the boundary.
--/
-def fold (A : FRFObject) (N : Nat) : FRFObject := if A ≥ N then A - N else 0
 
 /--
 The Monoidal Unit is 0.
@@ -65,10 +46,33 @@ theorem tensor_unit_right (A : FRFObject) :
   exact Nat.add_zero A
 
 /--
-The deficit closure condition (Betti number β₁ = 0) 
-means the total forked dimensions must equal total folded dimensions.
+The deficit of a topology branch (local β₁ contribution).
+Forks add dimensions (positive deficit), Folds remove them (negative deficit).
 -/
-def isClosed (totalForked totalFolded : Nat) : Prop :=
+def localDeficit (forked folded : Nat) : Int :=
+  (forked : Int) - (folded : Int)
+
+/--
+A topology is balanced if its total deficit is zero.
+This is the deficit closure condition from the Betty compiler.
+-/
+def isBalanced (totalForked totalFolded : Nat) : Prop :=
   totalForked = totalFolded
+
+/--
+Conservation Law: If a topology is balanced, its integer deficit is zero.
+-/
+theorem balanced_implies_zero_deficit (n : Nat) :
+    localDeficit n n = 0 := by
+  unfold localDeficit
+  exact Int.sub_self (n : Int)
+
+/--
+Consistency Check: Tensor with Unit is identity in dimension space.
+-/
+theorem tensor_unit_left (A : FRFObject) : 
+    tensor FRFUnit A = A := by
+  unfold tensor FRFUnit
+  exact Nat.zero_add A
 
 end Gnosis
