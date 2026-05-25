@@ -885,6 +885,7 @@ import Gnosis.Cancer.CancerPredictions4
 import Gnosis.Cancer.CancerTopology
 import Gnosis.Cancer.CancerTreatments
 import Gnosis.CancerReinforcement
+import Gnosis.CauseAndEffect
 import Gnosis.CassiopeiaWitness
 import Gnosis.CassiniConservation
 import Gnosis.CatMapModThreeBraid
@@ -917,6 +918,7 @@ import Gnosis.CertifiedDefenses
 import Gnosis.ChaitinOmega
 import Gnosis.Chapter17DMNVoidWalker
 import Gnosis.Chapter17OraclePrediction
+import Gnosis.ChickieRunSwerveGame
 import Gnosis.Civil.EulerBernoulliDiscreteCurvature
 import Gnosis.Civil.StaticEquilibrium
 import Gnosis.Civil.TerzaghiEffectiveStress
@@ -1406,6 +1408,7 @@ import Gnosis.InstitutionalLiability
 import Gnosis.InterferenceCoarsening
 import Gnosis.InterferenceAsTheFifthForce
 import Gnosis.InterferenceDimensionalCascade
+import Gnosis.InterferenceResidueSequence
 import Gnosis.InterferenceIsFundamental
 import Gnosis.InformationCompressionSieve
 import Gnosis.InterpretationFibration
@@ -1446,6 +1449,7 @@ import Gnosis.BashoClinamenTrillWitness
 import Gnosis.BashoClinamenFoldingInvariant
 import Gnosis.PoetryLattice
 import Gnosis.PoeticFormValidation
+import Gnosis.RoadNotTaken
 import Gnosis.RollingVerses
 import Gnosis.NoiseSpectrumLattice
 import Gnosis.PoetricFormsNoiseMapping
@@ -1677,6 +1681,7 @@ import Gnosis.Oracle.OracleExecutionStallTopologicalSurgery
 import Gnosis.Oracle.OracleStallAnnihilation
 import Gnosis.Oracle.OracleStallMetacognition
 import Gnosis.Oracle.OracleStallThermodynamicReversal
+import Gnosis.OrigamiFoldingTopology
 import Gnosis.OrpheusEurydiceWitness
 import Gnosis.OrbitAvoidanceLucasProbe
 import Gnosis.OrbitColoringDiscreteIndex
@@ -1793,6 +1798,7 @@ import Gnosis.RateDistortionFrontier
 import Gnosis.Real
 import Gnosis.RealShadow
 import Gnosis.RealityMesh
+import Gnosis.RebelHadACause
 import Gnosis.RecursionRiceShadow
 import Gnosis.RecursiveCoarseningSynthesis
 import Gnosis.RefutedConjecturesShadow
@@ -1952,6 +1958,7 @@ import Gnosis.TopologicalFirewall
 import Gnosis.TopologicalGoldenIgnition
 import Gnosis.TopologicalGrassmannianCompiler
 import Gnosis.TopologicalGriessAlgebra
+import Gnosis.TopologistJokeWitness
 import Gnosis.TopologicalLucasDynamics
 import Gnosis.TopologicalSegmentation
 import Gnosis.TopologicalMemoizationCache
@@ -1978,6 +1985,7 @@ import Gnosis.TritonDeferGatePayoff
 import Gnosis.TritonForkRaceFold
 import Gnosis.TritonQuantizationInversion
 import Gnosis.TritonReintegration
+import Gnosis.TritonSwerveGame
 import Gnosis.TruthOneManyNamesWitness
 import Gnosis.UltrametricBufferInstance
 import Gnosis.UniversalDomainConservation

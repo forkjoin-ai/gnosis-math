@@ -158,6 +158,16 @@ group larger families of related claims.
 - [DiscreteContinuumConstantRefinement.lean](./DiscreteContinuumConstantRefinement.lean)
   — finite refinement towers over those footholds, proving checked bracket
   widths shrink for Euler's number, pi, sqrt two, and the golden ratio.
+- [InterferenceResidueSequence.lean](./InterferenceResidueSequence.lean) —
+  finite Lucas/Fibonacci leftover certificate: `traceSeq - Lucas` matches the
+  balanced three-phase residue `(+2, -1, -1)` over the reconstructed window,
+  each three-step overlap has zero signed drift, and `5` remains the golden
+  discriminant marker at the Fibonacci/Lucas square gap.
+- [TopologistJokeWitness.lean](./TopologistJokeWitness.lean) — finite
+  humor/cringe certificate reusing the humor tensegrity bridge and cringe vacuum:
+  donut and coffee mug match under coarse genus, semantic snapback rejects drinking
+  the donut, and head/ground-hole routes through practical boundary rather than
+  identity.
 - [DiscreteMachineNumberApproximation.lean](./DiscreteMachineNumberApproximation.lean)
   — finite nearest-representable certificates for binary64 (`f64`, Java
   `double`, TypeScript `number`) and binary32 (`f32`, Java `float`) cells for
