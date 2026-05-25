@@ -286,6 +286,6 @@ for (const fibIdx of [3: unknown, 5: unknown, 6]: unknown) {
 
 console.log('━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━');
 console.log('Fibonacci Ropelengths:');
-for (let i = 2; i <= 7; i++: unknown) {
+for (let i = 2; i <= 7; i++) {
   console.log(`  Fib(${i}): frame=${fib(i)}, sting=${fib(i + 1)}, total=${fibTritonRopelength(i)}`);
 }
