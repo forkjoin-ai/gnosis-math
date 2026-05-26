@@ -8,6 +8,20 @@ group larger families of related claims.
 
 ## Key Modules
 
+- [Apotheosis/](./Apotheosis/README.md) — mechanical-brain carrier definitions
+  migrated from the legacy `open-source/gnosis` Lean tree into the `gnosis-math`
+  hierarchy, with explicit axiom boundaries for semantic claims.
+- [TreeShapes.lean](./TreeShapes.lean), [GeoShapes.lean](./GeoShapes.lean),
+  [RemainingNatureShapes.lean](./RemainingNatureShapes.lean),
+  [ImpossibleFireworkShapes.lean](./ImpossibleFireworkShapes.lean),
+  [ManmadeShapes.lean](./ManmadeShapes.lean), and
+  [SceneShapeLayer.lean](./SceneShapeLayer.lean) — finite shape catalog carriers
+  migrated from the legacy `open-source/gnosis/lean/Lean/Gnosis` tree.
+- [RootEnergyMass.lean](./RootEnergyMass.lean) — finite root-placement and
+  mass-accounting carrier migrated from the same legacy shape stack.
+- [EarthTilingTopology.lean](./EarthTilingTopology.lean) — finite
+  storms-watch-style earth mesh: bounded lat/lon tiles, antimeridian wrapping,
+  occupied witness cells, and direct spawn certificates.
 - [ScribalStandingWave.lean](./ScribalStandingWave.lean) — shared finite
   contract for Thoth-style mechanical/scribal interfaces: canonical failure
   boundary claims, viable audited-use claims, event-log projection to boundary

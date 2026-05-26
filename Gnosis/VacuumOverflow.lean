@@ -57,7 +57,7 @@ theorem first_lift_is_nonzero (f : BuleyFace) :
     buleyUnitScore (first_lift f) > 0 := by
   unfold first_lift
   rw [swerve_lift_score_strict_increment]
-  simp [vacuum_has_zero_score]
+  simp [Gnosis.SpectralNoiseEquilibrium.vacuum_has_zero_score]
 
 -- ══════════════════════════════════════════════════════════
 -- IMMEDIATE BRANCHING: THE OVERFLOW BEGINS
@@ -220,10 +220,10 @@ theorem cup_runneth_over_theorem :
   · refine ⟨first_lift .waste, ?_, ?_⟩
     · unfold first_lift
       rw [swerve_lift_score_strict_increment]
-      simp [vacuum_has_zero_score]
+      simp [Gnosis.SpectralNoiseEquilibrium.vacuum_has_zero_score]
     · intro h_eq
       have h_score : buleyUnitScore (first_lift .waste) = 0 := by
-        rw [h_eq]; exact vacuum_has_zero_score
+        rw [h_eq]; exact Gnosis.SpectralNoiseEquilibrium.vacuum_has_zero_score
       have h_pos : buleyUnitScore (first_lift .waste) > 0 :=
         first_lift_is_nonzero .waste
       exact Nat.lt_irrefl 0 (h_score ▸ h_pos)

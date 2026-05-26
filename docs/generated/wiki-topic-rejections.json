@@ -1,0 +1,14 @@
+{
+  "generatedAt": "2026-05-25T16:47:51.363Z",
+  "rejectedDumpCandidateCount": 2,
+  "rejectedDumpCandidates": [
+    {
+      "title": "Fault tolerance",
+      "reason": "no local module or topic-word match"
+    },
+    {
+      "title": "Unanchored celebrity biography",
+      "reason": "no local module or topic-word match"
+    }
+  ]
+}

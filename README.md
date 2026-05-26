@@ -20,6 +20,8 @@ Current integration plan: [ROADMAP.md](./ROADMAP.md)
 
 Gap closure status: [GAP_CLOSURE.md](./GAP_CLOSURE.md)
 
+Local scripts: [scripts/README.md](./scripts/README.md)
+
 MCP coverage gap ledger: [MCP_GAP_LEDGER.md](./MCP_GAP_LEDGER.md)
 
 MCP open-obligations ledger: [MCP_OPEN_OBLIGATIONS.md](./MCP_OPEN_OBLIGATIONS.md)

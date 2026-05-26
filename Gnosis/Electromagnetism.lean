@@ -42,8 +42,15 @@ def total_enclosed_charge (s : Surface) (ρ : BuleyUnit → Int) : Int :=
 theorem gauss_law_integral (s : Surface) (E : BuleyUnit → Vector3) (ρ : BuleyUnit → Int) :
     s.is_closed → (∀ p, ρ p = dot (E p) (s.normals p)) → 
     boundary_integral_electric_flux s E = total_enclosed_charge s ρ :=
-  λ _ h => by 
-    simp [boundary_integral_electric_flux, total_enclosed_charge, h]
+  λ _ h => by
+    unfold boundary_integral_electric_flux total_enclosed_charge
+    have hmap :
+        List.map ρ s.points =
+          List.map (fun p => dot (E p) (s.normals p)) s.points := by
+      apply List.map_congr_left
+      intro p _hp
+      exact h p
+    exact congrArg (List.foldl (fun x1 x2 => x1 + x2) 0) hmap.symm
 
 /-- 2. Gauss's Law for Magnetism: ∫ B · dA = 0 -/
 def boundary_integral_magnetic_flux (s : Surface) (B : BuleyUnit → Vector3) : Int :=
@@ -66,7 +73,9 @@ def magnetic_flux_derivative (s : Surface) (dBdt : BuleyUnit → Vector3) : Int 
 
 theorem faraday_law_induction (L : Int) (ΦB_dot : Int) :
     L = -ΦB_dot → L + ΦB_dot = 0 :=
-  λ h => by simp [h]
+  λ h => by
+    rw [h]
+    exact Int.add_left_neg ΦB_dot
 
 /-- 4. Ampere-Maxwell Law: ∮ B · dl = μ₀(I + ε₀ dΦ_E/dt) -/
 def line_integral_magnetic_field (path : List BuleyUnit) (tangents : BuleyUnit → Vector3) (B : BuleyUnit → Vector3) : Int :=
@@ -77,7 +86,9 @@ def displacement_current_density (E_derivative : BuleyUnit → Vector3) (ε0 : I
 
 theorem ampere_maxwell_law_integral (L : Int) (μ0 I displacement : Int) :
     L = μ0 * (I + displacement) → L - μ0 * (I + displacement) = 0 :=
-  λ h => by simp [h]
+  λ h => by
+    rw [h]
+    exact Int.sub_self (μ0 * (I + displacement))
 
 /-- 5. Lorentz Force Law: F = q(E + v × B) -/
 def lorentz_force_law (q : Int) (E B v : Vector3) : Vector3 :=
@@ -87,7 +98,13 @@ def lorentz_force_law (q : Int) (E B v : Vector3) : Vector3 :=
 /-- 6. Continuity Equation: ∇ · J + ∂ρ/∂t = 0 -/
 theorem continuity_equation (div_J : Int) (drho_dt : Int) :
     div_J + drho_dt = 0 → div_J = -drho_dt :=
-  λ h => by simp [h]
+  λ h => by
+    calc
+      div_J = div_J + 0 := by rw [Int.add_zero]
+      _ = div_J + (drho_dt + -drho_dt) := by rw [Int.add_right_neg drho_dt]
+      _ = (div_J + drho_dt) + -drho_dt := by rw [Int.add_assoc]
+      _ = 0 + -drho_dt := by rw [h]
+      _ = -drho_dt := by rw [Int.zero_add]
 
 /-- 7. Poynting Vector: S = (1/μ₀) (E × B) -/
 def poynting_vector_definition (E B : Vector3) (μ0 : Int) : Vector3 :=
