@@ -67,6 +67,7 @@ import Gnosis.PhyleFiniteSampleUniversality
 import Gnosis.PhyleContinuousManifoldClosure
 import Gnosis.PhyleTemporalDepthInvariant
 import Gnosis.NoiseIsUnresolvedSignal
+import Gnosis.EntropyBoostCrossover
 import Gnosis.MonsterAmplituhedronJewel
 import Gnosis.MonsterJewelFanoUnfolding
 import Gnosis.MonsterJewelParticleSurvivor
