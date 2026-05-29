@@ -103,7 +103,7 @@ def photon : Signal := fun t x => decide ((x : Int) = (t : Int))
 theorem photon_starts : StartsAtOrigin photon := by
   intro x hx
   simp only [photon, decide_eq_true_iff] at hx
-  exact_mod_cast hx
+  omega
 
 theorem photon_respects : RespectsLightSpeed photon := by
   intro t x hx
@@ -135,18 +135,13 @@ theorem cell_in_causal_cone (t : Nat) (x : Int) (h : x.natAbs ≤ t) :
     inFutureLightCone { time := 0, space := 0 } { time := (t : Int), space := x } = true := by
   unfold inFutureLightCone
   rw [decide_eq_true_iff]
-  refine ⟨by omega, ?_⟩
+  refine ⟨by show (0 : Int) ≤ (t : Int); omega, ?_⟩
   -- intervalSquared origin {time := t, space := x} = x*x - t*t ≤ 0
   have hsq : x * x ≤ (t : Int) * (t : Int) := by
     have hnat : x.natAbs * x.natAbs ≤ t * t := Nat.mul_self_le_mul_self h
     have hcast : ((x.natAbs * x.natAbs : Nat) : Int) ≤ ((t * t : Nat) : Int) := by
       exact_mod_cast hnat
-    have hxabs : ((x.natAbs * x.natAbs : Nat) : Int) = x * x := by
-      push_cast [Int.natAbs_mul_self]
-      exact Int.natAbs_mul_self
-    rw [hxabs] at hcast
-    have htt : ((t * t : Nat) : Int) = (t : Int) * (t : Int) := by push_cast; ring
-    rw [htt] at hcast
+    rw [Int.natAbs_mul_self, Int.natCast_mul] at hcast
     exact hcast
   show intervalSquared { time := 0, space := 0 } { time := (t : Int), space := x } ≤ 0
   rw [show intervalSquared { time := 0, space := 0 } { time := (t : Int), space := x }
