@@ -83,4 +83,31 @@ theorem reachable_iff_in_cone (T : Nat) (x : Int) :
     exact info_within_cone sig hc h0 T x hlit
   · exact cone_complete T x
 
+/-! ## Causal reach is a commutative monoid
+
+  Abstracting the reachable set: `InCone t x` ("event `(t,x)` is in the future
+  cone of the origin") is closed under composition — chaining a reach of `(s,x)`
+  with a further relative reach of `(t,y)` lands at `(s+t, x+y)`, still causal.
+  This is the dimensionless shadow of concatenating two light-speed signals;
+  causality composes (a monoid), with the origin as identity. -/
+
+/-- Event `(t, x)` lies in the future light cone of the origin. -/
+def InCone (t : Nat) (x : Int) : Prop := x.natAbs ≤ t
+
+/-- The origin is causal (identity). -/
+theorem inCone_origin : InCone 0 0 := by simp [InCone]
+
+/-- **Causality composes.** Chaining two causal reaches stays causal: the cone
+    is closed under additive composition. The information cone is a monoid. -/
+theorem inCone_compose {s t : Nat} {x y : Int}
+    (hx : InCone s x) (hy : InCone t y) : InCone (s + t) (x + y) := by
+  simp only [InCone] at *
+  omega
+
+/-- Composition is monotone: a wider time budget keeps an event causal. -/
+theorem inCone_mono {s t : Nat} {x : Int} (h : InCone s x) (hst : s ≤ t) :
+    InCone t x := by
+  simp only [InCone] at *
+  omega
+
 end InformationLightConeComplete
