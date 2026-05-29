@@ -740,6 +740,7 @@ import Gnosis.Apotheosis.TelemetryWitness
 import Gnosis.AnalogGravityLensing
 import Gnosis.AnarchyJacksonQueueBridge
 import Gnosis.AnimalMagnetismCatalog
+import Gnosis.AnisotropicHexWeld
 import Gnosis.AntColonyCollectiveIntelligence
 import Gnosis.AntiFrequencySyzygy
 import Gnosis.AntiTheorems.AntiTheoremStallInevitable
