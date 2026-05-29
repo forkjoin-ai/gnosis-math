@@ -73,11 +73,12 @@ theorem diagonal_escapes_every_level (k n : Nat) (hn : k + 3 ≤ n) :
     AckermannMonotone.eventual_domination k n hn
   omega
 
-/-- **Polynomial time is eventually strictly subluminal.** A polynomial runtime
-    `n ↦ n^d` is bounded by the exponential level (`n^d ≤ n^n = hyperop 3 n n`)
-    and so falls strictly below the Ackermann ceiling for `n ≥ max(d, 6)`. The
-    entire polynomial hierarchy is forever sub-frontier — it never catches the
-    photon. -/
+/-- **Polynomial-degree runtimes are eventually strictly subluminal.** A
+    runtime `n ↦ n^d` is bounded by the exponential level (`n^d ≤ n^n =
+    hyperop 3 n n`) and so falls strictly below the Ackermann ceiling for
+    `n ≥ max(d, 6)`. Every polynomial degree `d` is forever sub-frontier — it
+    never catches the photon. (This is about the family of polynomial functions
+    `n^d`, not the complexity-theoretic polynomial hierarchy.) -/
 theorem polynomial_eventually_subluminal (d n : Nat) (hn : 6 ≤ n) (hd : d ≤ n) :
     n ^ d < ackermannDiag n := by
   have h1 : n ^ d ≤ n ^ n := Nat.pow_le_pow_right (by omega) hd
