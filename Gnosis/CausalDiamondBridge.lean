@@ -94,4 +94,29 @@ theorem certified_runtime_in_diamond (T : Runtime) (n : Nat)
   apply subluminal_in_lightDiamond
   omega
 
+/-! ## `lightDiamond` and the kernel's width / sliver / race machinery -/
+
+/-- The time width of `lightDiamond t` is `2t+2` — the refinement budget. -/
+theorem timeWidth_lightDiamond (t : Nat) : timeWidth (lightDiamond t) = 2 * t + 2 := by
+  simp only [timeWidth, lightDiamond]
+  omega
+
+/-- `lightDiamond t` is never a sliver (its width is at least 2). -/
+theorem lightDiamond_not_sliver (t : Nat) : isSliver (lightDiamond t) = false := by
+  show decide (timeWidth (lightDiamond t) ≤ 1) = false
+  rw [timeWidth_lightDiamond]
+  exact decide_eq_false (by omega)
+
+/-- **`race` selects the narrower light diamond.** Racing two light diamonds to
+    the sliver threshold, the kernel keeps the one with the smaller budget:
+    its width is `2·min(s,t)+2`. The light-theorem diamonds compose correctly
+    with the kernel's `race`. -/
+theorem race_lightDiamond (s t : Nat) :
+    timeWidth (race (lightDiamond s) (lightDiamond t)) = 2 * (min s t) + 2 := by
+  unfold race
+  rw [timeWidth_lightDiamond, timeWidth_lightDiamond]
+  by_cases h : 2 * s + 2 ≤ 2 * t + 2
+  · rw [if_pos h, timeWidth_lightDiamond]; omega
+  · rw [if_neg h, timeWidth_lightDiamond]; omega
+
 end CausalDiamondBridge
