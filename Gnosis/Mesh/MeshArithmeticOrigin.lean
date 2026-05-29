@@ -1,4 +1,5 @@
 import Init
+import Gnosis.GnosisMathPrelude
 
 /-!
 # Mesh Arithmetic Origin (The Gnosis Arithmetic)
@@ -16,33 +17,11 @@ Zero sorry. Init only.
 
 namespace MeshArithmeticOrigin
 
-/-- 
-The "Gnosis Successor".
-Direct mapping of the Basis (5) to the Peano Successor.
--/
-def gnosisSucc (n : Nat) : Nat := n + 1
-
-/--
-The "Addition" Theorem:
-Addition is defined as the repeated application of the Gnosis Succ.
--/
-def gnosisAdd (n m : Nat) : Nat :=
-  match m with
-  | 0 => n
-  | k + 1 => gnosisSucc (gnosisAdd n k)
+open GnosisMath
 
 theorem arithmetic_is_gnosis (n m : Nat) :
-    gnosisAdd n m = n + m := by
-  induction m with
-  | zero => rfl
-  | succ k ih =>
-      -- gnosisAdd n (k+1) = gnosisSucc (gnosisAdd n k) by defn of gnosisAdd
-      -- gnosisSucc (gnosisAdd n k) = (gnosisAdd n k) + 1 by defn of gnosisSucc
-      -- (gnosisAdd n k) + 1 = (n + k) + 1 by ih
-      -- (n + k) + 1 = n + (k + 1) is definitional (Nat.add reduces on right arg)
-      show gnosisSucc (gnosisAdd n k) = n + (k + 1)
-      show (gnosisAdd n k) + 1 = n + (k + 1)
-      exact congrArg (· + 1) ih
+    gnosisAdd n m = n + m :=
+  gnosisAdd_is_add n m
 
 -- ═══════════════════════════════════════════════════════════════════════
 -- (2) The Arithmetic Sandwich

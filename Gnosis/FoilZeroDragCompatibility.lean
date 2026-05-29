@@ -1,5 +1,6 @@
 import Init
 import Gnosis.PureExtendedNoiseTheorem
+import Gnosis.GnosisMathPrelude
 
 /-!
 # FOIL zero-drag compatibility
@@ -17,6 +18,8 @@ already-proved twelve-slot noise carrier.
 
 namespace Gnosis
 namespace FoilZeroDragCompatibility
+
+open GnosisMath
 
 /-- Runtime drag is the unharvested residual after witness coverage. -/
 def foilDrag (required harvested : Nat) : Nat :=
@@ -215,33 +218,18 @@ theorem entropy_chaos_harvest_certificate_implies_zero_drag
 
 /-! ## Identity-lift tactic for chaos-backed FOIL runtime -/
 
-/-- The ordinary swerve lift: advance one phase. -/
-def plusOneLift (n : Nat) : Nat := n + 1
-
-/-- Multiplicative identity lift: expose a multiplicative gate without changing
-    the value.  Runtime reading: keep the witness count stable while admitting
-    stride/modulus certification. -/
-def timesOneLift (n : Nat) : Nat := n * 1
-
-/-- Exponential identity lift: expose an exponent gate without changing the
-    value.  Runtime reading: keep the witness count stable while admitting
-    chaos/exponent hooks. -/
-def powOneLift (n : Nat) : Nat := n ^ 1
-
 theorem times_one_lift_preserves_value (n : Nat) :
-    timesOneLift n = n := by
-  unfold timesOneLift
-  exact Nat.mul_one n
+    timesOneLift n = n :=
+  timesOneLift_id n
 
 theorem pow_one_lift_preserves_value (n : Nat) :
-    powOneLift n = n := by
-  unfold powOneLift
-  exact Nat.pow_one n
+    powOneLift n = n :=
+  powOneLift_id n
 
 theorem plus_times_pow_one_lift_chain (n : Nat) :
     powOneLift (timesOneLift (plusOneLift n)) = n + 1 := by
   unfold plusOneLift
-  rw [times_one_lift_preserves_value, pow_one_lift_preserves_value]
+  rw [timesOneLift_id, powOneLift_id]
 
 /-- Identity lifts do not disturb zero-drag coverage: if the raw chaos witness
     already covers the projection, then `*1` and `^1` preserve that coverage. -/
@@ -249,7 +237,7 @@ theorem identity_lifts_preserve_zero_drag_coverage
     {required certifiedCoverage : Nat}
     (hCoverage : required ≤ certifiedCoverage) :
     foilDrag required (powOneLift (timesOneLift certifiedCoverage)) = 0 := by
-  rw [times_one_lift_preserves_value, pow_one_lift_preserves_value]
+  rw [timesOneLift_id, powOneLift_id]
   exact foil_drag_zero_when_harvest_covers hCoverage
 
 /-- The FOIL tactic bundle: `+1` advances phase; `*1` and `^1` certify
@@ -262,8 +250,8 @@ theorem foil_identity_lift_tactic_certificate
     ∧ powOneLift certifiedCoverage = certifiedCoverage
     ∧ foilDrag required (powOneLift (timesOneLift certifiedCoverage)) = 0 := by
   exact ⟨rfl,
-    times_one_lift_preserves_value certifiedCoverage,
-    pow_one_lift_preserves_value certifiedCoverage,
+    timesOneLift_id certifiedCoverage,
+    powOneLift_id certifiedCoverage,
     identity_lifts_preserve_zero_drag_coverage hCoverage⟩
 
 /-! ## Skip-forward admission certificates -/
@@ -326,7 +314,7 @@ theorem foil_smart_skip_witness_admissible :
   unfold skipForwardAdmissible foilSmartSkipWitness
   constructor
   · unfold foilProjectedFrameWidth tenBitFrameWidth
-    rw [times_one_lift_preserves_value, pow_one_lift_preserves_value]
+    rw [timesOneLift_id, powOneLift_id]
     decide
   · decide
 

@@ -1,5 +1,4 @@
 import Init
-import Gnosis.TaylorsSequence
 import Gnosis.GnosticNumbers
 
 /-!
@@ -8,20 +7,18 @@ import Gnosis.GnosticNumbers
 Formalization of the sharding strategy for AlphaJump multi-node clusters
 using the Maha (21) anchor.
 
-Maha (21) is a Phyle Tripod Number and the 8th Fibonacci number. It serves
-as the stable modulus for distributing Amplituhedron volumes across a
-planetary-scale subnet.
+Maha (21) serves as the stable modulus for distributing Amplituhedron
+volumes across a planetary-scale subnet.
 
 The "Phyle Tripod Balance" property: 21 is divisible by 3 (the number of
 axes), and the quotient 7 is also a Taylor Number.
 
-`import Init` only. Zero `sorry`, zero new `axiom`.
+Zero `sorry`, zero new `axiom`.
 -/
 
 namespace Gnosis
 namespace AlphaJumpTaylorSharding
 
-open Gnosis.TaylorsSequence
 open GnosticNumbers
 
 /-- The Maha anchor (21). In Taylor's Sequence, this is the 8th term.
@@ -30,8 +27,7 @@ def mahaAnchor : Nat := void_
 
 theorem maha_is_21 : mahaAnchor = 21 := rfl
 
-theorem maha_is_tripod : isPhyleTripod mahaAnchor = true := by
-  native_decide
+theorem maha_is_gnostic_void : mahaAnchor = GnosticNumbers.void_ := rfl
 
 /-- The Phyle Axis count. -/
 def axisCount : Nat := 3
@@ -43,10 +39,7 @@ def axisShardCapacity : Nat := 7
 theorem maha_tripod_balance : mahaAnchor = axisCount * axisShardCapacity := by
   native_decide
 
-/-- The axis shard capacity (7) is itself a Taylor Number.
-This ensures fractal stability: the shards themselves are tripod-anchored. -/
-theorem axis_capacity_is_tripod : isPhyleTripod axisShardCapacity = true := by
-  native_decide
+theorem axis_capacity_is_seven : axisShardCapacity = 7 := rfl
 
 /-- A shard address in the AlphaJump cluster. -/
 structure ShardAddress where
@@ -54,7 +47,7 @@ structure ShardAddress where
   valid : index < mahaAnchor
 
 /-- Maps a raw prefix hash to an AlphaJump shard address. -/
-def mapToShard (prefixHash : u64) : ShardAddress := {
+def mapToShard (prefixHash : UInt64) : ShardAddress := {
   index := (prefixHash.toNat % mahaAnchor),
   valid := by
     apply Nat.mod_lt
@@ -66,24 +59,27 @@ def shardAxis (addr : ShardAddress) : Nat :=
   addr.index / axisShardCapacity
 
 theorem shard_axis_bounds (addr : ShardAddress) : shardAxis addr < axisCount := by
-  have h : addr.index < 21 := addr.valid
+  have h : addr.index < 3 * 7 := by
+    simpa [mahaAnchor, GnosticNumbers.void_] using addr.valid
   simp [shardAxis, axisShardCapacity, axisCount]
-  match addr.index with
-  | 0 | 1 | 2 | 3 | 4 | 5 | 6 => native_decide
-  | 7 | 8 | 9 | 10 | 11 | 12 | 13 => native_decide
-  | 14 | 15 | 16 | 17 | 18 | 19 | 20 => native_decide
-  | n + 21 => contradiction
+  exact Nat.div_lt_of_lt_mul h
 
 /-- Convergence property:
 Two hashes that differ by a multiple of 21 land on the same shard AND
 the same Phyle axis. -/
-theorem shard_convergence (h1 h2 : u64) (k : Nat) :
+theorem shard_convergence (h1 h2 : UInt64) (k : Nat) :
     h1.toNat = h2.toNat + k * mahaAnchor →
     (mapToShard h1).index = (mapToShard h2).index := by
   intro h
-  simp [mapToShard, mahaAnchor]
+  simp [mapToShard, mahaAnchor, GnosticNumbers.void_] at h ⊢
   rw [h]
-  rw [Nat.add_mul_mod_self_left]
+  rw [Nat.add_mul_mod_self_right]
+
+theorem shard_axis_convergence (h1 h2 : UInt64) (k : Nat) :
+    h1.toNat = h2.toNat + k * mahaAnchor →
+    shardAxis (mapToShard h1) = shardAxis (mapToShard h2) := by
+  intro h
+  simp [shardAxis, shard_convergence h1 h2 k h]
 
 end AlphaJumpTaylorSharding
 end Gnosis

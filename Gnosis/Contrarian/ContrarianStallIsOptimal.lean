@@ -1,10 +1,3 @@
-/-
-Second-pass short-file review: this module was still below the review
-threshold after the first burndown annotation. The proof payload remains
-unchanged; this note records that the file was counted, checked, and retained
-as a small finite certificate rather than a deleted or reverted artifact.
--/
-
 /-!
 Short-file burndown note: `Gnosis.Contrarian.ContrarianStallIsOptimal` has been reviewed as part of
 the strict Gnosis restoration sweep. The file is intentionally small, but it is

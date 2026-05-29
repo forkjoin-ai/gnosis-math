@@ -66,6 +66,7 @@ import Gnosis.TimeBridgePolarComplementDonut
 import Gnosis.PhyleFiniteSampleUniversality
 import Gnosis.PhyleContinuousManifoldClosure
 import Gnosis.PhyleTemporalDepthInvariant
+import Gnosis.AlphaJumpTaylorSharding
 import Gnosis.NoiseIsUnresolvedSignal
 import Gnosis.EntropyBoostCrossover
 import Gnosis.MonsterAmplituhedronJewel
@@ -1663,7 +1664,6 @@ import Gnosis.Moonshots.MoonshotProofDepthIsIllusionMobius
 import Gnosis.Moonshots.MoonshotQuantumBureaucraticErasure
 import Gnosis.Moonshots.MoonshotQuantumObserverWitnessGap
 import Gnosis.Moonshots.MoonshotQuantumStallTunneling
-import Gnosis.Moonshots.MoonshotRecursiveTruthDeficit
 import Gnosis.Moonshots.MoonshotSemanticCohomologySingularity
 import Gnosis.Moonshots.MoonshotSemanticEmbeddingBypassTopologicalShatter
 import Gnosis.Moonshots.MoonshotSemanticEmpathyProjection
@@ -2137,3 +2137,4 @@ import Gnosis.Security
 --   GnosticNumbers / IrrationalGnostic / Confinement / TenBosons
 import Gnosis.RenderBudgetDynamics
 import Gnosis.ImplementationWisdom
+import Gnosis.SphericalHexTerrain
