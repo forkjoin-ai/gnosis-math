@@ -85,6 +85,31 @@ theorem debounce_cut_churn_not_loss :
     tradesUndebounced ≥ 16 * tradesCliffGated ∧
     pf_mean_reversion < pfBreakevenX1000 := by decide
 
+-- ── FAILURE 5: the extreme-daily reversion lead fails out-of-sample ──
+-- Pooled 3σ+ daily fade, 12 symbols, trailing-60d vol (no look-ahead), n=339.
+-- Net bp after 25bp round-trip friction, by time split:
+def reversionPooledNetBp     : Int := 50    -- looked +50bp pooled
+def reversionFirstHalfNetBp  : Int := -31   -- OOS first half: NEGATIVE
+def reversionSecondHalfNetBp : Int := 130   -- all the gain in the recent half
+def reversionWorstSymbolBp   : Int := -158  -- DOGE (largest n=43): trends, doesn't revert
+
+/-- **FAILURE 5 — the one surviving lead dies out-of-sample.** Pooled it looked
+    like +50bp, but the first time-half was NEGATIVE (−31bp) and the entire edge
+    is in the recent half (+130bp): non-stationary. Per-symbol it is
+    inconsistent — DOGE (the largest sample) reverts −158bp (continues, with
+    negative skew: high hit rate, rare catastrophic losses). The n=28 BTC
+    +146bp was small-sample luck concentrated in recent history. No stationary,
+    universal reversion edge exists. -/
+theorem extreme_daily_reversion_fails_oos :
+    reversionFirstHalfNetBp < 0 ∧ reversionSecondHalfNetBp > 0
+    ∧ reversionWorstSymbolBp < 0 := by decide
+
+/-- The pooled mean is an artifact: it sits between a negative first half and a
+    positive second half, so the +50bp is not a stable property. -/
+theorem pooled_edge_is_non_stationary :
+    reversionFirstHalfNetBp < reversionPooledNetBp
+    ∧ reversionPooledNetBp < reversionSecondHalfNetBp := by decide
+
 -- ── The complete falsification ledger ────────────────────────────────
 -- Bundles the sweep failures above with the pulse/gate negatives proven in the
 -- sibling modules — one certificate of everything we killed.
@@ -101,6 +126,7 @@ structure FalsificationLedger where
   no_gnostic_day_beat       : maxGnosticReturnAcfX10000 < bonferroniBandX10000
   void66_not_directional    : voidReturnAcfX10000 < gnosticCi95X10000
   daily_lead_underpowered   : ¬ wellPowered btcDaily3Sigma
+  daily_lead_fails_oos      : reversionFirstHalfNetBp < 0 ∧ reversionSecondHalfNetBp > 0
   -- friction pump (MarketReynoldsGate)
   flat_is_optimal           : totalDragBps 0 = 0
 
@@ -114,6 +140,7 @@ theorem market_falsification_ledger : FalsificationLedger := {
   no_gnostic_day_beat       := by decide
   void66_not_directional    := by decide
   daily_lead_underpowered   := by decide
+  daily_lead_fails_oos      := by decide
   flat_is_optimal           := by decide
 }
 

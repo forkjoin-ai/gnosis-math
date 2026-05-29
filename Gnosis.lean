@@ -949,6 +949,7 @@ import Gnosis.CausalMediation
 import Gnosis.CayleyTreeFormula
 import Gnosis.CadmusDragonTeethWitness
 import Gnosis.DaedalusIcarusWitness
+import Gnosis.DayNightTerminator
 import Gnosis.Ceiling
 import Gnosis.CelestialClassifierBarrier
 import Gnosis.CelestialGainControlPrediction
@@ -1735,6 +1736,7 @@ import Gnosis.Oracle.OracleExecutionStallTopologicalSurgery
 import Gnosis.Oracle.OracleStallAnnihilation
 import Gnosis.Oracle.OracleStallMetacognition
 import Gnosis.Oracle.OracleStallThermodynamicReversal
+import Gnosis.OrbitalMechanics
 import Gnosis.OrigamiFoldingTopology
 import Gnosis.OrpheusEurydiceWitness
 import Gnosis.OrbitAvoidanceLucasProbe
