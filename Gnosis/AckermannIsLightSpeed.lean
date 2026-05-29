@@ -3,6 +3,7 @@ import Gnosis.AckermannFunction
 import Gnosis.AckermannRuntimeCertificate
 import Gnosis.AckermannLightConeBridge
 import Gnosis.AckermannUniversality
+import Gnosis.AckermannMonotone
 import Gnosis.InformationLightCone
 import Gnosis.ForcedLightConeEmbedding
 
@@ -43,11 +44,13 @@ import Gnosis.ForcedLightConeEmbedding
   ## What remains (honestly recorded, not asserted)
 
   `AckermannUniversality.ackermannUniversalityObligation.eventualLevelDomination`
-  — the classical Ackermann-not-primitive-recursive universal — is recorded as
-  a `Prop`, not proved here (needs a PR-encoder + the `hyperop`
-  level-monotonicity tower). And leg (D) is the discrete/dimensionless skeleton
-  of the Margolus–Levitin → c derivation; the continuum, real-valued physics
-  step is cited, not mechanized in Init-only Lean.
+  — the classical Ackermann-not-primitive-recursive universal — was formerly
+  recorded as a deferred `Prop`. It is now a THEOREM:
+  `AckermannMonotone.eventualLevelDomination_holds` (the full `hyperop`
+  monotonicity tower, Init-only, zero `sorry`). See `recorded_gap_discharged`
+  below. The only remaining citation is leg (D)'s continuum step: the discrete/
+  dimensionless Margolus–Levitin skeleton is mechanized; the real-valued
+  `ν_max · ℓ_P = c` derivation is cited, not mechanized in Init-only Lean.
 
   Init + the five sibling modules. Zero `sorry`, zero new `axiom`.
 -/
@@ -149,7 +152,14 @@ def identityLedger : IdentityLedger :=
       ∀ a b, hyperop 3 a b = a ^ b
   , recordedGap :=
       -- The classical Ackermann-not-PR universal, owned by
-      -- AckermannUniversality, deferred not asserted.
+      -- AckermannUniversality. Formerly deferred — now discharged below.
       AckermannUniversality.ackermannUniversalityObligation.eventualLevelDomination }
+
+/-- **The formerly-deferred leg is now a theorem.** The recorded gap — the
+    Ackermann diagonal eventually strictly dominating every primitive-recursive
+    ladder level — is discharged by the full `hyperop` monotonicity tower in
+    `AckermannMonotone`. All five legs AND the universal are now proved. -/
+theorem recorded_gap_discharged : identityLedger.recordedGap :=
+  AckermannMonotone.eventualLevelDomination_holds
 
 end AckermannIsLightSpeed

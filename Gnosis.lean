@@ -2116,6 +2116,7 @@ import Gnosis.BracketedSpace
 import Gnosis.CausalDiamond
 import Gnosis.AckermannLightConeBridge
 import Gnosis.AckermannUniversality
+import Gnosis.AckermannMonotone
 import Gnosis.InformationLightCone
 import Gnosis.ForcedLightConeEmbedding
 import Gnosis.AckermannIsLightSpeed
