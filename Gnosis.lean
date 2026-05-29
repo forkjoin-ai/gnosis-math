@@ -695,6 +695,7 @@ import Gnosis.AeonNoise
 import Gnosis.FiniteDynamicsCore
 import Gnosis.ErgodicCutoffDuality
 import Gnosis.QualityMarginCacheAdmissibility
+import Gnosis.SardisGateAdmissibility
 import Gnosis.ErgodicCutoffCycleType
 import Gnosis.FiniteDynamicsUnification
 import Gnosis.ContrarianSchemaClosure
