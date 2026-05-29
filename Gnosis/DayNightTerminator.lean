@@ -65,6 +65,99 @@ theorem terminator_antipodal (n s : V3) :
   rw [dot_neg_left]
   omega
 
+/-! ## Shadow predicate and sun-flip antisymmetry -/
+
+/-- IN SHADOW: the sun is below the point's horizon. -/
+def shadow (n s : V3) : Prop := V3.dot n s < 0
+
+instance (n s : V3) : Decidable (shadow n s) := by unfold shadow; infer_instance
+
+/-- **Full trichotomy with the shadow state.** Every point is lit, on the
+terminator, or in shadow — and exactly one holds (the three are mutually
+exclusive by the integer trichotomy). -/
+theorem lit_terminator_shadow (n s : V3) :
+    lit n s ∨ onTerminator n s ∨ shadow n s := by
+  unfold lit onTerminator shadow
+  omega
+
+/-- Lit and shadow are mutually exclusive. -/
+theorem lit_not_shadow (n s : V3) : lit n s → ¬ shadow n s := by
+  unfold lit shadow; omega
+
+/-- Dot is linear under negating the **sun**: `dot(n, -s) = -dot(n, s)`. -/
+theorem dot_neg_sun (n s : V3) : V3.dot n (V3.neg s) = - V3.dot n s := by
+  simp only [V3.dot, V3.neg, Int.mul_neg]
+  omega
+
+/-- **Antisymmetry of illumination under a sun flip.** Moving the sun to the
+antipode (a 12-hour rotation) turns a lit point into a shadowed one. -/
+theorem flip_sun_lit_to_shadow (n s : V3) (h : lit n s) : shadow n (V3.neg s) := by
+  unfold lit shadow at *
+  have := dot_neg_sun n s
+  omega
+
+/-- …and a shadowed point becomes lit. Day and night swap exactly under a sun
+flip. -/
+theorem flip_sun_shadow_to_lit (n s : V3) (h : shadow n s) : lit n (V3.neg s) := by
+  unfold lit shadow at *
+  have := dot_neg_sun n s
+  omega
+
+/-- The terminator great circle is **invariant** under flipping the sun — the
+same boundary separates the two hemispheres regardless of which faces the sun. -/
+theorem terminator_sun_flip_invariant (n s : V3) :
+    onTerminator n s ↔ onTerminator n (V3.neg s) := by
+  unfold onTerminator
+  have := dot_neg_sun n s
+  omega
+
+/-! ## The sub-solar point is maximally lit -/
+
+/-- The squared length of a direction is non-negative (`dot v v ≥ 0`). -/
+theorem dot_self_nonneg (v : V3) : 0 ≤ V3.dot v v := by
+  have nn : ∀ a : Int, 0 ≤ a * a := by
+    intro a
+    rcases Int.le_total 0 a with h | h
+    · exact Int.mul_nonneg h h
+    · have e : a * a = (-a) * (-a) := by rw [Int.neg_mul, Int.mul_neg, Int.neg_neg]
+      rw [e]; exact Int.mul_nonneg (by omega) (by omega)
+  unfold V3.dot
+  have := nn v.x; have := nn v.y; have := nn v.z
+  omega
+
+/-- The **sub-solar point** (normal equal to a nonzero sun direction) is lit:
+its illumination is the squared sun length, which is strictly positive. -/
+theorem subsolar_lit (s : V3) (h : V3.dot s s ≠ 0) : lit s s := by
+  unfold lit
+  have := dot_self_nonneg s
+  omega
+
+/-- Per-coordinate AM–GM: `2·x·y ≤ x² + y²`, init-only from `0 ≤ (x−y)²`. -/
+theorem amgm (x y : Int) : 2 * (x * y) ≤ x * x + y * y := by
+  have hsq : 0 ≤ (x - y) * (x - y) := by
+    rcases Int.le_total 0 (x - y) with h | h
+    · exact Int.mul_nonneg h h
+    · have e : (x - y) * (x - y) = (-(x - y)) * (-(x - y)) := by
+        rw [Int.neg_mul, Int.mul_neg, Int.neg_neg]
+      rw [e]; exact Int.mul_nonneg (by omega) (by omega)
+  have expand : (x - y) * (x - y) = x * x - 2 * (x * y) + y * y := by
+    rw [Int.sub_mul, Int.mul_sub, Int.mul_sub, Int.mul_comm y x]; omega
+  omega
+
+/-- **Sub-solar point is maximally lit (Cauchy–Schwarz at equal norm).** For a
+normal `n` on the same sphere as the sun (`dot n n = dot s s`, the unit-sphere
+constraint, supplied as a hypothesis since this model is over `Int`), no point
+is brighter than the sub-solar point: `dot n s ≤ dot s s`. Proof: sum the three
+per-coordinate AM–GM bounds `2·nᵢ·sᵢ ≤ nᵢ² + sᵢ²` to get `2·(n·s) ≤ n·n + s·s
+= 2·(s·s)`. -/
+theorem subsolar_maximal (n s : V3) (h : V3.dot n n = V3.dot s s) :
+    V3.dot n s ≤ V3.dot s s := by
+  have ax := amgm n.x s.x
+  have ay := amgm n.y s.y
+  have az := amgm n.z s.z
+  unfold V3.dot at *
+  omega
+
 /-! ## Witnesses (decide) — concrete sun directions -/
 
 -- Sun toward +X: the +X point is lit, −X is dark, the YZ great circle is the
@@ -79,6 +172,10 @@ example : onTerminator ⟨0, 0, 1⟩ ⟨1, 0, 0⟩ := by decide
 example : lit ⟨2, 1, 3⟩ ⟨2, 1, 3⟩ := by decide
 example : ¬ lit ⟨-2, -1, -3⟩ ⟨2, 1, 3⟩ := by decide
 example : onTerminator ⟨3, 0, -2⟩ ⟨2, 1, 3⟩ := by decide
+
+-- Shadow + sun-flip witnesses.
+example : shadow ⟨-1, 0, 0⟩ ⟨1, 0, 0⟩ := by decide        -- midnight is in shadow
+example : shadow ⟨1, 0, 0⟩ (V3.neg ⟨1, 0, 0⟩) := by decide  -- flipping the sun shadows noon
 
 end DayNightTerminator
 end Gnosis
