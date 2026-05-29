@@ -39,14 +39,29 @@ def properTime (w : Worldline) : Nat → Nat
   | 0 => 0
   | N + 1 => properTime w N + (if w (N + 1) = w N then 1 else 0)
 
+/-- Motion count over the first `N` ticks: the number of light-speed (moving)
+    steps — the complement of `properTime`. -/
+def motionCount (w : Worldline) : Nat → Nat
+  | 0 => 0
+  | N + 1 => motionCount w N + (if w (N + 1) = w N then 0 else 1)
+
+/-- **Exact time-dilation accounting.** Proper time plus motion steps equals
+    coordinate time: `properTime w N + motionCount w N = N`. Every tick is
+    either a rest step (one unit of aging) or a light-speed step (none); the
+    twin's missing age is exactly the distance it traveled. -/
+theorem properTime_add_motionCount (w : Worldline) (N : Nat) :
+    properTime w N + motionCount w N = N := by
+  induction N with
+  | zero => rfl
+  | succ N ih =>
+    unfold properTime motionCount
+    by_cases h : w (N + 1) = w N <;> simp [h] <;> omega
+
 /-- **Proper time never exceeds coordinate time.** The rest frame maximizes
     aging: you cannot age more than the clock on the wall. -/
 theorem properTime_le (w : Worldline) (N : Nat) : properTime w N ≤ N := by
-  induction N with
-  | zero => simp [properTime]
-  | succ N ih =>
-    unfold properTime
-    by_cases h : w (N + 1) = w N <;> simp [h] <;> omega
+  have := properTime_add_motionCount w N
+  omega
 
 /-- The resting (home) twin ages by exactly the coordinate time. -/
 theorem home_twin (N : Nat) : properTime (fun _ => 0) N = N := by
