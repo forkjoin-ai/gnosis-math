@@ -2124,6 +2124,7 @@ import Gnosis.AckermannIsLightSpeed
 import Gnosis.TimeTravelLightCone
 import Gnosis.FrontierComputability
 import Gnosis.TimeDilation
+import Gnosis.CausalDiamondBridge
 import Gnosis.GodBracket
 import Gnosis.ThermodynamicRefinement
 import Gnosis.FifthForceIdentity
