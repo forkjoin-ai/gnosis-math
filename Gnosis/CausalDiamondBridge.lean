@@ -18,7 +18,10 @@ import Gnosis.InformationLightCone
   STRUCTURE level: a subluminal event sits inside a concrete causal diamond
   (`CausalDiamond.contains`), born at the origin and dying at a future apex.
   Hence every 100%-certified (computable) runtime sample lives inside a genuine
-  `CausalDiamond` — the same objects the kernel forks, races, and folds.
+  `CausalDiamond` — a valid input to the kernel's `fork` / `race` / `fold`.
+  Proved here: the `contains`, `timeWidth`, `isSliver`, and `race` facts for
+  `lightDiamond`; `fork`/`fold` apply to it as kernel objects but are not
+  separately exercised in this module.
 
   Init + the kernel + the bridge. Zero `sorry`, zero new `axiom`.
 -/
