@@ -83,8 +83,9 @@ theorem ackermann_ceiling_occupies_role_of_c :
           → InformationLightCone.StartsAtOrigin sig
           → ∀ t x, sig t x = true → x.natAbs ≤ t)
       ∧ (∀ t, InformationLightCone.photon t (t : Int) = true)) ∧
-    -- (E) LADDER — the sub-frontier hyperoperation levels are exactly the
-    --     primitive-recursive operations successor/addition/mult/exponent.
+    -- (E) LADDER — the sub-frontier hyperoperation levels 1/2/3 are exactly
+    --     addition / multiplication / exponentiation (the PR ladder rungs;
+    --     level 0 = successor is `hyperop.eq_1`, not restated here).
     ((∀ a b, hyperop 1 a b = a + b)
       ∧ (∀ a b, hyperop 2 a b = a * b)
       ∧ (∀ a b, hyperop 3 a b = a ^ b)) := by
