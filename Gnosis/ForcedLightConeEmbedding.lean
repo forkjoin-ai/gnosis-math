@@ -29,8 +29,11 @@ import Gnosis.AckermannLightConeBridge
   100%-certificate is the one with equal scales — slope 1. The conversion
   constant is FORCED, not chosen. That is exactly what it means for the
   speed of light to be a *constant*: the cone slope is the unique value
-  making "realizable" coincide with "causal." `c` is pinned by the demand
-  that the saturating runtime be lightlike.
+  making "realizable" coincide with "causal." `c` is pinned by the FULL
+  correspondence, both directions at once — the saturating runtime must be
+  lightlike / in-cone (`s = c`, forcing `β ≤ α`) AND any over-ceiling runtime
+  must be spacelike / out-of-cone (`s = c+1`, forcing `α ≤ β`). Either demand
+  alone fixes only one inequality; together they fix the slope.
 
   Init + the certificate + the bridge. Zero `sorry`, zero new `axiom`.
 -/
