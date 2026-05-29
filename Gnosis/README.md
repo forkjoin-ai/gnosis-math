@@ -257,6 +257,19 @@ group larger families of related claims.
   final bridge proves that a pink residual fringe plus a saturated Hella-vortex
   canvas induces the earlier projection-denoising certificate, with a concrete
   `pathCount = 2`, single-stream canonical witness.
+- [DoorPaysAboveCrossover.lean](./DoorPaysAboveCrossover.lean),
+  [ValueDoorStoplight.lean](./ValueDoorStoplight.lean), and
+  [AdaptiveStoplight.lean](./AdaptiveStoplight.lean) — the value-door scheduling
+  gate that `open-source/gnosis/gnosis-frf` realizes. `netSaved = h·r − (N·g +
+  setup)` proves a value-check pays exactly when the eliminated recompute beats
+  the gate cost (the verify-vs-search gap); the stoplight makes that crossover
+  the colour of a RED (recompute) / YELLOW (probe) / GREEN (open the door) light
+  (`green_door_pays`, `red_door_loses`); and because gnosis admits everything
+  with a cost-bearing cert, `certified_never_yellow` / `certified_is_red_or_green`
+  (zero axioms) collapse YELLOW — the gate is total RED/GREEN and strictly
+  dominant. `AdaptiveStoplight` bounds the probe's downside while the static
+  always-open gate loses unboundedly. Measured ~594x over the size-only cutoff on
+  cheap large-N (`gnosis-frf/benches/bench_certified_gate.rs`).
 
 ## Child Directories
 
