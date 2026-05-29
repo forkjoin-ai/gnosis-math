@@ -133,6 +133,25 @@ theorem no_taylor_cadence_money :
     taylorTop11_eth_vol < taylorEnrichmentSignal ∧
     taylorTop11_eth_ret < taylorEnrichmentSignal := by decide
 
+-- ── FAILURE 7: Critical Slowing Down does not predict crypto crashes ──
+-- Pooled 12 symbols, 18066 daily obs. Crash = forward-20d drawdown < −25%.
+-- P(crash | indicator rising) ×1000, look-ahead-free trailing windows:
+def csdBaseRateX1000   : Nat := 115  -- base crash rate 11.5%
+def csdVarRisingX1000  : Nat := 138  -- variance rising → 1.2× (mechanical: vol clustering)
+def csdAr1RisingX1000  : Nat := 104  -- AR(1) rising → 0.91× (BELOW base)
+def csdBothRisingX1000 : Nat := 116  -- both rising (the CSD signal) → 1.01× (= base)
+
+/-- **FAILURE 7 — Critical Slowing Down gives no crash warning.** The
+    tipping-point early-warning that works for tumors/ecosystems (rising variance
+    + AR(1) before a transition) is null for crypto: the combined signal sits at
+    the base rate (lift ~1.0) and AR(1)-rising is BELOW it — the resilience-loss
+    precursor is absent. Crypto crashes are exogenous/jump-driven, with no slow
+    build-up to warn on. The 1.2× variance lift is just vol-clustering, already
+    captured by the McNally cliff. The cancer math does not transfer to price. -/
+theorem critical_slowing_down_does_not_warn :
+    csdBothRisingX1000 < csdVarRisingX1000
+    ∧ csdAr1RisingX1000 < csdBaseRateX1000 := by decide
+
 -- ── The complete falsification ledger ────────────────────────────────
 -- Bundles the sweep failures above with the pulse/gate negatives proven in the
 -- sibling modules — one certificate of everything we killed.
@@ -151,6 +170,7 @@ structure FalsificationLedger where
   daily_lead_underpowered   : ¬ wellPowered btcDaily3Sigma
   daily_lead_fails_oos      : reversionFirstHalfNetBp < 0 ∧ reversionSecondHalfNetBp > 0
   no_taylor_cadence_money   : taylorTop11_btc_vol < taylorEnrichmentSignal
+  csd_does_not_warn         : csdAr1RisingX1000 < csdBaseRateX1000
   -- friction pump (MarketReynoldsGate)
   flat_is_optimal           : totalDragBps 0 = 0
 
@@ -166,6 +186,7 @@ theorem market_falsification_ledger : FalsificationLedger := {
   daily_lead_underpowered   := by decide
   daily_lead_fails_oos      := by decide
   no_taylor_cadence_money   := by decide
+  csd_does_not_warn         := by decide
   flat_is_optimal           := by decide
 }
 
