@@ -1251,6 +1251,7 @@ import Gnosis.Echolocation
 import Gnosis.EarthTilingTopology
 import Gnosis.EconomicGain
 import Gnosis.ElGrecoElasticRealWitness
+import Gnosis.ElevationRelief
 import Gnosis.EpicurusTetrapharmakosWitness
 import Gnosis.EnergyConservationFromVacuum
 import Gnosis.EnrichedConvergence
@@ -1261,6 +1262,7 @@ import Gnosis.ErysichthonHungerWitness
 import Gnosis.RefinementSignature
 import Gnosis.FiniteVolume
 import Gnosis.WeakResidual
+import Gnosis.WeatherDynamics
 import Gnosis.BoundedFluidResidual
 import Gnosis.BoundedGravitationalResidual
 import Gnosis.FiniteFluidCompactness
