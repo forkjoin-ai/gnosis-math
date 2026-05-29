@@ -14,7 +14,7 @@ import Gnosis.AckermannMonotone
 
       every fixed primitive-recursive ladder level is EVENTUALLY subluminal —
       strictly inside the light cone, never reaching the luminal Ackermann
-      front, never entering the spacelike (time-travel / hypercomputation)
+      front, never entering the spacelike (time-travel / super-primitive-recursive)
       region.
 
   This is the rigorous form of "tractable computation can't catch the photon",
@@ -54,7 +54,7 @@ theorem fixed_level_strictly_below_ceiling (k n : Nat) (hn : k + 3 ≤ n) :
   AckermannMonotone.eventual_domination k n hn
 
 /-- **Fixed PR levels never time-travel.** A level-`k` runtime is never in the
-    spacelike (super-Ackermann / hypercomputation) region for `n ≥ k + 3`: it
+    spacelike (super-Ackermann / super-primitive-recursive) region for `n ≥ k + 3`: it
     cannot send information into its own past. -/
 theorem fixed_level_never_time_travel (k n : Nat) (hn : k + 3 ≤ n) :
     ¬ (ackermannCeiling n < levelRuntime k n) := by

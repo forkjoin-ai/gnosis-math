@@ -10,7 +10,7 @@ import Gnosis.CausalDiamond
   The bridge that connects two previously-unrelated Gnosis modules:
 
     * `AckermannRuntimeCertificate` — the Ackermann diagonal `A(n)` as the
-      ceiling of computable growth, with `IsKPercentCertified T k` measuring
+      ceiling of primitive-recursive growth, with `IsKPercentCertified T k` measuring
       a runtime's fractional approach to that ceiling.
     * `CausalDiamond`              — the relativistic light cone, with
       `inFutureLightCone` deciding causal membership at speed `c = 1`
@@ -148,7 +148,7 @@ theorem front_is_lightlike (n : Nat) :
   rw [runtimeEvent, interval_origin]; omega
 
 /-- **Super-Ackermann ⟹ spacelike.** A runtime that exceeds the ceiling at `n`
-    (a Busy-Beaver-beyond spike, uncomputably fast) maps to a SPACELIKE event:
+    (a super-primitive-recursive spike, out-growing every fixed PR level) maps to a SPACELIKE event:
     positive interval, "elsewhere," acausal. -/
 theorem super_ackermann_is_spacelike (T : Runtime) (n : Nat)
     (h : ackermannCeiling n < T n) :

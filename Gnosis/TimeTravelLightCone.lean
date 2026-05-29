@@ -18,9 +18,15 @@ import Gnosis.AckermannLightConeBridge
   interval: timelike (inside the cone, causal), lightlike (on the cone,
   saturating), spacelike (outside, "elsewhere"). It also showed:
 
-      sub-Ackermann runtime   ↔  timelike   (computable, causal)
+      sub-Ackermann runtime   ↔  timelike   (within the PR frontier, causal)
       saturating runtime      ↔  lightlike  (the luminal front)
-      super-Ackermann runtime ↔  spacelike  (uncomputable, acausal)
+      super-Ackermann runtime ↔  spacelike  (super-primitive-recursive, acausal)
+
+  A precision note (honest science): the Ackermann diagonal is the frontier of
+  the PRIMITIVE-RECURSIVE ladder, not of all computation. "Super-Ackermann"
+  means super-primitive-recursive (Ackermann-hard) — still computable (the
+  Ackermann function itself lives here). The strictly UNCOMPUTABLE limit (Busy
+  Beaver) lies even further beyond; we do not claim spacelike = uncomputable.
 
   Time travel lives in the spacelike region. A signal that reaches a spacelike
   cell `|x| > t` is, in special relativity, backward-in-time in some inertial
@@ -35,7 +41,7 @@ import Gnosis.AckermannLightConeBridge
     * `chronology_protected` — the c-bound forbids the spacelike channel the
       loop needs, so the contradiction can never be instantiated.
     * `tachyon_is_spacelike` / `time_travel_iff_super_ackermann` — the tachyon
-      is exactly a super-Ackermann event: time travel ⟺ hypercomputation.
+      is exactly a super-Ackermann event: time travel ⟺ super-primitive-recursive growth.
 
   Init + the light-cone substrate. Zero `sorry`, zero new `axiom`.
 -/
@@ -89,7 +95,7 @@ theorem chronology_protected (sig : Signal)
 /-! ## Tachyon = spacelike = super-Ackermann
 
   The time-travel carrier sits in the same region as a super-Ackermann
-  runtime: outside the cone. Time travel ⟺ hypercomputation. -/
+  runtime: outside the cone. Time travel ⟺ super-primitive-recursive growth. -/
 
 /-- A tachyonic (spacelike) event has positive interval — it is "elsewhere",
     outside the causal cone, the same region as a super-Ackermann runtime
@@ -107,10 +113,11 @@ theorem tachyon_is_spacelike (t : Nat) (x : Int) (h : t < x.natAbs) :
         simp [Int.sub_zero]]
   omega
 
-/-- **Time travel ⟺ hypercomputation.** A runtime maps to a spacelike (time-
-    travel) event exactly when it exceeds the Ackermann ceiling — i.e. computes
-    faster than any total-computable function. To "send information into its
-    own past" you must out-run the frontier of computability itself. -/
+/-- **Time travel ⟺ super-primitive-recursive growth.** A runtime maps to a
+    spacelike (time-travel) event exactly when it exceeds the Ackermann ceiling
+    — i.e. out-grows every fixed primitive-recursive level. To "send information
+    into its own past" you must out-run the entire PR ladder. (Still computable;
+    the strictly uncomputable Busy Beaver lies further out.) -/
 theorem time_travel_iff_super_ackermann (T : Runtime) (n : Nat) :
     ackermannCeiling n < T n
       ↔ intervalSquared origin (runtimeEvent T n) > 0 := by
@@ -132,7 +139,7 @@ theorem time_travel_iff_super_ackermann (T : Runtime) (n : Nat) :
   Light rides the cone exactly (lightlike); everything realizable is strictly
   inside (timelike); only the forbidden tachyon is outside. Time travel is the
   spacelike region you can never enter without breaking the speed of light —
-  equivalently, without computing the uncomputable. -/
+  equivalently, without out-growing the entire primitive-recursive ladder. -/
 
 /-- The trichotomy at the runtime frontier: a runtime sample is causal-and-
     realizable (`≤` ceiling, in cone), exactly luminal (`=` ceiling, on cone),

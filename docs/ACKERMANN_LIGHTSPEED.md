@@ -4,7 +4,7 @@ A Lean-verified program formalizing the claim that the **Ackermann function is t
 speed of light** — stated precisely (per the repo rule, never "X *is* the Y"): the
 Ackermann growth ceiling **occupies the role of c**, the unique invariant frontier
 separating the realizable (computable / causal) from the unrealizable
-(uncomputable / acausal).
+(super-primitive-recursive / acausal).
 
 All modules are **Init-only** (no Mathlib / Batteries), **zero `sorry`**, and depend
 only on the standard axioms `propext` + `Quot.sound` (the `native_decide` witnesses
@@ -32,7 +32,7 @@ diagonal** as the frontier of the primitive-recursive ladder.
 | `InformationLightCone` | The keystone (light = information). Discrete Margolus–Levitin lattice causality: `info_within_cone` (info confined to `|x| ≤ t`), the photon rides the front, max info speed = c. |
 | `ForcedLightConeEmbedding` | `slope_forced` — the cone slope (c) is the *unique* certificate-faithful conversion. c is pinned, not chosen. |
 | `AckermannIsLightSpeed` | Capstone: `ackermann_ceiling_occupies_role_of_c` (five legs), `co_theorem_subluminal_never_catches_the_front`, `identityLedger`, `recorded_gap_discharged`. |
-| `TimeTravelLightCone` | Closed timelike curves = spacelike = super-Ackermann. Chronology protection; `grandfather_paradox` (axiom-free); time travel ⟺ hypercomputation. |
+| `TimeTravelLightCone` | Closed timelike curves = spacelike = super-Ackermann. Chronology protection; `grandfather_paradox` (axiom-free); time travel ⟺ super-primitive-recursive growth. |
 | `FrontierComputability` | Fixed PR levels are **eventually subluminal** (general form of the NP co-theorem, backed by `eventual_domination`). |
 | `TimeDilation` | The twin paradox on the lattice: proper time = rest-step count; travel strictly reduces aging. |
 
