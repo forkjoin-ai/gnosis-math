@@ -134,21 +134,96 @@ theorem scalp_profitable_iff_friction_below_edge (edge fric : Int) :
     scalpNetCbp edge fric > 0 ↔ fric < edge := by
   unfold scalpNetCbp; omega
 
+-- ════════════════════════════════════════════════════════════════════
+-- Section 5: recursive zoom-out — the reversion is fractal, and the edge
+-- crosses the friction wall at the daily extreme-move scale
+-- ════════════════════════════════════════════════════════════════════
+
+-- BTC lag-1 return ACF ×10000 at each scale (measured). All negative: the
+-- over-react→revert pulse is present at every timeframe, not just 1 minute.
+def btcLag1_1min  : Int := -621
+def btcLag1_5min  : Int := -620
+def btcLag1_15min : Int := -173
+def btcLag1_1hour : Int := -158
+def btcLag1_1day  : Int := -493
+
+/-- **The reversion pulse is fractal**: lag-1 return ACF is negative at 1min,
+    5min, 15min, 1hour, and 1day. The market over-reacts and reverts at every
+    scale we probed. -/
+theorem reversion_is_fractal :
+    btcLag1_1min < 0 ∧ btcLag1_5min < 0 ∧ btcLag1_15min < 0 ∧
+    btcLag1_1hour < 0 ∧ btcLag1_1day < 0 := by decide
+
+/-- A conditional-reversion reading: what a fader captures at one
+    scale/move-bucket, with the sample count kept so significance is honest. -/
+structure ReversionEdge where
+  scale       : String
+  moveBucket  : String
+  samples     : Nat
+  fadeEdgeCbp : Int   -- captured reversion, centi-bp (bp×100)
+  hitRatePct  : Nat
+
+/-- Round-trip friction, centi-bp (25 bp). -/
+def reFrictionCbp : Nat := 2500
+/-- A minimum sample count to call an edge statistically powered. -/
+def minPowerSamples : Nat := 100
+
+def clearsFriction (e : ReversionEdge) : Prop := e.fadeEdgeCbp > (reFrictionCbp : Int)
+def wellPowered (e : ReversionEdge) : Prop := e.samples ≥ minPowerSamples
+
+instance (e : ReversionEdge) : Decidable (clearsFriction e) := by
+  unfold clearsFriction; exact inferInstance
+instance (e : ReversionEdge) : Decidable (wellPowered e) := by
+  unfold wellPowered; exact Nat.decLe _ _
+
+/-- The tradeable candidate: fade a 3σ+ daily move. Captured 171 bp at 71% hit
+    over 28 events in ~4 years. -/
+def btcDaily3Sigma : ReversionEdge :=
+  { scale := "1Day", moveBucket := "3sigma+", samples := 28,
+    fadeEdgeCbp := 17118, hitRatePct := 71 }
+
+/-- Moderate daily moves (2–3σ): 49 events, −25 bp — they *trend*, not revert.
+    The reversion edge is specific to the extreme tail. -/
+def btcDaily2to3Sigma : ReversionEdge :=
+  { scale := "1Day", moveBucket := "2-3sigma", samples := 49,
+    fadeEdgeCbp := -2513, hitRatePct := 45 }
+
+/-- **The daily extreme-move reversion clears friction** — by ~7× (171 bp vs
+    25 bp). At the daily scale the move (and its reversion) dwarfs the fixed
+    cost: the same pulse that was sub-friction at 1 minute is tradeable here. -/
+theorem daily_extreme_clears_friction : clearsFriction btcDaily3Sigma := by decide
+
+/-- **…but it is underpowered** — only 28 events. Honesty in the certificate:
+    the edge crosses friction yet is not yet statistically powered; it needs
+    out-of-sample validation before it is bet on. -/
+theorem daily_extreme_is_underpowered : ¬ wellPowered btcDaily3Sigma := by decide
+
+/-- The edge is **tail-specific**: moderate (2–3σ) daily moves trend rather than
+    revert (negative fade edge), so only the 3σ+ tail snaps back. -/
+theorem moderate_daily_moves_trend : btcDaily2to3Sigma.fadeEdgeCbp < 0 := by decide
+
 -- ── The complete certificate, witnessed by BTC ───────────────────────
 
 structure MarketPulseScalpTheorem where
-  btc_reverts          : reverts btc30d
-  no_taylor_pulse      : ¬ hasTaylorPulse btc30d
-  taker_sub_friction   : ¬ takerScalpProfitable btc30d
-  vol_clusters         : volClusters btc30d
-  pulse_is_btc_specific : ¬ reverts eth30d
+  btc_reverts            : reverts btc30d
+  no_taylor_pulse        : ¬ hasTaylorPulse btc30d
+  taker_sub_friction     : ¬ takerScalpProfitable btc30d
+  vol_clusters           : volClusters btc30d
+  pulse_is_btc_specific  : ¬ reverts eth30d
+  reversion_is_fractal   : btcLag1_1min < 0 ∧ btcLag1_5min < 0 ∧ btcLag1_15min < 0
+                             ∧ btcLag1_1hour < 0 ∧ btcLag1_1day < 0
+  daily_extreme_tradeable : clearsFriction btcDaily3Sigma
+  but_underpowered        : ¬ wellPowered btcDaily3Sigma
 
 theorem market_pulse_scalp : MarketPulseScalpTheorem := {
-  btc_reverts           := by decide
-  no_taylor_pulse       := by decide
-  taker_sub_friction    := by decide
-  vol_clusters          := by decide
-  pulse_is_btc_specific := by decide
+  btc_reverts            := by decide
+  no_taylor_pulse        := by decide
+  taker_sub_friction     := by decide
+  vol_clusters           := by decide
+  pulse_is_btc_specific  := by decide
+  reversion_is_fractal   := by decide
+  daily_extreme_tradeable := by decide
+  but_underpowered        := by decide
 }
 
 end MarketPulseScalp
