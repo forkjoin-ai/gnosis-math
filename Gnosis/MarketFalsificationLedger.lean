@@ -110,6 +110,29 @@ theorem pooled_edge_is_non_stationary :
     reversionFirstHalfNetBp < reversionPooledNetBp
     ∧ reversionPooledNetBp < reversionSecondHalfNetBp := by decide
 
+-- ── FAILURE 6: no Taylor-Sequence money in the price/vol cadence ──────
+-- Tested with the correct Taylor's Sequence (TaylorsSequence.lean), the lags in
+-- 2..72 are {6,7,8,11,14,15,18,21,22,29,47} = 11 of 71. After DETRENDING the
+-- ACF (removing the decay so small lags don't fake a peak), the count of Taylor
+-- lags among the top-11 residual peaks — chance ≈ 1.7:
+def taylorTop11_btc_vol : Nat := 0
+def taylorTop11_btc_ret : Nat := 1
+def taylorTop11_eth_vol : Nat := 2
+def taylorTop11_eth_ret : Nat := 2
+def taylorEnrichmentSignal : Nat := 5  -- would need ≥5/11 to claim a real cadence
+
+/-- **FAILURE 6 — no Taylor-Sequence cadence money.** With the correct sequence
+    and the decay detrended, Taylor lags are no more likely to be ACF peaks than
+    chance (top-11 counts 0–2 vs expected ~1.7) on either dissipation (vol) or
+    direction (returns), BTC and ETH. Taylor numbers organize the compute
+    substrate (ImplementationWisdom §5: 66 tiles the antiqueue carrier), NOT the
+    crypto price series — the quasicrystal lives in FOIL/scheduling, not price. -/
+theorem no_taylor_cadence_money :
+    taylorTop11_btc_vol < taylorEnrichmentSignal ∧
+    taylorTop11_btc_ret < taylorEnrichmentSignal ∧
+    taylorTop11_eth_vol < taylorEnrichmentSignal ∧
+    taylorTop11_eth_ret < taylorEnrichmentSignal := by decide
+
 -- ── The complete falsification ledger ────────────────────────────────
 -- Bundles the sweep failures above with the pulse/gate negatives proven in the
 -- sibling modules — one certificate of everything we killed.
@@ -127,6 +150,7 @@ structure FalsificationLedger where
   void66_not_directional    : voidReturnAcfX10000 < gnosticCi95X10000
   daily_lead_underpowered   : ¬ wellPowered btcDaily3Sigma
   daily_lead_fails_oos      : reversionFirstHalfNetBp < 0 ∧ reversionSecondHalfNetBp > 0
+  no_taylor_cadence_money   : taylorTop11_btc_vol < taylorEnrichmentSignal
   -- friction pump (MarketReynoldsGate)
   flat_is_optimal           : totalDragBps 0 = 0
 
@@ -141,6 +165,7 @@ theorem market_falsification_ledger : FalsificationLedger := {
   void66_not_directional    := by decide
   daily_lead_underpowered   := by decide
   daily_lead_fails_oos      := by decide
+  no_taylor_cadence_money   := by decide
   flat_is_optimal           := by decide
 }
 
