@@ -202,6 +202,52 @@ theorem daily_extreme_is_underpowered : ¬ wellPowered btcDaily3Sigma := by deci
     revert (negative fade edge), so only the 3σ+ tail snaps back. -/
 theorem moderate_daily_moves_trend : btcDaily2to3Sigma.fadeEdgeCbp < 0 := by decide
 
+-- ════════════════════════════════════════════════════════════════════
+-- Section 6: the Gnostic-cadence probe — the only multi-scale pulse is
+-- volatility clustering; no directional beat survives correction
+-- ════════════════════════════════════════════════════════════════════
+
+-- Daily-bar autocorrelation (×10000) at the Picolorenzo levels (GnosticTime),
+-- BTC, 1974 daily returns. raw band ci95 = 1.96/√1974 ≈ 0.0441 → 441.
+def gnosticCi95X10000 : Nat := 441
+
+-- Volatility (|return|) ACF at the Gnostic levels — all clear the band:
+def volAcf_syzygy6  : Nat := 1353   -- 6d
+def volAcf_week7    : Nat := 1293
+def volAcf_sophia28 : Nat := 1263
+def volAcf_void66   : Nat := 605
+
+/-- **Volatility clusters at every Gnostic level** (syzygy/week/sophia/void all
+    clear the band). The multi-scale pulse is real — but it is aperiodic
+    *clustering*, the persistence the McNally cliff already rides, not a beat. -/
+theorem vol_clusters_at_every_gnostic_level :
+    volAcf_syzygy6 > gnosticCi95X10000 ∧ volAcf_week7 > gnosticCi95X10000 ∧
+    volAcf_sophia28 > gnosticCi95X10000 ∧ volAcf_void66 > gnosticCi95X10000 := by
+  decide
+
+-- Strongest *directional* (return) ACF at any Gnostic lag: BTC proton (9d).
+def maxGnosticReturnAcfX10000 : Nat := 512   -- 0.0512, ~2.27σ
+-- Multiple-comparison band: 30 tests (10 lags × 3 symbols), FWER 0.05 →
+-- per-test z ≈ 2.93, × SE(1/√1974 = 0.0225) ≈ 0.066 → 660.
+def bonferroniBandX10000 : Nat := 660
+-- The void (66d) directional ACF — the Taylor-66 cadence hypothesis.
+def voidReturnAcfX10000 : Nat := 186   -- 0.0186
+
+/-- **No Gnostic-cadence directional pulse survives multiple-comparison
+    correction.** The strongest directional lag (proton, 9d) clears the raw band
+    but falls short of the Bonferroni band for 30 tests — and ~1.5 false
+    positives are expected at the raw band. The apparent weekly-momentum beat is
+    a multiple-comparison ghost. -/
+theorem no_gnostic_directional_pulse :
+    maxGnosticReturnAcfX10000 > gnosticCi95X10000 ∧
+    maxGnosticReturnAcfX10000 < bonferroniBandX10000 := by decide
+
+/-- **The void (66d) Taylor cadence is not a directional pulse** — inside the
+    raw band. The 66-beat that tiles the quasicrystal carrier (Implementation
+    Wisdom §5) does not appear as market direction at 66 days. -/
+theorem void_is_not_a_directional_pulse :
+    voidReturnAcfX10000 < gnosticCi95X10000 := by decide
+
 -- ── The complete certificate, witnessed by BTC ───────────────────────
 
 structure MarketPulseScalpTheorem where
@@ -214,6 +260,9 @@ structure MarketPulseScalpTheorem where
                              ∧ btcLag1_1hour < 0 ∧ btcLag1_1day < 0
   daily_extreme_tradeable : clearsFriction btcDaily3Sigma
   but_underpowered        : ¬ wellPowered btcDaily3Sigma
+  vol_clusters_all_scales : volAcf_void66 > gnosticCi95X10000
+  no_gnostic_dir_pulse    : maxGnosticReturnAcfX10000 < bonferroniBandX10000
+  void_not_directional    : voidReturnAcfX10000 < gnosticCi95X10000
 
 theorem market_pulse_scalp : MarketPulseScalpTheorem := {
   btc_reverts            := by decide
@@ -224,6 +273,9 @@ theorem market_pulse_scalp : MarketPulseScalpTheorem := {
   reversion_is_fractal   := by decide
   daily_extreme_tradeable := by decide
   but_underpowered        := by decide
+  vol_clusters_all_scales := by decide
+  no_gnostic_dir_pulse    := by decide
+  void_not_directional    := by decide
 }
 
 end MarketPulseScalp
