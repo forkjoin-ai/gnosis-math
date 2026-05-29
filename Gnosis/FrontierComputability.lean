@@ -26,6 +26,7 @@ import Gnosis.AckermannMonotone
 namespace FrontierComputability
 
 open AckermannFunction
+open AckermannUniversality
 open AckermannRuntimeCertificate
 open Gnosis.CausalDiamond
 open AckermannLightConeBridge
@@ -71,5 +72,26 @@ theorem diagonal_escapes_every_level (k n : Nat) (hn : k + 3 ≤ n) :
   have hlt : hyperop k n n < ackermannDiag n :=
     AckermannMonotone.eventual_domination k n hn
   omega
+
+/-- **Polynomial time is eventually strictly subluminal.** A polynomial runtime
+    `n ↦ n^d` is bounded by the exponential level (`n^d ≤ n^n = hyperop 3 n n`)
+    and so falls strictly below the Ackermann ceiling for `n ≥ max(d, 6)`. The
+    entire polynomial hierarchy is forever sub-frontier — it never catches the
+    photon. -/
+theorem polynomial_eventually_subluminal (d n : Nat) (hn : 6 ≤ n) (hd : d ≤ n) :
+    n ^ d < ackermannDiag n := by
+  have h1 : n ^ d ≤ n ^ n := Nat.pow_le_pow_right (by omega) hd
+  have h2 : n ^ n = hyperop 3 n n := (hyperop_three n n).symm
+  have h3 : hyperop 3 n n < ackermannDiag n :=
+    AckermannMonotone.eventual_domination 3 n (by omega)
+  omega
+
+/-- The geometric face: a polynomial runtime is strictly timelike (inside the
+    light cone) for `n ≥ max(d, 6)`. -/
+theorem polynomial_strictly_timelike (d n : Nat) (hn : 6 ≤ n) (hd : d ≤ n) :
+    intervalSquared origin (runtimeEvent (fun m => m ^ d) n) < 0 := by
+  apply subluminal_is_strictly_timelike
+  show n ^ d < ackermannCeiling n
+  exact polynomial_eventually_subluminal d n hn hd
 
 end FrontierComputability
