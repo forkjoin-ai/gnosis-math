@@ -2121,6 +2121,7 @@ import Gnosis.InformationLightCone
 import Gnosis.ForcedLightConeEmbedding
 import Gnosis.AckermannIsLightSpeed
 import Gnosis.TimeTravelLightCone
+import Gnosis.FrontierComputability
 import Gnosis.GodBracket
 import Gnosis.ThermodynamicRefinement
 import Gnosis.FifthForceIdentity
