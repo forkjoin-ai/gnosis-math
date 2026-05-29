@@ -141,4 +141,73 @@ theorem properTime_eq_coordTime_iff (w : Worldline) (N : Nat) :
     have hc := properTime_add_motionCount w N
     omega
 
+/-! ## The round-trip twin paradox (quantitative) -/
+
+/-- If the position differs across a range `[a, b]`, some step inside it moves. -/
+theorem motion_in_range (w : Worldline) (a b : Nat) :
+    a ≤ b → w a ≠ w b → ∃ s, a ≤ s ∧ s < b ∧ w (s + 1) ≠ w s := by
+  induction b with
+  | zero =>
+    intro hab h
+    have : a = 0 := by omega
+    subst this; exact absurd rfl h
+  | succ b ih =>
+    intro hab h
+    rcases Nat.lt_or_ge a (b + 1) with hlt | hge
+    · by_cases hb : w (b + 1) = w b
+      · have hne : w a ≠ w b := by rw [hb] at h; exact h
+        obtain ⟨s, hs1, hs2, hmove⟩ := ih (by omega) hne
+        exact ⟨s, hs1, by omega, hmove⟩
+      · exact ⟨b, by omega, by omega, hb⟩
+    · have : a = b + 1 := by omega
+      subst this; exact absurd rfl h
+
+/-- One-step monotonicity of motion count (no case split: the increment is a
+    `Nat`, hence non-negative). -/
+theorem motionCount_le_succ (w : Worldline) (N : Nat) :
+    motionCount w N ≤ motionCount w (N + 1) := by
+  show motionCount w N ≤ motionCount w N + (if w (N + 1) = w N then 0 else 1)
+  exact Nat.le_add_right _ _
+
+/-- Motion count is monotone in the time horizon. -/
+theorem motionCount_mono (w : Worldline) (m n : Nat) (h : m ≤ n) :
+    motionCount w m ≤ motionCount w n := by
+  induction n with
+  | zero =>
+    have : m = 0 := by omega
+    subst this; exact Nat.le_refl _
+  | succ n ih =>
+    rcases Nat.lt_or_ge m (n + 1) with hlt | hge
+    · exact Nat.le_trans (ih (by omega)) (motionCount_le_succ w n)
+    · have : m = n + 1 := by omega
+      subst this; exact Nat.le_refl _
+
+/-- A motion step bumps the motion count by exactly one. -/
+theorem motionCount_succ_of_motion (w : Worldline) (s : Nat) (h : w (s + 1) ≠ w s) :
+    motionCount w (s + 1) = motionCount w s + 1 := by
+  show motionCount w s + (if w (s + 1) = w s then 0 else 1) = motionCount w s + 1
+  rw [if_neg h]
+
+/-- **The round-trip twin paradox.** A twin that starts at the origin, leaves
+    it, and returns by tick `N` ages at LEAST two ticks less than the resting
+    twin: `properTime w N + 2 ≤ N`. The trip costs one motion step out and one
+    back — the deficit is at least the two legs of the journey. -/
+theorem round_trip_twin (w : Worldline) (N t : Nat)
+    (hstart : w 0 = 0) (hreturn : w N = 0) (ht0 : 0 < t) (htN : t < N) (hleft : w t ≠ 0) :
+    properTime w N + 2 ≤ N := by
+  have hout : w 0 ≠ w t := by rw [hstart]; exact fun he => hleft he.symm
+  obtain ⟨s1, hs1a, hs1b, hs1m⟩ := motion_in_range w 0 t (by omega) hout
+  have hret : w t ≠ w N := by rw [hreturn]; exact hleft
+  obtain ⟨s2, hs2a, hs2b, hs2m⟩ := motion_in_range w t N (by omega) hret
+  have hmc2 : 2 ≤ motionCount w N := by
+    have j1 : motionCount w (s1 + 1) = motionCount w s1 + 1 :=
+      motionCount_succ_of_motion w s1 hs1m
+    have j2 : motionCount w (s2 + 1) = motionCount w s2 + 1 :=
+      motionCount_succ_of_motion w s2 hs2m
+    have m12 : motionCount w (s1 + 1) ≤ motionCount w s2 := motionCount_mono w _ _ (by omega)
+    have m2N : motionCount w (s2 + 1) ≤ motionCount w N := motionCount_mono w _ _ (by omega)
+    omega
+  have hc := properTime_add_motionCount w N
+  omega
+
 end TimeDilation
