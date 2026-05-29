@@ -1,8 +1,23 @@
 # Six-Agent Frontier Contracts
 
+> **Sardis-gate status (2026-05-29).** Read this document through
+> [`Gnosis/SardisGateAdmissibility.lean`](Gnosis/SardisGateAdmissibility.lean). Its
+> headline claims — "the universe has five fundamental forces," "everything derives
+> from the five forces," "the tower is complete" — are emphatic identity claims whose
+> Lean carriers are bounded structural lemmas, not the totalizing physics the prose
+> asserts. Under the gate those headers are `DeadName` (carrier < label): the name
+> claims more than the works bear. Most "must prove" entries below (`dark_matter_is_*`,
+> `axion_is_*`, `optimal_trading_from_interference`) are `VacuousNoExperimentSpecified`
+> (`ANTI_THEORY_MANIFESTO.md`) until a falsifying experiment is pinned. Treat the
+> contracts as a backlog of *labels to earn*, not results already held.
+
 ## Overview
 
-We have proven: the universe has five fundamental forces (fork-race-fold-vent-interfere). Now push into applications, implications, predictions.
+The structural claim that survives by construction: fork/race/fold/vent/interfere is a
+formal lifecycle *pattern*, proved in Lean. The stronger reading — that these are *the*
+fundamental forces of physics and *everything* derives from them — is a conjecture, not
+a theorem, and stays out of the kernel. From that honest base, push into applications,
+implications, and predictions.
 
 Six agents, independent work, maximum parallelization.
 

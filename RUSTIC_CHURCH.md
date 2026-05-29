@@ -20,7 +20,14 @@ do not block merge on abstract “purity” beyond these rules.
 Every Init lemma cited below is provable from `Nat.succ` (the `+1` clinamen)
 by structural induction. The kernel is therefore self-bootstrapping: if `lake
 build` accepts a Rustic Church module, the formula's algebra has been
-re-derived from the inductive `+1` alone, and internal consistency follows.
+re-derived from the inductive `+1` alone. What a green build certifies is
+*local*: the finite carrier bears the weight its name claims. It does **not**
+certify *global* consistency — that is the Gödel boundary. The earlier over-reach
+in this sentence ("and internal consistency follows") is now refuted in its own
+antitheorem: [`Gnosis/SardisGateAdmissibility.lean`](Gnosis/SardisGateAdmissibility.lean)'s
+`admission_does_not_force_consistency` proves admission cannot force an arbitrary
+global predicate, so a green build is a `Live` witness (carrier ≥ name), never a
+consistency certificate.
 
 The canonical exemplar is [`Gnosis/GodFormula.lean`](Gnosis/GodFormula.lean):
 conservation, ceiling, floor, positivity, sandwich, antitonicity,

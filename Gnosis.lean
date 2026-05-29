@@ -1,5 +1,7 @@
 import Gnosis.SignalEnvelope
 import Gnosis.SignalFusion
+import Gnosis.SilhouetteCarveLattice
+import Gnosis.SpaceCarveOrderDependence
 import Gnosis.CalibrationTrust
 import Gnosis.MycelialEmergenceGraph
 import Gnosis.MarketAsSignal
