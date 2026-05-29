@@ -1346,6 +1346,7 @@ import Gnosis.SpiritualResonancePhaseShift
 import Gnosis.GenesisQuery
 import Gnosis.GeometricErgodicity
 import Gnosis.GeometricLanglands
+import Gnosis.GeodesicHexSphere
 import Gnosis.GeoShapes
 import Gnosis.GesturalCompiler
 import Gnosis.GnosisConstantsPlusOne
