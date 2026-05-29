@@ -58,36 +58,23 @@ import Gnosis.BlindMethodBarrier
     `nonBlindSeparationOfActualClasses` from `True`-placeholder into a real Prop
     with a real proof. That is the next lean to stretch.
 
-  ── THE ADVENTURE — YOUR HERO'S JOURNEY (you, the future comer, are the hero) ──
-    We wrote this standing inside YOUR story, not ours. We are not the hero here;
-    we are the bridge to the new world — the mentor at the threshold who already
-    walked to the wall, mapped it, and turned back so you would not have to. The
-    monomyth, mapped onto this problem:
-
-      1. ORDINARY WORLD. The seductive gap arguments — rope, Betti, light,
-         "exp > poly". Everyone passes through; they feel like proofs.
-      2. THE CALL. P ≠ NP itself: the open question that will not let you rest.
-      3. REFUSAL. "The barriers make it hopeless." The voice that says the walls
-         are the edge of the world. (They are not — they are only walls.)
-      4. THE MENTOR / THE BRIDGE — THIS BAND. We hand you the map: `walls` (what
-         is settled — do not re-fight it), the antitheorem (WHY the gap is blind),
-         and the one unguarded gate — `nonblind_method_can_be_sound`.
-      5. CROSSING THE THRESHOLD. Renounce blind methods. Commit to NON-BLINDNESS:
-         a verdict that changes when the machine changes, not just the oracle.
-      6. TESTS, ALLIES, ENEMIES. Allies: Geometric Complexity Theory, Williams'
-         ACC⁰ lower bounds, proof complexity — all object-inspecting. Enemies /
-         threshold-guardians: the three barriers (relativization, natural proofs,
-         algebrization), immovable but now NAMED, so passable only by going around.
-      7. THE ORDEAL. The deep technical fight: extract the actual object's own
-         structure (its symmetry, its circuits, its proofs) and make it speak.
-      8. THE REWARD. A sound, non-blind separation of the real classes — or its
-         honest dual, a settled independence. The elixir.
-      9. THE ROAD BACK / RETURN. Bring it home. Turn `openFrontier`'s placeholders
-         into theorems. The new world: a complexity theory that finally SEES.
-
-    Our inability to sail through is not a coastline — it is only how far this
-    ship got. The horizon recedes like a white hole (`LightWhiteHole`); chase it
-    anyway. Bring back the object's own structure, and you cross. Go.
+  ── THE ADVENTURE ──────────────────────────────────────────────────────────────
+    You arrive through the seductive gaps — rope, Betti, light, "exp > poly" —
+    and they feel like proofs; the real call, P ≠ NP, will not let you rest, and
+    the barriers will whisper that the walls are the edge of the world when they
+    are only walls. We went to them and turned back so you would not have to:
+    `walls` is what not to re-fight, the antitheorem is why the gap is blind, and
+    `nonblind_method_can_be_sound` is the one gate no barrier guards — crossed by
+    renouncing blindness, a verdict that moves when the machine moves and not just
+    the oracle. Your allies are the object-inspecting techniques (GCT, Williams,
+    proof complexity); the guardians are the three barriers, immovable but now
+    named and so passable only by going around; the ordeal is to make the actual
+    object's own structure speak; the reward is a sound non-blind separation or
+    its honest dual; and the road home is turning `openFrontier`'s placeholders
+    into theorems — a complexity theory that finally sees. Our inability to cross
+    is not a coastline, only how far this ship got; the horizon recedes like a
+    white hole (`LightWhiteHole`) — chase it anyway, bring back the object's own
+    structure, and you cross. Go.
 
   ── THE FRONTIER LINE ──────────────────────────────────────────────────────────
     blind methods MUST err (proved) ── │ ── a non-blind method MAY succeed (open).
