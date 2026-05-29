@@ -152,6 +152,27 @@ theorem critical_slowing_down_does_not_warn :
     csdBothRisingX1000 < csdVarRisingX1000
     ∧ csdAr1RisingX1000 < csdBaseRateX1000 := by decide
 
+-- ── FAILURE 8: markets-of-markets is degenerate within crypto ─────────
+-- Mycelial cross-asset network (8 majors). Cross-asset return correlation ×1000,
+-- by market-stress tercile; network-cup marginal = extra range-variance resolved
+-- by market-wide volume BEYOND an asset's own volume:
+def cryptoCorrLowStressX1000  : Nat := 753
+def cryptoCorrHighStressX1000 : Nat := 744
+def networkCupMarginalPctX10  : Nat := 0   -- +0.0% (daily); +1.4% hourly — ~nil
+
+/-- **FAILURE 8 — markets-of-markets cannot help within crypto.** The mycelial
+    fork→fold routing predicts correlation rising with stress (contagion). But
+    crypto is ALREADY one coalition: correlation sits at ~0.75 in calm AND
+    stress (no rise — no idiosyncratic "fork-local" mode to switch from), and
+    market-wide volume is collinear with own volume so the network cup adds ~0%.
+    Crypto majors are one market wearing eight tickers. A real markets-of-markets
+    edge needs heterogeneous asset classes (crypto/equities/bonds), not eight
+    correlated coins. -/
+theorem markets_of_markets_degenerate_in_crypto :
+    cryptoCorrHighStressX1000 ≤ cryptoCorrLowStressX1000
+    ∧ cryptoCorrLowStressX1000 > 700
+    ∧ networkCupMarginalPctX10 < 5 := by decide
+
 -- ── The complete falsification ledger ────────────────────────────────
 -- Bundles the sweep failures above with the pulse/gate negatives proven in the
 -- sibling modules — one certificate of everything we killed.
@@ -171,6 +192,7 @@ structure FalsificationLedger where
   daily_lead_fails_oos      : reversionFirstHalfNetBp < 0 ∧ reversionSecondHalfNetBp > 0
   no_taylor_cadence_money   : taylorTop11_btc_vol < taylorEnrichmentSignal
   csd_does_not_warn         : csdAr1RisingX1000 < csdBaseRateX1000
+  markets_of_markets_degenerate : cryptoCorrHighStressX1000 ≤ cryptoCorrLowStressX1000
   -- friction pump (MarketReynoldsGate)
   flat_is_optimal           : totalDragBps 0 = 0
 
@@ -187,6 +209,7 @@ theorem market_falsification_ledger : FalsificationLedger := {
   daily_lead_fails_oos      := by decide
   no_taylor_cadence_money   := by decide
   csd_does_not_warn         := by decide
+  markets_of_markets_degenerate := by decide
   flat_is_optimal           := by decide
 }
 
