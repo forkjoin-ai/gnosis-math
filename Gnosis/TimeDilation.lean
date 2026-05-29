@@ -113,4 +113,32 @@ theorem twin_paradox (w : Worldline) (N t : Nat)
   obtain ⟨s, hs, hmove⟩ := motion_of_ne w t hne
   exact ⟨s, by omega, hmove⟩
 
+/-- A worldline that never moves on `[0, N)` records zero motion. -/
+theorem motionCount_eq_zero_of_rest (w : Worldline) (N : Nat)
+    (h : ∀ s, s < N → w (s + 1) = w s) : motionCount w N = 0 := by
+  induction N with
+  | zero => rfl
+  | succ N ih =>
+    unfold motionCount
+    rw [if_pos (h N (by omega)), Nat.add_zero]
+    exact ih (fun s hs => h s (by omega))
+
+/-- **The rest frame uniquely maximizes proper time.** A worldline ages by the
+    full coordinate time `N` if and only if it never moves. Any motion — at any
+    single tick — costs aging. This is the geometric heart of the twin paradox:
+    the straight (resting) worldline is the unique maximizer of proper time. -/
+theorem properTime_eq_coordTime_iff (w : Worldline) (N : Nat) :
+    properTime w N = N ↔ ∀ s, s < N → w (s + 1) = w s := by
+  constructor
+  · intro hpt s hs
+    by_cases hb : w (s + 1) = w s
+    · exact hb
+    · exfalso
+      have : properTime w N < N := proper_time_lt_of_motion w N ⟨s, hs, hb⟩
+      omega
+  · intro hrest
+    have h0 : motionCount w N = 0 := motionCount_eq_zero_of_rest w N hrest
+    have hc := properTime_add_motionCount w N
+    omega
+
 end TimeDilation
