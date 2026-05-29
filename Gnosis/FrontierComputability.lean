@@ -94,4 +94,33 @@ theorem polynomial_strictly_timelike (d n : Nat) (hn : 6 ≤ n) (hd : d ≤ n) :
   show n ^ d < ackermannCeiling n
   exact polynomial_eventually_subluminal d n hn hd
 
+/-! ## The frontier recedes without bound
+
+  Not only does no fixed level catch the diagonal — the diagonal itself grows
+  past its own argument (`n < A(n)`), so the luminal front recedes unboundedly.
+  You can never catch the photon, no matter how long you compute. -/
+
+/-- The diagonal strictly exceeds its argument for `n ≥ 2`: `n < A(n)`. -/
+theorem diagonal_gt_self (n : Nat) (hn : 2 ≤ n) : n < ackermannDiag n := by
+  show n < hyperop n n n
+  exact AckermannMonotone.lt_self n n n hn (by omega)
+
+/-- **The frontier is unbounded.** For any value `V`, eventually `V < A(n)`: the
+    luminal Ackermann front recedes past every bound. -/
+theorem diagonal_unbounded (V : Nat) : ∃ N, ∀ n, N ≤ n → V < ackermannDiag n := by
+  refine ⟨V + 3, fun n hn => ?_⟩
+  have h1 : n < ackermannDiag n := diagonal_gt_self n (by omega)
+  omega
+
+/-- **The frontier recedes while dominating.** For any fixed level `k` and any
+    value `V`, eventually the diagonal simultaneously strictly dominates level
+    `k` AND exceeds `V`. The front outpaces every fixed computation and every
+    fixed bound at once — the photon is forever uncatchable. -/
+theorem frontier_recedes (k V : Nat) : ∃ N, ∀ n, N ≤ n →
+    hyperop k n n < ackermannDiag n ∧ V < ackermannDiag n := by
+  refine ⟨max (k + 3) (V + 3), fun n hn => ?_⟩
+  refine ⟨AckermannMonotone.eventual_domination k n (by omega), ?_⟩
+  have h1 : n < ackermannDiag n := diagonal_gt_self n (by omega)
+  omega
+
 end FrontierComputability
