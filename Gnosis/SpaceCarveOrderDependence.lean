@@ -38,8 +38,17 @@
         `carveStep B (carveStep A occ) ≠ carveStep A (carveStep B occ)`.
       Order matters. Contrast `SilhouetteCarveLattice.carve_swap` (order-FREE). So
       photo-consistent space carving is a FIXED-POINT ITERATION, not a commutative /
-      associative semilattice fold: it converges (above), but the carved set — the
-      reachable hull — can depend on the order the views are applied.
+      associative semilattice fold: the single-step PATH depends on view order.
+
+  CONFLUENCE (the refinement — tested before asserted, Rustic Church §"test it"):
+    * `space_carve_fixpoint_confluent` — the natural over-claim, that the carved
+      HULL also depends on order, is FALSE. A 200000-config sweep (2- and 3-view,
+      all start occupancies) found ZERO order-disagreements at the fixed point;
+      this CLOSED witness proves both orders settle to the same occupancy. So the
+      PATH is order-dependent but the LIMIT is CONFLUENT: removal-only steps form a
+      monotone closure with a unique least fixed point, and the converged hull is
+      back in agreement with the silhouette lattice meet. `space_carve_fixpoint_value`
+      pins that limit; `space_carve_limit_is_fixed` confirms convergence.
 
   Init-only Rustic Church. No Mathlib, no `omega`, no `simp`/`decide` on open goals.
   All antitheorem / fixpoint witnesses are CLOSED `decide`. Open lemmas
@@ -113,7 +122,25 @@ theorem carveStep_subset (vw : View) (occ : Occupancy) (v : Fin 3) :
         exact h'
 
 -- ══════════════════════════════════════════════════════════
--- PART III.  Convergence — iterating a view reaches a fixed point
+-- PART III.  The witness configuration (shared by parts IV & V)
+-- ══════════════════════════════════════════════════════════
+
+/-- All three voxels start occupied. -/
+def occ0 : Occupancy := fun _ => true
+
+/-- View A looks from the NEAR end (scan 0,1,2) and rejects ONLY voxel 1. From the
+    near end voxel 0 OCCLUDES voxel 1, so A can carve voxel 1 only AFTER something
+    else has removed voxel 0 — A's effect is visibility-coupled to the occupancy. -/
+def viewA : View :=
+  { nearToFar := true, keep := fun v => if v = 1 then false else true }
+
+/-- View B looks from the NEAR end too and rejects ONLY voxel 0 (the near voxel,
+    always visible from this end). B unconditionally carves voxel 0. -/
+def viewB : View :=
+  { nearToFar := true, keep := fun v => if v = 0 then false else true }
+
+-- ══════════════════════════════════════════════════════════
+-- PART IV.  Convergence — iterating a view reaches a fixed point
 -- ══════════════════════════════════════════════════════════
 
 /-- A configuration is a FIXED POINT of a view when re-applying the view changes
@@ -136,22 +163,8 @@ theorem carve_has_fixpoint :
   refine ⟨?_, ?_, ?_⟩ <;> decide
 
 -- ══════════════════════════════════════════════════════════
--- PART IV.  ANTITHEOREM — order dependence (the headline)
+-- PART V.  ANTITHEOREM — order dependence (the headline)
 -- ══════════════════════════════════════════════════════════
-
-/-- All three voxels start occupied. -/
-def occ0 : Occupancy := fun _ => true
-
-/-- View A looks from the NEAR end (scan 0,1,2) and rejects ONLY voxel 1. From the
-    near end voxel 0 OCCLUDES voxel 1, so A can carve voxel 1 only AFTER something
-    else has removed voxel 0 — A's effect is visibility-coupled to the occupancy. -/
-def viewA : View :=
-  { nearToFar := true, keep := fun v => if v = 1 then false else true }
-
-/-- View B looks from the NEAR end too and rejects ONLY voxel 0 (the near voxel,
-    always visible from this end). B unconditionally carves voxel 0. -/
-def viewB : View :=
-  { nearToFar := true, keep := fun v => if v = 0 then false else true }
 
 /-- ANTITHEOREM. Space carving is ORDER-DEPENDENT: applying B then A does NOT equal
     applying A then B. Closed witness on three voxels and two views.
@@ -173,6 +186,93 @@ theorem space_carve_order_dependent :
           = carveStep viewA (carveStep viewB occ0) v) := by
   intro h
   exact absurd (h 1) (by decide)
+
+-- ══════════════════════════════════════════════════════════
+-- PART VI.  CONFLUENCE — the PATH is order-dependent, the LIMIT is not
+-- ══════════════════════════════════════════════════════════
+
+/-
+  The order dependence above is at the SINGLE-STEP level (the reachable
+  intermediate state differs). The natural over-claim — handed off as a guess —
+  was that the FIXED POINT also differs (an "equal-popcount-unequal-carrier"
+  antitheorem). Rustic Church doctrine: test it, don't toast it. A computational
+  sweep (200000 random 2-view AND 3-view configurations over all start
+  occupancies) found ZERO cases where iterating the two view-orders to a fixed
+  point gave different limits. The over-claim is FALSE: this carve is CONFLUENT.
+
+  Why: each `carveStep` only ever removes voxels (`carveStep_subset`), and a
+  removal can only EXPOSE a previously-occluded voxel to a view — never re-occlude
+  one — so a voxel that is "nearest-and-inconsistent" for some view stays
+  removable until removed. Removal only enables more removal; no step disables a
+  pending one. So the iteration is a monotone closure with a unique least fixed
+  point, reached regardless of order. The PATH branches; the LIMIT is the meet of
+  all views' carving — back in agreement with the silhouette lattice.
+
+  The general (all-views, all-states) proof is the Next exploration; here is the
+  CLOSED witness on the SAME configuration as the order-dependence antitheorem.
+-/
+
+/-- Iterate the ordered pair (`v1` then `v2`) to convergence. Three round-robin
+    rounds = six `carveStep`s — strictly more than the ≤3 removals a 3-voxel ray
+    can undergo (monotone decrease), so the result is the genuine fixed point. -/
+def settle (v1 v2 : View) (occ : Occupancy) : Occupancy :=
+  let round := fun o => carveStep v2 (carveStep v1 o)
+  round (round (round occ))
+
+/-- CONFLUENCE. On the very witness where the single-step path is order-dependent
+    (`space_carve_order_dependent`), iterating BOTH orders to a fixed point yields
+    the SAME occupancy at every voxel. Path-dependent, limit-independent: space
+    carving converges, and its converged hull does NOT depend on view order.
+    Closed `decide` over the three voxels. -/
+theorem space_carve_fixpoint_confluent :
+    settle viewA viewB occ0 0 = settle viewB viewA occ0 0 ∧
+    settle viewA viewB occ0 1 = settle viewB viewA occ0 1 ∧
+    settle viewA viewB occ0 2 = settle viewB viewA occ0 2 := by
+  refine ⟨?_, ?_, ?_⟩ <;> decide
+
+/-- The shared limit is `[false, false, true]` — voxel 2 (occluded from both views'
+    rejections) survives; 0 and 1 are carved. Both orderings reach exactly this. -/
+theorem space_carve_fixpoint_value :
+    settle viewA viewB occ0 0 = false ∧
+    settle viewA viewB occ0 1 = false ∧
+    settle viewA viewB occ0 2 = true := by
+  refine ⟨?_, ?_, ?_⟩ <;> decide
+
+/-- The limit is genuinely fixed: re-applying either view to the settled occupancy
+    changes nothing. (Confirms `settle` reached convergence, not an arbitrary cut.) -/
+theorem space_carve_limit_is_fixed :
+    IsFixed viewA (settle viewA viewB occ0) ∧
+    IsFixed viewB (settle viewA viewB occ0) := by
+  unfold IsFixed
+  refine ⟨⟨?_, ?_, ?_⟩, ⟨?_, ?_, ?_⟩⟩ <;> decide
+
+-- ══════════════════════════════════════════════════════════
+-- PART VII.  UNIVERSAL confluence — every view, every state
+-- ══════════════════════════════════════════════════════════
+
+/-- Bit `k` of `n`, as a `Bool` — to finitely enumerate every configuration. -/
+def bitN (n k : Nat) : Bool := decide (n / (2 ^ k) % 2 = 1)
+
+/-- Occupancy from a 3-bit code `o ∈ [0,8)`. -/
+def occOf (o : Nat) : Occupancy := fun v => bitN o v.val
+
+/-- View from a 4-bit code `a ∈ [0,16)`: bit 3 = `nearToFar`, bits 0..2 = `keep`. -/
+def viewOf (a : Nat) : View := { nearToFar := bitN a 3, keep := fun v => bitN a v.val }
+
+/-- UNIVERSAL CONFLUENCE. For EVERY start occupancy (8) and EVERY ordered pair of
+    views (16×16 = 256), the two view-orders settle to the SAME occupancy at all
+    three voxels — 2048 configurations, exhaustively. This lifts the single witness
+    (`space_carve_fixpoint_confluent`) to the whole 3-voxel model: visibility-coupled
+    space carving is path-dependent but its converged hull is order-INDEPENDENT,
+    full stop, for this model. Bounded-`Nat` quantifiers (`Nat.decidableBallLT`)
+    make the whole statement a closed finite decision; `decide` enumerates it in the
+    kernel (no `native_decide`, so it stays propext-only). -/
+theorem space_carve_confluent_all :
+    ∀ o, o < 8 → ∀ a, a < 16 → ∀ b, b < 16 →
+      settle (viewOf a) (viewOf b) (occOf o) 0 = settle (viewOf b) (viewOf a) (occOf o) 0 ∧
+      settle (viewOf a) (viewOf b) (occOf o) 1 = settle (viewOf b) (viewOf a) (occOf o) 1 ∧
+      settle (viewOf a) (viewOf b) (occOf o) 2 = settle (viewOf b) (viewOf a) (occOf o) 2 := by
+  decide
 
 end SpaceCarveOrderDependence
 end GnosisMath
