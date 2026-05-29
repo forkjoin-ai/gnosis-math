@@ -2118,6 +2118,7 @@ import Gnosis.AckermannLightConeBridge
 import Gnosis.AckermannUniversality
 import Gnosis.AckermannMonotone
 import Gnosis.InformationLightCone
+import Gnosis.InformationLightConeComplete
 import Gnosis.ForcedLightConeEmbedding
 import Gnosis.AckermannIsLightSpeed
 import Gnosis.TimeTravelLightCone
