@@ -27,18 +27,21 @@ import Gnosis.AckermannFunction
 
   ## What remains (the cited classical universal)
 
-  The full universality claim — "every primitive-recursive runtime is
-  eventually strictly dominated by the Ackermann diagonal" — is the
-  classical Ackermann-is-not-primitive-recursive theorem (Ackermann 1928;
-  Grzegorczyk hierarchy). Its Lean mechanization requires (a) a primitive-
-  recursive function encoder and (b) the level-monotonicity tower for
-  `hyperop`, neither of which is cheap in Init-only Lean. Following the
-  established `SpacetimePromotionObligation` pattern in `CausalDiamond`,
-  we RECORD this as a precise `Prop`-valued obligation rather than assert
-  it with a `sorry`. The concrete escalating-dominance witnesses on the
-  calibration window are already proved in
-  `AckermannFunction.ack_dominates` and
-  `AckermannPrimitiveRecursiveBound`.
+  The full classical Ackermann-is-not-primitive-recursive theorem (Ackermann
+  1928; Grzegorczyk hierarchy) has two halves:
+    (a) a primitive-recursive function encoder showing every PR runtime is
+        bounded by some fixed hyperoperation level (`prBoundedByLadder`); and
+    (b) the diagonal eventually strictly dominates every fixed level
+        (`eventualLevelDomination`), which needs the `hyperop`
+        level-monotonicity tower.
+
+  Half (b) is now DISCHARGED — `AckermannMonotone.eventualLevelDomination_holds`
+  proves it in full (zero `sorry`). Half (a), the PR-encoder, is the only part
+  not mechanized in Init-only Lean; we keep it as a documented `Prop`
+  placeholder (`prBoundedByLadder`), following the `SpacetimePromotionObligation`
+  pattern in `CausalDiamond`, rather than assert it with a `sorry`. The
+  concrete escalating-dominance witnesses on the calibration window are in
+  `AckermannFunction.ack_dominates` and `AckermannPrimitiveRecursiveBound`.
 
   Init-only. Zero `sorry`, zero new `axiom`.
 -/
@@ -102,7 +105,7 @@ theorem ladder_strictly_escalates_at_three :
     hyperop 2 3 3 < hyperop 3 3 3 := by
   refine ⟨?_, ?_, ?_⟩ <;> native_decide
 
-/-! ## Recorded obligation — the classical universal (not mechanized here) -/
+/-! ## The classical universal — recorded here; (b) discharged in `AckermannMonotone` -/
 
 /-- The two universal statements whose composition is the full
     Ackermann-is-not-primitive-recursive theorem. We record them precisely
@@ -110,8 +113,9 @@ theorem ladder_strictly_escalates_at_three :
     discharging them. -/
 structure AckermannUniversalityObligation where
   /-- Every fixed hyperoperation level is eventually strictly dominated by
-      the Ackermann diagonal. (Needs the `hyperop` level-monotonicity tower;
-      the calibration-window instances are already proved upstream.) -/
+      the Ackermann diagonal. DISCHARGED in
+      `AckermannMonotone.eventualLevelDomination_holds` via the full `hyperop`
+      monotonicity tower. -/
   eventualLevelDomination : Prop
   /-- Every primitive-recursive runtime is bounded by some fixed level of
       the hyperoperation ladder (Grzegorczyk hierarchy). Stated in prose;
