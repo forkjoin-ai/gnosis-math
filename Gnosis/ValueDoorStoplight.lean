@@ -85,4 +85,31 @@ theorem light_trichotomy (m : Option Nat) (g : Nat) :
     · right; right; rw [if_pos hc]
     · left; rw [if_neg hc]
 
+/-! ## Admission eliminates YELLOW — there is always a cert
+
+  YELLOW (probe) is only for UN-attested cost. In gnosis nothing dispatches
+  un-admitted: every operation passes a cert that already carries its cost class.
+  So the recompute cost is always `some r` (certified), never `none` — and a
+  certified light is never yellow. The probe state is vacuous; the gate is total
+  RED/GREEN, decided at admission with no measurement, no estimate risk. That is
+  why the cost-aware gate is strictly dominant and need not be opt-in: there is
+  always some admission to read the cost from. -/
+
+/-- **A certified cost is never YELLOW.** Admission attests the cost, so the gate
+    skips the probe entirely. -/
+theorem certified_never_yellow (r g : Nat) : light (some r) g ≠ Light.yellow := by
+  simp only [light]
+  by_cases hc : g < r
+  · rw [if_pos hc]; exact (by decide)
+  · rw [if_neg hc]; exact (by decide)
+
+/-- **A certified light is decided: RED or GREEN.** With the cost in hand from the
+    cert, the gate is total and probe-free — no third state to resolve. -/
+theorem certified_is_red_or_green (r g : Nat) :
+    light (some r) g = Light.red ∨ light (some r) g = Light.green := by
+  simp only [light]
+  by_cases hc : g < r
+  · right; rw [if_pos hc]
+  · left; rw [if_neg hc]
+
 end ValueDoorStoplight
