@@ -83,10 +83,14 @@ theorem grandfather_paradox (Lives : Prop) (loop : Lives ↔ ¬ Lives) : False :
   have hne : ¬ Lives := fun hl => (loop.mp hl) hl
   exact hne (loop.mpr hne)
 
-/-- **Hawking-style chronology protection, composed.** In a universe whose
-    signals respect the speed of light, the spacelike (tachyonic) channel a
-    timelike loop would need does not exist, AND the loop it would create is
-    contradictory. The c-bound is exactly what keeps chronology consistent. -/
+/-- **Hawking-style chronology protection, composed.** Bundles the two proven
+    ingredients: under the speed-of-light bound the spacelike (tachyonic)
+    channel a timelike loop would need cannot exist
+    (`no_tachyon_under_lightspeed`), and a closed timelike loop is logically
+    contradictory (`grandfather_paradox`). That a CTC REQUIRES a tachyonic
+    channel is the physical model linking the two — not a separately-mechanized
+    Lean implication. Read together: the c-bound removes the only channel by
+    which the contradiction could be instantiated. -/
 theorem chronology_protected (sig : Signal)
     (hc : RespectsLightSpeed sig) (h0 : StartsAtOrigin sig) :
     ¬ Tachyonic sig ∧ (∀ P : Prop, (P ↔ ¬P) → False) :=
