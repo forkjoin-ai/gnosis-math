@@ -210,4 +210,34 @@ theorem round_trip_twin (w : Worldline) (N t : Nat)
   have hc := properTime_add_motionCount w N
   omega
 
+/-! ## Distance traveled is bounded by the aging deficit (uses the c-bound)
+
+  The proper-time results above hold for ANY worldline. These two use the
+  speed-of-light constraint `Lightspeed` directly. -/
+
+/-- Under the speed-of-light bound, net spatial displacement is at most the
+    motion count: each moving step advances at most one cell, each rest none. -/
+theorem displacement_le_motionCount (w : Worldline) (hL : Lightspeed w) (N : Nat) :
+    (w N - w 0).natAbs ≤ motionCount w N := by
+  induction N with
+  | zero => simp [motionCount]
+  | succ N ih =>
+    have hstep : (w (N + 1) - w N).natAbs ≤ 1 := hL N
+    show (w (N + 1) - w 0).natAbs ≤ motionCount w N + (if w (N + 1) = w N then 0 else 1)
+    by_cases hb : w (N + 1) = w N
+    · rw [if_pos hb]
+      have hdisp : w (N + 1) - w 0 = w N - w 0 := by rw [hb]
+      rw [hdisp]; omega
+    · rw [if_neg hb]; omega
+
+/-- **Distance traveled is bounded by the aging deficit.** Under the c-bound, a
+    worldline's net displacement is at most the gap between coordinate time and
+    its proper time: `|w N − w 0| + properTime w N ≤ N`. The farther a traveler
+    goes, the more it must have under-aged — distance is paid for in lost time. -/
+theorem displacement_le_deficit (w : Worldline) (hL : Lightspeed w) (N : Nat) :
+    (w N - w 0).natAbs + properTime w N ≤ N := by
+  have h1 := displacement_le_motionCount w hL N
+  have h2 := properTime_add_motionCount w N
+  omega
+
 end TimeDilation
