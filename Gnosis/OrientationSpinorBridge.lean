@@ -1,5 +1,7 @@
 import Init
 import Gnosis.TritonCanonical
+import Gnosis.TritonForkRaceFold
+import Gnosis.StandingWaveAmplitudeBridge
 
 /-!
 # OrientationSpinorBridge — the DISCRETE core of orientation-as-spinor perception
@@ -17,11 +19,18 @@ continuous `SU(2) → SO(3)` Lie-group cover; that needs Mathlib's real manifold
 machinery and is out of scope here. It formalizes only the DISCRETE/ALGEBRAIC content the
 perception actually consumes, and cites the continuous picture in prose:
 
-  * §1  **2:1 squaring / sign-loss.** A sheet-carrier sign `s ∈ {-1,+1}` (here `Bool`,
-        `false ↦ -1`, `true ↦ +1`) maps onto a single DIRECTOR by `square s = s·s = +1`.
-        Both sheets land on the SAME director (`square false = square true`), and the map
-        is exactly 2:1 (every director in the image has a 2-element preimage). The sign is
-        lost — the precise analogue of `±g ∈ SU(2)` mapping to one `R ∈ SO(3)`.
+  * §1  **The ℤ/2 cover carried by the ledger's own `tritAmplitude = natAbs ∘ sign`.**
+        The HEADLINE cover statement routes through the ledger's existing amplitude map
+        (`StandingWaveAmplitudeBridge.tritAmplitude`), NOT a fresh parallel construction and
+        NOT `intensity` (which is injective on `Nat` and carries no cover — see the NOTE).
+        On the FULL `Verdict` trit, `tritAmplitude = natAbs ∘ sign` realizes a ℤ/2-cover-
+        with-fixed-center: the orbit `{accept, decline}` (signs `+1`/`-1`) collapses 2-to-1
+        onto amplitude `1` (the antinode pair), while the node `abstain` (sign `0`) is the
+        UNIQUE fixed point at amplitude `0`. This is `natAbs`'s genuine 2-to-1 collapse on
+        `{±1}` with `0` fixed — the real form of the `U(1)`/`SU(2)` sheet structure, reusing
+        `antinodes_are_definite` + `node_is_abstain` + `abstain_is_superposed`. A supporting
+        `Bool` development (`square : Bool → Int`) exhibits the same shape on the two definite
+        sheets and is shown to AGREE with `tritAmplitude` on the `{accept, decline}` orbit.
   * §2  **Verdict map onto the spin triple `{-1,0,+1}`.** An OBSERVATION of the sheet
         (`some s` = resolved, `none` = unobserved) maps to `TritonCanonical.Verdict`:
         resolved `+`/`-` ↦ `accept`/`decline` (sign `±1`), unobserved ↦ `abstain` (sign
@@ -52,9 +61,114 @@ namespace Gnosis
 namespace OrientationSpinorBridge
 
 open Gnosis.TritonCanonical (Verdict sign)
+open Gnosis.TritonForkRaceFold (abstain_is_superposed)
+open Gnosis.StandingWaveAmplitudeBridge
+  (tritAmplitude node_is_abstain antinodes_are_definite tritAmplitude_abstain
+   tritAmplitude_accept tritAmplitude_decline)
 
 -- ══════════════════════════════════════════════════════════
--- §1  The 2:1 squaring map — the discrete double cover (sign-loss)
+-- §1  The ℤ/2 cover — carried by the ledger's `tritAmplitude = natAbs ∘ sign`
+-- ══════════════════════════════════════════════════════════
+
+/-! **HEADLINE.** The genuine 2-to-1 sheet collapse already lives in the ledger, in the
+    EXISTING map `StandingWaveAmplitudeBridge.tritAmplitude = (sign ·).natAbs`. We state the
+    cover through it directly, on the FULL `Verdict` trit — not through a fresh parallel
+    `Bool`-`square` (that is kept below as a supporting witness, §1b) and NOT through
+    `intensity` (which is injective on `Nat`, carries no cover; see the §4 NOTE).
+
+    `natAbs : Int → Nat` is the real-line analogue of the `U(1)` cover's quotient: it is
+    2-to-1 on the antinode signs (`+1` and `-1` both `↦ 1`) and fixes the node (`0 ↦ 0`).
+    Composed with `sign`, this makes the trit the REAL FORM of the ℤ/2 sheet cover — the
+    cover restricted to the real slice `{+1, -1} ∪ {0}`, where the continuous phase circle
+    degenerates to the two-point sign group ℤ/2 plus a fixed center. Concretely:
+
+      * the ORBIT `{accept, decline}` (signs `+1`/`-1`) is the ℤ/2-torsor of two distinct
+        sheets that COLLAPSE 2-to-1 onto the single amplitude `1` (the antinode pair), so
+        `tritAmplitude` cannot tell `accept` from `decline` — `natAbs` has forgotten the sign;
+      * the NODE `abstain` (sign `0`) is the UNIQUE FIXED POINT at amplitude `0` (the center
+        the ℤ/2 action fixes, the superposed middle).
+
+    The proof reuses `antinodes_are_definite` (amplitude `1 ↔ {accept, decline}`),
+    `node_is_abstain` (amplitude `0 ↔ abstain`), and `abstain_is_superposed` (the two
+    definite verdicts carry nonzero, oppositely-signed sign), rather than re-deriving. -/
+
+/-- The two-element ℤ/2 orbit: the definite verdicts whose signs are the sheet pair `±1`. -/
+def sheetOrbit : List Verdict := [.accept, .decline]
+
+/-- **The orbit's two sheets carry the two signs `+1` and `-1`** — a genuine ℤ/2-torsor on
+    the real slice. `accept ↦ +1`, `decline ↦ -1`, and they are NEGATIVES of each other:
+    `sign decline = - sign accept`. The orbit is exactly the nonzero-sign verdicts. -/
+theorem sheetOrbit_signs_are_pm_one :
+    sign Verdict.accept = 1
+    ∧ sign Verdict.decline = -1
+    ∧ sign Verdict.decline = - sign Verdict.accept
+    ∧ sign Verdict.accept ≠ 0
+    ∧ sign Verdict.decline ≠ 0 := by
+  refine ⟨by decide, by decide, by decide, ?_, ?_⟩
+  · exact (abstain_is_superposed).2.2.1
+  · exact (abstain_is_superposed).2.2.2
+
+/-- **The orbit collapses 2-to-1 onto amplitude `1`.** Both sheets of the orbit map to the
+    SAME amplitude `1` under `tritAmplitude = natAbs ∘ sign`, yet are GENUINELY distinct
+    verdicts: `natAbs` has identified `+1` and `-1`. This is the 2-to-1 sheet-forgetting,
+    the precise discrete analogue of `±g ∈ SU(2)` covering one `R ∈ SO(3)`. -/
+theorem orbit_collapses_two_to_one :
+    tritAmplitude Verdict.accept = 1
+    ∧ tritAmplitude Verdict.decline = 1
+    ∧ tritAmplitude Verdict.accept = tritAmplitude Verdict.decline
+    ∧ Verdict.accept ≠ Verdict.decline := by
+  refine ⟨tritAmplitude_accept, tritAmplitude_decline, ?_, by decide⟩
+  rw [tritAmplitude_accept, tritAmplitude_decline]
+
+/-- **The node `abstain` is the unique fixed center at amplitude `0`.** `tritAmplitude
+    abstain = 0`, and amplitude `0` characterizes `abstain` uniquely (`node_is_abstain`):
+    the ℤ/2 action's fixed point, the superposed middle. -/
+theorem node_is_fixed_center :
+    tritAmplitude Verdict.abstain = 0
+    ∧ (∀ v : Verdict, tritAmplitude v = 0 ↔ v = .abstain) := by
+  exact ⟨tritAmplitude_abstain, node_is_abstain⟩
+
+/-- **`trit_is_real_form_of_z2_cover` — the trit is the real form of the ℤ/2 sheet cover,
+    carried by `tritAmplitude = natAbs ∘ sign`.**
+
+    This is the HEADLINE cover statement. On the full `Verdict` trit, the ledger's own
+    amplitude map `tritAmplitude = (sign ·).natAbs` realizes a ℤ/2-cover-with-fixed-center:
+
+      (a) the ORBIT `{accept, decline}` carries the two sheets `sign = +1` / `sign = -1`
+          (a ℤ/2-torsor: `sign decline = - sign accept`, both nonzero — `sheetOrbit_signs_are_pm_one`);
+      (b) `tritAmplitude` COLLAPSES that orbit 2-to-1 onto the single amplitude `1`: both
+          sheets `↦ 1`, yet `accept ≠ decline` — the sign is forgotten by `natAbs`
+          (`orbit_collapses_two_to_one`, reusing `antinodes_are_definite`);
+      (c) the amplitude-`1` fibre is EXACTLY the orbit `{accept, decline}` and nothing else
+          (`antinodes_are_definite`) — the 2-to-1 fibre is precisely 2-element;
+      (d) the NODE `abstain` (sign `0`) is the UNIQUE FIXED POINT at amplitude `0`
+          (`node_is_fixed_center`, reusing `node_is_abstain`) — the center the ℤ/2 fixes.
+
+    So the trit `{-1, 0, +1}` is the real form of the `U(1)`/`SU(2)` double cover restricted
+    to the real slice `{±1} ∪ {0}`: the two-point sign group ℤ/2 (the orbit) plus a fixed
+    center (the node). The 2-to-1 collapse is `natAbs` on `{±1}`; the squaring `intensity`
+    is incidental here (`1² = 1`, `0² = 0`) and carries NO cover (§4 NOTE). -/
+theorem trit_is_real_form_of_z2_cover :
+    -- (a) the orbit is a ℤ/2-torsor of two sheets ±1
+    (sign Verdict.accept = 1 ∧ sign Verdict.decline = -1
+      ∧ sign Verdict.decline = - sign Verdict.accept)
+    -- (b) the orbit collapses 2-to-1 onto amplitude 1, sheets indistinguishable but distinct
+    ∧ (tritAmplitude Verdict.accept = 1 ∧ tritAmplitude Verdict.decline = 1
+      ∧ tritAmplitude Verdict.accept = tritAmplitude Verdict.decline
+      ∧ Verdict.accept ≠ Verdict.decline)
+    -- (c) the amplitude-1 fibre is exactly the 2-element orbit {accept, decline}
+    ∧ (∀ v : Verdict, tritAmplitude v = 1 ↔ (v = .accept ∨ v = .decline))
+    -- (d) the node abstain is the unique fixed center at amplitude 0
+    ∧ (tritAmplitude Verdict.abstain = 0
+      ∧ (∀ v : Verdict, tritAmplitude v = 0 ↔ v = .abstain)) := by
+  refine ⟨⟨(sheetOrbit_signs_are_pm_one).1, (sheetOrbit_signs_are_pm_one).2.1,
+            (sheetOrbit_signs_are_pm_one).2.2.1⟩,
+          orbit_collapses_two_to_one,
+          antinodes_are_definite,
+          node_is_fixed_center⟩
+
+-- ══════════════════════════════════════════════════════════
+-- §1b  Supporting `Bool`-sheet witness — and its agreement with `tritAmplitude`
 -- ══════════════════════════════════════════════════════════
 
 /-! The sheet-carrier is the spinor SIGN, the `{-1,+1}` we model as `Bool`
@@ -113,6 +227,34 @@ theorem squaring_is_double_cover :
     ∧ (sheetSign false ≠ sheetSign true)
     ∧ (preimageOfOne = [false, true] ∧ preimageOfOne.length = 2) := by
   refine ⟨square_loses_sign, square_is_one, by decide, preimage_is_two⟩
+
+/-! ### The `Bool` sheets embed into the orbit `{accept, decline}`, and `square` agrees with
+    the ledger's `tritAmplitude` there. This is what subordinates §1b to the §1 headline:
+    the supporting `Bool` development is a faithful slice of the trit cover, not a rival. -/
+
+/-- Embed a `Bool` sheet into the verdict orbit `{accept, decline}`: `true ↦ accept`
+    (sheet `+1`), `false ↦ decline` (sheet `-1`). The two sheets land on the two definite
+    verdicts — the ℤ/2-torsor of §1. -/
+def sheetToVerdict : Bool → Verdict
+  | true  => .accept
+  | false => .decline
+
+/-- The embedding lands in the orbit (its image is exactly `{accept, decline}`), and it is
+    injective — the two `Bool` sheets are the two distinct sheets of the orbit. -/
+theorem sheetToVerdict_into_orbit :
+    sheetToVerdict true = .accept
+    ∧ sheetToVerdict false = .decline
+    ∧ sheetToVerdict true ≠ sheetToVerdict false := by
+  refine ⟨by decide, by decide, by decide⟩
+
+/-- **`square` agrees with `tritAmplitude` on the embedded sheets.** For every `Bool` sheet
+    `s`, the supporting director `square s` equals (as an `Int`) the ledger amplitude
+    `tritAmplitude (sheetToVerdict s)`: both are the single antinode value `1`. The two
+    developments compute the SAME 2-to-1 collapse on the orbit — the `Bool`-`square` is a
+    faithful slice of the headline `natAbs ∘ sign` cover, not a parallel claim. -/
+theorem square_agrees_with_tritAmplitude :
+    ∀ s : Bool, square s = (tritAmplitude (sheetToVerdict s) : Int) := by
+  intro s; cases s <;> decide
 
 -- ══════════════════════════════════════════════════════════
 -- §2  The verdict map — sheet observation onto the spin triple {-1,0,+1}
@@ -298,8 +440,15 @@ theorem order_halves_under_quotient :
 
 /-- **ORIENTATION-SPINOR-BRIDGE (discrete core).**
 
-      (1) §1  The squaring map `square : Bool → Int` is a 2:1 double cover: both sheets
-              land on the single director `1`, losing the sign (`squaring_is_double_cover`).
+      (0) §1  HEADLINE. The trit is the REAL FORM of the ℤ/2 sheet cover, carried by the
+              ledger's own `tritAmplitude = natAbs ∘ sign` (`trit_is_real_form_of_z2_cover`):
+              the orbit `{accept, decline}` (signs `+1`/`-1`) collapses 2-to-1 onto amplitude
+              `1`, and the node `abstain` (sign `0`) is the unique fixed center at amplitude
+              `0`. This routes through `tritAmplitude`, NOT `intensity` (§5 NOTE).
+      (1) §1b The supporting `Bool` squaring `square : Bool → Int` is a 2:1 collapse on the
+              two sheets (`squaring_is_double_cover`); it AGREES with the headline
+              `tritAmplitude` on the embedded orbit `{accept, decline}`
+              (`square_agrees_with_tritAmplitude`).
       (2) §2  The sheet-observation map lands in the spin triple `{-1,0,+1}` and is total;
               the unobserved sheet is the sign-`0` `abstain` node
               (`verdict_sign_in_spin_triple`, `unobserved_is_abstain_node`).
@@ -308,9 +457,17 @@ theorem order_halves_under_quotient :
               sheet (`four_quanta_sheet_returns`); the generator's order halves under the
               2:1 quotient, 4 upstairs to 2 downstairs (`order_halves_under_quotient`). -/
 theorem orientation_spinor_bridge_master :
-    -- (1) 2:1 double cover
-    (square false = square true ∧ (∀ s : Bool, square s = 1)
-      ∧ preimageOfOne.length = 2)
+    -- (0) HEADLINE ℤ/2 cover via the ledger's tritAmplitude = natAbs ∘ sign
+    ((tritAmplitude Verdict.accept = 1 ∧ tritAmplitude Verdict.decline = 1
+        ∧ tritAmplitude Verdict.accept = tritAmplitude Verdict.decline
+        ∧ Verdict.accept ≠ Verdict.decline)
+      ∧ (∀ v : Verdict, tritAmplitude v = 1 ↔ (v = .accept ∨ v = .decline))
+      ∧ tritAmplitude Verdict.abstain = 0
+      ∧ (∀ v : Verdict, tritAmplitude v = 0 ↔ v = .abstain))
+    -- (1) supporting Bool 2:1 collapse, agreeing with tritAmplitude on the orbit
+    ∧ ((square false = square true ∧ (∀ s : Bool, square s = 1)
+        ∧ preimageOfOne.length = 2)
+      ∧ (∀ s : Bool, square s = (tritAmplitude (sheetToVerdict s) : Int)))
     -- (2) verdict map into the spin triple, unobserved = abstain node
     ∧ (sign (verdictOfObservation (some false)) = -1
       ∧ sign (verdictOfObservation none) = 0
@@ -323,12 +480,14 @@ theorem orientation_spinor_bridge_master :
       ∧ rotSheet (rotSheet (0 : Sheet)) ≠ 0
       ∧ rotDirector (rotDirector (0 : Director)) = 0
       ∧ (∀ x : Sheet, toDirector (rotSheet x) = rotDirector (toDirector x))) := by
-  refine ⟨⟨square_loses_sign, square_is_one, ?_⟩,
+  refine ⟨⟨orbit_collapses_two_to_one, antinodes_are_definite,
+            tritAmplitude_abstain, node_is_abstain⟩,
+          ⟨⟨square_loses_sign, square_is_one, (preimage_is_two).2⟩,
+            square_agrees_with_tritAmplitude⟩,
           ⟨by decide, by decide, by decide, by decide,
             (unobserved_is_abstain_node).2.2⟩,
-          ?_, four_quanta_sheet_returns, ?_, ?_, toDirector_intertwines⟩
-  · exact (preimage_is_two).2
-  · exact (two_quanta_director_returns_sheet_flips).1
+          (two_quanta_director_returns_sheet_flips).1, four_quanta_sheet_returns,
+          ?_, ?_, toDirector_intertwines⟩
   · decide
   · decide
 
@@ -339,11 +498,23 @@ theorem orientation_spinor_bridge_master :
 /-! The perception's orientation-as-spinor structure, formalized at the level it actually
 uses — discrete and algebraic, no continuous Lie group.
 
-§1 The DIRECTOR is the SQUARE of the spinor SIGN: `square : Bool → Int` sends both `-1`
-and `+1` to `+1` (`square_loses_sign`), a 2:1 map with a 2-element fibre over its single
-image point (`squaring_is_double_cover`). This MAPS TO (does not reconstruct) the
-`SU(2) → SO(3)` double cover, where `±g` cover one rotation. The sign-loss is the same
-shape as `TritonCanonical.collapse`'s loss of the neutral middle.
+§1 (HEADLINE) The trit is the REAL FORM of the ℤ/2 sheet cover, carried by the ledger's
+OWN amplitude map `tritAmplitude = natAbs ∘ sign` (`trit_is_real_form_of_z2_cover`). The
+genuine 2-to-1 collapse is `natAbs` on `{±1}`: the orbit `{accept, decline}` (signs
+`+1`/`-1`, a ℤ/2-torsor — `sheetOrbit_signs_are_pm_one`) collapses onto the single
+amplitude `1` (`orbit_collapses_two_to_one`, reusing `antinodes_are_definite`), and the
+node `abstain` (sign `0`) is the UNIQUE fixed center at amplitude `0` (`node_is_fixed_center`,
+reusing `node_is_abstain` and `abstain_is_superposed`). This MAPS TO (does not reconstruct)
+the `SU(2) → SO(3)` double cover restricted to the real slice `{±1} ∪ {0}`, where `±g`
+cover one rotation. It routes through `tritAmplitude`, NOT through `intensity` (see NOTE).
+
+§1b (supporting) The `Bool` development `square : Bool → Int` sends both `-1` and `+1` to
+`+1` (`square_loses_sign`), a 2:1 map with a 2-element fibre over its single image point
+(`squaring_is_double_cover`). It is a faithful SLICE of the headline cover, not a rival:
+the embedding `sheetToVerdict` (`sheetToVerdict_into_orbit`) lands the two `Bool` sheets in
+the orbit `{accept, decline}`, and `square` AGREES with `tritAmplitude` there
+(`square_agrees_with_tritAmplitude`). The sign-loss is the same shape as
+`TritonCanonical.collapse`'s loss of the neutral middle.
 
 §2 A sheet OBSERVATION (`Option Bool`) maps to `TritonCanonical.Verdict` and thence into
 the spin triple `{-1,0,+1}` (`verdict_sign_in_spin_triple`): resolved `±` ↦ `accept`/
@@ -360,21 +531,28 @@ The map is total and injective on resolved sheets (`verdict_map_total_and_resolv
 (`order_halves_under_quotient`). This is the discrete shadow of spinor-`4π`-identity vs
 director-`2π`-identity, NOT a proof of the continuous statement.
 
-NOTE (Born intensity). §1's `square s = sheetSign s * sheetSign s` is the SAME squaring
-operation as `StandingWaveAmplitudeBridge.intensity a = a * a` (`intensity = amplitude²`).
-Here it is applied to the SIGN carrier `{-1,+1}` (always yielding the unit director `1`,
-since `|±1|² = 1`); there it is applied to a varying `Nat` amplitude to give the Born
-weight. So the director-as-squared-spinor and the Born-intensity-as-squared-amplitude are
-two USES of one squaring map on different carriers — a structural parallel, not an identity
-of the two theories. (A full identity would require a single carrier on which both the
-spinor sign and the standing-wave amplitude live; that carrier is not built here.)
+NOTE (Born intensity is NOT the cover). The cover lives in `tritAmplitude = natAbs ∘ sign`
+(the 2-to-1 collapse, §1), NOT in `StandingWaveAmplitudeBridge.intensity a = a * a`. The
+squaring `intensity` is INJECTIVE on `Nat` (`a ↦ a²` is strictly monotone), so it has
+trivial fibres and carries NO cover: over `Nat` the phase/sign has already been quotiented
+away by `natAbs` BEFORE squaring, so there is no `-a` to collide with `a`. On the trit the
+squaring is moreover incidental — it merely fixes the amplitude values (`0² = 0`, `1² = 1`,
+`StandingWaveAmplitudeBridge.trit_intensity_is_amplitude`) and contributes nothing to the
+collapse. So `square`/`intensity` and the ℤ/2 cover are two USES of "squaring" on different
+carriers — a structural parallel — but the COVER is carried by the modulus `natAbs`, not by
+the squaring. Do not advertise "Born's rule = the spinor cover": as morphisms they differ
+(injective squaring vs 2-to-1 modulus). The cover-ness was in the complex structure the
+ledger discards at step one.
 
 -- Next exploration:
---   The CONTINUOUS cover, the one piece deferred here. With Mathlib, build the genuine
+--   The CONTINUOUS cover, the one piece deferred here. The DISCRETE real-form cover is now
+--   carried by the ledger's own `tritAmplitude = natAbs ∘ sign` (`trit_is_real_form_of_z2_cover`),
+--   so the open frontier is purely the continuous lift. With Mathlib, build the genuine
 --   `SU(2) → SO(3)` 2:1 group homomorphism (e.g. via unit quaternions / `Quaternion`
 --   acting on `ℝ³` by conjugation, or `Matrix.SpecialUnitaryGroup (Fin 2) ℂ →
 --   Matrix.specialOrthogonalGroup`), and prove (i) it is surjective with kernel `{±1}`
---   (the 2:1 property — the continuous lift of §1's `square_loses_sign`), and (ii) the
+--   (the 2:1 property — the continuous lift of §1's orbit-collapse, whose discrete real form
+--   is `natAbs` identifying `{+1,-1} ↦ 1` with `0` fixed), and (ii) the
 --   `2π`/`4π` periodicity as a statement about the rotation-by-angle one-parameter
 --   subgroup: `exp(2π) = -I` in `SU(2)` but `= I` in `SO(3)`, `exp(4π) = I` in both (the
 --   continuous lift of §3's `order_halves_under_quotient`). Then prove the DISCRETE maps

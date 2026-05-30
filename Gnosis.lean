@@ -2,6 +2,7 @@ import Gnosis.SignalEnvelope
 import Gnosis.SignalFusion
 import Gnosis.SilhouetteCarveLattice
 import Gnosis.SpaceCarveOrderDependence
+import Gnosis.SpinorCoverSampled
 import Gnosis.CalibrationTrust
 import Gnosis.MycelialEmergenceGraph
 import Gnosis.MarketAsSignal
@@ -1742,6 +1743,9 @@ import Gnosis.Oracle.OracleStallAnnihilation
 import Gnosis.Oracle.OracleStallMetacognition
 import Gnosis.Oracle.OracleStallThermodynamicReversal
 import Gnosis.OrbitalMechanics
+import Gnosis.OrientationADELadder
+import Gnosis.OrientationE8Bridge
+import Gnosis.OrientationSpinorBridge
 import Gnosis.OrigamiFoldingTopology
 import Gnosis.OrpheusEurydiceWitness
 import Gnosis.OrbitAvoidanceLucasProbe
