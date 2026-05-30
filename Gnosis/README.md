@@ -8,6 +8,32 @@ group larger families of related claims.
 
 ## Key Modules
 
+- **Fano → octonion → E₈ bridge** (the certified ladder behind the E₈ Hope
+  Jar, all 0-sorry):
+  [E8Lattice.lean](./E8Lattice.lean) — the 240 roots in a scaled-integer model
+  with `reflection_closure` (the certificate the set *is* the E₈ root system),
+  the self-similar coset tower `240·56·27·16·120`, and the Hope-Jar capacity
+  `30·240·96768 = |W(E₈)| = 696729600`;
+  [E8WellOrder.lean](./E8WellOrder.lean) — the canonical base-8 code order
+  (transitivity free from `Nat`) and the `Fin 240` discharge bijection (fills
+  the project's `WellOrder` gap);
+  [E8WeylOrder.lean](./E8WeylOrder.lean) — `|W(E₈)| = 696729600` proven as the
+  telescoping parabolic coset chain E₈⊃E₇⊃E₆⊃D₅⊃A₄;
+  [OctonionE8Lattice.lean](./OctonionE8Lattice.lean) — octavian↔root identity +
+  the Fano-structured octonion product + bundled `bridge_ladder`;
+  [OctavianLoop.lean](./OctavianLoop.lean) and
+  [KirmseObstruction.lean](./KirmseObstruction.lean) — two independent certified
+  constructions that the 240 unit octavians are **closed** under the octonion
+  product (the naive Kirmse set is *not* closed — 43008/57600 products escape;
+  Coxeter's coordinate swap fixes it);
+  [OctavianMoufang.lean](./OctavianMoufang.lean) (alternativity/flexibility) and
+  [OctavianMoufangCubic.lean](./OctavianMoufangCubic.lean) (the three degree-3
+  Moufang identities, 240³ each via a certified-equal fast product) — together
+  the octavians are a fully certified **Moufang loop**.
+- [HopeJarMemoryDoor.lean](./HopeJarMemoryDoor.lean) — the certified
+  memory-mapping transition for the hybrid Hope Jar: the cache-vs-regenerate
+  value-door crossover (reusing `ValueDoorStoplight`) plus an **axiom-free**
+  resident-memory bound (`resident_bounded`) that fixes the per-slot blow-up.
 - [Apotheosis/](./Apotheosis/README.md) — mechanical-brain carrier definitions
   migrated from the legacy `open-source/gnosis` Lean tree into the `gnosis-math`
   hierarchy, with explicit axiom boundaries for semantic claims.

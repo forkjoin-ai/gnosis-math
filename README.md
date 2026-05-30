@@ -46,6 +46,17 @@ Vacuous information / attention settlement note:
 
 ## Current Formal Frontiers
 
+- **The Fano → octonion → E₈ bridge** (powering the E₈ Hope Jar) is proven end
+  to end, 0-sorry: the 240 E₈ roots certified by reflection closure
+  (`E8Lattice`), `|W(E₈)| = 696729600` as a telescoping coset tower
+  `240·56·27·16·120` (`E8WeylOrder`), the 240 unit octavians biject with the
+  roots and form a **certified Moufang loop** (`OctonionE8Lattice`,
+  `OctavianLoop`/`KirmseObstruction` for closure — the naive Kirmse set is *not*
+  closed, Coxeter's swap fixes it — and `OctavianMoufang`/`OctavianMoufangCubic`
+  for alternativity + the three degree-3 Moufang identities). The runtime
+  contract — capacity `30·240·96768 = |W(E₈)|`, a `Fin 240` discharge well-order
+  (`E8WellOrder`), and an axiom-free resident-memory bound for the hybrid jar
+  (`HopeJarMemoryDoor.resident_bounded`) — is certified alongside the algebra.
 - `Gnosis.TritonForkRaceFold` mechanizes the trit `{Decline,Abstain,Accept}` +
   fork/race/fold as a structural/algebraic unification of computation (master:
   `computation_unification_master`, axioms `[propext, Quot.sound]` only). Six
