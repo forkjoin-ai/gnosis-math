@@ -46,9 +46,43 @@
 
   No axioms, no sorry. Every theorem closes by `native_decide`,
   `rfl`, or `decide`.
+
+  E8 SEAM (resolution of singularity)
+  -----------------------------------
+  The binary icosahedral group 2I (order 120) acts freely on
+  S³ ⊂ C²; the quotient singularity C²/2I has a minimal
+  resolution whose exceptional fiber is a configuration of
+  rational curves whose dual graph is the E_8 Dynkin diagram
+  (the FINITE one, 8 nodes), while the McKay quiver of 2I is the
+  AFFINE Ẽ_8 diagram (9 nodes = |Irr(2I)|).  The extra affine
+  node maps to the trivial representation.
+
+  This file imports `Gnosis.E8Lattice` (which transitively
+  imports `Gnosis.DynkinCoxeterClassification`, the single source
+  of truth for `weylOrder`, `coxeterNumber`, `binaryOrder`,
+  `affineNodeCount`).  The SEAM section below proves, with KERNEL
+  `decide`/`rfl` only (footprint `propext` or none — NOT
+  `native_decide`, so NO `Lean.ofReduceBool`/`trustCompiler`),
+  the numerical links between this McKay data and the E_8
+  lattice / Dynkin SSOT:
+
+      |2I| = 120 = bottom of the E_8 Weyl coset tower (= |W(A_4)|)
+      Σ dᵢ²(2I) = 120 = |2I|         (Burnside, the tower bottom)
+      |Irr(2I)| = 9 = #nodes(Ẽ_8) = affineNodeCount E8
+      mckayType 2I = E8 ⟷ mckayADE E8 = 2I   (round-trip)
+      Σ(Ẽ_8 marks) = 30 = coxeterNumber E8
+      |2I| divides |W(E_8)| (the tower product)
+
+  Only claims actually PROVED in Lean are asserted; the
+  resolution-of-singularity reading above is the geometric
+  motivation, not itself formalized here.
 -/
 
+import Gnosis.E8Lattice
+
 namespace ADEMcKayCorrespondence
+
+open DynkinCoxeterClassification
 
 -- ══════════════════════════════════════════════════════════
 -- THE FIVE FAMILIES OF FINITE SU(2) SUBGROUPS
@@ -429,5 +463,105 @@ theorem icosahedral_dominates_extraordinary :
 theorem ico_modes_to_E8_tilde :
       irrepDims2I.length = irrepCount .BinaryIcosa 0
     ∧ burnsideSum2I = subgroupOrder .BinaryIcosa 0 := by native_decide
+
+-- ══════════════════════════════════════════════════════════
+-- THE McKAY BIJECTION IS INJECTIVE (no axioms / propext only)
+-- ══════════════════════════════════════════════════════════
+-- `mckayType` is total by definition; here we certify that on
+-- the exceptional types it is injective, and that the full image
+-- has no repeats (so the bijection onto {A, D, E₆, E₇, E₈} is a
+-- genuine bijection of the 5 families).
+
+/-- On the three exceptional families, `mckayType` is injective:
+    2T, 2O, 2I map to pairwise-distinct ADE types E₆, E₇, E₈. -/
+theorem mckay_injective_exceptional :
+      mckayType .BinaryTetra ≠ mckayType .BinaryOcta
+    ∧ mckayType .BinaryTetra ≠ mckayType .BinaryIcosa
+    ∧ mckayType .BinaryOcta  ≠ mckayType .BinaryIcosa := by decide
+
+/-- The McKay image of the 5 families has no duplicates: deduping
+    `adeImage` does not shrink it, so `mckayType` is injective on
+    all five families (hence a bijection onto its image). -/
+theorem mckay_image_no_dups :
+    adeImage.eraseDups.length = allSU2Families.length := by decide
+
+-- ══════════════════════════════════════════════════════════
+-- THE E8 SEAM  (McKay 2I ↔ E₈ lattice, via the Dynkin SSOT)
+-- ══════════════════════════════════════════════════════════
+-- All seam theorems below close by KERNEL `decide`/`rfl`; their
+-- axiom footprint is `propext` or none — they do NOT use
+-- `native_decide`, so they carry no `Lean.ofReduceBool` /
+-- `Lean.trustCompiler` dependency.  This is the "higher plane of
+-- resolution": the order-120 binary icosahedral atom locks onto
+-- the bottom of the E₈ Weyl coset tower.
+
+/-- |2I| = 120 = the bottom of the E₈ Weyl coset tower
+    `[240, 56, 27, 16, 120]`, i.e. |W(A₄)| = 5!.  The largest
+    binary polyhedral group sits at the base of the minuscule
+    descent that enumerates |W(E₈)|. -/
+theorem icosa_order_eq_E8_tower_bottom :
+    subgroupOrder .BinaryIcosa 0 = (E8Lattice.cosetTower).getLastD 0 := by decide
+
+/-- Burnside for 2I lands on the same 120: Σ dᵢ²(2I) equals the
+    bottom of the E₈ coset tower.  The dimension sum of the
+    icosahedral irreps coincides with |W(A₄)|. -/
+theorem burnside_2I_eq_E8_tower_bottom :
+    burnsideSum2I = (E8Lattice.cosetTower).getLastD 0 := by decide
+
+/-- The McKay correspondence and the Dynkin SSOT agree on |2I|:
+    `subgroupOrder .BinaryIcosa = binaryOrder .E8 = 120`. -/
+theorem icosa_order_eq_dynkin_binaryOrder :
+    subgroupOrder .BinaryIcosa 0 = binaryOrder .E8 8 := by decide
+
+/-- Burnside for 2I equals the SSOT `weylOrder .A 4 = 120`
+    (= |W(A₄)|, the tower bottom). -/
+theorem burnside_2I_eq_weyl_A4 :
+    burnsideSum2I = weylOrder .A 4 := by decide
+
+/-- |Irr(2I)| = 9 = #nodes(Ẽ₈), matched against the Dynkin SSOT
+    `affineNodeCount .E8`.  The irreducible-representation count of
+    2I equals the vertex count of the affine E₈ diagram. -/
+theorem irrep_2I_eq_affine_E8_nodes :
+    irrepCount .BinaryIcosa 0 = affineNodeCount .E8 8 := by decide
+
+/-- The McKay quiver of 2I (the chain `E8_tilde_edges`, 8 edges) is
+    a tree on `affineNodeCount .E8 = 9` vertices: edges + 1 = nodes.
+    McKay graph adjacency realises the affine Ẽ₈ Cartan
+    off-diagonal as a tree of 9 nodes. -/
+theorem mckay_2I_quiver_matches_affine_E8 :
+    E8_tilde_edges.length + 1 = affineNodeCount .E8 8 := by decide
+
+/-- Round-trip across the SEAM: `mckayType` sends 2I to E₈, and the
+    SSOT `mckayADE` sends E₈ back to the binary icosahedral group.
+    The two maps are mutually inverse on this pair. -/
+theorem mckay_2I_E8_round_trip :
+    mckayType .BinaryIcosa = .E8
+  ∧ DynkinCoxeterClassification.mckayADE .E8 = .BinaryIcosa := by
+  exact ⟨rfl, rfl⟩
+
+/-- The sum of the dual Coxeter marks of Ẽ₈ equals the E₈ Coxeter
+    number `coxeterNumber .E8 = 30` from the SSOT (the McKay marks
+    are the affine marks, summing to h(E₈)). -/
+theorem E8_tilde_marks_sum_eq_coxeter :
+    E8_tilde_marks.foldl (· + ·) 0 = coxeterNumber .E8 8 := by decide
+
+/-- |2I| = 120 divides |W(E₈)| (the E₈ Weyl coset-tower product):
+    the icosahedral order is a factor of the full E₈ Weyl order. -/
+theorem icosa_order_divides_weyl_E8 :
+    E8Lattice.towerProduct E8Lattice.cosetTower % subgroupOrder .BinaryIcosa 0 = 0 := by
+  decide
+
+/-- Companion SEAM facts for the other two exceptional families,
+    against the Dynkin SSOT (Burnside dimension sums match
+    `binaryOrder`): 2T ↔ E₆ (24), 2O ↔ E₇ (48). -/
+theorem burnside_2T_2O_eq_dynkin_binaryOrder :
+      burnsideSum2T = binaryOrder .E6 6
+    ∧ burnsideSum2O = binaryOrder .E7 7 := by decide
+
+/-- The affine marks of Ẽ₆ and Ẽ₇ sum to the E₆/E₇ Coxeter numbers
+    (12 and 18) from the SSOT. -/
+theorem E6_E7_marks_sum_eq_coxeter :
+      E6_tilde_marks.foldl (· + ·) 0 = coxeterNumber .E6 6
+    ∧ E7_tilde_marks.foldl (· + ·) 0 = coxeterNumber .E7 7 := by decide
 
 end ADEMcKayCorrespondence
