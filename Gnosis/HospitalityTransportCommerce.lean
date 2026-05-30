@@ -20,8 +20,7 @@ Init-only; named `Nat` lemmas only (NO omega, per RUSTIC_CHURCH.md); propext-at-
 namespace Gnosis
 namespace HospitalityTransportCommerce
 
-open Gnosis.HotellingModel (natDist)
-open Gnosis.HotellingMeshSprawl (capturedVs differentiation_strictly_beats_colocation)
+open Gnosis.HotellingMeshSprawl (Plot score near_audience)
 
 /-- Location hospitality augmented with the two missing access dimensions:
     `transportation` (reachability over the route graph) and `commerce`
@@ -43,19 +42,23 @@ theorem monotone_in_commerce (b t c1 c2 : Nat) (h : c1 ≤ c2) :
   unfold hospitality
   exact Nat.add_le_add_left h (b + t)
 
-/-- BRIDGE: a business's COMMERCE access is its Hotelling catchment. Composed with
-    the proven spread law (differentiation captures STRICTLY more demand than
-    co-location), a DIFFERENTIATING business strictly raises the hospitality of the
-    plot it picks — the Hotelling placement IS hospitality specialised to commerce. -/
-theorem differentiation_raises_hospitality
-    (base transport rival h : Nat) (houses : List Nat)
-    (hmem : h ∈ houses) (hsep : 0 < natDist h rival) :
-    hospitality base transport (capturedVs rival rival houses)
-      < hospitality base transport (capturedVs h rival houses) := by
-  unfold hospitality
-  exact Nat.add_lt_add_left
-    (differentiation_strictly_beats_colocation rival h houses hmem hsep)
-    (base + transport)
+/-- A business's hospitality uses its Hotelling placement `score` (from the proven
+    `Gnosis/HotellingMeshSprawl`) as the COMMERCE term — `commerce = catchment`. -/
+def businessHospitality (base transport : Nat) (p : Plot) : Nat :=
+  hospitality base transport (score p)
+
+/-- BRIDGE: more audience (a bigger catchment, all else equal) never lowers a
+    plot's hospitality — Hotelling's `near_audience` lifts straight into the
+    hospitality COMMERCE dimension. The Hotelling placement IS hospitality
+    specialised to a business. -/
+theorem more_audience_more_hospitable
+    (base transport : Nat) (lo hi : Plot)
+    (hcl : lo.claimed = hi.claimed) (hcr : lo.crowding = hi.crowding)
+    (hmore : lo.audience ≤ hi.audience) :
+    businessHospitality base transport lo ≤ businessHospitality base transport hi := by
+  unfold businessHospitality
+  exact monotone_in_commerce base transport (score lo) (score hi)
+    (near_audience lo hi hcl hcr hmore)
 
 -- ── Witnesses (decide) — one H for all entities, dominance differs ────────────
 
@@ -73,7 +76,7 @@ theorem transport_breaks_tie : hospitality 10 0 5 < hospitality 10 1 5 := by dec
 theorem commerce_raises : hospitality 10 2 0 < hospitality 10 2 1 := by decide
 
 -- Axiom audit (target: propext-at-most, no omega / native_decide):
-#print axioms differentiation_raises_hospitality
+#print axioms more_audience_more_hospitable
 #print axioms monotone_in_transportation
 #print axioms monotone_in_commerce
 
