@@ -2248,6 +2248,8 @@ import Gnosis.JaneJacobs
 import Gnosis.HospitalitySpawning
 import Gnosis.Claim
 import Gnosis.CityDensity
+import Gnosis.HotellingMeshSprawl
+import Gnosis.HospitalityTransportCommerce
 import Gnosis.GeoProjection
 import Gnosis.Occupation
 import Gnosis.WeatherFronts
@@ -2307,3 +2309,4 @@ import Gnosis.Security
 import Gnosis.RenderBudgetDynamics
 import Gnosis.ImplementationWisdom
 import Gnosis.SphericalHexTerrain
+import Gnosis.CommerceGravity
