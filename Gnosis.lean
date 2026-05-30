@@ -2,6 +2,8 @@ import Gnosis.SignalEnvelope
 import Gnosis.SignalFusion
 import Gnosis.SilhouetteCarveLattice
 import Gnosis.SpaceCarveOrderDependence
+import Gnosis.SpinCoverSO4F4
+import Gnosis.SpinCoverTowerToMonster
 import Gnosis.SpinorCover2O
 import Gnosis.SpinorCover600Cell
 import Gnosis.SpinorCoverADE
@@ -838,6 +840,7 @@ import Gnosis.Bridges.BridgeKapustinWitten
 import Gnosis.Bridges.BridgeKhovanovRT3D
 import Gnosis.Bridges.BuleyDarkDeceptaconBridge
 import Gnosis.Bridges.BuleyMeshAttentionBridge
+import Gnosis.CubicPlasticShells
 import Gnosis.CyamitesBeanWitness
 import Gnosis.Bridges.BuleyTensorBridge
 import Gnosis.Bridges.BuleyTransformerSSMBridge
@@ -1140,6 +1143,7 @@ import Gnosis.CostAlgebraNoCloning
 import Gnosis.CostAlgebraTerminalInitial
 import Gnosis.CountBadLucasPhaseReconstruction
 import Gnosis.CouplingCost
+import Gnosis.CoverRingNumberSequences
 import Gnosis.CoveringSpaceCausality
 import Gnosis.CopyStoreEraseCostStructure
 import Gnosis.CummingsLeafFallsParenthesisWitness
@@ -1420,6 +1424,7 @@ import Gnosis.SemeleZeusWitness
 import Gnosis.HFTOperationsAsTopology
 import Gnosis.Helix55Dictionary
 import Gnosis.HellaVortex
+import Gnosis.HeptagonCubicShells
 import Gnosis.HeraclitusBowLifeDeathWitness
 import Gnosis.HeraclesLaborTransitionGraphWitness
 import Gnosis.HeraclesTwelveLaborsWitness
@@ -1438,7 +1443,9 @@ import Gnosis.HomomorphismLatticePattern
 import Gnosis.HopeGapFoldInversion
 import Gnosis.HumanCompiler
 import Gnosis.HypergraphInterpretationMapping
+import Gnosis.IcosianE8Congruence
 import Gnosis.IcosianE8Embedding
+import Gnosis.IcosianE8Equivariance
 import Gnosis.IcosianE8LatticeIso
 import Gnosis.ImpossibleFireworkShapes
 import Gnosis.ImmigrationDiversityIntegration
@@ -2009,6 +2016,7 @@ import Gnosis.TenModeUnification
 import Gnosis.TetraOctaHoneycomb
 import Gnosis.TheFiveIsOne
 import Gnosis.TheGain
+import Gnosis.TrialitySevenSynthesis
 import Gnosis.TreeShapes
 import Gnosis.StructuralStability
 import Gnosis.StructureInTension

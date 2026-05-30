@@ -1,2 +1,3 @@
 import SpinorContinuum.Basic
 import SpinorContinuum.Surjectivity
+import SpinorContinuum.IcosianE8
