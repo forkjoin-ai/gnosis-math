@@ -2250,6 +2250,7 @@ import Gnosis.Claim
 import Gnosis.CityDensity
 import Gnosis.HotellingMeshSprawl
 import Gnosis.HospitalityTransportCommerce
+import Gnosis.HospitalityThreeSistersCollective
 import Gnosis.GeoProjection
 import Gnosis.Occupation
 import Gnosis.WeatherFronts
