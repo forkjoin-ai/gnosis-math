@@ -2,6 +2,10 @@ import Gnosis.SignalEnvelope
 import Gnosis.SignalFusion
 import Gnosis.SilhouetteCarveLattice
 import Gnosis.SpaceCarveOrderDependence
+import Gnosis.SpinorCover2O
+import Gnosis.SpinorCover600Cell
+import Gnosis.SpinorCoverADE
+import Gnosis.SpinorCoverGeneric
 import Gnosis.SpinorCoverSampled
 import Gnosis.CalibrationTrust
 import Gnosis.MycelialEmergenceGraph
@@ -1295,6 +1299,7 @@ import Gnosis.FailureEntropy
 import Gnosis.FailureFamilies
 import Gnosis.FailurePareto
 import Gnosis.FailureUniversality
+import Gnosis.E8RoutesConverge
 import Gnosis.FanoGrassmannianMesh
 import Gnosis.FanoIncidence
 import Gnosis.FanoOctonionNonAssoc
@@ -1433,6 +1438,8 @@ import Gnosis.HomomorphismLatticePattern
 import Gnosis.HopeGapFoldInversion
 import Gnosis.HumanCompiler
 import Gnosis.HypergraphInterpretationMapping
+import Gnosis.IcosianE8Embedding
+import Gnosis.IcosianE8LatticeIso
 import Gnosis.ImpossibleFireworkShapes
 import Gnosis.ImmigrationDiversityIntegration
 import Gnosis.ImmigrationTopology
@@ -1745,6 +1752,8 @@ import Gnosis.Oracle.OracleStallThermodynamicReversal
 import Gnosis.OrbitalMechanics
 import Gnosis.OrientationADELadder
 import Gnosis.OrientationE8Bridge
+import Gnosis.OrientationLeechCeiling
+import Gnosis.OrientationSandwichBound
 import Gnosis.OrientationSpinorBridge
 import Gnosis.OrigamiFoldingTopology
 import Gnosis.OrpheusEurydiceWitness

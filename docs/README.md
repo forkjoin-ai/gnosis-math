@@ -16,3 +16,7 @@ domain readings.
 - [VacuousInformationVacuumPrinciple.md](./VacuousInformationVacuumPrinciple.md)
   - Skyrms energy-tax, Gatekeeping admissibility, and vacuous-information
   attention settlement note.
+- [orientation-sandwich-metric.md](./orientation-sandwich-metric.md) - the
+  proved discrete FLOOR <= ladder <= CEILING sandwich (spin index 2, Coxeter
+  2 < 12 < 18 < 30, kissing 240) from `Gnosis/OrientationSandwichBound.lean`,
+  plus the falsifiable E8 fragment-sharing / Coxeter-Nyquist prediction metric.
